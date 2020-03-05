@@ -14,20 +14,28 @@ public class ProspectsResponseStub {
     private ProspectsResponseStub() {
     }
 
-    private static final String TEST_DATA_FILE = "prospects-body-responce.json";
+    private static final String PROSPECTS_FILE = "prospects-body-response.json";
+    private static final String ONE_PROSPECT_FILE = "one-prospect-response.json";
 
     public static ResponseEntity<Object> getProspectsResponse() {
-
-        JsonNode jsonNode = readTestFile();
+        JsonNode jsonNode = readTestFile(PROSPECTS_FILE);
         if (jsonNode != null) {
             return ResponseEntity.status(200).body(jsonNode);
         }
         return null;
     }
 
-    private static JsonNode readTestFile() {
+    public static ResponseEntity<Object> getOneProspectResponse() {
+        JsonNode jsonNode = readTestFile(ONE_PROSPECT_FILE);
+        if (jsonNode != null) {
+            return ResponseEntity.status(200).body(jsonNode);
+        }
+        return null;
+    }
+
+    private static JsonNode readTestFile(String fileName) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream is = classloader.getResourceAsStream(TEST_DATA_FILE);
+        InputStream is = classloader.getResourceAsStream(fileName);
         ObjectMapper mapper = new ObjectMapper();
 
         try {

@@ -1,0 +1,233 @@
+{
+  "applicantInfo": {
+    "fullName": "qwer",
+    "email": "demo-user@mail.com",
+    "countryCode": "971",
+    "mobileNo": "123412341",
+    "applyOnbehalf": null
+  },
+  "generalInfo": {
+    "prospectId": "14899",
+    "_links": null,
+    "cifId": "",
+    "customerType": "",
+    "dsaId": "",
+    "groupId": "",
+    "groupName": "",
+    "rmCode": "",
+    "accountManagerId": "",
+    "isPoliticallyExposed": ""
+  },
+  "applicationInfo": {
+    "segment": null,
+    "viewId": "/CompanyInfo",
+    "islamicBanking": false,
+    "accountType": "Current Account",
+    "rakValuePackage": "",
+    "leadNumber": "",
+    "riskScore": "",
+    "srNumber": "",
+    "channelId": "",
+    "channelType": "",
+    "createdDate": "",
+    "lastModifiedDate": "",
+    "createdBy": "",
+    "lastModifiedBy": "",
+    "actionType": "save",
+    "saveType": "continue",
+    "tncAgreed": false,
+    "declaration": false
+  },
+  "accountInfo": [
+    {
+      "branchId": "",
+      "accountType": "",
+      "accountSubType": "",
+      "accountNo": "",
+      "accountCurrencies": [],
+      "accountCurrency": "AED",
+      "accountPurpose": "",
+      "debitCardApplied": false,
+      "chequeBookApplied": false,
+      "eStatements": true,
+      "mailStatements": false,
+      "receiveInterest": false,
+      "deliverByCourier": false
+    }
+  ],
+  "organizationInfo": {
+    "screeningInfo": {
+      "statusOverAll": "proceed",
+      "screeningResults": []
+    },
+    "branchCity": "",
+    "branchID": "",
+    "countryOfIncorporation": "AE",
+    "companyName": "",
+    "shortName": "",
+    "dateOfIncorporation": "",
+    "numberOfEmployees": 0,
+    "licenseType": "",
+    "licenseTypeOther": "",
+    "licenseIssuingAuthority": "",
+    "licenseNumber": "",
+    "licenseIssueDate": "",
+    "licenseExpiryDate": "",
+    "vatRegistrationNumber": "",
+    "addressInfo": [
+      {
+        "typeOfAddress": "",
+        "officeAddressDifferent": "",
+        "addressDetails": [
+          {
+            "addressFieldDesc": "",
+            "preferredAddress": "Y",
+            "addressLine1": "",
+            "addressLine2": "",
+            "addressLine3": "",
+            "addressLine4": "",
+            "poBox": "",
+            "emirateCity": "",
+            "country": "AE",
+            "typeOfSpaceOccupied": {
+              "spaceType": "",
+              "others": ""
+            }
+          }
+        ]
+      }
+    ],
+    "contactDetails": {
+      "primaryMobileNo": "",
+      "primaryMobCountryCode": "971",
+      "primaryEmail": "",
+      "primaryPhoneNo": "",
+      "primaryPhoneCountryCode": "971",
+      "fax": "",
+      "faxCountryCode": "",
+      "secondaryPhoneNo": "",
+      "secondaryPhoneCountryCode": "",
+      "secondaryMobileNo": "",
+      "secondaryMobileCountryCode": "",
+      "secondaryEmail": "",
+      "website": ""
+    },
+    "contactDetailsForTxnReconfirming": [
+      {
+        "TxnReconfirmingfullname": "",
+        "primaryMobileNo": "",
+        "primaryMobCountryCode": "971",
+        "primaryPhoneNo": "",
+        "primaryPhoneCountryCode": "971"
+      }
+    ]
+  },
+  "orgKYCDetails": {
+    "businessUnit": "",
+    "constitutionType": "",
+    "companyCategory": "",
+    "annualFinTurnoverAmtInAED": "",
+    "yearsInBusiness": 0,
+    "topCustomers": [
+      {
+        "name": "",
+        "country": ""
+      }
+    ],
+    "isDontHaveSuppliersYet": false,
+    "topSuppliers": [
+      {
+        "name": "",
+        "country": ""
+      }
+    ],
+    "isDontTradeGoodsYet": false,
+    "topOriginGoodsCountries": [
+      ""
+    ],
+    "industryMultiSelect": [
+      {
+        "industry": [
+          ""
+        ],
+        "subCategory": [
+          ""
+        ]
+      }
+    ],
+    "anticipatedTransactionsDetails": {
+      "totalMonthlyCashCreditsAED": {
+        "amountInFigures": "",
+        "inPercent": 0
+      },
+      "totalMonthlyNonCashCreditsAED": {
+        "amountInFigures": "",
+        "inPercent": 0
+      },
+      "totalMonthlyCreditsAED": "",
+      "maxAmtSingleTxnCashAED": "",
+      "maxAmtSingleTxnNonCashAED": ""
+    },
+    "otherBankingRelationshipsInfo": {
+      "otherBankingRelationshipsExist": false,
+      "otherBankDetails": [
+        {
+          "bankName": ""
+        }
+      ]
+    },
+    "otherEntitiesInUAE": false,
+    "entitiesInUAE": [
+      {
+        "companyName": "",
+        "emirate": "",
+        "tradeLicenseNo": ""
+      }
+    ],
+    "otherEntitiesOutsideUAE": false,
+    "entitiesOutsideUAE": [
+      {
+        "companyName": "",
+        "country": ""
+      }
+    ],
+    "isShareholderACompany": false
+  },
+  "signatoryInfo": [],
+  "channelServicesInfo": {
+    "mobileInstructions": false,
+    "marketingSMS": false,
+    "doNotDisturbHours": "",
+    "weeklyBalanceNotification": "",
+    "monthlyBalanceNotification": 0
+  },
+  "documents": {
+    "companyDocuments": [],
+    "stakeholdersDocuments": null,
+    "otherDocuments": null
+  },
+  "prospectStatusInfo": {
+    "statusType": "",
+    "statusCode": "",
+    "statusFlag": "",
+    "statusNotes": "",
+    "statusReason": "",
+    "statusOverAll": "",
+    "reasonNotes": "",
+    "reasonCode": "",
+    "reasonStatus": ""
+  },
+  "AuditTrailInfo": [
+    {
+      "modifiedBy": "qwer",
+      "modifiedDateTime": "04-03-2020 10:18:51"
+    }
+  ],
+  "freeFieldsInfo": {
+    "freeField1": "",
+    "freeField2": "",
+    "freeField3": "",
+    "freeField4": "",
+    "freeField5": ""
+  }
+}
