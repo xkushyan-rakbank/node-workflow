@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
@@ -28,6 +28,9 @@ import { NEXT } from "../../constants";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { SuccessFilledStakeholder } from "./components/SuccessFilledStakeholder/SuccessFilledStakeholder";
+
+const timeInterval = 5000;
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -45,8 +48,8 @@ const CompanyStakeholdersComponent = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const editableStakeholderRef = useRef(editableStakeholder);
-  editableStakeholderRef.current = editableStakeholder;
+
+  const [finalScreenStakeholderIndex, setFinalScreenStakeholderIndex] = useState();
 
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
@@ -98,9 +101,15 @@ const CompanyStakeholdersComponent = ({
     createNewStakeholder();
   }, [setIsShowingAddButton, createNewStakeholder]);
 
-  const handleFinalScreenEnd = index => {
-    if (index === editableStakeholderRef.current) changeEditableStakeholder();
-  };
+  const handleStepperComplete = useCallback(
+    index => {
+      setFinalScreenStakeholderIndex(index);
+      setTimeout(() => {
+        setFinalScreenStakeholderIndex();
+      }, timeInterval);
+    },
+    [setFinalScreenStakeholderIndex]
+  );
 
   return (
     <>
@@ -139,7 +148,7 @@ const CompanyStakeholdersComponent = ({
               }
               orderIndex={index}
               isEditInProgress={isEditInProgress}
-              onFinalScreenEnd={handleFinalScreenEnd}
+              onComplete={handleStepperComplete}
             />
           ) : (
             <FilledStakeholderCard
@@ -152,6 +161,9 @@ const CompanyStakeholdersComponent = ({
             />
           );
         })}
+        {finalScreenStakeholderIndex && (
+          <SuccessFilledStakeholder name={stakeholders[finalScreenStakeholderIndex].fullName} />
+        )}
       </div>
       {isShowingAddButton && !isLoading && (
         <div className={classes.buttonsWrapper}>

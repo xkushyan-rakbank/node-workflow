@@ -3,7 +3,6 @@ import { connect, useSelector } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
-import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import {
@@ -26,15 +25,12 @@ import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
 import { STEP_STATUS } from "../../../../constants";
 
-const timeInterval = 5000;
-
 const StakeholderStepperComponent = ({
   id,
   index,
   firstName,
   middleName,
   lastName,
-  fullName,
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
@@ -45,11 +41,10 @@ const StakeholderStepperComponent = ({
   showAddButton,
   isCompanyStakeHolder,
   isEditInProgress,
-  onFinalScreenEnd
+  onComplete
 }) => {
   const classes = useStyles();
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
-  const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
   const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
@@ -64,11 +59,8 @@ const StakeholderStepperComponent = ({
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
           showAddButton();
-          changeFinalScreenDisplay(true);
-          setTimeout(() => {
-            changeFinalScreenDisplay(false);
-            onFinalScreenEnd(index);
-          }, timeInterval);
+          changeEditableStakeholder();
+          onComplete(index);
         }
         handleSetNextStep(activeStep);
       },
@@ -93,10 +85,6 @@ const StakeholderStepperComponent = ({
     changeEditableStakeholder("");
     setEditStakeholder(index, false);
   }, [showAddButton, changeEditableStakeholder, setEditStakeholder, index]);
-
-  if (isDisplayFinalScreen) {
-    return <SuccessFilledStakeholder name={fullName} />;
-  }
 
   return (
     <CompanyStakeholderCard
