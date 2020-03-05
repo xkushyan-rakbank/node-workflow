@@ -2,10 +2,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 
-import {
-  getIsErrorOccurredWhilePerformingStatus,
-  getErrorCode
-} from "../../store/selectors/searchProspect";
+import { getErrorCode } from "../../store/selectors/searchProspect";
 import {
   getAccountType,
   getIsIslamicBanking,
@@ -19,7 +16,6 @@ const mapStateToProps = state => ({
   screeningError: getScreeningError(state),
   accountType: getAccountType(state),
   isIslamicBanking: getIsIslamicBanking(state),
-  isErrorOccurredWhilePerforming: getIsErrorOccurredWhilePerformingStatus(state),
   errorCode: getErrorCode(state)
 });
 

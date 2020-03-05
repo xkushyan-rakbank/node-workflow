@@ -12,7 +12,6 @@ export const initialState = {
   searchResults: [],
   isApplyEditApplication: null,
   isSearchLoading: false,
-  isErrorOccurredWhilePerforming: false,
   errorCode: null
 };
 

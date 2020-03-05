@@ -177,8 +177,7 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
     if (error instanceof ErrorOccurredWhilePerforming) {
       yield put(
         setErrorOccurredWhilePerforming({
-          errorCode: error.getErrorCode(),
-          isErrorOccurredWhilePerforming: true
+          errorCode: error.getErrorCode()
         })
       );
     } else if (error instanceof FieldsValidationError) {

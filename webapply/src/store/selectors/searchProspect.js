@@ -10,6 +10,4 @@ export const getSearchResultById = state => {
   return (searchResults || []).find(item => item.prospectId === prospectId) || {};
 };
 export const getProspectStatus = state => get(getSearchResultById(state), "status.statusNotes");
-export const getIsErrorOccurredWhilePerformingStatus = state =>
-  state.searchProspect.isErrorOccurredWhilePerforming;
 export const getErrorCode = state => state.searchProspect.errorCode;

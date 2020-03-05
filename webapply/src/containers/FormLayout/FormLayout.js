@@ -21,7 +21,6 @@ export const FormLayoutComponent = ({
   updateViewId,
   accountType,
   isIslamicBanking,
-  isErrorOccurredWhilePerforming,
   errorCode
 }) => {
   const blobColor = useBlobColor();
@@ -70,7 +69,7 @@ export const FormLayoutComponent = ({
 
                 {isDisplayScreeningError ? (
                   <ApplicationStatus {...screeningError} />
-                ) : isErrorOccurredWhilePerforming ? (
+                ) : errorCode ? (
                   <ApplicationStatus
                     icon={getErrorScreensIcons(
                       accountType,
