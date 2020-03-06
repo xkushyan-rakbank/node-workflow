@@ -21,10 +21,7 @@ export const FormLayoutComponent = ({
   updateViewId,
   accountType,
   isIslamicBanking,
-  errorCode,
-  isApplyEditApplication,
-  isAgentLoggedIn,
-  logout
+  errorCode
 }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
@@ -43,11 +40,6 @@ export const FormLayoutComponent = ({
       routes.selectServices,
       routes.SubmitApplication
     ].includes(pathname);
-
-    // to reset persisted loginStatus for none-agent user
-    if (isSendToApi && isAgentLoggedIn && !isApplyEditApplication) {
-      logout();
-    }
 
     updateViewId(viewId, isSendToApi);
   }, [pathname, updateViewId]);
