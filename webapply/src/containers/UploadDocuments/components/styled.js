@@ -267,7 +267,7 @@ export const useStyles = makeStyles({
     marginLeft: "230px",
     borderRadius: "28px"
   },
-  ErrorExplanation: {
+  errorExplanation: {
     fontSize: "12px",
     color: "#ea2925",
     margin: 0
