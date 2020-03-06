@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from "react";
-import { Switch, Redirect, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -141,8 +141,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 component={SubmitApplication}
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
-              <Route path={routes.NotFoundPage} component={NotFoundPage} />
-              <Redirect to={routes.NotFoundPage} />
+              <Route path="*" component={NotFoundPage} />
             </Switch>
           </Suspense>
         </FormLayout>

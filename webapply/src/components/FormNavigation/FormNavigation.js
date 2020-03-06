@@ -10,6 +10,7 @@ import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
 import { formStepper, searchProspectStepper } from "../../constants";
+import { VISIBLE_FOR_CHAT_ROUTES, NON_VISIBLE_FOR_CHAT_ROUTES } from "./constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
 
 import { useStyles } from "./styled";
@@ -34,24 +35,20 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     accountsComparisonPage: routes.accountsComparison === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
+  const isVisibleForChat = VISIBLE_FOR_CHAT_ROUTES.includes(pathname);
+
   const isChatVisible =
     !isApplyEditApplication &&
+    isVisibleForChat &&
     pathname.indexOf(agentBaseName) === -1 &&
-    ![
-      routes.accountsComparison,
-      routes.detailedAccount,
-      routes.applicationOverview,
-      routes.applicantInfo,
-      routes.verifyOtp,
-      routes.comeBackLogin,
-      routes.comeBackLoginVerification,
-      routes.NotFoundPage
-    ].includes(pathname);
+    !NON_VISIBLE_FOR_CHAT_ROUTES.includes(pathname);
+
   const navigationSteps = pathname.startsWith(agentBaseName)
     ? searchProspectStepper
-    : pathname !== routes.NotFoundPage
+    : isVisibleForChat && isChatVisible
     ? formStepper
     : [];
+
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
   );
