@@ -15,8 +15,7 @@ export const FilledStakeholderCard = ({
   changeEditableStep,
   index,
   kycDetails: { shareHoldingPercentage } = {},
-  datalist,
-  editDisabled
+  datalist
 }) => {
   const classes = useStyles();
 
@@ -38,7 +37,7 @@ export const FilledStakeholderCard = ({
             className={classes.shareholdingField}
           >{`Shareholding ${shareHoldingPercentage}%`}</div>
         </div>
-        {!editDisabled && <LinkButton clickHandler={editStakeholder} />}
+        <LinkButton clickHandler={editStakeholder} />
       </div>
     </div>
   );
