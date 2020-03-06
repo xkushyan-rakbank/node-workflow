@@ -1,27 +1,29 @@
-import map from "lodash/map";
-
-import { checkIfRequiredDocsUploaded } from "../../utils/documents";
-
 export const getUploadDocuments = state => state.uploadDocuments;
 
 export const getProgress = state => getUploadDocuments(state).progress;
 
 export const getUploadErrors = state => getUploadDocuments(state).uploadErrors;
 
-export const getProspectDocuments = state => state.appConfig.prospect.documents;
+export const getProspectDocuments = state => state.appConfig.prospect.documents || {};
 
 export const getOtherDocuments = state => getProspectDocuments(state).otherDocuments || [];
 
-export const isLoadingDocuments = state => state.uploadDocuments.isLoading;
+export const getisLoadingDocuments = state => state.uploadDocuments.isLoading;
 
-export const getRequiredDocsUploadingStatus = state => {
-  const documents = getProspectDocuments(state);
+const UPLOADED_STATE = "Uploaded";
 
-  if (!documents) return false;
-  const stakeholdersDocs = map(documents.stakeholdersDocuments, "documents").flat();
+const checkIfRequiredDocsUploaded = docs =>
+  docs.length && docs.filter(doc => doc.required).every(doc => doc.uploadStatus === UPLOADED_STATE);
 
-  const companyDocsStatus = checkIfRequiredDocsUploaded(documents.companyDocuments);
-  const stakeholderDocsStatus = checkIfRequiredDocsUploaded(stakeholdersDocs);
+export const getIsRequiredDocsUploaded = state => {
+  const { companyDocuments = [], stakeholdersDocuments = {} } = getProspectDocuments(state);
+  const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments)
+    .reduce((acc, { documents }) => (acc.push(documents), acc), [])
+    .flat();
+  const isRequiredDocsUploaded = checkIfRequiredDocsUploaded([
+    ...companyDocuments,
+    ...stakeholdersDocsFlattened
+  ]);
 
-  return companyDocsStatus && stakeholderDocsStatus;
+  return isRequiredDocsUploaded;
 };
