@@ -17,7 +17,7 @@ const StyledTextarea = styled.textarea`
   outline: none;
 `;
 
-const TextareaWrapper = styled.div`
+const TextareaWrapper = styled.form`
   display: flex;
   margin: auto 16px 20px 16px;
   padding: 16px;
@@ -63,16 +63,14 @@ class SendMessageInput extends PureComponent {
       event.target.scrollTop = event.target.scrollHeight;
     }
 
-    console.log("rows", currentRows < maxRows ? currentRows : maxRows);
-    console.log("value", event.target.value);
-
     this.setState({
       value: event.target.value,
       rows: currentRows < maxRows ? currentRows : maxRows
     });
   };
 
-  onSend = () => {
+  onSend = e => {
+    e.preventDefault();
     this.props.chatInstance
       .getInstance()
       .sendChatMessage(this.state.value)
@@ -84,19 +82,26 @@ class SendMessageInput extends PureComponent {
       });
   };
 
+  handleKeyDown = e => {
+    if (e.keyCode == 13 && e.shiftKey == false) {
+      this.onSend(e);
+    }
+  };
+
   render() {
     const { rows, value } = this.state;
     const { placeholder } = this.props;
 
     return (
-      <TextareaWrapper>
+      <TextareaWrapper onSubmit={this.onSend}>
         <StyledTextarea
           rows={rows}
           value={value}
           placeholder={placeholder}
           onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
         />
-        <StyledButton onClick={this.onSend}>
+        <StyledButton type="submit">
           <img src={SendMessage} alt="" />
         </StyledButton>
       </TextareaWrapper>
