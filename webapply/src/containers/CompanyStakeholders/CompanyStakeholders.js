@@ -144,7 +144,6 @@ const CompanyStakeholdersComponent = ({
               {...item}
               key={item.id}
               index={index}
-              editDisabled={Number.isInteger(editableStakeholder)}
               changeEditableStep={editStakeholderHandler}
               datalist={datalist}
             />
