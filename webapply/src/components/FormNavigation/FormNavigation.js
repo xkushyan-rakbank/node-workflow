@@ -44,9 +44,14 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
       routes.applicantInfo,
       routes.verifyOtp,
       routes.comeBackLogin,
-      routes.comeBackLoginVerification
+      routes.comeBackLoginVerification,
+      routes.NotFoundPage
     ].includes(pathname);
-  const navigationSteps = pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper;
+  const navigationSteps = pathname.startsWith(agentBaseName)
+    ? searchProspectStepper
+    : pathname !== routes.NotFoundPage
+    ? formStepper
+    : [];
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
   );

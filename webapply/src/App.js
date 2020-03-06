@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from "react";
-import { Switch, Redirect } from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -36,6 +36,7 @@ const ApplicationOverview = lazy(() => import("./containers/ApplicationOverview"
 const ComeBackLogin = lazy(() => import("./containers/ComeBackLogin"));
 const ComeBackVerification = lazy(() => import("./containers/ComeBackVerification"));
 const MyApplications = lazy(() => import("./containers/MyApplications"));
+const NotFoundPage = lazy(() => import("./containers/NotFoundPage/index"));
 const SubmitApplication = lazy(() =>
   import("./containers/SelectServices/components/SubmitApplication")
 );
@@ -140,7 +141,8 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 component={SubmitApplication}
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
-              <Redirect to={routes.accountsComparison} />
+              <Route path={routes.NotFoundPage} component={NotFoundPage} />
+              <Redirect to={routes.NotFoundPage} />
             </Switch>
           </Suspense>
         </FormLayout>

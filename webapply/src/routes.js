@@ -20,5 +20,6 @@ export default {
   searchProspect: `${agentBaseName}/SearchProspect`,
   login: `${agentBaseName}/Login`,
   SubmitApplication: `${smeBaseName}/SubmitApplication`,
-  SearchedAppInfo: `${agentBaseName}/SearchedAppInfo/:id`
+  SearchedAppInfo: `${agentBaseName}/SearchedAppInfo/:id`,
+  NotFoundPage: `${smeBaseName}/404`
 };
