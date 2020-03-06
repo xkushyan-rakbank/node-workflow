@@ -63,6 +63,9 @@ class SendMessageInput extends PureComponent {
       event.target.scrollTop = event.target.scrollHeight;
     }
 
+    console.log("rows", currentRows < maxRows ? currentRows : maxRows);
+    console.log("value", event.target.value);
+
     this.setState({
       value: event.target.value,
       rows: currentRows < maxRows ? currentRows : maxRows
@@ -74,7 +77,7 @@ class SendMessageInput extends PureComponent {
       .getInstance()
       .sendChatMessage(this.state.value)
       .then(() => {
-        this.setState({ value: "" });
+        this.setState({ value: "", rows: 1 });
       })
       .catch(e => {
         console.warn("error " + e);
