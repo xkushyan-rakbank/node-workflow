@@ -10,7 +10,6 @@ import routes from "../../routes";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS } from "../../constants";
 import { useStep } from "../../hooks/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 import { useStyles } from "./styled";
 
@@ -29,7 +28,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       sendProspectToAPI(NEXT).then(isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.SubmitApplication, REPLACE);
+        if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
       });
       return;
     }

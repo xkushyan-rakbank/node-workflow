@@ -11,7 +11,6 @@ import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appC
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { NEXT } from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 import { useStyles } from "./styled";
 
@@ -29,7 +28,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
 
   const goToUploadDocument = () => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.uploadDocuments, REPLACE);
+      if (!isScreeningError) pushHistory(routes.uploadDocuments, true);
     });
   };
 

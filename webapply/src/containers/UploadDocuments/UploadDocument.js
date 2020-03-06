@@ -9,7 +9,6 @@ import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { REPLACE } from "../../utils/useTrackingHistory/constants";
 
 export const UploadDocument = ({
   retrieveDocDetails,
@@ -28,7 +27,7 @@ export const UploadDocument = ({
 
   const goToSelectService = () => {
     rest.sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.selectServices, REPLACE);
+      if (!isScreeningError) pushHistory(routes.selectServices, true);
     });
   };
 

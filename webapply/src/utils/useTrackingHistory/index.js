@@ -2,15 +2,15 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
-import { gaEventsMap, REPLACE } from "./constants";
+import { gaEventsMap } from "./constants";
 
 export const useTrackingHistory = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  return (path, method) => {
+  return (path, isReplaceHistory = false) => {
     dispatch(sendGoogleAnalyticsMetrics(gaEventsMap[path]));
-    if (method === REPLACE) {
+    if (isReplaceHistory) {
       history.replace(path);
     } else {
       history.push(path);
