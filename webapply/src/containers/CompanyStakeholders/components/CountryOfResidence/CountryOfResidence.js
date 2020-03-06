@@ -58,6 +58,10 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 datalistId="country"
                 shrink
                 tabIndex="0"
+                changeProspect={(prospect, value) => ({
+                  ...prospect,
+                  [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE
+                })}
               />
             </Grid>
             <Grid item md={6} xs={12}>
