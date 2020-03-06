@@ -266,5 +266,10 @@ export const useStyles = makeStyles({
     marginBottom: "0px",
     marginLeft: "230px",
     borderRadius: "28px"
+  },
+  ErrorExplanation: {
+    fontSize: "12px",
+    color: "#ea2925",
+    margin: 0
   }
 });
