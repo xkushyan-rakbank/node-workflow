@@ -52,7 +52,7 @@ export const submitApplication = {
 export const accountNames = {
   starter: "RAKStarter",
   currentAccount: "Current Account",
-  elite: "RAKelite"
+  elite: "Business Elite"
 };
 
 export const UAE_CODE = "971";
