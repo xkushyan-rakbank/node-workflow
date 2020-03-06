@@ -165,7 +165,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                   <Field
                     name="totalExperienceYrs"
                     path={`${basePath}.employmentDetails.totalExperienceYrs`}
-                    label="Number of years of experience (Maximum 255 characters)"
+                    label="Background information of the signatory (Maximum 255 characters)"
                     placeholder="Work Experience"
                     component={Input}
                     multiline
