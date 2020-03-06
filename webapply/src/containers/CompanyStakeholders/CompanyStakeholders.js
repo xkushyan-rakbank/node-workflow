@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
@@ -12,11 +11,9 @@ import { Icon, ICONS } from "../../components/Icons";
 import {
   changeEditableStakeholder,
   createNewStakeholder,
-  deleteStakeholder,
-  setEditStakeholder
+  deleteStakeholder
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { getDatalist } from "../../store/selectors/appConfig";
 import {
   stakeholdersSelector,
   stakeholdersState,
@@ -33,15 +30,12 @@ const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
   changeEditableStakeholder,
   createNewStakeholder,
-  editableStakeholder,
   stakeholders,
   percentage,
   stakeholdersIds,
   hasSignatories,
-  datalist,
   sendProspectToAPI,
-  isLoading,
-  setEditStakeholder
+  isLoading
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
@@ -49,7 +43,6 @@ const CompanyStakeholdersComponent = ({
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
-  const [isNewStakeholder, setIsNewStakeholder] = useState(false);
 
   // Used to show add button after add stakeholder(if it is not limit)
   const handleShowAddButton = useCallback(() => {
@@ -58,10 +51,9 @@ const CompanyStakeholdersComponent = ({
 
   useEffect(() => {
     if (!stakeholders.length) {
-      setIsNewStakeholder(true);
       createNewStakeholder();
     }
-  }, [setIsNewStakeholder, createNewStakeholder, stakeholders.length]);
+  }, [createNewStakeholder, stakeholders.length]);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
@@ -85,20 +77,10 @@ const CompanyStakeholdersComponent = ({
     [stakeholders.length, deleteHandler, setIsShowingAddButton, changeEditableStakeholder]
   );
 
-  const editStakeholderHandler = useCallback(
-    index => {
-      changeEditableStakeholder(index);
-      setIsNewStakeholder(false);
-      setEditStakeholder(index, true);
-    },
-    [changeEditableStakeholder, setEditStakeholder, setIsNewStakeholder]
-  );
-
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
-    setIsNewStakeholder(true);
     createNewStakeholder();
-  }, [setIsShowingAddButton, setIsNewStakeholder, createNewStakeholder]);
+  }, [setIsShowingAddButton, createNewStakeholder]);
 
   return (
     <>
@@ -126,26 +108,17 @@ const CompanyStakeholdersComponent = ({
         {stakeholders.map((item, index) => {
           const isEditInProgress = stakeholdersIds.find(stakeholder => stakeholder.id === item.id)
             .isEditting;
-          return editableStakeholder === index ? (
+          return (
             <StakeholderStepper
               showAddButton={handleShowAddButton}
               {...item}
               key={item.id}
-              index={editableStakeholder}
+              index={index}
               deleteStakeholder={
                 stakeholders.length !== 1 || isEditInProgress ? handleDeleteStakeholder : null
               }
-              isNewStakeholder={isNewStakeholder}
               orderIndex={index}
               isEditInProgress={isEditInProgress}
-            />
-          ) : (
-            <FilledStakeholderCard
-              {...item}
-              key={item.id}
-              index={index}
-              changeEditableStep={editStakeholderHandler}
-              datalist={datalist}
             />
           );
         })}
@@ -179,12 +152,10 @@ const CompanyStakeholdersComponent = ({
 };
 
 const mapStateToProps = state => {
-  const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
+  const { stakeholdersIds } = stakeholdersState(state);
 
   return {
     isLoading: state.sendProspectToAPI.loading,
-    datalist: getDatalist(state),
-    editableStakeholder,
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
@@ -196,7 +167,6 @@ const mapDispatchToProps = {
   deleteStakeholder,
   createNewStakeholder,
   changeEditableStakeholder,
-  setEditStakeholder,
   sendProspectToAPI: sendProspectToAPIPromisify
 };
 
