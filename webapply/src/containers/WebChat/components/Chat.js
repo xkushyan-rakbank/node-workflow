@@ -44,6 +44,27 @@ function Chat({
   const [agentTyping, setAgentTyping] = useState(false);
   const [agentLeft, setAgentLeft] = useState(false);
 
+  const agentTypingHandler = useCallback(
+    flag => {
+      setAgentTyping(flag);
+    },
+    [setAgentTyping]
+  );
+
+  const agentLeftHandler = useCallback(
+    flag => {
+      setAgentLeft(flag);
+    },
+    [setAgentLeft]
+  );
+
+  const handleNewMessageArrival = useCallback(
+    messages => {
+      setMessages(messages);
+    },
+    [setMessages]
+  );
+
   useEffect(() => {
     const chatInstance = GenesysChat.getInstance();
 
@@ -59,33 +80,13 @@ function Chat({
     chatInstance.messagesCallback = handleNewMessageArrival;
     chatInstance.setOnTypingEventsHandler(agentTypingHandler);
     chatInstance.setOnAgentLeftEventHandler(agentLeftHandler);
-  }, [InitiatedCustomerName, InitiatedCustomerMobile, subject, EmailAddress, message, isAuth, cif]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClose = useCallback(() => {
     GenesysChat.getInstance().triggerDisconnectEvent();
     onClose();
   }, [onClose]);
-
-  const handleNewMessageArrival = useCallback(
-    messages => {
-      setMessages(messages);
-    },
-    [setMessages]
-  );
-
-  const agentTypingHandler = useCallback(
-    flag => {
-      setAgentTyping(flag);
-    },
-    [setAgentTyping]
-  );
-
-  const agentLeftHandler = useCallback(
-    flag => {
-      setAgentLeft(flag);
-    },
-    [setAgentLeft]
-  );
 
   return (
     <Container>
