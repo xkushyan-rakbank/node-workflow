@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import SendMessage from "../../../../assets/webchat/sendMessage.svg";
@@ -37,20 +37,18 @@ const StyledButton = styled.button`
   }
 `;
 
-class SendMessageInput extends PureComponent {
-  state = {
-    value: "",
-    rows: 1,
-    minRows: 1,
-    maxRows: 5
-  };
+const MIN_ROWS = 1;
+const MAX_ROWS = 5;
 
-  handleChange = event => {
+export function SendMessageInput({ placeholder, chatInstance }) {
+  const [value, setValue] = useState("");
+  const [rows, setRows] = useState(1);
+
+  const handleChange = useCallback(event => {
     const textareaLineHeight = 22; //StyledTextarea line-height
-    const { minRows, maxRows } = this.state;
 
     const previousRows = event.target.rows;
-    event.target.rows = minRows;
+    event.target.rows = MIN_ROWS;
 
     const currentRows = ~~(event.target.scrollHeight / textareaLineHeight);
 
@@ -58,59 +56,57 @@ class SendMessageInput extends PureComponent {
       event.target.rows = currentRows;
     }
 
-    if (currentRows >= maxRows) {
-      event.target.rows = maxRows;
+    if (currentRows >= MAX_ROWS) {
+      event.target.rows = MAX_ROWS;
       event.target.scrollTop = event.target.scrollHeight;
     }
 
-    this.setState({
-      value: event.target.value,
-      rows: currentRows < maxRows ? currentRows : maxRows
-    });
-  };
+    setValue(event.target.value);
+    setRows(currentRows < MAX_ROWS ? currentRows : MAX_ROWS);
+  }, []);
 
-  onSend = e => {
-    e.preventDefault();
-    this.props.chatInstance
-      .getInstance()
-      .sendChatMessage(this.state.value)
-      .then(() => {
-        this.setState({ value: "", rows: 1 });
-      })
-      .catch(e => {
-        console.warn("error " + e);
-      });
-  };
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      chatInstance
+        .getInstance()
+        .sendChatMessage(value)
+        .then(() => {
+          setValue("");
+          setRows(1);
+        })
+        .catch(e => {
+          console.warn("error " + e);
+        });
+    },
+    [chatInstance, value]
+  );
 
-  handleKeyDown = e => {
-    if (e.keyCode == 13 && e.shiftKey == false) {
-      this.onSend(e);
-    }
-  };
+  const handleKeyDown = useCallback(
+    e => {
+      if (e.keyCode === 13 && e.shiftKey === false) {
+        handleSubmit(e);
+      }
+    },
+    [handleSubmit]
+  );
 
-  render() {
-    const { rows, value } = this.state;
-    const { placeholder } = this.props;
-
-    return (
-      <TextareaWrapper onSubmit={this.onSend}>
-        <StyledTextarea
-          rows={rows}
-          value={value}
-          placeholder={placeholder}
-          onChange={this.handleChange}
-          onKeyDown={this.handleKeyDown}
-        />
-        <StyledButton type="submit">
-          <img src={SendMessage} alt="" />
-        </StyledButton>
-      </TextareaWrapper>
-    );
-  }
+  return (
+    <TextareaWrapper onSubmit={handleSubmit}>
+      <StyledTextarea
+        rows={rows}
+        value={value}
+        placeholder={placeholder}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+      />
+      <StyledButton type="submit">
+        <img src={SendMessage} alt="" />
+      </StyledButton>
+    </TextareaWrapper>
+  );
 }
 
 SendMessageInput.propTypes = {
   placeholder: PropTypes.string
 };
-
-export default SendMessageInput;
