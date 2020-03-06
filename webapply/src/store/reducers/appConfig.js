@@ -14,7 +14,6 @@ import {
   RESET_PROSPECT,
   RESET_APPLICANT_INFO
 } from "../actions/appConfig";
-import { REMOVE_PROSPECT_ID } from "../actions/getProspectDocuments";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
 
@@ -145,17 +144,6 @@ const appConfigReducer = (state = initialState, action) => {
             countryCode: UAE_CODE,
             mobileNo: "",
             applyOnbehalf: false
-          }
-        }
-      };
-    case REMOVE_PROSPECT_ID:
-      return {
-        ...state,
-        prospect: {
-          ...state.prospect,
-          generalInfo: {
-            ...state.prospect.generalInfo,
-            prospectId: ""
           }
         }
       };

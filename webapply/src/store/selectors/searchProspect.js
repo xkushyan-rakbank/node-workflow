@@ -1,4 +1,5 @@
 import get from "lodash/get";
+import { createSelector } from "reselect";
 import { getProspectId } from "./appConfig";
 
 export const getSearchResults = state => state.searchProspect.searchResults;
@@ -17,4 +18,12 @@ export const getSearchResultById = state => {
   return (searchResults || []).find(item => item.prospectId === prospectId) || {};
 };
 export const getProspectStatus = state => get(getSearchResultById(state), "status.statusNotes");
+export const getSearchResultsStatuses = createSelector(
+  getSearchResults,
+  searchResults =>
+    searchResults.map(result => ({
+      prospectId: result.prospectId,
+      status: result.status.statusNotes
+    }))
+);
 export const getErrorCode = state => state.searchProspect.errorCode;

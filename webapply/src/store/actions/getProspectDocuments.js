@@ -8,7 +8,6 @@ export const UPLOAD_FILES_PROGRESS = "UPLOAD_FILES_PROGRESS";
 export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
 export const GET_PROSPECT_DOCUMENTS_FAIL = "GET_PROSPECT_DOCUMENTS_FAIL";
 export const DOWNLOAD_DOCUMENT_FILE = "DOWNLOAD_DOCUMENT_FILE";
-export const REMOVE_PROSPECT_ID = "REMOVE_PROSPECT_ID";
 
 export const retrieveDocDetails = () => {
   return { type: RETRIEVE_DOC_UPLOADER };
@@ -44,8 +43,4 @@ export const addOtherDocument = document => {
 
 export const deleteOtherDocument = index => {
   return { type: DELETE_OTHER_DOCUMENT, payload: index };
-};
-
-export const removeProspectId = () => {
-  return { type: REMOVE_PROSPECT_ID };
 };

@@ -6,11 +6,7 @@ import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
-export const ApplicationList = ({
-  getProspectInfo,
-  getProspectInfoWithoutStatus,
-  applicantInfo = []
-}) => {
+export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
 
   return applicantInfo.map(app => (
@@ -56,7 +52,7 @@ export const ApplicationList = ({
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => getProspectInfoWithoutStatus(app.prospectId)}
+                  handleClick={() => getProspectInfo(app.prospectId)}
                 />
                 <div className={classes.hint}>
                   {ctaStatuses[app.status.statusNotes].mobileStatus}

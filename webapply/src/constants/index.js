@@ -88,6 +88,12 @@ const INVALID_ID = "Invalid Prospect ID";
 const COMMON_ERROR =
   "We already have your application. Not to worry, our team is already working on it.";
 
+export const PROSPECT_STATUSES = {
+  ASSESSING: "Assessing",
+  DOCUMENTS_NEEDED: "Documents needed",
+  NEED_ADDITIONAL_DOCUMENTS: "Need Additional Information/Documents"
+};
+
 export const ERROR_MESSAGES = {
   [RO_EDITING]: RO_STOP,
   [CIF_EXIST]: EXIST,
