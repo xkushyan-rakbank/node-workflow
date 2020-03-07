@@ -6,9 +6,9 @@ import { StyledTableBody } from "./components/StyledTableBody";
 import { StyledTableBodyMobile } from "./components/StyledTableBodyMobile";
 import { sizes, accountTypes } from "./constants";
 import { useStyles } from "./styled";
-import routes from "../../../../routes";
+import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
 
-export const TableCompareComponent = ({ history, updateProspect, selectedAccount }) => {
+export const TableCompareComponent = ({ history, selectedAccount }) => {
   const { INITIAL_OFFSET, OFFSET } = sizes;
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [activeAccount, setActiveAccount] = useState(accountTypes.currentAccount.position);
@@ -54,8 +54,7 @@ export const TableCompareComponent = ({ history, updateProspect, selectedAccount
   }
 
   const handleSelectAccount = accountType => {
-    updateProspect({ "prospect.applicationInfo.accountType": accountType });
-    history.push(routes.detailedAccount);
+    history.push(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
   };
 
   const handleHover = e => {

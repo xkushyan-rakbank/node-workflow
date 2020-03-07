@@ -11,6 +11,13 @@ import routes from "../../../routes";
 import { AccountInfoScreen } from "./AccountInfoScreen";
 import { getTitleByPathname } from "./utils";
 import { accountsInfo } from "./constants";
+import {
+  applicationOverviewRoutesMap,
+  applicationOverviewRoutes,
+  detailedAccountRoutes,
+  ISLAMIC,
+  CONVENTIONAL
+} from "../../../constants";
 
 export const AccountInfo = props => {
   const dispatch = useDispatch();
@@ -31,7 +38,9 @@ export const AccountInfo = props => {
   }, [pushHistory]);
 
   const handleApply = useCallback(() => {
-    pushHistory(routes.applicationOverview);
+    pushHistory(
+      applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
+    );
   }, [pushHistory]);
 
   return (
@@ -41,8 +50,8 @@ export const AccountInfo = props => {
         accountType && accountsInfo[accountType][isIslamicBanking ? "islamicSubtitle" : "subtitle"]
       }
       isShowCheck={pathname === routes.ApplicationSubmitted}
-      isShowStart={pathname === routes.applicationOverview}
-      isShowApply={accountType && pathname === routes.detailedAccount}
+      isShowStart={applicationOverviewRoutes.includes(pathname)}
+      isShowApply={accountType && detailedAccountRoutes.includes(pathname)}
       isApplyEditApplication={isApplyEditApplication}
       handleCheckStatus={handleCheckStatus}
       handleStart={handleStart}
