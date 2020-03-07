@@ -96,7 +96,8 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "6px",
     "& strong": {
       fontWeight: "600"
-    }
+    },
+    width: "224px"
   },
   button: {
     fontSize: "16px",
