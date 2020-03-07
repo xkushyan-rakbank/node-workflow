@@ -7,7 +7,7 @@ export const rakValuesList = [
       },
       {
         text: "Business insurance <strong>Basic</strong>",
-        textIslamic: "Business takaful <strong>Basic</strong>"
+        textIslamic: "Business Takaful <strong>Basic</strong>"
       },
       { text: "Host of other banking and lifestyle benefits" }
     ],
@@ -27,7 +27,7 @@ export const rakValuesList = [
       },
       {
         text: "Business insurance <strong>Advanced</strong>",
-        textIslamic: "Business takaful <strong>Advanced</strong>"
+        textIslamic: "Business Takaful <strong>Advanced</strong>"
       },
       { text: "Host of other banking and lifestyle benefits" }
     ],
