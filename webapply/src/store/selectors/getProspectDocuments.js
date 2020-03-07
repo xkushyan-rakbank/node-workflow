@@ -18,7 +18,10 @@ const checkIfRequiredDocsUploaded = docs =>
 export const getIsRequiredDocsUploaded = state => {
   const { companyDocuments = [], stakeholdersDocuments = {} } = getProspectDocuments(state);
   const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments)
-    .reduce((acc, { documents }) => (acc.push(documents), acc), [])
+    .reduce((acc, { documents }) => {
+      acc.push(documents);
+      return acc;
+    }, [])
     .flat();
   const isRequiredDocsUploaded = checkIfRequiredDocsUploaded([
     ...companyDocuments,
