@@ -17,14 +17,11 @@ const checkIfRequiredDocsUploaded = docs =>
 
 export const getIsRequiredDocsUploaded = state => {
   const { companyDocuments = [], stakeholdersDocuments = {} } = getProspectDocuments(state);
-  const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments)
-    .reduce((acc, { documents }) => {
-      acc.push(documents);
-      return acc;
-    }, [])
+  const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments || {})
+    .reduce((acc, { documents }) => (acc.push(documents), acc), [])
     .flat();
   const isRequiredDocsUploaded = checkIfRequiredDocsUploaded([
-    ...companyDocuments,
+    ...(companyDocuments || []),
     ...stakeholdersDocsFlattened
   ]);
 
