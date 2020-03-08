@@ -94,10 +94,10 @@ export const useStyles = makeStyles(theme => ({
   },
   indent: {
     marginBottom: "6px",
+    width: "224px",
     "& strong": {
       fontWeight: "600"
-    },
-    width: "224px"
+    }
   },
   button: {
     fontSize: "16px",
