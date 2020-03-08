@@ -13,6 +13,7 @@ import { getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { accountNames } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
+import { accountTypes } from "../../containers/AccountsComparison/components/TableCompare/constants";
 
 const HeaderTitleComponent = ({
   islamicBanking,
@@ -31,14 +32,14 @@ const HeaderTitleComponent = ({
   let selectedAccountTypeName = "";
   switch (accountType) {
     case accountNames.elite:
-      selectedAccountTypeName = accountNames.elite;
+      selectedAccountTypeName = accountTypes.elite.name;
       break;
     case accountNames.currentAccount:
-      selectedAccountTypeName = accountNames.currentAccount;
+      selectedAccountTypeName = accountTypes.currentAccount.name;
       break;
     case accountNames.starter:
     default:
-      selectedAccountTypeName = accountNames.starter;
+      selectedAccountTypeName = accountTypes.starter.name;
       break;
   }
 
