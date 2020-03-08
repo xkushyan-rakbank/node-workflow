@@ -6,6 +6,7 @@ import ae.rakbank.webapply.services.auth.AuthorizationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
 
@@ -51,8 +54,16 @@ class AuthorizationFilter extends GenericFilterBean {
                         .map(authorizationService::validateAndUpdateJwtToken)
                         .map(authorizationService::getPrincipal)
                         .ifPresent(principal -> {
+                            if (HttpMethod.GET.name().equals(httpRequest.getMethod())
+                                    && httpRequest.getServletPath().matches("/api/v1/usertypes/sme/prospects/.+/")) {
+                                Pattern pattern = Pattern.compile("/api/v1/usertypes/sme/prospects/(.+)/");
+                                Matcher matcher = pattern.matcher(httpRequest.getServletPath());
+                                matcher.find();
+                                principal.setProspectId(matcher.group(1));
+                            }
                             this.createSecurityContext(principal);
-                            ((HttpServletResponse) response).setHeader(AuthConstants.JWT_TOKEN_KEY, bearerToken.get());
+                            ((HttpServletResponse) response)
+                                    .setHeader(AuthConstants.JWT_TOKEN_KEY, authorizationService.getTokenFromPrincipal(principal));
                         });
             } catch (Exception e) {
                 sendUnauthorizedErrorToClient((HttpServletResponse) response);
