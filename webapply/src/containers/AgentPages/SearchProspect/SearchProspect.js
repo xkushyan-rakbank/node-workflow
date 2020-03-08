@@ -48,7 +48,7 @@ export const SearchProspectComponent = ({
 
   useEffect(() => {
     resetProspect();
-  }, []);
+  }, [resetProspect]);
 
   const handleSubmit = useCallback(
     values => {
