@@ -53,6 +53,7 @@ class JwtService {
                     .withClaim("OAuthRefreshToken", data.getOauthRefreshToken())
                     .withClaim("role", role)
                     .withClaim("phoneNumber", data.getPhoneNumber())
+                    .withClaim("prospectId", data.getProspectId())
                     .withClaim("oauthTokenExpiryTime", data.getOauthTokenExpiryTime().toString())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
@@ -76,6 +77,7 @@ class JwtService {
                     .oauthRefreshToken(jwt.getClaim("OAuthRefreshToken").asString())
                     .role(UserRole.valueOf(jwt.getClaim("role").asString()))
                     .phoneNumber(jwt.getClaim("phoneNumber").asString())
+                    .prospectId(jwt.getClaim("prospectId").asString())
                     .oauthTokenExpiryTime(LocalDateTime.parse(jwt.getClaim("oauthTokenExpiryTime").asString()))
                     .build();
         } catch (JWTVerificationException e) {

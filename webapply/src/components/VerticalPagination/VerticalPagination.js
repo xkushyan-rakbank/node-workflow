@@ -24,6 +24,21 @@ export const VerticalPaginationComponent = ({
   const poster = (video && video.poster) || "";
   const childrenCount = children.length + (poster ? 1 : 0);
 
+  const handleKeyDown = e => {
+    if (e.keyCode === 38 || e.keyCode === 33) {
+      scrollToSection(currentIndex => (currentIndex <= 0 ? currentIndex : currentIndex - 1));
+    } else if (e.keyCode === 40 || e.keyCode === 34) {
+      scrollToSection(currentIndex =>
+        currentIndex === childrenCount - 1 ? currentIndex : currentIndex + 1
+      );
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   useEffect(() => {
     setHasVideo(hasVideo);
   }, [setHasVideo, hasVideo]);

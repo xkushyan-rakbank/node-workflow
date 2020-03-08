@@ -98,7 +98,7 @@ export const ReUploadDocuments = () => {
       () => pushHistory(routes.MyApplications),
       () => {}
     );
-  }, [dispatch]);
+  }, [dispatch, pushHistory]);
 
   return (
     <div className={classes.root}>
