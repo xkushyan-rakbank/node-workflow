@@ -105,9 +105,6 @@ export const UploadDocuments = ({
       return selectedFile.name;
     } else if (isUploaded && document.fileDescription) {
       return document.fileDescription;
-    } else if (isUploaded && document.documentKey && document.fileName) {
-      const fileExt = document.fileName.split(".");
-      return `${document.documentKey}.${fileExt[fileExt.length - 1]}`;
     } else {
       return document.documentTitle;
     }
