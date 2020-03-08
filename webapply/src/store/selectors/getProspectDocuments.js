@@ -21,7 +21,7 @@ export const getIsRequiredDocsUploaded = state => {
     .reduce((acc, { documents }) => (acc.push(documents), acc), [])
     .flat();
   const isRequiredDocsUploaded = checkIfRequiredDocsUploaded([
-    ...companyDocuments,
+    ...(companyDocuments || []),
     ...stakeholdersDocsFlattened
   ]);
 
