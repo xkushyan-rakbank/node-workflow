@@ -2,6 +2,7 @@ import { accountNames } from "../../../../constants";
 import startups_ic from "../../../../assets/icons/startups_ic.svg";
 import businesses_ic from "../../../../assets/icons/growing_businesses_ic.svg";
 import established_businesses_ic from "../../../../assets/icons/established_businesses_ic.svg";
+import { accountTypes } from "../TableCompare/constants";
 
 export const accountTypesDescription = [
   {
@@ -13,7 +14,7 @@ export const accountTypesDescription = [
       "Free remittances & preferential forex rates",
       "Free accounting \npackage & business insurance"
     ],
-    buttonText: accountNames.starter
+    buttonText: accountTypes.starter.name
   },
   {
     name: accountNames.currentAccount,
@@ -24,7 +25,7 @@ export const accountTypesDescription = [
       "Preferential transaction fees",
       "Dedicated Relationship Manager "
     ],
-    buttonText: accountNames.currentAccount
+    buttonText: accountTypes.currentAccount.name
   },
   {
     name: accountNames.elite,
@@ -35,7 +36,7 @@ export const accountTypesDescription = [
       "Host of lifestyle benefits",
       "Priority servicing & Dedicated Relationship Manager"
     ],
-    buttonText: accountNames.elite
+    buttonText: accountTypes.elite.name
   }
 ];
 export const SECTION_INDEX = 2;
