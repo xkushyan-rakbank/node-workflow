@@ -14,8 +14,7 @@ export const UploadDocument = ({
   retrieveDocDetails,
   isLoading,
   documents,
-  uploadedDocsCount,
-  requiredDocsCount,
+  isRequiredDocsUploaded,
   ...rest
 }) => {
   const classes = useStyles();
@@ -57,7 +56,7 @@ export const UploadDocument = ({
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
-          disabled={!rest.isApplyEditApplication && requiredDocsCount > uploadedDocsCount}
+          disabled={!rest.isApplyEditApplication && !isRequiredDocsUploaded}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

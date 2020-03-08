@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 import { MessagesList } from "./elements/MessagesList";
-import SendMessageInput from "./elements/SendMessageInput";
+import { SendMessageInput } from "./elements/SendMessageInput";
 import { GenesysChat } from "../utils/GenesysChat";
 import { Header } from "./elements/Header";
 

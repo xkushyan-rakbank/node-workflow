@@ -149,7 +149,7 @@ export const UploadDocuments = ({
           )}
         </div>
 
-        {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
+        {errorMessage && <p className={classes.errorExplanation}>{errorMessage}</p>}
       </div>
 
       {!isDisabledUploadForRO && (
