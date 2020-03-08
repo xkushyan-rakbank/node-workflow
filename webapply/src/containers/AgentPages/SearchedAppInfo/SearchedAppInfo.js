@@ -22,10 +22,12 @@ import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBa
 export const SearchedAppInfoComponent = ({
   searchResults,
   match,
-  updateProspectId,
   retrieveDocDetails,
+  getProspectOverview,
+  prospectOverview,
   getProspectInfo,
-  prospectInfo
+  updateProspectId,
+  resetProspect
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
@@ -44,9 +46,9 @@ export const SearchedAppInfoComponent = ({
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
   useEffect(() => {
-    updateProspectId(match.params.id);
-    getProspectInfo(match.params.id);
-  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
+    resetProspect();
+    getProspectOverview(match.params.id);
+  }, [match.params.id, getProspectOverview, resetProspect]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
@@ -55,8 +57,18 @@ export const SearchedAppInfoComponent = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
-    pushDisplayScreenToHistory();
-  }, [pushDisplayScreenToHistory]);
+    updateProspectId(match.params.id);
+    getProspectInfo(match.params.id).then(
+      () => pushDisplayScreenToHistory(prospectOverview),
+      () => {}
+    );
+  }, [
+    pushDisplayScreenToHistory,
+    prospectOverview,
+    updateProspectId,
+    getProspectInfo,
+    match.params.id
+  ]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
@@ -65,7 +77,8 @@ export const SearchedAppInfoComponent = ({
   const searchResult = searchResults.find(item => item.prospectId === match.params.id);
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
-    get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT ||
+    get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
+      APP_STOP_SCREEN_RESULT ||
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
 
   const fullName = get(searchResult, "applicantInfo.fullName", "");
@@ -92,7 +105,7 @@ export const SearchedAppInfoComponent = ({
                 isFilled={true}
                 handleClick={createSetStepHandler(item.step)}
                 hideContinue={true}
-                prospectInfo={prospectInfo}
+                prospectOverview={prospectOverview}
                 stepForm={item.component}
                 searchResult={searchResult}
               />

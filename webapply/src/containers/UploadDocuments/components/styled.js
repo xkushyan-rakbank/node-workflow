@@ -128,7 +128,7 @@ export const useStyles = makeStyles({
     color: "#373737"
   },
   fileUploadPlaceholder: {
-    height: "50px",
+    minHeight: "50px",
     display: "flex",
     alignItems: "center",
     padding: "0 25px",
@@ -266,5 +266,10 @@ export const useStyles = makeStyles({
     marginBottom: "0px",
     marginLeft: "230px",
     borderRadius: "28px"
+  },
+  errorExplanation: {
+    fontSize: "12px",
+    color: "#ea2925",
+    margin: 0
   }
 });

@@ -22,11 +22,8 @@ import {
   uploadProspectDocument,
   downloadProspectDocument
 } from "../../api/apiClient";
-import {
-  getProspectId,
-  getProspectDocuments as getDocuments,
-  getAuthorizationHeader
-} from "../selectors/appConfig";
+import { getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
+import { getProspectDocuments as getDocuments } from "../selectors/getProspectDocuments";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,

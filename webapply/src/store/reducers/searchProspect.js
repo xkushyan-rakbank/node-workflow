@@ -3,7 +3,8 @@ import {
   IS_APPLY_EDIT_APPLICATION,
   SEARCH_APPLICATIONS_FAILURE,
   SEARCH_APPLICATIONS_REQUEST,
-  IS_LOCK_STATUS_BY_RO_AGENT
+  SET_ERROR_OCCURRED_WHILE_PERFORMING,
+  GET_PROSPECT_OVERVIEW_SUCCESS
 } from "../actions/searchProspect";
 import { LOGOUT } from "../actions/loginForm";
 import { handleActions } from "../../utils/redux-utils";
@@ -12,7 +13,8 @@ export const initialState = {
   searchResults: [],
   isApplyEditApplication: null,
   isSearchLoading: false,
-  isLockStatusByROAgent: false
+  errorCode: null,
+  prospectOverview: {}
 };
 
 export default handleActions(
@@ -36,9 +38,13 @@ export default handleActions(
       ...state,
       isApplyEditApplication: payload
     }),
-    [IS_LOCK_STATUS_BY_RO_AGENT]: (state, { payload }) => ({
+    [SET_ERROR_OCCURRED_WHILE_PERFORMING]: (state, { payload }) => ({
       ...state,
-      isLockStatusByROAgent: payload
+      ...payload
+    }),
+    [GET_PROSPECT_OVERVIEW_SUCCESS]: (state, { payload: { prospect } }) => ({
+      ...state,
+      prospectOverview: prospect
     }),
     [LOGOUT]: () => initialState
   },

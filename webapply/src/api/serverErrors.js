@@ -12,11 +12,16 @@ class CustomError extends Error {
     this.errorType = error.errorType;
     this.errors = error.errors;
   }
+
   getInputsErrors() {
     return this.errors;
+  }
+
+  getErrorCode() {
+    return this.errors[0].errorCode;
   }
 }
 
 export class ReCaptchaError extends CustomError {}
 export class FieldsValidationError extends CustomError {}
-export class ROError extends CustomError {}
+export class ErrorOccurredWhilePerforming extends CustomError {}

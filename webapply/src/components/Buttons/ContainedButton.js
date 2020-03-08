@@ -18,7 +18,7 @@ const styles = {
     outline: "none ",
     fontSize: "18px",
     textTransform: "none",
-    padding: "12px 32px",
+    padding: "15px 32px",
     backgroundColor: "#3b3a3a",
     "& svg": {
       verticalAlign: "top",

@@ -1,12 +1,12 @@
 import get from "lodash/get";
 import { createSelector } from "reselect";
-import { getOrganizationInfo, getApplicationInfo } from "./appConfig";
+import { getOverviewOrganizationInfo, getOverviewApplicationInfo } from "./searchProspect";
 import { RISK_RATING, COMPANY_CHECK_NAMES } from "../../constants";
 
 export const getOrganizationScreeningResults = state =>
-  get(getOrganizationInfo(state), "screeningInfo.screeningResults", []);
+  get(getOverviewOrganizationInfo(state), "screeningInfo.screeningResults", []);
 
-export const getProspectRiskScore = state => getApplicationInfo(state).riskScore || "0.0";
+export const getProspectRiskScore = state => getOverviewApplicationInfo(state).riskScore || "0.0";
 
 const screeningResults = state => getOrganizationScreeningResults(state);
 const riskScore = state => getProspectRiskScore(state);

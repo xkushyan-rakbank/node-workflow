@@ -1,5 +1,5 @@
-export const getRequiredNotTextInputMessage = fieldName => `Field ${fieldName} is not filled`;
+export const getRequiredNotTextInputMessage = fieldName => `${fieldName} is not filled`;
 
-export const getRequiredMessage = fieldName => `Field ${fieldName} is blank`;
+export const getRequiredMessage = fieldName => `${fieldName} is blank`;
 
-export const getInvalidMessage = fieldName => `Field ${fieldName} is invalid`;
+export const getInvalidMessage = fieldName => `${fieldName} is invalid`;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
 
@@ -9,13 +9,12 @@ import {
   docUpload,
   retrieveDocDetails
 } from "../../store/actions/getProspectDocuments";
-import { getOtherDocuments } from "../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 import { DocumentRow } from "./components/DocumentRow/DocumentRow";
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { ReUploadSuccess } from "./components/ReUploadSuccess/ReUploadSuccess";
 
 import { MAX_OTHER_DOCUMENTS } from "./constants";
 import { NEXT, OTHER_DOCUMENTS, SUBMIT } from "../../constants";
@@ -24,7 +23,11 @@ import routes from "../../routes";
 import { useStyles } from "./styled";
 
 import { UploadButton } from "./components/UploadButton/UploadButton";
-import { getProgress, getUploadErrors } from "../../store/selectors/getProspectDocuments";
+import {
+  getOtherDocuments,
+  getProgress,
+  getUploadErrors
+} from "../../store/selectors/getProspectDocuments";
 
 export const ReUploadDocuments = () => {
   const classes = useStyles();
@@ -32,8 +35,7 @@ export const ReUploadDocuments = () => {
   const otherDocuments = useSelector(getOtherDocuments);
   const progress = useSelector(getProgress);
   const uploadErrors = useSelector(getUploadErrors);
-
-  const [isSubmitted, setSubmitted] = useState(false);
+  const pushHistory = useTrackingHistory();
 
   useEffect(() => {
     dispatch(retrieveDocDetails());
@@ -93,12 +95,10 @@ export const ReUploadDocuments = () => {
 
   const submitForm = useCallback(() => {
     dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(
-      () => setSubmitted(true),
+      () => pushHistory(routes.MyApplications),
       () => {}
     );
-  }, [dispatch]);
-
-  if (isSubmitted) return <ReUploadSuccess />;
+  }, [dispatch, pushHistory]);
 
   return (
     <div className={classes.root}>
@@ -108,7 +108,7 @@ export const ReUploadDocuments = () => {
       </p>
       {otherDocuments.map(({ documentKey, ...rest }) => (
         <DocumentRow
-          key={document.documentKey}
+          key={documentKey}
           error={uploadErrors[documentKey]}
           documentProgress={progress[documentKey]}
           removeDocument={() => removeDocument(documentKey)}

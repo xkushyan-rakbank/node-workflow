@@ -14,7 +14,6 @@ import { ProspectProtectedRoute } from "./components/Routers";
 import { AccountTypeProtectedRoute } from "./components/Routers/AccountTypeProtectedRoute";
 import { ProtectedRoute } from "./components/Routers/ProtectedRoute";
 
-import { getEndpoints } from "./store/selectors/appConfig";
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
@@ -150,16 +149,12 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  endpoints: getEndpoints(state)
-});
-
 const mapDispatchToProps = {
   receiveAppConfig,
   prospectAutoSave
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(App);
