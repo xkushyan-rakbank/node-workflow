@@ -34,8 +34,9 @@ export const AccountInfo = props => {
   }, [pushHistory, dispatch]);
 
   const handleStart = useCallback(() => {
+    dispatch(resetApplicantInfo());
     pushHistory(routes.applicantInfo);
-  }, [pushHistory]);
+  }, [dispatch, pushHistory]);
 
   const handleApply = useCallback(() => {
     pushHistory(
