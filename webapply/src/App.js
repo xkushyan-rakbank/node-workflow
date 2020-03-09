@@ -67,22 +67,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     if (history.location.pathname === routes.applicantInfo) {
       history.push(routes.detailedAccount);
     }
-
-    history.listen(({ pathname }, action) => {
-      const isDisabledNavigation = [
-        routes.applicantInfo,
-        routes.companyInfo,
-        routes.stakeholdersInfo,
-        routes.finalQuestions,
-        routes.uploadDocuments,
-        routes.selectServices,
-        routes.SubmitApplication,
-        routes.ApplicationSubmitted
-      ].includes(pathname);
-      if (isDisabledNavigation && action === "POP") {
-        history.replace(routes.applicationOverview);
-      }
-    });
   }, []);
 
   return (
