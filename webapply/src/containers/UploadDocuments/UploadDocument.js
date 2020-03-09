@@ -31,11 +31,11 @@ export const UploadDocument = ({
     });
   };
 
-  const isDisabledNextStep = rest.isApplyEditApplication
-    ? DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(rest.prospectStatusInfo)
-      ? false
-      : !isRequiredDocsUploaded
-    : !isRequiredDocsUploaded;
+  const isDisabledNextStep =
+    !(
+      rest.isApplyEditApplication &&
+      DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(rest.prospectStatusInfo)
+    ) && !isRequiredDocsUploaded;
 
   return (
     <>
