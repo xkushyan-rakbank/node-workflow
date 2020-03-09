@@ -75,7 +75,8 @@ const ComeBackLoginComponent = ({
       pushHistory(
         process.env.REACT_APP_OTP_ENABLE === "N"
           ? routes.MyApplications
-          : routes.comeBackLoginVerification
+          : routes.comeBackLoginVerification,
+        true
       );
     }
   }, [pushHistory, isOtpGenerated]);
