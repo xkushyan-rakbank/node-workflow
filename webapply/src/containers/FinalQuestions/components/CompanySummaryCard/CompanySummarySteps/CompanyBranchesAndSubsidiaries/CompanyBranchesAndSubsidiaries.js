@@ -37,6 +37,7 @@ const companyBranchesAndSubsidiariesSchema = () =>
         Yup.object().shape({
           companyName: Yup.string()
             .required(getRequiredMessage("Company name"))
+            // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
             .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
           emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
@@ -54,6 +55,7 @@ const companyBranchesAndSubsidiariesSchema = () =>
         Yup.object().shape({
           companyName: Yup.string()
             .required(getRequiredMessage("Company name"))
+            // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
             .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
           country: Yup.string().required(getRequiredMessage("Country"))

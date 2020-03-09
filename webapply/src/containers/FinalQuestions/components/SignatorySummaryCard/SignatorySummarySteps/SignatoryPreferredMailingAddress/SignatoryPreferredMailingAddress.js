@@ -27,10 +27,12 @@ import { useStyles } from "./styled";
 const signatoryPreferredMailingAddressSchema = () =>
   Yup.object().shape({
     addressLine2: Yup.string()
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
     addressLine1: Yup.string()
       .required(getRequiredMessage("Flat / Villa / Building"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
     poBox: Yup.string()
