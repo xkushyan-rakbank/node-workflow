@@ -42,6 +42,8 @@ export const BackgroundVideoPlayerComponent = ({
         onLoadedData={onLoadedDataVideo}
         poster={poster}
         playsInline
+        autoPlay
+        loop
       >
         <source src={webm} type="video/webm" />
         <source src={mp4} type="video/mp4" />
