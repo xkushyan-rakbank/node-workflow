@@ -29,7 +29,7 @@ export const AccountInfo = props => {
   const handleStart = useCallback(() => {
     dispatch(resetApplicantInfo());
     pushHistory(routes.applicantInfo);
-  }, [pushHistory]);
+  }, [dispatch, pushHistory]);
 
   const handleApply = useCallback(() => {
     pushHistory(routes.applicationOverview);
