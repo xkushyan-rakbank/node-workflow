@@ -180,7 +180,7 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink path={routes.accountsComparison} />
+                <BackLink path={{ pathname: routes.accountsComparison, initialPosition: 1 }} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
