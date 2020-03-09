@@ -77,7 +77,8 @@ const ApplicantInfoPage = ({
       submit(values).then(
         () => {
           pushHistory(
-            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
+            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
+            true
           );
         },
         () => {

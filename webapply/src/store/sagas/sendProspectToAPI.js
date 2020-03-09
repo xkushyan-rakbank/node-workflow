@@ -7,7 +7,6 @@ import {
   takeLatest,
   take,
   cancel,
-  cancelled,
   fork,
   actionChannel,
   flush
@@ -133,10 +132,8 @@ function* prospectAutoSave() {
         yield put(sendProspectRequest(newProspect, AUTO));
       }
     }
-  } finally {
-    if (yield cancelled()) {
-      log("refresh auto save interval");
-    }
+  } catch (e) {
+    console.log(e);
   }
 }
 
