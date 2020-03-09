@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 import cx from "classnames";
 
@@ -11,6 +11,7 @@ import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appC
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { NEXT } from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 
 import { useStyles } from "./styled";
 
@@ -44,6 +45,13 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
     setIsExpandedMargin,
     isExpandedMargin
   ]);
+
+  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
+
+  useEffect(() => {
+    setChatVisibility(true);
+    setFormStepper(true);
+  }, [setFormStepper, setChatVisibility]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
@@ -9,6 +9,7 @@ import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidat
 
 import { useStyles } from "./styled";
 import routes from "../../../routes";
+import { FormNavigationContext } from "../../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 
 const loginSchema = Yup.object({
   username: Yup.string()
@@ -39,6 +40,13 @@ export const LoginComponent = ({ login, setIsApplyEditApplication, history }) =>
     },
     [login, history, setIsApplyEditApplication]
   );
+
+  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
+
+  useEffect(() => {
+    setChatVisibility(false);
+    setFormStepper(false);
+  }, [setFormStepper, setChatVisibility]);
 
   return (
     <div className={classes.baseForm}>

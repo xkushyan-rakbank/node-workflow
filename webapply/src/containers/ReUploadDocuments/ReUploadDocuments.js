@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
 
@@ -28,6 +28,7 @@ import {
   getProgress,
   getUploadErrors
 } from "../../store/selectors/getProspectDocuments";
+import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 
 export const ReUploadDocuments = () => {
   const classes = useStyles();
@@ -36,6 +37,13 @@ export const ReUploadDocuments = () => {
   const progress = useSelector(getProgress);
   const uploadErrors = useSelector(getUploadErrors);
   const pushHistory = useTrackingHistory();
+
+  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
+
+  useEffect(() => {
+    setChatVisibility(true);
+    setFormStepper(true);
+  }, [setFormStepper, setChatVisibility]);
 
   useEffect(() => {
     dispatch(retrieveDocDetails());

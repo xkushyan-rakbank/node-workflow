@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { OTPform } from "../../components/OTPform";
 
 import routes from "../../routes";
+import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 
 const useStyles = makeStyles({
   centeredContainer: {
@@ -21,6 +22,14 @@ const useStyles = makeStyles({
 
 export const FormConfirm = () => {
   const classes = useStyles();
+
+  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
+
+  useEffect(() => {
+    setChatVisibility(false);
+    setFormStepper(false);
+  }, [setFormStepper, setChatVisibility]);
+
   return (
     <div className={classes.container}>
       <h2 className="title">Confirm It’s You</h2>

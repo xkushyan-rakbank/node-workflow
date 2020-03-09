@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -25,6 +25,7 @@ import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -59,6 +60,13 @@ const ApplicantInfoPage = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
+
+  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
+
+  useEffect(() => {
+    setChatVisibility(false);
+    setFormStepper(true);
+  }, [setFormStepper, setChatVisibility]);
 
   useEffect(() => {
     const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";

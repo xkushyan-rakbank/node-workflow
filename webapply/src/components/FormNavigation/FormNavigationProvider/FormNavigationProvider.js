@@ -1,16 +1,49 @@
-import React, { useMemo } from "react";
-import { useSetUpChatAndNavigationStep } from "./useSetUpChatAndNavigationStep";
+import React, { useCallback, useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { agentBaseName } from "../../../routes";
+import { getIsEditableStatusSearchInfo } from "../../../store/selectors/searchProspect";
+import { setNavigationStep } from "./setNavigationStep";
 
 export const FormNavigationContext = React.createContext({});
 
 export const FormNavigationProvider = ({ children }) => {
-  const [isChatVisible, navigationSteps] = useSetUpChatAndNavigationStep();
+  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
+  const {
+    location: { pathname }
+  } = useHistory();
+  const [isChatVisible, setIsChatVisible] = useState(false);
+  const [isFormStepper, setSideBar] = useState(false);
+
+  const setChatVisibility = useCallback(
+    isChatDisplaying => {
+      if (!isApplyEditApplication && pathname.indexOf(agentBaseName) === -1) {
+        setIsChatVisible(isChatDisplaying);
+      }
+    },
+    [isChatVisible, setIsChatVisible, pathname]
+  );
+
+  const setFormStepper = useCallback(
+    isFormStepperDisplaying => {
+      setSideBar(isFormStepperDisplaying);
+    },
+    [setSideBar]
+  );
+
+  const navigationSteps = setNavigationStep(
+    pathname.startsWith(agentBaseName),
+    isFormStepper || isChatVisible
+  );
+
   const contextValue = useMemo(
     () => ({
       isChatVisible,
-      navigationSteps
+      setChatVisibility,
+      navigationSteps,
+      setFormStepper
     }),
-    [isChatVisible, navigationSteps]
+    [isChatVisible, navigationSteps, setChatVisibility, setFormStepper]
   );
 
   return (

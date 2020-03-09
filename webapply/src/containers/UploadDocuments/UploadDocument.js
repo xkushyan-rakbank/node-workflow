@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import routes from "../../routes";
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -9,6 +9,7 @@ import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 
 export const UploadDocument = ({
   retrieveDocDetails,
@@ -19,6 +20,13 @@ export const UploadDocument = ({
 }) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
+
+  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
+
+  useEffect(() => {
+    setChatVisibility(true);
+    setFormStepper(true);
+  }, [setFormStepper, setChatVisibility]);
 
   useEffect(() => {
     retrieveDocDetails();
