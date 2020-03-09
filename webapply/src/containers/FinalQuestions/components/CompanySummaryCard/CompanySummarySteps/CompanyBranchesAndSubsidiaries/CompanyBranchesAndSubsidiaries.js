@@ -103,7 +103,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                     <Field
                       name="otherEntitiesInUAE"
                       path="prospect.orgKYCDetails.otherEntitiesInUAE"
-                      label="The company has branches, subsidiaries or other companies in the UAE"
+                      label="The company or shareholders have branches, subsidiaries or other companies in the UAE"
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherEntitiesInUAE) {
@@ -222,7 +222,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                     <Field
                       name="otherEntitiesOutsideUAE"
                       path="prospect.orgKYCDetails.otherEntitiesOutsideUAE"
-                      label="The company has branches, subsidiaries or other companies outside the UAE"
+                      label="The company or shareholders have branches, subsidiaries or other companies outside the UAE"
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherEntitiesOutsideUAE) {
