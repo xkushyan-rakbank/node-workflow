@@ -5,7 +5,7 @@ export const FormNavigationContext = React.createContext({});
 let setValues;
 
 export const FormNavigationProvider = ({ children }) => {
-  const [contextValue, setContextValues] = useState([false, false, []]);
+  const [contextValue, setContextValues] = useState([true, false, []]);
   setValues = setContextValues;
 
   return (
