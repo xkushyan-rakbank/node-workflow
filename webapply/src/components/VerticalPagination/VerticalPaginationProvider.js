@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, useLayoutEffect } from "react";
+import React, { useState, useCallback, useMemo, useRef, useLayoutEffect, useEffect } from "react";
 import { useLocation } from "react-router";
 
 import { transitionDuration } from "./styled";
@@ -13,6 +13,14 @@ export const VerticalPaginationProvider = ({ children }) => {
 
   // reset scroll params when location changes.
   const location = useLocation();
+  const { initialPosition } = location;
+
+  useEffect(() => {
+    if (initialPosition) {
+      setCurrentSectionIndex(initialPosition);
+    }
+  }, [initialPosition, scrollToSection]);
+
   useLayoutEffect(() => {
     setCurrentSectionIndex(0);
     setHasVideo(false);

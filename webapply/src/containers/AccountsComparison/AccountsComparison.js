@@ -1,6 +1,6 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, { useState, useRef } from "react";
 
-import { VerticalPagination, VerticalPaginationContext } from "../../components/VerticalPagination";
+import { VerticalPagination } from "../../components/VerticalPagination";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
@@ -10,16 +10,7 @@ import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 import { useStyles } from "./styled";
 
-export const AccountsComparisonComponent = ({ servicePricingGuideUrl, ...props }) => {
-  const {
-    location: { initialPosition }
-  } = props;
-  const { scrollToSection } = useContext(VerticalPaginationContext);
-  useEffect(() => {
-    if (initialPosition) {
-      scrollToSection(initialPosition);
-    }
-  }, [initialPosition, scrollToSection]);
+export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const [selectedAccount, setSelectedAccount] = useState("Current Account");
   const classes = useStyles();
 
