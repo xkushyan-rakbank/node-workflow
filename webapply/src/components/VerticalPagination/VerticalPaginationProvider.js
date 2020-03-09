@@ -15,7 +15,7 @@ export const VerticalPaginationProvider = ({ children }) => {
   const scrollTimeout = useRef(0);
 
   useEffect(() => {
-    if (initialPosition) {
+    if (initialPosition >= 0) {
       setCurrentSectionIndex(initialPosition);
     }
   }, [initialPosition, setCurrentSectionIndex]);
