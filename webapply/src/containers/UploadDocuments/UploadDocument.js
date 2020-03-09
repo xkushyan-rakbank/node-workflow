@@ -8,6 +8,7 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const UploadDocument = ({
@@ -29,6 +30,12 @@ export const UploadDocument = ({
       if (!isScreeningError) pushHistory(routes.selectServices, true);
     });
   };
+
+  const isDisabledNextStep =
+    !(
+      rest.isApplyEditApplication &&
+      DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(rest.prospectStatusInfo)
+    ) && !isRequiredDocsUploaded;
 
   return (
     <>
@@ -56,7 +63,7 @@ export const UploadDocument = ({
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
-          disabled={!rest.isApplyEditApplication && !isRequiredDocsUploaded}
+          disabled={isDisabledNextStep}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

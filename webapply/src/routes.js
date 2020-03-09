@@ -1,4 +1,4 @@
-export const smeBaseName = "/sme";
+export const smeBaseName = "/business";
 export const agentBaseName = "/agent";
 
 export default {
@@ -6,9 +6,9 @@ export default {
   MyApplications: `${smeBaseName}/MyApplications`,
   comeBackLoginVerification: `${smeBaseName}/ComeBackVerification`,
   comeBackLogin: `${smeBaseName}/ComeBackLogin`,
-  accountsComparison: `${smeBaseName}/AccountsComparison`,
-  applicationOverview: `${smeBaseName}/ApplicationOverview`,
-  detailedAccount: `${smeBaseName}/DetailedAccount`,
+  accountsComparison: `${smeBaseName}/accounts`,
+  applicationOverview: `${smeBaseName}/accounts/:accountType/application-overview`,
+  detailedAccount: `${smeBaseName}/accounts/:accountType`,
   applicantInfo: `${smeBaseName}/ApplicantInfo`,
   verifyOtp: `${smeBaseName}/VerifyOTP`,
   companyInfo: `${smeBaseName}/CompanyInfo`,

@@ -23,8 +23,8 @@ export const loadMetaData = (meta = {}) => ({
   payload: meta.freeField5 || ""
 });
 
-export const receiveAppConfig = (segment, accountType, isIslamicBanking) => {
-  return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking, segment } };
+export const receiveAppConfig = () => {
+  return { type: RECEIVE_APPCONFIG };
 };
 
 export const receiveAppConfigSuccess = data => {
