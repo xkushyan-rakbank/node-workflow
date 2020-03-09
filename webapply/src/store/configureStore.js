@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import createReduxWaitForMiddleware from "redux-wait-for-action";
-import { routerMiddleware } from "connected-react-router";
+import { routerMiddleware, LOCATION_CHANGE, routerActions } from "connected-react-router";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import createFilter from "redux-persist-transform-filter";
@@ -9,6 +9,7 @@ import { createGoogleAnalyticsMiddleware } from "./googleAnalytics";
 
 import reducers from "./reducers";
 import rootSaga from "./sagas";
+import routes from "../routes";
 
 export const configureStore = (initialState, history) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -31,11 +32,32 @@ export const configureStore = (initialState, history) => {
     ]
   };
 
+  const disableForwardMiddleware = store => next => action => {
+    if (action.type === LOCATION_CHANGE) {
+      const isDisabledNavigation = [
+        routes.applicantInfo,
+        routes.companyInfo,
+        routes.stakeholdersInfo,
+        routes.finalQuestions,
+        routes.uploadDocuments,
+        routes.selectServices,
+        routes.SubmitApplication,
+        routes.ApplicationSubmitted
+      ].includes(action.payload.location.pathname);
+
+      if (action.payload.action === "POP" && isDisabledNavigation) {
+        return next(routerActions.goBack());
+      }
+    }
+    return next(action);
+  };
+
   const store = createStore(
     persistReducer(persistConfig, reducers(history)),
     initialState,
     composeEnhancers(
       applyMiddleware(
+        disableForwardMiddleware,
         createGoogleAnalyticsMiddleware(),
         sagaMiddleware,
         routerMiddleware(history),
