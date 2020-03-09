@@ -41,7 +41,7 @@ export const AccountInfo = props => {
     pushHistory(
       applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
     );
-  }, [pushHistory]);
+  }, [pushHistory, accountType, isIslamicBanking]);
 
   return (
     <AccountInfoScreen

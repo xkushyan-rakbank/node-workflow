@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button/Button";
 import { connect } from "react-redux";
@@ -16,9 +16,12 @@ const IslamicBankingSwitcher = ({ isIslamicBanking, accountType }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const classes = useStyles({ isMobileNotificationActive });
   const pushHistory = useTrackingHistory();
-  const handleClick = islamicBanking => {
-    pushHistory(detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL]);
-  };
+  const handleClick = useCallback(
+    islamicBanking => {
+      pushHistory(detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL]);
+    },
+    [pushHistory, accountType]
+  );
 
   return (
     <ButtonGroup
