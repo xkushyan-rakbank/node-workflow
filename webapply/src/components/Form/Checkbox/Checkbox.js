@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../../components/InfoTitle";
 import { ContexualHelp, ErrorMessage } from "../../Notifications";
+import { areEqualFieldProps } from "../utils";
 
 const useStyles = makeStyles({
   formControlRoot: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
   infoTitle: {}
 });
 
-export const Checkbox = ({
+export const Base = ({
   infoTitle,
   label = "",
   value = true,
@@ -47,3 +48,5 @@ export const Checkbox = ({
     </FormControl>
   );
 };
+
+export const Checkbox = memo(Base, areEqualFieldProps);
