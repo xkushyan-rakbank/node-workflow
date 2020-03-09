@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Providers } from "./Providers";
 import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
+import { FormNavigationProvider } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notification";
@@ -59,7 +60,9 @@ export const FormLayoutComponent = ({
     <Providers>
       <MobileNotification>
         <div className={classes.formLayout}>
-          <FormNavigation />
+          <FormNavigationProvider>
+            <FormNavigation />
+          </FormNavigationProvider>
           <div className={classes.formWrapper}>
             <div className={classes.formInner}>
               <div className={classes.mainContainer}>

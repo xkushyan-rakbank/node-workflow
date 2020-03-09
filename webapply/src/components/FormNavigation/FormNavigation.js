@@ -8,10 +8,9 @@ import { VerticalPaginationContext } from "../VerticalPagination";
 import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
-import routes, { agentBaseName } from "../../routes";
-import { formStepper, searchProspectStepper } from "../../constants";
-import { VISIBLE_FOR_CHAT_ROUTES, NON_VISIBLE_FOR_CHAT_ROUTES } from "./constants";
+import routes from "../../routes";
 import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
+import { FormNavigationContext } from "./FormNavigationProvider/FormNavigationProvider";
 
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
@@ -19,11 +18,12 @@ import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.s
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({ isApplyEditApplication }) => {
+export const FormNavigationComponent = () => {
   const {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
+  const { isChatVisible, navigationSteps } = useContext(FormNavigationContext);
   const blobColor = useBlobColor();
 
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
@@ -35,22 +35,6 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     accountsComparisonPage: routes.accountsComparison === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
-  const isVisibleForChat = VISIBLE_FOR_CHAT_ROUTES.includes(pathname);
-
-  const isChatVisible =
-    !isApplyEditApplication &&
-    isVisibleForChat &&
-    pathname.indexOf(agentBaseName) === -1 &&
-    !NON_VISIBLE_FOR_CHAT_ROUTES.includes(pathname);
-
-  let navigationSteps;
-  if (pathname.startsWith(agentBaseName)) {
-    navigationSteps = searchProspectStepper;
-  } else if (isChatVisible) {
-    navigationSteps = formStepper;
-  } else {
-    navigationSteps = [];
-  }
 
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
