@@ -52,7 +52,7 @@ export const CompanyInfoPage = ({
 
   const handleClickNextStep = useCallback(() => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.stakeholdersInfo);
+      if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
     });
   }, [pushHistory, sendProspectToAPI]);
 

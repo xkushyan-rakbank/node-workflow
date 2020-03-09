@@ -1,4 +1,3 @@
-import get from "lodash/get";
 import { COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 
 export const getDatalist = state => state.appConfig.datalist || {};
@@ -57,35 +56,6 @@ export const getUrlsReadMore = state => ({
   rakValuePlusIslamicReadMoreUrl: state.appConfig.rakValuePlusIslamicReadMoreUrl,
   rakValueMaxIslamicReadMoreUrl: state.appConfig.rakValueMaxIslamicReadMoreUrl
 });
-
-export const getProspectDocuments = state => state.appConfig.prospect.documents;
-export const getOtherDocuments = state => getProspectDocuments(state).otherDocuments || [];
-export const isLoadingDocuments = state => state.uploadDocuments.isLoading;
-
-const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
-  const documents = getProspectDocuments(state);
-  let counter = 0;
-
-  if (documents) {
-    counter += (documents.companyDocuments || []).filter(filterDocuments).length;
-    counter += Object.values(documents.stakeholdersDocuments || {})
-      .map(
-        stakeholdersDocument =>
-          get(stakeholdersDocument, "documents", []).filter(filterDocuments).length
-      )
-      .reduce((acc, item) => acc + item, 0);
-  }
-
-  return counter;
-};
-
-const UPLOADED_STATE = "Uploaded";
-
-export const getUploadedDocsCount = createGetDocsCountSelector(
-  doc => doc.uploadStatus === UPLOADED_STATE
-);
-
-export const getRequiredDocsCount = createGetDocsCountSelector();
 
 export const getAuthToken = state => state.appConfig.authorizationToken;
 

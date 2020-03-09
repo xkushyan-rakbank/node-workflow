@@ -22,12 +22,15 @@ const MessageWrapper = styled.div`
 `;
 
 const MessageStyled = styled.div`
-  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
   padding: 12px 16px;
   border-radius: 16px;
   background-color: ${({ incoming }) => (incoming ? "#eaeced" : "#373737")};
   font-size: 14px;
   color: ${({ incoming }) => (incoming ? "#263d4c" : "#fff")};
+  word-wrap: break-word;
 `;
 
 const DateStyled = styled.div`

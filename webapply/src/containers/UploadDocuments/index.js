@@ -1,14 +1,11 @@
 import { connect } from "react-redux";
 
+import { getSignatories, getEndpoints, getProspectId } from "../../store/selectors/appConfig";
 import {
   getProspectDocuments,
-  getSignatories,
-  getEndpoints,
-  getProspectId,
-  getUploadedDocsCount,
-  getRequiredDocsCount,
-  isLoadingDocuments
-} from "../../store/selectors/appConfig";
+  getisLoadingDocuments,
+  getIsRequiredDocsUploaded
+} from "../../store/selectors/getProspectDocuments";
 import { UploadDocument } from "./UploadDocument";
 import {
   retrieveDocDetails,
@@ -29,11 +26,10 @@ const mapStateToProps = state => ({
   signatories: getSignatories(state),
   uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state),
-  uploadedDocsCount: getUploadedDocsCount(state),
-  requiredDocsCount: getRequiredDocsCount(state),
+  isRequiredDocsUploaded: getIsRequiredDocsUploaded(state),
   progress: state.uploadDocuments.progress,
   uploadErrorMessage: state.uploadDocuments.uploadErrors,
-  isLoading: isLoadingDocuments(state),
+  isLoading: getisLoadingDocuments(state),
   prospectStatusInfo: getProspectStatus(state),
   isApplyEditApplication: getIsEditableStatusSearchInfo(state)
 });

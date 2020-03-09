@@ -8,17 +8,17 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const UploadDocument = ({
   retrieveDocDetails,
   isLoading,
   documents,
-  history,
-  uploadedDocsCount,
-  requiredDocsCount,
+  isRequiredDocsUploaded,
   ...rest
 }) => {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
 
   useEffect(() => {
     retrieveDocDetails();
@@ -26,7 +26,7 @@ export const UploadDocument = ({
 
   const goToSelectService = () => {
     rest.sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) history.push(routes.selectServices);
+      if (!isScreeningError) pushHistory(routes.selectServices, true);
     });
   };
 
@@ -56,7 +56,7 @@ export const UploadDocument = ({
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
-          disabled={!rest.isApplyEditApplication && requiredDocsCount > uploadedDocsCount}
+          disabled={!rest.isApplyEditApplication && !isRequiredDocsUploaded}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

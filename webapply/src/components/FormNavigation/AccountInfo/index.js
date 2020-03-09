@@ -23,7 +23,7 @@ export const AccountInfo = props => {
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());
-    pushHistory(routes.comeBackLogin);
+    pushHistory(routes.comeBackLogin, true);
   }, [pushHistory, dispatch]);
 
   const handleStart = useCallback(() => {

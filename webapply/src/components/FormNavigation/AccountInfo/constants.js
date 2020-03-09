@@ -2,7 +2,7 @@ import { accountNames } from "../../../constants";
 
 export const accountsInfo = {
   [accountNames.starter]: {
-    title: "RAKstarter account",
+    title: "RAKstarter Account",
     subtitle: "A zero balance account, for startups \n& entrepreneurs.",
     islamicSubtitle: "A zero balance account, for startups \n& entrepreneurs."
   },

@@ -9,7 +9,6 @@ import {
   docUpload,
   retrieveDocDetails
 } from "../../store/actions/getProspectDocuments";
-import { getOtherDocuments } from "../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
@@ -24,7 +23,11 @@ import routes from "../../routes";
 import { useStyles } from "./styled";
 
 import { UploadButton } from "./components/UploadButton/UploadButton";
-import { getProgress, getUploadErrors } from "../../store/selectors/getProspectDocuments";
+import {
+  getOtherDocuments,
+  getProgress,
+  getUploadErrors
+} from "../../store/selectors/getProspectDocuments";
 
 export const ReUploadDocuments = () => {
   const classes = useStyles();
@@ -95,7 +98,7 @@ export const ReUploadDocuments = () => {
       () => pushHistory(routes.MyApplications),
       () => {}
     );
-  }, [dispatch]);
+  }, [dispatch, pushHistory]);
 
   return (
     <div className={classes.root}>

@@ -41,9 +41,8 @@ export const submitApplication = {
   termsOfEnrolment: "terms of enrolment",
   termConditionUrl:
     "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
-  //TODO: need to update the URL
   termOfEnrolmentUrl:
-    "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
+    "https://revamp.rakbank.ae/wps/wcm/connect/03cd2c04-69c0-402e-81a9-9524367ee746/tnc.jpg?MOD=AJPERES&id=1577254367005",
   formTitle: "Submit application",
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for."

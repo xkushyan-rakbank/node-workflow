@@ -35,7 +35,7 @@ export const StyledTableHeaderComponent = ({ selectedCurrentColumn, handleHover 
         <StyledTableHeaderCellWitHoverHandler
           selectedCurrentColumn={selectedCurrentColumn}
           handleHover={handleHover}
-          text={accountNames.elite}
+          text="Business Elite"
           name={accountTypes.elite.name}
           order={accountTypes.elite.position}
         />
