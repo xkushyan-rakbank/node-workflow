@@ -9,7 +9,7 @@ export const buildURI = (uriName, prospectId, documentKey) => {
   let uri = endpoints[uriName];
   const userType = pathname.includes("/agent")
     ? get(store.getState(), "appConfig.searchInfo.segment", "")
-    : pathname.substring(1, pathname.lastIndexOf("/"));
+    : "sme";
 
   return generatePath(uri, { userType, prospectId, documentKey });
 };

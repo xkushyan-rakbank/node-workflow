@@ -9,7 +9,12 @@ import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicB
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes, { agentBaseName } from "../../routes";
-import { formStepper, searchProspectStepper } from "../../constants";
+import {
+  applicationOverviewRoutes,
+  detailedAccountRoutes,
+  formStepper,
+  searchProspectStepper
+} from "../../constants";
 import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
 
 import { useStyles } from "./styled";
@@ -39,8 +44,8 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     pathname.indexOf(agentBaseName) === -1 &&
     ![
       routes.accountsComparison,
-      routes.detailedAccount,
-      routes.applicationOverview,
+      ...detailedAccountRoutes,
+      ...applicationOverviewRoutes,
       routes.applicantInfo,
       routes.verifyOtp,
       routes.comeBackLogin,

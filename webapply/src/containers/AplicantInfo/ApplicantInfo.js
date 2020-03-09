@@ -61,10 +61,7 @@ const ApplicantInfoPage = ({
   const pushHistory = useTrackingHistory();
 
   useEffect(() => {
-    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
-
-    receiveAppConfig(segment);
+    receiveAppConfig();
   }, [receiveAppConfig]);
 
   useEffect(() => {

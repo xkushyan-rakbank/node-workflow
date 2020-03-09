@@ -10,7 +10,7 @@ import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { getIsIslamicBanking } from "../../store/selectors/appConfig";
 
-import { accountNames } from "../../constants";
+import { accountNames, applicationOverviewRoutes } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 import { accountTypes } from "../../containers/AccountsComparison/components/TableCompare/constants";
@@ -43,7 +43,7 @@ const HeaderTitleComponent = ({
       break;
   }
 
-  const isHideCompanyName = pathname === routes.applicationOverview;
+  const isHideCompanyName = applicationOverviewRoutes.includes(pathname);
 
   const routesToShowPortalTitle = [
     routes.login,
