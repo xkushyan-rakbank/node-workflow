@@ -1,33 +1,55 @@
 {
-  "accountInfo": [
-    {
-      "accountNo": "0192766195001",
-      "currency": "USD"
-    },
-    {
-      "accountNo": "0192766195002",
-      "currency": "EUR"
-    }
-  ],
-  "prospectId": "COSME0000000000000001",
-  "_links": {
-    "self": {
-      "href": "/banks/RAK/usertypes/sme/prospects/COSME0000000000000001"
-    }
-  },
-  "preScreening": {
-    "statusOverAll": "proceed",
-    "screeningResults": [
+  "status": "BAD_REQUEST",
+  "statusCode": 400,
+  "timestamp": "2020-03-09 14:23:34,782",
+  "message": "Error response from DEH Server",
+  "debugMessage": "{\"errorType\":\"Other\",\"errors\":[{\"fieldPath\":\"\",\"errorCode\":\"12013\",\"errorType\":\"invalid\",\"message\":\"CONCURRENT MODIFICATION NOT ALLOWED-SALES AGENT IS UPDATING\",\"developerText\":\"RO_EDIT\"}]}",
+  "errorType": "Other",
+  "errors": [
       {
-        "screeningType": "",
-        "screeningStatus": "",
-        "screeningFlag": "",
-        "screeningNotes": "",
-        "screeningReason": "",
-        "reasonNotes": "",
-        "reasonCode": "",
-        "reasonStatus": ""
+          "fieldPath": "",
+          "errorCode": "12013",
+          "errorType": "invalid",
+          "message": "CONCURRENT MODIFICATION NOT ALLOWED-SALES AGENT IS UPDATING",
+          "developerText": "RO_EDIT"
       }
-    ]
-  }
+  ],
+  "exceptionClassName": "ApiException",
+  "stackTrace": [
+      {
+          "methodName": "invokeApiEndpoint",
+          "fileName": "DehClient.java",
+          "lineNumber": 81,
+          "className": "ae.rakbank.webapply.client.DehClient",
+          "nativeMethod": false
+      },
+      {
+          "methodName": "updateSMEProspect",
+          "fileName": "ProspectController.java",
+          "lineNumber": 138,
+          "className": "ae.rakbank.webapply.controller.ProspectController",
+          "nativeMethod": false
+      },
+      {
+          "methodName": "invoke",
+          "fileName": "<generated>",
+          "lineNumber": -1,
+          "className": "ae.rakbank.webapply.controller.ProspectController$$FastClassBySpringCGLIB$$3cd75906",
+          "nativeMethod": false
+      },
+      {
+          "methodName": "invoke",
+          "fileName": "MethodProxy.java",
+          "lineNumber": 218,
+          "className": "org.springframework.cglib.proxy.MethodProxy",
+          "nativeMethod": false
+      },
+      {
+          "methodName": "invokeJoinpoint",
+          "fileName": "CglibAopProxy.java",
+          "lineNumber": 749,
+          "className": "org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation",
+          "nativeMethod": false
+      }
+  ]
 }

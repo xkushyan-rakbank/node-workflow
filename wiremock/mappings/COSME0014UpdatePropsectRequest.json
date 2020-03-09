@@ -9,14 +9,15 @@
     ]
   },
   "response": {
-    "status": 200,
+    "status": 400,
     "headers": {
       "Content-Type": "application/json",
       "Access-Control-Allow-Methods": "*",
       "Access-Control-Allow-Headers": "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding, X-Requested-With, X-Authorization",
       "X-Content-Type-Options": "nosniff",
       "x-frame-options": "DENY",
-      "x-xss-protection": "1; mode=block"
+      "x-xss-protection": "1; mode=block",
+      "Content-Length" : "10"
     },
     "bodyFileName": "COSME0014UpdatePropsectResponse.json"
   }
