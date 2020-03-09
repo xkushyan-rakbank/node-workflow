@@ -16,6 +16,7 @@ export const MIN_NON_UAE_PHONE_LENGTH = 4;
 export const MAX_NON_UAE_PHONE_LENGTH = 10;
 export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
+export const MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH = 50;
 
 export const CURRENCY_REGEX = /^[0-9]*([.][0-9]{1,2})?$/;
 export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z]){1,30}$/;
