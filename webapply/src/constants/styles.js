@@ -1,4 +1,5 @@
 import routes from "../routes";
+import { applicationOverviewRoutes, detailedAccountRoutes } from "./index";
 
 export const sideNavWidthLG = 530;
 export const sideNavWidthMD = 380;
@@ -10,8 +11,8 @@ export const portraitOrientationQueryIPads =
 
 export const routerToAddPaddingInSlider = [
   routes.accountsComparison,
-  routes.detailedAccount,
-  routes.applicationOverview,
+  ...detailedAccountRoutes,
+  ...applicationOverviewRoutes,
   routes.login,
   routes.comeBackLogin,
   routes.comeBackLoginVerification,

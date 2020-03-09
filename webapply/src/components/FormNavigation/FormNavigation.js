@@ -18,7 +18,7 @@ import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.s
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = () => {
+export const FormNavigationComponent = ({ isApplyEditApplication }) => {
   const {
     location: { pathname }
   } = useHistory();
