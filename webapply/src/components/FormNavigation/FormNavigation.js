@@ -43,11 +43,14 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     pathname.indexOf(agentBaseName) === -1 &&
     !NON_VISIBLE_FOR_CHAT_ROUTES.includes(pathname);
 
-  const navigationSteps = pathname.startsWith(agentBaseName)
-    ? searchProspectStepper
-    : isVisibleForChat && isChatVisible
-    ? formStepper
-    : [];
+  let navigationSteps;
+  if (pathname.startsWith(agentBaseName)) {
+    navigationSteps = searchProspectStepper;
+  } else if (isChatVisible) {
+    navigationSteps = formStepper;
+  } else {
+    navigationSteps = [];
+  }
 
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
