@@ -56,17 +56,6 @@ const HeaderTitleComponent = ({
     history.push(routes.login);
   }, [logout, history]);
 
-  const getSelectedAccountTypeInfo = () => (
-    <>
-      {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
-      {!isHideCompanyName && companyName && (
-        <>
-          for <span>{companyName}</span>
-        </>
-      )}
-    </>
-  );
-
   return (
     <div
       className={cx(
@@ -85,11 +74,16 @@ const HeaderTitleComponent = ({
               <div className={classes.logout} onClick={() => agentLogout()}>
                 Logout
               </div>
-              {!isHideCompanyName && companyName && getSelectedAccountTypeInfo()}
             </>
-          ) : (
-            getSelectedAccountTypeInfo()
-          )}
+          ) : null}
+          <>
+            {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+            {!isHideCompanyName && companyName && (
+              <>
+                for <span>{companyName}</span>
+              </>
+            )}
+          </>
         </span>
       </div>
     </div>
