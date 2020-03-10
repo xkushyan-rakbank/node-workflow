@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import java.io.IOException;
-import java.util.Iterator;
 
 @Slf4j
 @Service
