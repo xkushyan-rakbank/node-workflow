@@ -20,11 +20,7 @@ import {
   MAX_COMPANY_NAME_LENGTH,
   MAX_TRADE_LICENSE_LENGTH
 } from "../CompanyBusinessRelationships/constants";
-import {
-  ALPHANUMERIC_REGEX,
-  COMPANY_NAME_REGEX,
-  SPECIAL_CHARACTERS_REGEX
-} from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -43,12 +39,12 @@ const companyBranchesAndSubsidiariesSchema = () =>
             .required(getRequiredMessage("Company name"))
             // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-            .matches(COMPANY_NAME_REGEX, getInvalidMessage("Company name")),
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
           emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
           tradeLicenseNo: Yup.string()
             .required(getRequiredMessage("Trade license number"))
             .max(20, "Maximum 20 characters allowed")
-            .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Trade license number"))
         })
       )
     }),

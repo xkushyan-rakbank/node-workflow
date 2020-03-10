@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
-import { submitApplication } from "../../../../constants/index";
-import { PROSPECT_STATUSES } from "../../../AgentPages/constants";
+import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
 
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
