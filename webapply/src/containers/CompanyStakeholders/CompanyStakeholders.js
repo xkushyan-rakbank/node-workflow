@@ -119,6 +119,7 @@ const CompanyStakeholdersComponent = ({
               }
               orderIndex={index}
               isEditInProgress={isEditInProgress}
+              setIsShowingAddButton={setIsShowingAddButton}
             />
           );
         })}

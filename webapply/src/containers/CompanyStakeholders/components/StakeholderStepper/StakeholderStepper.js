@@ -46,7 +46,8 @@ const StakeholderStepperComponent = ({
   kycDetails,
   editableStakeholder,
   accountSigningInfo,
-  datalist
+  datalist,
+  setIsShowingAddButton
 }) => {
   const classes = useStyles();
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
@@ -62,11 +63,12 @@ const StakeholderStepperComponent = ({
       () => {
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
-          showAddButton();
           changeEditableStakeholder();
           setIsShowSuccessFilled(true);
+          setIsShowingAddButton(false);
           setTimeout(() => {
             setIsShowSuccessFilled(false);
+            showAddButton();
           }, timeInterval);
         }
         handleSetNextStep(activeStep);
