@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
@@ -21,15 +21,16 @@ const blockConfirmSchema = Yup.object({
   areTermsAgreed: Yup.boolean().oneOf([true], "Required")
 });
 
-export const BlockConfirmComponent = ({ setFormFields, islamicBanking }) => {
+export const BlockConfirm = ({ setFormFields }) => {
   const classes = useStyles();
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
 
   const termsAgreedLabel = (
     <span>
       I agree with RAKBANK’s{" "}
       <a
         className={classes.link}
-        href={islamicBanking ? termConditionIslamicBankingUrl : termConditionUrl}
+        href={isIslamicBanking ? termConditionIslamicBankingUrl : termConditionUrl}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -38,7 +39,7 @@ export const BlockConfirmComponent = ({ setFormFields, islamicBanking }) => {
       and{" "}
       <a
         className={classes.link}
-        href={islamicBanking ? termOfEnrolmentIslamicBankingUrl : termOfEnrolmentUrl}
+        href={isIslamicBanking ? termOfEnrolmentIslamicBankingUrl : termOfEnrolmentUrl}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -96,9 +97,3 @@ export const BlockConfirmComponent = ({ setFormFields, islamicBanking }) => {
     </div>
   );
 };
-
-const mapStateToProps = state => ({
-  islamicBanking: getIsIslamicBanking(state)
-});
-
-export const BlockConfirm = connect(mapStateToProps)(BlockConfirmComponent);
