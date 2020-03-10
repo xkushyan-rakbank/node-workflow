@@ -105,8 +105,6 @@ public class DehClient {
         }
         String methodName = "getDatalistJSON()";
 
-        RestTemplate restTemplate = new RestTemplate();
-
         String dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
         JsonNode dehURIs = appConfigJSON.get("DehURIs");
         String url = dehBaseUrl + dehURIs.get("datalistUri").asText();
