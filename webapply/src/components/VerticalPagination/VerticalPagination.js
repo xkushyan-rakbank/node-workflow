@@ -1,12 +1,10 @@
 import React, { useRef, useContext, useEffect, useCallback } from "react";
 import cx from "classnames";
-
 import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
 import { VerticalPaginationContext } from "./VerticalPaginationProvider";
 import { useStyles } from "./styled";
 import { getAverage } from "./utils";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
-import { useFormNavigation } from "../FormNavigation/FormNavigationProvider";
 
 export const VerticalPaginationComponent = ({
   children,
@@ -19,7 +17,6 @@ export const VerticalPaginationComponent = ({
   const { currentSectionIndex, scrollToSection, isCanScroll, setHasVideo } = useContext(
     VerticalPaginationContext
   );
-  useFormNavigation([true, false]);
 
   const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
   const scrollings = useRef([]);

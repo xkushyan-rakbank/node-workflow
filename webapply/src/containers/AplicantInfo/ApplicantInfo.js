@@ -60,7 +60,6 @@ const ApplicantInfoPage = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
-
   useFormNavigation([true, false]);
 
   useEffect(() => {

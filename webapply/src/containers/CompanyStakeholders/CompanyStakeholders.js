@@ -23,9 +23,9 @@ import {
 import routes from "../../routes";
 import { formStepper, NEXT } from "../../constants";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
-import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useStyles } from "./styled";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,

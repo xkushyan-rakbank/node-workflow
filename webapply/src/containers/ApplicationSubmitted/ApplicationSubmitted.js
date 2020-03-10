@@ -8,10 +8,10 @@ import { InfoNote } from "../../components/InfoNote";
 import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
 
 import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
-import { useStyles } from "./styled";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { formStepper } from "../../constants";
+import { useStyles } from "./styled";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();

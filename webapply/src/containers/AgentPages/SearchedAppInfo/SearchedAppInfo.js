@@ -14,8 +14,7 @@ import {
   STATUS_LOCKED,
   STATUS_FORCE_STOP
 } from "./constants";
-import { searchProspectStepper } from "../../../constants";
-import { APP_STOP_SCREEN_RESULT } from "../../../constants";
+import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
