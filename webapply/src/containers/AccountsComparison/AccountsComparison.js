@@ -12,10 +12,9 @@ import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 import { useStyles } from "./styled";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
-  useFormNavigation([true, false]);
-
-  const [selectedAccount, setSelectedAccount] = useState("Current Account");
   const classes = useStyles();
+  useFormNavigation([true, false]);
+  const [selectedAccount, setSelectedAccount] = useState("Current Account");
 
   const secondSection = useRef(null);
   const tableRef = useRef(null);
