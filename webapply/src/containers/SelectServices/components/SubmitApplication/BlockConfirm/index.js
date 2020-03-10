@@ -1,32 +1,44 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { submitApplication } from "../../../../../constants";
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
+import { getIsIslamicBanking } from "../../../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
-const { termConditionUrl, termOfEnrolmentUrl } = submitApplication;
+const {
+  termConditionUrl,
+  termConditionIslamicBankingUrl,
+  termOfEnrolmentUrl,
+  termOfEnrolmentIslamicBankingUrl
+} = submitApplication;
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
   areTermsAgreed: Yup.boolean().oneOf([true], "Required")
 });
 
-export const BlockConfirm = ({ setFormFields }) => {
+export const BlockConfirmComponent = ({ setFormFields, islamicBanking }) => {
   const classes = useStyles();
 
   const termsAgreedLabel = (
     <span>
       I agree with RAKBANK’s{" "}
-      <a className={classes.link} href={termConditionUrl} target="_blank" rel="noopener noreferrer">
+      <a
+        className={classes.link}
+        href={islamicBanking ? termConditionIslamicBankingUrl : termConditionUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         terms and conditions
       </a>{" "}
       and{" "}
       <a
         className={classes.link}
-        href={termOfEnrolmentUrl}
+        href={islamicBanking ? termOfEnrolmentIslamicBankingUrl : termOfEnrolmentUrl}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -84,3 +96,9 @@ export const BlockConfirm = ({ setFormFields }) => {
     </div>
   );
 };
+
+const mapStateToProps = state => ({
+  islamicBanking: getIsIslamicBanking(state)
+});
+
+export const BlockConfirm = connect(mapStateToProps)(BlockConfirmComponent);
