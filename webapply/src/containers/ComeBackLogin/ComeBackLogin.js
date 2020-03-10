@@ -23,9 +23,9 @@ import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
-import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useStyles } from "./styled";
 export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({

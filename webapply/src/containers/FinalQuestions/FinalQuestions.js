@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import cx from "classnames";
-
 import routes from "../../routes";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { CompanySummaryCard } from "./components/CompanySummaryCard";
@@ -12,7 +11,6 @@ import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { formStepper, NEXT } from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-
 import { useStyles } from "./styled";
 
 export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {

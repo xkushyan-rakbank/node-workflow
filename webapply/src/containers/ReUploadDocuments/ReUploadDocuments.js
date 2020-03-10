@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
-
 import {
   addOtherDocument,
   cancelDocUpload,
@@ -11,15 +10,12 @@ import {
 } from "../../store/actions/getProspectDocuments";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-
-import { DocumentRow } from "./components/DocumentRow/DocumentRow";
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
 import { BackLink } from "../../components/Buttons/BackLink";
-
-import { MAX_OTHER_DOCUMENTS } from "./constants";
 import { NEXT, OTHER_DOCUMENTS, SUBMIT } from "../../constants";
 import routes from "../../routes";
-
+import { DocumentRow } from "./components/DocumentRow/DocumentRow";
+import { MAX_OTHER_DOCUMENTS } from "./constants";
 import { useStyles } from "./styled";
 
 import { UploadButton } from "./components/UploadButton/UploadButton";

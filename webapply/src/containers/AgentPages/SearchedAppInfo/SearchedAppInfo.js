@@ -16,9 +16,9 @@ import {
 } from "./constants";
 import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
 
-import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
+import { useStyles } from "./styled";
 
 export const SearchedAppInfoComponent = ({
   searchResults,

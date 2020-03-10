@@ -22,9 +22,9 @@ import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
 import { formStepper } from "../../constants";
 import { STEP_STATUS } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
-import { useStyles } from "./styled";
 import routes from "./../../routes";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useStyles } from "./styled";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,

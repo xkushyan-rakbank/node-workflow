@@ -1,13 +1,11 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
-
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { Icon, ICONS } from "../../components/Icons";
-
 import {
   changeEditableStakeholder,
   createNewStakeholder,

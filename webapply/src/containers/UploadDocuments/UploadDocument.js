@@ -6,11 +6,11 @@ import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { formStepper, NEXT } from "../../constants";
-import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useStyles } from "./styled";
 
 export const UploadDocument = ({
   retrieveDocDetails,
