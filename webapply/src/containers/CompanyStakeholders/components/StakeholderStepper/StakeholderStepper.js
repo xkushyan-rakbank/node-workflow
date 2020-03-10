@@ -5,11 +5,7 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
-import {
-  getIsCompanyStakeholder,
-  getIsSendingProspect,
-  getDatalist
-} from "../../../../store/selectors/appConfig";
+import { getIsSendingProspect, getDatalist } from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
   setScreeningError
@@ -20,7 +16,7 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { CONTINUE, NEXT } from "../../../../constants";
+import { CONTINUE } from "../../../../constants";
 import { getStakeholdersIds, stakeholdersState } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
@@ -46,7 +42,6 @@ const StakeholderStepperComponent = ({
   setFillStakeholder,
   setEditStakeholder,
   showAddButton,
-  isCompanyStakeHolder,
   isEditInProgress,
   kycDetails,
   editableStakeholder,
@@ -63,9 +58,7 @@ const StakeholderStepperComponent = ({
   );
 
   const handleContinue = event => () => {
-    const saveType = activeStep === STEP_1 && isCompanyStakeHolder ? NEXT : CONTINUE;
-
-    sendProspectToAPI(saveType, event).then(
+    sendProspectToAPI(CONTINUE, event).then(
       () => {
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
@@ -178,7 +171,6 @@ const mapStateToProps = state => {
 
   return {
     isStatusShown: state.stakeholders.isStatusShown,
-    isCompanyStakeHolder: getIsCompanyStakeholder(state),
     loading: getIsSendingProspect(state),
     datalist: getDatalist(state),
     editableStakeholder
