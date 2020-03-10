@@ -49,6 +49,10 @@ const CompanyStakeholdersComponent = ({
     setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
   }, [setIsShowingAddButton, stakeholders]);
 
+  const handleHideAddButton = useCallback(() => {
+    setIsShowingAddButton(false);
+  }, [setIsShowingAddButton]);
+
   useEffect(() => {
     if (!stakeholders.length) {
       createNewStakeholder();
@@ -111,6 +115,7 @@ const CompanyStakeholdersComponent = ({
           return (
             <StakeholderStepper
               showAddButton={handleShowAddButton}
+              hideAddButton={handleHideAddButton}
               {...item}
               key={item.id}
               index={index}
@@ -119,7 +124,6 @@ const CompanyStakeholdersComponent = ({
               }
               orderIndex={index}
               isEditInProgress={isEditInProgress}
-              setIsShowingAddButton={setIsShowingAddButton}
             />
           );
         })}
