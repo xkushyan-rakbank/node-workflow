@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { List, CellMeasurerCache, CellMeasurer } from "react-virtualized";
 import { Message } from "./Message";
 
 const MessagesListStyled = styled.div`
@@ -11,26 +12,46 @@ const MessagesListStyled = styled.div`
   min-height: 320px;
 `;
 
-const VIEW_HEIGHT = 500;
+const cache = new CellMeasurerCache({
+  fixedWidth: true,
+  minHeight: 85,
+  defaultHeight: 85
+});
 
 const MessagesList = ({ data }) => {
-  const messageRef = useRef();
+  let virtualRef = useRef();
 
   useEffect(() => {
-    if (
-      messageRef.current &&
-      // condition if user scroll message himself autoscroll on new message will not work
-      messageRef.current.scrollTop + VIEW_HEIGHT + 100 >= messageRef.current.scrollHeight
-    ) {
-      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    if (virtualRef) {
+      virtualRef.scrollToRow(data.length);
     }
   }, [data]);
 
   return (
-    <MessagesListStyled ref={messageRef}>
-      {data.map(({ id, message, utcTime, type, name }) => (
-        <Message key={id} body={message} date={utcTime} name={name} incoming={type !== "Client"} />
-      ))}
+    <MessagesListStyled>
+      <List
+        ref={element => {
+          virtualRef = element;
+        }}
+        width={327}
+        deferredMeasurementCache={cache}
+        height={310}
+        rowCount={data.length}
+        rowHeight={cache.rowHeight}
+        overscanRowCount={4}
+        rowRenderer={({ index, key, parent, style }) => (
+          <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
+            <Message
+              key={key}
+              body={data[index].message}
+              date={data[index].utcTime}
+              name={data[index].name}
+              incoming={data[index].type !== "Client"}
+              style={style}
+            />
+          </CellMeasurer>
+        )}
+      />
     </MessagesListStyled>
   );
 };
