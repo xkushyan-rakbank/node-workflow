@@ -46,7 +46,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
     isExpandedMargin
   ]);
 
-  useFormNavigation([false, false, formStepper]);
+  useFormNavigation([false, true, formStepper]);
 
   return (
     <>
