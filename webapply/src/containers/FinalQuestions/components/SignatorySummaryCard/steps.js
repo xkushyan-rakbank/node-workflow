@@ -3,11 +3,7 @@ import { SignatorySourceOfFunds } from "./SignatorySummarySteps/SignatorySourceO
 import { SignatoryPersonalInformation } from "./SignatorySummarySteps/SignatoryPersonalInformation";
 import { SignatoryPreferredMailingAddress } from "./SignatorySummarySteps/SignatoryPreferredMailingAddress";
 import { GA_EVENTS } from "../../../../utils/ga";
-
-export const STEP_1 = 1;
-export const STEP_2 = 2;
-export const STEP_3 = 3;
-export const STEP_4 = 4;
+import { STEP_1, STEP_2, STEP_3, STEP_4 } from "./constants";
 
 export const signatoriesSteps = [
   {
