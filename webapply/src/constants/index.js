@@ -43,6 +43,10 @@ export const submitApplication = {
     "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
   termOfEnrolmentUrl:
     "https://revamp.rakbank.ae/wps/wcm/connect/03cd2c04-69c0-402e-81a9-9524367ee746/tnc.jpg?MOD=AJPERES&id=1577254367005",
+  termConditionIslamicBankingUrl:
+    "https://rakbank.ae/wps/wcm/connect/32cb9ff6-706a-489b-98fb-55d639b97c16/%28K%29+J00203+-+Debit+Card+T%26C+Business+A4+02.04.17.pdf?MOD=AJPERES&CVID=IQ7xQCk",
+  termOfEnrolmentIslamicBankingUrl:
+    "https://rakbank.ae/wps/wcm/connect/3c758876-1f16-490d-a574-57a62ef50a9d/%28A%29+J00807+RAKvalue+Account+-+T%26C-Final.pdf?MOD=AJPERES&CVID=ICiyB8R",
   formTitle: "Submit application",
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
@@ -87,6 +91,12 @@ const EXIST = "We already have your application. Not to worry, our team is alrea
 const INVALID_ID = "Invalid Prospect ID";
 const COMMON_ERROR =
   "We already have your application. Not to worry, our team is already working on it.";
+
+export const PROSPECT_STATUSES = {
+  ASSESSING: "Assessing",
+  DOCUMENTS_NEEDED: "Documents needed",
+  NEED_ADDITIONAL_DOCUMENTS: "Need Additional Information/Documents"
+};
 
 export const ERROR_MESSAGES = {
   [RO_EDITING]: RO_STOP,

@@ -20,7 +20,6 @@ import { UAE_CODE } from "../../constants";
 export const initialState = {
   loading: false,
   uiConfig: {},
-  endpoints: {},
   prospect: {
     applicationInfo: {
       islamicBanking: false
