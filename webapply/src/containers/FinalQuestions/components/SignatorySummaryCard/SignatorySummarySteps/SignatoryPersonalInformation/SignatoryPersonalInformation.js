@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
-import { MOTHERS_MAIDEN_NAME_REGEX, NAME_REGEX } from "../../../../../../utils/validation";
+import { MOTHERS_MAIDEN_NAME_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import {
   Input,
@@ -24,9 +24,7 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
     .matches(MOTHERS_MAIDEN_NAME_REGEX, getInvalidMessage("Mother's maiden name")),
   maritalStatusOthers: Yup.string().when("maritalStatus", {
     is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string()
-      .required(getRequiredMessage("Other"))
-      .matches(NAME_REGEX, getInvalidMessage("Other"))
+    then: Yup.string().required(getRequiredMessage("Other"))
   })
 });
 
