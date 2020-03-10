@@ -25,7 +25,7 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 const FormatDecimalNumberInput = props => (
-  <NumberFormat allowNegative={false} decimalScale={0} {...props} />
+  <NumberFormat allowNegative={false} thousandSeparator={true} suffix={".00"} {...props} />
 );
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
