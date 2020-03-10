@@ -6,7 +6,7 @@ import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/inde
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
-import { BlockConfirm } from "./BlockConfirm";
+import { BlockConfirm } from "./BlockConfirm/index";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
