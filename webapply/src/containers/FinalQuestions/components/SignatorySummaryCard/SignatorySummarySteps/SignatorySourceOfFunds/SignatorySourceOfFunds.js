@@ -11,7 +11,10 @@ import {
   Input,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import {
+  MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH,
+  SPECIAL_CHARACTERS_REGEX
+} from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import {
   getRequiredMessage,
@@ -114,7 +117,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
                   }
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH, tabIndex: 0 }
                   }}
                 />
               </Grid>

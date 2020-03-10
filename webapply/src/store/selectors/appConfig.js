@@ -2,8 +2,6 @@ import { COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constant
 
 export const getDatalist = state => state.appConfig.datalist || {};
 
-export const getEndpoints = state => state.appConfig.endpoints || {};
-
 export const getProspect = state => state.appConfig.prospect || {};
 
 export const getAgentName = state => state.appConfig.login.userName;

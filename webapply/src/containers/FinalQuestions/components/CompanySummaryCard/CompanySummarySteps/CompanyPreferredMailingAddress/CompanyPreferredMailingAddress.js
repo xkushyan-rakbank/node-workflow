@@ -10,11 +10,7 @@ import {
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import {
-  SPECIAL_CHARACTERS_REGEX,
-  POBOX_REGEX,
-  SPACE_OCCUPIED_OTHER_REGEX
-} from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX, POBOX_REGEX } from "../../../../../../utils/validation";
 import {
   OTHER_OPTION_CODE,
   BASE_PATH,
@@ -34,9 +30,11 @@ const companyPreferredMailingAddressSchema = () =>
   Yup.object().shape({
     addressLine1: Yup.string()
       .required(getRequiredMessage("Office / Shop Number"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office / Shop Number")),
     addressLine2: Yup.string()
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
     poBox: Yup.string()
@@ -45,7 +43,7 @@ const companyPreferredMailingAddressSchema = () =>
     emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
     typeOfSpaceOccupied: Yup.object().shape({
       spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
-      others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, getInvalidMessage("Other"))
+      others: Yup.string().matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
     })
   });
 

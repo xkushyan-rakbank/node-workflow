@@ -1,8 +1,12 @@
 import routes from "../../routes";
 import { GA_EVENTS } from "../ga";
+import { applicationOverviewRoutes } from "../../constants";
 
 export const gaEventsMap = {
-  [routes.applicationOverview]: GA_EVENTS.PRODUCT_APPLY,
+  ...applicationOverviewRoutes.reduce(
+    (acc, route) => ({ ...acc, [acc[route]]: GA_EVENTS.PRODUCT_APPLY }),
+    {}
+  ),
   [routes.applicantInfo]: GA_EVENTS.PRODUCT_START,
   [routes.comeBackLogin]: GA_EVENTS.COMEBACK_START,
   [routes.stakeholdersInfo]: GA_EVENTS.COMPANY_INFORMATION_SUBMITTED,

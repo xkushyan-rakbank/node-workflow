@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { OTPform } from "../../components/OTPform";
 
+import { OTPform } from "../../components/OTPform";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import routes from "../../routes";
 
 const useStyles = makeStyles({
@@ -21,6 +22,9 @@ const useStyles = makeStyles({
 
 export const FormConfirm = () => {
   const classes = useStyles();
+
+  useFormNavigation([true, false]);
+
   return (
     <div className={classes.container}>
       <h2 className="title">Confirm It’s You</h2>

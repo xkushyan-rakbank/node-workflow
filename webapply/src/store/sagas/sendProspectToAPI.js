@@ -133,7 +133,7 @@ function* prospectAutoSave() {
       }
     }
   } catch (e) {
-    console.log(e);
+    log(e);
   }
 }
 

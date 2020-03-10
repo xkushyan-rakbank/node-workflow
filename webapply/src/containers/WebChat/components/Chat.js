@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -29,95 +29,85 @@ const TypingLabel = styled.div`
   color: #c6c6cc;
 `;
 
-class Chat extends PureComponent {
-  state = {
-    messages: [],
-    agentTyping: false,
-    agentLeft: false,
-    isReverify: false
-  };
+function Chat({
+  InitiatedCustomerName = "",
+  InitiatedCustomerMobile = "",
+  EmailAddress = "",
+  isAuth,
+  cif,
+  subject,
+  message,
+  onClose,
+  onMinimize
+}) {
+  const [messages, setMessages] = useState([]);
+  const [agentTyping, setAgentTyping] = useState(false);
+  const [agentLeft, setAgentLeft] = useState(false);
 
-  get userInfo() {
-    const {
-      InitiatedCustomerName = "",
-      InitiatedCustomerMobile = "",
-      EmailAddress = "",
-      isAuth,
-      CIF,
-      subject,
-      message
-    } = this.props;
+  const agentTypingHandler = useCallback(
+    flag => {
+      setAgentTyping(flag);
+    },
+    [setAgentTyping]
+  );
 
-    return {
+  const agentLeftHandler = useCallback(
+    flag => {
+      setAgentLeft(flag);
+    },
+    [setAgentLeft]
+  );
+
+  const handleNewMessageArrival = useCallback(
+    messages => {
+      setMessages(messages);
+    },
+    [setMessages]
+  );
+
+  useEffect(() => {
+    const chatInstance = GenesysChat.getInstance();
+
+    chatInstance.initChat({
       InitiatedCustomerName,
       InitiatedCustomerMobile,
       selectedSubject: subject,
       EmailAddress,
       message,
       isAuth,
-      CIF
-    };
-  }
+      cif
+    });
+    chatInstance.messagesCallback = handleNewMessageArrival;
+    chatInstance.setOnTypingEventsHandler(agentTypingHandler);
+    chatInstance.setOnAgentLeftEventHandler(agentLeftHandler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  get chatInstance() {
-    return GenesysChat.getInstance();
-  }
-
-  componentDidMount() {
-    this.chatInstance.initChat(this.userInfo);
-    this.chatInstance.messagesCallback = this.onNewMessageArrival;
-    this.chatInstance.setOnTypingEventsHandler(this.agentTypingHandler);
-    this.chatInstance.setOnAgentLeftEventHandler(this.agentLeftHandler);
-  }
-
-  onClose = () => {
+  const handleClose = useCallback(() => {
     GenesysChat.getInstance().triggerDisconnectEvent();
-    this.props.onClose();
-  };
+    onClose();
+  }, [onClose]);
 
-  onNewMessageArrival = messages => {
-    this.setState({ messages });
-  };
-
-  userStartedTyping = () => {
-    GenesysChat.getInstance().userStartedTyping();
-  };
-
-  userStopedTyping = () => {
-    GenesysChat.getInstance().userStopedTyping();
-  };
-
-  agentTypingHandler = flag => {
-    this.setState({ agentTyping: flag });
-  };
-
-  agentLeftHandler = flag => {
-    this.setState({ agentLeft: flag });
-  };
-
-  render() {
-    const { messages, agentTyping } = this.state;
-    const { onMinimize } = this.props;
-
-    return (
-      <Container>
-        <Header onClose={this.onClose} onMinimize={onMinimize} />
-        <Body>
-          <MessagesList data={messages} />
-          {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
-          <SendMessageInput placeholder="Type Message" chatInstance={GenesysChat} />
-        </Body>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <Header onClose={handleClose} onMinimize={onMinimize} />
+      <Body>
+        <MessagesList data={messages} />
+        {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
+        {agentLeft && <TypingLabel>Agent left chat</TypingLabel>}
+        <SendMessageInput placeholder="Type Message" chatInstance={GenesysChat} />
+      </Body>
+    </Container>
+  );
 }
 
 Chat.propTypes = {
-  name: PropTypes.string,
-  mobileNumber: PropTypes.string,
-  email: PropTypes.string,
-  subject: PropTypes.string,
-  message: PropTypes.string
+  InitiatedCustomerName: PropTypes.string,
+  InitiatedCustomerMobile: PropTypes.string,
+  EmailAddress: PropTypes.string,
+  isAuth: PropTypes.bool,
+  onClose: PropTypes.func,
+  onMinimize: PropTypes.func
 };
 
 export default Chat;

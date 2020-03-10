@@ -1,7 +1,6 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
 
 import {
   RECEIVE_APPCONFIG,
@@ -17,30 +16,17 @@ import {
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
-import {
-  accountNames,
-  UAE_CODE,
-  UAE,
-  UAE_CURRENCY,
-  CONVENTIONAL_BANK,
-  ISLAMIC_BANK,
-  CONTINUE
-} from "../../constants";
-import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../constants";
+import { getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
-function* receiveAppConfigSaga({ payload }) {
+function* receiveAppConfigSaga() {
   try {
     const state = yield select();
-
-    const endpoints = getEndpoints(state);
+    const accountType = getAccountType(state);
     let response = null;
 
-    const accountType = Object.values(accountNames).includes(payload.accountType)
-      ? payload.accountType
-      : getAccountType(state);
-
-    if (!isEmpty(endpoints)) {
+    if (accountType) {
       response = yield call(config.load, accountType);
     } else {
       if (process.env.NODE_ENV === "development") {
@@ -59,12 +45,7 @@ function* receiveAppConfigSaga({ payload }) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicationInfo.accountType = accountType;
-      newConfig.prospect.applicationInfo.islamicBanking = [
-        CONVENTIONAL_BANK,
-        ISLAMIC_BANK
-      ].includes(payload.isIslamicBanking)
-        ? payload.isIslamicBanking === ISLAMIC_BANK
-        : getIsIslamicBanking(state);
+      newConfig.prospect.applicationInfo.islamicBanking = getIsIslamicBanking(state);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
