@@ -3,14 +3,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { Input, AutoSaveField as Field } from "../../../components/Form";
-import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
+import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
+import routes from "../../../routes";
 
 import { useStyles } from "./styled";
-import routes from "../../../routes";
-import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
-
 const loginSchema = Yup.object({
   username: Yup.string()
     .required(getRequiredMessage("User name"))
@@ -22,7 +21,9 @@ const loginSchema = Yup.object({
 
 export const LoginComponent = ({ login, setIsApplyEditApplication, history }) => {
   const classes = useStyles();
+  useFormNavigation([false, false]);
   const [isLoading, setIsLoading] = useState(false);
+
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
@@ -40,8 +41,6 @@ export const LoginComponent = ({ login, setIsApplyEditApplication, history }) =>
     },
     [login, history, setIsApplyEditApplication]
   );
-
-  useFormNavigation([true, false]);
 
   return (
     <div className={classes.baseForm}>

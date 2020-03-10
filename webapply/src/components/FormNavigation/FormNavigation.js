@@ -23,7 +23,9 @@ export const FormNavigationComponent = () => {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
-  const [isShowAccountInfo, isChatVisible, navigationSteps] = useContext(FormNavigationContext);
+  const { isShowAccountInfo, isChatVisible, navigationSteps = [] } = useContext(
+    FormNavigationContext
+  );
   const blobColor = useBlobColor();
 
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
