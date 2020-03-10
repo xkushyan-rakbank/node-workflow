@@ -66,13 +66,6 @@ const ApplicantInfoPage = ({
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
 
-  const handleClick = useCallback(
-    islamicBanking => {
-      pushHistory(detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL]);
-    },
-    [pushHistory, accountType]
-  );
-
   useEffect(() => {
     receiveAppConfig();
   }, [receiveAppConfig]);
@@ -193,7 +186,11 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink onClick={() => handleClick(isIslamicBanking)} />
+                <BackLink
+                  path={
+                    detailedAccountRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
+                  }
+                />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
