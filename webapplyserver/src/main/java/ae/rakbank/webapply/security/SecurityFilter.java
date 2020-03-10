@@ -44,7 +44,7 @@ public class SecurityFilter implements Filter {
             }
 
             if (decryptedData == null || decryptedData.length == 0) {
-                throw new IllegalStateException("Decrypted is empty");
+                throw new IllegalStateException("Error while reading request payload, encrypted payload should be passed");
             } else {
                 HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request, decryptedData);
                 chain.doFilter(requestWrapper, response);
