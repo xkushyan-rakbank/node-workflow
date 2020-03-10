@@ -47,7 +47,8 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
               label="Is this person a signatory?"
               changeProspect={prospect => ({
                 ...prospect,
-                [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE
+                [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE,
+                [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: true
               })}
               onSelect={() => {
                 if (values.isSignatory) {

@@ -28,6 +28,8 @@ import {
   getProgress,
   getUploadErrors
 } from "../../store/selectors/getProspectDocuments";
+import { getViewIdOfSearchResultById } from "../../store/selectors/searchProspect";
+import { updateViewId } from "../../store/actions/appConfig";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
 export const ReUploadDocuments = () => {
@@ -36,6 +38,7 @@ export const ReUploadDocuments = () => {
   const otherDocuments = useSelector(getOtherDocuments);
   const progress = useSelector(getProgress);
   const uploadErrors = useSelector(getUploadErrors);
+  const searchResultViewId = useSelector(getViewIdOfSearchResultById);
   const pushHistory = useTrackingHistory();
 
   useFormNavigation([true, false]);
@@ -97,11 +100,12 @@ export const ReUploadDocuments = () => {
     otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === "Uploaded");
 
   const submitForm = useCallback(() => {
+    dispatch(updateViewId(searchResultViewId, false));
     dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(
       () => pushHistory(routes.MyApplications),
       () => {}
     );
-  }, [dispatch, pushHistory]);
+  }, [dispatch, pushHistory, searchResultViewId]);
 
   return (
     <div className={classes.root}>
