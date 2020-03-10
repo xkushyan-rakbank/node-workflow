@@ -3,8 +3,8 @@ package ae.rakbank.documentuploader;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ae.rakbank.documentuploader.services.ProspectValidatorService;
 import ae.rakbank.documentuploader.services.auth.AuthorizationService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,8 @@ public class DocumentUploaderTest {
 	private DocumentUploadService docUploadService;
 	@MockBean
 	private AuthorizationService authorizationService;
+	@MockBean
+	private ProspectValidatorService prospectValidatorService;
 
 	@Test
 	public void shouldSaveUploadedFile() throws Exception {
