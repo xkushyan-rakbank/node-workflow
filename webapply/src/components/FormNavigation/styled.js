@@ -30,7 +30,6 @@ export const useStyles = makeStyles(theme => ({
   blob: {
     position: "absolute",
     top: "50%",
-    width: "calc(380/768*100vh)",
     zIndex: -1,
     right: 0,
     minHeight: "100vh",

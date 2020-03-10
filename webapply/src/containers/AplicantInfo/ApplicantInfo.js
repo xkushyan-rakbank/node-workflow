@@ -61,10 +61,7 @@ const ApplicantInfoPage = ({
   const pushHistory = useTrackingHistory();
 
   useEffect(() => {
-    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
-
-    receiveAppConfig(segment);
+    receiveAppConfig();
   }, [receiveAppConfig]);
 
   useEffect(() => {
@@ -77,7 +74,8 @@ const ApplicantInfoPage = ({
       submit(values).then(
         () => {
           pushHistory(
-            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
+            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
+            true
           );
         },
         () => {

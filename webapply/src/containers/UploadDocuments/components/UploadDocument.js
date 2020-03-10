@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useMemo } from "react";
 import cx from "classnames";
 
 import { documentValidationSchema } from "./../../../utils/validation";
@@ -98,6 +98,18 @@ export const UploadDocuments = ({
     setSelectedFile(null);
   }, []);
 
+  const renderDocumentTitle = useMemo(() => {
+    if (isUploading) {
+      return `Uploading ${document.documentTitle}`;
+    } else if (isUploaded && selectedFile) {
+      return selectedFile.name;
+    } else if (isUploaded && document.fileDescription) {
+      return document.fileDescription;
+    } else {
+      return document.documentTitle;
+    }
+  }, [document, isUploading, isUploaded]);
+
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {
@@ -117,13 +129,7 @@ export const UploadDocuments = ({
 
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
-          {isUploading
-            ? `Uploading ${document.documentTitle}`
-            : isUploaded && selectedFile
-            ? `${selectedFile.name}`
-            : isUploaded
-            ? document.fileDescription
-            : document.documentTitle}
+          {renderDocumentTitle}
 
           {selectedFile && (
             <span className={classes.signatoryRights}>

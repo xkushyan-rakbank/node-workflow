@@ -72,9 +72,8 @@ public class WebApplyController {
     }
 
     @PostMapping(value = "/otp", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Object> generateVerifyOTP(HttpServletRequest httpRequest,
-                                               @RequestBody JsonNode requestJSON,
-                                               boolean captchaVerified) {
+    public ResponseEntity<Object> generateVerifyOTP(@RequestBody JsonNode requestJSON,
+                                                    boolean captchaVerified) {
         boolean isRecaptchaTokenPresent = requestJSON.has(RECAPTCHA_TOKEN_REQUEST_KEY);
         if (isRecaptchaTokenPresent) {
             ((ObjectNode) requestJSON).remove(RECAPTCHA_TOKEN_REQUEST_KEY);
@@ -94,12 +93,16 @@ public class WebApplyController {
     }
 
     private String issueJwtToken(JsonNode requestJSON) {
-        return authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText());
+        if (requestJSON.get("prospectId") != null) {
+            return authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText(), requestJSON.get("prospectId").asText());
+        } else {
+            return authorizationService.createCustomerJwtToken(requestJSON.get("mobileNo").asText(), "");
+        }
     }
 
     @PostMapping(value = "/users/authenticate", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Object> login(HttpServletRequest httpRequest,
-                                   @RequestBody JsonNode requestBodyJSON) {
+                                        @RequestBody JsonNode requestBodyJSON) {
 
         log.info("Begin login() method");
         log.debug(String.format("login() method args, RequestBody=[%s]", requestBodyJSON.toString()));
@@ -115,7 +118,7 @@ public class WebApplyController {
 
         if (dehResponse.getStatusCode() == HttpStatus.OK) {
             response.header(JWT_TOKEN_KEY, authorizationService.createAgentJwtToken(requestBodyJSON.get("username").asText(),
-                requestBodyJSON.get("password").asText()));
+                    requestBodyJSON.get("password").asText()));
         }
 
         return response.body(dehResponse.getBody());

@@ -32,6 +32,7 @@ const licenseInformationSchema = () =>
   Yup.object({
     licenseNumber: Yup.string()
       .required(getRequiredMessage("License number"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("License number")),
     licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),

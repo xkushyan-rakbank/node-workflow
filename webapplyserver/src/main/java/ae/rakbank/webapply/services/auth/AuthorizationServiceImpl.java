@@ -74,13 +74,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public String createCustomerJwtToken(String phoneNumber) {
+    public String createCustomerJwtToken(String phoneNumber, String prospectId) {
         ResponseEntity<JsonNode> oAuthObjectResponse =
                 oauthClient.authorize(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
 
         return jwtService.encrypt(JwtPayload.builder()
                 .role(UserRole.CUSTOMER)
                 .phoneNumber(phoneNumber)
+                .prospectId(prospectId)
                 .oauthAccessToken(oAuthObjectResponse.getBody().get("access_token").asText())
                 .oauthRefreshToken(oAuthObjectResponse.getBody().get("refresh_token").asText())
                 .oauthTokenExpiryTime(oAuthService.getExpireTime(oAuthObjectResponse))
@@ -100,5 +101,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public JwtPayload getPrincipal(String token) {
         return jwtService.decrypt(token);
+    }
+
+    @Override
+    public String getTokenFromPrincipal(JwtPayload principal) {
+        return jwtService.encrypt(principal);
     }
 }

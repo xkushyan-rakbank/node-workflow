@@ -64,7 +64,7 @@ const CompanyStakeholdersComponent = ({
 
   const goToFinalQuestions = useCallback(() => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.finalQuestions);
+      if (!isScreeningError) pushHistory(routes.finalQuestions, true);
     });
   }, [pushHistory, sendProspectToAPI]);
 
