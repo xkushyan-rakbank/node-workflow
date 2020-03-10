@@ -10,11 +10,7 @@ import {
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import {
-  SPECIAL_CHARACTERS_REGEX,
-  POBOX_REGEX,
-  SPACE_OCCUPIED_OTHER_REGEX
-} from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX, POBOX_REGEX } from "../../../../../../utils/validation";
 import {
   OTHER_OPTION_CODE,
   BASE_PATH,
@@ -47,7 +43,7 @@ const companyPreferredMailingAddressSchema = () =>
     emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
     typeOfSpaceOccupied: Yup.object().shape({
       spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
-      others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, getInvalidMessage("Other"))
+      others: Yup.string().matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
     })
   });
 
