@@ -7,7 +7,7 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import routes from "../../routes";
-import { accountNames, CONTINUE, NEXT, STEP_STATUS } from "../../constants";
+import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper } from "../../constants";
 import { useStep } from "../../hooks/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
@@ -44,7 +44,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     },
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
-  useFormNavigation([true, false]);
+  useFormNavigation([false, true, formStepper]);
 
   const createSetStepHandler = nextStep => () => {
     setIsSubmit(false);

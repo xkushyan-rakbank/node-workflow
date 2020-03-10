@@ -19,6 +19,7 @@ import {
   getIsSendingProspect
 } from "../../store/selectors/appConfig";
 import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
+import { formStepper } from "../../constants";
 import { STEP_STATUS } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { useStyles } from "./styled";
@@ -32,7 +33,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName },
   isComeFromROScreens
 }) => {
-  useFormNavigation([true, false]);
+  useFormNavigation([false, true, formStepper]);
 
   const pushHistory = useTrackingHistory();
   const classes = useStyles();

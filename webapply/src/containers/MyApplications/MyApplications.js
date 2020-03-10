@@ -8,12 +8,13 @@ import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { MyApplications as BaseComponent } from "./components/MyApplications";
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { searchProspectStepper } from "../../constants";
 
 export const MyApplications = () => {
   const inputParam = useSelector(getApplicantInfo);
   const dispatch = useDispatch();
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
-  useFormNavigation([true, false]);
+  useFormNavigation([true, false, searchProspectStepper]);
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));

@@ -10,10 +10,13 @@ import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/ap
 import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
 import { useStyles } from "./styled";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { formStepper } from "../../constants";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
   const { submitted, bankingClock: BankingClock } = useIconsByAccount();
+  useFormNavigation([true, true, formStepper]);
 
   return accountNumbers.length > 0 ? (
     <div className={classes.container}>

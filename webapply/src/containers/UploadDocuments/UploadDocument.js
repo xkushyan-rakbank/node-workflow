@@ -5,7 +5,7 @@ import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { NEXT } from "../../constants";
+import { formStepper, NEXT } from "../../constants";
 import { useStyles } from "./styled";
 import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
@@ -22,7 +22,7 @@ export const UploadDocument = ({
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
 
-  useFormNavigation([true, false]);
+  useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
     retrieveDocDetails();

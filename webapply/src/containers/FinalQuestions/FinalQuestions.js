@@ -9,7 +9,7 @@ import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appConfig";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
-import { NEXT } from "../../constants";
+import { formStepper, NEXT } from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
@@ -46,7 +46,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
     isExpandedMargin
   ]);
 
-  useFormNavigation([true, false]);
+  useFormNavigation([false, false, formStepper]);
 
   return (
     <>

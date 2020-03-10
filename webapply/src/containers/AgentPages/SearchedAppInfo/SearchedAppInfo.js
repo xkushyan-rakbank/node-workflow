@@ -14,10 +14,12 @@ import {
   STATUS_LOCKED,
   STATUS_FORCE_STOP
 } from "./constants";
+import { searchProspectStepper } from "../../../constants";
 import { APP_STOP_SCREEN_RESULT } from "../../../constants";
 
 import { useStyles } from "./styled";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 
 export const SearchedAppInfoComponent = ({
   searchResults,
@@ -32,6 +34,7 @@ export const SearchedAppInfoComponent = ({
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
+  useFormNavigation([false, false, searchProspectStepper]);
 
   const handleSetStep = nextStep => {
     if (initialAvailableSteps.includes(nextStep)) {

@@ -21,7 +21,7 @@ import {
   percentageSelector
 } from "../../store/selectors/stakeholder";
 import routes from "../../routes";
-import { NEXT } from "../../constants";
+import { formStepper, NEXT } from "../../constants";
 import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -50,7 +50,7 @@ const CompanyStakeholdersComponent = ({
     setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
   }, [setIsShowingAddButton, stakeholders]);
 
-  useFormNavigation([true, false]);
+  useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
     if (!stakeholders.length) {
