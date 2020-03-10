@@ -221,6 +221,9 @@ public class DehClientTest {
         Assert.assertSame(HttpStatus.OK, response.getStatusCode());
         Assert.assertSame(dehResponse, response.getBody());
 
+        Mockito.verify(authorizationService).getAndUpdateContextOauthToken();
+        Mockito.verify(authorizationService).getOAuthHeaders(any());
+
     }
 
     @Test(expected = ApiException.class)
@@ -279,23 +282,5 @@ public class DehClientTest {
         Assert.assertNotNull(objectResponseEntity.getBody());
         Assert.assertEquals(responseNode, objectResponseEntity.getBody());
 
-    }
-
-    @Test
-    public void invokeApiEndpoint2() {
-
-        Mockito.when(restTemplate.exchange(eq("http://test"), eq(HttpMethod.POST), any(), eq(JsonNode.class))).thenReturn(ResponseEntity.ok().build());
-
-        final ResponseEntity<Object> objectResponseEntity = dehClient.invokeApiEndpoint("http://test",
-                HttpMethod.POST,
-                null,
-                "updateProspect()",
-                MediaType.APPLICATION_JSON,
-                "Test123");
-        Assert.assertNotNull(objectResponseEntity);
-    }
-
-    @Test
-    public void getDatalistJSON() {
     }
 }
