@@ -16,15 +16,18 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { setToken } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
+import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
-import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
+
 import { useStyles } from "./styled";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
+
 export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({
@@ -69,6 +72,8 @@ const ComeBackLoginComponent = ({
   const handleVerifiedFailed = useCallback(() => {
     setToken(null);
   }, [setToken]);
+
+  useFormNavigation([true, false]);
 
   useEffect(() => {
     if (isOtpGenerated) {

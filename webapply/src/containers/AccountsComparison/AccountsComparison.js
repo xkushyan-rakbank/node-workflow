@@ -5,14 +5,15 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
 import { TableCompare } from "./components/TableCompare";
-
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 import { useStyles } from "./styled";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
-  const [selectedAccount, setSelectedAccount] = useState("Current Account");
   const classes = useStyles();
+  useFormNavigation([true, false]);
+  const [selectedAccount, setSelectedAccount] = useState("Current Account");
 
   const secondSection = useRef(null);
   const tableRef = useRef(null);
