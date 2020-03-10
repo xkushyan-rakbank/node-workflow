@@ -26,7 +26,7 @@ Text.defaultProps = {
 };
 
 export const BackLink = ({ text = "Go back", className = "", path, ...props }) => (
-  <Root className={className} to={path} {...props}>
+  <Root className={className} to={path} replace {...props}>
     <ArrowBack alt="back" />
     <Text>{text}</Text>
   </Root>

@@ -1,7 +1,6 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
 import cloneDeep from "lodash/cloneDeep";
-import isEmpty from "lodash/isEmpty";
 
 import {
   RECEIVE_APPCONFIG,
@@ -18,19 +17,16 @@ import {
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
 import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../constants";
-import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import { getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
 function* receiveAppConfigSaga() {
   try {
     const state = yield select();
-
-    const endpoints = getEndpoints(state);
+    const accountType = getAccountType(state);
     let response = null;
 
-    const accountType = getAccountType(state);
-
-    if (!isEmpty(endpoints)) {
+    if (accountType) {
       response = yield call(config.load, accountType);
     } else {
       if (process.env.NODE_ENV === "development") {

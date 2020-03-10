@@ -26,7 +26,9 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
     .matches(NAME_REGEX, getInvalidMessage("Mother's maiden name")),
   maritalStatusOthers: Yup.string().when("maritalStatus", {
     is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string().required(getRequiredMessage("Other"))
+    then: Yup.string()
+      .required(getRequiredMessage("Other"))
+      .matches(NAME_REGEX, getInvalidMessage("Other"))
   })
 });
 

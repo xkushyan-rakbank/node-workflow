@@ -3,9 +3,9 @@ import cx from "classnames";
 
 import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
 import { VerticalPaginationContext } from "./VerticalPaginationProvider";
-import { useStyles } from "./styled";
 import { getAverage } from "./utils";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
+import { useStyles } from "./styled";
 
 export const VerticalPaginationComponent = ({
   children,

@@ -6,8 +6,8 @@ import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStake
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { Icon, ICONS } from "../../components/Icons";
-
 import {
   changeEditableStakeholder,
   createNewStakeholder,
@@ -20,11 +20,11 @@ import {
   checkIsHasSignatories,
   percentageSelector
 } from "../../store/selectors/stakeholder";
-import routes from "../../routes";
-import { NEXT } from "../../constants";
-import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
-import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import routes from "../../routes";
+import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
+
+import { useStyles } from "./styled";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -52,6 +52,8 @@ const CompanyStakeholdersComponent = ({
   const handleHideAddButton = useCallback(() => {
     setIsShowingAddButton(false);
   }, [setIsShowingAddButton]);
+
+  useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
     if (!stakeholders.length) {

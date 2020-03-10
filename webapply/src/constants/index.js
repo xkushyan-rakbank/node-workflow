@@ -241,7 +241,7 @@ export const COUNTRYOFINCORPORATION_CHECK = {
   screeningReason: "Proceed"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
-  screeningType: "RAKStarter Account Check",
+  screeningType: "RAK-Starter Account Validation",
   screeningStatus: "Not completed",
   screeningLabel: "RAK-Starter Account Validation",
   screeningReason: "Proceed"
