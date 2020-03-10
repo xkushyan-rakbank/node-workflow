@@ -37,3 +37,8 @@ Open Issues / Refactor:
 2. PUT method has issue in binding the RequestParam (fileInfo), use POST method until this issue is fixed.
 3. Remove @CrossOrigin from Controller class once the development is done.
 4. logback-spring.xml: a logger configuration file, currently logs written to server.log instead of application log file. This works fine when the application is run as standalone or with embedded servlet container.
+
+Environment variables:
+
+1. WEB_APPLY_DIR - path to web apply directory
+2. WEB_APPLY_ENV - name of profile, list of all profiles you can see into DocUploadConfig.json file.

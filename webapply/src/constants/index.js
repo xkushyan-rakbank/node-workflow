@@ -1,4 +1,4 @@
-import routes from "../routes";
+import routes, { smeBaseName } from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 
 export const authorityType = [
@@ -11,7 +11,7 @@ export const formStepper = [
     step: 1,
     title: "Basic Information",
     path: routes.applicantInfo,
-    relatedPath: routes.verifyOtp //clarify in Dhanya about additional item on right steps
+    relatedPath: routes.verifyOtp
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
   { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
@@ -41,9 +41,8 @@ export const submitApplication = {
   termsOfEnrolment: "terms of enrolment",
   termConditionUrl:
     "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
-  //TODO: need to update the URL
   termOfEnrolmentUrl:
-    "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
+    "https://revamp.rakbank.ae/wps/wcm/connect/03cd2c04-69c0-402e-81a9-9524367ee746/tnc.jpg?MOD=AJPERES&id=1577254367005",
   formTitle: "Submit application",
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
@@ -182,12 +181,6 @@ export const screeningStatusDefault = {
 
 export const DATE_FORMAT = "yyyy-MM-dd";
 
-export const queryParams = {
-  PRODUCT: "product",
-  IS_ISLAMIC: "type"
-};
-export const ISLAMIC_BANK = "RAKislamic";
-export const CONVENTIONAL_BANK = "Conventional";
 export const BYTES_IN_MEGABYTE = 1048576;
 
 export const VIEW_IDS = {
@@ -283,4 +276,89 @@ export const COMPANY_CHECK_NAMES = [
   RAKSTARTER_ACCOUNT_CHECK,
   ISSHAREHOLDERACOMPANY_CHECK,
   TOO_MANY_STAKEHOLDERS
+];
+
+export const RAKSTARTER_ROUTE_PARAM = "rakstarter";
+export const CURRENT_ACCOUNT_ROUTE_PARAM = "current-account";
+export const ELITE_ROUTE_PARAM = "business-elite";
+export const RAKSTARTER_ISLAMIC_ROUTE_PARAM = "rakstarter-islamic";
+export const CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM = "current-account-islamic";
+export const ELITE_ISLAMIC_ROUTE_PARAM = "business-elite-islamic";
+
+export const accountTypeURIs = {
+  [RAKSTARTER_ROUTE_PARAM]: {
+    accountType: accountNames.starter,
+    isIslamicBanking: false
+  },
+  [CURRENT_ACCOUNT_ROUTE_PARAM]: {
+    accountType: accountNames.currentAccount,
+    isIslamicBanking: false
+  },
+  [ELITE_ROUTE_PARAM]: {
+    accountType: accountNames.elite,
+    isIslamicBanking: false
+  },
+  [RAKSTARTER_ISLAMIC_ROUTE_PARAM]: {
+    accountType: accountNames.starter,
+    isIslamicBanking: true
+  },
+  [CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM]: {
+    accountType: accountNames.currentAccount,
+    isIslamicBanking: true
+  },
+  [ELITE_ISLAMIC_ROUTE_PARAM]: {
+    accountType: accountNames.elite,
+    isIslamicBanking: true
+  }
+};
+
+export const CONVENTIONAL = "conventional";
+export const ISLAMIC = "islamic";
+
+export const detailedAccountRoutesMap = {
+  [accountNames.starter]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}`
+  },
+  [accountNames.currentAccount]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}`
+  },
+  [accountNames.elite]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}`
+  }
+};
+
+export const detailedAccountRoutes = [
+  `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}`,
+  `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}`,
+  `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}`,
+  `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}`
+];
+
+export const applicationOverviewRoutesMap = {
+  [accountNames.starter]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/application-overview`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}/application-overview`
+  },
+  [accountNames.currentAccount]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}/application-overview`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/application-overview`
+  },
+  [accountNames.elite]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/application-overview`
+  }
+};
+
+export const applicationOverviewRoutes = [
+  `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/application-overview`,
+  `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}/application-overview`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}/application-overview`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/application-overview`,
+  `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/application-overview`,
+  `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`
 ];

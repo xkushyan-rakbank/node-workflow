@@ -34,9 +34,11 @@ const companyPreferredMailingAddressSchema = () =>
   Yup.object().shape({
     addressLine1: Yup.string()
       .required(getRequiredMessage("Office / Shop Number"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office / Shop Number")),
     addressLine2: Yup.string()
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
     poBox: Yup.string()

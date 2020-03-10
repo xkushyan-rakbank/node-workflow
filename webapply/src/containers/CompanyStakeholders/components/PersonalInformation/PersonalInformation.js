@@ -114,7 +114,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       }}
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
-      validateOnChange={false}
+      validateOnChange={true}
     >
       {({ values, setFieldValue, errors, touched }) => (
         <Form>

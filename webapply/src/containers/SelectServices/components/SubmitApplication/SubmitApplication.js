@@ -38,7 +38,7 @@ export const SubmitApplicationComponent = ({
     updateViewId(pathname.replace(smeBaseName, ""), false);
     setIsSubmitting(true);
     sendProspectToAPI(NEXT, null, SUBMIT).then(
-      () => pushHistory(routes.ApplicationSubmitted),
+      () => pushHistory(routes.ApplicationSubmitted, true),
       () => setIsSubmitting(false)
     );
   };

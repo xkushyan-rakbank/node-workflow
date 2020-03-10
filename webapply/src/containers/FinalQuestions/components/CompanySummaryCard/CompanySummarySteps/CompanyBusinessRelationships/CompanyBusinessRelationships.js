@@ -37,6 +37,7 @@ const companyBusinessRelationshipsSchema = () =>
       Yup.object().shape({
         name: Yup.string()
           .required(getRequiredMessage("Customer name"))
+          // eslint-disable-next-line no-template-curly-in-string
           .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
           .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name")),
         country: Yup.string().required(getRequiredMessage("Country"))
@@ -49,6 +50,7 @@ const companyBusinessRelationshipsSchema = () =>
         Yup.object().shape({
           name: Yup.string()
             .required(getRequiredMessage("Supplier name"))
+            // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
             .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name")),
           country: Yup.string().required(getRequiredMessage("Country"))
@@ -72,6 +74,7 @@ const companyBusinessRelationshipsSchema = () =>
           Yup.object().shape({
             bankName: Yup.string()
               .required(getRequiredMessage("Bank name"))
+              // eslint-disable-next-line no-template-curly-in-string
               .max(MAX_BANK_NAME_LENGTH, "Maximum ${max} characters allowed")
               .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Bank name"))
           })
@@ -173,6 +176,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               component={SelectAutocomplete}
                               shrink
                               tabIndex="0"
+                              otherProps={{ menuFullWidth: true }}
                             />
                             {isTopCustomers && (
                               <ArrayRemoveButton
@@ -275,6 +279,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               disabled={values.isDontHaveSuppliersYet}
                               shrink
                               tabIndex="0"
+                              otherProps={{ menuFullWidth: true }}
                             />
                             {isTopSuppliers && (
                               <ArrayRemoveButton
