@@ -1,6 +1,5 @@
 export const smeBaseName = "/business";
 export const agentBaseName = "/agent";
-export const reUploadDocumentsAddress = "/ReUploadDocuments";
 
 export default {
   ApplicationSubmitted: `${smeBaseName}/ApplicationSubmitted`,

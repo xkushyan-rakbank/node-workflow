@@ -26,4 +26,8 @@ export const getSearchResultsStatuses = createSelector(
       status: result.status.statusNotes
     }))
 );
+export const getViewIdOfSearchResultById = createSelector(
+  getSearchResultById,
+  searchResult => get(searchResult, "applicationInfo.viewId")
+);
 export const getErrorCode = state => state.searchProspect.errorCode;

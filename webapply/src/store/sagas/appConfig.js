@@ -20,7 +20,6 @@ import { config } from "../../api/apiClient";
 import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../constants";
 import { getEndpoints, getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
-import { reUploadDocumentsAddress } from "../../routes";
 
 function* receiveAppConfigSaga() {
   try {
@@ -79,9 +78,7 @@ function* updateActionTypeSaga({ actionType }) {
 }
 
 function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
-  if (viewId !== reUploadDocumentsAddress) {
-    yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
-  }
+  yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
     yield put(sendProspectToAPI(CONTINUE));
   }

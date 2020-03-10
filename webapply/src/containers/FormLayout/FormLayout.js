@@ -32,18 +32,16 @@ export const FormLayoutComponent = ({
 
   useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
-    if (pathname !== routes.reUploadDocuments) {
-      const isSendToApi = [
-        routes.companyInfo,
-        routes.stakeholdersInfo,
-        routes.finalQuestions,
-        routes.uploadDocuments,
-        routes.selectServices,
-        routes.SubmitApplication
-      ].includes(pathname);
+    const isSendToApi = [
+      routes.companyInfo,
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.uploadDocuments,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(pathname);
 
-      updateViewId(viewId, isSendToApi);
-    }
+    updateViewId(viewId, isSendToApi);
   }, [pathname, updateViewId]);
 
   const isDisplayScreeningError =
