@@ -78,6 +78,7 @@ export const customStyles = {
     return {
       ...provided,
       zIndex: 2,
+      marginTop: "6px",
       width
     };
   },
