@@ -30,7 +30,7 @@ public class EncodeResponseAdviser implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object jsonObject, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         byte[] randomKey = getKeyFromRequest(serverHttpRequest.getHeaders());
-        if (randomKey != null && randomKey.length > 0) {
+        if (randomKey.length > 0) {
             SecretKeySpec spec = securityUtil.getSecretKeySpec(randomKey);
             return encrypt(jsonObject.toString(), spec);
         }
@@ -47,16 +47,10 @@ public class EncodeResponseAdviser implements ResponseBodyAdvice<Object> {
     }
 
     private byte[] getKeyFromRequest(HttpHeaders headers) {
-        String key = Optional.ofNullable(headers.get("x-sym-key"))
+        return Optional.ofNullable(headers.get("x-sym-key"))
                 .map(strings -> strings.get(0))
-                .orElse(null);
-        if (key == null) return new byte[0];
-        try {
-            return securityUtil.decryptAsymmetric(key);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-        return new byte[0];
+                .map(securityUtil::decryptAsymmetric)
+                .orElse(new byte[0]);
     }
 
 }
