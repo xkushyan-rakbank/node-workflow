@@ -1,8 +1,4 @@
-export const PROSPECT_STATUSES = {
-  ASSESSING: "Assessing",
-  DOCUMENTS_NEEDED: "Documents needed",
-  NEED_ADDITIONAL_INFORMATION_DOCUMENTS: "Need Additional Information/Documents"
-};
+import { PROSPECT_STATUSES } from "../../constants/index";
 
 export const DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS = [
   PROSPECT_STATUSES.ASSESSING,

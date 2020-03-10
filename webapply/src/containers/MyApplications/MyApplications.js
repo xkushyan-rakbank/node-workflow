@@ -19,8 +19,12 @@ export const MyApplications = () => {
   }, []);
 
   const onGetProspectInfo = useCallback(
-    prospectId =>
-      dispatch(getProspectInfoPromisify(prospectId)).then(pushDisplayScreenToHistory, () => {}),
+    prospectId => {
+      dispatch(getProspectInfoPromisify(prospectId)).then(
+        prospect => pushDisplayScreenToHistory(prospect),
+        () => {}
+      );
+    },
     [pushDisplayScreenToHistory, dispatch]
   );
 

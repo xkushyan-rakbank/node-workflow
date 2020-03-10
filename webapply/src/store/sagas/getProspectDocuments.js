@@ -24,6 +24,7 @@ import {
 } from "../../api/apiClient";
 import { getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
 import { getProspectDocuments as getDocuments } from "../selectors/getProspectDocuments";
+import { getProspectStatus } from "../selectors/searchProspect";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
@@ -46,6 +47,7 @@ import {
   appendDocumentKey
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, OTHER_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
+import { PROSPECT_STATUSES } from "../../constants/index";
 
 function createUploader(prospectId, data, source, headers) {
   let emit;
@@ -129,6 +131,7 @@ function* uploadDocumentsBgSync({
     const config = cloneDeep(state.appConfig);
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state);
+    const prospectStatus = getProspectStatus(state);
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
@@ -153,7 +156,13 @@ function* uploadDocumentsBgSync({
     }
 
     yield put(setConfig(config));
-    yield put(sendProspectToAPIPromisify());
+    if (
+      ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
+        prospectStatus
+      )
+    ) {
+      yield put(sendProspectToAPIPromisify());
+    }
   } catch (error) {
     yield put(uploadFilesFail({ [documentKey]: error }));
   } finally {
