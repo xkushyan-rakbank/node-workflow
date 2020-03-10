@@ -17,21 +17,20 @@ import {
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
 
-export const signatoryPersonalInformationSchema = () =>
-  Yup.object().shape({
-    maritalStatus: Yup.string().required(getRequiredMessage("Marital Status")),
-    mothersMaidenName: Yup.string()
-      .required(getRequiredMessage("Mother's maiden name"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_MOTHERS_MAIDEN_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, getInvalidMessage("Mother's maiden name")),
-    maritalStatusOthers: Yup.string().when("maritalStatus", {
-      is: value => value === OTHER_OPTION_CODE,
-      then: Yup.string()
-        .required(getRequiredMessage("Other"))
-        .matches(NAME_REGEX, getInvalidMessage("Other"))
-    })
-  });
+export const signatoryPersonalInformationSchema = Yup.object().shape({
+  maritalStatus: Yup.string().required(getRequiredMessage("Marital Status")),
+  mothersMaidenName: Yup.string()
+    .required(getRequiredMessage("Mother's maiden name"))
+    // eslint-disable-next-line no-template-curly-in-string
+    .max(MAX_MOTHERS_MAIDEN_NAME_LENGTH, "Maximum ${max} characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Mother's maiden name")),
+  maritalStatusOthers: Yup.string().when("maritalStatus", {
+    is: value => value === OTHER_OPTION_CODE,
+    then: Yup.string()
+      .required(getRequiredMessage("Other"))
+      .matches(NAME_REGEX, getInvalidMessage("Other"))
+  })
+});
 
 export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
