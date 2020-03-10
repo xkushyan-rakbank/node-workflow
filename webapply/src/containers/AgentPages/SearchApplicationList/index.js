@@ -2,7 +2,9 @@ import React from "react";
 import { generatePath } from "react-router";
 import { Link } from "react-router-dom";
 import cx from "classnames";
+
 import routes from "../../../routes";
+
 import { useStyles } from "./styled";
 
 export const SearchApplicationList = ({ currentApplications }) => {
