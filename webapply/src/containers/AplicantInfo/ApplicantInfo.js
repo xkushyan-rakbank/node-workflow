@@ -15,13 +15,17 @@ import {
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
-import { UAE_CODE } from "../../constants";
+import { UAE_CODE, CONVENTIONAL, detailedAccountRoutesMap, ISLAMIC } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
+import {
+  getIsRecaptchaEnable,
+  getAccountType,
+  getIsIslamicBanking
+} from "../../store/selectors/appConfig";
 import routes from "../../routes";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -55,10 +59,19 @@ const ApplicantInfoPage = ({
   reCaptchaToken,
   isRecaptchaEnable,
   resetScreeningError,
-  isConfigLoading
+  isConfigLoading,
+  accountType,
+  isIslamicBanking
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
+
+  const handleClick = useCallback(
+    islamicBanking => {
+      pushHistory(detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL]);
+    },
+    [pushHistory, accountType]
+  );
 
   useEffect(() => {
     receiveAppConfig();
@@ -180,7 +193,7 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink path={{ pathname: routes.accountsComparison, initialPosition: 1 }} />
+                <BackLink onClick={() => handleClick(isIslamicBanking)} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
@@ -204,7 +217,9 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  accountType: getAccountType(state),
+  isIslamicBanking: getIsIslamicBanking(state)
 });
 
 const mapDispatchToProps = {
