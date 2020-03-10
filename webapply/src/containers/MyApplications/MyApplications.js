@@ -1,13 +1,12 @@
 import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { MyApplications as BaseComponent } from "./components/MyApplications";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { searchApplications } from "../../store/actions/searchProspect";
 import { getProspectInfoPromisify } from "./../../store/actions/retrieveApplicantInfo";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
-
-import { MyApplications as BaseComponent } from "./components/MyApplications";
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
-import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { searchProspectStepper } from "../../constants";
 
 export const MyApplications = () => {

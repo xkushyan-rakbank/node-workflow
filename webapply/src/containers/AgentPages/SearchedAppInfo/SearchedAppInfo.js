@@ -3,10 +3,14 @@ import get from "lodash/get";
 
 import { FormCard } from "../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../components/StepComponent/StepComponent";
-import routes from "../../../routes";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
+import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
+import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
+import routes from "../../../routes";
+
 import {
   searchedAppInfoSteps,
   CONFIRM_MESSAGE,
@@ -14,16 +18,11 @@ import {
   STATUS_LOCKED,
   STATUS_FORCE_STOP
 } from "./constants";
-import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
-
-import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
-import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { useStyles } from "./styled";
 
 export const SearchedAppInfoComponent = ({
   searchResults,
   match,
-  retrieveDocDetails,
   getProspectOverview,
   prospectOverview,
   getProspectInfo,

@@ -5,13 +5,14 @@ import { connect } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
+import { formStepper } from "../../constants";
+
+import { useStyles } from "./styled";
 
 import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
-import { useIconsByAccount } from "../../utils/useIconsByAccount";
-import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { formStepper } from "../../constants";
-import { useStyles } from "./styled";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();

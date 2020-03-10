@@ -1,15 +1,17 @@
 import React, { useState, useCallback } from "react";
 import cx from "classnames";
-import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
+
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
-import routes from "../../routes";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper } from "../../constants";
 import { useStep } from "../../hooks/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import routes from "../../routes";
+
+import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { useStyles } from "./styled";
 
 export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {

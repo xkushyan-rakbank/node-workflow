@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { OTPform } from "../../components/OTPform";
 
-import routes from "../../routes";
+import { OTPform } from "../../components/OTPform";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import routes from "../../routes";
 
 const useStyles = makeStyles({
   centeredContainer: {

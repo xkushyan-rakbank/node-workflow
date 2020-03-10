@@ -18,5 +18,5 @@ export const useFormNavigation = params => {
     if (setValues) {
       setValues(params);
     }
-  }, [params, setValues]);
+  }, [params]);
 };
