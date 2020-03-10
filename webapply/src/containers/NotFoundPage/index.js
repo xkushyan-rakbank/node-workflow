@@ -1,10 +1,13 @@
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { useStyles } from "./styled";
-import { useIconsByAccount } from "../../utils/useIconsByAccount";
-import { ReactComponent as Arrow } from "../../assets/icons/whiteArrow.svg";
+
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
+import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import routes from "../../routes";
+
+import { useStyles } from "./styled";
+
+import { ReactComponent as Arrow } from "../../assets/icons/whiteArrow.svg";
 
 export default function NotFoundPage() {
   const history = useHistory();

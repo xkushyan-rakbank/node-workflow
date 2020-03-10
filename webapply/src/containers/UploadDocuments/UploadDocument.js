@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
-import routes from "../../routes";
+
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { BackLink } from "../../components/Buttons/BackLink";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
-import { BackLink } from "../../components/Buttons/BackLink";
 import { formStepper, NEXT } from "../../constants";
-import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
-import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import routes from "../../routes";
+
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 import { useStyles } from "./styled";
 
 export const UploadDocument = ({
@@ -21,7 +23,6 @@ export const UploadDocument = ({
 }) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
-
   useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {

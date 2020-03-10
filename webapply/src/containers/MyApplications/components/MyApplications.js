@@ -3,6 +3,7 @@ import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { useSelector } from "react-redux";
+
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ICONS } from "../../../components/Icons";
 import { ApplicationList } from "./ApplicationList";
@@ -15,6 +16,7 @@ import {
   getIsLoadingSearchProspects,
   getSearchResults
 } from "../../../store/selectors/searchProspect";
+
 import { useStyles } from "./styled";
 
 export const MyApplications = ({ getProspectInfo }) => {

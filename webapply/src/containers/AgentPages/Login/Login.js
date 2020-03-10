@@ -10,6 +10,7 @@ import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidat
 import routes from "../../../routes";
 
 import { useStyles } from "./styled";
+
 const loginSchema = Yup.object({
   username: Yup.string()
     .required(getRequiredMessage("User name"))
