@@ -6,7 +6,7 @@ import { VerticalPaginationContext } from "./VerticalPaginationProvider";
 import { useStyles } from "./styled";
 import { getAverage } from "./utils";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
-import { FormNavigationContext } from "../FormNavigation/FormNavigationProvider/FormNavigationProvider";
+import { useFormNavigation } from "../FormNavigation/FormNavigationProvider";
 
 export const VerticalPaginationComponent = ({
   children,
@@ -19,12 +19,7 @@ export const VerticalPaginationComponent = ({
   const { currentSectionIndex, scrollToSection, isCanScroll, setHasVideo } = useContext(
     VerticalPaginationContext
   );
-  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
-
-  useEffect(() => {
-    setChatVisibility(false);
-    setFormStepper(false);
-  }, [setFormStepper, setChatVisibility]);
+  useFormNavigation([true, false]);
 
   const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
   const scrollings = useRef([]);

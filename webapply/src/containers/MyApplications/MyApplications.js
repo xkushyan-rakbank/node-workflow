@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { searchApplications } from "../../store/actions/searchProspect";
@@ -7,18 +7,13 @@ import { getApplicantInfo } from "../../store/selectors/appConfig";
 
 import { MyApplications as BaseComponent } from "./components/MyApplications";
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
-import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
 export const MyApplications = () => {
   const inputParam = useSelector(getApplicantInfo);
   const dispatch = useDispatch();
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
-  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
-
-  useEffect(() => {
-    setChatVisibility(false);
-    setFormStepper(false);
-  }, [setFormStepper, setChatVisibility]);
+  useFormNavigation([true, false]);
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));

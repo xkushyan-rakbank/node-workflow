@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useContext } from "react";
+import React, { useEffect, useCallback } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import { Formik, Form } from "formik";
@@ -25,7 +25,7 @@ import { UAE_CODE } from "../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({
@@ -71,12 +71,7 @@ const ComeBackLoginComponent = ({
     setToken(null);
   }, [setToken]);
 
-  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
-
-  useEffect(() => {
-    setChatVisibility(false);
-    setFormStepper(false);
-  }, [setFormStepper, setChatVisibility]);
+  useFormNavigation([true, false]);
 
   useEffect(() => {
     if (isOtpGenerated) {

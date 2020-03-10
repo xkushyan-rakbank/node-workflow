@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
@@ -23,7 +23,7 @@ import { STEP_STATUS } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { useStyles } from "./styled";
 import routes from "./../../routes";
-import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -32,12 +32,7 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName },
   isComeFromROScreens
 }) => {
-  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
-
-  useEffect(() => {
-    setChatVisibility(true);
-    setFormStepper(true);
-  }, [setFormStepper, setChatVisibility]);
+  useFormNavigation([true, false]);
 
   const pushHistory = useTrackingHistory();
   const classes = useStyles();

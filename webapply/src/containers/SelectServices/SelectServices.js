@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import cx from "classnames";
 
 import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
@@ -12,7 +12,7 @@ import { useStep } from "../../hooks/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 import { useStyles } from "./styled";
-import { FormNavigationContext } from "../../components/FormNavigation/FormNavigationProvider/FormNavigationProvider";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
 export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
@@ -44,13 +44,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     },
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
-
-  const { setChatVisibility, setFormStepper } = useContext(FormNavigationContext);
-
-  useEffect(() => {
-    setChatVisibility(false);
-    setFormStepper(false);
-  }, [setFormStepper, setChatVisibility]);
+  useFormNavigation([true, false]);
 
   const createSetStepHandler = nextStep => () => {
     setIsSubmit(false);

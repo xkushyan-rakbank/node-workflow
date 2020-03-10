@@ -10,7 +10,7 @@ import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes from "../../routes";
 import { checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
-import { FormNavigationContext } from "./FormNavigationProvider/FormNavigationProvider";
+import { FormNavigationContext } from "./FormNavigationProvider";
 
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
@@ -23,7 +23,7 @@ export const FormNavigationComponent = () => {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
-  const { isShowAccountInfo, isChatVisible, navigationSteps } = useContext(FormNavigationContext);
+  const [isShowAccountInfo, isChatVisible, navigationSteps] = useContext(FormNavigationContext);
   const blobColor = useBlobColor();
 
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
