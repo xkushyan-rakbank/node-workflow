@@ -20,7 +20,7 @@ public class ProspectValidatorService {
             return;
         }
         if (!prospectId.equals(principal.getProspectId())) {
-            throw new ApiException("The prospect is not allowed for current Customer", HttpStatus.BAD_REQUEST);
+            throw new ApiException("The prospect is not allowed for current Customer", HttpStatus.FORBIDDEN);
         }
     }
 }
