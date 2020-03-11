@@ -30,18 +30,11 @@ public class EncodeResponseAdviser implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object jsonObject, MethodParameter methodParameter, MediaType mediaType, Class<?
             extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        return getRandomKey(serverHttpRequest)
-                .filter(key -> isJsonContentType(serverHttpResponse))
+        if (!isJsonContentType(serverHttpResponse)) return jsonObject;
+        return getKeyFromRequest(serverHttpRequest.getHeaders())
                 .map(securityUtil::getSecretKeySpec)
-                .map(key -> encrypt(jsonObject.toString(), key))
+                .map(secretKeySpec -> encrypt(jsonObject.toString(), secretKeySpec))
                 .orElse(jsonObject.toString());
-    }
-
-    private Optional<byte[]> getRandomKey(ServerHttpRequest httpServletRequest) {
-        final byte[] keyFromRequest = getKeyFromRequest(httpServletRequest.getHeaders());
-        return keyFromRequest.length > 1
-                ? Optional.of(keyFromRequest)
-                : Optional.empty();
     }
 
     private boolean isJsonContentType(ServerHttpResponse response) {
@@ -57,11 +50,10 @@ public class EncodeResponseAdviser implements ResponseBodyAdvice<Object> {
         return null;
     }
 
-    private byte[] getKeyFromRequest(HttpHeaders headers) {
+    private Optional<byte[]> getKeyFromRequest(HttpHeaders headers) {
         return Optional.ofNullable(headers.get("x-sym-key"))
                 .map(strings -> strings.get(0))
-                .map(securityUtil::decryptAsymmetric)
-                .orElse(new byte[0]);
+                .map(securityUtil::decryptAsymmetric);
     }
 
 }
