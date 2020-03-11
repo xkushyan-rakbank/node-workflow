@@ -76,14 +76,12 @@ const HeaderTitleComponent = ({
                   </div>
                 </>
               )}
-          <>
-            {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
-            {!isHideCompanyName && companyName && (
-              <>
-                for <span>{companyName}</span>
-              </>
-            )}
-          </>
+          {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+          {!isHideCompanyName && companyName && (
+            <>
+              for <span>{companyName}</span>
+            </>
+          )}
         </span>
       </div>
     </div>
