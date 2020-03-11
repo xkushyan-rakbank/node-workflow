@@ -98,18 +98,6 @@ export const UploadDocuments = ({
     setSelectedFile(null);
   }, []);
 
-  const renderDocumentTitle = () => {
-    if (isUploading) {
-      return `Uploading ${document.documentTitle}`;
-    } else if (isUploaded && selectedFile) {
-      return selectedFile.name;
-    } else if (isUploaded && document.fileDescription) {
-      return document.fileDescription;
-    } else {
-      return document.documentTitle;
-    }
-  };
-
   return (
     <div
       className={cx(classes.fileUploadPlaceholder, {
@@ -129,7 +117,17 @@ export const UploadDocuments = ({
 
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
-          {renderDocumentTitle}
+          {(() => {
+            if (isUploading) {
+              return `Uploading ${document.documentTitle}`;
+            } else if (isUploaded && selectedFile) {
+              return selectedFile.name;
+            } else if (isUploaded && document.fileDescription) {
+              return document.fileDescription;
+            } else {
+              return document.documentTitle;
+            }
+          })()}
 
           {selectedFile && (
             <span className={classes.signatoryRights}>
