@@ -17,10 +17,14 @@ import {
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { CONTINUE } from "../../../../constants";
-import { getStakeholdersIds, stakeholdersState } from "../../../../store/selectors/stakeholder";
+import {
+  getStakeholdersIds,
+  stakeholdersState,
+  stakeholdersSelector
+} from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
-import { STEP_STATUS } from "../../../../constants";
+import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
 
@@ -41,13 +45,13 @@ const StakeholderStepperComponent = ({
   changeEditableStakeholder,
   setFillStakeholder,
   setEditStakeholder,
-  showAddButton,
   isEditInProgress,
   kycDetails,
   editableStakeholder,
   accountSigningInfo,
   datalist,
-  hideAddButton
+  setIsShowingAddButton,
+  stakeholders
 }) => {
   const classes = useStyles();
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
@@ -65,10 +69,10 @@ const StakeholderStepperComponent = ({
           setFillStakeholder(index, true);
           changeEditableStakeholder();
           setIsShowSuccessFilled(true);
-          hideAddButton();
+          setIsShowingAddButton(false);
           setTimeout(() => {
             setIsShowSuccessFilled(false);
-            showAddButton();
+            setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
           }, timeInterval);
         }
         handleSetNextStep(activeStep);
@@ -90,10 +94,10 @@ const StakeholderStepperComponent = ({
   );
 
   const editHandler = useCallback(() => {
-    showAddButton();
+    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
     changeEditableStakeholder("");
     setEditStakeholder(index, false);
-  }, [showAddButton, changeEditableStakeholder, setEditStakeholder, index]);
+  }, [setIsShowingAddButton, changeEditableStakeholder, setEditStakeholder, index]);
 
   const handleEditCompleted = useCallback(
     index => {
@@ -173,6 +177,7 @@ const mapStateToProps = state => {
 
   return {
     isStatusShown: state.stakeholders.isStatusShown,
+    stakeholders: stakeholdersSelector(state),
     loading: getIsSendingProspect(state),
     datalist: getDatalist(state),
     editableStakeholder
