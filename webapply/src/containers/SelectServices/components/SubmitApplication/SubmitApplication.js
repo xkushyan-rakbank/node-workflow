@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
-import { submitApplication } from "../../../../constants/index";
-import { PROSPECT_STATUSES } from "../../../AgentPages/constants";
+import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
 
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
-import { BlockConfirm } from "./BlockConfirm";
+import { BlockConfirm } from "./BlockConfirm/index";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
@@ -38,7 +37,7 @@ export const SubmitApplicationComponent = ({
     updateViewId(pathname.replace(smeBaseName, ""), false);
     setIsSubmitting(true);
     sendProspectToAPI(NEXT, null, SUBMIT).then(
-      () => pushHistory(routes.ApplicationSubmitted),
+      () => pushHistory(routes.ApplicationSubmitted, true),
       () => setIsSubmitting(false)
     );
   };

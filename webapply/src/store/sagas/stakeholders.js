@@ -1,5 +1,4 @@
 import { all, put, takeEvery, select } from "redux-saga/effects";
-import cloneDeep from "lodash/cloneDeep";
 import uniqueId from "lodash/uniqueId";
 
 import {
@@ -12,17 +11,20 @@ import {
 } from "../actions/stakeholders";
 import { removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
+import { UAE } from "../../constants";
 
 function* createNewStakeholderSaga() {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
   const stakeholderId = uniqueId();
   const stakeholdersIds = [
     ...state.stakeholders.stakeholdersIds,
     { id: stakeholderId, done: false }
   ];
 
-  const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
+  const signatoryInfoModel = { ...config.prospectModel.signatoryInfo[0] };
+  signatoryInfoModel.kycDetails.residenceCountry = UAE;
+  signatoryInfoModel.kycDetails.isUAEResident = true;
   config.prospect.signatoryInfo.push(signatoryInfoModel);
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 
@@ -33,7 +35,7 @@ function* createNewStakeholderSaga() {
 
 function* deleteStakeholderSaga(action) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
   const removedIndex = stakeholdersIds.indexOf(
     stakeholdersIds.find(item => item.id === action.stakeholderId)

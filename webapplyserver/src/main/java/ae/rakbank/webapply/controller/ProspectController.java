@@ -3,9 +3,10 @@ package ae.rakbank.webapply.controller;
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.RecaptchaService;
+import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
-import ae.rakbank.webapply.util.ProspectUtil;
+import ae.rakbank.webapply.services.ProspectValidatorService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -42,7 +43,8 @@ public class ProspectController {
     private final DehClient dehClient;
     private final RecaptchaService captchaService;
     private final WebApplyController applyController;
-    private final ProspectUtil prospectUtil;
+    private final ProspectValidatorService prospectValidatorService;
+    private final AuthorizationService authorizationService;
 
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
@@ -77,7 +79,7 @@ public class ProspectController {
         String prospectId = ((JsonNode) createdProspectResponse.getBody()).get("prospectId").asText();
         log.info("Send OTP for prospectId:" + prospectId);
         ObjectNode otpRequest = createOtpRequest(requestBodyJSON, prospectId);
-        ResponseEntity<Object> otpResponse = applyController.generateVerifyOTP(httpRequest, otpRequest, true);
+        ResponseEntity<Object> otpResponse = applyController.generateVerifyOTP(otpRequest, true);
         if (!otpResponse.getStatusCode().is2xxSuccessful()) {
             return otpResponse;
         }
@@ -112,8 +114,11 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
-                "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+        ResponseEntity<Object> oneProspectResponseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET,
+                null, "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+
+        prospectValidatorService.validateProspectOwner(oneProspectResponseEntity, jwtPayload);
+        return oneProspectResponseEntity;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -125,12 +130,13 @@ public class ProspectController {
         log.info("Begin updateSMEProspect() method");
         log.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
                 jsonNode.toString(), segment, prospectId));
+        prospectValidatorService.checkOwnerProspectId(prospectId, jwtPayload);
 
         String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT, jsonNode,
-                "updateSMEProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT,
+                jsonNode, "updateSMEProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -148,7 +154,7 @@ public class ProspectController {
         ResponseEntity<Object> responseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.POST, jsonNode,
                 "searchProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
 
-        prospectUtil.filterAllowedProspects(responseEntity, jwtPayload);
+        prospectValidatorService.validateAndFilterAllowedProspects(responseEntity, jwtPayload);
         return responseEntity;
     }
 }

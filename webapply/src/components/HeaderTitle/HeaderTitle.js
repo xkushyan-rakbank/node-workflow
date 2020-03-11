@@ -10,7 +10,7 @@ import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { getIsIslamicBanking } from "../../store/selectors/appConfig";
 
-import { accountNames } from "../../constants";
+import { accountNames, applicationOverviewRoutes } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 import { accountTypes } from "../../containers/AccountsComparison/components/TableCompare/constants";
@@ -43,7 +43,7 @@ const HeaderTitleComponent = ({
       break;
   }
 
-  const isHideCompanyName = pathname === routes.applicationOverview;
+  const isHideCompanyName = applicationOverviewRoutes.includes(pathname);
 
   const routesToShowPortalTitle = [
     routes.login,
@@ -66,23 +66,20 @@ const HeaderTitleComponent = ({
     >
       <div className={classes.headerTitleIn}>
         <span>
-          {routesToShowPortalTitle.includes(pathname) ? (
-            "RAK Application Portal"
-          ) : checkLoginStatus ? (
-            <>
-              <div>{getAgentName}</div>
-              <div className={classes.logout} onClick={() => agentLogout()}>
-                Logout
-              </div>
-            </>
-          ) : (
-            <>
-              {selectedAccountTypeName} {islamicBanking && "Islamic"} Application{" "}
-              {!isHideCompanyName && companyName && (
+          {routesToShowPortalTitle.includes(pathname)
+            ? "RAK Application Portal"
+            : checkLoginStatus && (
                 <>
-                  for <span>{companyName}</span>
+                  <div>{getAgentName}</div>
+                  <div className={classes.logout} onClick={() => agentLogout()}>
+                    Logout
+                  </div>
                 </>
               )}
+          {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+          {!isHideCompanyName && companyName && (
+            <>
+              for <span>{companyName}</span>
             </>
           )}
         </span>

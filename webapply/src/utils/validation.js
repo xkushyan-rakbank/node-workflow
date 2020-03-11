@@ -4,6 +4,8 @@ import { UAE_CODE } from "../constants";
 // "Allowed Special Characters" based on swagger 0.0.21
 export const SPECIAL_CHARACTERS_REGEX = /^([a-zA-Z0-9.@#%*()/ -])*$/;
 
+export const TOTAL_EXPERIENCE_YRS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
+export const LICENSE_NUMBER_REGEX = /^([a-zA-Z0-9.@#%*()/-])*$/;
 export const USER_NAME_REGEX = /^([a-zA-Z0-9.]){1,65}$/;
 export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;
 export const NAME_REGEX = /^([a-zA-Z ])+$/;
@@ -16,9 +18,9 @@ export const MIN_NON_UAE_PHONE_LENGTH = 4;
 export const MAX_NON_UAE_PHONE_LENGTH = 10;
 export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
+export const MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH = 50;
 
 export const CURRENCY_REGEX = /^[0-9]*([.][0-9]{1,2})?$/;
-export const MOTHERS_MAIDEN_NAME_REGEX = /^([a-zA-Z]){1,30}$/;
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 export const POBOX_REGEX = /^([a-zA-Z0-9])*$/;

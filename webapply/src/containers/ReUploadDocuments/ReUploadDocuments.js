@@ -2,6 +2,11 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
 
+import { ContainedButton } from "../../components/Buttons/ContainedButton";
+import { BackLink } from "../../components/Buttons/BackLink";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { DocumentRow } from "./components/DocumentRow/DocumentRow";
+import { UploadButton } from "./components/UploadButton/UploadButton";
 import {
   addOtherDocument,
   cancelDocUpload,
@@ -10,24 +15,19 @@ import {
   retrieveDocDetails
 } from "../../store/actions/getProspectDocuments";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
-
-import { DocumentRow } from "./components/DocumentRow/DocumentRow";
-import { ContainedButton } from "../../components/Buttons/ContainedButton";
-import { BackLink } from "../../components/Buttons/BackLink";
-
-import { MAX_OTHER_DOCUMENTS } from "./constants";
-import { NEXT, OTHER_DOCUMENTS, SUBMIT } from "../../constants";
-import routes from "../../routes";
-
-import { useStyles } from "./styled";
-
-import { UploadButton } from "./components/UploadButton/UploadButton";
 import {
   getOtherDocuments,
   getProgress,
   getUploadErrors
 } from "../../store/selectors/getProspectDocuments";
+import { getViewIdOfSearchResultById } from "../../store/selectors/searchProspect";
+import { updateViewId } from "../../store/actions/appConfig";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { NEXT, OTHER_DOCUMENTS, SUBMIT } from "../../constants";
+import routes from "../../routes";
+
+import { MAX_OTHER_DOCUMENTS } from "./constants";
+import { useStyles } from "./styled";
 
 export const ReUploadDocuments = () => {
   const classes = useStyles();
@@ -35,7 +35,10 @@ export const ReUploadDocuments = () => {
   const otherDocuments = useSelector(getOtherDocuments);
   const progress = useSelector(getProgress);
   const uploadErrors = useSelector(getUploadErrors);
+  const searchResultViewId = useSelector(getViewIdOfSearchResultById);
   const pushHistory = useTrackingHistory();
+
+  useFormNavigation([true, false]);
 
   useEffect(() => {
     dispatch(retrieveDocDetails());
@@ -94,11 +97,12 @@ export const ReUploadDocuments = () => {
     otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === "Uploaded");
 
   const submitForm = useCallback(() => {
+    dispatch(updateViewId(searchResultViewId, false));
     dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(
       () => pushHistory(routes.MyApplications),
       () => {}
     );
-  }, [dispatch, pushHistory]);
+  }, [dispatch, pushHistory, searchResultViewId]);
 
   return (
     <div className={classes.root}>

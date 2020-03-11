@@ -5,14 +5,15 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
 import { TableCompare } from "./components/TableCompare";
-
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 import { useStyles } from "./styled";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
-  const [selectedAccount, setSelectedAccount] = useState("Current Account");
   const classes = useStyles();
+  useFormNavigation([true, false]);
+  const [selectedAccount, setSelectedAccount] = useState("Current Account");
 
   const secondSection = useRef(null);
   const tableRef = useRef(null);
@@ -43,7 +44,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             info="Available in both conventional and islamic variants"
           />
           <AccountCard setAccountType={setAccountType} handleClickMobile={scrollToTable} />
-          <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
+          <InfoNote text="Companies older than 12 months are not eligible for the Rakstarter account" />
         </div>
 
         <div ref={tableRef}>

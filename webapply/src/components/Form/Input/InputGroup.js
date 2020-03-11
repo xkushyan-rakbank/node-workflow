@@ -1,10 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import { useStyles } from "./styled";
 import { ErrorMessage } from "../../Notifications";
 
-export const InputGroup = ({ error, children }) => {
+const InputGroupBase = ({ error, children }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.inputGroupWrapper}>
       <FormGroup row className={classes.selectCombined}>
@@ -14,3 +15,5 @@ export const InputGroup = ({ error, children }) => {
     </div>
   );
 };
+
+export const InputGroup = memo(InputGroupBase);

@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from "react";
 import cx from "classnames";
 
-import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
-import routes from "../../routes";
-import { accountNames, CONTINUE, NEXT, STEP_STATUS } from "../../constants";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper } from "../../constants";
 import { useStep } from "../../hooks/useStep";
-
-import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import routes from "../../routes";
+
+import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
+import { useStyles } from "./styled";
 
 export const SelectServicesComponent = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const classes = useStyles();
@@ -28,7 +29,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
       sendProspectToAPI(NEXT).then(isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.SubmitApplication);
+        if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
       });
       return;
     }
@@ -43,6 +44,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     },
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
+  useFormNavigation([false, true, formStepper]);
 
   const createSetStepHandler = nextStep => () => {
     setIsSubmit(false);
@@ -53,7 +55,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     <>
       <FormTitle
         title="Services for your account"
-        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is currencies, bossiness debit cards or cheque books."
+        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is currencies, bussiness debit cards or cheque books."
       />
 
       <ServicesSteps

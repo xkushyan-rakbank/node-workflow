@@ -2,6 +2,7 @@ package ae.rakbank.documentuploader.controller;
 
 import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.exception.ApiException;
+import ae.rakbank.documentuploader.services.ProspectValidatorService;
 import ae.rakbank.documentuploader.services.auth.AuthorizationService;
 import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@CrossOrigin
 public class DocumentUploadController {
 
     @Value("${build.date}")
@@ -33,6 +35,7 @@ public class DocumentUploadController {
     private final DocumentUploadService docUploadService;
     private final EnvironmentUtil environmentUtil;
     private final AuthorizationService authorizationService;
+    private final ProspectValidatorService prospectValidatorService;
 
     @GetMapping(value = "/health", produces = "application/json")
     @ResponseBody
@@ -56,6 +59,7 @@ public class DocumentUploadController {
                                                        @PathVariable String prospectId) {
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
         authorizationService.validateJwtToken(jwtToken);
+        prospectValidatorService.validate(jwtToken, prospectId);
 
         return docUploadService.processUploadRequest(file, fileInfo, prospectId);
     }
@@ -69,6 +73,7 @@ public class DocumentUploadController {
                                                          @PathVariable String prospectId) {
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
         authorizationService.validateJwtToken(jwtToken);
+        prospectValidatorService.validate(jwtToken, prospectId);
 
         if (StringUtils.isBlank(fileInfo)) {
             log.error(String.format("The 'fileInfo' parameter must not be null or empty, prospectId=%s, fileInfo length=%s",
@@ -88,6 +93,7 @@ public class DocumentUploadController {
                                                @PathVariable String documentKey) {
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
         authorizationService.validateJwtToken(jwtToken);
+        prospectValidatorService.validate(jwtToken, prospectId);
 
         final FileDto file = docUploadService.findOneByDocumentKey(documentKey);
         return ResponseEntity.ok().headers(configureHttpHeadersForFile(file)).body(file.getContent());

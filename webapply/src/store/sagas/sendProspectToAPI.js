@@ -11,7 +11,6 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
-import cloneDeep from "lodash/cloneDeep";
 
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
@@ -96,7 +95,7 @@ function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
     const state = yield select();
     const prospect = getProspect(state);
 
-    const newProspect = cloneDeep(prospect);
+    const newProspect = { ...prospect };
     newProspect.freeFieldsInfo = {
       ...(newProspect.freeFieldsInfo || {}),
       freeField5: JSON.stringify({ completedSteps: state.completedSteps })
@@ -133,7 +132,7 @@ function* prospectAutoSave() {
       }
     }
   } catch (e) {
-    console.log(e);
+    log(e);
   }
 }
 

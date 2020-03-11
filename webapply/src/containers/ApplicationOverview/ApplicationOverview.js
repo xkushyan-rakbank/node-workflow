@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-import { TwoSteps } from "./components/TwoSteps";
-
-import { PreliminaryInformation } from "./components/PreliminaryInformation";
-import { VerticalPagination } from "../../components/VerticalPagination";
+import { ApplicationOverviewComponent } from "./components/ApplicationOverviewComponent";
+import { removeProspectId } from "../../store/actions/appConfig";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
 export const ApplicationOverview = () => {
-  return (
-    <VerticalPagination>
-      <TwoSteps withHeader />
-      <PreliminaryInformation />
-    </VerticalPagination>
-  );
+  useFormNavigation([true, false]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(removeProspectId());
+  }, [dispatch]);
+
+  return <ApplicationOverviewComponent />;
 };

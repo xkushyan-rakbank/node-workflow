@@ -74,19 +74,17 @@ public class DehClient {
         } catch (HttpClientErrorException e) {
             log.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            HttpHeaders responseHeaders = e.getResponseHeaders();
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
-            throw new ApiException(apiError, responseHeaders, status);
+            throw new ApiException(apiError, new HttpHeaders(), status);
         } catch (HttpServerErrorException e) {
             log.error(String.format("HttpServerErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            HttpHeaders responseHeaders = e.getResponseHeaders();
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
             ApiError apiError = dehUtil.initApiError(e, status);
 
-            throw new ApiException(apiError, responseHeaders, status);
+            throw new ApiException(apiError, new HttpHeaders(), status);
         }
 
         log.info(String.format("API call from %s method, Endpoint=[%s] HttpStatus=[%s] Response=[%s]",
