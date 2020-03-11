@@ -41,11 +41,11 @@ Text.defaultProps = {
   style: theme.palette.text
 };
 
-const Base = ({ classes, title = "Add", className = "", ...rest }) => (
+const AddButtonBase = ({ classes, title = "Add", className = "", ...rest }) => (
   <Button className={className} type="button" {...rest}>
     <AddIcon alt="add" />
     <Text>{title}</Text>
   </Button>
 );
 
-export const AddButton = memo(Base);
+export const AddButton = memo(AddButtonBase);

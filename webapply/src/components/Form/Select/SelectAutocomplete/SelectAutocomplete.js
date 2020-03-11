@@ -15,7 +15,7 @@ const components = {
   MultiValue
 };
 
-export const Base = ({
+export const SelectAutocompleteBase = ({
   extractValue = option => option.value,
   extractLabel = option => option.label || option.displayText,
   theme,
@@ -91,4 +91,4 @@ export const Base = ({
   );
 };
 
-export const SelectAutocomplete = memo(Base, areEqualFieldProps);
+export const SelectAutocomplete = memo(SelectAutocompleteBase, areEqualFieldProps);

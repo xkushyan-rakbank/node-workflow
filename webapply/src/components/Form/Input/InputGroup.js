@@ -3,7 +3,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import { useStyles } from "./styled";
 import { ErrorMessage } from "../../Notifications";
 
-const Base = ({ error, children }) => {
+const InputGroupBase = ({ error, children }) => {
   const classes = useStyles();
 
   return (
@@ -18,4 +18,4 @@ const Base = ({ error, children }) => {
 
 const areEqual = (prevProps, nextProps) => prevProps.error === nextProps.error;
 
-export const InputGroup = memo(Base, areEqual);
+export const InputGroup = memo(InputGroupBase, areEqual);

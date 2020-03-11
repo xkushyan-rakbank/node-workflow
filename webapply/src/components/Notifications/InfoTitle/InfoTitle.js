@@ -11,6 +11,6 @@ const InfoTitleComponent = ({ classes, styles, title, className }) => (
   </div>
 );
 
-export const Base = withStyles(styles)(InfoTitleComponent);
+export const InfoTitleBase = withStyles(styles)(InfoTitleComponent);
 
-export const InfoTitle = memo(Base);
+export const InfoTitle = memo(InfoTitleBase);

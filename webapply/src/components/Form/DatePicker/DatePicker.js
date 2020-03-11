@@ -9,7 +9,7 @@ import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { BaseDatePicker } from "./styled";
 import { areEqualFieldProps } from "../utils";
 
-const Base = ({
+const DatePickerBase = ({
   field,
   label,
   disabled,
@@ -63,4 +63,4 @@ const Base = ({
   );
 };
 
-export const DatePicker = memo(Base, areEqualFieldProps);
+export const DatePicker = memo(DatePickerBase, areEqualFieldProps);

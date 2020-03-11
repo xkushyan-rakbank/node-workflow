@@ -19,8 +19,8 @@ const styles = {
   }
 };
 
-const Base = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
+const ContinueButtonBase = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
   <ContainedButton className={classes.buttonStyle} label={label} {...rest} />
 ));
 
-export const ContinueButton = memo(Base);
+export const ContinueButton = memo(ContinueButtonBase);

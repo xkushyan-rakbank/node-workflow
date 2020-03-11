@@ -18,7 +18,7 @@ export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
   }
 }));
 
-export const Base = ({ justify, submitButtonClassName, ...rest }) => (
+export const SubmitButtonBase = ({ justify, submitButtonClassName, ...rest }) => (
   <ButtonWrapper
     container
     direction="row"
@@ -30,4 +30,4 @@ export const Base = ({ justify, submitButtonClassName, ...rest }) => (
   </ButtonWrapper>
 );
 
-export const SubmitButton = memo(Base);
+export const SubmitButton = memo(SubmitButtonBase);

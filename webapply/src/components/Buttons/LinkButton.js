@@ -17,7 +17,7 @@ Button.defaultProps = {
   style: theme.palette.button
 };
 
-const Base = ({
+const LinkButtonBase = ({
   clickHandler,
   title = "Edit",
   className = "",
@@ -32,4 +32,4 @@ const Base = ({
   </ContexualHelp>
 );
 
-export const LinkButton = memo(Base);
+export const LinkButton = memo(LinkButtonBase);

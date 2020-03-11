@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   infoTitle: {}
 });
 
-export const Base = ({
+export const CheckboxBase = ({
   infoTitle,
   label = "",
   value = true,
@@ -49,4 +49,4 @@ export const Base = ({
   );
 };
 
-export const Checkbox = memo(Base, areEqualFieldProps);
+export const Checkbox = memo(CheckboxBase, areEqualFieldProps);

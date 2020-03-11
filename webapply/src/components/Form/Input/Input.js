@@ -10,7 +10,7 @@ import { areEqualFieldProps } from "../utils";
 
 import { useStyles } from "./styled";
 
-const Base = ({
+const InputBase = ({
   contextualHelpText,
   contextualHelpProps,
   placement,
@@ -77,4 +77,4 @@ const Base = ({
   );
 };
 
-export const Input = memo(Base, areEqualFieldProps);
+export const Input = memo(InputBase, areEqualFieldProps);
