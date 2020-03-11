@@ -12,6 +12,7 @@ import {
 } from "../actions/stakeholders";
 import { removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
+import { UAE } from "../../constants";
 
 function* createNewStakeholderSaga() {
   const state = yield select();
@@ -23,6 +24,8 @@ function* createNewStakeholderSaga() {
   ];
 
   const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
+  signatoryInfoModel.kycDetails.residenceCountry = UAE;
+  signatoryInfoModel.kycDetails.isUAEResident = true;
   config.prospect.signatoryInfo.push(signatoryInfoModel);
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 

@@ -33,7 +33,7 @@ export const AccountBenefits = () => {
           ))}
         {isShowInfoNote && (
           <div className={classes.styleInfoNotes}>
-            <InfoNote text="*Companies older than 12 months are not eligible for the RAKstarter account" />
+            <InfoNote text="*Companies older than 12 months are not eligible for the Rakstarter account" />
           </div>
         )}
       </IconCardsContainer>
