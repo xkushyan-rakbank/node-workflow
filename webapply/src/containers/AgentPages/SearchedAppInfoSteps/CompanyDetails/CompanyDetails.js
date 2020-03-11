@@ -41,8 +41,7 @@ export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
         <div className={classes.errorMsg}>{errorMsgs.RAKTRACK_LEAD_REFERENCE_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.COMPANY_DETAIL_TITLE}</h4>
-      {prospectOverview.organizationInfo &&
-      get(prospectOverview, "organizationInfo.companyName") !== "" ? (
+      {get(prospectOverview, "organizationInfo.companyName") ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
