@@ -14,7 +14,6 @@ import { ReactComponent as bankingClockConventional } from "../../assets/icons/c
 import { ReactComponent as companyDocumentsConventional } from "../../assets/icons/conventional/company-documents.svg";
 import { ReactComponent as bankingConventional } from "../../assets/icons/conventional/banking.svg";
 import { ReactComponent as logoConventional } from "../../assets/images/logo-standart.svg";
-import overviewConventoinal from "../../assets/gif/overview_reg.gif";
 import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
 import submittedRegular from "../../assets/gif/submitted_regular.gif";
 import successRegular from "../../assets/gif/submitted_regular.gif";
@@ -41,7 +40,6 @@ import { ReactComponent as companyDocumentsIslamic } from "../../assets/icons/is
 import { ReactComponent as bankingIslamic } from "../../assets/icons/islamic/banking.svg";
 import { ReactComponent as logoIslamic } from "../../assets/images/logo-islamic.svg";
 import { ReactComponent as bankingClockIslamic } from "../../assets/icons/islamic/bankingClockIslamic.svg";
-import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
 import submittedIslamic from "../../assets/gif/submitted_islamic.gif";
 import successIslamic from "../../assets/gif/success_islamic.gif";
@@ -65,7 +63,6 @@ import { ReactComponent as companyDocumentsElite } from "../../assets/icons/elit
 import { ReactComponent as bankingElite } from "../../assets/icons/elite/banking.svg";
 import { ReactComponent as logoElite } from "../../assets/images/logo-elite.svg";
 import { ReactComponent as bankingClockElite } from "../../assets/icons/elite/bankingClockElite.svg";
-import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
 import submittedElite from "../../assets/gif/submitted_elite.gif";
 import successElite from "../../assets/gif/success_elite.gif";
@@ -86,7 +83,6 @@ export const conventionalIconsSet = {
   companyDocuments: companyDocumentsConventional,
   banking: bankingConventional,
   logo: logoConventional,
-  overview: overviewConventoinal,
   awaiting: paperPlaneRegular,
   submitted: submittedRegular,
   success: successRegular,
@@ -114,7 +110,6 @@ export const islamicIconsSet = {
   companyDocuments: companyDocumentsIslamic,
   banking: bankingIslamic,
   logo: logoIslamic,
-  overview: overviewIslamic,
   awaiting: paperPlaneIslamic,
   submitted: submittedIslamic,
   success: successIslamic,
@@ -140,7 +135,6 @@ export const eliteIconsSet = {
   companyDocuments: companyDocumentsElite,
   banking: bankingElite,
   logo: logoElite,
-  overview: overviewElite,
   awaiting: paperPlaneElite,
   submitted: submittedElite,
   success: successElite,
