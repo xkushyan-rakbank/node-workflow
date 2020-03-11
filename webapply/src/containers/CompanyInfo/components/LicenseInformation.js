@@ -110,6 +110,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 datalistId="countryOfIncorporation"
                 contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
+                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
