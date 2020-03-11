@@ -62,6 +62,10 @@ const StakeholderStepperComponent = ({
     stakeHoldersSteps
   );
 
+  const setIsDisplayAddButton = useCallback(() => {
+    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
+  }, [setIsShowingAddButton, stakeholders.length]);
+
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event).then(
       () => {
@@ -72,7 +76,7 @@ const StakeholderStepperComponent = ({
           setIsShowingAddButton(false);
           setTimeout(() => {
             setIsShowSuccessFilled(false);
-            setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
+            setIsDisplayAddButton();
           }, timeInterval);
         }
         handleSetNextStep(activeStep);
@@ -94,10 +98,10 @@ const StakeholderStepperComponent = ({
   );
 
   const editHandler = useCallback(() => {
-    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
+    setIsDisplayAddButton();
     changeEditableStakeholder("");
     setEditStakeholder(index, false);
-  }, [setIsShowingAddButton, changeEditableStakeholder, setEditStakeholder, index]);
+  }, [setIsDisplayAddButton, changeEditableStakeholder, setEditStakeholder, index]);
 
   const handleEditCompleted = useCallback(
     index => {
