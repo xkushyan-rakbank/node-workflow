@@ -110,4 +110,4 @@ Chat.propTypes = {
   onMinimize: PropTypes.func
 };
 
-export default Chat;
+export default React.memo(Chat);
