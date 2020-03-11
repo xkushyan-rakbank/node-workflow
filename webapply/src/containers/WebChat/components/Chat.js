@@ -34,6 +34,9 @@ function Chat({
   InitiatedCustomerMobile = "",
   EmailAddress = "",
   isAuth,
+  cif,
+  subject,
+  message,
   onClose,
   onMinimize,
   onNewMessageReceive
@@ -70,8 +73,11 @@ function Chat({
     chatInstance.initChat({
       InitiatedCustomerName,
       InitiatedCustomerMobile,
+      selectedSubject: subject,
       EmailAddress,
-      isAuth
+      message,
+      isAuth,
+      cif
     });
     chatInstance.messagesCallback = handleNewMessageArrival;
     chatInstance.setOnTypingEventsHandler(agentTypingHandler);
@@ -103,8 +109,7 @@ Chat.propTypes = {
   EmailAddress: PropTypes.string,
   isAuth: PropTypes.bool,
   onClose: PropTypes.func,
-  onMinimize: PropTypes.func,
-  onNewMessageReceive: PropTypes.func
+  onMinimize: PropTypes.func
 };
 
 export default Chat;
