@@ -114,11 +114,11 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        ResponseEntity<Object> responseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET,
+        ResponseEntity<Object> oneProspectResponseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
 
-        prospectValidatorService.validateProspectOwner(responseEntity, jwtPayload);
-        return responseEntity;
+        prospectValidatorService.validateProspectOwner(oneProspectResponseEntity, jwtPayload);
+        return oneProspectResponseEntity;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -130,15 +130,16 @@ public class ProspectController {
         log.info("Begin updateSMEProspect() method");
         log.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
                 jsonNode.toString(), segment, prospectId));
+        prospectValidatorService.checkOwnerProspectId(prospectId, jwtPayload);
 
         String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        ResponseEntity<Object> responseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT,
+        ResponseEntity<Object> oneProspectResponseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT,
                 jsonNode, "updateSMEProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
 
-        prospectValidatorService.validateProspectOwner(responseEntity, jwtPayload);
-        return responseEntity;
+        prospectValidatorService.validateProspectOwner(oneProspectResponseEntity, jwtPayload);
+        return oneProspectResponseEntity;
     }
 
     @PreAuthorize("isAuthenticated()")

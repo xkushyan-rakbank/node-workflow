@@ -45,4 +45,14 @@ public class ProspectValidatorService {
             throw new ApiException("The prospect is not allowed for current Customer", HttpStatus.FORBIDDEN);
         }
     }
+
+    public void checkOwnerProspectId(String prospectId, JwtPayload jwtPayload) {
+        if (UserRole.AGENT.equals(jwtPayload.getRole())) {
+            return;
+        }
+
+        if (!prospectId.equals(jwtPayload.getProspectId())) {
+            throw new ApiException("The prospect id is not allowed for current Customer", HttpStatus.FORBIDDEN);
+        }
+    }
 }
