@@ -33,6 +33,7 @@ const MessagesList = ({ data }) => {
         ref={element => {
           virtualRef = element;
         }}
+        style={{ outline: "none" }}
         width={327}
         deferredMeasurementCache={cache}
         height={310}

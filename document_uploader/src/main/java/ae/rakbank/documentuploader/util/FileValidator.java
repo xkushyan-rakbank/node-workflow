@@ -25,6 +25,7 @@ public class FileValidator {
         this.allowedExtensions = new ArrayList<>();
         allowedExtensions.add("png");
         allowedExtensions.add("jpeg");
+        allowedExtensions.add("jpg");
         allowedExtensions.add("pdf");
         allowedExtensions.add("txt");
 

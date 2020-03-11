@@ -8,7 +8,7 @@ import declinedIslamic from "../../assets/gif/declined_islamic.gif";
 export const ERRORS_TYPE = {
   DEDUPE: "Dedupe Check",
   VIRTUAL_CURRENCIES: "Virtual Currency Check",
-  NOT_ELIGIBLE: "RAKStarter Account Check",
+  NOT_ELIGIBLE: "Rakstarter Account Check",
   NOT_REGISTERED: "Country Of Incorporation Check",
   BIG_COMPANY: "ShareHolderCount Check",
   BLACKLIST: "Blacklist Check",

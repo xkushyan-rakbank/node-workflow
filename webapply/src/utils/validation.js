@@ -4,6 +4,8 @@ import { UAE_CODE } from "../constants";
 // "Allowed Special Characters" based on swagger 0.0.21
 export const SPECIAL_CHARACTERS_REGEX = /^([a-zA-Z0-9.@#%*()/ -])*$/;
 
+export const TOTAL_EXPERIENCE_YRS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
+export const LICENSE_NUMBER_REGEX = /^([a-zA-Z0-9.@#%*()/-])*$/;
 export const USER_NAME_REGEX = /^([a-zA-Z0-9.]){1,65}$/;
 export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;
 export const NAME_REGEX = /^([a-zA-Z ])+$/;

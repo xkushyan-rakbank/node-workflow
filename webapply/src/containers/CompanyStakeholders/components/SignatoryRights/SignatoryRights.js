@@ -14,7 +14,7 @@ import {
 } from "../../../../components/Form";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { yesNoOptions } from "../../../../constants/options";
-import { UAE, SOLE_PROPRIETOR } from "../../../../constants";
+import { SOLE_PROPRIETOR } from "../../../../constants";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 const signatoryRightsSchema = Yup.object().shape({
@@ -45,11 +45,6 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
               component={InlineRadioGroup}
               options={yesNoOptions}
               label="Is this person a signatory?"
-              changeProspect={prospect => ({
-                ...prospect,
-                [`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`]: UAE,
-                [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: true
-              })}
               onSelect={() => {
                 if (values.isSignatory) {
                   setFieldValue("authorityType", "");
