@@ -15,7 +15,7 @@ const WebChatComponent = lazy(() => import("./components/Chat"));
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
-  const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
+  const [{ isOpened, isClosed, isMinimized, newMessagesCount }, dispatch] = useWebChatState();
   const searchName = get(searchResults, "[0].applicantInfo.fullName", "");
 
   const openChat = useCallback(() => {
@@ -23,6 +23,9 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
   }, [isClosed, dispatch]);
   const closeWebChat = useCallback(() => dispatch({ type: "close" }), [dispatch]);
   const minimizeChat = useCallback(() => dispatch({ type: "minimize" }), [dispatch]);
+  const handleReceiveNewMessage = useCallback(() => dispatch({ type: "addNewMessage" }), [
+    dispatch
+  ]);
 
   return [
     (isClosed || isMinimized) && (
@@ -32,7 +35,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
             <span>
               {isMinimized && (
                 <div className={classes.messagesCount}>
-                  <p>0</p>
+                  <p>{newMessagesCount}</p>
                 </div>
               )}
               <img src={chatIcon} alt="chat" />
@@ -58,6 +61,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
             InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
             EmailAddress={email}
             isAuth={false}
+            onNewMessageReceive={handleReceiveNewMessage}
           />
         </Suspense>
       </div>

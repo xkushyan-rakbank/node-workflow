@@ -38,7 +38,8 @@ function Chat({
   subject,
   message,
   onClose,
-  onMinimize
+  onMinimize,
+  onNewMessageReceive
 }) {
   const [messages, setMessages] = useState([]);
   const [agentTyping, setAgentTyping] = useState(false);
@@ -61,6 +62,7 @@ function Chat({
   const handleNewMessageArrival = useCallback(
     messages => {
       setMessages(messages);
+      onNewMessageReceive(messages);
     },
     [setMessages]
   );
