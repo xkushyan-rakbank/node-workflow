@@ -16,7 +16,7 @@ import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 
-const Chat = lazy(() => import("../../containers/WebChat/Chat"));
+const Chat = lazy(() => import("../../containers/WebChat"));
 
 export const FormNavigationComponent = () => {
   const {
