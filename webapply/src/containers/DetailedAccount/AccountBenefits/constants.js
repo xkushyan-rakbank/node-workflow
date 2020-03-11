@@ -34,7 +34,7 @@ export const accountTypesInfo = {
     },
     {
       key: 3,
-      text: "Exclusive Business Elite service centers",
+      text: "Exclusive Business Elite services centers",
       iconName: "serviceCenter"
     },
     { key: 4, text: "Preferential exchange rates", iconName: "exchange" },

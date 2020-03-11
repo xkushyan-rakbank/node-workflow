@@ -1,21 +1,22 @@
-package ae.rakbank.webapply.util;
+package ae.rakbank.webapply.services;
 
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.dto.UserRole;
+import ae.rakbank.webapply.exception.ApiException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProspectUtil {
+public class ProspectValidatorService {
 
     static final String ROOT_KEY = "searchResult";
     private static final String APPLICANT_INFO = "applicantInfo";
     private static final String MOBILE_NO = "mobileNo";
 
-    public void filterAllowedProspects(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
+    public void validateAndFilterAllowedProspects(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
         if (UserRole.AGENT.equals(jwtPayload.getRole())) {
             return;
         }
@@ -32,7 +33,7 @@ public class ProspectUtil {
         }
     }
 
-    public void checkOneProspect(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
+    public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
         if (UserRole.AGENT.equals(jwtPayload.getRole())) {
             return;
         }
@@ -41,7 +42,7 @@ public class ProspectUtil {
         JsonNode responseBody = (JsonNode)responseForFiltering.getBody();
 
         if (!phoneNumber.equals(responseBody.get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
-            ((ObjectNode)responseBody).removeAll();
+            throw new ApiException("The prospect is not allowed for current Customer", HttpStatus.FORBIDDEN);
         }
     }
 }
