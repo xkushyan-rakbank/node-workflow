@@ -43,7 +43,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     @Override
     public ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
-        log.info("[Begin] processUploadRequest() method, prospectId=%s, originalFilename={}, filesize={}, fileInfo= {}",
+        log.info("[Begin] processUploadRequest() method, prospectId={}, originalFilename={}, filesize={}, fileInfo= {}",
                 prospectId, file.getOriginalFilename(), file.getSize(), fileInfo);
 
         fileValidator.validate(file);

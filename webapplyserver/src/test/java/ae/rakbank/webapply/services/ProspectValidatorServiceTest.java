@@ -1,6 +1,7 @@
-package ae.rakbank.webapply.util;
+package ae.rakbank.webapply.services;
 
 import ae.rakbank.webapply.dto.JwtPayload;
+import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.stub.JwtPayloadStub;
 import ae.rakbank.webapply.stub.ProspectsResponseStub;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -13,21 +14,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static ae.rakbank.webapply.util.ProspectUtil.ROOT_KEY;
+import static ae.rakbank.webapply.services.ProspectValidatorService.ROOT_KEY;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProspectUtilTest {
+public class ProspectValidatorServiceTest {
 
     @Autowired
-    private ProspectUtil prospectUtil;
+    private ProspectValidatorService prospectValidatorService;
 
     @Test
     public void testFilterAllowedProspects() {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getProspectsResponse();
 
-        prospectUtil.filterAllowedProspects(prospectsResponse, JwtPayloadStub.getJwtPayload());
+        prospectValidatorService.validateAndFilterAllowedProspects(prospectsResponse, JwtPayloadStub.getJwtPayload());
 
         Assert.assertNotNull(prospectsResponse);
         JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
@@ -35,18 +36,14 @@ public class ProspectUtilTest {
         Assert.assertEquals(12, rootNode.size());
     }
 
-    @Test
+    @Test(expected = ApiException.class)
     public void testCheckNotOwnerOneProspect() {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
         JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
         jwtPayload.setPhoneNumber("0000000000");
-        prospectUtil.checkOneProspect(prospectsResponse, jwtPayload);
-
-        Assert.assertNotNull(prospectsResponse);
-        JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
-        Assert.assertEquals(0, responseBody.size());
+        prospectValidatorService.validateProspectOwner(prospectsResponse, jwtPayload);
     }
 
     @Test
@@ -55,7 +52,7 @@ public class ProspectUtilTest {
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
         JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
-        prospectUtil.checkOneProspect(prospectsResponse, jwtPayload);
+        prospectValidatorService.validateProspectOwner(prospectsResponse, jwtPayload);
 
         Assert.assertNotNull(prospectsResponse);
         JsonNode responseBody = (JsonNode) prospectsResponse.getBody();

@@ -58,6 +58,12 @@ export const accountNames = {
   elite: "RAKelite"
 };
 
+export const accountNamesShow = {
+  starter: "Rakstarter",
+  currentAccount: "Current Account",
+  elite: "Business Elite"
+};
+
 export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
@@ -155,7 +161,7 @@ export const screeningStatus = [
   },
   {
     error: "not Eligible",
-    screeningType: "RAKStarter Account Check",
+    screeningType: "Rakstarter Account Check",
     link: true
   },
   {

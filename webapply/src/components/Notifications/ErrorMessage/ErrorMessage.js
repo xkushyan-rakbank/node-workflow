@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { Icon, ICONS } from "../../Icons";
 
 import { useStyles } from "./styled";
 
-export const ErrorMessage = ({ error }) => {
+const ErrorMessageBase = ({ error }) => {
   const classes = useStyles();
 
   return (
@@ -16,3 +16,4 @@ export const ErrorMessage = ({ error }) => {
     </div>
   );
 };
+export const ErrorMessage = memo(ErrorMessageBase);
