@@ -44,18 +44,6 @@ public class SecurityUtil {
         return result;
     }
 
-    public byte[] decryptSymmetric(String strToDecrypt, SecretKeySpec secretKey) {
-        try {
-            @SuppressWarnings("squid:S5542")
-            Cipher cipher = Cipher.getInstance(AES_ECB_PKCS5_PADDING);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return cipher.doFinal(Base64.decodeBase64(strToDecrypt));
-        } catch (Exception e) {
-            log.error("error while decrypting data {}", e.getMessage());
-        }
-        return new byte[0];
-    }
-
     public String encryptSymmetric(String strToEncrypt, SecretKeySpec secretKey) {
         try {
             @SuppressWarnings("squid:S5542")
