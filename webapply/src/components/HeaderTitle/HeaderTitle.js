@@ -66,23 +66,20 @@ const HeaderTitleComponent = ({
     >
       <div className={classes.headerTitleIn}>
         <span>
-          {routesToShowPortalTitle.includes(pathname) ? (
-            "RAK Application Portal"
-          ) : checkLoginStatus ? (
-            <>
-              <div>{getAgentName}</div>
-              <div className={classes.logout} onClick={() => agentLogout()}>
-                Logout
-              </div>
-            </>
-          ) : (
-            <>
-              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
-              {!isHideCompanyName && companyName && (
+          {routesToShowPortalTitle.includes(pathname)
+            ? "RAK Application Portal"
+            : checkLoginStatus && (
                 <>
-                  for <span>{companyName}</span>
+                  <div>{getAgentName}</div>
+                  <div className={classes.logout} onClick={() => agentLogout()}>
+                    Logout
+                  </div>
                 </>
               )}
+          {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+          {!isHideCompanyName && companyName && (
+            <>
+              for <span>{companyName}</span>
             </>
           )}
         </span>
