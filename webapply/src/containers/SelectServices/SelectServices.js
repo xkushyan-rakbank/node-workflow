@@ -55,7 +55,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
     <>
       <FormTitle
         title="Services for your account"
-        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is currencies, bossiness debit cards or cheque books."
+        info="Enough of us asking. Now it’s your turn to say which services you want, whether it is currencies, bussiness debit cards or cheque books."
       />
 
       <ServicesSteps

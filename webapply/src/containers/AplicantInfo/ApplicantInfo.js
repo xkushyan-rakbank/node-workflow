@@ -24,7 +24,7 @@ import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoFor
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
-import { UAE_CODE } from "../../constants";
+import { UAE_CODE, formStepper } from "../../constants";
 import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
@@ -60,7 +60,7 @@ const ApplicantInfoPage = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
-  useFormNavigation([true, false]);
+  useFormNavigation([false, false, formStepper]);
 
   useEffect(() => {
     receiveAppConfig();

@@ -102,7 +102,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Cash"))
     .test(
       "is not exceed turnover",
-      "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
+      "Maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
         const { annualFinTurnoverAmtInAED, maxAmtSingleTxnNonCashAED } = this.parent;
         return checkFieldSumNotExceedYearTotal(
@@ -117,7 +117,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Non-Cash"))
     .test(
       "is not exceed turnover",
-      "maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
+      "Maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
         const { annualFinTurnoverAmtInAED, maxAmtSingleTxnCashAED } = this.parent;
         return checkFieldSumNotExceedYearTotal(
@@ -132,7 +132,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Cash"))
     .test(
       "is matches with month turnover",
-      "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
+      "Total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
         const { annualFinTurnoverAmtInAED, totalMonthlyNonCashAmountInFigures } = this.parent;
         return checkFieldSumEqualMonthTotal(
@@ -147,7 +147,7 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Non-Cash"))
     .test(
       "is matches with month turnover",
-      "total amount in Cash and Non-cash should be equal to Total Monthly Credits",
+      "Total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
         const { annualFinTurnoverAmtInAED, totalMonthlyCashAmountInFigures } = this.parent;
         return checkFieldSumEqualMonthTotal(
