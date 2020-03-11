@@ -135,11 +135,8 @@ public class ProspectController {
         String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment, prospectId);
 
-        ResponseEntity<Object> oneProspectResponseEntity = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT,
+        return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT,
                 jsonNode, "updateSMEProspect()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
-
-        prospectValidatorService.validateProspectOwner(oneProspectResponseEntity, jwtPayload);
-        return oneProspectResponseEntity;
     }
 
     @PreAuthorize("isAuthenticated()")
