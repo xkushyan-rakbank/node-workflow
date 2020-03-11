@@ -26,7 +26,6 @@ export const BackgroundVideoPlayerComponent = ({
 
   const onLoadedDataVideo = e => {
     const currentVideoName = e.target.getAttribute("data-name");
-
     if (!playedVideos.includes(currentVideoName)) e.target.play();
   };
 
@@ -42,6 +41,7 @@ export const BackgroundVideoPlayerComponent = ({
         onLoadedData={onLoadedDataVideo}
         poster={poster}
         playsInline
+        autoPlay={!playedVideos.includes(mp4)}
       >
         <source src={webm} type="video/webm" />
         <source src={mp4} type="video/mp4" />

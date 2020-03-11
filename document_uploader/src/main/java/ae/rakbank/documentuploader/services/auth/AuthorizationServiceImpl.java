@@ -29,6 +29,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
     }
 
+    @Override
+    public JwtPayload getPrincipal(String token) {
+        return jwtService.decrypt(token);
+    }
+
     private void validateCustomerJwtPayload(JwtPayload jwtPayload) {
         if (StringUtils.isEmpty(jwtPayload.getPhoneNumber())
                 || StringUtils.isEmpty(jwtPayload.getOauthAccessToken())

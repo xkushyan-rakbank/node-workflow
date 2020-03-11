@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { NAME_REGEX } from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -13,18 +12,20 @@ import {
   SkeletonLoader
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
-import { receiveAppConfig } from "./../../store/actions/appConfig";
-import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
-import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { NAME_REGEX } from "./../../utils/validation";
+import { receiveAppConfig } from "./../../store/actions/appConfig";
+import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
+import { UAE_CODE, formStepper } from "../../constants";
 import routes from "../../routes";
-import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -59,12 +60,10 @@ const ApplicantInfoPage = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
+  useFormNavigation([false, false, formStepper]);
 
   useEffect(() => {
-    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
-
-    receiveAppConfig(segment);
+    receiveAppConfig();
   }, [receiveAppConfig]);
 
   useEffect(() => {
@@ -182,7 +181,7 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink path={routes.accountsComparison} />
+                <BackLink path={{ pathname: routes.accountsComparison, initialPosition: 1 }} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||

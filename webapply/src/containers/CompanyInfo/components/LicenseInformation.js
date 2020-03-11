@@ -32,14 +32,20 @@ const licenseInformationSchema = () =>
   Yup.object({
     licenseNumber: Yup.string()
       .required(getRequiredMessage("License number"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("License number")),
-    licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
+    licenseIssueDate: Yup.date()
+      .typeError(getInvalidMessage("License issuing date"))
+      .required(getRequiredMessage("License issuing date")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
-    dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
+    dateOfIncorporation: Yup.date()
+      .typeError(getInvalidMessage("Date of incorporation"))
+      .required(getRequiredMessage("Date of incorporation")),
     yearsInBusiness: Yup.number()
       .min(0, "Must be more than 0")
+      .typeError(getInvalidMessage("Years in business"))
       .integer(getInvalidMessage("Years in business"))
   });
 

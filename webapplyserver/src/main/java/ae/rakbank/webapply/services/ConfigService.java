@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import java.io.IOException;
-import java.util.Iterator;
 
 @Slf4j
 @Service
@@ -40,7 +38,6 @@ public class ConfigService {
         log.info("Begin buildAppInitialState() method");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode initStateJSON = objectMapper.createObjectNode();
-        setWebApplyEndpoints(objectMapper, initStateJSON, role);
         initStateJSON.set("prospect", getProspect(segment));
 
         boolean recaptchaEnable = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaEnable").asText("N").equals("Y");
@@ -101,29 +98,6 @@ public class ConfigService {
 
     private String getCacheKey(String segment, String product, String role, String device) {
         return getCacheKey(segment, product, role, device, null);
-    }
-
-    private void setWebApplyEndpoints(ObjectMapper objectMapper, ObjectNode initStateJSON, String role) {
-        log.info("Begin setWebApplyEndpoints() method");
-        ObjectNode endpointsJSON = objectMapper.createObjectNode();
-        endpointsJSON.put("baseUrl", appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("WebApplyBaseUrl").asText());
-        JsonNode webApplyURIs = appConfigJSON.get("WebApplyURIs");
-        Iterator<String> uris = webApplyURIs.fieldNames();
-        while (uris.hasNext()) {
-            String uriName = uris.next();
-            endpointsJSON.set(uriName, webApplyURIs.get(uriName));
-        }
-
-        // remove agent specific URIs
-        String[] agentURIs = {"authenticateUserUri"};
-        if (StringUtils.isBlank(role) || StringUtils.equalsIgnoreCase("customer", role)) {
-            for (String uri : agentURIs) {
-                endpointsJSON.remove(uri);
-            }
-        }
-
-        initStateJSON.set("endpoints", endpointsJSON);
-        log.info("End setWebApplyEndpoints() method");
     }
 
     private JsonNode getProspect(String segment) {

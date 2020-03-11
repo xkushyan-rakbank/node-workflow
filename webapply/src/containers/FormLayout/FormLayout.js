@@ -6,13 +6,13 @@ import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notification";
 import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
-import { useStyles } from "./styled";
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
 import { ERROR_MESSAGES } from "../../constants";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
 import { MobileNotification } from "../../components/Notifications";
+import { useStyles } from "./styled";
 
 export const FormLayoutComponent = ({
   location: { pathname } = {},

@@ -19,7 +19,8 @@ import {
 } from "../../../../../../components/Form";
 import {
   MAX_EXPERIENCE_YEARS_LENGTH,
-  SPECIAL_CHARACTERS_REGEX
+  SPECIAL_CHARACTERS_REGEX,
+  TOTAL_EXPERIENCE_YRS_REGEX
 } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
@@ -34,8 +35,9 @@ export const signatoryEmploymentDetailsSchema = () =>
     employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
     totalExperienceYrs: Yup.string()
       .required(getRequiredMessage("Number of years of experience"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Number of years of experience")),
+      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Number of years of experience")),
     otherEmploymentType: Yup.string().when("employmentType", {
       is: value => value === OTHER_OPTION_CODE,
       then: Yup.string()
@@ -44,6 +46,7 @@ export const signatoryEmploymentDetailsSchema = () =>
     }),
     employerName: Yup.string()
       .required(getRequiredMessage("Employer name"))
+      // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Employer name")),
     designation: Yup.string()

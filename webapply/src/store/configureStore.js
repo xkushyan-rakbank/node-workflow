@@ -23,10 +23,7 @@ export const configureStore = (initialState, history) => {
     storage,
     whitelist: ["appConfig", "video", "login"],
     transforms: [
-      createFilter("appConfig", [
-        "prospect.applicationInfo.accountType",
-        "prospect.applicationInfo.islamicBanking"
-      ]),
+      createFilter("appConfig", ["prospect.applicationInfo.accountType"]),
       createFilter("login", ["loginStatus"])
     ]
   };

@@ -6,6 +6,7 @@ import {
   RECEIVE_APPCONFIG_SUCCESS,
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
+  REMOVE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
   SAVE_PROSPECT_MODEL,
@@ -19,7 +20,6 @@ import { UAE_CODE } from "../../constants";
 export const initialState = {
   loading: false,
   uiConfig: {},
-  endpoints: {},
   prospect: {
     applicationInfo: {
       islamicBanking: false
@@ -94,6 +94,17 @@ const appConfigReducer = (state = initialState, action) => {
           generalInfo: {
             ...get(state, "prospect.generalInfo", {}),
             prospectId: action.prospectId
+          }
+        }
+      };
+    case REMOVE_PROSPECT_ID:
+      return {
+        ...state,
+        prospect: {
+          ...state.prospect,
+          generalInfo: {
+            ...get(state, "prospect.generalInfo", {}),
+            prospectId: ""
           }
         }
       };

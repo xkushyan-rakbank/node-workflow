@@ -7,7 +7,7 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps } from "./constants";
+import { signatoriesSteps } from "./steps";
 import { checkIsAccountInfoTypeNumber } from "./utils";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";

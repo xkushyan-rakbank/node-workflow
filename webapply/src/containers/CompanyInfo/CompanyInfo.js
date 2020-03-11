@@ -7,22 +7,24 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useStep } from "../../hooks/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
-import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import StatusLoader from "../../components/StatusLoader";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
+import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { CONTINUE, NEXT } from "../../constants";
-import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 import {
   getApplicantInfo,
   getOrganizationInfo,
   getIsSendingProspect
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
-import { STEP_STATUS } from "../../constants";
+import { CONTINUE, NEXT, formStepper, STEP_STATUS } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
-import { useStyles } from "./styled";
 import routes from "./../../routes";
+
+import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
+import { useStyles } from "./styled";
+
+import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -31,6 +33,8 @@ export const CompanyInfoPage = ({
   organizationInfo: { companyName },
   isComeFromROScreens
 }) => {
+  useFormNavigation([false, true, formStepper]);
+
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
