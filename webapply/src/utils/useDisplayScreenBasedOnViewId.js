@@ -42,7 +42,7 @@ export const useDisplayScreenBasedOnViewId = () => {
       }
       if (
         isROScreens &&
-        (viewId === VIEW_IDS.ApplicationSubmitted || viewId === VIEW_IDS.ReUploadDocuments)
+        [VIEW_IDS.ApplicationSubmitted, VIEW_IDS.ReUploadDocuments].includes(viewId)
       ) {
         url = routes.companyInfo;
       }
