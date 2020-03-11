@@ -17,7 +17,7 @@ import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../cons
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
-import { SPECIAL_CHARACTERS_REGEX } from "../../../utils/validation";
+import { LICENSE_NUMBER_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -34,7 +34,7 @@ const licenseInformationSchema = () =>
       .required(getRequiredMessage("License number"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("License number")),
+      .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("License number")),
     licenseIssueDate: Yup.date()
       .typeError(getInvalidMessage("License issuing date"))
       .required(getRequiredMessage("License issuing date")),
@@ -110,6 +110,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 datalistId="countryOfIncorporation"
                 contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
+                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"

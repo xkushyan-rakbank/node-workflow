@@ -88,7 +88,7 @@ export const StyledTableBodyMobileComponent = ({ handleSelectAccount }) => {
           <TableCell key={index} classes={{ root: classes.tableCellRoot }}>
             <ContainedButton
               label="Read more"
-              handleClick={() => handleSelectAccount(accountTypes[mobileAccount].name)}
+              handleClick={() => handleSelectAccount(accountTypes[mobileAccount].accountName)}
               classes={{
                 buttonStyle: classes.containedButton,
                 labelStyle: classes.containedButtonLabelStyle
