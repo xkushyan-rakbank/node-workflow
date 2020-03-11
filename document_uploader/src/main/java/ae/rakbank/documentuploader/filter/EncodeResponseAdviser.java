@@ -38,7 +38,10 @@ public class EncodeResponseAdviser implements ResponseBodyAdvice<Object> {
     }
 
     private Optional<byte[]> getRandomKey(ServerHttpRequest httpServletRequest) {
-        return Optional.of(getKeyFromRequest(httpServletRequest.getHeaders()));
+        final byte[] keyFromRequest = getKeyFromRequest(httpServletRequest.getHeaders());
+        return keyFromRequest.length > 1
+                ? Optional.of(keyFromRequest)
+                : Optional.empty();
     }
 
     private boolean isJsonContentType(ServerHttpResponse response) {
