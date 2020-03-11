@@ -16,6 +16,4 @@ const InputGroupBase = ({ error, children }) => {
   );
 };
 
-const areEqual = (prevProps, nextProps) => prevProps.error === nextProps.error;
-
-export const InputGroup = memo(InputGroupBase, areEqual);
+export const InputGroup = memo(InputGroupBase);

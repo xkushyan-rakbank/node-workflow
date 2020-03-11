@@ -9,7 +9,7 @@ import { ContexualHelp, ErrorMessage } from "../../Notifications";
 import { useStyles } from "./styled";
 import { areEqualFieldProps } from "../utils";
 
-const Base = ({
+const InlineRadioGroupBase = ({
   label,
   field,
   form: { touched, errors, setFieldValue },
@@ -19,7 +19,7 @@ const Base = ({
   contextualHelpText,
   contextualHelpProps = {},
   onSelect = () => {},
-  isDisabled
+  disabled: isDisabled
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -67,4 +67,4 @@ const Base = ({
   );
 };
 
-export const InlineRadioGroup = memo(Base, areEqualFieldProps);
+export const InlineRadioGroup = memo(InlineRadioGroupBase, areEqualFieldProps);
