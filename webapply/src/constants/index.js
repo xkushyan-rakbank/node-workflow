@@ -59,7 +59,7 @@ export const accountNames = {
 };
 
 export const accountNamesShow = {
-  starter: "Rakstarter",
+  starter: "RAKstarter",
   currentAccount: "Current Account",
   elite: "Business Elite"
 };
