@@ -32,4 +32,8 @@ const BackLinkBase = ({ text = "Go back", className = "", path, ...props }) => (
   </Root>
 );
 
-export const BackLink = memo(BackLinkBase);
+const areEqual = (prevProps, nextProps) =>
+  prevProps.text === nextProps.text &&
+  JSON.stringify(prevProps.path) === JSON.stringify(nextProps.path);
+
+export const BackLink = memo(BackLinkBase, areEqual);
