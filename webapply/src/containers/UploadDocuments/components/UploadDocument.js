@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useMemo } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import cx from "classnames";
 
 import { documentValidationSchema } from "./../../../utils/validation";
@@ -98,7 +98,7 @@ export const UploadDocuments = ({
     setSelectedFile(null);
   }, []);
 
-  const renderDocumentTitle = useMemo(() => {
+  const renderDocumentTitle = () => {
     if (isUploading) {
       return `Uploading ${document.documentTitle}`;
     } else if (isUploaded && selectedFile) {
@@ -108,7 +108,7 @@ export const UploadDocuments = ({
     } else {
       return document.documentTitle;
     }
-  }, [document, isUploading, isUploaded]);
+  };
 
   return (
     <div
