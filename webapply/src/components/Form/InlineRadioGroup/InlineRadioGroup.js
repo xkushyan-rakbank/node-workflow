@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
 import { getIn } from "formik";
@@ -7,8 +7,9 @@ import cx from "classnames";
 import { CustomRadioButton as Radio } from "../RadioButton/CustomRadioButton";
 import { ContexualHelp, ErrorMessage } from "../../Notifications";
 import { useStyles } from "./styled";
+import { areEqualFieldProps } from "../utils";
 
-export const InlineRadioGroup = ({
+const InlineRadioGroupBase = ({
   label,
   field,
   form: { touched, errors, setFieldValue },
@@ -18,7 +19,7 @@ export const InlineRadioGroup = ({
   contextualHelpText,
   contextualHelpProps = {},
   onSelect = () => {},
-  isDisabled
+  disabled: isDisabled
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -65,3 +66,5 @@ export const InlineRadioGroup = ({
     </FormControl>
   );
 };
+
+export const InlineRadioGroup = memo(InlineRadioGroupBase, areEqualFieldProps);
