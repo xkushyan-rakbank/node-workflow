@@ -39,7 +39,7 @@ export const OTPformComponent = ({
 
   useEffect(() => {
     if (isVerified) {
-      pushHistory(redirectRoute);
+      pushHistory(redirectRoute, true);
     }
   }, [isVerified, pushHistory, redirectRoute]);
 

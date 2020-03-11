@@ -168,7 +168,7 @@ export const useStyles = makeStyles({
     }
   },
   ControlsBox: {
-    width: "130px",
+    minWidth: "130px",
     height: "32px",
     borderRadius: "21px",
     border: "solid 1px #373737",

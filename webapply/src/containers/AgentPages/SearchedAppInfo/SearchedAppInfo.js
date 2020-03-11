@@ -3,10 +3,14 @@ import get from "lodash/get";
 
 import { FormCard } from "../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../components/StepComponent/StepComponent";
-import routes from "../../../routes";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
+import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
+import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
+import routes from "../../../routes";
+
 import {
   searchedAppInfoSteps,
   CONFIRM_MESSAGE,
@@ -14,15 +18,11 @@ import {
   STATUS_LOCKED,
   STATUS_FORCE_STOP
 } from "./constants";
-import { APP_STOP_SCREEN_RESULT } from "../../../constants";
-
 import { useStyles } from "./styled";
-import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 
 export const SearchedAppInfoComponent = ({
   searchResults,
   match,
-  retrieveDocDetails,
   getProspectOverview,
   prospectOverview,
   getProspectInfo,
@@ -32,6 +32,7 @@ export const SearchedAppInfoComponent = ({
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
+  useFormNavigation([false, false, searchProspectStepper]);
 
   const handleSetStep = nextStep => {
     if (initialAvailableSteps.includes(nextStep)) {

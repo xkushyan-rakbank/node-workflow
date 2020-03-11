@@ -1,6 +1,6 @@
 export const COMPANY_CURRENCY = "AED";
 export const YEAR_MONTH_COUNT = 12;
-export const ANNUAL_TURNOVER_MAX_LENGTH = 10;
+export const ANNUAL_TURNOVER_MAX_LENGTH = 16;
 export const PLACEHOLDER = "9999999999";
 
 export const linkedFields = {
