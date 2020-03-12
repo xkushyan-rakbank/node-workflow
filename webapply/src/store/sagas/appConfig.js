@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
 
-import cloneDeep from "../../utils/cloneDeep";
+import { cloneDeep } from "../../utils/cloneDeep";
 
 import {
   RECEIVE_APPCONFIG,

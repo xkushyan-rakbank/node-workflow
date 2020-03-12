@@ -1,7 +1,7 @@
 import { all, put, takeEvery, select } from "redux-saga/effects";
 import uniqueId from "lodash/uniqueId";
 
-import cloneDeep from "../../utils/cloneDeep";
+import { cloneDeep } from "../../utils/cloneDeep";
 
 import {
   CREATE_NEW_STAKEHOLDER,
