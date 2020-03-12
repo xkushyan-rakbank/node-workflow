@@ -38,8 +38,6 @@ const industrySchema = Yup.object().shape({
 export const IndustryStep = ({ handleContinue, industries, updateProspect, isIslamicBanking }) => {
   const classes = useStyles();
 
-  const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
-
   const addIndustryHandler = arrayHelper => () => {
     arrayHelper.push({ ...initialIndustry, id: uniqueId() });
   };
@@ -68,6 +66,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
       }
     });
   };
+
+  const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   return (
     <Formik
