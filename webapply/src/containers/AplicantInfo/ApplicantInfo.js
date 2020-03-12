@@ -23,8 +23,18 @@ import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
-import { UAE_CODE, formStepper } from "../../constants";
+import {
+  getIsRecaptchaEnable,
+  getAccountType,
+  getIsIslamicBanking
+} from "../../store/selectors/appConfig";
+import {
+  UAE_CODE,
+  formStepper,
+  applicationOverviewRoutesMap,
+  ISLAMIC,
+  CONVENTIONAL
+} from "../../constants";
 import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
@@ -56,7 +66,9 @@ const ApplicantInfoPage = ({
   reCaptchaToken,
   isRecaptchaEnable,
   resetScreeningError,
-  isConfigLoading
+  isConfigLoading,
+  accountType,
+  isIslamicBanking
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -181,7 +193,13 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink path={{ pathname: routes.accountsComparison, initialPosition: 1 }} />
+                <BackLink
+                  path={
+                    applicationOverviewRoutesMap[accountType][
+                      isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                    ]
+                  }
+                />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
@@ -205,7 +223,9 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  accountType: getAccountType(state),
+  isIslamicBanking: getIsIslamicBanking(state)
 });
 
 const mapDispatchToProps = {
