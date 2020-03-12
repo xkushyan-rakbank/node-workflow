@@ -85,7 +85,7 @@ function Chat({
         isAuth,
         cif
       })
-      .then(() => {
+      .finally(() => {
         setIsLoading(false);
       });
     chatInstance.messagesCallback = handleNewMessageArrival;
