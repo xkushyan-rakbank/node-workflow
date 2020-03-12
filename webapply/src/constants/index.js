@@ -230,7 +230,7 @@ export const STEP_STATUS = {
 // Company Check list
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
-  screeningStatus: "Not completed",
+  screeningStatus: "Completed",
   screeningLabel: "Negative List",
   screeningReason: "No Match"
 };
@@ -278,7 +278,7 @@ export const TOO_MANY_STAKEHOLDERS = {
 };
 export const RISK_RATING = {
   screeningType: "Risk Rating",
-  screeningStatus: "Not completed",
+  screeningStatus: "Completed",
   screeningLabel: "Risk Rating",
   screeningReason: "Proceed"
 };
