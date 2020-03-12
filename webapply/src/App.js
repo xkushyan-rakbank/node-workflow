@@ -43,12 +43,6 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("beforeunload", () => {
-        localStorage.removeItem("videoAlreadyPlayed");
-      });
-    }
-
     receiveAppConfig();
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
