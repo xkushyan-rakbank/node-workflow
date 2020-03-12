@@ -127,6 +127,11 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Checkbox}
                 onChange={() => {
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
+                  if (!values.isShareholderACompany) {
+                    setFieldValue("firstName", "");
+                    setFieldValue("middleName", "");
+                    setFieldValue("lastName", "");
+                  }
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ tabIndex: 0 }}
