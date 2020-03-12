@@ -105,16 +105,13 @@ export class GenesysChat {
    */
   initChat = (userInfo, callback) => {
     // Handshake with the server.
-    return new Promise((resolve, reject) => {
-      if (this.cometD.getStatus() !== CONNECTED_STATUS) {
-        this.userInfo = userInfo;
-        this.connectedCallback = callback;
-        this.initiateHandshake();
-        resolve();
-      } else {
-        reject({ message: "Chat already created!" });
-      }
-    });
+    if (this.cometD.getStatus() !== CONNECTED_STATUS) {
+      this.userInfo = userInfo;
+      this.connectedCallback = callback;
+      return this.initiateHandshake();
+    } else {
+      return Promise.reject({ message: "Chat already created!" });
+    }
   };
 
   initiateHandshake = () => {
