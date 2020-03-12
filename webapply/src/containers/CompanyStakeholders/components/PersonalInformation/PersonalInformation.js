@@ -95,27 +95,27 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   const applicantInfo = useSelector(getApplicantInfo);
 
   const createChangeProspectHandler = values => prospect => {
-    if (values.isShareholderACompany) {
-      return {
-        ...prospect,
-        [`prospect.signatoryInfo[${index}].firstName`]: "",
-        [`prospect.signatoryInfo[${index}].middleName`]: "",
-        [`prospect.signatoryInfo[${index}].lastName`]: "",
-        [`prospect.signatoryInfo[${index}].kycDetails.dateOfBirth`]: "",
-        [`prospect.signatoryInfo[${index}].fullName`]: applicantInfo.fullName
-      };
-    } else {
-      return {
-        ...prospect,
-        [`prospect.signatoryInfo[${index}].fullName`]: [
-          values.firstName,
-          values.middleName,
-          values.lastName
-        ]
-          .filter(item => item)
-          .join(" ")
-      };
-    }
+    const extraFields = values.isShareholderACompany
+      ? {
+          [`prospect.signatoryInfo[${index}].firstName`]: "",
+          [`prospect.signatoryInfo[${index}].middleName`]: "",
+          [`prospect.signatoryInfo[${index}].lastName`]: "",
+          [`prospect.signatoryInfo[${index}].kycDetails.dateOfBirth`]: "",
+          [`prospect.signatoryInfo[${index}].fullName`]: applicantInfo.fullName
+        }
+      : {
+          [`prospect.signatoryInfo[${index}].fullName`]: [
+            values.firstName,
+            values.middleName,
+            values.lastName
+          ]
+            .filter(item => item)
+            .join(" ")
+        };
+    return {
+      ...prospect,
+      extraFields
+    };
   };
 
   return (
@@ -144,7 +144,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Checkbox}
                 onChange={() => {
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
-                  if (!values.isShareholderACompany) {
+                  if (values.isShareholderACompany) {
                     setFieldValue("firstName", "");
                     setFieldValue("middleName", "");
                     setFieldValue("lastName", "");
