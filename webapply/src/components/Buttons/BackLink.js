@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import { styled } from "@material-ui/styles";
 
@@ -25,9 +25,15 @@ Text.defaultProps = {
   style: theme.palette.text
 };
 
-export const BackLink = ({ text = "Go back", className = "", path, ...props }) => (
+const BackLinkBase = ({ text = "Go back", className = "", path, ...props }) => (
   <Root className={className} to={path} replace {...props}>
     <ArrowBack alt="back" />
     <Text>{text}</Text>
   </Root>
 );
+
+const areEqual = (prevProps, nextProps) =>
+  prevProps.text === nextProps.text &&
+  JSON.stringify(prevProps.path) === JSON.stringify(nextProps.path);
+
+export const BackLink = memo(BackLinkBase, areEqual);
