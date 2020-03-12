@@ -23,9 +23,8 @@ import { log } from "../../utils/loggger";
 
 function* receiveAppConfigSaga() {
   try {
-    let response = null;
-
     const accountType = yield select(getAccountType);
+    let response = null;
 
     if (accountType) {
       response = yield call(config.load, accountType);

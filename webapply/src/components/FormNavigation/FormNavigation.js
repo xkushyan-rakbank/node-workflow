@@ -23,13 +23,9 @@ export const FormNavigationComponent = () => {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
-
   const navContext = useContext(FormNavigationContext);
-
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
-
-  const blobColor = useBlobColor({ isShowLeftPanel: navContext !== null });
-
+  const blobColor = useBlobColor(!navContext);
   const classes = useStyles({
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),

@@ -9,8 +9,8 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 export const ApplicationOverview = () => {
   useAccountTypeByPathname();
   useFormNavigation([true, false]);
-
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(removeProspectId());
   }, [dispatch]);

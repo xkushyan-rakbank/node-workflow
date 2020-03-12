@@ -5,7 +5,7 @@ import routes from "../../routes";
 import { accountNames } from "../../constants";
 import { STANDART, ELITE, ISLAMIC, NONE } from "./constants";
 
-export const useBlobColor = ({ isShowLeftPanel }) => {
+export const useBlobColor = (isHideSideBar = false) => {
   const {
     location: { pathname }
   } = useHistory();
@@ -13,11 +13,8 @@ export const useBlobColor = ({ isShowLeftPanel }) => {
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const isAccountsComparison = routes.accountsComparison === pathname;
 
-  if (isShowLeftPanel) {
-    if (!isAccountsComparison && accountType === accountNames.elite) return ELITE;
-    if (!isAccountsComparison && isIslamicBanking) return ISLAMIC;
-    return STANDART;
-  } else {
-    return NONE;
-  }
+  if (isHideSideBar) return NONE;
+  if (!isAccountsComparison && accountType === accountNames.elite) return ELITE;
+  if (!isAccountsComparison && isIslamicBanking) return ISLAMIC;
+  return STANDART;
 };

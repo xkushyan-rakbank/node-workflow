@@ -6,17 +6,13 @@ import TableCell from "@material-ui/core/TableCell";
 
 import { LinkedButton } from "../../../../../../components/LinkedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
-import { useStyles } from "./styled";
 import { accountsDataRows, accountTypes } from "../../constants";
-import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
-import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants/index";
+import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
 
-export const StyledTableBodyComponent = ({
-  selectedCurrentColumn,
-  handleSelectAccount,
-  handleHover,
-  refs
-}) => {
+import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
+import { useStyles } from "./styled";
+
+export const StyledTableBodyComponent = ({ selectedCurrentColumn, handleHover, refs }) => {
   const classes = useStyles();
   return (
     <TableBody>

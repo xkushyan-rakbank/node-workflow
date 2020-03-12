@@ -22,9 +22,9 @@ export const loadMetaData = (meta = {}) => ({
   payload: meta.freeField5 || ""
 });
 
-export const receiveAppConfig = payload => {
-  return { type: RECEIVE_APPCONFIG, payload };
-};
+export const receiveAppConfig = () => ({
+  type: RECEIVE_APPCONFIG
+});
 
 export const receiveAppConfigSuccess = data => {
   return { type: RECEIVE_APPCONFIG_SUCCESS, data };

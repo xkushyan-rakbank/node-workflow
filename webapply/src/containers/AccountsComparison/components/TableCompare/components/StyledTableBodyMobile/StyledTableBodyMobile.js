@@ -6,11 +6,13 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+
 import { LinkedButton } from "../../../../../../components/LinkedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
-import { useStyles } from "./styled";
 import { accountsDataRows, accountTypes } from "../../constants";
-import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants/index";
+import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
+
+import { useStyles } from "./styled";
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -33,7 +35,7 @@ const BootstrapInput = withStyles(theme => ({
   }
 }))(InputBase);
 
-export const StyledTableBodyMobileComponent = ({ handleSelectAccount }) => {
+export const StyledTableBodyMobileComponent = () => {
   const classes = useStyles();
   const [mobileAccounts, setMobileAccounts] = useState([
     accountTypes.starter.id,

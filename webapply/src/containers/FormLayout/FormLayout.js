@@ -23,10 +23,7 @@ export const FormLayoutComponent = ({
   isIslamicBanking,
   errorCode
 }) => {
-  const isShowLeftPanel = isIslamicBanking !== undefined;
-
-  const blobColor = useBlobColor({ isShowLeftPanel });
-
+  const blobColor = useBlobColor();
   const classes = useStyles({
     pathname,
     color: blobColor,
