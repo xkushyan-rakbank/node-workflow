@@ -39,14 +39,22 @@ export const digitRegExp = new RegExp("^[0-9]$");
 export const submitApplication = {
   termCondition: "terms & conditions",
   termsOfEnrolment: "terms of enrolment",
-  termConditionUrl:
-    "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
-  termOfEnrolmentUrl:
-    "https://revamp.rakbank.ae/wps/wcm/connect/03cd2c04-69c0-402e-81a9-9524367ee746/tnc.jpg?MOD=AJPERES&id=1577254367005",
-  termConditionIslamicBankingUrl:
+  termConditionUrlProd:
+    "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29+J00781+RAK++Debit+Card+-+Bisiness+A4-T%26C-New+Guide-EN%26AR%28withe+out+c....pdf?MOD=AJPERES&CVID=lTLVCHV",
+  termConditionIslamicBankingUrlProd:
     "https://rakbank.ae/wps/wcm/connect/32cb9ff6-706a-489b-98fb-55d639b97c16/%28K%29+J00203+-+Debit+Card+T%26C+Business+A4+02.04.17.pdf?MOD=AJPERES&CVID=IQ7xQCk",
-  termOfEnrolmentIslamicBankingUrl:
-    "https://rakbank.ae/wps/wcm/connect/3c758876-1f16-490d-a574-57a62ef50a9d/%28A%29+J00807+RAKvalue+Account+-+T%26C-Final.pdf?MOD=AJPERES&CVID=ICiyB8R",
+  termConditionUrlUAT:
+    "https://revamp.rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29+J00781+RAK++Debit+Card+-+Bisiness+A4-T%26C-New+Guide-EN%26AR%28withe+out+c....pdf?MOD=AJPERES&CVID=lTLVCHV",
+  termConditionIslamicBankingUrlUAT:
+    "https://revamp.rakbank.ae/wps/wcm/connect/32cb9ff6-706a-489b-98fb-55d639b97c16/%28K%29+J00203+-+Debit+Card+T%26C+Business+A4+02.04.17.pdf?MOD=AJPERES&CVID=IQ7xQCk",
+  termOfEnrolmentUrlProd:
+    "https://rakbank.ae/wps/wcm/connect/b0cd7557-1926-43d7-873e-d43942313ca8/TOE+-+Conventional.pdf?MOD=AJPERES",
+  termOfEnrolmentIslamicBankingUrlProd:
+    "https://rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES",
+  termOfEnrolmentUrlUAT:
+    "https://revamp.rakbank.ae/wps/wcm/connect/b0cd7557-1926-43d7-873e-d43942313ca8/TOE+-+Conventional.pdf?MOD=AJPERES",
+  termOfEnrolmentIslamicBankingUrlUAT:
+    "https://rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES",
   formTitle: "Submit application",
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for."

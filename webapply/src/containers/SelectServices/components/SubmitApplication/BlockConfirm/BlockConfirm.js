@@ -8,10 +8,14 @@ import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form
 import { useStyles } from "./styled";
 
 const {
-  termConditionUrl,
-  termConditionIslamicBankingUrl,
-  termOfEnrolmentUrl,
-  termOfEnrolmentIslamicBankingUrl
+  termConditionUrlProd,
+  termConditionIslamicBankingUrlProd,
+  termConditionUrlUAT,
+  termConditionIslamicBankingUrlUAT,
+  termOfEnrolmentUrlProd,
+  termOfEnrolmentIslamicBankingUrlProd,
+  termOfEnrolmentUrlUAT,
+  termOfEnrolmentIslamicBankingUrlUAT
 } = submitApplication;
 
 const blockConfirmSchema = Yup.object({
@@ -22,12 +26,28 @@ const blockConfirmSchema = Yup.object({
 export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
   const classes = useStyles();
 
+  const getTermConditionLink = () => {
+    if (process.env.NODE_ENV === "production") {
+      return isIslamicBanking ? termConditionIslamicBankingUrlProd : termConditionUrlProd;
+    } else {
+      return isIslamicBanking ? termConditionIslamicBankingUrlUAT : termConditionUrlUAT;
+    }
+  };
+
+  const getTermEnrollmentLink = () => {
+    if (process.env.NODE_ENV === "production") {
+      return isIslamicBanking ? termOfEnrolmentIslamicBankingUrlProd : termOfEnrolmentUrlProd;
+    } else {
+      return isIslamicBanking ? termOfEnrolmentIslamicBankingUrlUAT : termOfEnrolmentUrlUAT;
+    }
+  };
+
   const termsAgreedLabel = (
     <span>
       I agree with RAKBANK’s{" "}
       <a
         className={classes.link}
-        href={isIslamicBanking ? termConditionIslamicBankingUrl : termConditionUrl}
+        href={getTermConditionLink()}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -36,7 +56,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
       and{" "}
       <a
         className={classes.link}
-        href={isIslamicBanking ? termOfEnrolmentIslamicBankingUrl : termOfEnrolmentUrl}
+        href={getTermEnrollmentLink()}
         target="_blank"
         rel="noopener noreferrer"
       >
