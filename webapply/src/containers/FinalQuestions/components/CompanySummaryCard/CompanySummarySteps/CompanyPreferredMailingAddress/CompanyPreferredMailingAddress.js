@@ -98,6 +98,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   }}
                 />
                 <Field
+                  key={values.country}
                   name="emirateCity"
                   path={`${BASE_PATH}.emirateCity`}
                   datalistId="emirateCity"

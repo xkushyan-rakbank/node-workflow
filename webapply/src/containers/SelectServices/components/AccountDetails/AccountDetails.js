@@ -68,6 +68,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <Field
+                key={values.accountCurrencies}
                 name="branchCity"
                 datalistId="branchCity"
                 path="prospect.organizationInfo.branchCity"
