@@ -22,7 +22,7 @@ public class RequestIdFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         final String requestId = request.getHeader(REQUEST_ID_HEADER_NAME);
         if (StringUtils.isNotBlank(requestId)) {
-            MDC.put(REQUEST_ID_HEADER_NAME, String.format("[request id] - %S", requestId));
+            MDC.put(REQUEST_ID_HEADER_NAME, String.format("%S", requestId));
         } else {
             MDC.remove(REQUEST_ID_HEADER_NAME);
         }

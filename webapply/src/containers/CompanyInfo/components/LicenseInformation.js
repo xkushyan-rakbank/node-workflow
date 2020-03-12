@@ -17,7 +17,7 @@ import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../cons
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
-import { LICENSE_NUMBER } from "../../../utils/validation";
+import { LICENSE_NUMBER_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -28,18 +28,26 @@ const initialValues = {
   yearsInBusiness: ""
 };
 
-const licenseInformationSchema = Yup.object({
-  licenseNumber: Yup.string()
-    .required(getRequiredMessage("License number"))
-    .matches(LICENSE_NUMBER, getInvalidMessage("License number")),
-  licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
-  countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
-  licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
-  dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
-  yearsInBusiness: Yup.number()
-    .min(0, "Must be more than 0")
-    .integer(getInvalidMessage("Years in business"))
-});
+const licenseInformationSchema = () =>
+  Yup.object({
+    licenseNumber: Yup.string()
+      .required(getRequiredMessage("License number"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("License number")),
+    licenseIssueDate: Yup.date()
+      .typeError(getInvalidMessage("License issuing date"))
+      .required(getRequiredMessage("License issuing date")),
+    countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
+    licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
+    dateOfIncorporation: Yup.date()
+      .typeError(getInvalidMessage("Date of incorporation"))
+      .required(getRequiredMessage("Date of incorporation")),
+    yearsInBusiness: Yup.number()
+      .min(0, "Must be more than 0")
+      .typeError(getInvalidMessage("Years in business"))
+      .integer(getInvalidMessage("Years in business"))
+  });
 
 const changeDateProspectHandler = (_, value, path) =>
   isValid(value) && { [path]: format(value, DATE_FORMAT) };
@@ -82,7 +90,7 @@ export const LicenseInformation = ({ handleContinue }) => {
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="licenseIssuingAuthority"
                 label="License issuing authority"
@@ -94,7 +102,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="countryOfIncorporation"
                 label="Country of incorporation"
@@ -102,6 +110,7 @@ export const LicenseInformation = ({ handleContinue }) => {
                 datalistId="countryOfIncorporation"
                 contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
+                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"

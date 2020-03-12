@@ -114,7 +114,8 @@
 			{
 				"primaryMobileNo": "",
 				"primaryMobCountryCode": "971",
-				"primaryPhoneNo": "",
+                "TxnReconfirmingfullname": "",
+                "primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "971"
 			}
 		]
@@ -186,7 +187,9 @@
 				"country": ""
 			}
 		],
-		"isShareholderACompany": false
+		"isShareholderACompany": false,
+		"isDontHaveSuppliersYet": false,
+  		"isDontTradeGoodsYet": false
 	},
 	"signatoryInfo": [
 		{
@@ -205,7 +208,7 @@
 					}
 				]
 			},
-			"salutation": "",
+			"salutation": "MR.",
 			"signatoryId": "",
 			"firstName": "",
 			"middleName": "",
@@ -252,10 +255,10 @@
 				"isPEP": false,
 				"qualification": "",
 				"experienceInYrs": "",
-				"sourceOfWealth": {
+				"sourceOfWealth": [{
 					"wealthType": "",
 					"others": ""
-				}
+				}]
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
@@ -281,7 +284,8 @@
 				"employerName": "",
 				"occupation": "",
 				"totalExperienceYrs": 0,
-				"employmentStartDate": ""
+				"employmentStartDate": "",
+				"isPersonWorkAtCompany": false
 			},
 			"sameAsCompanyAddress": false,
 			"addressInfo": [

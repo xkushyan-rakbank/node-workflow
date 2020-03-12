@@ -1,3 +1,3 @@
-import { EditApplication } from "./ReUploadDocuments";
+import { ReUploadDocuments } from "./ReUploadDocuments";
 
-export default EditApplication;
+export default ReUploadDocuments;

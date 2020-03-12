@@ -32,7 +32,8 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     flex: 1,
-    paddingRight: 45
+    paddingRight: 45,
+    overflow: "hidden"
   },
   errorReason: {
     margin: "0 0 3px 0",
@@ -43,7 +44,8 @@ export const useStyles = makeStyles({
     margin: "0",
     fontSize: "12px",
     lineHeight: 1.33,
-    color: "#86868b"
+    color: "#86868b",
+    overflow: "scroll"
   },
   closeIcon: {
     width: 24,

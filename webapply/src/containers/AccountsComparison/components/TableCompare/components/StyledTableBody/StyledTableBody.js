@@ -62,7 +62,7 @@ export const StyledTableBodyComponent = ({
 
       <TableRow classes={{ root: classes.tableRowRoot }}>
         <TableCell component="th" scope="row" />
-        {Object.entries(accountTypes).map(([_, { name }], index) => (
+        {Object.entries(accountTypes).map(([_, { name, accountName }], index) => (
           <TableCell
             ref={refs[index]}
             data-name={name}
@@ -75,7 +75,7 @@ export const StyledTableBodyComponent = ({
           >
             <ContainedButton
               label="Read more"
-              handleClick={() => handleSelectAccount(name)}
+              handleClick={() => handleSelectAccount(accountName)}
               classes={{
                 buttonStyle: classes.containedButton,
                 labelStyle: classes.containedButtonLabelStyle

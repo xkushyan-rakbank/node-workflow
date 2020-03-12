@@ -13,7 +13,9 @@ export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
       documents: documents.map(
         document =>
           get(uploadedDocs, `${signatoryId}.documents`, []).find(
-            uploadedDoc => uploadedDoc.documentKey === document.documentKey
+            uploadedDoc =>
+              uploadedDoc.documentKey === document.documentKey &&
+              uploadedDoc.documentTitle === document.documentTitle
           ) || document
       )
     };
@@ -36,3 +38,5 @@ export const appendDocumentKey = (docs = []) =>
       .filter(document => document.documentType === doc.documentType).length;
     return { ...doc, documentKey: `${doc.documentType}-${docIndex}` };
   });
+
+export const range = (end, start = 0) => Array.from({ length: end - start }, (_, i) => start + i);

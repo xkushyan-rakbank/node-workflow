@@ -49,19 +49,6 @@
       "ServicePricingGuideUrl": "https://rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA"
     }
   },
-  "WebApplyURIs": {
-    "appConfigUri": "/webapply/api/v1/config",
-    "createProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects",
-    "searchProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/search",
-    "getProspectUri": "/webapply/api/v1/usertypes/{userType}/prospects/{prospectId}",
-    "updateProspectUri": "/webapply/api/v1/usertypes/sme/prospects/{prospectId}",
-    "getProspectDocumentsUri": "/webapply/api/v1/prospects/{prospectId}/documents",
-    "uploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
-    "reuploadDocumentUri": "/webapply/api/v1/prospects/{prospectId}/documents",
-    "getDocumentByIdUri": "/webapply/api/v1/prospects/{prospectId}/documents/{documentKey}",
-    "authenticateUserUri": "/webapply/api/v1/users/authenticate",
-    "otpUri": "/webapply/api/v1/otp"
-  },
   "DehURIs": {
     "datalistUri": "/banks/RAK/usertypes/{userType}/datalist",
     "createProspectUri": "/banks/RAK/usertypes/{userType}/prospects",
@@ -103,7 +90,9 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
       "ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
-      "RSAPublicKeyFilename": "RSAPublicKey.txt"
+      "RSAPublicKeyFilename": "RSAPublicKey.txt",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+      "OtpEnabled": "N"
     },
     "dev": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -121,7 +110,9 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+      "OtpEnabled": "N"
     },
     "uat": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -139,7 +130,9 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+      "OtpEnabled": "Y"
     },
     "prod": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -157,7 +150,9 @@
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
-      "RSAPublicKeyFilename": ""
+      "RSAPublicKeyFilename": "",
+      "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+      "OtpEnabled": "Y"
     }
   }
 }

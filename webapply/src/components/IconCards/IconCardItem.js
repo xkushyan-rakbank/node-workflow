@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { withStyles } from "@material-ui/core";
 
 const style = theme => ({
@@ -10,7 +11,7 @@ const style = theme => ({
     alignItems: "center",
     minWidth: props => (props.minWidth ? props.minWidth : "0"),
     margin: "10px",
-    padding: "25px 20px 27px 20px",
+    padding: "24px 20px",
     border: "solid 1px #e8e8e8",
     borderRadius: "8px",
     boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
@@ -19,7 +20,21 @@ const style = theme => ({
     [theme.breakpoints.only("xs")]: {
       padding: "15px",
       margin: "5px"
+    },
+    "&$horizontal": {
+      minWidth: "calc(50% - 20px)",
+      "& $iconCardImg": {
+        paddingBottom: 0,
+        paddingRight: 16
+      },
+      "@media (min-width: 480px)": {
+        textAlign: "left",
+        flexDirection: "row"
+      }
     }
+  },
+  horizontal: {
+    boxSizing: "border-box"
   },
   iconCardTitle: {
     paddingTop: "2px",
@@ -30,21 +45,24 @@ const style = theme => ({
   iconCardText: {
     fontSize: "16px",
     display: "block",
-    width: "100%"
+    width: "100%",
+    "@media (max-width: 480px)": {
+      marginTop: "10px"
+    }
   },
   iconCardImg: {
     paddingBottom: 20,
-    height: 80,
     display: "flex",
     alignItems: "center",
-    "& img": {
-      width: 60
+    "& svg": {
+      width: 64,
+      height: 64
     }
   }
 });
 
-const IconCardItem = ({ classes, children, title, text }) => (
-  <div className={classes.iconCardWrapper}>
+const IconCardItem = ({ classes, children, title, text, horizontal }) => (
+  <div className={cx(classes.iconCardWrapper, { [classes.horizontal]: horizontal })}>
     {title && <div className={classes.iconCardTitle}>{title}</div>}
     <div className={classes.iconCardImg}>{children}</div>
     <div className={classes.iconCardText}>{text}</div>

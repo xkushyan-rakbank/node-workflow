@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
-import { MOTHERS_MAIDEN_NAME_REGEX } from "../../../../../../utils/validation";
+import { NAME_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import {
   Input,
@@ -21,10 +21,14 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
   maritalStatus: Yup.string().required(getRequiredMessage("Marital Status")),
   mothersMaidenName: Yup.string()
     .required(getRequiredMessage("Mother's maiden name"))
-    .matches(MOTHERS_MAIDEN_NAME_REGEX, getInvalidMessage("Mother's maiden name")),
+    // eslint-disable-next-line no-template-curly-in-string
+    .max(MAX_MOTHERS_MAIDEN_NAME_LENGTH, "Maximum ${max} characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Mother's maiden name")),
   maritalStatusOthers: Yup.string().when("maritalStatus", {
     is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string().required(getRequiredMessage("Other"))
+    then: Yup.string()
+      .required(getRequiredMessage("Other"))
+      .matches(NAME_REGEX, getInvalidMessage("Other"))
   })
 });
 
@@ -50,7 +54,7 @@ export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
         {({ values }) => (
           <Form>
             <Grid spacing={3} container className={classes.flexContainer}>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="maritalStatus"
                   path={`prospect.signatoryInfo[${index}].maritalStatus`}

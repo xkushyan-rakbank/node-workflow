@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
   root: {
-    position: "absolute",
+    position: "fixed",
     top: "30px",
     right: "40px",
     zIndex: 21,
@@ -11,13 +11,26 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       padding: "30px 16px",
       left: 0,
-      top: "100vh",
+      top: ({ isMobileNotificationActive }) =>
+        isMobileNotificationActive ? "calc(100vh - 64px)" : "100vh",
       transform: "translateY(-100%)",
       boxShadow: "none",
       width: "100%",
       flexWrap: "wrap",
       display: "flex",
       boxSizing: "border-box"
+    }
+  },
+  grouped: {
+    [theme.breakpoints.only("xs")]: {
+      "&:not(:last-child)": {
+        borderRadius: "8px",
+        border: "0px"
+      },
+      "&:not(:first-child)": {
+        borderRadius: "8px",
+        border: "0px"
+      }
     }
   },
   buttonStyle: {
@@ -34,11 +47,12 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.only("xs")]: {
       width: "100%",
-      borderRadius: "8px!important",
-      border: "0!important",
       height: 72,
       marginTop: 10,
       padding: "2px 20px",
+      "&:hover": {
+        backgroundColor: "#000"
+      },
       "& svg": {
         display: "inline-block",
         verticalAlign: "inline-block",

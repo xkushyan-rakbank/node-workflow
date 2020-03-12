@@ -10,7 +10,9 @@ export const useStyles = makeStyles({
   link: {
     fontSize: "14px",
     lineHeight: 1.33,
-    height: "45px"
+    height: "45px",
+    cursor: "pointer",
+    color: "blue"
   },
   title: {
     marginTop: "0px",
@@ -31,8 +33,7 @@ export const useStyles = makeStyles({
     "&:last-of-type": {
       border: "none"
     },
-    display: "grid",
-    gridTemplateColumns: "2fr 2fr 1fr",
+    display: "flex",
     alignItems: "center",
     padding: "24px 20px 19px 30px"
   },
@@ -40,7 +41,19 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     lineHeight: 1.33,
     color: "#86868b",
-    marginTop: 5
+    marginTop: 5,
+    maxWidth: "50%",
+    width: "50%",
+    "&:first-child": {
+      wordBreak: "break-all",
+      paddingRight: "10px"
+    },
+    "&:nth-child(2)": {
+      width: "20%"
+    },
+    "&:last-child": {
+      width: "30%"
+    }
   },
   heading: {
     fontWeight: 600,

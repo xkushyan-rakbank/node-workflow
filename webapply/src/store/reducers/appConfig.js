@@ -6,18 +6,20 @@ import {
   RECEIVE_APPCONFIG_SUCCESS,
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
+  REMOVE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
   SAVE_PROSPECT_MODEL,
-  SET_ACCESS_TOKEN
+  SET_ACCESS_TOKEN,
+  RESET_PROSPECT,
+  RESET_APPLICANT_INFO
 } from "../actions/appConfig";
-import { LOGOUT } from "../actions/loginForm";
-import { LOGIN_INFO_FORM_SUCCESS } from "../actions/loginForm";
+import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
+import { UAE_CODE } from "../../constants";
 
 export const initialState = {
   loading: false,
   uiConfig: {},
-  endpoints: {},
   prospect: {
     applicationInfo: {
       islamicBanking: false
@@ -79,6 +81,11 @@ const appConfigReducer = (state = initialState, action) => {
         ...state,
         prospect: action.prospect
       };
+    case RESET_PROSPECT:
+      return {
+        ...state,
+        prospect: initialState.prospect
+      };
     case UPDATE_PROSPECT_ID:
       return {
         ...state,
@@ -87,6 +94,17 @@ const appConfigReducer = (state = initialState, action) => {
           generalInfo: {
             ...get(state, "prospect.generalInfo", {}),
             prospectId: action.prospectId
+          }
+        }
+      };
+    case REMOVE_PROSPECT_ID:
+      return {
+        ...state,
+        prospect: {
+          ...state.prospect,
+          generalInfo: {
+            ...get(state, "prospect.generalInfo", {}),
+            prospectId: ""
           }
         }
       };
@@ -104,14 +122,29 @@ const appConfigReducer = (state = initialState, action) => {
         },
         searchInfo: {
           ...state.searchInfo,
-          fname: "",
-          countryCode: "",
+          fullName: "",
+          countryCode: UAE_CODE,
           mobileNo: "",
           leadNumber: "",
           tradeLicenseNo: "",
           email: ""
         },
         prospect: {}
+      };
+    case RESET_APPLICANT_INFO:
+      return {
+        ...state,
+        authorizationToken: null,
+        prospect: {
+          ...state.prospect,
+          applicantInfo: {
+            fullName: "",
+            email: "",
+            countryCode: UAE_CODE,
+            mobileNo: "",
+            applyOnbehalf: false
+          }
+        }
       };
     default:
       return state;

@@ -1,17 +1,15 @@
 import React, { useCallback, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Grid } from "@material-ui/core";
 
 import { Input, AutoSaveField as Field } from "../../../components/Form";
-import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
-import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
-import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
+import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
+import routes from "../../../routes";
 
 import { useStyles } from "./styled";
-import routes from "../../../routes";
 
 const loginSchema = Yup.object({
   username: Yup.string()
@@ -22,35 +20,28 @@ const loginSchema = Yup.object({
     .matches(PASSWORD_REGEX, getInvalidMessage("Password"))
 });
 
-export const LoginComponent = ({ login, setToken, recaptchaToken, isRecaptchaEnable, history }) => {
+export const LoginComponent = ({ login, setIsApplyEditApplication, history }) => {
   const classes = useStyles();
+  useFormNavigation([false, false]);
   const [isLoading, setIsLoading] = useState(false);
+
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
-      if (isRecaptchaEnable) {
-        loginData.recaptchaToken = recaptchaToken;
-      }
       setIsLoading(true);
-      login(loginData)
-        .then(() => {
-          history.push(routes.searchProspect);
-        })
-        .finally(() => {
+      login(loginData).then(
+        () => {
+          setIsApplyEditApplication(true);
           setIsLoading(false);
-        });
+          history.push(routes.searchProspect);
+        },
+        () => {
+          setIsLoading(false);
+        }
+      );
     },
-    [login, recaptchaToken, isRecaptchaEnable, history]
+    [login, history, setIsApplyEditApplication]
   );
-  const handleReCaptchaVerify = useCallback(
-    token => {
-      setToken(token);
-    },
-    [setToken]
-  );
-  const handleVerifiedFailed = useCallback(() => {
-    setToken(null);
-  }, [setToken]);
 
   return (
     <div className={classes.baseForm}>
@@ -85,28 +76,13 @@ export const LoginComponent = ({ login, setToken, recaptchaToken, isRecaptchaEna
                 inputProps: { tabIndex: 0 }
               }}
             />
-            <Grid container direction="row" justify="space-between" alignItems="center">
-              <ErrorBoundaryForReCaptcha>
-                {isRecaptchaEnable && (
-                  <ReCaptcha
-                    onVerify={handleReCaptchaVerify}
-                    onExpired={handleVerifiedFailed}
-                    onError={handleVerifiedFailed}
-                  />
-                )}
-              </ErrorBoundaryForReCaptcha>
-              <div className="linkContainer">
-                <SubmitButton
-                  justify="flex-end"
-                  label="Next Step"
-                  disabled={
-                    Object.values(values).some(value => !value) ||
-                    isLoading ||
-                    (isRecaptchaEnable && !recaptchaToken)
-                  }
-                />
-              </div>
-            </Grid>
+            <div className="linkContainer">
+              <SubmitButton
+                justify="flex-end"
+                label="Next Step"
+                disabled={Object.values(values).some(value => !value) || isLoading}
+              />
+            </div>
           </Form>
         )}
       </Formik>

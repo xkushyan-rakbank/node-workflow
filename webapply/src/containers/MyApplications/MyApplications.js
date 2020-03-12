@@ -1,39 +1,34 @@
 import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import { MyApplications as BaseComponent } from "./components/MyApplications";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { searchApplications } from "../../store/actions/searchProspect";
 import { getProspectInfoPromisify } from "./../../store/actions/retrieveApplicantInfo";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
-import {
-  getSearchResult,
-  getIsLoadingSearchProspects
-} from "./../../store/selectors/searchProspect";
-
-import { MyApplications as BaseComponent } from "./components/MyApplications";
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
+import { searchProspectStepper } from "../../constants";
 
 export const MyApplications = () => {
-  const searchResults = useSelector(getSearchResult);
   const inputParam = useSelector(getApplicantInfo);
-  const isLoading = useSelector(getIsLoadingSearchProspects);
   const dispatch = useDispatch();
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
+  useFormNavigation([true, false, searchProspectStepper]);
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));
-  }, [inputParam, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onGetProspectInfo = useCallback(
-    prospectId =>
-      dispatch(getProspectInfoPromisify(prospectId)).then(pushDisplayScreenToHistory, () => {}),
+    prospectId => {
+      dispatch(getProspectInfoPromisify(prospectId)).then(
+        prospect => pushDisplayScreenToHistory(prospect),
+        () => {}
+      );
+    },
     [pushDisplayScreenToHistory, dispatch]
   );
 
-  return (
-    <BaseComponent
-      searchResults={searchResults}
-      getProspectInfo={onGetProspectInfo}
-      isLoading={isLoading}
-    />
-  );
+  return <BaseComponent getProspectInfo={onGetProspectInfo} />;
 };

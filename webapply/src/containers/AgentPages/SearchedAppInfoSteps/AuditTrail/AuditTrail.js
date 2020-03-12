@@ -1,31 +1,43 @@
 import React from "react";
-import get from "lodash/get";
 import cx from "classnames";
+import { sortBy } from "lodash";
 
 import { useStyles } from "./styled";
 
-export const AuditTrail = ({ prospectInfo = {} }) => {
-  const classes = useStyles();
-  const info = get(prospectInfo, "AuditTrailInfo[0]");
+const revertedAuditTrailInfo = auditTrailInfo => {
+  const newAuditTrailInfo = auditTrailInfo.map(trailInfo => {
+    let date = trailInfo.modifiedDateTime.split(" ");
+    date[0] = date[0]
+      .split("-")
+      .reverse()
+      .join("-");
+    return {
+      modifiedBy: trailInfo.modifiedBy,
+      modifiedDateTime: date.join(" ")
+    };
+  });
+  return newAuditTrailInfo;
+};
 
-  return info ? (
+export const AuditTrail = ({ prospectOverview = {} }) => {
+  const classes = useStyles();
+  const auditTrailInfo = prospectOverview.AuditTrailInfo || [];
+  const sortedAuditTrailInfo = revertedAuditTrailInfo(
+    sortBy(revertedAuditTrailInfo(auditTrailInfo), ["modifiedDateTime"]).reverse()
+  );
+
+  return sortedAuditTrailInfo && sortedAuditTrailInfo.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
-        <div>
-          <div className={cx(classes.checkListData, classes.heading)}>Modified By</div>
-        </div>
-        <div>
-          <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
-        </div>
+        <div className={cx(classes.checkListData, classes.heading)}>Modified By</div>
+        <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
       </div>
-      <div className={classes.applicationRow}>
-        <div>
-          <div className={classes.checkListData}>{info.modifiedBy}</div>
+      {sortedAuditTrailInfo.map((item, index) => (
+        <div className={classes.applicationRow} key={index}>
+          <div className={classes.checkListData}>{item.modifiedBy}</div>
+          <div className={classes.checkListData}>{item.modifiedDateTime}</div>
         </div>
-        <div>
-          <div className={classes.checkListData}>{info.modifiedDateTime}</div>
-        </div>
-      </div>
+      ))}
     </div>
   ) : (
     <div className={classes.errorMsg}>Fields are not modified yet.</div>

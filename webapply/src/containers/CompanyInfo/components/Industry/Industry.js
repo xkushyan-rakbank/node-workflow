@@ -6,7 +6,7 @@ import uniqueId from "lodash/uniqueId";
 import Grid from "@material-ui/core/Grid";
 import get from "lodash/get";
 
-import { getOrgKYCDetails } from "../../../../store/selectors/appConfig";
+import { getOrgKYCDetails, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { MAX_INDUSTRIES_LENGTH } from "../../constants";
@@ -35,7 +35,7 @@ const industrySchema = Yup.object().shape({
   )
 });
 
-export const IndustryStep = ({ handleContinue, industries, updateProspect }) => {
+export const IndustryStep = ({ handleContinue, industries, updateProspect, isIslamicBanking }) => {
   const classes = useStyles();
 
   const addIndustryHandler = arrayHelper => () => {
@@ -67,6 +67,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
     });
   };
 
+  const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
+
   return (
     <Formik
       initialValues={{
@@ -97,18 +99,17 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                   const currentIndustry = `prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`;
                   // eslint-disable-next-line max-len
                   const currentSubCategory = `prospect.orgKYCDetails.industryMultiSelect[0].subCategory[${industryIndex}]`;
-                  const isDisplayDeleteButton =
-                    item.industry && item.subCategory && values.industries.length > 1;
+                  const isDisplayDeleteButton = values.industries.length > 1;
 
                   return (
                     <React.Fragment key={item.id}>
-                      <Grid item md={isDisplayDeleteButton ? 5 : 6} sm={12}>
+                      <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
                           name={`industries[${industryIndex}].industry`}
                           path={currentIndustry}
                           label="Industry"
                           component={SelectAutocomplete}
-                          datalistId="industry"
+                          datalistId={datalistId}
                           changeProspect={(prospect, value) => {
                             if (industryIndex) {
                               return prospect;
@@ -137,13 +138,13 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }
                         />
                       </Grid>
-                      <Grid item md={isDisplayDeleteButton ? 5 : 6} sm={12}>
+                      <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
                           name={`industries[${industryIndex}].subCategory`}
                           path={currentSubCategory}
                           label="Industry sub-category"
                           component={SelectAutocomplete}
-                          datalistId="industry"
+                          datalistId={datalistId}
                           filterOptions={options => {
                             // All previous industries with selected industry
                             const previousSelectedIndustries = values.industries.filter(
@@ -155,7 +156,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                             );
 
                             return options
-                              .filter(({ value }) => item.industry.includes(value))
+                              .filter(({ value }) => item.industry === value)
                               .reduce((acc, curr) => {
                                 // All subCategories for selected industry
                                 const allSubCategories = curr.subGroup;
@@ -233,7 +234,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
 
 const mapStateToProps = state => {
   return {
-    industries: get(getOrgKYCDetails(state), "industryMultiSelect", [])
+    industries: get(getOrgKYCDetails(state), "industryMultiSelect", []),
+    isIslamicBanking: getIsIslamicBanking(state)
   };
 };
 

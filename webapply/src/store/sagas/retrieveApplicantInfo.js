@@ -1,7 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import uniqueId from "lodash/uniqueId";
 import * as actions from "../actions/retrieveApplicantInfo";
-import { setConfig } from "../actions/appConfig";
+import { setConfig, loadMetaData } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
@@ -32,10 +32,14 @@ function* getProspectIdInfo({ payload }) {
     const headers = getAuthorizationHeader(state);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
+    const freeFieldsInfo = config.prospect.freeFieldsInfo;
 
     yield put(setConfig(config));
+    if (freeFieldsInfo) {
+      yield put(loadMetaData(freeFieldsInfo));
+    }
 
-    const stakeholdersIds = config.prospect.signatoryInfo.map(info => ({
+    const stakeholdersIds = config.prospect.signatoryInfo.map(() => ({
       id: uniqueId(),
       done: false,
       isEditting: false

@@ -10,12 +10,7 @@ import {
   SelectAutocomplete
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import {
-  ADDRESS_NUMBER_REGEX,
-  ADDRESS_REGEX,
-  ALPHANUMERIC_REGEX,
-  SPACE_OCCUPIED_OTHER_REGEX
-} from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX, POBOX_REGEX } from "../../../../../../utils/validation";
 import {
   OTHER_OPTION_CODE,
   BASE_PATH,
@@ -31,20 +26,26 @@ import {
 
 import { useStyles } from "./styled";
 
-const companyPreferredMailingAddressSchema = Yup.object().shape({
-  addressLine1: Yup.string()
-    .required(getRequiredMessage("Office / Shop Number"))
-    .matches(ADDRESS_NUMBER_REGEX, getInvalidMessage("Office / Shop Number")),
-  addressLine2: Yup.string().matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
-  poBox: Yup.string()
-    .required(getRequiredMessage("PO Box Number"))
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-  emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
-  typeOfSpaceOccupied: Yup.object().shape({
-    spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
-    others: Yup.string().matches(SPACE_OCCUPIED_OTHER_REGEX, getInvalidMessage("Other"))
-  })
-});
+const companyPreferredMailingAddressSchema = () =>
+  Yup.object().shape({
+    addressLine1: Yup.string()
+      .required(getRequiredMessage("Office / Shop Number"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office / Shop Number")),
+    addressLine2: Yup.string()
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
+    poBox: Yup.string()
+      .required(getRequiredMessage("PO Box Number"))
+      .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
+    emirateCity: Yup.string().required(getRequiredMessage("Emirate")),
+    typeOfSpaceOccupied: Yup.object().shape({
+      spaceType: Yup.string().required(getRequiredMessage("Type of Space Occupied")),
+      others: Yup.string().matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
+    })
+  });
 
 export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
   const classes = useStyles();
@@ -74,14 +75,13 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
         {({ values }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="addressLine1"
                   path={`${BASE_PATH}.addressLine1`}
                   label="Office / Shop Number"
                   placeholder="Office / Shop Number"
                   contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
-                  multiline
                   InputProps={{
                     inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 1 }
                   }}
@@ -93,7 +93,6 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   label="Street / Location"
                   placeholder="Street / Location"
                   component={Input}
-                  multiline
                   InputProps={{
                     inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 2 }
                   }}
@@ -108,7 +107,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   tabIndex="3"
                 />
               </Grid>
-              <Grid item md={6} sm={12}>
+              <Grid item md={6} xs={12}>
                 <Field
                   name="typeOfSpaceOccupied.spaceType"
                   path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}

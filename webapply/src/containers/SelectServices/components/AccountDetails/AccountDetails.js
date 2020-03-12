@@ -66,7 +66,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
           <Divider />
           <Subtitle title="Select branch" classes={{ wrapper: classes.subtitleBranch }} />
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="branchCity"
                 datalistId="branchCity"
@@ -81,7 +81,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 tabIndex="0"
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="branchID"
                 datalistId="branchCity"

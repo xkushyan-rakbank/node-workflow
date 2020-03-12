@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, memo } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -10,6 +10,8 @@ import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { StyledKeyboardDatePicker } from "./StyledKeyboadDatePicker";
 import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
 import { useStyles } from "./styled";
+
+import { areEqualFieldProps } from "../utils";
 
 class LocalizedUtils extends DateFnsUtils {
   getWeekdays() {
@@ -35,7 +37,7 @@ const scrollIntoView = (datePickerRef, dateInputRef, actionRef) => {
   }
 };
 
-export const DatePicker = ({
+const DatePickerBase = ({
   field,
   label,
   disabled,
@@ -116,3 +118,5 @@ export const DatePicker = ({
     </ContexualHelp>
   );
 };
+
+export const DatePicker = memo(DatePickerBase, areEqualFieldProps);

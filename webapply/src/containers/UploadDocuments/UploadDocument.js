@@ -1,33 +1,45 @@
 import React, { useEffect } from "react";
-import routes from "../../routes";
+
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { BackLink } from "../../components/Buttons/BackLink";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { DocumentsSkeleton } from "./components/DocumentsSkeleton";
 import { CompanyDocuments } from "./components/CompanyDocuments";
 import { SignatoriesDocuments } from "./components/SignatoriesDocuments";
-import { BackLink } from "../../components/Buttons/BackLink";
+import { formStepper, NEXT } from "../../constants";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import routes from "../../routes";
+
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 import { useStyles } from "./styled";
 
 export const UploadDocument = ({
   retrieveDocDetails,
+  isLoading,
   documents,
-  docUpload,
-  cancelDocUpload,
-  companyName,
-  signatories,
-  history,
-  progress,
-  updateProspect,
-  uploadedDocsCount,
-  requiredDocsCount,
-  uploadErrorMessage
+  isRequiredDocsUploaded,
+  ...rest
 }) => {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
+  useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
     retrieveDocDetails();
   }, [retrieveDocDetails]);
 
-  const goToSelectService = () => history.push(routes.selectServices);
+  const goToSelectService = () => {
+    rest.sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.selectServices, true);
+    });
+  };
+
+  const isDisabledNextStep =
+    !(
+      rest.isApplyEditApplication &&
+      DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(rest.prospectStatusInfo)
+    ) && !isRequiredDocsUploaded;
 
   return (
     <>
@@ -35,32 +47,18 @@ export const UploadDocument = ({
       <p className="formDescription">
         Remember we asked you to have the papers ready? Now it’s time to upload them.
       </p>
-      {documents && (
+      {isLoading ? (
+        <DocumentsSkeleton />
+      ) : (
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" className={classes.title} />
-            <CompanyDocuments
-              documents={documents.companyDocuments}
-              companyName={companyName}
-              docUpload={docUpload}
-              cancelDocUpload={cancelDocUpload}
-              updateProspect={updateProspect}
-              progress={progress}
-              uploadErrorMessage={uploadErrorMessage}
-            />
+            <CompanyDocuments documents={documents.companyDocuments} {...rest} />
           </div>
           {documents.stakeholdersDocuments && (
             <div className={classes.sectionContainer}>
               <SectionTitle title="Stakeholders documents" />
-              <SignatoriesDocuments
-                documents={documents.stakeholdersDocuments}
-                signatories={signatories}
-                docUpload={docUpload}
-                cancelDocUpload={cancelDocUpload}
-                updateProspect={updateProspect}
-                progress={progress}
-                uploadErrorMessage={uploadErrorMessage}
-              />
+              <SignatoriesDocuments documents={documents.stakeholdersDocuments} {...rest} />
             </div>
           )}
         </>
@@ -69,7 +67,7 @@ export const UploadDocument = ({
       <div className="linkContainer">
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
-          disabled={requiredDocsCount > uploadedDocsCount}
+          disabled={isDisabledNextStep}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

@@ -3,29 +3,36 @@ import get from "lodash/get";
 
 import { FormCard } from "../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../components/StepComponent/StepComponent";
-import routes from "../../../routes";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../components/Modals";
-import { searchedAppInfoSteps, CONFIRM_MESSAGE, STEP_1, STATUS_LOCKED } from "./constants";
-import { APP_STOP_SCREEN_RESULT } from "../../../constants";
-
-import { useStyles } from "./styled";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
+import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
+import routes from "../../../routes";
+
+import {
+  searchedAppInfoSteps,
+  CONFIRM_MESSAGE,
+  STEP_1,
+  STATUS_LOCKED,
+  STATUS_FORCE_STOP
+} from "./constants";
+import { useStyles } from "./styled";
 
 export const SearchedAppInfoComponent = ({
   searchResults,
   match,
-  updateProspectId,
-  retrieveDocDetails,
+  getProspectOverview,
+  prospectOverview,
   getProspectInfo,
-  setIsApplyEditApplication,
-  isApplyEditApplication,
-  prospectInfo
+  updateProspectId,
+  resetProspect
 }) => {
   const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
+  useFormNavigation([false, false, searchProspectStepper]);
 
   const handleSetStep = nextStep => {
     if (initialAvailableSteps.includes(nextStep)) {
@@ -40,15 +47,9 @@ export const SearchedAppInfoComponent = ({
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
   useEffect(() => {
-    updateProspectId(match.params.id);
-    getProspectInfo(match.params.id);
-  }, [updateProspectId, retrieveDocDetails, match.params.id, getProspectInfo]);
-
-  useEffect(() => {
-    if (isApplyEditApplication) {
-      pushDisplayScreenToHistory();
-    }
-  }, [isApplyEditApplication]);
+    resetProspect();
+    getProspectOverview(match.params.id);
+  }, [match.params.id, getProspectOverview, resetProspect]);
 
   const redirectUserPage = useCallback(() => {
     setIsDisplayConfirmDialog(true);
@@ -57,19 +58,29 @@ export const SearchedAppInfoComponent = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
-    setIsApplyEditApplication(true);
-  }, [setIsApplyEditApplication, pushDisplayScreenToHistory]);
+    updateProspectId(match.params.id);
+    getProspectInfo(match.params.id).then(
+      () => pushDisplayScreenToHistory(prospectOverview),
+      () => {}
+    );
+  }, [
+    pushDisplayScreenToHistory,
+    prospectOverview,
+    updateProspectId,
+    getProspectInfo,
+    match.params.id
+  ]);
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const searchResult = (searchResults.searchResult || []).find(
-    item => item.prospectId === match.params.id
-  );
+  const searchResult = searchResults.find(item => item.prospectId === match.params.id);
   const isDisabled =
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
-    get(prospectInfo, "organizationInfo.screeningInfo.statusOverAll") === APP_STOP_SCREEN_RESULT;
+    get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
+      APP_STOP_SCREEN_RESULT ||
+    get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
 
   const fullName = get(searchResult, "applicantInfo.fullName", "");
   const [firstName, lastName] = fullName.split(/\s/);
@@ -95,7 +106,7 @@ export const SearchedAppInfoComponent = ({
                 isFilled={true}
                 handleClick={createSetStepHandler(item.step)}
                 hideContinue={true}
-                prospectInfo={prospectInfo}
+                prospectOverview={prospectOverview}
                 stepForm={item.component}
                 searchResult={searchResult}
               />

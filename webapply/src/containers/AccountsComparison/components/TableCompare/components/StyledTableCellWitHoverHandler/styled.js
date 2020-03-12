@@ -17,7 +17,14 @@ export const useStyles = makeStyles(theme => ({
     },
     "& div": {
       fontSize: "14px",
-      color: "#888"
+      color: "#888",
+      [theme.breakpoints.only("xs")]: {
+        marginLeft: "auto",
+        marginRight: "auto",
+        maxWidth: 143,
+        lineHeight: "18px",
+        letterSpacing: "normal"
+      }
     },
     "& button": {
       marginTop: "5px"

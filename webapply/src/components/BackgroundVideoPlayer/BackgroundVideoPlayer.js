@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createPortal } from "react-dom";
 import cx from "classnames";
 
 import Fab from "@material-ui/core/Fab/index";
 import expandMoreIcon from "../../assets/icons/arrowDown.svg";
 import { useStyles } from "./styled";
+import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 
 export const BackgroundVideoPlayerComponent = ({
   playedVideos,
@@ -15,7 +16,8 @@ export const BackgroundVideoPlayerComponent = ({
   videoWrapperClass,
   video: { mp4, webm, poster }
 }) => {
-  const classes = useStyles({ currentSectionIndex });
+  const isMobileNotificationActive = useContext(MobileNotificationContext);
+  const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
 
   const onEndedVideoPLay = e => {
     const videoName = e.target.getAttribute("data-name");
@@ -24,7 +26,6 @@ export const BackgroundVideoPlayerComponent = ({
 
   const onLoadedDataVideo = e => {
     const currentVideoName = e.target.getAttribute("data-name");
-
     if (!playedVideos.includes(currentVideoName)) e.target.play();
   };
 
@@ -40,6 +41,7 @@ export const BackgroundVideoPlayerComponent = ({
         onLoadedData={onLoadedDataVideo}
         poster={poster}
         playsInline
+        autoPlay={!playedVideos.includes(mp4)}
       >
         <source src={webm} type="video/webm" />
         <source src={mp4} type="video/mp4" />

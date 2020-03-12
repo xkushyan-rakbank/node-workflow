@@ -46,6 +46,8 @@ jobs:
           cd webapply
           yarn
           yarn build
+          #npm install
+          #npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
@@ -280,25 +282,20 @@ jobs:
        - Webapply
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
-        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
       pool:
        name: Hosted macOS
       steps:
       #prepare the Sonarqube for executing the sonar 
-      - task: SonarQubePrepare@4
+      - task: SonarCloudPrepare@1
         inputs:
-          SonarQube: 'sonarqube'
+          SonarCloud: 'RAKBANKSonarCloud'
+          organization: 'rakrepoadmin-github'
           scannerMode: 'CLI'
           configMode: 'file'
+
       #execute the sonar qube analyze in order to run the analyzes of the source code
-      - task: SonarQubeAnalyze@4
-      # publish the sonar report
-      - task: SonarQubePublish@4
+      - task: SonarCloudAnalyze@1
+      - task: SonarCloudPublish@1
         inputs:
           pollingTimeoutSec: '300'
-      - task: PowerShell@2
-        displayName: 'SonarQube Quality Gate status'
-        inputs:
-          filePath: 'webapply/get-sonarqube-quality-gate-status.ps1'
-          arguments: '-SonarServerName "http://104.211.240.147:9000/" -SonarProjectKey "onboarding_webapply" -SonarToken "d8c342584b463b68af3864c244f404440bdbfaf1"'
-        enabled: false

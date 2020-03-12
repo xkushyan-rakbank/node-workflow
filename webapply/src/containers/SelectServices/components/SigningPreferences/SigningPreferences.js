@@ -4,14 +4,7 @@ import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 
-import {
-  NAME_REGEX,
-  UAE_MOBILE_PHONE_REGEX,
-  UAE_LANDLINE_PHONE_REGEX,
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH
-} from "../../../../utils/validation";
+import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../utils/validation";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../../../constants";
 import { UAE_CODE } from "../../../../constants";
 import { Subtitle } from "../../../../components/Subtitle";
@@ -47,69 +40,34 @@ const signingPreferencesSchema = Yup.object({
   accountSigningInstn: Yup.string().when("accountSigningType", {
     is: selectedAccountType => selectedAccountType === SIGNING_TRANSACTIONS_TYPE.OTHER,
     then: Yup.string()
-      .max(MAX_ACCOUNT_SIGNING_INSTN_LENGTH, "Max length is 50 symbols")
+      .max(
+        MAX_ACCOUNT_SIGNING_INSTN_LENGTH,
+        `Max length is ${MAX_ACCOUNT_SIGNING_INSTN_LENGTH} symbols`
+      )
       .required(getRequiredMessage("Others"))
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Others"))
   }),
   signatories: Yup.array().of(
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
         .required(getRequiredMessage("Full name"))
-        .max(77, "Maximum 77 characters allowed")
+        .max(MAX_RECONFIRMING_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
         .matches(NAME_REGEX, getInvalidMessage("Full name")),
       primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
-      primaryMobileNo: Yup.string()
-        .when("TxnReconfirmingfullname", {
-          is: value => !!value,
-          then: Yup.string()
-            .required(getRequiredMessage("Primary mobile number"))
-            .when("primaryMobCountryCode", {
-              is: primaryMobCountryCode => primaryMobCountryCode === UAE_CODE,
-              then: Yup.string().matches(
-                UAE_MOBILE_PHONE_REGEX,
-                getInvalidMessage("Primary mobile number")
-              ),
-              otherwise: Yup.string()
-                .matches(NUMBER_REGEX, getInvalidMessage("Code"))
-                .min(
-                  MIN_NON_UAE_PHONE_LENGTH,
-                  `${getInvalidMessage("Primary mobile number")} (min length is not reached)`
-                )
-                .test(
-                  "length validation",
-                  `${getInvalidMessage("Primary mobile number")} (max length exceeded)`,
-                  function(mobilePhone) {
-                    return (
-                      mobilePhone &&
-                      this.parent &&
-                      this.parent.primaryMobCountryCode &&
-                      this.parent.primaryMobCountryCode.length + mobilePhone.length <=
-                        MAX_NON_UAE_PHONE_LENGTH
-                    );
-                  }
-                )
-            })
-        })
-        .required(getRequiredMessage("Primary mobile number")),
+      primaryMobileNo: Yup.string().when("TxnReconfirmingfullname", {
+        is: value => !!value,
+        then: Yup.string()
+          .required(getRequiredMessage("Primary mobile number"))
+          .phoneNo({
+            fieldName: "Primary mobile number",
+            codeFieldName: "primaryMobCountryCode"
+          })
+      }),
       primaryPhoneCountryCode: Yup.string(),
-      primaryPhoneNo: Yup.string().when("primaryPhoneCountryCode", {
-        is: primaryPhoneCountryCode => primaryPhoneCountryCode === UAE_CODE,
-        then: Yup.string().matches(UAE_LANDLINE_PHONE_REGEX, getInvalidMessage("Landline number")),
-        otherwise: Yup.string()
-          .matches(NUMBER_REGEX, getInvalidMessage("Landline number"))
-          .min(
-            MIN_NON_UAE_PHONE_LENGTH,
-            `${getInvalidMessage("Landline number")} (min length is not reached)`
-          )
-          .test(
-            "length validation",
-            `${getInvalidMessage("Landline number")} (max length exceeded)`,
-            function() {
-              const { primaryPhoneCountryCode = "", primaryPhoneNo = "" } = this.parent;
-              return (
-                primaryPhoneCountryCode.length + primaryPhoneNo.length <= MAX_NON_UAE_PHONE_LENGTH
-              );
-            }
-          )
+      primaryPhoneNo: Yup.string().phoneNo({
+        fieldName: "Landline number",
+        codeFieldName: "primaryPhoneCountryCode",
+        isLandline: true
       })
     })
   )
@@ -242,7 +200,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 label="Primary mobile number"
                                 placeholder="55xxxxxxx"
                                 component={Input}
-                                type="number"
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}
@@ -266,7 +223,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 label="Landline phone no. (optional)"
                                 placeholder="42xxxxxx"
                                 component={Input}
-                                type="number"
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}

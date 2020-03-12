@@ -20,11 +20,7 @@ export const FilledStakeholderCard = ({
 }) => {
   const classes = useStyles();
 
-  const editStakeholder = useCallback(() => !editDisabled && changeEditableStep(index), [
-    index,
-    editDisabled,
-    changeEditableStep
-  ]);
+  const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
 
@@ -42,12 +38,7 @@ export const FilledStakeholderCard = ({
             className={classes.shareholdingField}
           >{`Shareholding ${shareHoldingPercentage}%`}</div>
         </div>
-
-        <LinkButton
-          clickHandler={editStakeholder}
-          editDisabled={editDisabled}
-          contextualHelpText="Delete or finish current stakeholder to edit"
-        />
+        {!editDisabled && <LinkButton clickHandler={editStakeholder} />}
       </div>
     </div>
   );

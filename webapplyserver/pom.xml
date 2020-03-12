@@ -4,7 +4,6 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>webapplyserver</groupId>
     <artifactId>webapply</artifactId>
-    <!-- <version>0.0.1-SNAPSHOT</version> -->
     <packaging>war</packaging>
 
     <parent>
@@ -37,6 +36,10 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -88,6 +91,11 @@
             <artifactId>spring-mock-mvc</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
@@ -129,6 +137,17 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Dependencies>jdk.unsupported</Dependencies>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
 

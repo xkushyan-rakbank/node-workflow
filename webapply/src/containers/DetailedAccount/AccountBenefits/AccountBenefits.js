@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
-import HorizontalIconCardsContainer from "../../../components/HorizontalIconCards/HorizontalIconCardsContainer";
-import HorizontalIconCardItem from "../../../components/HorizontalIconCards/HorizontalIconCardItem";
+import IconCardsContainer from "../../../components/IconCards/IconCardsContainer";
+import IconCardItem from "../../../components/IconCards/IconCardItem";
 import { useIconsByAccount } from "../../../utils/useIconsByAccount";
 import { InfoNote } from "../../../components/InfoNote";
 import { accountNames } from "../../../constants";
@@ -22,23 +22,21 @@ export const AccountBenefits = () => {
 
   return (
     <>
-      <div className={classes.indent}>
-        <SectionTitleWithInfo title={accountText[accountType] || ""} />
-      </div>
-      <HorizontalIconCardsContainer>
+      <SectionTitleWithInfo title={accountText[accountType] || ""} />
+      <IconCardsContainer>
         {data
           .map(({ iconName, ...item }) => ({ Icon: icons[iconName], ...item }))
           .map(({ key, text, iconName, Icon }) => (
-            <HorizontalIconCardItem key={key} text={text}>
+            <IconCardItem key={key} horizontal text={text}>
               <Icon className={classes.icon} alt={iconName} />
-            </HorizontalIconCardItem>
+            </IconCardItem>
           ))}
         {isShowInfoNote && (
           <div className={classes.styleInfoNotes}>
             <InfoNote text="*Companies older than 12 months are not eligible for the RAKstarter account" />
           </div>
         )}
-      </HorizontalIconCardsContainer>
+      </IconCardsContainer>
     </>
   );
 };

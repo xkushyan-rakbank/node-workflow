@@ -8,8 +8,9 @@ export const useTrackingHistory = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  return path => {
+  return (path, isReplaceHistory = false) => {
     dispatch(sendGoogleAnalyticsMetrics(gaEventsMap[path]));
-    history.push(path);
+    const goTo = isReplaceHistory ? history.replace : history.push;
+    goTo(path);
   };
 };

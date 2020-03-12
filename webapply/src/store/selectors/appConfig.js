@@ -1,14 +1,12 @@
-import get from "lodash/get";
-import { UAE } from "../../constants";
-
-import { COMPANY_SIGNATORY_ID } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
-import { FINAL_QUESTIONS_COMPANY_ID } from "../../containers/FinalQuestions/components/CompanySummaryCard/constants";
+import { COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 
 export const getDatalist = state => state.appConfig.datalist || {};
 
-export const getEndpoints = state => state.appConfig.endpoints || {};
-
 export const getProspect = state => state.appConfig.prospect || {};
+
+export const getProspectModel = state => state.appConfig.prospectModel || {};
+
+export const getAgentName = state => state.appConfig.login.userName;
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
@@ -16,9 +14,11 @@ export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
 export const getAccountNumbers = state => state.accountNumbers;
 
-export const getOrganizationInfo = state => getProspect(state).organizationInfo || [];
+export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
+
+export const getIsCompanyStakeholder = state => getOrgKYCDetails(state).isShareholderACompany;
 
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
@@ -27,6 +27,8 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 export const getSendProspectToAPIInfo = state => state.sendProspectToAPI || {};
 
 export const getIsSendingProspect = state => getSendProspectToAPIInfo(state).loading;
+
+export const getScreeningError = state => getSendProspectToAPIInfo(state).screeningError;
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
@@ -42,28 +44,11 @@ export const getSignatoriesSteps = state =>
 
 export const getProspectId = state => getGeneralInfo(state).prospectId;
 
-export const getProceedStatus = state => state.applicationStatus.isProceed;
-
-export const getServerErrorStatus = state => state.applicationStatus.serverErorr;
-
-export const getScreeningResults = state => state.sendProspectToAPI.screeningResults;
-
-export const getLoginParam = state => state.appConfig.login;
-
 export const getAgentLogin = state => state.login;
-
-export const getIsAgentLoggedIn = state => getAgentLogin(state).loginStatus;
-
-export const getSearchInfo = state => state.appConfig.searchInfo || {};
-
-export const getAccountSubmittedInfo = state => state.appConfig.prospect.accountInfo;
 
 export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 
 export const getServicePricingGuideUrl = state => state.appConfig.servicePricingGuideUrl;
-
-export const getIsRegisteredInUAE = state =>
-  get(getProspect(state), "organizationInfo.countryOfIncorporation") === UAE;
 
 export const getUrlsReadMore = state => ({
   rakValuePlusReadMoreUrl: state.appConfig.rakValuePlusReadMoreUrl,
@@ -71,37 +56,6 @@ export const getUrlsReadMore = state => ({
   rakValuePlusIslamicReadMoreUrl: state.appConfig.rakValuePlusIslamicReadMoreUrl,
   rakValueMaxIslamicReadMoreUrl: state.appConfig.rakValueMaxIslamicReadMoreUrl
 });
-
-export const getProspectDocuments = state => state.appConfig.prospect.documents;
-
-const createGetDocsCountSelector = (filterDocuments = () => true) => state => {
-  const documents = getProspectDocuments(state);
-  let counter = 0;
-
-  if (documents) {
-    counter += (documents.companyDocuments || []).filter(filterDocuments).length;
-    counter += Object.values(documents.stakeholdersDocuments || {})
-      .map(
-        stakeholdersDocument =>
-          get(stakeholdersDocument, "documents", []).filter(filterDocuments).length
-      )
-      .reduce((acc, item) => acc + item, 0);
-  }
-
-  return counter;
-};
-
-const UPLOADED_STATE = "Uploaded";
-
-export const getUploadedDocsCount = createGetDocsCountSelector(
-  doc => doc.uploadStatus === UPLOADED_STATE
-);
-
-export const getRequiredDocsCount = createGetDocsCountSelector();
-
-export const getProspectErrorMessage = state => state.appConfig.prospectError;
-
-export const getLoading = state => state.appConfig.loading;
 
 export const getAuthToken = state => state.appConfig.authorizationToken;
 

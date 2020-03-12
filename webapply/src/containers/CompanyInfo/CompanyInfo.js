@@ -7,36 +7,34 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useStep } from "../../hooks/useStep";
 import { FormCard } from "../../components/FormCard/FormCard";
 import { StepComponent } from "../../components/StepComponent/StepComponent";
-import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import StatusLoader from "../../components/StatusLoader";
-import { ContainedButton } from "./../../components/Buttons/ContainedButton";
-import {
-  sendProspectToAPIPromisify,
-  setScreeningError
-} from "../../store/actions/sendProspectToAPI";
-import { CONTINUE, screeningStatusNotRegistered } from "../../constants";
-import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
+import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
   getApplicantInfo,
   getOrganizationInfo,
-  getSendProspectToAPIInfo,
-  getIsRegisteredInUAE
+  getIsSendingProspect
 } from "../../store/selectors/appConfig";
-import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
-import { STEP_STATUS } from "../../constants";
+import { CONTINUE, NEXT, formStepper, STEP_STATUS } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
-import { useStyles } from "./styled";
 import routes from "./../../routes";
+
+import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
+import { useStyles } from "./styled";
+
+import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
   loading,
   fullName,
   organizationInfo: { companyName },
-  setScreeningError,
-  isRegisteredInUAE,
   isComeFromROScreens
 }) => {
+  useFormNavigation([false, true, formStepper]);
+
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
   const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
@@ -48,9 +46,6 @@ export const CompanyInfoPage = ({
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event).then(
       () => {
-        if (!isRegisteredInUAE) {
-          return setScreeningError(screeningStatusNotRegistered);
-        }
         handleSetNextStep(activeStep);
       },
       () => {}
@@ -60,8 +55,10 @@ export const CompanyInfoPage = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    pushHistory(routes.stakeholdersInfo);
-  }, [pushHistory]);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
+    });
+  }, [pushHistory, sendProspectToAPI]);
 
   return (
     <>
@@ -100,8 +97,7 @@ export const CompanyInfoPage = ({
 
       <div className="linkContainer">
         {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
-        <ContainedButton
-          style={{ padding: "0 32px", borderRadius: "28px" }}
+        <NextStepButton
           justify="flex-end"
           label="Next Step"
           disabled={!isAllStepsCompleted}
@@ -114,16 +110,14 @@ export const CompanyInfoPage = ({
 };
 
 const mapStateToProps = state => ({
-  ...getSendProspectToAPIInfo(state),
+  loading: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
   organizationInfo: getOrganizationInfo(state),
-  isRegisteredInUAE: getIsRegisteredInUAE(state),
   isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 
 const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify,
-  setScreeningError
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const CompanyInfo = connect(

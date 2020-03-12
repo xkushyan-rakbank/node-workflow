@@ -134,6 +134,10 @@ export const useStyles = makeStyles({
     padding: "0 25px",
     borderTop: "solid 1px rgba(230, 230, 230, 0.5)"
   },
+  disabled: {
+    pointerEvents: "none",
+    opacity: "0.6"
+  },
   ContentBox: {
     alignItems: "center",
     flexGrow: "1",
@@ -159,13 +163,12 @@ export const useStyles = makeStyles({
     fontStretch: "normal",
     lineHeight: ".6",
     letterSpacing: "normal",
-    margin: "10px 0 0 0",
     "& p": {
       margin: 0
     }
   },
   ControlsBox: {
-    width: "130px",
+    minWidth: "130px",
     height: "32px",
     borderRadius: "21px",
     border: "solid 1px #373737",
@@ -222,27 +225,9 @@ export const useStyles = makeStyles({
     color: "#373737",
     paddingLeft: "11px"
   },
-  ErrorExplanation: {
-    display: "flex",
-    alignItems: "center",
-    fontSize: "12px",
-    fontWeight: "normal",
-    fontStyle: "normal",
-    fontStretch: "normal",
-    lineHeight: ".6",
-    letterSpacing: "normal",
-    color: "#ea2925",
-    "& svg": {
-      marginRight: " 10px"
-    }
-  },
-  tryAgain: {
-    textDecoration: "underline",
-    marinLeft: "3px",
-    cursor: "pointer"
-  },
   cancel: {
-    width: 24,
+    width: "24px",
+    height: "24px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
     cursor: "pointer"
   },
@@ -262,5 +247,29 @@ export const useStyles = makeStyles({
   progressStatus: {
     display: "inline-block",
     paddingLeft: "11px"
+  },
+  nameSkeleton: {
+    width: "210px",
+    height: "40px",
+    borderRadius: "8px",
+    marginLeft: "25px"
+  },
+  contentSkeleton: {
+    width: "400px",
+    height: "30px",
+    margin: "20px 0 20px 15px",
+    borderRadius: "8px"
+  },
+  buttonSkeleton: {
+    width: "140px",
+    height: "35px",
+    marginBottom: "0px",
+    marginLeft: "230px",
+    borderRadius: "28px"
+  },
+  errorExplanation: {
+    fontSize: "12px",
+    color: "#ea2925",
+    margin: 0
   }
 });

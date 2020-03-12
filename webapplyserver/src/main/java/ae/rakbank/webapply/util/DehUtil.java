@@ -1,12 +1,14 @@
 package ae.rakbank.webapply.util;
 
-import ae.rakbank.webapply.commons.ApiError;
+import ae.rakbank.webapply.dto.ApiError;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
+
+import java.util.List;
 
 @Slf4j
 @Component
@@ -28,21 +30,32 @@ public class DehUtil {
         return apiError;
     }
 
+    @SuppressWarnings("all")
     private JsonNode gerErrors(HttpStatusCodeException e) {
+        List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.readTree(e.getResponseBodyAsString()).get("errors");
+            if (channelContext != null) {
+                return mapper.readTree(channelContext.get(0)).get("errors");
+            } else {
+                return mapper.readTree(e.getResponseBodyAsString()).get("errors");
+            }
         } catch (Exception e1) {
             log.warn("Can't parse errors from the response", e1);
             return null;
         }
     }
 
+    @SuppressWarnings("all")
     private String getErrorType(HttpStatusCodeException e) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            JsonNode jsonNode = mapper.readTree(e.getResponseBodyAsString());
-            return jsonNode.get("errorType").asText();
+            List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
+            if (channelContext != null) {
+                return mapper.readTree(channelContext.get(0)).get("errorType").asText();
+            } else {
+                return mapper.readTree(e.getResponseBodyAsString()).get("errorType").asText();
+            }
         } catch (Exception e1) {
             log.warn("Can't parse errorType from the response", e1);
             return "";

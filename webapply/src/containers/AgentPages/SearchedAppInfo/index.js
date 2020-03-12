@@ -1,27 +1,21 @@
 import { connect } from "react-redux";
 
-import { updateProspectId } from "../../../store/actions/appConfig";
+import { updateProspectId, resetProspect } from "../../../store/actions/appConfig";
 import { getProspectInfoPromisify } from "../../../store/actions/retrieveApplicantInfo";
-import { retrieveDocDetails } from "../../../store/actions/getProspectDocuments";
-import {
-  getIsEditableStatusSearchInfo,
-  getSearchResult
-} from "../../../store/selectors/searchProspect";
-import { getProspect } from "../../../store/selectors/appConfig";
+import { getSearchResults, getProspectOverview } from "../../../store/selectors/searchProspect";
+import { getProspectOverviewPromisify } from "../../../store/actions/searchProspect";
 import { SearchedAppInfoComponent } from "./SearchedAppInfo";
-import { setIsApplyEditApplication } from "../../../store/actions/searchProspect";
 
 const mapStateToProps = state => ({
-  searchResults: getSearchResult(state),
-  isApplyEditApplication: getIsEditableStatusSearchInfo(state),
-  prospectInfo: getProspect(state)
+  searchResults: getSearchResults(state),
+  prospectOverview: getProspectOverview(state)
 });
 
 const mapDispatchToProps = {
-  retrieveDocDetails,
+  getProspectOverview: getProspectOverviewPromisify,
   getProspectInfo: getProspectInfoPromisify,
   updateProspectId,
-  setIsApplyEditApplication
+  resetProspect
 };
 
 export default connect(

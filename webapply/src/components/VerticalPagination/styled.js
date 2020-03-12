@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
       position: "relative",
       height: "100vh",
-      overflowY: "hidden"
+      overflow: "hidden"
     }
   },
   paginationContent: {
@@ -32,7 +32,8 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     position: "relative",
     boxSizing: "border-box",
-    height: 1,
+    minHeight: 1,
+    padding: "15px 0",
     "&:last-of-type": {
       marginBottom: 0
     },
@@ -62,6 +63,9 @@ export const useStyles = makeStyles(theme => ({
     width: "10px",
     zIndex: 2,
     transform: "translateY(-50%)",
+    [theme.breakpoints.only("sm")]: {
+      right: 15
+    },
     [`${theme.breakpoints.only("xs")}, (max-height: ${normalScrollHeight}px)`]: {
       display: "none"
     }
@@ -84,5 +88,12 @@ export const useStyles = makeStyles(theme => ({
   current: {
     backgroundColor: "#020f21",
     cursor: "auto"
+  },
+  videoWrapper: {
+    height: "100vh",
+    [theme.breakpoints.only("xs")]: {
+      height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 444 : 380),
+      marginBottom: 40
+    }
   }
 }));

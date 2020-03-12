@@ -41,7 +41,7 @@ export const prospect = {
     accountType: "",
     rakValuePackage: "",
     leadNumber: "",
-    riskScore: "",
+    riskScore: "0.0",
     srNumber: "",
     channelId: "",
     channelType: "",
@@ -198,7 +198,9 @@ export const prospect = {
         companyName: "",
         country: ""
       }
-    ]
+    ],
+    isDontHaveSuppliersYet: false,
+    isDontTradeGoodsYet: false
   },
   signatoryInfo: [
     {
@@ -263,10 +265,12 @@ export const prospect = {
         isPEP: false,
         qualification: "",
         experienceInYrs: "",
-        sourceOfWealth: {
-          wealthType: "",
-          others: ""
-        }
+        sourceOfWealth: [
+          {
+            wealthType: "",
+            others: ""
+          }
+        ]
       },
       contactDetails: {
         primaryMobileNo: "",
@@ -292,7 +296,8 @@ export const prospect = {
         employerName: "",
         occupation: "",
         totalExperienceYrs: "",
-        employmentStartDate: ""
+        employmentStartDate: "",
+        isPersonWorkAtCompany: false
       },
       sameAsCompanyAddress: false,
       addressInfo: [
@@ -336,7 +341,8 @@ export const prospect = {
   },
   documents: {
     companyDocuments: [],
-    stakeholdersDocuments: null
+    stakeholdersDocuments: null,
+    otherDocuments: []
   },
   prospectStatusInfo: {
     statusType: "",

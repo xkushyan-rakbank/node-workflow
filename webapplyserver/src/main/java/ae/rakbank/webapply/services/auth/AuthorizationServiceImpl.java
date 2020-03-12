@@ -1,12 +1,11 @@
 package ae.rakbank.webapply.services.auth;
 
 import ae.rakbank.webapply.client.OauthClient;
-import ae.rakbank.webapply.commons.EnvUtil;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.helpers.FileHelper;
-import ae.rakbank.webapply.services.AuthorizationService;
+import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +22,7 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class AuthorizationServiceImpl implements AuthorizationService {
 
-    private final FileHelper fileHelper;
+    private final FileUtil fileUtil;
     private final JwtService jwtService;
     private final OAuthService oAuthService;
     private final OauthClient oauthClient;
@@ -32,7 +31,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @PostConstruct
     public void init() {
-        JsonNode appConfigJSON = fileHelper.getAppConfigJSON();
+        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
     }
 
@@ -75,13 +74,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public String createCustomerJwtToken(String phoneNumber) {
+    public String createCustomerJwtToken(String phoneNumber, String prospectId) {
         ResponseEntity<JsonNode> oAuthObjectResponse =
                 oauthClient.authorize(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
 
         return jwtService.encrypt(JwtPayload.builder()
                 .role(UserRole.CUSTOMER)
                 .phoneNumber(phoneNumber)
+                .prospectId(prospectId)
                 .oauthAccessToken(oAuthObjectResponse.getBody().get("access_token").asText())
                 .oauthRefreshToken(oAuthObjectResponse.getBody().get("refresh_token").asText())
                 .oauthTokenExpiryTime(oAuthService.getExpireTime(oAuthObjectResponse))
@@ -99,7 +99,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     @Override
-    public String getOauthTokenFromJwt(String jwtToken) {
-        return jwtService.decrypt(jwtToken).getOauthAccessToken();
+    public JwtPayload getPrincipal(String token) {
+        return jwtService.decrypt(token);
+    }
+
+    @Override
+    public String getTokenFromPrincipal(JwtPayload principal) {
+        return jwtService.encrypt(principal);
     }
 }

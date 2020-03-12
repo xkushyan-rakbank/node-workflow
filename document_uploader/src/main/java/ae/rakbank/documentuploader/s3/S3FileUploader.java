@@ -1,14 +1,14 @@
 package ae.rakbank.documentuploader.s3;
 
-import ae.rakbank.documentuploader.commons.EnvironmentUtil;
+import ae.rakbank.documentuploader.exception.S3ReadFileException;
+import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
 import com.emc.object.s3.S3Client;
 import com.emc.object.s3.bean.GetObjectResult;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -19,108 +19,91 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-/**
- * https://github.com/EMCECS/ecs-samples
- */
+@Slf4j
 @Component
 @EnableAsync
+@RequiredArgsConstructor
 public class S3FileUploader {
 
-	private static final Logger logger = LoggerFactory.getLogger(S3FileUploader.class);
+    private final ECSS3Factory ecsS3Factory;
+    private final EnvironmentUtil environmentUtil;
 
-	@Autowired
-	private ECSS3Factory ecsS3Factory;
+    @Async
+    @Scheduled(cron = "0 0/5 * * * ?")
+    public void uploadFilesToS3Bucket() {
+        log.info("[Begin] uploadFilesToS3Bucket() method");
 
-	@Autowired
-	private EnvironmentUtil environmentUtil;
+        log.info("Initializing scanned docs dir: " + environmentUtil.getScannedDocsDir());
+        Path scannedDocsDir = Paths.get(environmentUtil.getScannedDocsDir());
+        long totalDocs = 0;
+        try (Stream<Path> pathStream = Files.list(scannedDocsDir)) {
+            totalDocs = pathStream.count();
+        } catch (IOException e) {
+            log.error("Error occurred while listing documents from " + environmentUtil.getScannedDocsDir(), e);
+        }
 
-	@Async
-	@Scheduled(cron = "0 0/5 * * * ?")
-	public void uploadFilesToS3Bucket() throws InterruptedException {
-		logger.info("[Begin] uploadFilesToS3Bucket() method");
+        log.info("{} documents found in {}", totalDocs, scannedDocsDir);
+        if (totalDocs != 0) {
 
-		logger.info("Initializing scanned docs dir: " + environmentUtil.getScannedDocsDir());
-		Path scannedDocsDir = Paths.get(environmentUtil.getScannedDocsDir());
-		long totalDocs = 0;
+            try {
+                S3Client s3 = ecsS3Factory.getS3Client();
+                uploadToS3(s3);
+            } catch (URISyntaxException e) {
+                log.error("exception in getS3Client() method ", e);
+            }
+        }
+        log.info("[End] uploadFilesToS3Bucket() method");
+    }
 
-		try {
-			totalDocs = Files.list(scannedDocsDir).count();
-		} catch (IOException e) {
-			logger.error("Error occured while listing documents from " + environmentUtil.getScannedDocsDir(), e);
-		}
+    private void uploadToS3(S3Client s3) {
+        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir()))) {
+            directoryStream.forEach(path -> {
+                File file = path.toFile();
+                byte[] fileData;
+                try {
+                    fileData = FileUtils.readFileToByteArray(file);
+                    MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+                    String mimeType = fileTypeMap.getContentType(file.getName());
 
-		logger.info(String.format("%s documents found in %s", totalDocs, scannedDocsDir));
+                    // create the object in S3 bucket
+                    s3.putObject(ecsS3Factory.getS3Bucket(), file.getName(), fileData, mimeType);
+                    log.info(String.format("created object [%s/%s] for file [%s]", ecsS3Factory.getS3Bucket(),
+                            file.getName(), file.getName()));
 
-		if (totalDocs != 0) {
+                    moveFileFromScannedDocsToS3Object(path, file);
+                } catch (IOException e) {
+                    log.error("unable to read file contents into byte[]", e);
+                }
+            });
+        } catch (IOException e) {
+            log.error("Error occured while iterating files ", e);
+        }
+    }
 
-			try {
-				S3Client s3 = ecsS3Factory.getS3Client();
-				uploadToS3(s3);
-			} catch (URISyntaxException e) {
-				logger.error("exception in getS3Client() method ", e);
-			}
-		}
-		logger.info("[End] uploadFilesToS3Bucket() method");
+    private void moveFileFromScannedDocsToS3Object(Path path, File file) {
+        log.info("Moving file " + file.getName() + " from scanned docs to S3Object");
+        log.info("S3Objects dir = " + environmentUtil.getS3ObjectsDir());
+        Path targetPath = Paths.get(environmentUtil.getS3ObjectsDir() + File.separator + file.getName());
+        try {
+            // move the file to sObject directory
+            Files.move(path, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-	}
-
-	private void uploadToS3(S3Client s3) {
-		try {
-			Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir())).forEach(path -> {
-				File file = path.toFile();
-
-				byte[] fileData;
-				try {
-					fileData = FileUtils.readFileToByteArray(file);
-
-					MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
-					String mimeType = fileTypeMap.getContentType(file.getName());
-
-					// create the object in S3 bucket
-					s3.putObject(ecsS3Factory.getS3Bucket(), file.getName(), fileData, mimeType);
-
-					logger.info(String.format("created object [%s/%s] for file [%s]", ecsS3Factory.getS3Bucket(),
-            file.getName(), file.getName()));
-
-					moveFileFromScannedDocsToS3Object(path, file);
-
-				} catch (IOException e) {
-					logger.error("unable to read file contents into byte[]", e);
-				}
-
-			});
-		} catch (IOException e) {
-			logger.error("Error occured while iterating files ", e);
-		}
-
-	}
-
-	private void moveFileFromScannedDocsToS3Object(Path path, File file) {
-		logger.info("Moving file " + file.getName() + " from scanned docs to S3Object");
-		logger.info("S3Objects dir = " + environmentUtil.getS3ObjectsDir());
-		Path targetPath = Paths.get(environmentUtil.getS3ObjectsDir() + "/" + file.getName());
-		try {
-			// move the file to sObject directory
-			Files.move(path, targetPath, StandardCopyOption.REPLACE_EXISTING);
-
-			logger.info(String.format("moved file from [%s] to [%s]", path, targetPath));
-		} catch (Exception e) {
-			logger.error(String.format("Unable to move file from [%s] to [%s]", path, targetPath), e);
-		}
-	}
+            log.info("moved file from {} to {}", path, targetPath);
+        } catch (Exception e) {
+            log.error("Unable to move file from {} to {}", path, targetPath, e);
+        }
+    }
 
     public Optional<FileDto> downloadFile(String documentKey) {
         try {
-			final GetObjectResult<InputStream> object = ecsS3Factory.getS3Client().getObject(ecsS3Factory.getS3Bucket(), documentKey);
-			return Optional.of(object).map(obj -> mapS3ObjectToFileDto(object, documentKey));
+            final GetObjectResult<InputStream> object = ecsS3Factory.getS3Client().getObject(ecsS3Factory.getS3Bucket(), documentKey);
+            return Optional.of(object).map(obj -> mapS3ObjectToFileDto(object, documentKey));
         } catch (URISyntaxException e) {
-            logger.info(e.getMessage(), e);
+            log.info(e.getMessage(), e);
             return Optional.empty();
         }
     }

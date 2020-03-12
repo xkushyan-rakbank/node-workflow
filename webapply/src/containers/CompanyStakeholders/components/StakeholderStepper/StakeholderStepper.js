@@ -3,10 +3,9 @@ import { connect, useSelector } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
-import { SuccessFilledStakeholder } from "./../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
-import { getSendProspectToAPIInfo } from "../../../../store/selectors/appConfig";
+import { getIsSendingProspect, getDatalist } from "../../../../store/selectors/appConfig";
 import {
   sendProspectToAPIPromisify,
   setScreeningError
@@ -17,21 +16,28 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { CONTINUE, stakeholderScreeningStatus } from "../../../../constants";
-import { getStakeholdersIds, quantityErrorSelector } from "../../../../store/selectors/stakeholder";
+import { CONTINUE } from "../../../../constants";
+import {
+  getStakeholdersIds,
+  stakeholdersState,
+  stakeholdersSelector
+} from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
-import { STEP_STATUS } from "../../../../constants";
+import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";
+import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
+import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
 
 const timeInterval = 5000;
 
 const StakeholderStepperComponent = ({
   id,
+  key,
   index,
+  fullName,
   firstName,
   middleName,
   lastName,
-  fullName,
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
@@ -39,40 +45,45 @@ const StakeholderStepperComponent = ({
   changeEditableStakeholder,
   setFillStakeholder,
   setEditStakeholder,
-  isTooManyStakeholders,
-  setScreeningError,
-  showAddButton,
-  isEditInProgress
+  isEditInProgress,
+  kycDetails,
+  editableStakeholder,
+  accountSigningInfo,
+  datalist,
+  setIsShowingAddButton,
+  stakeholders
 }) => {
   const classes = useStyles();
+  const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
-  const [isDisplayFinalScreen, changeFinalScreenDisplay] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
   const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
     stakeHoldersSteps
   );
 
-  const handleContinue = event => () =>
+  const setIsDisplayAddButton = useCallback(() => {
+    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
+  }, [setIsShowingAddButton, stakeholders.length]);
+
+  const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event).then(
       () => {
-        if (isTooManyStakeholders) {
-          setScreeningError(stakeholderScreeningStatus);
-        }
-
         if (activeStep === STEP_6) {
           setFillStakeholder(index, true);
-          showAddButton();
-          changeFinalScreenDisplay(true);
+          changeEditableStakeholder();
+          setIsShowSuccessFilled(true);
+          setIsShowingAddButton(false);
           setTimeout(() => {
-            changeFinalScreenDisplay(false);
-            changeEditableStakeholder();
+            setIsShowSuccessFilled(false);
+            setIsDisplayAddButton();
           }, timeInterval);
         }
         handleSetNextStep(activeStep);
       },
       () => {}
     );
+  };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -87,13 +98,38 @@ const StakeholderStepperComponent = ({
   );
 
   const editHandler = useCallback(() => {
-    showAddButton();
+    setIsDisplayAddButton();
     changeEditableStakeholder("");
     setEditStakeholder(index, false);
-  }, [showAddButton, changeEditableStakeholder, setEditStakeholder, index]);
+  }, [setIsDisplayAddButton, changeEditableStakeholder, setEditStakeholder, index]);
 
-  if (isDisplayFinalScreen) {
+  const handleEditCompleted = useCallback(
+    index => {
+      changeEditableStakeholder(index);
+      setEditStakeholder(index, true);
+    },
+    [changeEditableStakeholder, setEditStakeholder]
+  );
+
+  if (isShowSuccessFilled) {
     return <SuccessFilledStakeholder name={fullName} />;
+  }
+
+  if (editableStakeholder !== index) {
+    return (
+      <FilledStakeholderCard
+        key={key}
+        index={index}
+        editDisabled={Number.isInteger(editableStakeholder)}
+        changeEditableStep={handleEditCompleted}
+        datalist={datalist}
+        firstName={firstName}
+        middleName={middleName}
+        lastName={lastName}
+        accountSigningInfo={accountSigningInfo}
+        kycDetails={kycDetails}
+      />
+    );
   }
 
   return (
@@ -140,11 +176,17 @@ const StakeholderStepperComponent = ({
   );
 };
 
-const mapStateToProps = state => ({
-  isStatusShown: state.stakeholders.isStatusShown,
-  isTooManyStakeholders: quantityErrorSelector(state),
-  ...getSendProspectToAPIInfo(state)
-});
+const mapStateToProps = state => {
+  const { editableStakeholder } = stakeholdersState(state);
+
+  return {
+    isStatusShown: state.stakeholders.isStatusShown,
+    stakeholders: stakeholdersSelector(state),
+    loading: getIsSendingProspect(state),
+    datalist: getDatalist(state),
+    editableStakeholder
+  };
+};
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,

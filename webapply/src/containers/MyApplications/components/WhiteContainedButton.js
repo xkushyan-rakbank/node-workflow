@@ -9,9 +9,10 @@ export const WhiteContainedButton = withStyles(theme => ({
     backgroundColor: "#fff",
     width: 160,
     height: 32,
+    minHeight: 32,
     padding: "0 10px",
     [theme.breakpoints.only("xs")]: {
-      width: "130px"
+      display: "none"
     },
     "&:hover": {
       backgroundColor: "#000",

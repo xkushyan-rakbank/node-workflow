@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
     color: "#888888",
     display: "block",
     [theme.breakpoints.only("xs")]: {
-      marginTop: 10,
+      marginTop: 20,
       fontSize: 10
     }
   }

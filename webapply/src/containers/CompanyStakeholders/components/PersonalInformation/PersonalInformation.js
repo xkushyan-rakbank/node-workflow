@@ -25,7 +25,7 @@ import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
-import { NAME_REGEX } from "../../../../utils/validation";
+import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -40,6 +40,7 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("First name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("First name"))
+      .test("space validation", getInvalidMessage("First name"), checkIsTrimmed)
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
@@ -52,6 +53,7 @@ const personalInformationSchema = Yup.object().shape({
   middleName: Yup.string()
     .max(30, "Maximum 30 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Middle name"))
+    .test("space validation", getInvalidMessage("Middle name"), checkIsTrimmed)
     .test(
       "length validation",
       "First, Middle and Last name combined have a limit of 77 characters",
@@ -66,6 +68,7 @@ const personalInformationSchema = Yup.object().shape({
       .required(getRequiredMessage("Last name"))
       .max(30, "Maximum 30 characters allowed")
       .matches(NAME_REGEX, getInvalidMessage("Last name"))
+      .test("space validation", getInvalidMessage("Last name"), checkIsTrimmed)
       .test(
         "length validation",
         "First, Middle and Last name combined have a limit of 77 characters",
@@ -111,9 +114,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       }}
       onSubmit={handleContinue}
       validationSchema={personalInformationSchema}
-      validateOnChange={false}
+      validateOnChange={true}
     >
-      {({ values, setFieldValue, resetForm, errors, touched }) => (
+      {({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -123,7 +126,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
-                  resetForm();
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
@@ -232,6 +234,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             path={`prospect.signatoryInfo[${index}].kycDetails.isPEP`}
             component={InlineRadioGroup}
             options={yesNoOptions}
+            disabled={!!values.isShareholderACompany}
             label="This Person, or a relative of this person by blood or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
             InputProps={{
               inputProps: { tabIndex: 0 }

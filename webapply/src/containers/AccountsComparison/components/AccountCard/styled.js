@@ -6,7 +6,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexWrap: "nowrap",
     overflow: "hidden",
-    margin: "20px -26px -25px",
+    margin: "20px -26px 0",
     padding: "0 16px 25px",
     [portraitOrientationQueryIPads]: {
       flexDirection: "column"
@@ -22,6 +22,7 @@ export const useStyles = makeStyles(theme => ({
       marginTop: 0,
       marginLeft: -16,
       marginRight: -16,
+      marginBottom: -25,
       paddingLeft: 0,
       paddingRight: 0,
       overflowX: "auto"

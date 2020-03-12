@@ -5,7 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import { StyledTableHeaderCellWitHoverHandler } from "../StyledTableHeaderCellWitHoverHandler";
 import { useStyles } from "./styled";
 import { accountTypes } from "../../constants";
-import { accountNames } from "../../../../../../constants";
+import { accountNames, accountNamesShow } from "../../../../../../constants";
 
 export const StyledTableHeaderComponent = ({ selectedCurrentColumn, handleHover }) => {
   const classes = useStyles();
@@ -21,7 +21,7 @@ export const StyledTableHeaderComponent = ({ selectedCurrentColumn, handleHover 
         <StyledTableHeaderCellWitHoverHandler
           selectedCurrentColumn={selectedCurrentColumn}
           handleHover={handleHover}
-          text={accountNames.starter}
+          text={accountNamesShow.starter}
           name={accountTypes.starter.name}
           order={accountTypes.starter.position}
         />
@@ -35,7 +35,7 @@ export const StyledTableHeaderComponent = ({ selectedCurrentColumn, handleHover 
         <StyledTableHeaderCellWitHoverHandler
           selectedCurrentColumn={selectedCurrentColumn}
           handleHover={handleHover}
-          text={accountNames.elite}
+          text={accountNamesShow.elite}
           name={accountTypes.elite.name}
           order={accountTypes.elite.position}
         />

@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-import { routerToAddPaddingInSlider, sideNavWidthSM, sideNavWidthLG } from "../../constants/styles";
+import {
+  routerToAddPaddingInSlider,
+  sideNavWidthSM,
+  sideNavWidthMD,
+  sideNavWidthLG,
+  sideNavWidthCollapsed
+} from "../../constants/styles";
 import { ELITE, ISLAMIC } from "../../utils/useBlobColor/constants";
 
 export const useStyles = makeStyles(theme => ({
@@ -41,6 +47,7 @@ export const useStyles = makeStyles(theme => ({
     flex: "1 1 auto",
     minHeight: "0px",
     minWidth: "1px",
+    transition: theme.transitions.default,
     "& h2": {
       fontSize: "46px",
       fontWeight: "600",
@@ -51,8 +58,12 @@ export const useStyles = makeStyles(theme => ({
         fontSize: "27px"
       }
     },
-    [theme.breakpoints.up("sm")]: {
-      paddingLeft: sideNavWidthSM
+    [theme.breakpoints.only("sm")]: {
+      paddingLeft: ({ fullContentWidth }) =>
+        fullContentWidth ? sideNavWidthCollapsed : sideNavWidthSM
+    },
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: sideNavWidthMD
     },
     [theme.breakpoints.up("lg")]: {
       paddingLeft: sideNavWidthLG
@@ -65,12 +76,16 @@ export const useStyles = makeStyles(theme => ({
     "& nextButton": {
       margin: "42px 0 0 !important"
     },
+    [theme.breakpoints.only("xs")]: {
+      paddingRight: 16,
+      paddingLeft: 16
+    },
     [theme.breakpoints.up("sm")]: {
       overflowY: "auto"
     }
   },
   mainContainer: {
-    width: "832px",
+    width: ({ fullContentWidth }) => (fullContentWidth ? 780 : 634),
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
@@ -78,6 +93,9 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: "35px",
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "832px"
     }
   },
   mainContainerFullHeight: {

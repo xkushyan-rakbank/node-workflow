@@ -8,7 +8,7 @@ const Container = styled.div`
   flex-direction: ${({ incoming }) => (incoming ? "row-reverse" : "row")};
   justify-content: ${({ incoming }) => (incoming ? "flex-end" : "flex-end")};
   min-width: 202px;
-  margin-top: 20px;
+  padding-top: 20px;
   margin-right: ${({ incoming }) => (incoming ? "auto" : "0")};
   margin-left: ${({ incoming }) => (incoming ? "0" : "auto")};
 `;
@@ -22,12 +22,15 @@ const MessageWrapper = styled.div`
 `;
 
 const MessageStyled = styled.div`
-  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
   padding: 12px 16px;
   border-radius: 16px;
   background-color: ${({ incoming }) => (incoming ? "#eaeced" : "#373737")};
   font-size: 14px;
   color: ${({ incoming }) => (incoming ? "#263d4c" : "#fff")};
+  word-wrap: break-word;
 `;
 
 const DateStyled = styled.div`
@@ -49,19 +52,17 @@ const Avatar = styled.div`
   border-radius: 100%;
 `;
 
-const Message = ({ body, date, incoming, name }) => {
-  return (
-    <Container incoming={incoming}>
-      <MessageWrapper incoming={incoming}>
-        <MessageStyled incoming={incoming}>{body}</MessageStyled>
-        <DateStyled>{date}</DateStyled>
-      </MessageWrapper>
-      <Avatar incoming={incoming}>
-        {incoming ? <img src={User} alt="avatar" /> : name ? name.charAt(0) : ""}
-      </Avatar>
-    </Container>
-  );
-};
+const Message = ({ body, date, incoming, name, style }) => (
+  <Container incoming={incoming} style={style}>
+    <MessageWrapper incoming={incoming}>
+      <MessageStyled incoming={incoming}>{body}</MessageStyled>
+      <DateStyled>{date}</DateStyled>
+    </MessageWrapper>
+    <Avatar incoming={incoming}>
+      {incoming ? <img src={User} alt="avatar" /> : name ? name.charAt(0) : ""}
+    </Avatar>
+  </Container>
+);
 
 Message.propTypes = {
   body: PropTypes.string,

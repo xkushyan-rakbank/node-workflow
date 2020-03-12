@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: "24px",
     fontWeight: 600,
-    lineHeight: 1.33,
+    lineHeight: "32px",
     color: "#373737",
     margin: 0
   },

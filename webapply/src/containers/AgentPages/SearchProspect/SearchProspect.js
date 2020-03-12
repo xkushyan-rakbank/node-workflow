@@ -1,18 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import omit from "lodash/omit";
 
 import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
-import {
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH,
-  NAME_REGEX,
-  ALPHANUMERIC_REGEX,
-  UAE_MOBILE_PHONE_REGEX
-} from "../../../utils/validation";
+import { NAME_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_EMAIL_LENGTH } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { SearchResult } from "../SearchResult";
@@ -22,29 +15,12 @@ import { getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 
 const searchProspectSchema = Yup.object({
-  fname: Yup.string()
+  fullName: Yup.string()
     .max(30, "Maximum 30 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
-  mobileNo: Yup.string().when("countryCode", {
-    is: countryCode => countryCode === UAE_CODE,
-    then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, `${getInvalidMessage("Mobile Number")}`),
-    otherwise: Yup.string()
-      .matches(NUMBER_REGEX, `${getInvalidMessage("Mobile Number")} (wrong characters)`)
-      .min(
-        MIN_NON_UAE_PHONE_LENGTH,
-        `${getInvalidMessage("Mobile Number")} (min length is not reached)`
-      )
-      .test(
-        "length validation",
-        `${getInvalidMessage("Mobile Number")} (max length exceeded)`,
-        function() {
-          const { countryCode = "", mobileNo = "" } = this.parent;
-          return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-        }
-      )
-  }),
+  mobileNo: Yup.string().phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number" }),
   email: Yup.string().email(getInvalidMessage("Email")),
-  raktrackNumber: Yup.string()
+  leadNumber: Yup.string()
     .max(20, "Maximum 20 characters allowed")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("RAKtrack Lead Reference Number")),
   tradeLicenseNo: Yup.string()
@@ -53,17 +29,27 @@ const searchProspectSchema = Yup.object({
 });
 
 const initialValues = {
-  fname: "",
+  fullName: "",
   countryCode: UAE_CODE,
   mobileNo: "",
   email: "",
-  raktrackNumber: "",
+  leadNumber: "",
   tradeLicenseNo: ""
 };
 
-export const SearchProspectComponent = ({ searchApplications, searchResults, isLoading }) => {
+export const SearchProspectComponent = ({
+  searchApplications,
+  searchResults,
+  isLoading,
+  resetProspect
+}) => {
   const classes = useStyles();
   const [isSearchLaunched, setSearchStatus] = useState(false);
+
+  useEffect(() => {
+    resetProspect();
+  }, [resetProspect]);
+
   const handleSubmit = useCallback(
     values => {
       setSearchStatus(true);
@@ -84,8 +70,8 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
         {({ values }) => (
           <Form>
             <Field
-              name="fname"
-              path="searchInfo.fname"
+              name="fullName"
+              path="searchInfo.fullName"
               label="Applicant Name"
               placeholder="Applicant Name"
               contextualHelpText="This should be the name of the person who has registered for WebApply and initiated the application on behalf of the company."
@@ -137,7 +123,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
             <Grid container spacing={3}>
               <Grid item md={6} sm={12}>
                 <Field
-                  name="raktrackNumber"
+                  name="leadNumber"
                   path="searchInfo.raktrackNumber"
                   label="RAKtrack Lead Reference Number"
                   placeholder="RAKtrack Lead Reference Number"
@@ -152,7 +138,7 @@ export const SearchProspectComponent = ({ searchApplications, searchResults, isL
                   name="tradeLicenseNo"
                   path="searchInfo.tradeLicenseNo"
                   label="Trade License Number"
-                  placeholder="Track License Number"
+                  placeholder="Trade License Number"
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0 }

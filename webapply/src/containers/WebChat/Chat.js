@@ -1,19 +1,22 @@
 import React, { Suspense, lazy, useCallback } from "react";
 import { connect } from "react-redux";
+import get from "lodash/get";
 import cx from "classnames";
 
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
+import { getSearchResults } from "../../store/selectors/searchProspect";
 
 import chatIcon from "./../../assets/webchat/black.svg";
 
 import { useStyles } from "./styled";
 
-const WebChatComponent = lazy(() => import("./components/WebChat"));
+const WebChatComponent = lazy(() => import("./components/Chat"));
 
-const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
+const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
   const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
+  const searchName = get(searchResults, "[0].applicantInfo.fullName", "");
 
   const openChat = useCallback(() => {
     dispatch({ type: isClosed ? "open" : "expand" });
@@ -35,7 +38,7 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
               <img src={chatIcon} alt="chat" />
             </span>
           </div>
-          <div className="hide-on-mobile"> Chat with Us</div>
+          <div className="hide-on-mobile small-menu-hide"> Chat with Us</div>
         </div>
       </div>
     ),
@@ -51,7 +54,7 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
           <WebChatComponent
             onClose={closeWebChat}
             onMinimize={minimizeChat}
-            InitiatedCustomerName={name}
+            InitiatedCustomerName={name || searchName}
             InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
             EmailAddress={email}
             isAuth={false}
@@ -63,6 +66,7 @@ const ChatComponent = ({ name, mobileNo, countryCode, email }) => {
 };
 
 const mapStateToProps = state => ({
+  searchResults: getSearchResults(state),
   name: getApplicantInfo(state).fullName,
   mobileNo: getApplicantInfo(state).mobileNo,
   countryCode: getApplicantInfo(state).countryCode,

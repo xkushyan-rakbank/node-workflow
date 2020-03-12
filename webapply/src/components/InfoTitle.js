@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { makeStyles, styled } from "@material-ui/core/styles";
 import cx from "classnames";
 
@@ -30,7 +30,7 @@ IconStyled.defaultProps = {
   alt: "info icon"
 };
 
-export const InfoTitle = ({ styles, iconName = ICONS.info, ...props }) => {
+const InfoTitleBase = ({ styles, iconName = ICONS.info, ...props }) => {
   const classes = useStyles();
   return (
     <div className={cx(classes.wrapper, props.className)} style={{ ...styles }}>
@@ -39,3 +39,5 @@ export const InfoTitle = ({ styles, iconName = ICONS.info, ...props }) => {
     </div>
   );
 };
+
+export const InfoTitle = memo(InfoTitleBase);

@@ -7,11 +7,11 @@ import { FormCard } from "../../../../components/FormCard/FormCard";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
-import { signatoriesSteps } from "./constants";
+import { signatoriesSteps } from "./steps";
 import { checkIsAccountInfoTypeNumber } from "./utils";
-import { COMPANY_SIGNATORY_ID } from "./constants";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
+import { COMPANY_SIGNATORY_ID } from "../../../../constants";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,

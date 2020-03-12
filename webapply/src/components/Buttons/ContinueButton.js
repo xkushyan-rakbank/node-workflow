@@ -1,12 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { ContainedButton } from "./ContainedButton";
 
 const styles = {
   buttonStyle: {
     width: "145px",
-    height: "40px",
-    borderRadius: "21px ",
+    minHeight: 40,
+    borderRadius: "21px",
+    padding: "8px 20px",
     backgroundColor: "#3b3a3a",
     fontFamily: "Open Sans, sans-serif",
     lineHeight: "normal",
@@ -18,6 +19,8 @@ const styles = {
   }
 };
 
-export const ContinueButton = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
+const ContinueButtonBase = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
   <ContainedButton className={classes.buttonStyle} label={label} {...rest} />
 ));
+
+export const ContinueButton = memo(ContinueButtonBase);

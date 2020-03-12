@@ -1,6 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useImperativeHandle, forwardRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+
+import { isNumeric } from "../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -13,8 +15,12 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-export const OtpVerification = ({ onChange, code }) => {
+const OtpInput = ({ onChange, code }, ref) => {
   const classes = useStyles();
+
+  useImperativeHandle(ref, () => ({
+    resetFocus: () => inputRefs[0].focus()
+  }));
 
   const handleInputFocus = useCallback(event => {
     event.target.select();
@@ -23,12 +29,14 @@ export const OtpVerification = ({ onChange, code }) => {
   const handleChange = useCallback(
     event => {
       const { value, name } = event.target;
-      const newCodeIndex = parseInt(name, 10);
-      const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
+      if (!value || isNumeric(value)) {
+        const newCodeIndex = parseInt(name, 10);
+        const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
 
-      onChange(newCode);
-      if (value && inputRefs[newCodeIndex + 1]) {
-        inputRefs[newCodeIndex + 1].focus();
+        onChange(newCode);
+        if (value && inputRefs[newCodeIndex + 1]) {
+          inputRefs[newCodeIndex + 1].focus();
+        }
       }
     },
     [code, onChange]
@@ -69,3 +77,5 @@ export const OtpVerification = ({ onChange, code }) => {
     </Grid>
   ));
 };
+
+export const OtpVerification = forwardRef(OtpInput);

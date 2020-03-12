@@ -6,21 +6,21 @@ import { titles, errorMsgs } from "./constants";
 
 import { useStyles } from "./styled";
 
-export const CompanyDetails = ({ prospectInfo = {}, searchResult }) => {
+export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
   const classes = useStyles();
 
   return (
     <>
       <h4 className={classes.title}>{titles.APPLICANT_DETAIL_TITLE}</h4>
-      {prospectInfo.applicantInfo ? (
+      {prospectOverview.applicantInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>{prospectInfo.applicantInfo.email}</div>
+            <div className={classes.companyDetails}>{prospectOverview.applicantInfo.email}</div>
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {`${get(prospectInfo, "applicantInfo.countryCode", "")} ${get(
-                prospectInfo,
+              {`${get(prospectOverview, "applicantInfo.countryCode", "")} ${get(
+                prospectOverview,
                 "applicantInfo.mobileNo",
                 ""
               )}`}
@@ -41,16 +41,16 @@ export const CompanyDetails = ({ prospectInfo = {}, searchResult }) => {
         <div className={classes.errorMsg}>{errorMsgs.RAKTRACK_LEAD_REFERENCE_ERROR}</div>
       )}
       <h4 className={classes.title}>{titles.COMPANY_DETAIL_TITLE}</h4>
-      {prospectInfo.organizationInfo ? (
+      {get(prospectOverview, "organizationInfo.companyName") ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {prospectInfo.organizationInfo.companyName}
+              {prospectOverview.organizationInfo.companyName}
             </div>
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {prospectInfo.organizationInfo.licenseNumber}
+              {prospectOverview.organizationInfo.licenseNumber}
             </div>
           </Grid>
         </Grid>

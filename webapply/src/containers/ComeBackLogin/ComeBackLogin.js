@@ -12,25 +12,22 @@ import {
   AutoSaveField as Field,
   SkeletonLoader
 } from "./../../components/Form";
-import {
-  UAE_MOBILE_PHONE_REGEX,
-  NUMBER_REGEX,
-  MIN_NON_UAE_PHONE_LENGTH,
-  MAX_NON_UAE_PHONE_LENGTH
-} from "./../../utils/validation";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { setToken } from "../../store/actions/reCaptcha";
 import { generateOtpCode } from "../../store/actions/otp";
 import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
+import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
-import { getRequiredMessage, getInvalidMessage } from "../../utils/getValidationMessage";
+
 import { useStyles } from "./styled";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
+
 export const MAX_LENGTH_EMAIL = 50;
 
 const comebackSchema = Yup.object({
@@ -40,24 +37,7 @@ const comebackSchema = Yup.object({
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
-    .when("countryCode", {
-      is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Your Mobile Number")),
-      otherwise: Yup.string()
-        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
-        .min(
-          MIN_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
-        )
-        .test(
-          "length validation",
-          `${getInvalidMessage("Your Mobile Number")}  (max length exceeded)`,
-          function() {
-            const { countryCode = "", mobileNo = "" } = this.parent;
-            return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-          }
-        )
-    })
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
 const ComeBackLoginComponent = ({
@@ -93,12 +73,15 @@ const ComeBackLoginComponent = ({
     setToken(null);
   }, [setToken]);
 
+  useFormNavigation([true, false]);
+
   useEffect(() => {
     if (isOtpGenerated) {
       pushHistory(
         process.env.REACT_APP_OTP_ENABLE === "N"
           ? routes.MyApplications
-          : routes.comeBackLoginVerification
+          : routes.comeBackLoginVerification,
+        true
       );
     }
   }, [pushHistory, isOtpGenerated]);
@@ -188,7 +171,7 @@ const ComeBackLoginComponent = ({
                     (isRecaptchaEnable && !recaptchaToken)
                   }
                   justify="flex-end"
-                  label="Next step"
+                  label="Next Step"
                 />
               </div>
             </Grid>

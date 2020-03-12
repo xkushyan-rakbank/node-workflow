@@ -42,11 +42,16 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
               </div>,
               <div key="action" className={classes.blockAction}>
                 {ctaStatuses[app.status.statusNotes] ? (
-                  <WhiteContainedButton
-                    disabled={app.status.reasonCode === STATUS_LOCKED}
-                    label={ctaStatuses[app.status.statusNotes]}
-                    handleClick={() => getProspectInfo(app.prospectId)}
-                  />
+                  <>
+                    <WhiteContainedButton
+                      disabled={app.status.reasonCode === STATUS_LOCKED}
+                      label={ctaStatuses[app.status.statusNotes].buttonText}
+                      handleClick={() => getProspectInfo(app.prospectId)}
+                    />
+                    <div className={classes.hint}>
+                      {ctaStatuses[app.status.statusNotes].mobileStatus}
+                    </div>
+                  </>
                 ) : (
                   notCtaStatuses[app.status.statusNotes] && (
                     <div className={classes.statusNotes}>
@@ -65,6 +70,9 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                   label="Finish Application"
                   handleClick={() => getProspectInfo(app.prospectId)}
                 />
+                <div className={classes.hint}>
+                  {ctaStatuses[app.status.statusNotes].mobileStatus}
+                </div>
               </div>
             ]}
       </div>

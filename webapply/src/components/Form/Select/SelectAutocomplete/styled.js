@@ -2,11 +2,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
 
 export const useStyles = makeStyles(theme => ({
+  formControlRoot: {
+    zIndex: "auto"
+  },
   input: {
     display: "flex",
     padding: 0,
     minHeight: "56px",
     height: "auto",
+    backgroundColor: ({ disabled }) => (disabled ? "rgba(242, 242, 242, 0.5)" : "transparent"),
     "& > *": {
       minHeight: "56px"
     },
@@ -74,6 +78,7 @@ export const customStyles = {
     return {
       ...provided,
       zIndex: 2,
+      marginTop: "6px",
       width
     };
   },

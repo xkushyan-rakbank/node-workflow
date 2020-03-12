@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
@@ -6,6 +6,7 @@ import { FormControl } from "@material-ui/core";
 import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
 import { useStyles, customStyles } from "./styled";
+import { areEqualFieldProps } from "../../utils";
 
 const components = {
   Control,
@@ -14,7 +15,7 @@ const components = {
   MultiValue
 };
 
-export const SelectAutocomplete = ({
+export const SelectAutocompleteBase = ({
   extractValue = option => option.value,
   extractLabel = option => option.label || option.displayText,
   theme,
@@ -30,25 +31,30 @@ export const SelectAutocomplete = ({
   onChange = value => setFieldValue(field.name, value),
   ...props
 }) => {
-  const classes = useStyles(props);
+  const classes = useStyles({
+    ...props,
+    disabled
+  });
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const [hasFocus, setFocus] = useState(false);
 
   const handleChange = selected => {
-    const value = multiple
-      ? (selected || []).map(item => extractValue(item))
-      : extractValue(selected);
+    const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
 
     return onChange(value);
   };
 
   const renderValue = !multiple
     ? options.find(option => extractValue(option) === field.value)
-    : options.filter(option => field.value.includes(option.value));
+    : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
   return (
-    <FormControl className="formControl" variant="outlined">
+    <FormControl
+      classes={{ root: classes.formControlRoot }}
+      className="formControl"
+      variant="outlined"
+    >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
@@ -63,6 +69,7 @@ export const SelectAutocomplete = ({
           isMulti={multiple}
           isDisabled={disabled}
           closeMenuOnSelect={!multiple}
+          tabSelectsValue={!multiple}
           hideSelectedOptions={false}
           joinValues={true}
           delimiter=","
@@ -83,3 +90,5 @@ export const SelectAutocomplete = ({
     </FormControl>
   );
 };
+
+export const SelectAutocomplete = memo(SelectAutocompleteBase, areEqualFieldProps);

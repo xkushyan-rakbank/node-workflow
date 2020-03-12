@@ -5,13 +5,6 @@ import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
 import {
-  NUMBER_REGEX,
-  UAE_MOBILE_PHONE_REGEX,
-  MAX_NON_UAE_PHONE_LENGTH,
-  MIN_NON_UAE_PHONE_LENGTH,
-  NAME_REGEX
-} from "./../../utils/validation";
-import {
   Input,
   CustomSelect,
   InputGroup,
@@ -19,17 +12,30 @@ import {
   SkeletonLoader
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
-import { receiveAppConfig } from "./../../store/actions/appConfig";
-import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
-import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { setToken } from "../../store/actions/reCaptcha";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
-import routes from "../../routes";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { NAME_REGEX } from "./../../utils/validation";
+import { receiveAppConfig } from "./../../store/actions/appConfig";
+import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
+import { setToken } from "../../store/actions/reCaptcha";
+import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
+import {
+  getIsRecaptchaEnable,
+  getAccountType,
+  getIsIslamicBanking
+} from "../../store/selectors/appConfig";
+import {
+  UAE_CODE,
+  formStepper,
+  CONVENTIONAL,
+  detailedAccountRoutesMap,
+  ISLAMIC
+} from "../../constants";
+import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -43,24 +49,7 @@ const aplicantInfoSchema = Yup.object({
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
-    .when("countryCode", {
-      is: countryCode => countryCode === UAE_CODE,
-      then: Yup.string().matches(UAE_MOBILE_PHONE_REGEX, getInvalidMessage("Your Mobile Number")),
-      otherwise: Yup.string()
-        .matches(NUMBER_REGEX, getInvalidMessage("Your Mobile Number"))
-        .min(
-          MIN_NON_UAE_PHONE_LENGTH,
-          `${getInvalidMessage("Your Mobile Number")} (min length is not reached)`
-        )
-        .test(
-          "length validation",
-          `${getInvalidMessage("Your Mobile Number")} (max length exceeded)`,
-          function() {
-            const { countryCode = "", mobileNo = "" } = this.parent;
-            return countryCode.length + mobileNo.length <= MAX_NON_UAE_PHONE_LENGTH;
-          }
-        )
-    })
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
 const initialValues = {
@@ -76,29 +65,37 @@ const ApplicantInfoPage = ({
   setToken,
   reCaptchaToken,
   isRecaptchaEnable,
-  isConfigLoading
+  resetScreeningError,
+  isConfigLoading,
+  accountType,
+  isIslamicBanking
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
-  useEffect(() => {
-    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
+  useFormNavigation([false, false, formStepper]);
 
-    receiveAppConfig(segment);
+  useEffect(() => {
+    receiveAppConfig();
   }, [receiveAppConfig]);
+
+  useEffect(() => {
+    resetScreeningError();
+  }, [resetScreeningError]);
 
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values)
-        .then(() => {
+      submit(values).then(
+        () => {
           pushHistory(
-            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp
+            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
+            true
           );
-        })
-        .finally(() => {
+        },
+        () => {
           setIsLoading(false);
-        });
+        }
+      );
     },
     [submit, pushHistory]
   );
@@ -171,13 +168,13 @@ const ApplicantInfoPage = ({
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />
-
                 <Field
                   name="mobileNo"
                   path="prospect.applicantInfo.mobileNo"
                   label="Your Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
+                  contextualHelpText="This number should be unique for a Company"
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}
@@ -196,7 +193,11 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink path={routes.accountsComparison} />
+                <BackLink
+                  path={
+                    detailedAccountRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
+                  }
+                />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
@@ -220,10 +221,13 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  accountType: getAccountType(state),
+  isIslamicBanking: getIsIslamicBanking(state)
 });
 
 const mapDispatchToProps = {
+  resetScreeningError,
   receiveAppConfig,
   submit: applicantInfoFormPromisify,
   setToken

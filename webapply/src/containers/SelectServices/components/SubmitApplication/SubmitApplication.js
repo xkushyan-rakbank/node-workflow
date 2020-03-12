@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-import routes from "../../../../routes";
-import { submitApplication } from "../../../../constants/index";
+import routes, { smeBaseName } from "../../../../routes";
+import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
 
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
-import { BlockConfirm } from "./BlockConfirm";
+import { BlockConfirm } from "./BlockConfirm/index";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { SUBMIT, NEXT } from "../../../../constants";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
+import { NEXT, SUBMIT } from "../../../../constants";
 
 export const SubmitApplicationComponent = ({
   accountInfo: [account],
@@ -18,23 +18,28 @@ export const SubmitApplicationComponent = ({
   applicationInfo,
   organizationInfo: { companyName },
   sendProspectToAPI,
-  updateActionType,
-  updateSaveType,
-  isApplyEditApplication
+  isApplyEditApplication,
+  updateViewId,
+  currentProspectStatus
 }) => {
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isROSubmit =
+    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
+  const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
+
   const isSubmitButtonEnable =
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
+
   const handleSubmit = () => {
+    updateViewId(pathname.replace(smeBaseName, ""), false);
     setIsSubmitting(true);
-    updateActionType(SUBMIT);
-    updateSaveType(NEXT);
-    sendProspectToAPI()
-      .then(() => pushHistory(routes.ApplicationSubmitted), () => {})
-      .finally(() => setIsSubmitting(false));
+    sendProspectToAPI(NEXT, null, SUBMIT).then(
+      () => pushHistory(routes.ApplicationSubmitted, true),
+      () => setIsSubmitting(false)
+    );
   };
 
   if (isSubmitting) {

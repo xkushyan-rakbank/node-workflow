@@ -23,59 +23,65 @@ import {
   MAX_BANK_NAME_LENGTH,
   MAX_COMPANY_NAME_LENGTH
 } from "./constants";
-import { COMPANY_NAME_REGEX, BANK_NAME_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { FinalQuestionField } from "../../../../FinalQuestionsStateContext";
 
-const companyBusinessRelationshipsSchema = Yup.object().shape({
-  topCustomers: Yup.array().of(
-    Yup.object().shape({
-      name: Yup.string()
-        .required(getRequiredMessage("Customer name"))
-        .matches(COMPANY_NAME_REGEX, getInvalidMessage("Customer name")),
-      country: Yup.string().required(getRequiredMessage("Country"))
-    })
-  ),
-  isDontHaveSuppliersYet: Yup.boolean(),
-  topSuppliers: Yup.array().when("isDontHaveSuppliersYet", {
-    is: false,
-    then: Yup.array().of(
+const companyBusinessRelationshipsSchema = () =>
+  Yup.object().shape({
+    topCustomers: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .required(getRequiredMessage("Supplier name"))
-          .matches(COMPANY_NAME_REGEX, getInvalidMessage("Supplier name")),
+          .required(getRequiredMessage("Customer name"))
+          // eslint-disable-next-line no-template-curly-in-string
+          .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name")),
         country: Yup.string().required(getRequiredMessage("Country"))
       })
-    )
-  }),
-  isDontTradeGoodsYet: Yup.bool(),
-  topOriginGoodsCountries: Yup.array().when("isDontTradeGoodsYet", {
-    is: false,
-    then: Yup.array().of(
-      Yup.object().shape({
-        country: Yup.string().required(getRequiredMessage("Country of origin"))
-      })
-    )
-  }),
-  otherBankingRelationshipsInfo: Yup.object().shape({
-    otherBankingRelationshipsExist: Yup.bool(),
-    otherBankDetails: Yup.array().when("otherBankingRelationshipsExist", {
-      is: true,
+    ),
+    isDontHaveSuppliersYet: Yup.boolean(),
+    topSuppliers: Yup.array().when("isDontHaveSuppliersYet", {
+      is: false,
       then: Yup.array().of(
         Yup.object().shape({
-          bankName: Yup.string()
-            .matches(BANK_NAME_REGEX, getInvalidMessage("Bank name"))
-            .required(getRequiredMessage("Bank name"))
+          name: Yup.string()
+            .required(getRequiredMessage("Supplier name"))
+            // eslint-disable-next-line no-template-curly-in-string
+            .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name")),
+          country: Yup.string().required(getRequiredMessage("Country"))
         })
       )
+    }),
+    isDontTradeGoodsYet: Yup.bool(),
+    topOriginGoodsCountries: Yup.array().when("isDontTradeGoodsYet", {
+      is: false,
+      then: Yup.array().of(
+        Yup.object().shape({
+          country: Yup.string().required(getRequiredMessage("Country of origin"))
+        })
+      )
+    }),
+    otherBankingRelationshipsInfo: Yup.object().shape({
+      otherBankingRelationshipsExist: Yup.bool(),
+      otherBankDetails: Yup.array().when("otherBankingRelationshipsExist", {
+        is: true,
+        then: Yup.array().of(
+          Yup.object().shape({
+            bankName: Yup.string()
+              .required(getRequiredMessage("Bank name"))
+              // eslint-disable-next-line no-template-curly-in-string
+              .max(MAX_BANK_NAME_LENGTH, "Maximum ${max} characters allowed")
+              .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Bank name"))
+          })
+        )
+      })
     })
-  })
-});
+  });
 
 export const CompanyBusinessRelationshipsComponent = ({
   handleContinue,
@@ -88,10 +94,6 @@ export const CompanyBusinessRelationshipsComponent = ({
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
-  const isDontHaveSuppliersYet =
-    topSuppliers.length === 1 && !topSuppliers[0].name && !topSuppliers[0].country;
-  const isDontTradeGoodsYet =
-    topOriginGoodsCountries.length === 1 && !topOriginGoodsCountries[0].length;
 
   const handleSubmit = useCallback(() => {
     handleContinue();
@@ -102,13 +104,13 @@ export const CompanyBusinessRelationshipsComponent = ({
       <Formik
         initialValues={{
           topCustomers: topCustomers.map(item => ({ ...item, id: uniqueId() })),
-          isDontHaveSuppliersYet,
+          isDontHaveSuppliersYet: false,
           topSuppliers: topSuppliers.map(item => ({ ...item, id: uniqueId() })),
           topOriginGoodsCountries: topOriginGoodsCountries.map(item => ({
             country: item,
             id: uniqueId()
           })),
-          isDontTradeGoodsYet,
+          isDontTradeGoodsYet: false,
           otherBankingRelationshipsInfo: {
             otherBankingRelationshipsExist: false,
             otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
@@ -163,7 +165,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopCustomers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -174,6 +176,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               component={SelectAutocomplete}
                               shrink
                               tabIndex="0"
+                              otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                             />
                             {isTopCustomers && (
                               <ArrayRemoveButton
@@ -207,8 +210,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top suppliers</h4>
-                    <FinalQuestionField
+                    <Field
                       name="isDontHaveSuppliersYet"
+                      path="prospect.orgKYCDetails.isDontHaveSuppliersYet"
                       label="I don't have any suppliers"
                       component={Checkbox}
                       onSelect={() => {
@@ -263,7 +267,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopSuppliers ? 5 : 6}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -275,6 +279,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               disabled={values.isDontHaveSuppliersYet}
                               shrink
                               tabIndex="0"
+                              otherProps={{ menuFullWidth: true }}
                             />
                             {isTopSuppliers && (
                               <ArrayRemoveButton
@@ -311,8 +316,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                 {arrayHelpers => (
                   <>
                     <h4 className={classes.groupLabel}>Top origin of goods</h4>
-                    <FinalQuestionField
+                    <Field
                       name="isDontTradeGoodsYet"
+                      path="prospect.orgKYCDetails.isDontTradeGoodsYet"
                       label="I don't trade with goods"
                       component={Checkbox}
                       onSelect={() => {
@@ -338,7 +344,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                           <Grid
                             item
                             md={isTopOriginGoodsCountries ? 10 : 12}
-                            sm={12}
+                            xs={12}
                             className={cx(classes.relative, { [classes.tablet]: !index })}
                           >
                             <Field
@@ -351,6 +357,14 @@ export const CompanyBusinessRelationshipsComponent = ({
                               contextualHelpText="List down the top countries from where existing or future goods originate"
                               shrink
                               tabIndex="0"
+                              filterOptions={options => {
+                                const countries = values.topOriginGoodsCountries
+                                  .filter(
+                                    (item, indexCountry) => item.country && indexCountry !== index
+                                  )
+                                  .map(item => item.country);
+                                return options.filter(item => !countries.includes(item.code));
+                              }}
                             />
                             {isTopOriginGoodsCountries && (
                               <ArrayRemoveButton

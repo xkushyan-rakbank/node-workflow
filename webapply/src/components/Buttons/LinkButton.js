@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { styled } from "@material-ui/styles";
 import { theme } from "../../theme";
 import { ContexualHelp } from "../Notifications/ContexualHelp/ContexualHelp";
@@ -17,7 +17,7 @@ Button.defaultProps = {
   style: theme.palette.button
 };
 
-export const LinkButton = ({
+const LinkButtonBase = ({
   clickHandler,
   title = "Edit",
   className = "",
@@ -31,3 +31,5 @@ export const LinkButton = ({
     </Button>
   </ContexualHelp>
 );
+
+export const LinkButton = memo(LinkButtonBase);

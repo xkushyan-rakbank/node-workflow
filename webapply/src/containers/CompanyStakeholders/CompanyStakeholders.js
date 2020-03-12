@@ -1,66 +1,56 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
-import { FilledStakeholderCard } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
+import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { ConfirmDialog } from "../../components/Modals";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { Icon, ICONS } from "../../components/Icons";
-
 import {
   changeEditableStakeholder,
   createNewStakeholder,
-  deleteStakeholder,
-  setEditStakeholder
+  deleteStakeholder
 } from "../../store/actions/stakeholders";
-import { resetProspect } from "../../store/actions/appConfig";
-import { getSendProspectToAPIInfo, getDatalist } from "../../store/selectors/appConfig";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
   stakeholdersState,
   checkIsHasSignatories,
   percentageSelector
 } from "../../store/selectors/stakeholder";
-import routes from "../../routes";
-import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
-import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import routes from "../../routes";
+import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
+
+import { useStyles } from "./styled";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
   changeEditableStakeholder,
   createNewStakeholder,
-  editableStakeholder,
   stakeholders,
   percentage,
-  resetProspect,
   stakeholdersIds,
   hasSignatories,
-  datalist,
-  setEditStakeholder
+  sendProspectToAPI,
+  isLoading
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
-  const [isNewStakeholder, setIsNewStakeholder] = useState(false);
 
-  // Used to show add button after add stakeholder(if it is not limit)
-  const handleShowAddButton = useCallback(() => {
-    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
-  }, [setIsShowingAddButton, stakeholders]);
+  useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
     if (!stakeholders.length) {
-      setIsNewStakeholder(true);
       createNewStakeholder();
     }
-  }, [setIsNewStakeholder, createNewStakeholder, stakeholders.length, isShowingAddButton]);
+  }, [createNewStakeholder, stakeholders.length]);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
@@ -70,8 +60,10 @@ const CompanyStakeholdersComponent = ({
     !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
-    pushHistory(routes.finalQuestions);
-  }, [pushHistory]);
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.finalQuestions, true);
+    });
+  }, [pushHistory, sendProspectToAPI]);
 
   const handleDeleteStakeholder = useCallback(
     id => {
@@ -82,47 +74,10 @@ const CompanyStakeholdersComponent = ({
     [stakeholders.length, deleteHandler, setIsShowingAddButton, changeEditableStakeholder]
   );
 
-  const editStakeholderHandler = useCallback(
-    index => {
-      if (editableStakeholder) {
-        resetProspect();
-      }
-      changeEditableStakeholder(index);
-      setIsNewStakeholder(false);
-      setEditStakeholder(index, true);
-    },
-    [
-      changeEditableStakeholder,
-      editableStakeholder,
-      resetProspect,
-      setEditStakeholder,
-      setIsNewStakeholder
-    ]
-  );
-
   const addNewStakeholder = useCallback(() => {
     setIsShowingAddButton(false);
-    if (editableStakeholder) {
-      setOpen(true);
-    } else {
-      setIsNewStakeholder(true);
-      createNewStakeholder();
-    }
-  }, [
-    setIsShowingAddButton,
-    editableStakeholder,
-    setOpen,
-    setIsNewStakeholder,
-    createNewStakeholder
-  ]);
-
-  const handleClose = () => setOpen(false);
-
-  const handleConfirm = () => {
-    resetProspect();
     createNewStakeholder();
-    setOpen(false);
-  };
+  }, [setIsShowingAddButton, createNewStakeholder]);
 
   return (
     <>
@@ -150,40 +105,30 @@ const CompanyStakeholdersComponent = ({
         {stakeholders.map((item, index) => {
           const isEditInProgress = stakeholdersIds.find(stakeholder => stakeholder.id === item.id)
             .isEditting;
-          return editableStakeholder === index ? (
+          return (
             <StakeholderStepper
-              showAddButton={handleShowAddButton}
-              {...item}
-              key={item.id}
-              index={editableStakeholder}
-              deleteStakeholder={
-                stakeholders.length !== 1 || isEditInProgress ? handleDeleteStakeholder : null
-              }
-              isNewStakeholder={isNewStakeholder}
-              orderIndex={index}
-              isEditInProgress={isEditInProgress}
-            />
-          ) : (
-            <FilledStakeholderCard
+              setIsShowingAddButton={setIsShowingAddButton}
               {...item}
               key={item.id}
               index={index}
-              editDisabled={editableStakeholder}
-              changeEditableStep={editStakeholderHandler}
-              datalist={datalist}
+              deleteStakeholder={
+                stakeholders.length !== 1 || isEditInProgress ? handleDeleteStakeholder : null
+              }
+              orderIndex={index}
+              isEditInProgress={isEditInProgress}
             />
           );
         })}
       </div>
-      {isShowingAddButton && (
+      {isShowingAddButton && !isLoading && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
-      {stakeholders.length && (stakeholdersIds[0].done && !hasSignatories) && (
+      {stakeholders.length > 0 && (stakeholdersIds[0].done && !hasSignatories) && (
         <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
       )}
-      {stakeholders.length && (stakeholdersIds[0].done && isLowPercentage) && (
+      {stakeholders.length > 0 && (stakeholdersIds[0].done && isLowPercentage) && (
         <ErrorMessage
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
           or edit the shareholding % for the added stakeholders.`}
@@ -192,33 +137,26 @@ const CompanyStakeholdersComponent = ({
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
 
-        <SubmitButton
+        <NextStepButton
           handleClick={goToFinalQuestions}
           label="Next Step"
           justify="flex-end"
           disabled={isDisableNextStep}
         />
       </div>
-      <ConfirmDialog
-        isOpen={open}
-        handleConfirm={handleConfirm}
-        handleClose={handleClose}
-        id="Stakeholder.message"
-      />
     </>
   );
 };
 
 const mapStateToProps = state => {
-  const { editableStakeholder, stakeholdersIds } = stakeholdersState(state);
+  const { stakeholdersIds } = stakeholdersState(state);
+
   return {
-    datalist: getDatalist(state),
-    editableStakeholder,
+    isLoading: state.sendProspectToAPI.loading,
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
-    hasSignatories: checkIsHasSignatories(state),
-    ...getSendProspectToAPIInfo(state)
+    hasSignatories: checkIsHasSignatories(state)
   };
 };
 
@@ -226,8 +164,7 @@ const mapDispatchToProps = {
   deleteStakeholder,
   createNewStakeholder,
   changeEditableStakeholder,
-  setEditStakeholder,
-  resetProspect
+  sendProspectToAPI: sendProspectToAPIPromisify
 };
 
 export const CompanyStakeholders = connect(

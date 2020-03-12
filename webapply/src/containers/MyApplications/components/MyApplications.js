@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import { useSelector } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ICONS } from "../../../components/Icons";
@@ -10,13 +11,32 @@ import { ApplicationGrid } from "./ApplicationGrid";
 import { ButtonWithIcon } from "./ButtonWithIcon";
 import { GRID_VIEW, LIST_VIEW } from "../constants";
 import { ApplicationsSkeleton } from "./ApplicationsSkeleton";
+import declinedRegular from "../../../assets/gif/declined_regular.gif";
+import {
+  getIsLoadingSearchProspects,
+  getSearchResults
+} from "../../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
 
-export const MyApplications = ({ searchResults, getProspectInfo, isLoading }) => {
+export const MyApplications = ({ getProspectInfo }) => {
+  const isLoading = useSelector(getIsLoadingSearchProspects);
+  const searchResults = useSelector(getSearchResults);
+
   const classes = useStyles();
 
   const [selectedView, setSelectedView] = useState(LIST_VIEW);
+
+  if (!isLoading && !searchResults.length) {
+    return (
+      <div className={classes.centeredContainer}>
+        <img className={classes.noRecordsIcon} src={declinedRegular} alt="No records" />
+        <p className={classes.noRecordsText}>
+          Sorry, no record was found for the details provided.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className={classes.centeredContainer}>
@@ -41,34 +61,20 @@ export const MyApplications = ({ searchResults, getProspectInfo, isLoading }) =>
           />
         </Box>
       </Grid>
-
-      {searchResults && (
-        <div
-          className={cx({
-            [classes.viewColumn]: selectedView === LIST_VIEW,
-            [classes.veiwRow]: selectedView === GRID_VIEW
-          })}
-        >
-          {isLoading ? (
-            <ApplicationsSkeleton />
-          ) : (
-            [
-              selectedView === LIST_VIEW && (
-                <ApplicationList
-                  applicantInfo={searchResults.searchResult}
-                  getProspectInfo={getProspectInfo}
-                />
-              ),
-              selectedView === GRID_VIEW && (
-                <ApplicationGrid
-                  applicantInfo={searchResults.searchResult}
-                  getProspectInfo={getProspectInfo}
-                />
-              )
-            ]
-          )}
-        </div>
-      )}
+      <div
+        className={cx({
+          [classes.viewColumn]: selectedView === LIST_VIEW,
+          [classes.veiwRow]: selectedView === GRID_VIEW
+        })}
+      >
+        {isLoading ? (
+          <ApplicationsSkeleton />
+        ) : selectedView === LIST_VIEW ? (
+          <ApplicationList applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+        ) : (
+          <ApplicationGrid applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+        )}
+      </div>
     </div>
   );
 };

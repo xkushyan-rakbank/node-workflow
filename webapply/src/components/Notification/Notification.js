@@ -6,8 +6,10 @@ import { useStyles } from "./styled";
 export const Notification = ({
   onClose,
   icon = ICONS.lock,
-  title = "Server error",
-  message = "Oops, something went wrong with our servers. Please wait a bit and try again."
+  title = "Oops!",
+  message = "We are facing a glitch at the moment, please try again later.",
+  status = "",
+  stakTrace = ""
 }) => {
   const classes = useStyles();
 
@@ -20,6 +22,8 @@ export const Notification = ({
       <div className={classes.errorMessage}>
         <h6 className={classes.errorReason}>{title}</h6>
         <p className={classes.errorDescription}>{message}</p>
+        {status && <p className={classes.errorDescription}>{status}</p>}
+        {stakTrace && <p className={classes.errorDescription}>{stakTrace}</p>}
       </div>
 
       <div className={classes.closeIconWrapper}>

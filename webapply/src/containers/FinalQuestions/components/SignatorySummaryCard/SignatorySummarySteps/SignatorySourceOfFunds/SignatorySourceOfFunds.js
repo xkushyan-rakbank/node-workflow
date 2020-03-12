@@ -11,7 +11,10 @@ import {
   Input,
   AutoSaveField as Field
 } from "../../../../../../components/Form";
-import { WEALTH_TYPE__REGEX } from "../../../../../../utils/validation";
+import {
+  MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH,
+  SPECIAL_CHARACTERS_REGEX
+} from "../../../../../../utils/validation";
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import {
   getRequiredMessage,
@@ -21,13 +24,21 @@ import {
 import { useStyles } from "./styled";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
-  wealthType: Yup.string().required(getRequiredMessage("Source of funds")),
-  others: Yup.string().when("wealthType", {
-    is: value => value === OTHER_SOURCE_OF_WEALTH,
-    then: Yup.string()
-      .required(getRequiredMessage("Other"))
-      .matches(WEALTH_TYPE__REGEX, getInvalidMessage("Other"))
-  })
+  sourceOfWealth: Yup.array()
+    .of(
+      Yup.object().shape({
+        wealthType: Yup.string(),
+        others: Yup.string()
+      })
+    )
+    .required(getRequiredMessage("Source of funds")),
+  others: Yup.string()
+    .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
+    .when("sourceOfWealth", {
+      is: sourceOfWealth =>
+        sourceOfWealth.map(value => value.wealthType).includes(OTHER_SOURCE_OF_WEALTH),
+      then: Yup.string().required()
+    })
 });
 
 export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
@@ -41,7 +52,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
     <div className={classes.formWrapper}>
       <Formik
         initialValues={{
-          wealthType: "",
+          sourceOfWealth: [],
           others: ""
         }}
         onSubmit={handleSubmit}
@@ -51,22 +62,28 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
         {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={12} sm={12}>
+              <Grid item md={12} xs={12}>
                 <Field
-                  name="wealthType"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.wealthType`}
+                  multiple
+                  name="sourceOfWealth"
+                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`}
                   datalistId="wealthType"
                   label="Source of funds"
                   onChange={selectedValue => {
-                    if (
-                      selectedValue !== OTHER_SOURCE_OF_WEALTH &&
-                      values.wealthType === OTHER_SOURCE_OF_WEALTH
-                    ) {
+                    const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
+                    if (!withOption) {
                       setFieldValue("others", "");
-                      setFieldTouched("others", false);
                     }
-                    setFieldValue("wealthType", selectedValue);
+
+                    setFieldValue(
+                      "sourceOfWealth",
+                      selectedValue.map(value => ({
+                        wealthType: value,
+                        others: withOption ? values.others : ""
+                      }))
+                    );
                   }}
+                  extractValue={value => value.wealthType}
                   contextualHelpText="Select the most prominent source of capital to fund the company"
                   contextualHelpProps={{ isDisableHoverListener: false }}
                   component={SelectAutocomplete}
@@ -82,7 +99,9 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               </Grid>
               <Grid
                 className={cx({
-                  hidden: values.wealthType !== OTHER_SOURCE_OF_WEALTH
+                  hidden: !(values.sourceOfWealth || [])
+                    .map(item => item.wealthType)
+                    .includes(OTHER_SOURCE_OF_WEALTH)
                 })}
                 item
                 md={12}
@@ -90,12 +109,15 @@ export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
               >
                 <Field
                   name="others"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth.others`}
-                  label="Other(Specify)"
-                  placeholder="Other(Specify)"
+                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth[0].others`}
+                  label="Other (Specify)"
+                  placeholder="Other (Specify)"
+                  initialValue={
+                    (values.sourceOfWealth.length && values.sourceOfWealth[0].others) || ""
+                  }
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { maxLength: MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH, tabIndex: 0 }
                   }}
                 />
               </Grid>

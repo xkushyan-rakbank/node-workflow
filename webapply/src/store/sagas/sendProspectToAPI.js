@@ -7,21 +7,20 @@ import {
   takeLatest,
   take,
   cancel,
-  cancelled,
   fork,
   actionChannel,
   flush
 } from "redux-saga/effects";
-import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
   SEND_PROSPECT_TO_API,
   sendProspectToAPISuccess,
-  SEND_PROSPECT_TO_API_SUCCESS,
   sendProspectToAPIFail,
   resetFormStep,
   PROSPECT_AUTO_SAVE,
   sendProspectRequest,
+  SEND_PROSPECT_REQUEST,
   setScreeningError
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
@@ -30,28 +29,31 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking
+  getIsIslamicBanking,
+  getScreeningError
 } from "../selectors/appConfig";
-import { resetInputsErrors } from "../actions/serverValidation";
+import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
+import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
 import { prospect } from "../../api/apiClient";
 import {
   APP_STOP_SCREEN_RESULT,
   screeningStatus,
-  APP_COMPLETED_SCREENING_STATUS,
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  SUBMIT
+  VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
+import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
+import { SCREENING_FAIL_REASONS } from "../../constants";
 
 function* watchRequest() {
-  const chan = yield actionChannel("SEND_PROSPECT_REQUEST");
+  const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
-      const action = actions.find(act => act.saveType === CONTINUE) || actions[0];
+      const action = actions.find(act => act.payload.saveType === CONTINUE) || actions[0];
       yield call(sendProspectToAPI, action);
     }
     yield delay(1000);
@@ -59,8 +61,8 @@ function* watchRequest() {
 }
 
 function* setScreeningResults({ preScreening }) {
-  const currScreeningType = preScreening.screeningResults.find(
-    screeningResult => screeningResult.screeningStatus !== APP_COMPLETED_SCREENING_STATUS
+  const currScreeningType = preScreening.screeningResults.find(screeningResult =>
+    SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
   );
 
   const screenError = screeningStatus.find(
@@ -85,15 +87,21 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga({ payload: { saveType } }) {
+function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
 
     const state = yield select();
-    const newProspect = getProspect(state);
+    const prospect = getProspect(state);
 
-    yield put(sendProspectRequest(saveType, newProspect));
+    const newProspect = { ...prospect };
+    newProspect.freeFieldsInfo = {
+      ...(newProspect.freeFieldsInfo || {}),
+      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
+    };
+
+    yield put(sendProspectRequest(newProspect, saveType, actionType));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -101,27 +109,41 @@ function* sendProspectToAPISaga({ payload: { saveType } }) {
 
 function* prospectAutoSave() {
   try {
-    while (yield take(SEND_PROSPECT_TO_API_SUCCESS)) {
-      const state = yield select();
-      const newProspect = getProspect(state);
-
-      yield put(sendProspectRequest(AUTO, newProspect));
+    while (true) {
       yield delay(40000);
+
+      const newProspect = yield select(getProspect);
+      const screeningError = yield select(getScreeningError);
+      const isScreeningError = screeningError.error;
+      const viewId = newProspect.applicationInfo.viewId;
+
+      const isAutoSaveEnabled =
+        !isScreeningError &&
+        [
+          VIEW_IDS.CompanyInfo,
+          VIEW_IDS.StakeholdersInfo,
+          VIEW_IDS.FinalQuestions,
+          VIEW_IDS.UploadDocuments,
+          VIEW_IDS.SelectServices
+        ].includes(viewId);
+
+      if (isAutoSaveEnabled) {
+        yield put(sendProspectRequest(newProspect, AUTO));
+      }
     }
-  } finally {
-    if (yield cancelled()) {
-      log("cancel");
-    }
+  } catch (e) {
+    log(e);
   }
 }
 
-function* sendProspectToAPI({ newProspect, saveType }) {
+function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
     newProspect.applicationInfo.saveType = saveType;
+    newProspect.applicationInfo.actionType = actionType;
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {
@@ -136,28 +158,40 @@ function* sendProspectToAPI({ newProspect, saveType }) {
     }
 
     const { preScreening } = data;
-    if (preScreening) {
-      if (preScreening.statusOverAll === APP_STOP_SCREEN_RESULT) {
-        yield fork(setScreeningResults, data);
-      }
-      yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
-    }
 
-    yield put(sendProspectToAPISuccess(newProspect));
+    const isScreeningError = preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT;
+
+    if (isScreeningError) {
+      yield fork(setScreeningResults, data);
+    } else {
+      if (preScreening) {
+        yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
+      }
+    }
+    yield put(sendProspectToAPISuccess(isScreeningError));
   } catch (error) {
-    log({ error });
-    yield put(sendProspectToAPIFail(error));
+    if (error instanceof ErrorOccurredWhilePerforming) {
+      yield put(
+        setErrorOccurredWhilePerforming({
+          errorCode: error.getErrorCode()
+        })
+      );
+    } else if (error instanceof FieldsValidationError) {
+      yield put(setInputsErrors(error.getInputsErrors()));
+    } else {
+      log({ error });
+      yield put(sendProspectToAPIFail(error));
+    }
   }
 }
 
 function* prospectAutoSaveFlowSaga() {
-  while (yield take("START_PROSPECT_AUTO_SAVE")) {
+  while (true) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
-    const { actionType } = yield take("UPDATE_ACTION_TYPE");
 
-    if (actionType === SUBMIT) {
-      yield cancel(bgSyncAutoSave);
-    }
+    yield take(SEND_PROSPECT_REQUEST);
+
+    yield cancel(bgSyncAutoSave);
   }
 }
 

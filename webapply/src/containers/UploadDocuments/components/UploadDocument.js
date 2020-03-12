@@ -1,22 +1,14 @@
 import React, { useState, useRef, useCallback } from "react";
-import * as Yup from "yup";
+import cx from "classnames";
 
-import { FILE_SIZE, SUPPORTED_FORMATS } from "./../../../utils/validation";
+import { documentValidationSchema } from "./../../../utils/validation";
+
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
-import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../../constants";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
-import { BYTES_IN_MEGABYTE } from "../../../constants";
-
-const validationFileSchema = Yup.object().shape({
-  file: Yup.mixed()
-    .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
-    .test(
-      "type",
-      "Supported formats are PDF, JPG and PNG",
-      value => value && SUPPORTED_FORMATS.includes(value.type)
-    )
-});
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../constants";
+import { DocumentUploadError } from "../../../components/DocumentUploadError/DocumentUploadError";
 
 export const UploadDocuments = ({
   document,
@@ -27,25 +19,28 @@ export const UploadDocuments = ({
   uploadErrorMessage,
   progress,
   cancelDocUpload,
-  updateProspect
+  updateProspect,
+  isApplyEditApplication,
+  prospectStatusInfo,
+  sendProspectToAPI
 }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const classes = useStyles();
   const inputEl = useRef(null);
+  const isDisabledUploadForRO =
+    isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
   const { documentKey, documentType = "" } = document;
   const isUploaded = document.uploadStatus === "Uploaded";
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
   const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
-
   const fileUploadClick = event => (event.target.value = null);
-
   const fileUploadChange = useCallback(() => {
     const file = inputEl.current.files[0];
 
     try {
-      validationFileSchema.validateSync({ file }, { abortEarly: false });
+      documentValidationSchema.validateSync({ file }, { abortEarly: false });
     } catch (error) {
       return setErrorMessage(error.message);
     }
@@ -68,6 +63,7 @@ export const UploadDocuments = ({
       documentType,
       documentKey,
       index,
+      userFileName: file.name,
       stakeholderIndex
     });
     setErrorMessage(null);
@@ -86,7 +82,16 @@ export const UploadDocuments = ({
     }
     cancelDocUpload(documentKey);
     setSelectedFile(null);
-  }, [cancelDocUpload, docOwner, documentKey, index, stakeholderIndex, updateProspect]);
+    sendProspectToAPI();
+  }, [
+    cancelDocUpload,
+    docOwner,
+    documentKey,
+    index,
+    stakeholderIndex,
+    updateProspect,
+    sendProspectToAPI
+  ]);
 
   const reUploadHandler = useCallback(() => {
     inputEl.current.click();
@@ -94,7 +99,11 @@ export const UploadDocuments = ({
   }, []);
 
   return (
-    <div className={classes.fileUploadPlaceholder}>
+    <div
+      className={cx(classes.fileUploadPlaceholder, {
+        [classes.disabled]: isDisabledUploadForRO
+      })}
+    >
       <input
         className={classes.defaultInput}
         name="file"
@@ -108,11 +117,17 @@ export const UploadDocuments = ({
 
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>
-          {isUploading
-            ? `Uploading ${document.documentTitle}`
-            : isUploaded && selectedFile
-            ? `${selectedFile.name}`
-            : document.documentTitle}
+          {(() => {
+            if (isUploading) {
+              return `Uploading ${document.documentTitle}`;
+            } else if (isUploaded && selectedFile) {
+              return selectedFile.name;
+            } else if (isUploaded && document.fileDescription) {
+              return document.fileDescription;
+            } else {
+              return document.documentTitle;
+            }
+          })()}
 
           {selectedFile && (
             <span className={classes.signatoryRights}>
@@ -131,39 +146,35 @@ export const UploadDocuments = ({
             </div>
           )}
 
-          {isUploadError && (
-            <p className={classes.ErrorExplanation}>
-              <Icon name={ICONS.infoRed} alt="upload error" />
-              Oops! We couldn’t upload the document.
-              <span className={classes.tryAgain} onClick={reUploadHandler}>
-                Please try again.
-              </span>
-            </p>
-          )}
+          {isUploadError && <DocumentUploadError tryAgainHandler={reUploadHandler} />}
 
           {!selectedFile && !isUploaded && !errorMessage && (
             <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
           )}
         </div>
 
-        {errorMessage && <p className={classes.ErrorExplanation}>{errorMessage}</p>}
+        {errorMessage && <p className={classes.errorExplanation}>{errorMessage}</p>}
       </div>
 
-      {selectedFile || isUploaded ? (
-        <Icon
-          name={ICONS.close}
-          className={classes.cancel}
-          onClick={fileUploadCancel}
-          alt="cancel upload"
-        />
-      ) : (
-        <p
-          className={classes.ControlsBox}
-          justify="flex-end"
-          onClick={() => inputEl.current.click()}
-        >
-          Upload
-        </p>
+      {!isDisabledUploadForRO && (
+        <>
+          {selectedFile || isUploaded ? (
+            <Icon
+              name={ICONS.close}
+              className={classes.cancel}
+              onClick={fileUploadCancel}
+              alt="cancel upload"
+            />
+          ) : (
+            <p
+              className={classes.ControlsBox}
+              justify="flex-end"
+              onClick={() => inputEl.current.click()}
+            >
+              Upload
+            </p>
+          )}
+        </>
       )}
     </div>
   );

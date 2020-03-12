@@ -1,4 +1,6 @@
+/* eslint-disable */
 import cometd from "cometd";
+import nanoid from "nanoid";
 import has from "lodash/has";
 import { callSafely } from "./GenericUtils";
 import { CHAT_URL, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
@@ -219,7 +221,7 @@ export class GenesysChat {
       message,
       utcTime,
       type: from.type,
-      id: index,
+      id: nanoid(),
       name
     };
 
@@ -355,13 +357,16 @@ export class GenesysChat {
    */
 
   triggerDisconnectEvent = () => {
-    const disconnectData = {
-      operation: ChatOperationTypes.ChatDisconnect,
-      secureKey: this.secureKey
-    };
-    this.cometD.publish(CHAT_CHANNEL, disconnectData);
-    this.unSubscribe();
-    this.cometD.disconnect();
+    if (this.cometD.getStatus() === CONNECTED_STATUS) {
+      const disconnectData = {
+        operation: ChatOperationTypes.ChatDisconnect,
+        secureKey: this.secureKey
+      };
+      this.cometD.publish(CHAT_CHANNEL, disconnectData);
+      this.unSubscribe();
+      this.cometD.disconnect();
+    }
+
     GenesysChat.chatInstance = undefined;
   };
 
@@ -389,19 +394,5 @@ export class GenesysChat {
 
   setOnAgentLeftEventHandler = handler => {
     this.agentLeftEvent = handler;
-  };
-
-  /**
-   * Trigger this function when we minimizes the chat.
-   */
-
-  minimizeChat = () => {
-    this.isChatMinimized = true;
-    if (this.cometD) {
-      this.cometD.disconnect();
-    }
-    if (this.intervalAPICall) {
-      this.intervalAPICall.unsubscribe();
-    }
   };
 }

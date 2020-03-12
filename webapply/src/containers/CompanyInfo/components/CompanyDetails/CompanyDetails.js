@@ -11,7 +11,7 @@ import {
   NumberFormat
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { COMPANY_NAME_SPEC_CHAR_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
+import { NUMBER_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { useStyles } from "../../styled";
@@ -23,21 +23,24 @@ const initialValues = {
   companyCategory: ""
 };
 
-const companyDetailsSchema = Yup.object({
-  companyName: Yup.string()
-    .required(getRequiredMessage("Company name"))
-    .matches(COMPANY_NAME_SPEC_CHAR_REGEX, getInvalidMessage("Company name")),
-  vatRegistrationNumber: Yup.string().matches(
-    NUMBER_REGEX,
-    getInvalidMessage("Registration number")
-  ),
-  numberOfEmployees: Yup.number()
-    .typeError("Not valid number")
-    .min(0, "Must be more than or equal to 0")
-    .max(99999, "Must be less than or equal to 99,999")
-    .integer(getInvalidMessage("Number of employees")),
-  companyCategory: Yup.string().required(getRequiredMessage("Company category"))
-});
+const companyDetailsSchema = () =>
+  Yup.object({
+    companyName: Yup.string()
+      .required(getRequiredMessage("Company name"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
+    vatRegistrationNumber: Yup.string().matches(
+      NUMBER_REGEX,
+      getInvalidMessage("Registration number")
+    ),
+    numberOfEmployees: Yup.number()
+      .typeError("Not valid number")
+      .min(0, "Must be more than or equal to 0")
+      .max(99999, "Must be less than or equal to 99,999")
+      .integer(getInvalidMessage("Number of employees")),
+    companyCategory: Yup.string().required(getRequiredMessage("Company category"))
+  });
 
 export const CompanyDetails = ({ handleContinue }) => {
   const classes = useStyles();
@@ -52,7 +55,7 @@ export const CompanyDetails = ({ handleContinue }) => {
       {() => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="companyName"
                 label="Company Name"
@@ -65,7 +68,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 }}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="companyCategory"
                 label="Company Category"
@@ -75,6 +78,7 @@ export const CompanyDetails = ({ handleContinue }) => {
                 component={SelectAutocomplete}
                 tabIndex="0"
                 isSearchable
+                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
           </Grid>

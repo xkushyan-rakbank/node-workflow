@@ -48,7 +48,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       {({ values }) => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="residenceCountry"
                 path={`prospect.signatoryInfo[${index}].kycDetails.residenceCountry`}
@@ -58,9 +58,13 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 datalistId="country"
                 shrink
                 tabIndex="0"
+                changeProspect={(prospect, value) => ({
+                  ...prospect,
+                  [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE
+                })}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item md={6} xs={12}>
               <Field
                 name="eidNumber"
                 path={eidNumberPath}

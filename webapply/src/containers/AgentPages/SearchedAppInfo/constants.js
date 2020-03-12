@@ -12,6 +12,7 @@ export const STEP_3 = 3;
 export const STEP_4 = 4;
 
 export const STATUS_LOCKED = "locked";
+export const STATUS_FORCE_STOP = "FORCE_STOPPED";
 
 export const searchedAppInfoSteps = [
   {

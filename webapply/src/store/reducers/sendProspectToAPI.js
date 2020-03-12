@@ -10,8 +10,7 @@ import {
 export const initialState = {
   loading: false,
   resetStep: false,
-  screeningError: {},
-  prospectCopy: {}
+  screeningError: {}
 };
 
 const sendProspectToAPIReducer = (state = initialState, action) => {
@@ -24,8 +23,7 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
     case SEND_PROSPECT_TO_API_SUCCESS:
       return {
         ...state,
-        loading: false,
-        prospectCopy: action.prospectCopy
+        loading: false
       };
     case SEND_PROSPECT_TO_API_FAIL:
       return {
