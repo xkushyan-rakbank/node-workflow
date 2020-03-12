@@ -40,7 +40,10 @@ export const useDisplayScreenBasedOnViewId = () => {
           url = routes.companyInfo;
         }
       }
-      if (isROScreens && viewId === VIEW_IDS.ApplicationSubmitted) {
+      if (
+        isROScreens &&
+        [VIEW_IDS.ApplicationSubmitted, VIEW_IDS.ReUploadDocuments].includes(viewId)
+      ) {
         url = routes.companyInfo;
       }
       if (
