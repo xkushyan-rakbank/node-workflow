@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 import {
-  routerToAddPaddingInSlider,
   sideNavWidthSM,
   sideNavWidthMD,
   sideNavWidthLG,
@@ -91,8 +90,7 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
-    padding: ({ pathname }) => (routerToAddPaddingInSlider.includes(pathname) ? "0" : "35px 0 0"),
-    paddingTop: "35px",
+    paddingTop: ({ isDisplayHeader }) => (isDisplayHeader ? 35 : 0),
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
     },

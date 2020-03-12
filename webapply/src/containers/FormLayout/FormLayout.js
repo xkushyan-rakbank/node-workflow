@@ -4,7 +4,6 @@ import { ApplicationStatus } from "../../components/ApplicationStatus/Applicatio
 import { FormNavigation } from "../../components/FormNavigation";
 import { HeaderTitle } from "../../components/HeaderTitle";
 import { Notifications } from "../../components/Notification";
-import { routerToAddPaddingInSlider } from "../../constants/styles";
 import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
 import { ERROR_MESSAGES } from "../../constants";
@@ -24,8 +23,27 @@ export const FormLayoutComponent = ({
   errorCode
 }) => {
   const blobColor = useBlobColor();
+
+  const isDisplayHeader = [
+    routes.login,
+    routes.MyApplications,
+    routes.comeBackLoginVerification,
+    routes.verifyOtp,
+    routes.applicantInfo,
+    routes.companyInfo,
+    routes.stakeholdersInfo,
+    routes.finalQuestions,
+    routes.uploadDocuments,
+    routes.selectServices,
+    routes.SubmitApplication,
+    routes.reUploadDocuments,
+    routes.ApplicationSubmitted,
+    routes.searchProspect,
+    routes.SearchedAppInfo
+  ].includes(pathname);
+
   const classes = useStyles({
-    pathname,
+    isDisplayHeader,
     color: blobColor,
     fullContentWidth: checkIsShowSmallMenu(pathname)
   });
@@ -63,7 +81,7 @@ export const FormLayoutComponent = ({
           <div className={classes.formWrapper}>
             <div className={classes.formInner}>
               <div className={classes.mainContainer}>
-                {!routerToAddPaddingInSlider.includes(pathname) && <HeaderTitle />}
+                {isDisplayHeader && <HeaderTitle />}
 
                 <Notifications />
 
