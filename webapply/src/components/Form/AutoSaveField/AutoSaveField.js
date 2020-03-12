@@ -90,5 +90,5 @@ export const AutoSaveField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, datalistId, filterOptions, filterOptionsDeps]);
 
-  return <Field name={name} options={options} filterOptionsDeps={filterOptionsDeps} {...rest} />;
+  return <Field name={name} options={options} {...rest} />;
 };
