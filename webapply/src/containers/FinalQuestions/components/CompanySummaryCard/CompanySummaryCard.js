@@ -1,18 +1,15 @@
-import React, { useCallback } from "react";
+import React from "react";
 import cx from "classnames";
 
 import { CompanyCard } from "../CompanyCard";
-import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { finalQuestionsSteps } from "./constants";
 
-import { useStyles } from "./styled";
 import { FINAL_QUESTIONS_COMPANY_ID } from "../../../../constants";
 
 export const CompanySummaryCardComponent = ({
   index,
-  switchExpandedMargin,
   companyName,
   handleFinalStepContinue,
   sendProspectToAPI,
@@ -20,15 +17,6 @@ export const CompanySummaryCardComponent = ({
   isCompanyExpanded,
   setIsCompanyExpanded
 }) => {
-  const classes = useStyles();
-
-  const handleClickStartHere = useCallback(() => {
-    setIsCompanyExpanded(true);
-    if (switchExpandedMargin) {
-      switchExpandedMargin();
-    }
-  }, [switchExpandedMargin, setIsCompanyExpanded]);
-
   const handleExpandNextBlock = () => setIsCompanyExpanded(false);
 
   return (
@@ -36,15 +24,7 @@ export const CompanySummaryCardComponent = ({
       companyName={companyName}
       controls={
         !isCompanyExpanded &&
-        (isCompanyStepsCompleted ? (
-          <LinkButton clickHandler={() => setIsCompanyExpanded(true)} />
-        ) : (
-          <ContinueButton
-            label="Start here"
-            classes={{ buttonStyle: classes.buttonStyle }}
-            handleClick={handleClickStartHere}
-          />
-        ))
+        isCompanyStepsCompleted && <LinkButton clickHandler={() => setIsCompanyExpanded(true)} />
       }
     >
       <div className={cx({ hidden: !isCompanyExpanded })}>

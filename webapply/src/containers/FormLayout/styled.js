@@ -13,7 +13,7 @@ export const useStyles = makeStyles(theme => ({
   formLayout: {
     position: "relative",
     display: "flex",
-    height: "100%",
+    minHeight: "100vh",
     [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     },

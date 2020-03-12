@@ -23,6 +23,7 @@ const MessagesList = ({ data }) => {
 
   useEffect(() => {
     if (virtualRef) {
+      if (data.length > 0) virtualRef.recomputeRowHeights(data.length - 1);
       virtualRef.scrollToRow(data.length);
     }
   }, [data]);
