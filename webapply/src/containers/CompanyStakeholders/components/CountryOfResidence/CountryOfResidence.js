@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import get from "lodash/get";
 
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
 import {
   AutoSaveField as Field,
   SelectAutocomplete,
@@ -32,7 +33,7 @@ const getCountryOfResidenceSchema = isSignatory =>
     })
   });
 
-const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
+const CountryOfResidenceStep = ({ index, isSignatory, handleContinue, updateProspect }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
 
   return (
@@ -45,7 +46,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -62,6 +63,15 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                   ...prospect,
                   [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE
                 })}
+                onChange={value => {
+                  if (values !== UAE) {
+                    setFieldValue("eidNumber", "");
+                    setFieldValue("residenceCountry", value);
+                    updateProspect({
+                      [eidNumberPath]: ""
+                    });
+                  }
+                }}
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -101,4 +111,11 @@ const mapStateToProps = (state, { index }) => ({
   isSignatory: get(getSignatories(state)[index], "kycDetails.isSignatory", false)
 });
 
-export const CountryOfResidence = connect(mapStateToProps)(CountryOfResidenceStep);
+const mapDispatchToProps = {
+  updateProspect
+};
+
+export const CountryOfResidence = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CountryOfResidenceStep);
