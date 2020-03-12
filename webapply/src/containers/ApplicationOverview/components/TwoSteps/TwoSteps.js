@@ -4,7 +4,6 @@ import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInf
 import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
 import IconCardItem from "../../../../components/IconCards/IconCardItem";
 import { HeaderTitle } from "../../../../components/HeaderTitle";
-import { useOverviewIcon } from "./useOverviewIcon/useOverviewIcon";
 import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 
 import { useStyles } from "./styled";
@@ -12,12 +11,12 @@ import { useStyles } from "./styled";
 export const TwoSteps = () => {
   const classes = useStyles();
   const {
+    overview,
     license: License,
     emiratesId: EmirateId,
     companyDocuments: CompanyDocuments,
     passport: Passport
   } = useIconsByAccount();
-  const { overview } = useOverviewIcon();
 
   return (
     <>
