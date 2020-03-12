@@ -2,17 +2,15 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   appStatus: {
-    position: "absolute",
-    top: "50%",
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
     alignItems: "center",
+    height: "100vh",
     width: "100%",
     backgroundColor: "#ffffff",
     maxWidth: 780,
-    margin: "0 auto",
-    transform: "translateY(-50%)"
+    margin: "0 auto"
   },
 
   buttonText: {
