@@ -14,6 +14,7 @@ import { formStepper, NEXT } from "../../constants";
 import routes from "../../routes";
 
 import { useStyles } from "./styled";
+import { ContinueButton } from "../../components/Buttons/ContinueButton";
 
 export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
   const [isExpandedMargin, setIsExpandedMargin] = useState(true);
@@ -24,7 +25,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
   const companySteps = useSelector(getCompanySteps);
   const isCompanyStepsCompleted = checkAllStepsCompleted(companySteps);
   const signatoriesSteps = useSelector(getSignatoriesSteps);
-  const isSignatoriesStepsCompleted = checkAllStepsCompleted(signatoriesSteps);
+  const isAllStepsCompleted = checkAllStepsCompleted(signatoriesSteps) && isCompanyStepsCompleted;
   const pushHistory = useTrackingHistory();
 
   const goToUploadDocument = () => {
@@ -46,6 +47,13 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
     isExpandedMargin
   ]);
 
+  const handleClickStartHere = useCallback(() => {
+    setIsCompanyExpanded(true);
+    if (switchExpandedMargin) {
+      switchExpandedMargin();
+    }
+  }, [switchExpandedMargin, setIsCompanyExpanded]);
+
   useFormNavigation([false, true, formStepper]);
 
   return (
@@ -56,8 +64,14 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
         signatories. We promise there are no more questions after this section.
       </p>
       <div className={classes.sectionContainer}>
+        {!isAllStepsCompleted && !isCompanyExpanded && expandedSignatoryIndex === null && (
+          <ContinueButton
+            label="Start here"
+            classes={{ buttonStyle: classes.startButton }}
+            handleClick={handleClickStartHere}
+          />
+        )}
         <CompanySummaryCard
-          switchExpandedMargin={switchExpandedMargin}
           handleFinalStepContinue={handleFinalStepContinue}
           isCompanyStepsCompleted={isCompanyStepsCompleted}
           isCompanyExpanded={isCompanyExpanded}
@@ -80,7 +94,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
         <NextStepButton
-          disabled={!isCompanyStepsCompleted || !isSignatoriesStepsCompleted}
+          disabled={!isAllStepsCompleted}
           handleClick={goToUploadDocument}
           label="Next Step"
         />

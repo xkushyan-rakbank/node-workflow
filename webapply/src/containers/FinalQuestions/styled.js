@@ -7,7 +7,7 @@ export const useStyles = makeStyles({
   description: {
     fontSize: "20px",
     color: "#373737",
-    margin: "20px 0 130px",
+    margin: "20px 0 30px",
     lineHeight: 1.5
   },
   smallMargin: {
@@ -27,5 +27,10 @@ export const useStyles = makeStyles({
       width: "auto",
       margin: "0"
     }
+  },
+  startButton: {
+    marginBottom: 60,
+    width: "auto",
+    padding: "8px 33px 12px 33px"
   }
 });
