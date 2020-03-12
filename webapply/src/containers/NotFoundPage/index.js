@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import routes from "../../routes";
 
@@ -16,6 +17,7 @@ export default function NotFoundPage() {
   const handleGoToHomePage = useCallback(() => {
     history.push(routes.accountsComparison);
   }, [history]);
+  useFormNavigation([false, false]);
 
   return (
     <div className={classes.appStatus}>
