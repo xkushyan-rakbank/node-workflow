@@ -125,7 +125,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
         firstName: "",
         middleName: "",
         lastName: "",
-        isShareholderACompany: "",
+        isShareholderACompany: false,
         dateOfBirth: "",
         isPEP: ""
       }}
@@ -133,7 +133,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched }) => (
+      {({ values, setFieldValue, errors, touched, setValues }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -144,11 +144,14 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Checkbox}
                 onChange={() => {
                   setFieldValue("isShareholderACompany", !values.isShareholderACompany);
-                  if (values.isShareholderACompany) {
-                    setFieldValue("firstName", "");
-                    setFieldValue("middleName", "");
-                    setFieldValue("lastName", "");
-                    setFieldValue("dateOfBirth", "");
+                  if (!values.isShareholderACompany) {
+                    setValues({
+                      firstName: "",
+                      middleName: "",
+                      lastName: "",
+                      dateOfBirth: "",
+                      isShareholderACompany: true
+                    });
                   }
                 }}
                 changeProspect={createChangeProspectHandler(values)}
