@@ -7,6 +7,9 @@ import overviewIslamic from "../../../../../assets/gif/overview_islamic.gif";
 /* RAKElite */
 import overviewElite from "../../../../../assets/gif/overview_elite.gif";
 
+/* RAKElite Islamic*/
+import overviewEliteIslamic from "../../../../../assets/gif/overview_elite islamic.gif";
+
 export const conventionalIconsSet = {
   overview: overviewConventoinal
 };
@@ -16,7 +19,7 @@ export const islamicIconsSet = {
 };
 
 export const eliteIslamicIconsSet = {
-  overview: overviewIslamic
+  overview: overviewEliteIslamic
 };
 
 export const eliteIconsSet = {
