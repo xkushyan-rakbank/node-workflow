@@ -145,6 +145,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                           label="Industry sub-category"
                           component={SelectAutocomplete}
                           datalistId={datalistId}
+                          filterOptionsDeps={item.industry}
                           filterOptions={options => {
                             // All previous industries with selected industry
                             const previousSelectedIndustries = values.industries.filter(
