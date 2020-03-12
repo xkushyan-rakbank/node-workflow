@@ -1,6 +1,7 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
-import cloneDeep from "lodash/cloneDeep";
+
+import { cloneDeep } from "../../utils/cloneDeep";
 
 import {
   RECEIVE_APPCONFIG,
@@ -17,7 +18,7 @@ import {
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
 import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../constants";
-import { getIsIslamicBanking, getAccountType } from "../selectors/appConfig";
+import { getIsIslamicBanking, getAccountType, getProspect } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
 function* receiveAppConfigSaga() {
@@ -36,9 +37,11 @@ function* receiveAppConfigSaga() {
       }
     }
 
-    const newConfig = cloneDeep(response.data);
-    const prospectModel = cloneDeep(newConfig.prospect);
+    const newConfig = response.data;
+    let prospectModel;
+
     if (newConfig.prospect) {
+      prospectModel = cloneDeep(newConfig.prospect);
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
@@ -50,7 +53,9 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
-    yield put(saveProspectModel(prospectModel));
+    if (prospectModel) {
+      yield put(saveProspectModel(prospectModel));
+    }
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());
   } catch (error) {
@@ -61,7 +66,12 @@ function* receiveAppConfigSaga() {
 
 function* updateProspectSaga(action) {
   const state = yield select();
-  const newConfig = cloneDeep(state.appConfig);
+  const prospect = cloneDeep(getProspect(state));
+  const newConfig = {
+    ...state.appConfig,
+    prospect
+  };
+
   for (let name in action.fields) {
     set(newConfig, name, action.fields[name]);
   }
