@@ -109,8 +109,9 @@ export class GenesysChat {
       if (this.cometD.getStatus() !== CONNECTED_STATUS) {
         this.userInfo = userInfo;
         this.connectedCallback = callback;
-        this.initiateHandshake();
-        resolve();
+        this.initiateHandshake().finally(() => {
+          resolve();
+        });
       } else {
         reject({ message: "Chat already created!" });
       }

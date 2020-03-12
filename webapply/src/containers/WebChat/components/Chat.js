@@ -29,6 +29,12 @@ const TypingLabel = styled.div`
   color: #c6c6cc;
 `;
 
+const LoadingLabel = styled.div`
+  font-size: 16px;
+  margin: 8px 16px;
+  color: #9c9c9c;
+`;
+
 function Chat({
   InitiatedCustomerName = "",
   InitiatedCustomerMobile = "",
@@ -43,6 +49,7 @@ function Chat({
   const [messages, setMessages] = useState([]);
   const [agentTyping, setAgentTyping] = useState(false);
   const [agentLeft, setAgentLeft] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const agentTypingHandler = useCallback(
     flag => {
@@ -68,15 +75,19 @@ function Chat({
   useEffect(() => {
     const chatInstance = GenesysChat.getInstance();
 
-    chatInstance.initChat({
-      InitiatedCustomerName,
-      InitiatedCustomerMobile,
-      selectedSubject: subject,
-      EmailAddress,
-      message,
-      isAuth,
-      cif
-    });
+    chatInstance
+      .initChat({
+        InitiatedCustomerName,
+        InitiatedCustomerMobile,
+        selectedSubject: subject,
+        EmailAddress,
+        message,
+        isAuth,
+        cif
+      })
+      .then(() => {
+        setIsLoading(false);
+      });
     chatInstance.messagesCallback = handleNewMessageArrival;
     chatInstance.setOnTypingEventsHandler(agentTypingHandler);
     chatInstance.setOnAgentLeftEventHandler(agentLeftHandler);
@@ -91,12 +102,16 @@ function Chat({
   return (
     <Container>
       <Header onClose={handleClose} onMinimize={onMinimize} />
-      <Body>
-        <MessagesList data={messages} />
-        {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
-        {agentLeft && <TypingLabel>Agent left chat</TypingLabel>}
-        <SendMessageInput placeholder="Type Message" chatInstance={GenesysChat} />
-      </Body>
+      {isLoading ? (
+        <LoadingLabel>Loading...</LoadingLabel>
+      ) : (
+        <Body>
+          <MessagesList data={messages} />
+          {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
+          {agentLeft && <TypingLabel>Agent left chat</TypingLabel>}
+          <SendMessageInput placeholder="Type Message" chatInstance={GenesysChat} />
+        </Body>
+      )}
     </Container>
   );
 }
