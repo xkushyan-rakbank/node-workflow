@@ -200,7 +200,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 label="Primary mobile number"
                                 placeholder="55xxxxxxx"
                                 component={Input}
-                                type="number"
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}
@@ -224,7 +223,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 label="Landline phone no. (optional)"
                                 placeholder="42xxxxxx"
                                 component={Input}
-                                type="number"
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}

@@ -2,12 +2,14 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   sectionContainer: {
-    marginBottom: "20px"
+    marginTop: 60,
+    marginBottom: 20
   },
   description: {
     fontSize: "20px",
     color: "#373737",
-    margin: "20px 0 130px",
+    marginTop: 20,
+    marginBottom: 0,
     lineHeight: 1.5
   },
   smallMargin: {
@@ -27,5 +29,10 @@ export const useStyles = makeStyles({
       width: "auto",
       margin: "0"
     }
+  },
+  startButton: {
+    marginTop: 30,
+    width: "auto",
+    padding: "8px 33px 12px 33px"
   }
 });

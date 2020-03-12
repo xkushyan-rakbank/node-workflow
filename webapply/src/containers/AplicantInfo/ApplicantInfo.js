@@ -31,9 +31,9 @@ import {
 import {
   UAE_CODE,
   formStepper,
-  CONVENTIONAL,
-  detailedAccountRoutesMap,
-  ISLAMIC
+  applicationOverviewRoutesMap,
+  ISLAMIC,
+  CONVENTIONAL
 } from "../../constants";
 import routes from "../../routes";
 
@@ -195,7 +195,9 @@ const ApplicantInfoPage = ({
               <div className="linkContainer">
                 <BackLink
                   path={
-                    detailedAccountRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
+                    applicationOverviewRoutesMap[accountType][
+                      isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                    ]
                   }
                 />
                 <SubmitButton

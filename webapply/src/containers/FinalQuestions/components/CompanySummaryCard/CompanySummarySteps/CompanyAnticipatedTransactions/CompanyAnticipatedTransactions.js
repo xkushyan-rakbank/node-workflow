@@ -25,7 +25,12 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 const FormatDecimalNumberInput = props => (
-  <NumberFormat allowNegative={false} thousandSeparator={true} suffix={".00"} {...props} />
+  <NumberFormat
+    allowNegative={false}
+    thousandSeparator={true}
+    decimalSeparator={false}
+    {...props}
+  />
 );
 
 const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
@@ -38,7 +43,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
   return isNumeric(monthlyCreditsValue)
-    ? `${monthlyCreditsValue} in Total Monthly Credits`
+    ? `${monthlyCreditsValue.toLocaleString("en-US")} in Total Monthly Credits`
     : PLACEHOLDER;
 };
 

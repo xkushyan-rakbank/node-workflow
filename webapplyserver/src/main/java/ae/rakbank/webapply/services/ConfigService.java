@@ -53,10 +53,6 @@ public class ConfigService {
         initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
 
-        String publicKey = fileUtil.getRSAPublicKey();
-        if (publicKey != null) {
-            initStateJSON.put("rsaPublicKey", publicKey);
-        }
         String cacheKey = getCacheKey(segment, product, role, device);
         String configJSON = initStateJSON.toString();
 

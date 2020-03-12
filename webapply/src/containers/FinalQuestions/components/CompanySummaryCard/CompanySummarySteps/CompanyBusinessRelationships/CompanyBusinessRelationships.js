@@ -176,7 +176,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                               component={SelectAutocomplete}
                               shrink
                               tabIndex="0"
-                              otherProps={{ menuFullWidth: true }}
+                              otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                             />
                             {isTopCustomers && (
                               <ArrayRemoveButton

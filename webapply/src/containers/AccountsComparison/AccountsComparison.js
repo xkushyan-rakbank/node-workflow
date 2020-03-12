@@ -44,7 +44,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             info="Available in both conventional and islamic variants"
           />
           <AccountCard setAccountType={setAccountType} handleClickMobile={scrollToTable} />
-          <InfoNote text="Companies older than 12 months are not eligible for the Rakstarter account" />
+          <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 
         <div ref={tableRef}>

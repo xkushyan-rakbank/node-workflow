@@ -7,9 +7,7 @@ import expandMoreIcon from "../../assets/icons/arrowDown.svg";
 import { useStyles } from "./styled";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 
-export const BackgroundVideoPlayerComponent = ({
-  playedVideos,
-  addPlayedVideo,
+export const BackgroundVideoPlayer = ({
   handleClick,
   currentSectionIndex,
   handleClickMobile,
@@ -19,16 +17,6 @@ export const BackgroundVideoPlayerComponent = ({
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
 
-  const onEndedVideoPLay = e => {
-    const videoName = e.target.getAttribute("data-name");
-    addPlayedVideo(videoName);
-  };
-
-  const onLoadedDataVideo = e => {
-    const currentVideoName = e.target.getAttribute("data-name");
-    if (!playedVideos.includes(currentVideoName)) e.target.play();
-  };
-
   return createPortal(
     <div className={cx(classes.container, videoWrapperClass)}>
       <video
@@ -36,12 +24,10 @@ export const BackgroundVideoPlayerComponent = ({
         id="video-background"
         className={classes.video}
         key={mp4}
-        data-name={mp4}
-        onEnded={onEndedVideoPLay}
-        onLoadedData={onLoadedDataVideo}
         poster={poster}
         playsInline
-        autoPlay={!playedVideos.includes(mp4)}
+        autoPlay
+        loop
       >
         <source src={webm} type="video/webm" />
         <source src={mp4} type="video/mp4" />
