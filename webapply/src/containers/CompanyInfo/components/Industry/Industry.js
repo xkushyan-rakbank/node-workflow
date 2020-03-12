@@ -140,12 +140,12 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                       </Grid>
                       <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
-                          key={item.industry}
                           name={`industries[${industryIndex}].subCategory`}
                           path={currentSubCategory}
                           label="Industry sub-category"
                           component={SelectAutocomplete}
                           datalistId={datalistId}
+                          filterOptionsDeps={item.industry}
                           filterOptions={options => {
                             // All previous industries with selected industry
                             const previousSelectedIndustries = values.industries.filter(

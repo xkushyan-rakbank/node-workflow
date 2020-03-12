@@ -13,6 +13,7 @@ export const AutoSaveField = ({
   path,
   isLoadDefaultValueFromStore = true,
   datalistId,
+  filterOptionsDeps,
   filterOptions = option => option,
   changeProspect = prospect => prospect,
   initialValue = "",
@@ -87,7 +88,7 @@ export const AutoSaveField = ({
       return filterOptions(fieldConfig);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [path, datalistId, filterOptions]);
+  }, [path, datalistId, filterOptions, filterOptionsDeps]);
 
-  return <Field name={name} options={options} {...rest} />;
+  return <Field name={name} options={options} filterOptionsDeps={filterOptionsDeps} {...rest} />;
 };

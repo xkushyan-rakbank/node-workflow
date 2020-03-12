@@ -68,7 +68,6 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
               <Field
-                key={values.accountCurrencies}
                 name="branchCity"
                 datalistId="branchCity"
                 path="prospect.organizationInfo.branchCity"
@@ -87,6 +86,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 name="branchID"
                 datalistId="branchCity"
                 path="prospect.organizationInfo.branchID"
+                filterOptionsDeps={values.branchCity}
                 filterOptions={options =>
                   options
                     .filter(city => city.code === values.branchCity)
