@@ -23,18 +23,8 @@ import { receiveAppConfig } from "./../../store/actions/appConfig";
 import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
-import {
-  getIsRecaptchaEnable,
-  getAccountType,
-  getIsIslamicBanking
-} from "../../store/selectors/appConfig";
-import {
-  UAE_CODE,
-  formStepper,
-  CONVENTIONAL,
-  detailedAccountRoutesMap,
-  ISLAMIC
-} from "../../constants";
+import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
+import { UAE_CODE, formStepper } from "../../constants";
 import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
@@ -66,9 +56,7 @@ const ApplicantInfoPage = ({
   reCaptchaToken,
   isRecaptchaEnable,
   resetScreeningError,
-  isConfigLoading,
-  accountType,
-  isIslamicBanking
+  isConfigLoading
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -193,11 +181,7 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink
-                  path={
-                    detailedAccountRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
-                  }
-                />
+                <BackLink path={{ pathname: routes.accountsComparison, initialPosition: 1 }} />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
@@ -221,9 +205,7 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state),
-  accountType: getAccountType(state),
-  isIslamicBanking: getIsIslamicBanking(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state)
 });
 
 const mapDispatchToProps = {
