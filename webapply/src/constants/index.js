@@ -161,7 +161,7 @@ export const screeningStatus = [
   },
   {
     error: "not Eligible",
-    screeningType: "Rakstarter Account Check",
+    screeningType: "RAK-Starter Account Validation",
     link: true
   },
   {
