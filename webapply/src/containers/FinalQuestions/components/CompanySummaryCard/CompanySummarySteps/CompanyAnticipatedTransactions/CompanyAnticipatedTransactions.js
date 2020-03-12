@@ -29,7 +29,6 @@ const FormatDecimalNumberInput = props => (
     allowNegative={false}
     thousandSeparator={true}
     decimalSeparator={false}
-    suffix={".00"}
     {...props}
   />
 );
@@ -44,7 +43,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
   return isNumeric(monthlyCreditsValue)
-    ? `${monthlyCreditsValue} in Total Monthly Credits`
+    ? `${monthlyCreditsValue.toLocaleString("en-US")} in Total Monthly Credits`
     : PLACEHOLDER;
 };
 
