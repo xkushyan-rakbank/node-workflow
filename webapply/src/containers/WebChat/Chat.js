@@ -1,7 +1,6 @@
-import React, { Suspense, lazy, useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
-import cx from "classnames";
 
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
@@ -10,22 +9,27 @@ import { getSearchResults } from "../../store/selectors/searchProspect";
 import chatIcon from "./../../assets/webchat/black.svg";
 
 import { useStyles } from "./styled";
-
-const WebChatComponent = lazy(() => import("./components/Chat"));
+import { ChatWrapper } from "./ChatWrapper";
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
-  const [{ isOpened, isClosed, isMinimized, newMessagesCount }, dispatch] = useWebChatState();
+  const [newMessagesCount, setNewMessagesCount] = useState(0);
+  const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
   const searchName = get(searchResults, "[0].applicantInfo.fullName", "");
 
-  const openChat = useCallback(() => {
-    dispatch({ type: isClosed ? "open" : "expand" });
-  }, [isClosed, dispatch]);
-  const closeWebChat = useCallback(() => dispatch({ type: "close" }), [dispatch]);
-  const minimizeChat = useCallback(() => dispatch({ type: "minimize" }), [dispatch]);
-  const handleReceiveNewMessage = useCallback(() => dispatch({ type: "addNewMessage" }), [
+  const openChat = useCallback(() => dispatch({ type: isClosed ? "open" : "expand" }), [
+    isClosed,
     dispatch
   ]);
+  const closeWebChat = useCallback(() => dispatch({ type: "close" }), [dispatch]);
+  const minimizeChat = useCallback(() => {
+    dispatch({ type: "minimize" });
+    setNewMessagesCount(0);
+  }, [dispatch, setNewMessagesCount]);
+
+  const handleReceiveNewMessage = useCallback(() => {
+    setNewMessagesCount(newMessagesCount + 1);
+  }, [setNewMessagesCount, newMessagesCount]);
 
   return [
     (isClosed || isMinimized) && (
@@ -46,25 +50,16 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
       </div>
     ),
     isOpened && (
-      <div
+      <ChatWrapper
         key="window"
-        className={cx(classes.chatWrapper, {
-          [classes.mimimized]: isMinimized,
-          [classes.expand]: !isMinimized
-        })}
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          <WebChatComponent
-            onClose={closeWebChat}
-            onMinimize={minimizeChat}
-            InitiatedCustomerName={name || searchName}
-            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
-            EmailAddress={email}
-            isAuth={false}
-            onNewMessageReceive={handleReceiveNewMessage}
-          />
-        </Suspense>
-      </div>
+        closeWebChat={closeWebChat}
+        minimizeChat={minimizeChat}
+        onNewMessageReceive={handleReceiveNewMessage}
+        isMinimized={isMinimized}
+        InitiatedCustomerName={name || searchName}
+        InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+        EmailAddress={email}
+      />
     )
   ];
 };

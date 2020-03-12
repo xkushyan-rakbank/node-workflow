@@ -4,8 +4,7 @@ const initialState = {
   isOpened: false,
   isClosed: true,
   isMinimized: false,
-  isExpanded: false,
-  newMessagesCount: 0
+  isExpanded: false
 };
 
 const webChatReducer = (state, { type }) => {
@@ -15,8 +14,7 @@ const webChatReducer = (state, { type }) => {
         ...state,
         isOpened: true,
         isClosed: false,
-        isMinimized: false,
-        newMessagesCount: 0
+        isMinimized: false
       };
     case "close":
       return {
@@ -30,13 +28,10 @@ const webChatReducer = (state, { type }) => {
         isOpened: true,
         isMinimized: true,
         isClosed: false,
-        isExpanded: false,
-        newMessagesCount: 0
+        isExpanded: false
       };
     case "expand":
       return { ...state, isExpanded: true, isMinimized: false };
-    case "addNewMessage":
-      return { ...state, newMessagesCount: state.newMessagesCount + 1 };
     default:
       return state;
   }

@@ -34,9 +34,6 @@ function Chat({
   InitiatedCustomerMobile = "",
   EmailAddress = "",
   isAuth,
-  cif,
-  subject,
-  message,
   onClose,
   onMinimize,
   onNewMessageReceive
@@ -44,6 +41,10 @@ function Chat({
   const [messages, setMessages] = useState([]);
   const [agentTyping, setAgentTyping] = useState(false);
   const [agentLeft, setAgentLeft] = useState(false);
+
+  useEffect(() => {
+    onNewMessageReceive(messages);
+  }, [messages]);
 
   const agentTypingHandler = useCallback(
     flag => {
@@ -62,7 +63,6 @@ function Chat({
   const handleNewMessageArrival = useCallback(
     messages => {
       setMessages(messages);
-      onNewMessageReceive(messages);
     },
     [setMessages]
   );
@@ -73,11 +73,8 @@ function Chat({
     chatInstance.initChat({
       InitiatedCustomerName,
       InitiatedCustomerMobile,
-      selectedSubject: subject,
       EmailAddress,
-      message,
-      isAuth,
-      cif
+      isAuth
     });
     chatInstance.messagesCallback = handleNewMessageArrival;
     chatInstance.setOnTypingEventsHandler(agentTypingHandler);
