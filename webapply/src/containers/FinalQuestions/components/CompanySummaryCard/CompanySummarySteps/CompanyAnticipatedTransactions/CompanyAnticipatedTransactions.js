@@ -43,7 +43,7 @@ const getTotalMonthlyCreditsValue = annualFinancialTurnover => {
 
 const getTotalMonthlyCreditsText = monthlyCreditsValue => {
   return isNumeric(monthlyCreditsValue)
-    ? `${monthlyCreditsValue.toLocaleString("en")} in Total Monthly Credits`
+    ? `${monthlyCreditsValue.toLocaleString("en-US")} in Total Monthly Credits`
     : PLACEHOLDER;
 };
 
