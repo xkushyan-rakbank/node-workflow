@@ -1,5 +1,6 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
 import set from "lodash/set";
+import cloneDeep from "lodash/cloneDeep";
 
 import {
   RECEIVE_APPCONFIG,
@@ -35,8 +36,8 @@ function* receiveAppConfigSaga() {
       }
     }
 
-    const newConfig = { ...response.data };
-    const prospectModel = { ...newConfig.prospect };
+    const newConfig = cloneDeep(response.data);
+    const prospectModel = cloneDeep(newConfig.prospect);
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
@@ -60,7 +61,7 @@ function* receiveAppConfigSaga() {
 
 function* updateProspectSaga(action) {
   const state = yield select();
-  const newConfig = { ...state.appConfig };
+  const newConfig = cloneDeep(state.appConfig);
   for (let name in action.fields) {
     set(newConfig, name, action.fields[name]);
   }

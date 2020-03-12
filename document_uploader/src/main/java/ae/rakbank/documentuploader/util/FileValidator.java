@@ -13,6 +13,7 @@ import javax.activation.MimetypesFileTypeMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -37,8 +38,8 @@ public class FileValidator {
     }
 
     public void validate(MultipartFile file) {
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        if (!allowedExtensions.contains(extension)) {
+        String extension = Objects.requireNonNull(FilenameUtils.getExtension(file.getOriginalFilename()));
+        if (allowedExtensions.stream().noneMatch(extension::equalsIgnoreCase)) {
             throw new ApiException("Not supported file extension", HttpStatus.BAD_REQUEST);
         }
 
