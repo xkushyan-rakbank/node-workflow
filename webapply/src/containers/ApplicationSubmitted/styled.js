@@ -114,6 +114,10 @@ export const useStyles = makeStyles(theme => ({
     maxWidth: "443px",
     margin: "0 auto"
   },
+  infoNote: {
+    marginTop: 20,
+    fontSize: 14
+  },
   divider: {
     height: "1px",
     backgroundColor: "rgba(230, 230, 230, 0.5)",
