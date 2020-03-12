@@ -13,12 +13,8 @@ export const useIconsByAccount = () => {
   const accountType = useSelector(getAccountType);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
 
-  if (isIslamicBanking && accountType !== accountNames.elite) {
-    return islamicIconsSet;
-  }
-
-  if (isIslamicBanking && accountType === accountNames.elite) {
-    return eliteIslamicIconsSet;
+  if (isIslamicBanking) {
+    return accountType === accountNames.elite ? eliteIslamicIconsSet : islamicIconsSet;
   }
 
   if (
