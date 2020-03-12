@@ -1,6 +1,5 @@
 import React, { useEffect, Suspense, lazy } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { matchPath } from "react-router";
 import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -50,16 +49,9 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       });
     }
 
-    let accountType;
-    const matchProfile = matchPath(history.location.pathname, {
-      path: routes.detailedAccount
-    });
-
-    accountType = matchProfile && matchProfile.params && matchProfile.params.accountType;
-
-    receiveAppConfig(accountType);
+    receiveAppConfig();
     prospectAutoSave();
-  }, [receiveAppConfig, prospectAutoSave, history.location.pathname]);
+  }, [receiveAppConfig, prospectAutoSave]);
 
   useEffect(() => {
     if (history.location.pathname === routes.applicantInfo) {

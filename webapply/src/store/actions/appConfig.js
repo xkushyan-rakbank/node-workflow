@@ -22,8 +22,8 @@ export const loadMetaData = (meta = {}) => ({
   payload: meta.freeField5 || ""
 });
 
-export const receiveAppConfig = accountType => {
-  return { type: RECEIVE_APPCONFIG, payload: { accountType } };
+export const receiveAppConfig = payload => {
+  return { type: RECEIVE_APPCONFIG, payload };
 };
 
 export const receiveAppConfigSuccess = data => {
