@@ -38,7 +38,8 @@ function* receiveAppConfigSaga() {
     }
 
     const newConfig = response.data;
-    const prospectModel = cloneDeep(newConfig.prospect);
+    const prospectModel = newConfig.prospect && cloneDeep(newConfig.prospect);
+
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
@@ -51,7 +52,9 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
-    yield put(saveProspectModel(prospectModel));
+    if (prospectModel) {
+      yield put(saveProspectModel(prospectModel));
+    }
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());
   } catch (error) {
