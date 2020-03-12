@@ -101,7 +101,7 @@ export const ExpandedDetailedOptionsCard = ({
             handleClick={() => handleClick(id)}
           />
         ) : accountType === accountNames.starter && value === rakValuePackagePlusName ? (
-          "Included in Rakstarter"
+          "Included in RAKstarter"
         ) : (
           "Upgrade available"
         )}
