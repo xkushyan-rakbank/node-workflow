@@ -6,7 +6,6 @@ import get from "lodash/get";
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
-import chatIcon from "./../../assets/webchat/black.svg";
 
 import { useStyles } from "./styled";
 import { ClosedChat } from "./ClosedChat";
@@ -35,13 +34,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
 
   return [
     (isClosed || isMinimized) && (
-      <ClosedChat
-        key="link"
-        ref={closedChatRef}
-        openChat={openChat}
-        isMinimized={isMinimized}
-        chatIcon={chatIcon}
-      />
+      <ClosedChat key="link" ref={closedChatRef} openChat={openChat} isMinimized={isMinimized} />
     ),
     isOpened && (
       <div

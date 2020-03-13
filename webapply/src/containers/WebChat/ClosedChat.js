@@ -1,15 +1,16 @@
 import React, { useState, forwardRef } from "react";
 
+import chatIcon from "./../../assets/webchat/black.svg";
 import { useStyles } from "./styled";
 
-const ClosedChatScreen = ({ openChat, isMinimized, chatIcon }, ref) => {
+const ClosedChatScreen = ({ openChat, isMinimized }, ref) => {
   const classes = useStyles();
   const [newMessagesCount, setNewMessagesCount] = useState(0);
 
   ref.current = { newMessagesCount, setNewMessagesCount };
 
   return (
-    <div key="link" className={classes.chat}>
+    <div className={classes.chat}>
       <div className={classes.chatInner} onClick={openChat}>
         <div>
           <span>
