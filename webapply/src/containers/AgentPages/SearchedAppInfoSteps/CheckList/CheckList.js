@@ -4,7 +4,7 @@ import get from "lodash/get";
 import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
-import { titles, errorMsgs } from "./constants";
+import { titles } from "./constants";
 import { getOverviewSignatories } from "../../../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
@@ -39,7 +39,7 @@ export const CheckList = () => {
           ))}
         </div>
       ) : (
-        <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
+        <div className={classes.errorMsg}>Company check list is not available.</div>
       )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
       {signatoryInfo.length ? (
@@ -66,13 +66,15 @@ export const CheckList = () => {
                   </div>
                 ))
               ) : (
-                <div className={classes.errorMsgInsideTable}>{errorMsgs.STAKEHOLDER_ERROR}</div>
+                <div className={classes.errorMsgInsideTable}>
+                  Check list is not available for this stakeholder.
+                </div>
               )}
             </div>
           </div>
         ))
       ) : (
-        <div className={classes.errorMsg}>{errorMsgs.STAKEHOLDERS_CHECKLIST_ERROR}</div>
+        <div className={classes.errorMsg}>Stakeholder check list is not available.</div>
       )}
     </>
   );

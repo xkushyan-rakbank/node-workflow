@@ -228,12 +228,72 @@ export const STEP_STATUS = {
   COMPLETED: "COMPLETED"
 };
 
+// Company Check list
+export const NEGATIVE_LIST_CHECK = {
+  screeningType: "Negative List Check",
+  screeningStatus: "Completed",
+  screeningLabel: "Negative List",
+  screeningReason: "No Match"
+};
+export const VIRTUAL_CURRENCY_CHECK = {
+  screeningType: "Virtual Currency Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Virtual Currency",
+  screeningReason: "Proceed"
+};
+export const COUNTRYOFINCORPORATION_CHECK = {
+  screeningType: "Country Of Incorporation Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Country of Incorporation",
+  screeningReason: "Proceed"
+};
+export const RAKSTARTER_ACCOUNT_CHECK = {
+  screeningType: "RAK-Starter Account Validation",
+  screeningStatus: "Not completed",
+  screeningLabel: "RAK-Starter Account Validation",
+  screeningReason: "Proceed"
+};
+export const DEDUPE_CHECK = {
+  screeningType: "Dedupe Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Dedupe",
+  screeningReason: "No Match"
+};
+export const ISSHAREHOLDERACOMPANY_CHECK = {
+  screeningType: "Company is a Stakeholder Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Company is a Stakeholder",
+  screeningReason: "Proceed"
+};
+export const BLACKLIST_CHECK = {
+  screeningType: "Blacklist Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Blacklist",
+  screeningReason: "No Match"
+};
+export const TOO_MANY_STAKEHOLDERS = {
+  screeningType: "Too many Stakeholders Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Too many Stakeholders",
+  screeningReason: "Proceed"
+};
 export const RISK_RATING = {
   screeningType: "Risk Rating",
   screeningStatus: "Completed",
   screeningLabel: "Risk Rating",
   screeningReason: "Proceed"
 };
+
+export const COMPANY_CHECK_NAMES = [
+  DEDUPE_CHECK,
+  BLACKLIST_CHECK,
+  NEGATIVE_LIST_CHECK,
+  COUNTRYOFINCORPORATION_CHECK,
+  VIRTUAL_CURRENCY_CHECK,
+  RAKSTARTER_ACCOUNT_CHECK,
+  ISSHAREHOLDERACOMPANY_CHECK,
+  TOO_MANY_STAKEHOLDERS
+];
 
 export const RAKSTARTER_ROUTE_PARAM = "rakstarter";
 export const CURRENT_ACCOUNT_ROUTE_PARAM = "current-account";
