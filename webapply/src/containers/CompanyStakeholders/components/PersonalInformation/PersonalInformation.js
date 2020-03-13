@@ -59,7 +59,7 @@ const personalInformationSchema = Yup.object().shape({
       "First, Middle and Last name combined have a limit of 77 characters",
       function(middleName) {
         const { firstName, lastName } = this.parent;
-        return checkFullNameLength(firstName, middleName, lastName);
+        return middleName && checkFullNameLength(firstName, middleName, lastName);
       }
     ),
   lastName: Yup.string().when("isShareholderACompany", {
@@ -115,7 +115,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
         };
     return {
       ...prospect,
-      extraFields
+      ...extraFields
     };
   };
 
@@ -144,14 +144,16 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
-                  let data = { isShareholderACompany: !values.isShareholderACompany };
+                  let data = {
+                    isShareholderACompany: !values.isShareholderACompany,
+                    dateOfBirth: ""
+                  };
                   if (!values.isShareholderACompany) {
                     data = {
                       ...data,
                       firstName: "",
                       middleName: "",
-                      lastName: "",
-                      dateOfBirth: ""
+                      lastName: ""
                     };
                   }
                   setValues(data);
@@ -217,6 +219,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
                 }}
+                ErrorMessageComponent={() => null}
               />
             </Grid>
           </Grid>
