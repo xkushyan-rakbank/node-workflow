@@ -60,17 +60,16 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 shrink
                 tabIndex="0"
                 changeProspect={(prospect, value) => {
-                  if (value !== UAE) {
-                    return {
-                      ...prospect,
-                      [isUAEResident]: false,
-                      [eidNumberPath]: ""
-                    };
-                  }
-                  return {
+                  let result = {
                     ...prospect,
-                    [isUAEResident]: true
+                    [isUAEResident]: value === UAE
                   };
+
+                  if (value !== UAE) {
+                    result.eidNumberPath = "";
+                  }
+
+                  return result;
                 }}
                 onChange={value => {
                   if (value !== UAE) {
