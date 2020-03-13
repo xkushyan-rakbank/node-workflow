@@ -143,7 +143,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
-                  setFieldValue("isShareholderACompany", !values.isShareholderACompany);
                   if (!values.isShareholderACompany) {
                     setValues({
                       firstName: "",
@@ -152,6 +151,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                       dateOfBirth: "",
                       isShareholderACompany: true
                     });
+                  } else {
+                    setFieldValue("isShareholderACompany", false);
                   }
                 }}
                 changeProspect={createChangeProspectHandler(values)}
