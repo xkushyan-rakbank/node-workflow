@@ -4,11 +4,11 @@ import { ComeBackLink } from "./styled";
 
 const Answer = () => (
   <>
-    Yes. You can continue your application from where you left
+    Yes. You can continue your application from where you left using
     <ComeBackLink to={routes.comeBackLogin} target="_blank">
       the link
     </ComeBackLink>
-    using the link sent to your email id.
+    sent to your email id.
   </>
 );
 
