@@ -40,11 +40,9 @@ function Chat({
   InitiatedCustomerMobile = "",
   EmailAddress = "",
   isAuth,
-  cif,
-  subject,
-  message,
   onClose,
-  onMinimize
+  onMinimize,
+  onNewMessageReceive
 }) {
   const [messages, setMessages] = useState([]);
   const [agentTyping, setAgentTyping] = useState(false);
@@ -68,8 +66,9 @@ function Chat({
   const handleNewMessageArrival = useCallback(
     messages => {
       setMessages(messages);
+      onNewMessageReceive(messages);
     },
-    [setMessages]
+    [setMessages, onNewMessageReceive]
   );
 
   useEffect(() => {
@@ -79,11 +78,8 @@ function Chat({
       .initChat({
         InitiatedCustomerName,
         InitiatedCustomerMobile,
-        selectedSubject: subject,
         EmailAddress,
-        message,
-        isAuth,
-        cif
+        isAuth
       })
       .finally(() => {
         setIsLoading(false);
