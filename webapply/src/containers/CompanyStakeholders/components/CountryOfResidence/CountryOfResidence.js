@@ -33,8 +33,8 @@ const getCountryOfResidenceSchema = isSignatory =>
   });
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
-  const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
-  const isUAEResident = `prospect.signatoryInfo[${index}].kycDetails.isUAEResident`;
+  const pathToEidNumber = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
+  const pathToIsUAEResident = `prospect.signatoryInfo[${index}].kycDetails.isUAEResident`;
 
   return (
     <Formik
@@ -62,11 +62,11 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 changeProspect={(prospect, value) => {
                   let result = {
                     ...prospect,
-                    [isUAEResident]: value === UAE
+                    [pathToIsUAEResident]: value === UAE
                   };
 
                   if (value !== UAE) {
-                    result.eidNumberPath = "";
+                    result[pathToEidNumber] = "";
                   }
 
                   return result;
@@ -87,14 +87,14 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
             <Grid item md={6} xs={12}>
               <Field
                 name="eidNumber"
-                path={eidNumberPath}
+                path={pathToEidNumber}
                 label="Emirates ID"
                 placeholder="784-1950-1234567-8"
                 disabled={values.residenceCountry !== UAE}
                 component={EmiratesID}
                 changeProspect={(prospect, value) => ({
                   ...prospect,
-                  [eidNumberPath]: value.replace(/-/g, "")
+                  [pathToEidNumber]: value.replace(/-/g, "")
                 })}
                 contextualHelpText={
                   <>
