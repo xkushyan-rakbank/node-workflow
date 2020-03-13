@@ -95,7 +95,7 @@ export const useStyles = makeStyles(theme => ({
         background: ({ color }) => {
           switch (color) {
             case ELITE:
-              return "linear-gradient(to bottom, #8E2141, #B55774)";
+              return "linear-gradient(to bottom, #831334, #b1536f 90%, #b25470 100%)";
             case ISLAMIC:
               return "#417C35";
             case STANDART:

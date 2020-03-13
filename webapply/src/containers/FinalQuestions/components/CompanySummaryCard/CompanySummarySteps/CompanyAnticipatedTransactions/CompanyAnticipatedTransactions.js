@@ -248,7 +248,13 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   placeholder={PLACEHOLDER}
                   autoComplete="off"
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in a month in Cash.
+                      <br />
+                      Enter 0 if there are no cash transactions.
+                    </>
+                  }
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -265,7 +271,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Part of Monthly Total in Non-Cash"
                   placeholder={PLACEHOLDER}
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in a month in modes
+                      other than Cash.
+                      <br />
+                      Enter 0 if there are no non-cash transactions.
+                    </>
+                  }
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -299,7 +312,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in single transaction
+                      in Cash
+                      <br />
+                      Enter 0 if there are no cash transactions.
+                    </>
+                  }
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -314,7 +334,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in single transaction
+                      in modes other than Cash
+                      <br />
+                      Enter 0 if there are no non-cash transactions.
+                    </>
+                  }
                 />
                 <InfoTitle
                   classes={{

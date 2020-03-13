@@ -14,10 +14,11 @@ export default function NotFoundPage() {
   const history = useHistory();
   const classes = useStyles();
   const { notFound } = useIconsByAccount();
+  useFormNavigation([false, false]);
+
   const handleGoToHomePage = useCallback(() => {
     history.push(routes.accountsComparison);
   }, [history]);
-  useFormNavigation([false, false]);
 
   return (
     <div className={classes.appStatus}>

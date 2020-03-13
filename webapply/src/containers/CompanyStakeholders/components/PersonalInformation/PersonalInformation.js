@@ -81,6 +81,7 @@ const personalInformationSchema = Yup.object().shape({
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
+      .nullable()
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
@@ -94,12 +95,29 @@ export const PersonalInformation = ({ index, handleContinue }) => {
 
   const applicantInfo = useSelector(getApplicantInfo);
 
-  const createChangeProspectHandler = values => prospect => ({
-    ...prospect,
-    [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
-      ? applicantInfo.fullName
-      : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
-  });
+  const createChangeProspectHandler = values => prospect => {
+    const extraFields = values.isShareholderACompany
+      ? {
+          [`prospect.signatoryInfo[${index}].firstName`]: "",
+          [`prospect.signatoryInfo[${index}].middleName`]: "",
+          [`prospect.signatoryInfo[${index}].lastName`]: "",
+          [`prospect.signatoryInfo[${index}].kycDetails.dateOfBirth`]: "",
+          [`prospect.signatoryInfo[${index}].fullName`]: applicantInfo.fullName
+        }
+      : {
+          [`prospect.signatoryInfo[${index}].fullName`]: [
+            values.firstName,
+            values.middleName,
+            values.lastName
+          ]
+            .filter(item => item)
+            .join(" ")
+        };
+    return {
+      ...prospect,
+      extraFields
+    };
+  };
 
   return (
     <Formik
@@ -108,7 +126,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
         firstName: "",
         middleName: "",
         lastName: "",
-        isShareholderACompany: "",
+        isShareholderACompany: false,
         dateOfBirth: "",
         isPEP: ""
       }}
@@ -116,7 +134,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched }) => (
+      {({ values, errors, touched, setValues }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -126,7 +144,17 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
-                  setFieldValue("isShareholderACompany", !values.isShareholderACompany);
+                  let data = { isShareholderACompany: !values.isShareholderACompany };
+                  if (!values.isShareholderACompany) {
+                    data = {
+                      ...data,
+                      firstName: "",
+                      middleName: "",
+                      lastName: "",
+                      dateOfBirth: ""
+                    };
+                  }
+                  setValues(data);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ tabIndex: 0 }}
