@@ -101,7 +101,6 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           label="Nationality"
                           component={SelectAutocomplete}
                           datalistId="nationality"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           filterOptions={options => {
                             const nationalities = values.passportDetails
                               .filter((item, index) => item.country && index !== passportIndex)

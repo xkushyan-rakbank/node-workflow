@@ -68,28 +68,23 @@ export const useStyles = makeStyles(theme => ({
   },
   menuItem: {
     display: "flex",
-    justifyContent: "space-between"
+    width: "100%",
+    justifyContent: "space-between",
+    whiteSpace: "normal",
+    lineHeight: 1
   }
 }));
 
 export const customStyles = {
-  menu: (provided, { selectProps: { otherProps } }) => {
-    const width = otherProps && otherProps.menuFullWidth ? "auto" : "100%";
-    return {
-      ...provided,
-      zIndex: 2,
-      marginTop: "6px",
-      width
-    };
-  },
-  singleValue: (provided, { selectProps: { otherProps } }) => {
-    const whiteSpace = otherProps && otherProps.sinleValueWrap ? "normal" : "nowrap";
-    const fontSize = otherProps && otherProps.sinleValueWrap ? "15px" : "inherit";
-    return {
-      ...provided,
-      padding: "2px",
-      whiteSpace,
-      fontSize
-    };
-  }
+  menu: provided => ({
+    ...provided,
+    zIndex: 2,
+    marginTop: "6px",
+    width: "100%"
+  }),
+  singleValue: provided => ({
+    ...provided,
+    whiteSpace: "normal",
+    padding: "2px"
+  })
 };
