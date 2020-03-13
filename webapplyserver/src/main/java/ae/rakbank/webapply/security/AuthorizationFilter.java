@@ -55,11 +55,11 @@ class AuthorizationFilter extends GenericFilterBean {
                         .map(authorizationService::getPrincipal)
                         .ifPresent(principal -> {
                             if (HttpMethod.GET.name().equals(httpRequest.getMethod())
-                                    && httpRequest.getServletPath().matches("/api/v1/usertypes/sme/prospects/.+/")) {
-                                Pattern pattern = Pattern.compile("/api/v1/usertypes/sme/prospects/(.+)/");
+                                    && httpRequest.getServletPath().matches("/api/v1/usertypes/sme/prospects/.+")) {
+                                Pattern pattern = Pattern.compile("/api/v1/usertypes/sme/prospects/(.+)");
                                 Matcher matcher = pattern.matcher(httpRequest.getServletPath());
                                 matcher.find();
-                                principal.setProspectId(matcher.group(1));
+                                principal.setProspectId(matcher.group(1).replace("/", ""));
                             }
                             this.createSecurityContext(principal);
                             ((HttpServletResponse) response)

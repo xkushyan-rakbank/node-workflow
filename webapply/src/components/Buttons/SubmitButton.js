@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Grid from "@material-ui/core/Grid";
 import { styled, withTheme } from "@material-ui/styles";
 
@@ -18,7 +18,7 @@ export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
   }
 }));
 
-export const SubmitButton = ({ justify, submitButtonClassName, ...rest }) => (
+export const SubmitButtonBase = ({ justify, submitButtonClassName, ...rest }) => (
   <ButtonWrapper
     container
     direction="row"
@@ -29,3 +29,5 @@ export const SubmitButton = ({ justify, submitButtonClassName, ...rest }) => (
     <Button type="submit" withRightArrow {...rest} />
   </ButtonWrapper>
 );
+
+export const SubmitButton = memo(SubmitButtonBase);

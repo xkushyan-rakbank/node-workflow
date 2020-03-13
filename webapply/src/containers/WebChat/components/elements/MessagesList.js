@@ -23,6 +23,7 @@ const MessagesList = ({ data }) => {
 
   useEffect(() => {
     if (virtualRef) {
+      if (data.length > 0) virtualRef.recomputeRowHeights(data.length - 1);
       virtualRef.scrollToRow(data.length);
     }
   }, [data]);
@@ -33,6 +34,7 @@ const MessagesList = ({ data }) => {
         ref={element => {
           virtualRef = element;
         }}
+        style={{ outline: "none" }}
         width={327}
         deferredMeasurementCache={cache}
         height={310}

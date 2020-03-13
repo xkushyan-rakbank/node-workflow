@@ -1,27 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
-  containedButton: {
-    boxShadow: "none",
-    backgroundColor: "#fff",
-    height: "auto",
-    border: "1px solid #373737",
-    padding: "3px 15px",
-    minWidth: 120,
-    minHeight: 32,
-    fontFamily: "Open Sans",
-    "&:hover": {
-      backgroundColor: "#000",
-      "& span": {
-        color: "#fff"
-      }
-    }
+  linkStyle: {
+    margin: 0
   },
-  containedButtonLabelStyle: {
-    color: "#373737",
-    fontSize: "14px",
-    textAlign: "center",
-    display: "block"
+  buttonStyle: {
+    height: 32
   },
   tableRowRoot: {
     "& td": {

@@ -98,8 +98,10 @@ export const useStyles = makeStyles(theme => ({
               return "linear-gradient(to bottom, #8E2141, #B55774)";
             case ISLAMIC:
               return "#417C35";
-            default:
+            case STANDART:
               return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+            default:
+              return "transparent";
           }
         }
       }

@@ -13,7 +13,6 @@ import screenProspect from "./screenProspect";
 import uploadDocuments from "./getProspectDocuments";
 import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
-import video from "./video";
 
 const reducers = history =>
   combineReducers({
@@ -30,7 +29,6 @@ const reducers = history =>
     screenProspect,
     uploadDocuments,
     completedSteps,
-    video,
     accountNumbers
   });
 

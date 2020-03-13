@@ -44,11 +44,6 @@ const CompanyStakeholdersComponent = ({
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
 
-  // Used to show add button after add stakeholder(if it is not limit)
-  const handleShowAddButton = useCallback(() => {
-    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
-  }, [setIsShowingAddButton, stakeholders]);
-
   useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
@@ -112,7 +107,7 @@ const CompanyStakeholdersComponent = ({
             .isEditting;
           return (
             <StakeholderStepper
-              showAddButton={handleShowAddButton}
+              setIsShowingAddButton={setIsShowingAddButton}
               {...item}
               key={item.id}
               index={index}

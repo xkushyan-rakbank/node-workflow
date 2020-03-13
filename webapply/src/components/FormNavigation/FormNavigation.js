@@ -23,13 +23,9 @@ export const FormNavigationComponent = () => {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
-  const [isShowAccountInfo, isChatVisible, navigationSteps = []] = useContext(
-    FormNavigationContext
-  );
-  const blobColor = useBlobColor();
-
+  const navContext = useContext(FormNavigationContext);
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
-
+  const blobColor = useBlobColor(!navContext);
   const classes = useStyles({
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
@@ -37,6 +33,12 @@ export const FormNavigationComponent = () => {
     accountsComparisonPage: routes.accountsComparison === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
+
+  if (!navContext) {
+    return null;
+  }
+
+  const [isShowAccountInfo, isChatVisible, navigationSteps = []] = navContext;
 
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)

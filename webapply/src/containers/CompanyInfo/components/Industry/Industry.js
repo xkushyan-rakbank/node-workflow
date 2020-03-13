@@ -6,7 +6,7 @@ import uniqueId from "lodash/uniqueId";
 import Grid from "@material-ui/core/Grid";
 import get from "lodash/get";
 
-import { getOrgKYCDetails } from "../../../../store/selectors/appConfig";
+import { getOrgKYCDetails, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { MAX_INDUSTRIES_LENGTH } from "../../constants";
@@ -35,7 +35,7 @@ const industrySchema = Yup.object().shape({
   )
 });
 
-export const IndustryStep = ({ handleContinue, industries, updateProspect }) => {
+export const IndustryStep = ({ handleContinue, industries, updateProspect, isIslamicBanking }) => {
   const classes = useStyles();
 
   const addIndustryHandler = arrayHelper => () => {
@@ -66,6 +66,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
       }
     });
   };
+
+  const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   return (
     <Formik
@@ -107,7 +109,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           path={currentIndustry}
                           label="Industry"
                           component={SelectAutocomplete}
-                          datalistId="industry"
+                          datalistId={datalistId}
                           changeProspect={(prospect, value) => {
                             if (industryIndex) {
                               return prospect;
@@ -142,7 +144,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           path={currentSubCategory}
                           label="Industry sub-category"
                           component={SelectAutocomplete}
-                          datalistId="industry"
+                          datalistId={datalistId}
+                          filterOptionsDeps={item.industry}
                           filterOptions={options => {
                             // All previous industries with selected industry
                             const previousSelectedIndustries = values.industries.filter(
@@ -232,7 +235,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
 
 const mapStateToProps = state => {
   return {
-    industries: get(getOrgKYCDetails(state), "industryMultiSelect", [])
+    industries: get(getOrgKYCDetails(state), "industryMultiSelect", []),
+    isIslamicBanking: getIsIslamicBanking(state)
   };
 };
 

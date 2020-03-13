@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import cx from "classnames";
 import { connect } from "react-redux";
 
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
@@ -21,11 +20,10 @@ const HeaderTitleComponent = ({
   organizationInfo: { companyName },
   checkLoginStatus,
   getAgentName,
-  withMargin,
   withoutMarginBottom,
   logout
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ withoutMarginBottom });
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -57,32 +55,23 @@ const HeaderTitleComponent = ({
   }, [logout, history]);
 
   return (
-    <div
-      className={cx(
-        classes.headerTitle,
-        withoutMarginBottom && classes.withoutMarginBottom,
-        withMargin && classes.withMargin
-      )}
-    >
+    <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {routesToShowPortalTitle.includes(pathname) ? (
-            "RAK Application Portal"
-          ) : checkLoginStatus ? (
-            <>
-              <div>{getAgentName}</div>
-              <div className={classes.logout} onClick={() => agentLogout()}>
-                Logout
-              </div>
-            </>
-          ) : (
-            <>
-              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
-              {!isHideCompanyName && companyName && (
+          {routesToShowPortalTitle.includes(pathname)
+            ? "RAK Application Portal"
+            : checkLoginStatus && (
                 <>
-                  for <span>{companyName}</span>
+                  <div>{getAgentName}</div>
+                  <div className={classes.logout} onClick={() => agentLogout()}>
+                    Logout
+                  </div>
                 </>
               )}
+          {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+          {!isHideCompanyName && companyName && (
+            <>
+              for <span>{companyName}</span>
             </>
           )}
         </span>
