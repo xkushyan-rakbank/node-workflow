@@ -46,7 +46,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
-      {({ values, setValues }) => (
+      {({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -74,8 +74,9 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 }}
                 onChange={value => {
                   if (value !== UAE) {
-                    setValues({ eidNumber: "", residenceCountry: value });
+                    setFieldValue("eidNumber", "");
                   }
+                  setFieldValue("residenceCountry", value);
                 }}
               />
             </Grid>
