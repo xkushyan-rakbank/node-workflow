@@ -123,7 +123,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                           }}
                           shrink={true}
                           tabIndex="0"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
                               This should be selected as per the most relevant business / commercial
@@ -145,6 +144,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                           label="Industry sub-category"
                           component={SelectAutocomplete}
                           datalistId={datalistId}
+                          filterOptionsDeps={item.industry}
                           filterOptions={options => {
                             // All previous industries with selected industry
                             const previousSelectedIndustries = values.industries.filter(
@@ -176,7 +176,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                           }}
                           disabled={!item.industry}
                           tabIndex="0"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
                               This should be selected as per the most relevant business / commercial

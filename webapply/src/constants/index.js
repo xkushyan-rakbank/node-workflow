@@ -208,7 +208,8 @@ export const VIEW_IDS = {
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
   SearchedAppInfo: "/SearchedAppInfo",
-  ApplicationSubmitted: "/ApplicationSubmitted"
+  ApplicationSubmitted: "/ApplicationSubmitted",
+  ReUploadDocuments: "/ReUploadDocuments"
 };
 
 export const ACTION_TYPES = {

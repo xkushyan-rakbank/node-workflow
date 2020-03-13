@@ -21,7 +21,7 @@ export const configureStore = (initialState, history) => {
   const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["appConfig", "video", "login"],
+    whitelist: ["appConfig", "login"],
     transforms: [
       createFilter("appConfig", ["prospect.applicationInfo.accountType"]),
       createFilter("login", ["loginStatus"])

@@ -86,6 +86,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 name="branchID"
                 datalistId="branchCity"
                 path="prospect.organizationInfo.branchID"
+                filterOptionsDeps={values.branchCity}
                 filterOptions={options =>
                   options
                     .filter(city => city.code === values.branchCity)
