@@ -71,7 +71,7 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     justifyContent: "space-between",
     whiteSpace: "normal",
-    lineHeight: 1
+    lineHeight: "normal"
   }
 }));
 
