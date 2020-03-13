@@ -64,7 +64,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                   [eidNumberPath]: ""
                 })}
                 onChange={value => {
-                  if (values !== UAE) {
+                  if (value !== UAE) {
                     setValues({ eidNumber: "", residenceCountry: value });
                   }
                 }}
