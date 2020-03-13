@@ -2,6 +2,7 @@ import React, { useCallback, useRef, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 import get from "lodash/get";
+import { Portal } from "react-portal";
 
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
@@ -37,25 +38,27 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
       <ClosedChat key="link" ref={closedChatRef} openChat={openChat} isMinimized={isMinimized} />
     ),
     isOpened && (
-      <div
-        key="window"
-        className={cx(classes.chatWrapper, {
-          [classes.mimimized]: isMinimized,
-          [classes.expand]: !isMinimized
-        })}
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          <WebChatComponent
-            onClose={closeWebChat}
-            onMinimize={minimizeChat}
-            isAuth={false}
-            onNewMessageReceive={handleReceiveNewMessage}
-            InitiatedCustomerName={name || searchName}
-            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
-            EmailAddress={email}
-          />
-        </Suspense>
-      </div>
+      <Portal>
+        <div
+          key="window"
+          className={cx(classes.chatWrapper, {
+            [classes.mimimized]: isMinimized,
+            [classes.expand]: !isMinimized
+          })}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <WebChatComponent
+              onClose={closeWebChat}
+              onMinimize={minimizeChat}
+              isAuth={false}
+              onNewMessageReceive={handleReceiveNewMessage}
+              InitiatedCustomerName={name || searchName}
+              InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+              EmailAddress={email}
+            />
+          </Suspense>
+        </div>
+      </Portal>
     )
   ];
 };
