@@ -133,7 +133,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched, setValues }) => (
+      {({ values, errors, touched, setValues }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -143,17 +143,17 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 label="This stakeholder is a company"
                 component={Checkbox}
                 onChange={() => {
+                  let data = { isShareholderACompany: !values.isShareholderACompany };
                   if (!values.isShareholderACompany) {
-                    setValues({
+                    data = {
+                      ...data,
                       firstName: "",
                       middleName: "",
                       lastName: "",
-                      dateOfBirth: "",
-                      isShareholderACompany: true
-                    });
-                  } else {
-                    setFieldValue("isShareholderACompany", false);
+                      dateOfBirth: ""
+                    };
                   }
+                  setValues(data);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 inputProps={{ tabIndex: 0 }}
