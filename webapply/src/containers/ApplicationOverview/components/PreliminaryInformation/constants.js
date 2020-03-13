@@ -1,8 +1,21 @@
+import React from "react";
+import routes from "../../../../routes";
+import { ComeBackLink } from "./styled";
+
+const Answer = () => (
+  <>
+    Yes. You can continue your application from where you left
+    <ComeBackLink to={routes.comeBackLogin} target="_blank">
+      the link
+    </ComeBackLink>
+    using the link sent to your email id.
+  </>
+);
+
 export const questions = [
   {
     question: "Once I start the application, can I come back later and complete it?",
-    answer:
-      "Yes. You can continue your application from where you left using the link sent to your email id.",
+    answer: <Answer />,
     id: 1
   },
   {
@@ -13,7 +26,7 @@ export const questions = [
   },
   {
     question: "What if I need help while filling the application?",
-    answer: "You can use web chat option to get help from our experts who are available 24 x 7.",
+    answer: "You can use web chat option to get help from our experts who are\n available 24 x 7.",
     id: 3
   },
   {

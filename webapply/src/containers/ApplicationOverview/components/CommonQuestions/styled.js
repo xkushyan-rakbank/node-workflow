@@ -74,6 +74,7 @@ export const useStyles = makeStyles(theme => ({
   },
   info: {
     paddingLeft: 10,
+    whiteSpace: "pre-line",
     [theme.breakpoints.only("xs")]: {
       paddingLeft: 0
     }

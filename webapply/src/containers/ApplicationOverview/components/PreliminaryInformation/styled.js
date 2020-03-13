@@ -1,4 +1,17 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { styled } from "@material-ui/styles";
+import { Link } from "react-router-dom";
+
+export const ComeBackLink = styled(Link)({
+  color: "rgba(0, 0, 0, 0.87)",
+  textDecoration: "underline",
+  padding: "5px 5px",
+  hover: {
+    "&:hover": {
+      textDecoration: "nome"
+    }
+  }
+});
 
 export const useStyles = makeStyles(theme => ({
   answers: {
