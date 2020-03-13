@@ -90,7 +90,13 @@ const CompanyStakeholdersComponent = ({
 
       <div className={classes.stakeholdersTitleWrapper}>
         <ContexualHelp
-          title="This stakeholder should be defined / mentioned in valid legal document of the Company. Examples: - Sole Proprietorship Company > Trade License - Partnership Company > Trade License / Partners agreement / Share Certificate, etc - Limited Liability Company (LLC) > Trade License / Memorandum of Association / Articles of Association, etc"
+          title={
+            <>
+              This stakeholder should be defined / mentioned in valid legal document of the Company.
+              <br />
+              Please note that maximum 8 Signatories and 4 Shareholders an be declared.
+            </>
+          }
           placement="right"
           isDisableHoverListener={false}
         >
