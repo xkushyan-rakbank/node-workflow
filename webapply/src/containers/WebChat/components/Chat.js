@@ -49,11 +49,6 @@ function Chat({
   const [agentLeft, setAgentLeft] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    onNewMessageReceive(messages);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages]);
-
   const agentTypingHandler = useCallback(
     flag => {
       setAgentTyping(flag);
@@ -71,8 +66,9 @@ function Chat({
   const handleNewMessageArrival = useCallback(
     messages => {
       setMessages(messages);
+      onNewMessageReceive(messages);
     },
-    [setMessages]
+    [setMessages, onNewMessageReceive]
   );
 
   useEffect(() => {

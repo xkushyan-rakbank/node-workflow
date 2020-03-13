@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useCallback } from "react";
 
 import chatIcon from "./../../assets/webchat/black.svg";
 import { useStyles } from "./styled";
@@ -7,7 +7,13 @@ const ClosedChatScreen = ({ openChat, isMinimized }, ref) => {
   const classes = useStyles();
   const [newMessagesCount, setNewMessagesCount] = useState(0);
 
-  ref.current = { newMessagesCount, setNewMessagesCount };
+  const resetCounter = useCallback(() => setNewMessagesCount(0), [setNewMessagesCount]);
+  const incCounter = useCallback(() => setNewMessagesCount(newMessagesCount + 1), [
+    setNewMessagesCount,
+    newMessagesCount
+  ]);
+
+  ref.current = { incCounter, resetCounter };
 
   return (
     <div className={classes.chat}>

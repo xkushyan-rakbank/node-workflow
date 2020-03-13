@@ -25,11 +25,11 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
   const closeWebChat = useCallback(() => dispatch({ type: "close" }), [dispatch]);
   const minimizeChat = useCallback(() => {
     dispatch({ type: "minimize" });
-    closedChatRef.current.setNewMessagesCount(0);
+    closedChatRef.current.resetCounter();
   }, [dispatch]);
 
   const handleReceiveNewMessage = useCallback(() => {
-    closedChatRef.current.setNewMessagesCount(closedChatRef.current.newMessagesCount + 1);
+    closedChatRef.current.incCounter();
   }, []);
 
   return [
