@@ -51,6 +51,7 @@ function Chat({
 
   useEffect(() => {
     onNewMessageReceive(messages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   const agentTypingHandler = useCallback(

@@ -1,19 +1,21 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, lazy, Suspense } from "react";
 import { connect } from "react-redux";
+import cx from "classnames";
 import get from "lodash/get";
 
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
-
 import chatIcon from "./../../assets/webchat/black.svg";
 
 import { useStyles } from "./styled";
-import { ChatWrapper } from "./ChatWrapper";
+import { ClosedChat } from "./ClosedChat";
+
+const WebChatComponent = lazy(() => import("./components/Chat"));
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
-  const [newMessagesCount, setNewMessagesCount] = useState(0);
+  const closedChatRef = useRef(null);
   const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
   const searchName = get(searchResults, "[0].applicantInfo.fullName", "");
 
@@ -24,42 +26,43 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
   const closeWebChat = useCallback(() => dispatch({ type: "close" }), [dispatch]);
   const minimizeChat = useCallback(() => {
     dispatch({ type: "minimize" });
-    setNewMessagesCount(0);
-  }, [dispatch, setNewMessagesCount]);
+    closedChatRef.current.setNewMessagesCount(0);
+  }, [dispatch]);
 
   const handleReceiveNewMessage = useCallback(() => {
-    setNewMessagesCount(newMessagesCount + 1);
-  }, [setNewMessagesCount, newMessagesCount]);
+    closedChatRef.current.setNewMessagesCount(closedChatRef.current.newMessagesCount + 1);
+  }, []);
 
   return [
     (isClosed || isMinimized) && (
-      <div key="link" className={classes.chat}>
-        <div className={classes.chatInner} onClick={openChat}>
-          <div>
-            <span>
-              {isMinimized && (
-                <div className={classes.messagesCount}>
-                  <p>{newMessagesCount}</p>
-                </div>
-              )}
-              <img src={chatIcon} alt="chat" />
-            </span>
-          </div>
-          <div className="hide-on-mobile small-menu-hide"> Chat with Us</div>
-        </div>
-      </div>
+      <ClosedChat
+        key="link"
+        ref={closedChatRef}
+        openChat={openChat}
+        isMinimized={isMinimized}
+        chatIcon={chatIcon}
+      />
     ),
     isOpened && (
-      <ChatWrapper
+      <div
         key="window"
-        closeWebChat={closeWebChat}
-        minimizeChat={minimizeChat}
-        onNewMessageReceive={handleReceiveNewMessage}
-        isMinimized={isMinimized}
-        InitiatedCustomerName={name || searchName}
-        InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
-        EmailAddress={email}
-      />
+        className={cx(classes.chatWrapper, {
+          [classes.mimimized]: isMinimized,
+          [classes.expand]: !isMinimized
+        })}
+      >
+        <Suspense fallback={<div>Loading...</div>}>
+          <WebChatComponent
+            onClose={closeWebChat}
+            onMinimize={minimizeChat}
+            isAuth={false}
+            onNewMessageReceive={handleReceiveNewMessage}
+            InitiatedCustomerName={name || searchName}
+            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+            EmailAddress={email}
+          />
+        </Suspense>
+      </div>
     )
   ];
 };
