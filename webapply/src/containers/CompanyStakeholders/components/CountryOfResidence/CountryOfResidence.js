@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import get from "lodash/get";
 
 import { getSignatories } from "../../../../store/selectors/appConfig";
-import { updateProspect } from "../../../../store/actions/appConfig";
 import {
   AutoSaveField as Field,
   SelectAutocomplete,
@@ -33,7 +32,7 @@ const getCountryOfResidenceSchema = isSignatory =>
     })
   });
 
-const CountryOfResidenceStep = ({ index, isSignatory, handleContinue, updateProspect }) => {
+const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
 
   return (
@@ -61,14 +60,12 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue, updatePros
                 tabIndex="0"
                 changeProspect={(prospect, value) => ({
                   ...prospect,
-                  [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE
+                  [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE,
+                  [eidNumberPath]: ""
                 })}
                 onChange={value => {
                   if (values !== UAE) {
                     setValues({ eidNumber: "", residenceCountry: value });
-                    updateProspect({
-                      [eidNumberPath]: ""
-                    });
                   }
                 }}
               />
@@ -110,11 +107,4 @@ const mapStateToProps = (state, { index }) => ({
   isSignatory: get(getSignatories(state)[index], "kycDetails.isSignatory", false)
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export const CountryOfResidence = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CountryOfResidenceStep);
+export const CountryOfResidence = connect(mapStateToProps)(CountryOfResidenceStep);
