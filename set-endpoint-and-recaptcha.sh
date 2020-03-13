@@ -20,6 +20,6 @@ echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
 echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
 else
 echo 'REACT_APP_RECAPTCHA_ENABLE=N' >> webapply/.env.production
-echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
+echo 'REACT_APP_ENCRYPTION_ENABLE=N' >> webapply/.env.production
 fi
 cat webapply/.env.production
