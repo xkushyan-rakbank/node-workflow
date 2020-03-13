@@ -2,8 +2,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   sectionContainer: {
-    marginTop: 60,
     marginBottom: 20
+  },
+  companyContainer: {
+    marginTop: 60
   },
   description: {
     fontSize: "20px",

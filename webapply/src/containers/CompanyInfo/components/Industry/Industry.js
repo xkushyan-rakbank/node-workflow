@@ -123,7 +123,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                           }}
                           shrink={true}
                           tabIndex="0"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
                               This should be selected as per the most relevant business / commercial
@@ -177,7 +176,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                           }}
                           disabled={!item.industry}
                           tabIndex="0"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
                               This should be selected as per the most relevant business / commercial

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import cx from "classnames";
 import { useSelector } from "react-redux";
 
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
@@ -60,7 +61,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
           handleClick={handleClickStartHere}
         />
       )}
-      <div className={classes.sectionContainer}>
+      <div className={cx(classes.sectionContainer, classes.companyContainer)}>
         <CompanySummaryCard
           handleFinalStepContinue={handleFinalStepContinue}
           isCompanyStepsCompleted={isCompanyStepsCompleted}
