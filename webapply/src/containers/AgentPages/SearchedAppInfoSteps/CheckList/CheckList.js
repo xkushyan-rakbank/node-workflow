@@ -8,32 +8,39 @@ import { titles, errorMsgs } from "./constants";
 import { getOverviewSignatories } from "../../../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
-import { getCompanyChecks } from "../../../../store/selectors/screeningResults";
+import {
+  getCompanyChecks,
+  getOrganizationScreeningResults
+} from "../../../../store/selectors/screeningResults";
 
 export const CheckList = () => {
   const signatoryInfo = useSelector(getOverviewSignatories);
   const companyChecks = useSelector(getCompanyChecks);
-
+  const companyInfo = useSelector(getOrganizationScreeningResults);
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
-          <div className={headingClassName}>{titles.CHECK_NAME_TITLE}</div>
-          <div className={headingClassName}>{titles.STATUS_TITLE}</div>
-          <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
-        </div>
-        {companyChecks.map(application => (
-          <div className={classes.applicationRow} key={application.screeningType}>
-            <div className={classes.checkListData}>{application.screeningLabel}</div>
-            <div className={classes.checkListData}>{application.screeningStatus}</div>
-            <div className={classes.checkListData}>{application.screeningReason}</div>
+      {companyInfo.length ? (
+        <div className={classes.wrapper}>
+          <div className={classes.applicationRow}>
+            <div className={headingClassName}>{titles.CHECK_NAME_TITLE}</div>
+            <div className={headingClassName}>{titles.STATUS_TITLE}</div>
+            <div className={headingClassName}>{titles.RESULT_REASON_TITLE}</div>
           </div>
-        ))}
-      </div>
+          {companyChecks.map(application => (
+            <div className={classes.applicationRow} key={application.screeningType}>
+              <div className={classes.checkListData}>{application.screeningType}</div>
+              <div className={classes.checkListData}>{application.screeningStatus}</div>
+              <div className={classes.checkListData}>{application.screeningReason}</div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className={classes.errorMsg}>{errorMsgs.COMPANY_CHECKLIST_ERROR}</div>
+      )}
       <h4 className={classes.title}>{titles.STAKEHOLDER_TITLE}</h4>
       {signatoryInfo.length ? (
         signatoryInfo.map((signatory, index) => (
