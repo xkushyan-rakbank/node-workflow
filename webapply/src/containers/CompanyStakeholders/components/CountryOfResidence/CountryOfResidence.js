@@ -34,6 +34,7 @@ const getCountryOfResidenceSchema = isSignatory =>
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
   const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
+  const isUAEResident = `prospect.signatoryInfo[${index}].kycDetails.isUAEResident`;
 
   return (
     <Formik
@@ -58,11 +59,19 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 datalistId="country"
                 shrink
                 tabIndex="0"
-                changeProspect={(prospect, value) => ({
-                  ...prospect,
-                  [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE,
-                  [eidNumberPath]: ""
-                })}
+                changeProspect={(prospect, value) => {
+                  if (value !== UAE) {
+                    return {
+                      ...prospect,
+                      [isUAEResident]: false,
+                      [eidNumberPath]: ""
+                    };
+                  }
+                  return {
+                    ...prospect,
+                    [isUAEResident]: true
+                  };
+                }}
                 onChange={value => {
                   if (value !== UAE) {
                     setValues({ eidNumber: "", residenceCountry: value });
