@@ -127,12 +127,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                             <>
                               This should be selected as per the most relevant business / commercial
                               / licensed activity mentioned in the trade license
-                              <br />
-                              Example:
-                              <br />
-                              If business / commercial / licensed activity is {"'"}E Commerce{"'"},
-                              please select industry as {"'"}Services{"'"} & sub-industry as {"'"}
-                              Computer & IT Industry{"'"}
                             </>
                           }
                         />
@@ -180,12 +174,6 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
                             <>
                               This should be selected as per the most relevant business / commercial
                               / licensed activity mentioned in the trade license
-                              <br />
-                              Example:
-                              <br />
-                              If business / commercial / licensed activity is {"'"}E Commerce{"'"},
-                              please select industry as {"'"}Services{"'"} & sub-industry as {"'"}
-                              Computer & IT Industry{"'"}
                             </>
                           }
                         />
