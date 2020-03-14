@@ -54,11 +54,13 @@ const HeaderTitleComponent = ({
     history.push(routes.login);
   }, [logout, history]);
 
+  const isShowPortalTitle = routesToShowPortalTitle.includes(pathname);
+
   return (
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {routesToShowPortalTitle.includes(pathname)
+          {isShowPortalTitle
             ? "RAK Application Portal"
             : checkLoginStatus && (
                 <>
@@ -68,7 +70,8 @@ const HeaderTitleComponent = ({
                   </div>
                 </>
               )}
-          {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+          {!isShowPortalTitle &&
+            `${selectedAccountTypeName} ${islamicBanking ? "RAKislamic" : ""} Application`}
           {!isHideCompanyName && companyName && (
             <>
               for <span>{companyName}</span>
