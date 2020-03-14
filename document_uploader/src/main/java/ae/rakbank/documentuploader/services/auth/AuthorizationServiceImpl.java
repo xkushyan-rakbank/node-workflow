@@ -49,7 +49,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (StringUtils.isEmpty(jwtPayload.getOauthAccessToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthRefreshToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthTokenExpiryTime())) {
-            log.error("JwtToken is not valid, field phoneNumber is required for the Agent");
+            log.error("JwtToken is not valid, Oauth details is required for the Agent");
             throw new ApiException("JwtToken is not valid, Oauth details is required for the Agent",
                     HttpStatus.UNAUTHORIZED);
         }
