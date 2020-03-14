@@ -46,7 +46,7 @@ const personalInformationSchema = Yup.object().shape({
         "First, Middle and Last name combined have a limit of 77 characters",
         function(firstName) {
           const { middleName, lastName } = this.parent;
-          return checkFullNameLength(firstName, middleName, lastName);
+          return firstName && checkFullNameLength(firstName, middleName, lastName);
         }
       )
   }),
@@ -219,7 +219,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
                 }}
-                ErrorMessageComponent={() => null}
               />
             </Grid>
           </Grid>
