@@ -54,24 +54,28 @@ const HeaderTitleComponent = ({
     history.push(routes.login);
   }, [logout, history]);
 
-  const isShowPortalTitle = routesToShowPortalTitle.includes(pathname);
-
   return (
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {isShowPortalTitle
-            ? "RAK Application Portal"
-            : checkLoginStatus && (
+          {routesToShowPortalTitle.includes(pathname) ? (
+            "RAK Application Portal"
+          ) : (
+            <>
+              {checkLoginStatus ? (
                 <>
                   <div>{getAgentName}</div>
                   <div className={classes.logout} onClick={() => agentLogout()}>
                     Logout
                   </div>
                 </>
+              ) : (
+                <>
+                  {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application
+                </>
               )}
-          {!isShowPortalTitle &&
-            `${selectedAccountTypeName} ${islamicBanking ? "RAKislamic" : ""} Application`}
+            </>
+          )}
           {!isHideCompanyName && companyName && (
             <>
               for <span>{companyName}</span>
