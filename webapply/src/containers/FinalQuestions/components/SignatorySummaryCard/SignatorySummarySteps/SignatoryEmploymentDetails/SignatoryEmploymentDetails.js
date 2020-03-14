@@ -186,8 +186,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                         <br />
                         Example
                         <br />
-                        APR-16 to &apos;TodaysDate&apos;, Reliance Biz, UAE, Proprietor,
-                        Self-Employed
+                        APR-16 to TodaysDate, Reliance Biz, UAE, Proprietor, Self-Employed
                         <br />
                         AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
                       </>
