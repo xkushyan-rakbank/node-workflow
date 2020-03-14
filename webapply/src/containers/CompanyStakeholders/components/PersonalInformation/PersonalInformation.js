@@ -46,7 +46,7 @@ const personalInformationSchema = Yup.object().shape({
         "First, Middle and Last name combined have a limit of 77 characters",
         function(firstName) {
           const { middleName, lastName } = this.parent;
-          return firstName && checkFullNameLength(firstName, middleName, lastName);
+          return checkFullNameLength(firstName, middleName, lastName);
         }
       )
   }),
@@ -59,7 +59,7 @@ const personalInformationSchema = Yup.object().shape({
       "First, Middle and Last name combined have a limit of 77 characters",
       function(middleName) {
         const { firstName, lastName } = this.parent;
-        return middleName && checkFullNameLength(firstName, middleName, lastName);
+        return checkFullNameLength(firstName, middleName, lastName);
       }
     ),
   lastName: Yup.string().when("isShareholderACompany", {
