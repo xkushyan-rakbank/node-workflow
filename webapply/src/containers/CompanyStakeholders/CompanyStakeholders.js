@@ -44,11 +44,6 @@ const CompanyStakeholdersComponent = ({
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
 
-  // Used to show add button after add stakeholder(if it is not limit)
-  const handleShowAddButton = useCallback(() => {
-    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
-  }, [setIsShowingAddButton, stakeholders]);
-
   useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
@@ -95,7 +90,13 @@ const CompanyStakeholdersComponent = ({
 
       <div className={classes.stakeholdersTitleWrapper}>
         <ContexualHelp
-          title="This stakeholder should be defined / mentioned in valid legal document of the Company. Examples: - Sole Proprietorship Company > Trade License - Partnership Company > Trade License / Partners agreement / Share Certificate, etc - Limited Liability Company (LLC) > Trade License / Memorandum of Association / Articles of Association, etc"
+          title={
+            <>
+              This stakeholder should be defined / mentioned in valid legal document of the Company.
+              <br />
+              Please note that maximum 8 Signatories and 4 Shareholders an be declared.
+            </>
+          }
           placement="right"
           isDisableHoverListener={false}
         >
@@ -112,7 +113,7 @@ const CompanyStakeholdersComponent = ({
             .isEditting;
           return (
             <StakeholderStepper
-              showAddButton={handleShowAddButton}
+              setIsShowingAddButton={setIsShowingAddButton}
               {...item}
               key={item.id}
               index={index}

@@ -36,11 +36,13 @@ const licenseInformationSchema = () =>
       .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("License number")),
     licenseIssueDate: Yup.date()
+      .nullable()
       .typeError(getInvalidMessage("License issuing date"))
       .required(getRequiredMessage("License issuing date")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
     dateOfIncorporation: Yup.date()
+      .nullable()
       .typeError(getInvalidMessage("Date of incorporation"))
       .required(getRequiredMessage("Date of incorporation")),
     yearsInBusiness: Yup.number()
@@ -99,7 +101,6 @@ export const LicenseInformation = ({ handleContinue }) => {
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
-                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
             <Grid item md={6} xs={12}>

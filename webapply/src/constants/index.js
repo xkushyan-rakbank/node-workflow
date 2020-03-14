@@ -58,6 +58,12 @@ export const accountNames = {
   elite: "RAKelite"
 };
 
+export const accountNamesShow = {
+  starter: "RAKstarter",
+  currentAccount: "Current Account",
+  elite: "Business Elite"
+};
+
 export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
@@ -155,7 +161,7 @@ export const screeningStatus = [
   },
   {
     error: "not Eligible",
-    screeningType: "RAKStarter Account Check",
+    screeningType: "RAK-Starter Account Validation",
     link: true
   },
   {
@@ -202,7 +208,8 @@ export const VIEW_IDS = {
   SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
   SearchedAppInfo: "/SearchedAppInfo",
-  ApplicationSubmitted: "/ApplicationSubmitted"
+  ApplicationSubmitted: "/ApplicationSubmitted",
+  ReUploadDocuments: "/ReUploadDocuments"
 };
 
 export const ACTION_TYPES = {
@@ -224,7 +231,7 @@ export const STEP_STATUS = {
 // Company Check list
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
-  screeningStatus: "Not completed",
+  screeningStatus: "Completed",
   screeningLabel: "Negative List",
   screeningReason: "No Match"
 };
@@ -272,7 +279,7 @@ export const TOO_MANY_STAKEHOLDERS = {
 };
 export const RISK_RATING = {
   screeningType: "Risk Rating",
-  screeningStatus: "Not completed",
+  screeningStatus: "Completed",
   screeningLabel: "Risk Rating",
   screeningReason: "Proceed"
 };

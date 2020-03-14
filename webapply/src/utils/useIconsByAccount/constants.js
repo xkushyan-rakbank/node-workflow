@@ -71,6 +71,9 @@ import submittedElite from "../../assets/gif/submitted_elite.gif";
 import successElite from "../../assets/gif/success_elite.gif";
 import notFoundElite from "../../assets/gif/declined_elite.gif";
 
+/*RakElite Islamic*/
+import overviewEliteIslamic from "../../assets/gif/overview_elite islamic.gif";
+
 export const conventionalIconsSet = {
   availability: availabilityConventional,
   balance: balanceConventional,
@@ -146,4 +149,9 @@ export const eliteIconsSet = {
   success: successElite,
   bankingClock: bankingClockElite,
   notFound: notFoundElite
+};
+
+export const eliteIslamicIconsSet = {
+  ...eliteIconsSet,
+  overview: overviewEliteIslamic
 };

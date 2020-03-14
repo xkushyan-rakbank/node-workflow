@@ -1,4 +1,22 @@
+import React from "react";
+
 export const questions = [
+  {
+    question: "What should I expect on «Submitting» the completed application?",
+    answer: (
+      <>
+        a. You will instantly get an inactive account number on successful submission of
+        application.
+        <br />
+        b. Our team will reach out to you in one business day to fix an appointment.
+        <br />
+        c. On submission of the signed form Bank will activate the account within 5 business days
+        subject to internal policies and guidelines. <br />
+        d. Once the account is funded, you will earn AED 100 credit.
+      </>
+    ),
+    id: 5
+  },
   {
     question: "Once I start the application, can I come back later and complete it?",
     answer:

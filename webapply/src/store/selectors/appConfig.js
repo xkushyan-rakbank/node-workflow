@@ -4,6 +4,8 @@ export const getDatalist = state => state.appConfig.datalist || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
 
+export const getProspectModel = state => state.appConfig.prospectModel || {};
+
 export const getAgentName = state => state.appConfig.login.userName;
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];

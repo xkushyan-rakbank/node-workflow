@@ -68,7 +68,7 @@ const ShareholdingStep = ({
           <Form>
             <Grid container>
               <Field
-                isDisabled={isSoleProprietor}
+                disabled={isSoleProprietor}
                 name="isShareholderACompany"
                 component={InlineRadioGroup}
                 path={`prospect.signatoryInfo[${index}].kycDetails.isShareholder`}

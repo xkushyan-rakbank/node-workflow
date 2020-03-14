@@ -1,4 +1,5 @@
 import React from "react";
+import cx from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -14,11 +15,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const InfoNote = ({ text, ...props }) => {
+export const InfoNote = ({ text, className, ...props }) => {
   const classes = useStyles();
 
   return (
-    <span className={classes.note} {...props}>
+    <span className={cx(classes.note, className)} {...props}>
       {text}
     </span>
   );

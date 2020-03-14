@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { ContainedButton } from "./ContainedButton";
 
@@ -19,6 +19,8 @@ const styles = {
   }
 };
 
-export const ContinueButton = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
+const ContinueButtonBase = withStyles(styles)(({ label = "Continue", classes, ...rest }) => (
   <ContainedButton className={classes.buttonStyle} label={label} {...rest} />
 ));
+
+export const ContinueButton = memo(ContinueButtonBase);
