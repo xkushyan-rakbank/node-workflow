@@ -90,7 +90,6 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
-    paddingTop: ({ isDisplayHeader }) => (isDisplayHeader ? 35 : 0),
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
     },
