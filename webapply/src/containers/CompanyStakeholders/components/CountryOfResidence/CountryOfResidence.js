@@ -33,7 +33,8 @@ const getCountryOfResidenceSchema = isSignatory =>
   });
 
 const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
-  const eidNumberPath = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
+  const pathToEidNumber = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
+  const pathToIsUAEResident = `prospect.signatoryInfo[${index}].kycDetails.isUAEResident`;
 
   return (
     <Formik
@@ -45,7 +46,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
-      {({ values }) => (
+      {({ values, setValues }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -58,23 +59,42 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
                 datalistId="country"
                 shrink
                 tabIndex="0"
-                changeProspect={(prospect, value) => ({
-                  ...prospect,
-                  [`prospect.signatoryInfo[${index}].kycDetails.isUAEResident`]: value === UAE
-                })}
+                changeProspect={(prospect, value) => {
+                  let result = {
+                    ...prospect,
+                    [pathToIsUAEResident]: value === UAE
+                  };
+
+                  if (value !== UAE) {
+                    result[pathToEidNumber] = "";
+                  }
+
+                  return result;
+                }}
+                onChange={value => {
+                  let data = {
+                    residenceCountry: value
+                  };
+
+                  if (value !== UAE) {
+                    data.eidNumber = "";
+                  }
+
+                  setValues(data);
+                }}
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <Field
                 name="eidNumber"
-                path={eidNumberPath}
+                path={pathToEidNumber}
                 label="Emirates ID"
                 placeholder="784-1950-1234567-8"
                 disabled={values.residenceCountry !== UAE}
                 component={EmiratesID}
                 changeProspect={(prospect, value) => ({
                   ...prospect,
-                  [eidNumberPath]: value.replace(/-/g, "")
+                  [pathToEidNumber]: value.replace(/-/g, "")
                 })}
                 contextualHelpText={
                   <>

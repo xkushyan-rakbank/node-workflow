@@ -32,7 +32,7 @@ export const TwoSteps = () => {
             <IconCardItem horizontal text="Trade License">
               <License alt="trade-license" />
             </IconCardItem>
-            <IconCardItem horizontal text="Passport / visa of all signatories¹">
+            <IconCardItem horizontal text="Passport / visa¹ of all signatories">
               <Passport alt="passport-visa" />
             </IconCardItem>
             <IconCardItem horizontal text="Emirates ID of all signatories">

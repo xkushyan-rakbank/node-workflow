@@ -52,8 +52,8 @@ const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => 
       </div>
       <div className={classes.infoBottom}>
         <InfoNote
-          text="Account numbers are provisional and subject to internal approvals. You will be able to make transactions on the accounts once they get activated."
-          style={{ marginTop: "20px", position: "static" }}
+          text="Account numbers are provisional and subject to internal approvals. You will only be able to make transactions on the accounts once they get activated."
+          className={classes.infoNote}
         />
       </div>
       <div className={classes.divider}>{""}</div>

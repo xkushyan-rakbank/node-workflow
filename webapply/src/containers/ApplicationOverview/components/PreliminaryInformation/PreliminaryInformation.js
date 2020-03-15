@@ -28,6 +28,9 @@ export const PreliminaryInformation = () => {
           </IconCardItem>
         </IconCardsContainer>
       </div>
+      <div className={classes.info}>
+        On submission of a completed application get an inactive account number instantly.
+      </div>
       <div className={classes.answers}>
         <div className={classes.title}>Have more questions? Here are some answers</div>
         <CommonQuestions questions={questions} />

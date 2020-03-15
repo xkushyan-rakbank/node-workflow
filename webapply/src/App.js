@@ -35,7 +35,7 @@ const ApplicationOverview = lazy(() => import("./containers/ApplicationOverview"
 const ComeBackLogin = lazy(() => import("./containers/ComeBackLogin"));
 const ComeBackVerification = lazy(() => import("./containers/ComeBackVerification"));
 const MyApplications = lazy(() => import("./containers/MyApplications"));
-const NotFoundPage = lazy(() => import("./containers/NotFoundPage/index"));
+const NotFoundPage = lazy(() => import("./containers/NotFoundPage"));
 const SubmitApplication = lazy(() =>
   import("./containers/SelectServices/components/SubmitApplication")
 );
@@ -43,12 +43,6 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("beforeunload", () => {
-        localStorage.removeItem("videoAlreadyPlayed");
-      });
-    }
-
     receiveAppConfig();
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);

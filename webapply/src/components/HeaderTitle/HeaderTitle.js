@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import cx from "classnames";
 import { connect } from "react-redux";
 
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
@@ -19,13 +18,12 @@ const HeaderTitleComponent = ({
   islamicBanking,
   accountType,
   organizationInfo: { companyName },
-  checkLoginStatus,
+  isAgent,
   getAgentName,
-  withMargin,
   withoutMarginBottom,
   logout
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ withoutMarginBottom });
   const { pathname } = useLocation();
   const history = useHistory();
 
@@ -43,44 +41,32 @@ const HeaderTitleComponent = ({
       break;
   }
 
-  const isHideCompanyName = applicationOverviewRoutes.includes(pathname);
-
-  const routesToShowPortalTitle = [
-    routes.login,
-    routes.comeBackLoginVerification,
-    routes.MyApplications
-  ];
-
   const agentLogout = useCallback(() => {
     logout();
     history.push(routes.login);
   }, [logout, history]);
 
   return (
-    <div
-      className={cx(
-        classes.headerTitle,
-        withoutMarginBottom && classes.withoutMarginBottom,
-        withMargin && classes.withMargin
-      )}
-    >
+    <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {routesToShowPortalTitle.includes(pathname)
-            ? "RAK Application Portal"
-            : checkLoginStatus && (
-                <>
-                  <div>{getAgentName}</div>
-                  <div className={classes.logout} onClick={() => agentLogout()}>
-                    Logout
-                  </div>
-                </>
-              )}
-          {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
-          {!isHideCompanyName && companyName && (
+          {isAgent && (
+            <>
+              <div>{getAgentName}</div>
+              <div className={classes.logout} onClick={() => agentLogout()}>
+                Logout
+              </div>
+            </>
+          )}
+          {!applicationOverviewRoutes.includes(pathname) && companyName && (
             <>
               for <span>{companyName}</span>
             </>
+          )}
+          {![routes.searchProspect].includes(pathname) && (
+            <div>
+              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application
+            </div>
           )}
         </span>
       </div>
@@ -89,7 +75,7 @@ const HeaderTitleComponent = ({
 };
 
 const mapStateToProps = state => ({
-  checkLoginStatus: checkLoginStatus(state),
+  isAgent: checkLoginStatus(state),
   getAgentName: getAgentName(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),

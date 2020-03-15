@@ -22,6 +22,7 @@ const REQUEST_ID_HEADER = "x-request-id";
 const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const rsaPublicKey = process.env.REACT_APP_RSA_PUBLIC_KEY;
+
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
 export const uploadClient = axios.create({

@@ -18,11 +18,8 @@ import {
   PLACEHOLDER,
   linkedFields
 } from "./constants";
-import { CURRENCY_REGEX, isNumeric } from "../../../../../../utils/validation";
-import {
-  getRequiredMessage,
-  getInvalidMessage
-} from "../../../../../../utils/getValidationMessage";
+import { isNumeric } from "../../../../../../utils/validation";
+import { getRequiredMessage } from "../../../../../../utils/getValidationMessage";
 
 const FormatDecimalNumberInput = props => (
   <NumberFormat
@@ -99,12 +96,9 @@ const createChangeProspectHandler = values => (prospect, name, path, errors) => 
 };
 
 const companyAnticipatedTransactionsSchema = Yup.object().shape({
-  annualFinTurnoverAmtInAED: Yup.string()
-    .required(getRequiredMessage("Annual Financial Turnover"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Annual Financial Turnover")),
+  annualFinTurnoverAmtInAED: Yup.string().required(getRequiredMessage("Annual Financial Turnover")),
   maxAmtSingleTxnCashAED: Yup.string()
     .required(getRequiredMessage("Part of Monthly Total in Cash"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Cash"))
     .test(
       "is not exceed turnover",
       "Maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
@@ -119,12 +113,11 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     ),
   maxAmtSingleTxnNonCashAED: Yup.string()
     .required(getRequiredMessage("Part of Monthly Total in Non-Cash"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Part of Monthly Total in Non-Cash"))
     .test(
       "is not exceed turnover",
       "Maximum amount in a single transactions in Cash and Non-cash should not exceed the Annual Financial Turnover",
       function(value) {
-        const { annualFinTurnoverAmtInAED, maxAmtSingleTxnCashAED } = this.parent;
+        const { annualFinTurnoverAmtInAED, maxAmtSingleTxnCashAED = 0 } = this.parent;
         return checkFieldSumNotExceedYearTotal(
           value,
           maxAmtSingleTxnCashAED,
@@ -134,12 +127,11 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     ),
   totalMonthlyCashAmountInFigures: Yup.string()
     .required(getRequiredMessage("Maximum amount in Cash"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Cash"))
     .test(
       "is matches with month turnover",
       "Total amount in Cash and Non-cash should be equal to Total Monthly Credits",
       function(value) {
-        const { annualFinTurnoverAmtInAED, totalMonthlyNonCashAmountInFigures } = this.parent;
+        const { annualFinTurnoverAmtInAED, totalMonthlyNonCashAmountInFigures = 0 } = this.parent;
         return checkFieldSumEqualMonthTotal(
           value,
           totalMonthlyNonCashAmountInFigures,
@@ -149,7 +141,6 @@ const companyAnticipatedTransactionsSchema = Yup.object().shape({
     ),
   totalMonthlyNonCashAmountInFigures: Yup.string()
     .required(getRequiredMessage("Maximum amount in Non-Cash"))
-    .matches(CURRENCY_REGEX, getInvalidMessage("Maximum amount in Non-Cash"))
     .test(
       "is matches with month turnover",
       "Total amount in Cash and Non-cash should be equal to Total Monthly Credits",
@@ -248,7 +239,13 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   placeholder={PLACEHOLDER}
                   autoComplete="off"
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in a month in Cash."
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in a month in Cash.
+                      <br />
+                      Enter 0 if there are no cash transactions.
+                    </>
+                  }
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -265,7 +262,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   label="Part of Monthly Total in Non-Cash"
                   placeholder={PLACEHOLDER}
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in a month in modes other than Cash."
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in a month in modes
+                      other than Cash.
+                      <br />
+                      Enter 0 if there are no non-cash transactions.
+                    </>
+                  }
                   InputProps={{
                     ...commonInputProps,
                     inputComponent: FormatDecimalNumberInput,
@@ -299,7 +303,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in single transaction in Cash "
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in single transaction
+                      in Cash.
+                      <br />
+                      Enter 0 if there are no cash transactions.
+                    </>
+                  }
                 />
               </Grid>
               <Grid item md={6} sm={12}>
@@ -314,7 +325,14 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                     inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
                   }}
                   component={Input}
-                  contextualHelpText="Approximate amount that the company expects to receive in single transaction in modes other than Cash"
+                  contextualHelpText={
+                    <>
+                      Approximate amount that the company expects to receive in single transaction
+                      in modes other than Cash.
+                      <br />
+                      Enter 0 if there are no non-cash transactions.
+                    </>
+                  }
                 />
                 <InfoTitle
                   classes={{

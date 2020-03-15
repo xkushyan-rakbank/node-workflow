@@ -23,8 +23,7 @@ import { log } from "../../utils/loggger";
 
 function* receiveAppConfigSaga() {
   try {
-    const state = yield select();
-    const accountType = getAccountType(state);
+    const accountType = yield select(getAccountType);
     let response = null;
 
     if (accountType) {
@@ -47,8 +46,8 @@ function* receiveAppConfigSaga() {
       if (!newConfig.prospect.applicantInfo.countryCode) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
-      newConfig.prospect.applicationInfo.accountType = accountType;
-      newConfig.prospect.applicationInfo.islamicBanking = getIsIslamicBanking(state);
+      newConfig.prospect.applicationInfo.accountType = yield select(getAccountType);
+      newConfig.prospect.applicationInfo.islamicBanking = yield select(getIsIslamicBanking);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
