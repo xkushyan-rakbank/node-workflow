@@ -90,7 +90,7 @@ export class GenesysChat {
    */
   configureChat = () => {
     this.cometD.configure({
-      url: CHAT_API_PATH + "/cometd",
+      url: CHAT_API_PATH,
       logLevel: "debug"
     });
     const TimeStampExtension = require("cometd/TimeStampExtension");
