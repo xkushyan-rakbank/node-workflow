@@ -20,7 +20,6 @@ export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
 export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
 export const MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH = 50;
 
-export const CURRENCY_REGEX = /^[0-9]*([.][0-9]{1,2})?$/;
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 export const POBOX_REGEX = /^([a-zA-Z0-9])*$/;
