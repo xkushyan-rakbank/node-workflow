@@ -57,7 +57,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
         initialValues={{
           isInformationProvided: false,
           areTermsAgreed: false,
-          needCommunication: false
+          needCommunication: true
         }}
         onSubmit={() => {}}
         validationSchema={blockConfirmSchema}
