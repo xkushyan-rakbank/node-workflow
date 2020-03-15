@@ -2,21 +2,12 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { submitApplication } from "../../../../../constants";
+import { submitApplication, ISLAMIC, CONVENTIONAL } from "../../../../../constants";
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
 
 import { useStyles } from "./styled";
 
-const {
-  termConditionUrlProd,
-  termConditionIslamicBankingUrlProd,
-  termConditionUrlUAT,
-  termConditionIslamicBankingUrlUAT,
-  termOfEnrolmentUrlProd,
-  termOfEnrolmentIslamicBankingUrlProd,
-  termOfEnrolmentUrlUAT,
-  termOfEnrolmentIslamicBankingUrlUAT
-} = submitApplication;
+const { termConditionLinks, termEnrollmentLinks } = submitApplication;
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
@@ -26,28 +17,14 @@ const blockConfirmSchema = Yup.object({
 export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
   const classes = useStyles();
 
-  const getTermConditionLink = () => {
-    if (process.env.NODE_ENV === "production") {
-      return isIslamicBanking ? termConditionIslamicBankingUrlProd : termConditionUrlProd;
-    } else {
-      return isIslamicBanking ? termConditionIslamicBankingUrlUAT : termConditionUrlUAT;
-    }
-  };
-
-  const getTermEnrollmentLink = () => {
-    if (process.env.NODE_ENV === "production") {
-      return isIslamicBanking ? termOfEnrolmentIslamicBankingUrlProd : termOfEnrolmentUrlProd;
-    } else {
-      return isIslamicBanking ? termOfEnrolmentIslamicBankingUrlUAT : termOfEnrolmentUrlUAT;
-    }
-  };
+  const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
 
   const termsAgreedLabel = (
     <span>
       I agree with RAKBANK’s{" "}
       <a
         className={classes.link}
-        href={getTermConditionLink()}
+        href={termConditionLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -56,7 +33,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
       and{" "}
       <a
         className={classes.link}
-        href={getTermEnrollmentLink()}
+        href={termEnrollmentLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
       >
