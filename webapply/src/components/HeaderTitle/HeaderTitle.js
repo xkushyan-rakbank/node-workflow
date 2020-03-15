@@ -18,7 +18,7 @@ const HeaderTitleComponent = ({
   islamicBanking,
   accountType,
   organizationInfo: { companyName },
-  checkLoginStatus,
+  isAgent,
   getAgentName,
   withoutMarginBottom,
   logout
@@ -50,7 +50,7 @@ const HeaderTitleComponent = ({
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {checkLoginStatus && (
+          {isAgent && (
             <>
               <div>{getAgentName}</div>
               <div className={classes.logout} onClick={() => agentLogout()}>
@@ -75,7 +75,7 @@ const HeaderTitleComponent = ({
 };
 
 const mapStateToProps = state => ({
-  checkLoginStatus: checkLoginStatus(state),
+  isAgent: checkLoginStatus(state),
   getAgentName: getAgentName(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),
