@@ -3,7 +3,7 @@ import cometd from "cometd";
 import nanoid from "nanoid";
 import has from "lodash/has";
 import { callSafely } from "./GenericUtils";
-import { CHAT_URL, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
+import { CHAT_API_PATH, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
 
 const ChatOperationTypes = Object.freeze({
   RequestChat: "requestChat",
@@ -90,7 +90,7 @@ export class GenesysChat {
    */
   configureChat = () => {
     this.cometD.configure({
-      url: CHAT_URL + "/cometd",
+      url: CHAT_API_PATH,
       logLevel: "debug"
     });
     const TimeStampExtension = require("cometd/TimeStampExtension");
