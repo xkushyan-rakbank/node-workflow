@@ -25,7 +25,6 @@ export const FormLayoutComponent = ({
   const blobColor = useBlobColor();
 
   const isDisplayHeader = [
-    routes.login,
     routes.MyApplications,
     routes.comeBackLoginVerification,
     routes.verifyOtp,
