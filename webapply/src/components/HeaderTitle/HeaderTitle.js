@@ -18,7 +18,7 @@ const HeaderTitleComponent = ({
   islamicBanking,
   accountType,
   organizationInfo: { companyName },
-  checkLoginStatus,
+  isAgent,
   getAgentName,
   withoutMarginBottom,
   logout
@@ -41,14 +41,6 @@ const HeaderTitleComponent = ({
       break;
   }
 
-  const isHideCompanyName = applicationOverviewRoutes.includes(pathname);
-
-  const routesToShowPortalTitle = [
-    routes.login,
-    routes.comeBackLoginVerification,
-    routes.MyApplications
-  ];
-
   const agentLogout = useCallback(() => {
     logout();
     history.push(routes.login);
@@ -58,28 +50,23 @@ const HeaderTitleComponent = ({
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {routesToShowPortalTitle.includes(pathname) ? (
-            "RAK Application Portal"
-          ) : (
+          {isAgent && (
             <>
-              {checkLoginStatus ? (
-                <>
-                  <div>{getAgentName}</div>
-                  <div className={classes.logout} onClick={() => agentLogout()}>
-                    Logout
-                  </div>
-                </>
-              ) : (
-                <>
-                  {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application
-                </>
-              )}
+              <div>{getAgentName}</div>
+              <div className={classes.logout} onClick={() => agentLogout()}>
+                Logout
+              </div>
             </>
           )}
-          {!isHideCompanyName && companyName && (
+          {!applicationOverviewRoutes.includes(pathname) && companyName && (
             <>
               for <span>{companyName}</span>
             </>
+          )}
+          {![routes.searchProspect].includes(pathname) && (
+            <div>
+              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application
+            </div>
           )}
         </span>
       </div>
@@ -88,7 +75,7 @@ const HeaderTitleComponent = ({
 };
 
 const mapStateToProps = state => ({
-  checkLoginStatus: checkLoginStatus(state),
+  isAgent: checkLoginStatus(state),
   getAgentName: getAgentName(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),
