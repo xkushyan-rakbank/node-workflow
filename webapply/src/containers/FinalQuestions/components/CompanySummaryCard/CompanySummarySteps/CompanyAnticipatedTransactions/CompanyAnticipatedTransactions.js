@@ -315,7 +315,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   contextualHelpText={
                     <>
                       Approximate amount that the company expects to receive in single transaction
-                      in Cash
+                      in Cash.
                       <br />
                       Enter 0 if there are no cash transactions.
                     </>
@@ -337,7 +337,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
                   contextualHelpText={
                     <>
                       Approximate amount that the company expects to receive in single transaction
-                      in modes other than Cash
+                      in modes other than Cash.
                       <br />
                       Enter 0 if there are no non-cash transactions.
                     </>
