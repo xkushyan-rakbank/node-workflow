@@ -46,7 +46,6 @@ function SendMessageInputScreen({ placeholder, chatInstance }) {
       const isConnected = chat && chat.cometD.getStatus() === CONNECTED_STATUS;
       if (isConnected) {
         chat
-          .getInstance()
           .sendChatMessage(value)
           .then(() => {
             setValue("");
