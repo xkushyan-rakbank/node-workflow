@@ -6,7 +6,6 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     flexDirection: "column",
     width: "100%",
-    height: "100%",
     [theme.breakpoints.only("xs")]: {
       marginTop: "50px",
       padding: "0 16px",
