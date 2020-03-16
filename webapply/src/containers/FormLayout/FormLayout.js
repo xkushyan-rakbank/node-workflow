@@ -46,8 +46,10 @@ export const FormLayoutComponent = ({
   });
 
   useEffect(() => {
-    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
+  useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
     const isSendToApi = [
       routes.companyInfo,
