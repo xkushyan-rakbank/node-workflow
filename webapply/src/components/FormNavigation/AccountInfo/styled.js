@@ -1,5 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 
+const buttonMobile = {
+  marginTop: "initial",
+  marginRight: "auto",
+  marginBottom: "30px"
+};
+
 export const useStyles = makeStyles(theme => ({
   contentContainer: {
     margin: 0,
@@ -9,6 +15,11 @@ export const useStyles = makeStyles(theme => ({
       maxWidth: "auto",
       width: "auto",
       paddingRight: "25px"
+    },
+    [theme.breakpoints.only("xs")]: {
+      display: "flex",
+      flexDirection: "column",
+      height: "calc(100% - 64px)"
     }
   },
   sectionTitle: {
@@ -19,16 +30,17 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     fontFamily: "Open Sans",
     marginBottom: 20,
-    whiteSpace: "pre-line",
     "& + button": {
-      marginTop: 60
+      marginTop: 60,
+      [theme.breakpoints.only("xs")]: buttonMobile
     },
     [theme.breakpoints.down("sm")]: {
       fontSize: 38
     },
     [theme.breakpoints.only("xs")]: {
       width: 310,
-      marginBottom: 10,
+      marginTop: "auto",
+      marginBottom: props => (props.isShowApply ? 10 : "auto"),
       fontSize: 32,
       lineHeight: "36px"
     }
@@ -43,10 +55,15 @@ export const useStyles = makeStyles(theme => ({
     fontFamily: "Open Sans",
     whiteSpace: "pre-wrap",
     "& + button": {
-      marginTop: 60
+      marginTop: 60,
+      [theme.breakpoints.only("xs")]: buttonMobile
+    },
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: "auto"
     }
   },
   sectionButton: {
-    marginTop: 60
+    marginTop: 60,
+    [theme.breakpoints.only("xs")]: buttonMobile
   }
 }));
