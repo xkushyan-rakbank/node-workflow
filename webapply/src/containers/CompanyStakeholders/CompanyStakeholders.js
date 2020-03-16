@@ -94,7 +94,12 @@ const CompanyStakeholdersComponent = ({
             <>
               This stakeholder should be defined / mentioned in valid legal document of the Company.
               <br />
-              Please note that maximum 8 Signatories and 4 Shareholders an be declared.
+              <b>Examples:</b>
+              <br />- Sole Proprietorship Company &gt; Trade License
+              <br />- Partnership Company &gt; Trade License / Partners agreement / Share
+              Certificate, etc
+              <br />- Limited Liability Company (LLC) &gt; Trade License / Memorandum of Association
+              / Articles of Association, etc
             </>
           }
           placement="right"
