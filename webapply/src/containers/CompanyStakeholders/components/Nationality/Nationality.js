@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { Formik, Form, FieldArray, getIn } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import uniqueId from "lodash/uniqueId";
 import get from "lodash/get";
@@ -16,17 +16,14 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { ALPHANUMERIC_REGEX } from "../../../../utils/validation";
 import { MAX_PASSPORT_NUMBER_LENGTH } from "./constants";
+import { NationalityCheckbox } from "./NationalityCheckbox";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
+import { createAddCitizenshipHandler, isAdditionalCitizenshipDisabled } from "./utils";
+
 import { useStyles } from "./styled";
 
 const MAX_ANOTHER_CITIZENSHIP = 4;
-const initialPassportDetails = {
-  country: "",
-  hasAnotherCitizenship: false,
-  passportNumber: "",
-  diplomatPassport: false
-};
 
 const nationalitySchema = Yup.object().shape({
   passportDetails: Yup.array().of(
@@ -39,27 +36,6 @@ const nationalitySchema = Yup.object().shape({
     })
   )
 });
-
-const createAddCitizenshipHandler = (values, arrayHelper, passportIndex, setFieldValue) => () => {
-  const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
-  const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
-
-  if (!value) {
-    arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
-  } else {
-    values.passportDetails.forEach((el, index) => index > passportIndex && arrayHelper.pop());
-  }
-  setFieldValue(name, !value);
-};
-
-const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {
-  return (
-    !(
-      getIn(values, `passportDetails[${passportIndex}].country`, false) &&
-      getIn(values, `passportDetails[${passportIndex}].passportNumber`, false)
-    ) || !!getIn(errors, `passportDetails[${passportIndex}].passportNumber`, false)
-  );
-};
 
 export const NationalityStep = ({ index, passportDetails, handleContinue, updateProspect }) => {
   const classes = useStyles();
@@ -126,7 +102,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                             name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
                             path={`${passportDetailsPath}.hasAnotherCitizenship`}
                             label="This person has another citizenship"
-                            component={Checkbox}
+                            component={NationalityCheckbox}
                             onChange={createAddCitizenshipHandler(
                               values,
                               arrayHelper,
