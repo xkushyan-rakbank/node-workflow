@@ -73,8 +73,16 @@ export const useStyles = makeStyles(theme => ({
   },
   info: {
     paddingLeft: 10,
+    whiteSpace: "pre-line",
     [theme.breakpoints.only("xs")]: {
       paddingLeft: 0
+    },
+    "& a": {
+      color: "rgba(0, 0, 0, 0.87)",
+      textDecoration: "underline",
+      "&:hover": {
+        textDecoration: "none"
+      }
     }
   }
 }));

@@ -53,9 +53,13 @@ export const useStyles = makeStyles(theme => ({
       paddingTop: 71,
       height: ({ isOpen, isSmallBg }) => {
         if (isOpen) return "calc(100vh - 50px)";
-        if (isSmallBg) return 190;
-        return 290;
-      }
+        if (isSmallBg) return 220;
+        return 340;
+      },
+      transition: theme.transitions.create("height", {
+        easing: theme.transitions.easing.linear,
+        duration: theme.transitions.duration.short
+      })
     },
     [theme.breakpoints.up("sm")]: {
       width: sideNavWidthMD,
@@ -188,7 +192,8 @@ export const useStyles = makeStyles(theme => ({
     overflow: "auto",
     [theme.breakpoints.only("xs")]: {
       paddingLeft: 16,
-      paddingRight: 16
+      paddingRight: 16,
+      height: "100%"
     },
     [theme.breakpoints.up("sm")]: {
       width: sideNavWidthMD,

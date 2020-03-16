@@ -17,14 +17,12 @@ const InputBase = ({
   disabled,
   placeholder,
   label,
-  field,
+  field: { onBlur, ...field },
   shrink,
   infoTitle,
   form: { errors, touched },
   classes: extendedClasses,
   InputProps,
-  onFocus,
-  onBlur,
   ErrorMessageComponent = ErrorMessage,
   ...props
 }) => {
@@ -52,17 +50,16 @@ const InputBase = ({
             classes: { input: classes.input, inputMultiline: classes.inputMultiline }
           }}
           InputLabelProps={{ shrink }}
-          onFocus={event => {
+          onFocus={() => {
             if (isIE) {
               setFocus(true);
             }
-            onFocus && onFocus(event);
           }}
           onBlur={event => {
             if (isIE) {
               setFocus(false);
             }
-            onBlur && onBlur(event);
+            onBlur(event);
           }}
         />
       </ContexualHelp>

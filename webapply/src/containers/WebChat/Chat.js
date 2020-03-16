@@ -9,6 +9,7 @@ import { getSearchResults } from "../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
 import { ClosedChat } from "./ClosedChat";
+import { Portal } from "./Portal";
 
 const WebChatComponent = lazy(() => import("./components/Chat"));
 
@@ -37,25 +38,26 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
       <ClosedChat key="link" ref={closedChatRef} openChat={openChat} isMinimized={isMinimized} />
     ),
     isOpened && (
-      <div
-        key="window"
-        className={cx(classes.chatWrapper, {
-          [classes.mimimized]: isMinimized,
-          [classes.expand]: !isMinimized
-        })}
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          <WebChatComponent
-            onClose={closeWebChat}
-            onMinimize={minimizeChat}
-            isAuth={false}
-            onNewMessageReceive={handleReceiveNewMessage}
-            InitiatedCustomerName={name || searchName}
-            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
-            EmailAddress={email}
-          />
-        </Suspense>
-      </div>
+      <Portal key="window" id="chat">
+        <div
+          className={cx(classes.chatWrapper, {
+            [classes.mimimized]: isMinimized,
+            [classes.expand]: !isMinimized
+          })}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <WebChatComponent
+              onClose={closeWebChat}
+              onMinimize={minimizeChat}
+              isAuth={false}
+              onNewMessageReceive={handleReceiveNewMessage}
+              InitiatedCustomerName={name || searchName}
+              InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+              EmailAddress={email}
+            />
+          </Suspense>
+        </div>
+      </Portal>
     )
   ];
 };
