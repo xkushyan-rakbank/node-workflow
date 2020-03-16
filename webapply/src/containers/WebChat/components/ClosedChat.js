@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useCallback } from "react";
 
-import chatIcon from "./../../assets/webchat/black.svg";
-import { useStyles } from "./styled";
+import chatIcon from "../../../assets/webchat/black.svg";
+import { useStyles } from "../styled";
 
 const ClosedChatScreen = ({ openChat, isMinimized }, ref) => {
   const classes = useStyles();

@@ -8,10 +8,10 @@ import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
-import { ClosedChat } from "./ClosedChat";
-import { Portal } from "./Portal";
+import { ClosedChat } from "./components/ClosedChat";
+import { Portal } from "./components/Portal";
 
-const WebChatComponent = lazy(() => import("./components/Chat"));
+const WebChatComponent = lazy(() => import("./core"));
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();

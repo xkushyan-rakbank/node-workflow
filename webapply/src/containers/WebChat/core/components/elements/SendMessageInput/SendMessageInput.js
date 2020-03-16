@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import { ReactComponent as SendMessage } from "../../../../../assets/webchat/sendMessage.svg";
+
+import { ReactComponent as SendMessage } from "../../../assets/sendMessage.svg";
 import { CONNECTED_STATUS } from "../../../constants";
 import {
   TextareaWrapper,

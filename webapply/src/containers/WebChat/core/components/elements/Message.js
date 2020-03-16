@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import User from "../../../../assets/webchat/user.svg";
+
+import User from "../../assets/user.svg";
 
 const Container = styled.div`
   display: flex;

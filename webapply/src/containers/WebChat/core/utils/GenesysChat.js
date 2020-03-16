@@ -2,6 +2,7 @@
 import cometd from "cometd";
 import nanoid from "nanoid";
 import has from "lodash/has";
+
 import { callSafely } from "./GenericUtils";
 import { CHAT_API_PATH, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
 
