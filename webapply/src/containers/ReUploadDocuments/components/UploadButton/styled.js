@@ -33,5 +33,8 @@ export const useStyles = makeStyles({
   },
   addIcon: {
     marginRight: 30
+  },
+  cancelIcon: {
+    marginLeft: "auto"
   }
 });
