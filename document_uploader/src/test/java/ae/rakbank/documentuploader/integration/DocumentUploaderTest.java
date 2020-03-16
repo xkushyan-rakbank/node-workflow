@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader;
+package ae.rakbank.documentuploader.integration;
 
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
