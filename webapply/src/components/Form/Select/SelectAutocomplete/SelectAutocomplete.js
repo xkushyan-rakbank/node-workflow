@@ -5,7 +5,7 @@ import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
-import { areEqualFieldProps } from "../utils";
+import { areEqualFieldProps } from "../../utils";
 import { useStyles, customStyles } from "./styled";
 
 const components = {
