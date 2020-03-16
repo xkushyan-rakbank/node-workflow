@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader.util;
+package ae.rakbank.documentuploader.services;
 
 import ae.rakbank.documentuploader.exception.ApiException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +17,12 @@ import java.util.Objects;
 
 @Slf4j
 @Component
-public class FileValidator {
+public class FileValidatorService {
 
     private final List<String> allowedExtensions;
     private final List<String> allowedMimeTypes;
 
-    public FileValidator() {
+    public FileValidatorService() {
         this.allowedExtensions = new ArrayList<>();
         allowedExtensions.add("png");
         allowedExtensions.add("jpeg");
@@ -37,7 +37,7 @@ public class FileValidator {
         allowedMimeTypes.add(MediaType.TEXT_PLAIN_VALUE);
     }
 
-    public void validate(MultipartFile file) {
+    void validate(MultipartFile file) {
         String extension = Objects.requireNonNull(FilenameUtils.getExtension(file.getOriginalFilename()));
         if (allowedExtensions.stream().noneMatch(extension::equalsIgnoreCase)) {
             throw new ApiException("Not supported file extension", HttpStatus.BAD_REQUEST);
@@ -47,13 +47,17 @@ public class FileValidator {
         validateMediaType(contentType);
 
         Tika tika = new Tika();
+        String mediaType;
         try {
             //check with magic symbols in content
-            String mediaType = tika.detect(file.getInputStream());
+            mediaType = tika.detect(file.getInputStream());
             validateMediaType(mediaType);
         } catch (IOException e) {
             log.error("Failed to detect file media content");
             throw new ApiException("Failed to read file media content", e);
+        }
+        if (!contentType.equals(mediaType)) {
+            throw new ApiException("The content type does not match file content", HttpStatus.BAD_REQUEST);
         }
     }
 

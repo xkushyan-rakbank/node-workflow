@@ -1,12 +1,12 @@
 package ae.rakbank.documentuploader.services;
 
 import ae.rakbank.documentuploader.dto.ApiError;
+import ae.rakbank.documentuploader.exception.ApiException;
 import ae.rakbank.documentuploader.exception.DocumentUploadException;
 import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.exception.AmazonS3FileNotFoundException;
 import ae.rakbank.documentuploader.s3.S3FileUploader;
-import ae.rakbank.documentuploader.util.FileValidator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,7 +34,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     private final S3FileUploader s3FileUploader;
     private final EnvironmentUtil environmentUtil;
-    private final FileValidator fileValidator;
+    private final FileValidatorService fileValidatorService;
 
     @Override
     public FileDto findOneByDocumentKey(String documentKey) {
@@ -43,10 +44,13 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     @Override
     public ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
+        if (file == null) {
+            throw new ApiException("the file should not be null", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         log.info("[Begin] processUploadRequest() method, prospectId={}, originalFilename={}, filesize={}, fileInfo= {}",
                 prospectId, file.getOriginalFilename(), file.getSize(), fileInfo);
 
-        fileValidator.validate(file);
+        fileValidatorService.validate(file);
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode fileInfoJSON;
@@ -57,7 +61,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
             ApiError error =
                     new ApiError(HttpStatus.BAD_REQUEST, "fileInfo is not valid JSON string", e.getMessage(), e);
 
-            return new ResponseEntity<>(error.toJsonString(), null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
         return saveUploadedFile(file, fileInfoJSON, prospectId);
     }
@@ -76,7 +80,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                     prospectId, file.getOriginalFilename(), file.getSize()));
 
             ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage(), e.getMessage(), e);
-            return new ResponseEntity<>(error.toJsonString(), null, HttpStatus.BAD_REQUEST);
+            throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
         log.info("[End] saveUploadedFile() method, UPLOAD SUCCESS for prospectId = {}, originalFilename = {}, filesize = {}",
                 prospectId, file.getOriginalFilename(), file.getSize());
@@ -110,7 +114,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
             log.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId, uploadsDir.resolve(documentKey)));
 
             return documentKey;
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error(e.getMessage());
         }
         return "";
