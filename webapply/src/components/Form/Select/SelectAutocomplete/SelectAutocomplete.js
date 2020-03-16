@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
-import omit from "lodash/omit";
 import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
@@ -22,7 +21,7 @@ export const SelectAutocomplete = ({
   label,
   shrink,
   options,
-  field,
+  field: { onBlur, ...field },
   form: { errors, touched, setFieldValue, setFieldTouched },
   multiple = false,
   disabled,
@@ -52,7 +51,7 @@ export const SelectAutocomplete = ({
     <FormControl className="formControl" variant="outlined">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
-          {...omit(field, "onBlur")}
+          {...field}
           {...props}
           classes={classes}
           isOpen
