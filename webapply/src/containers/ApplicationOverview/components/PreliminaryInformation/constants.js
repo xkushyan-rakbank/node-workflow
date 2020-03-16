@@ -10,7 +10,7 @@ export const questions = [
   {
     question: "Once I start the application, can I come back later and complete it?",
     // eslint-disable-next-line max-len
-    answer: `Yes. You can continue your application from where you left using <a href=${routes.comeBackLogin} target="_blank">the link</a> sent to your email id.`,
+    answer: `Yes. You can continue your application from where you left using <a href="${routes.comeBackLogin}" target="_blank">the link</a> sent to your email id.`,
     id: 1
   },
   {
