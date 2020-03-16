@@ -2,7 +2,6 @@ import React, { useCallback, useRef, lazy, Suspense } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 import get from "lodash/get";
-import { Portal } from "react-portal";
 
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
@@ -10,6 +9,7 @@ import { getSearchResults } from "../../store/selectors/searchProspect";
 
 import { useStyles } from "./styled";
 import { ClosedChat } from "./ClosedChat";
+import { Portal } from "./Portal";
 
 const WebChatComponent = lazy(() => import("./components/Chat"));
 
