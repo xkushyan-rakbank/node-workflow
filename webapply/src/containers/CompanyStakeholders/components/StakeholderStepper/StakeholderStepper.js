@@ -54,6 +54,7 @@ const StakeholderStepperComponent = ({
   stakeholders
 }) => {
   const classes = useStyles();
+  const [newFullName, setNewFullName] = useState({});
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
@@ -126,6 +127,7 @@ const StakeholderStepperComponent = ({
         firstName={firstName}
         middleName={middleName}
         lastName={lastName}
+        newFullName={newFullName}
         accountSigningInfo={accountSigningInfo}
         kycDetails={kycDetails}
       />
@@ -154,6 +156,7 @@ const StakeholderStepperComponent = ({
             isFilled={availableSteps.some(
               step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
             )}
+            setNewFullName={setNewFullName}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             stepForm={item.component}

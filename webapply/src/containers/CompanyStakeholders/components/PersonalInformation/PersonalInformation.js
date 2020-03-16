@@ -24,7 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
+import { useFormNavigation } from "../../../../components/UpdatedFullNameContext";
 
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
@@ -94,9 +94,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
 
   const applicantInfo = useSelector(getApplicantInfo);
-  const [newFullName, setNewFullName] = useState([]);
+  const [newFullName, setNewFullName] = useState({});
   useFormNavigation(newFullName);
-
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
     [`prospect.signatoryInfo[${index}].fullName`]: values.isShareholderACompany
@@ -173,7 +172,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
                   onChange={e => {
-                    setNewFullName({ ...newFullName, firstName: e.value });
+                    setNewFullName({ ...newFullName, firstName: e.target.value });
+                    setFieldValue("firstName", e.target.value);
                   }}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
@@ -192,7 +192,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 disabled={!!values.isShareholderACompany}
                 component={Input}
                 onChange={e => {
-                  setNewFullName({ ...newFullName, midlleName: e.value });
+                  setNewFullName({ ...newFullName, midlleName: e.target.value });
+                  setFieldValue("middleName", e.target.value);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
@@ -211,7 +212,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 disabled={!!values.isShareholderACompany}
                 component={Input}
                 onChange={e => {
-                  setNewFullName({ ...newFullName, middleName: e.value });
+                  setNewFullName({ ...newFullName, lastName: e.target.value });
+                  setFieldValue("lastName", e.target.value);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
