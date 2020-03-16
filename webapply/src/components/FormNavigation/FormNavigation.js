@@ -15,6 +15,7 @@ import { FormNavigationContext } from "./FormNavigationProvider";
 import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
+import { detailedAccountRoutes } from "../../constants";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -50,15 +51,17 @@ export const FormNavigationComponent = () => {
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
-        <IslamicBankingSwitcherMobile
-          className={classes.formNavBg}
-          isSwitcherShow={isSwitcherShow}
-          toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
-        >
-          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-            What banking option do you prefer?
-          </Typography>
-        </IslamicBankingSwitcherMobile>
+        {detailedAccountRoutes.includes(pathname) && (
+          <IslamicBankingSwitcherMobile
+            className={classes.formNavBg}
+            isSwitcherShow={isSwitcherShow}
+            toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
+          >
+            <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+              What banking option do you prefer?
+            </Typography>
+          </IslamicBankingSwitcherMobile>
+        )}
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (
