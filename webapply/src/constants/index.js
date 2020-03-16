@@ -52,14 +52,14 @@ export let submitApplication = {
     [CONVENTIONAL]:
       "https://revamp.rakbank.ae/wps/wcm/connect/b0cd7557-1926-43d7-873e-d43942313ca8/TOE+-+Conventional.pdf?MOD=AJPERES",
     [ISLAMIC]:
-      "https://rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES"
+      "https://revamp.rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES"
   },
   formTitle: "Submit application",
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
 };
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.REACT_APP_SERVER_ENV === "production") {
   submitApplication.termConditionLinks = {
     [CONVENTIONAL]:
       "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29+J00781+RAK++Debit+Card+-+Bisiness+A4-T%26C-New+Guide-EN%26AR%28withe+out+c....pdf?MOD=AJPERES&CVID=lTLVCHV",
