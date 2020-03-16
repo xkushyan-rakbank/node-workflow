@@ -1,18 +1,6 @@
 import routes from "../../routes";
 import { applicationOverviewRoutes, detailedAccountRoutes } from "../../constants";
 
-export const checkIsShowAccountInfo = pathname =>
-  [
-    routes.accountsComparison,
-    ...detailedAccountRoutes,
-    ...applicationOverviewRoutes,
-    routes.MyApplications,
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification,
-    routes.reUploadDocuments,
-    routes.ApplicationSubmitted
-  ].includes(pathname);
-
 export const checkIsShowSmallBg = pathname =>
   [
     routes.accountsComparison,

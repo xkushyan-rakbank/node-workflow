@@ -1,19 +1,18 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 import {
-  routerToAddPaddingInSlider,
   sideNavWidthSM,
   sideNavWidthMD,
   sideNavWidthLG,
   sideNavWidthCollapsed
 } from "../../constants/styles";
-import { ELITE, ISLAMIC } from "../../utils/useBlobColor/constants";
+import { ELITE, ISLAMIC, STANDART } from "../../utils/useBlobColor/constants";
 
 export const useStyles = makeStyles(theme => ({
   formLayout: {
     position: "relative",
     display: "flex",
-    height: "100%",
+    minHeight: "100vh",
     [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     },
@@ -35,8 +34,10 @@ export const useStyles = makeStyles(theme => ({
               return "linear-gradient(to bottom, #8E2141, #B55774)";
             case ISLAMIC:
               return "#417C35";
-            default:
+            case STANDART:
               return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+            default:
+              return "transparent";
           }
         }
       }
@@ -89,8 +90,6 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
-    padding: ({ pathname }) => (routerToAddPaddingInSlider.includes(pathname) ? "0" : "35px 0 0"),
-    paddingTop: "35px",
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
     },

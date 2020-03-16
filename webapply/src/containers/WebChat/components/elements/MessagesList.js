@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import { List, CellMeasurerCache, CellMeasurer } from "react-virtualized";
 import { Message } from "./Message";
 
 const MessagesListStyled = styled.div`
@@ -11,12 +12,50 @@ const MessagesListStyled = styled.div`
   min-height: 320px;
 `;
 
-const MessagesList = ({ data }) => {
-  const messages = data.map(({ id, message, utcTime, type, name }) => (
-    <Message key={id} body={message} date={utcTime} name={name} incoming={type !== "Client"} />
-  ));
+const cache = new CellMeasurerCache({
+  fixedWidth: true,
+  minHeight: 85,
+  defaultHeight: 85
+});
 
-  return <MessagesListStyled>{messages}</MessagesListStyled>;
+const MessagesList = ({ data }) => {
+  let virtualRef = useRef();
+
+  useEffect(() => {
+    if (virtualRef) {
+      if (data.length > 0) virtualRef.recomputeRowHeights(data.length - 1);
+      virtualRef.scrollToRow(data.length);
+    }
+  }, [data]);
+
+  return (
+    <MessagesListStyled>
+      <List
+        ref={element => {
+          virtualRef = element;
+        }}
+        style={{ outline: "none" }}
+        width={327}
+        deferredMeasurementCache={cache}
+        height={310}
+        rowCount={data.length}
+        rowHeight={cache.rowHeight}
+        overscanRowCount={4}
+        rowRenderer={({ index, key, parent, style }) => (
+          <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
+            <Message
+              key={key}
+              body={data[index].message}
+              date={data[index].utcTime}
+              name={data[index].name}
+              incoming={data[index].type !== "Client"}
+              style={style}
+            />
+          </CellMeasurer>
+        )}
+      />
+    </MessagesListStyled>
+  );
 };
 
 MessagesList.propTypes = {

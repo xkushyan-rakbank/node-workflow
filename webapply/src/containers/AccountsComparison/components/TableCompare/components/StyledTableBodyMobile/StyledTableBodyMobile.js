@@ -6,10 +6,13 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { ContainedButton } from "../../../../../../components/Buttons/ContainedButton";
+
+import { LinkedButton } from "../../../../../../components/LinkedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
-import { useStyles } from "./styled";
 import { accountsDataRows, accountTypes } from "../../constants";
+import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
+
+import { useStyles } from "./styled";
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -32,7 +35,7 @@ const BootstrapInput = withStyles(theme => ({
   }
 }))(InputBase);
 
-export const StyledTableBodyMobileComponent = ({ handleSelectAccount }) => {
+export const StyledTableBodyMobileComponent = () => {
   const classes = useStyles();
   const [mobileAccounts, setMobileAccounts] = useState([
     accountTypes.starter.id,
@@ -86,9 +89,9 @@ export const StyledTableBodyMobileComponent = ({ handleSelectAccount }) => {
       <TableRow classes={{ root: classes.tableRowRoot }}>
         {mobileAccounts.map((mobileAccount, index) => (
           <TableCell key={index} classes={{ root: classes.tableCellRoot }}>
-            <ContainedButton
+            <LinkedButton
               label="Read more"
-              handleClick={() => handleSelectAccount(accountTypes[mobileAccount].name)}
+              to={detailedAccountRoutesMap[accountTypes[mobileAccount].accountName][CONVENTIONAL]}
               classes={{
                 buttonStyle: classes.containedButton,
                 labelStyle: classes.containedButtonLabelStyle

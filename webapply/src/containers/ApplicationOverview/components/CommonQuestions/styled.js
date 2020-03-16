@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     "&:not(:last-child)": {
       borderBottom: 0
     },
-    "&:nth-child(odd)": {
+    "&:nth-child(even)": {
       backgroundColor: "rgba(239, 242, 244, .5)"
     },
     "&:before": {
@@ -42,8 +42,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "16px",
     borderTop: "1px solid rgba(239, 242, 244, .5)",
     borderBottom: "1px solid rgba(239, 242, 244, .5)",
-    fontSize: "16px",
-    backgroundColor: "#fff"
+    fontSize: 16
   },
   iconSize: {
     width: "24px",

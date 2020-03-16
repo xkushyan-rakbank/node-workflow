@@ -1,30 +1,16 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React from "react";
 
 import { VerticalPagination } from "../../components/VerticalPagination";
 import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
-
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
-import { updateProspect } from "../../store/actions/appConfig";
-import { accountTypeURIs } from "../../constants";
+import { useAccountTypeByPathname } from "../../utils/useAccountTypeByPathname";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 
 export const DetailedAccount = () => {
-  const { accountType: accountRoute } = useParams();
-  const dispatch = useDispatch();
-  const isIslamicBanking = accountTypeURIs[accountRoute].isIslamicBanking;
-  const accountType = accountTypeURIs[accountRoute].accountType;
-
-  useEffect(() => {
-    dispatch(
-      updateProspect({
-        "prospect.applicationInfo.islamicBanking": isIslamicBanking,
-        "prospect.applicationInfo.accountType": accountType
-      })
-    );
-  }, [accountType, isIslamicBanking]);
+  const { accountType, isIslamicBanking } = useAccountTypeByPathname();
+  useFormNavigation([true, false]);
 
   return (
     <>

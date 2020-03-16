@@ -12,7 +12,6 @@ import {
 } from "redux-saga/effects";
 import { eventChannel, END } from "redux-saga";
 import { CancelToken } from "axios";
-import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import mapValues from "lodash/mapValues";
 import { saveAs } from "file-saver";
@@ -24,6 +23,7 @@ import {
 } from "../../api/apiClient";
 import { getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
 import { getProspectDocuments as getDocuments } from "../selectors/getProspectDocuments";
+import { getProspectStatus } from "../selectors/searchProspect";
 import {
   RETRIEVE_DOC_UPLOADER,
   DOC_UPLOADER,
@@ -46,6 +46,7 @@ import {
   appendDocumentKey
 } from "../../utils/documents";
 import { COMPANY_DOCUMENTS, OTHER_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
+import { PROSPECT_STATUSES } from "../../constants/index";
 
 function createUploader(prospectId, data, source, headers) {
   let emit;
@@ -81,7 +82,7 @@ function* getProspectDocumentsSaga() {
   const headers = getAuthorizationHeader(state);
   const prospectID = getProspectId(state);
   const existDocuments = getDocuments(state);
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
   const isDocsUploaded =
     existDocuments &&
     existDocuments.companyDocuments.length > 0 &&
@@ -126,9 +127,10 @@ function* uploadDocumentsBgSync({
 
   try {
     const state = yield select();
-    const config = cloneDeep(state.appConfig);
+    const config = { ...state.appConfig };
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state);
+    const prospectStatus = getProspectStatus(state);
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
@@ -153,7 +155,13 @@ function* uploadDocumentsBgSync({
     }
 
     yield put(setConfig(config));
-    yield put(sendProspectToAPIPromisify());
+    if (
+      ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
+        prospectStatus
+      )
+    ) {
+      yield put(sendProspectToAPIPromisify());
+    }
   } catch (error) {
     yield put(uploadFilesFail({ [documentKey]: error }));
   } finally {
@@ -175,7 +183,7 @@ function* uploadDocumentsFlowSaga({ payload }) {
 
 function* addOtherDocument({ payload }) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
 
   config.prospect.documents.otherDocuments.push(payload);
   yield put(setConfig(config));
@@ -183,7 +191,7 @@ function* addOtherDocument({ payload }) {
 
 function* deleteOtherDocument({ payload }) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const config = { ...state.appConfig };
 
   config.prospect.documents.otherDocuments = config.prospect.documents.otherDocuments.filter(
     doc => doc.documentKey !== payload

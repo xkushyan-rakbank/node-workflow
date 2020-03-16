@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { ReactComponent as SendMessage } from "../../../../../assets/webchat/sendMessage.svg";
+import { CONNECTED_STATUS } from "../../../constants";
 import {
   TextareaWrapper,
   StyledButton,
@@ -41,17 +42,20 @@ function SendMessageInputScreen({ placeholder, chatInstance }) {
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
-      chatInstance
-        .getInstance()
-        .sendChatMessage(value)
-        .then(() => {
-          setValue("");
-          setRows(1);
-        })
-        .catch(e => {
-          setError(e);
-          console.warn("error " + e);
-        });
+      const chat = chatInstance.getInstance();
+      const isConnected = chat && chat.cometD.getStatus() === CONNECTED_STATUS;
+      if (isConnected) {
+        chat
+          .sendChatMessage(value)
+          .then(() => {
+            setValue("");
+            setRows(1);
+          })
+          .catch(e => {
+            setError(e);
+            console.warn("error " + e);
+          });
+      }
     },
     [chatInstance, value]
   );

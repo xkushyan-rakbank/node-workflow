@@ -51,7 +51,7 @@ const signingPreferencesSchema = Yup.object({
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
         .required(getRequiredMessage("Full name"))
-        .max(77, "Maximum 77 characters allowed")
+        .max(MAX_RECONFIRMING_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
         .matches(NAME_REGEX, getInvalidMessage("Full name")),
       primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
       primaryMobileNo: Yup.string().when("TxnReconfirmingfullname", {
@@ -200,7 +200,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 label="Primary mobile number"
                                 placeholder="55xxxxxxx"
                                 component={Input}
-                                type="number"
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}
@@ -224,7 +223,6 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 label="Landline phone no. (optional)"
                                 placeholder="42xxxxxx"
                                 component={Input}
-                                type="number"
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}

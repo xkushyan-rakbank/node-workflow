@@ -20,7 +20,7 @@ import {
   MAX_COMPANY_NAME_LENGTH,
   MAX_TRADE_LICENSE_LENGTH
 } from "../CompanyBusinessRelationships/constants";
-import { ALPHANUMERIC_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -44,7 +44,7 @@ const companyBranchesAndSubsidiariesSchema = () =>
           tradeLicenseNo: Yup.string()
             .required(getRequiredMessage("Trade license number"))
             .max(20, "Maximum 20 characters allowed")
-            .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Trade license number"))
         })
       )
     }),

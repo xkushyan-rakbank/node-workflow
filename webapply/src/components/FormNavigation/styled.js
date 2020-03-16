@@ -30,6 +30,7 @@ export const useStyles = makeStyles(theme => ({
   blob: {
     position: "absolute",
     top: "50%",
+    width: "calc(380/768*100vh)",
     zIndex: -1,
     right: 0,
     minHeight: "100vh",
@@ -94,11 +95,13 @@ export const useStyles = makeStyles(theme => ({
         background: ({ color }) => {
           switch (color) {
             case ELITE:
-              return "linear-gradient(to bottom, #8E2141, #B55774)";
+              return "linear-gradient(to bottom, #831334, #b1536f 90%, #b25470 100%)";
             case ISLAMIC:
               return "#417C35";
-            default:
+            case STANDART:
               return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+            default:
+              return "transparent";
           }
         }
       }

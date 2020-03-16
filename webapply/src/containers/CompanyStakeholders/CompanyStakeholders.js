@@ -6,8 +6,8 @@ import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStake
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { Icon, ICONS } from "../../components/Icons";
-
 import {
   changeEditableStakeholder,
   createNewStakeholder,
@@ -20,11 +20,11 @@ import {
   checkIsHasSignatories,
   percentageSelector
 } from "../../store/selectors/stakeholder";
-import routes from "../../routes";
-import { NEXT } from "../../constants";
-import { MAX_STAKEHOLDERS_LENGTH } from "./../../constants";
-import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import routes from "../../routes";
+import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
+
+import { useStyles } from "./styled";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -44,10 +44,7 @@ const CompanyStakeholdersComponent = ({
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
 
-  // Used to show add button after add stakeholder(if it is not limit)
-  const handleShowAddButton = useCallback(() => {
-    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
-  }, [setIsShowingAddButton, stakeholders]);
+  useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
     if (!stakeholders.length) {
@@ -93,7 +90,18 @@ const CompanyStakeholdersComponent = ({
 
       <div className={classes.stakeholdersTitleWrapper}>
         <ContexualHelp
-          title="This stakeholder should be defined / mentioned in valid legal document of the Company. Examples: - Sole Proprietorship Company > Trade License - Partnership Company > Trade License / Partners agreement / Share Certificate, etc - Limited Liability Company (LLC) > Trade License / Memorandum of Association / Articles of Association, etc"
+          title={
+            <>
+              This stakeholder should be defined / mentioned in valid legal document of the Company.
+              <br />
+              <b>Examples:</b>
+              <br />- Sole Proprietorship Company &gt; Trade License
+              <br />- Partnership Company &gt; Trade License / Partners agreement / Share
+              Certificate, etc
+              <br />- Limited Liability Company (LLC) &gt; Trade License / Memorandum of Association
+              / Articles of Association, etc
+            </>
+          }
           placement="right"
           isDisableHoverListener={false}
         >
@@ -110,7 +118,7 @@ const CompanyStakeholdersComponent = ({
             .isEditting;
           return (
             <StakeholderStepper
-              showAddButton={handleShowAddButton}
+              setIsShowingAddButton={setIsShowingAddButton}
               {...item}
               key={item.id}
               index={index}

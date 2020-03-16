@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -29,95 +29,96 @@ const TypingLabel = styled.div`
   color: #c6c6cc;
 `;
 
-class Chat extends PureComponent {
-  state = {
-    messages: [],
-    agentTyping: false,
-    agentLeft: false,
-    isReverify: false
-  };
+const LoadingLabel = styled.div`
+  font-size: 16px;
+  margin: 8px 16px;
+  color: #9c9c9c;
+`;
 
-  get userInfo() {
-    const {
-      InitiatedCustomerName = "",
-      InitiatedCustomerMobile = "",
-      EmailAddress = "",
-      isAuth,
-      CIF,
-      subject,
-      message
-    } = this.props;
+function Chat({
+  InitiatedCustomerName = "",
+  InitiatedCustomerMobile = "",
+  EmailAddress = "",
+  isAuth,
+  onClose,
+  onMinimize,
+  onNewMessageReceive
+}) {
+  const [messages, setMessages] = useState([]);
+  const [agentTyping, setAgentTyping] = useState(false);
+  const [agentLeft, setAgentLeft] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-    return {
-      InitiatedCustomerName,
-      InitiatedCustomerMobile,
-      selectedSubject: subject,
-      EmailAddress,
-      message,
-      isAuth,
-      CIF
-    };
-  }
+  const agentTypingHandler = useCallback(
+    flag => {
+      setAgentTyping(flag);
+    },
+    [setAgentTyping]
+  );
 
-  get chatInstance() {
-    return GenesysChat.getInstance();
-  }
+  const agentLeftHandler = useCallback(
+    flag => {
+      setAgentLeft(flag);
+    },
+    [setAgentLeft]
+  );
 
-  componentDidMount() {
-    this.chatInstance.initChat(this.userInfo);
-    this.chatInstance.messagesCallback = this.onNewMessageArrival;
-    this.chatInstance.setOnTypingEventsHandler(this.agentTypingHandler);
-    this.chatInstance.setOnAgentLeftEventHandler(this.agentLeftHandler);
-  }
+  const handleNewMessageArrival = useCallback(
+    messages => {
+      setMessages(messages);
+      onNewMessageReceive(messages);
+    },
+    [setMessages, onNewMessageReceive]
+  );
 
-  onClose = () => {
+  useEffect(() => {
+    const chatInstance = GenesysChat.getInstance();
+
+    chatInstance
+      .initChat({
+        InitiatedCustomerName,
+        InitiatedCustomerMobile,
+        EmailAddress,
+        isAuth
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    chatInstance.messagesCallback = handleNewMessageArrival;
+    chatInstance.setOnTypingEventsHandler(agentTypingHandler);
+    chatInstance.setOnAgentLeftEventHandler(agentLeftHandler);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClose = useCallback(() => {
     GenesysChat.getInstance().triggerDisconnectEvent();
-    this.props.onClose();
-  };
+    onClose();
+  }, [onClose]);
 
-  onNewMessageArrival = messages => {
-    this.setState({ messages });
-  };
-
-  userStartedTyping = () => {
-    GenesysChat.getInstance().userStartedTyping();
-  };
-
-  userStopedTyping = () => {
-    GenesysChat.getInstance().userStopedTyping();
-  };
-
-  agentTypingHandler = flag => {
-    this.setState({ agentTyping: flag });
-  };
-
-  agentLeftHandler = flag => {
-    this.setState({ agentLeft: flag });
-  };
-
-  render() {
-    const { messages, agentTyping } = this.state;
-    const { onMinimize } = this.props;
-
-    return (
-      <Container>
-        <Header onClose={this.onClose} onMinimize={onMinimize} />
+  return (
+    <Container>
+      <Header onClose={handleClose} onMinimize={onMinimize} />
+      {isLoading ? (
+        <LoadingLabel>Loading...</LoadingLabel>
+      ) : (
         <Body>
           <MessagesList data={messages} />
           {agentTyping && <TypingLabel>Agent is typing...</TypingLabel>}
+          {agentLeft && <TypingLabel>Agent left chat</TypingLabel>}
           <SendMessageInput placeholder="Type Message" chatInstance={GenesysChat} />
         </Body>
-      </Container>
-    );
-  }
+      )}
+    </Container>
+  );
 }
 
 Chat.propTypes = {
-  name: PropTypes.string,
-  mobileNumber: PropTypes.string,
-  email: PropTypes.string,
-  subject: PropTypes.string,
-  message: PropTypes.string
+  InitiatedCustomerName: PropTypes.string,
+  InitiatedCustomerMobile: PropTypes.string,
+  EmailAddress: PropTypes.string,
+  isAuth: PropTypes.bool,
+  onClose: PropTypes.func,
+  onMinimize: PropTypes.func
 };
 
-export default Chat;
+export default React.memo(Chat);
