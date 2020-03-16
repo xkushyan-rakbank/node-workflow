@@ -2,15 +2,15 @@ import * as appConfig from "../appConfig";
 
 describe("app config actions", () => {
   it("should loadMetaData with undefined argument", () => {
-    const meta = undefined;
+    const payload = undefined;
     const expectedAction = { type: appConfig.LOAD_META_DATA, payload: "" };
-    expect(appConfig.loadMetaData(meta)).toEqual(expectedAction);
+    expect(appConfig.loadMetaData(payload)).toEqual(expectedAction);
   });
 
   it("should loadMetaData with valid argument", () => {
-    const meta = { freeField5: {} };
-    const expectedAction = { type: appConfig.LOAD_META_DATA, payload: meta.freeField5 };
-    expect(appConfig.loadMetaData(meta)).toEqual(expectedAction);
+    const payload = { freeField5: {} };
+    const expectedAction = { type: appConfig.LOAD_META_DATA, payload: payload.freeField5 };
+    expect(appConfig.loadMetaData(payload)).toEqual(expectedAction);
   });
 
   it("should receiveAppConfig", () => {
@@ -19,15 +19,15 @@ describe("app config actions", () => {
   });
 
   it("should receiveAppConfig success", () => {
-    const data = {};
-    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_SUCCESS, data };
-    expect(appConfig.receiveAppConfigSuccess(data)).toEqual(expectedAction);
+    const payload = {};
+    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_SUCCESS, data: payload };
+    expect(appConfig.receiveAppConfigSuccess(payload)).toEqual(expectedAction);
   });
 
   it("should receiveAppConfig fail", () => {
-    const data = {};
-    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_FAIL, error: data };
-    expect(appConfig.receiveAppConfigFail(data)).toEqual(expectedAction);
+    const payload = {};
+    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_FAIL, error: payload };
+    expect(appConfig.receiveAppConfigFail(payload)).toEqual(expectedAction);
   });
 
   it("should update prospect without gaEvent", () => {
