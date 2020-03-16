@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -24,6 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
 
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
@@ -93,6 +94,8 @@ export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
 
   const applicantInfo = useSelector(getApplicantInfo);
+  const [newFullName, setNewFullName] = useState([]);
+  useFormNavigation(newFullName);
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
@@ -169,6 +172,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   disabled={!!values.isShareholderACompany}
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
+                  onChange={e => {
+                    setNewFullName({ ...newFullName, firstName: e.value });
+                  }}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
@@ -185,6 +191,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                onChange={e => {
+                  setNewFullName({ ...newFullName, midlleName: e.value });
+                }}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
@@ -201,6 +210,9 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                onChange={e => {
+                  setNewFullName({ ...newFullName, middleName: e.value });
+                }}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
