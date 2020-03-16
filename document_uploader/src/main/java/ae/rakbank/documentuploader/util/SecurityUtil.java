@@ -20,6 +20,7 @@ public class SecurityUtil {
     private static final String AES_ECB_PKCS5_PADDING = "AES/ECB/PKCS5Padding";
     private final FileUtil fileUtil;
 
+    @SuppressWarnings("Duplicates")
     public byte[] decryptAsymmetric(String input) {
         String privateKeyContent = fileUtil.getRSAPrivateKey();
         privateKeyContent = privateKeyContent
@@ -44,6 +45,7 @@ public class SecurityUtil {
         return result;
     }
 
+    @SuppressWarnings("Duplicates")
     public String encryptSymmetric(String strToEncrypt, SecretKeySpec secretKey) {
         try {
             @SuppressWarnings("squid:S5542")
