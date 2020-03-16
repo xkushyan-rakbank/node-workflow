@@ -31,25 +31,30 @@ const SelectAutocompleteBase = ({
   onChange = value => setFieldValue(field.name, value),
   ...props
 }) => {
-  const classes = useStyles(props);
+  const classes = useStyles({
+    ...props,
+    disabled
+  });
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const [hasFocus, setFocus] = useState(false);
 
   const handleChange = selected => {
-    const value = multiple
-      ? (selected || []).map(item => extractValue(item))
-      : extractValue(selected);
+    const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
 
     return onChange(value);
   };
 
   const renderValue = !multiple
     ? options.find(option => extractValue(option) === field.value)
-    : options.filter(option => field.value.includes(option.value));
+    : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
   return (
-    <FormControl className="formControl" variant="outlined">
+    <FormControl
+      classes={{ root: classes.formControlRoot }}
+      className="formControl"
+      variant="outlined"
+    >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
@@ -64,6 +69,7 @@ const SelectAutocompleteBase = ({
           isMulti={multiple}
           isDisabled={disabled}
           closeMenuOnSelect={!multiple}
+          tabSelectsValue={!multiple}
           hideSelectedOptions={false}
           joinValues={true}
           delimiter=","
