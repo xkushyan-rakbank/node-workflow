@@ -252,7 +252,7 @@
 				},
 				"selfGovtPosition": "",
 				"relativeGovtPosition": "",
-				"isPEP": false,
+				"isPEP": "",
 				"qualification": "",
 				"experienceInYrs": "",
 				"sourceOfWealth": [{
@@ -283,7 +283,7 @@
 				"department": "",
 				"employerName": "",
 				"occupation": "",
-				"totalExperienceYrs": 0,
+				"totalExperienceYrs": "",
 				"employmentStartDate": "",
 				"isPersonWorkAtCompany": false
 			},
@@ -322,7 +322,7 @@
 	],
 	"channelServicesInfo": {
 		"mobileInstructions": false,
-		"marketingSMS": false,
+		"marketingSMS": true,
 		"doNotDisturbHours": "",
 		"weeklyBalanceNotification": "",
 		"monthlyBalanceNotification": 0
