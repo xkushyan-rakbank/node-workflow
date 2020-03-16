@@ -1,12 +1,12 @@
-import React, { memo, useState } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
+import omit from "lodash/omit";
 import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
 import { useStyles, customStyles } from "./styled";
-import { areEqualFieldProps } from "../../utils";
 
 const components = {
   Control,
@@ -15,7 +15,7 @@ const components = {
   MultiValue
 };
 
-export const SelectAutocompleteBase = ({
+export const SelectAutocomplete = ({
   extractValue = option => option.value,
   extractLabel = option => option.label || option.displayText,
   theme,
@@ -23,7 +23,7 @@ export const SelectAutocompleteBase = ({
   shrink,
   options,
   field,
-  form: { errors, touched, setFieldValue },
+  form: { errors, touched, setFieldValue, setFieldTouched },
   multiple = false,
   disabled,
   contextualHelpText,
@@ -31,33 +31,28 @@ export const SelectAutocompleteBase = ({
   onChange = value => setFieldValue(field.name, value),
   ...props
 }) => {
-  const classes = useStyles({
-    ...props,
-    disabled
-  });
+  const classes = useStyles(props);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const [hasFocus, setFocus] = useState(false);
 
   const handleChange = selected => {
-    const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
+    const value = multiple
+      ? (selected || []).map(item => extractValue(item))
+      : extractValue(selected);
 
     return onChange(value);
   };
 
   const renderValue = !multiple
     ? options.find(option => extractValue(option) === field.value)
-    : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
+    : options.filter(option => field.value.includes(option.value));
 
   return (
-    <FormControl
-      classes={{ root: classes.formControlRoot }}
-      className="formControl"
-      variant="outlined"
-    >
+    <FormControl className="formControl" variant="outlined">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
-          {...field}
+          {...omit(field, "onBlur")}
           {...props}
           classes={classes}
           isOpen
@@ -69,14 +64,16 @@ export const SelectAutocompleteBase = ({
           isMulti={multiple}
           isDisabled={disabled}
           closeMenuOnSelect={!multiple}
-          tabSelectsValue={!multiple}
           hideSelectedOptions={false}
           joinValues={true}
           delimiter=","
           placeholder=""
           textFieldProps={{
             onFocus: () => setFocus(true),
-            onBlur: () => setFocus(false),
+            onBlur: () => {
+              setFocus(false);
+              setFieldTouched(field.name);
+            },
             label,
             error: !!isError,
             InputLabelProps: {
@@ -90,5 +87,3 @@ export const SelectAutocompleteBase = ({
     </FormControl>
   );
 };
-
-export const SelectAutocomplete = memo(SelectAutocompleteBase, areEqualFieldProps);
