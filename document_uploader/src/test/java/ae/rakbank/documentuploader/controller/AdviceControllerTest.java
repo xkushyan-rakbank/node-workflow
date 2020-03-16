@@ -3,10 +3,10 @@ package ae.rakbank.documentuploader.controller;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class AdviceControllerTest {
 
-    @Test
+//    @Test
     public void contextLoads() {
     }
 }
