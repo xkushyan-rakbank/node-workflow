@@ -1,23 +1,7 @@
-import ReactDOM from "react-dom";
-import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import { usePortal } from "./hooks/usePortal";
 
-let defaultNode = null;
-
-export const Portal = ({ children }) => {
-  useEffect(() => {
-    return () => {
-      if (defaultNode) {
-        document.body.removeChild(defaultNode);
-      }
-
-      defaultNode = null;
-    };
-  }, []);
-
-  if (!defaultNode) {
-    defaultNode = document.createElement("div");
-    document.body.appendChild(defaultNode);
-  }
-
-  return ReactDOM.createPortal(children, defaultNode);
+export const Portal = ({ id, children }) => {
+  const target = usePortal(id);
+  return createPortal(children, target);
 };

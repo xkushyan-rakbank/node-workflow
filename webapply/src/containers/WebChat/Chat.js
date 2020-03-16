@@ -38,9 +38,8 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
       <ClosedChat key="link" ref={closedChatRef} openChat={openChat} isMinimized={isMinimized} />
     ),
     isOpened && (
-      <Portal key="window">
+      <Portal key="window" id="chat">
         <div
-          key="window"
           className={cx(classes.chatWrapper, {
             [classes.mimimized]: isMinimized,
             [classes.expand]: !isMinimized
