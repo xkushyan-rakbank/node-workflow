@@ -23,7 +23,8 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
     secondSection.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const scrollToTable = () => {
+  const scrollToTable = accountType => {
+    setSelectedAccount(accountType);
     tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 

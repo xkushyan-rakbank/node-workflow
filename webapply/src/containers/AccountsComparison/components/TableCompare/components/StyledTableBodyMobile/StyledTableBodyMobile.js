@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import InputBase from "@material-ui/core/InputBase";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
@@ -11,47 +9,19 @@ import { LinkedButton } from "../../../../../../components/LinkedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { accountsDataRows, accountTypes } from "../../constants";
 import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
+import { COMPARED_ACCOUNTS_TYPES } from "./constants";
 
-import { useStyles } from "./styled";
-
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    width: "100%"
-  },
-  input: {
-    borderRadius: 4,
-    boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
-    width: "100%",
-    position: "relative",
-    backgroundColor: "#fff",
-    border: "1px solid #e8e8e8",
-    fontSize: 14,
-    textAlign: "left",
-    padding: "13px 26px 13px 12px",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    "&:focus": {
-      backgroundColor: "#fff"
-    }
-  }
-}))(InputBase);
+import { useStyles, BootstrapInput } from "./styled";
 
 export const StyledTableBodyMobileComponent = ({ selectedAccount }) => {
   const classes = useStyles();
-  const [mobileAccounts, setMobileAccounts] = useState([
-    accountTypes.starter.id,
-    accountTypes.currentAccount.id
-  ]);
+  const [mobileAccounts, setMobileAccounts] = useState(COMPARED_ACCOUNTS_TYPES.starter);
 
   useEffect(() => {
     const accountTypeId = Object.values(accountTypes).find(
       value => value.accountName === selectedAccount
     ).id;
-    const comparedAccounts = {
-      [accountTypes.starter.id]: [accountTypes.starter.id, accountTypes.currentAccount.id],
-      [accountTypes.currentAccount.id]: [accountTypes.currentAccount.id, accountTypes.elite.id],
-      [accountTypes.elite.id]: [accountTypes.elite.id, accountTypes.currentAccount.id]
-    };
-    setMobileAccounts(comparedAccounts[accountTypeId]);
+    setMobileAccounts(COMPARED_ACCOUNTS_TYPES[accountTypeId]);
   }, [selectedAccount, setMobileAccounts]);
 
   return (
