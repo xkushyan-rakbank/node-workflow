@@ -3,7 +3,6 @@ import cometd from "cometd";
 import nanoid from "nanoid";
 import has from "lodash/has";
 
-import { callSafely } from "./GenericUtils";
 import { CHAT_API_PATH, CHAT_CHANNEL, CONNECTED_STATUS, CHAT_CHANNEL_ID } from "../constants";
 
 const ChatOperationTypes = Object.freeze({
@@ -224,7 +223,7 @@ export class GenesysChat {
     };
 
     this.chatMessages.push(messageObject);
-    callSafely(this.messagesCallback, [...this.chatMessages]);
+    this.messagesCallback([...this.chatMessages]);
   };
 
   errorHandler = receivedData => {
@@ -237,13 +236,13 @@ export class GenesysChat {
     });
   };
 
-  onReceiveData = (message, callBack) => {
+  onReceiveData = (message, callBack = () => {}) => {
     const dataFromServer = message.data;
     this.lastPosition = dataFromServer.nextPosition;
     if (has(dataFromServer, "messages")) {
       dataFromServer.messages.forEach(message => {
         if (has(agentEvents, message.text) && message.from.type === UserTypes.Agent) {
-          callSafely(this.eventsCallback, message.text);
+          this.eventsCallback(message.text);
         } else {
           switch (message.type) {
             case ChatOperationTypes.IncomingMessage: {
@@ -269,7 +268,7 @@ export class GenesysChat {
                   index: 0,
                   text: "Welcome to RAKBANK live chat!"
                 });
-                callSafely(this.connectedCallback);
+                this.connectedCallback();
               }
 
               break;
@@ -301,7 +300,7 @@ export class GenesysChat {
         case ChatOperationTypes.SendMessage:
         case ChatOperationTypes.RequestChat: {
           this.chatMessages.push(dataFromServer);
-          callSafely(callBack, [...this.chatMessages]);
+          callBack([...this.chatMessages]);
           break;
         }
       }
