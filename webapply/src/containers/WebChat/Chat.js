@@ -7,11 +7,11 @@ import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
 
+import { ClosedChat } from "./components/ClosedChat";
+import { Portal } from "./components/Portal";
 import { useStyles } from "./styled";
-import { ClosedChat } from "./ClosedChat";
-import { Portal } from "./Portal";
 
-const WebChatComponent = lazy(() => import("./components/Chat"));
+const WebChatComponent = lazy(() => import("./core"));
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
