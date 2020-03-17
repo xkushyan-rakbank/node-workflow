@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { FormNavigationStep } from "../FormNavigationStep";
 import { VerticalPaginationContext } from "../VerticalPagination";
 import { FormNavigationContext } from "./FormNavigationProvider";
-import { IslamicSwitcherWrapper } from "../IslamicSwitcherWrapper";
+import { IslamicSwitcher } from "../IslamicSwitcher";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes from "../../routes";
@@ -50,7 +50,7 @@ export const FormNavigationComponent = () => {
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
-        <IslamicSwitcherWrapper
+        <IslamicSwitcher
           className={classes.formNavBg}
           isSwitcherShow={isSwitcherShow}
           toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
@@ -58,7 +58,7 @@ export const FormNavigationComponent = () => {
           <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
             What banking option do you prefer?
           </Typography>
-        </IslamicSwitcherWrapper>
+        </IslamicSwitcher>
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (

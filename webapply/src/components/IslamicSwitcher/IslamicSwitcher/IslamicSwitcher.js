@@ -1,27 +1,18 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
+import cx from "classnames";
 import ButtonGroup from "@material-ui/core/ButtonGroup/index";
 import Button from "@material-ui/core/Button/Button";
-import { connect } from "react-redux";
-import cx from "classnames";
+
+import { MobileNotificationContext } from "../../Notifications/MobileNotification/MobileNotification";
 
 import { useStyles } from "./styled";
+
 import { ReactComponent as ConventionalIcon } from "../../../assets/icons/conventional.svg";
 import { ReactComponent as IslamicIcon } from "../../../assets/icons/islamic.svg";
-import * as appConfigSelectors from "../../../store/selectors/appConfig";
-import { MobileNotificationContext } from "../../Notifications/MobileNotification/MobileNotification";
-import { useTrackingHistory } from "../../../utils/useTrackingHistory";
-import { CONVENTIONAL, detailedAccountRoutesMap, ISLAMIC } from "../../../constants";
 
-const IslamicSwitcherComponent = ({ isIslamicBanking, accountType }) => {
+export const IslamicSwitcherButtons = ({ isIslamicBanking, setIsIslamicBanking }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const classes = useStyles({ isMobileNotificationActive });
-  const pushHistory = useTrackingHistory();
-  const handleClick = useCallback(
-    islamicBanking => {
-      pushHistory(detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL]);
-    },
-    [pushHistory, accountType]
-  );
 
   return (
     <ButtonGroup
@@ -37,7 +28,7 @@ const IslamicSwitcherComponent = ({ isIslamicBanking, accountType }) => {
           }),
           label: classes.labelStyle
         }}
-        onClick={() => handleClick(false)}
+        onClick={() => setIsIslamicBanking(false)}
       >
         <ConventionalIcon />
         Conventional
@@ -49,7 +40,7 @@ const IslamicSwitcherComponent = ({ isIslamicBanking, accountType }) => {
           }),
           label: classes.labelStyle
         }}
-        onClick={() => handleClick(true)}
+        onClick={() => setIsIslamicBanking(true)}
       >
         <IslamicIcon />
         RAKislamic
@@ -57,10 +48,3 @@ const IslamicSwitcherComponent = ({ isIslamicBanking, accountType }) => {
     </ButtonGroup>
   );
 };
-
-const mapStateToProps = state => ({
-  accountType: appConfigSelectors.getAccountType(state),
-  isIslamicBanking: appConfigSelectors.getIsIslamicBanking(state)
-});
-
-export const IslamicSwitcher = connect(mapStateToProps)(IslamicSwitcherComponent);
