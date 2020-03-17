@@ -84,7 +84,7 @@ export const CompanyInfoPage = ({
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
-            isActiveStep={activeStep === item.step}
+            isActiveStep={3 === item.step}
             isFilled={availableSteps.some(
               step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
             )}

@@ -1,7 +1,4 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import setMonth from "date-fns/setMonth";
-import setYear from "date-fns/setYear";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { FormControl } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
@@ -37,18 +34,14 @@ const StyledSelect = withStyles({
   }
 })(Select);
 
-export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) => {
+export const PickerSelect = ({ date, onChange, type }) => {
+  const classes = useStyles();
   const value = type === "month" ? date.getMonth() : date.getFullYear();
   const options = type === "month" ? MONTH_OPTIONS : getYearOptions();
-  const classes = useStyles();
 
-  const handleChange = useCallback(
-    ({ target: { value } }) => {
-      const changeDate = type === "month" ? setMonth : setYear;
-      onChange(changeDate(date, value));
-    },
-    [date, type, onChange]
-  );
+  const handleChange = event => {
+    onChange(event.target.value);
+  };
 
   return (
     <FormControl classes={{ root: classes.root }}>
@@ -84,10 +77,4 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
       </StyledSelect>
     </FormControl>
   );
-};
-
-PickerSelect.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  onChange: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(["month", "year"])
 };

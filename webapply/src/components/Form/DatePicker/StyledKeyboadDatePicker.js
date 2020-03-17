@@ -58,6 +58,27 @@ const keyboardDatePickerTheme = createMuiTheme({
         }
       }
     },
+    MuiInputAdornment: {
+      root: {
+        marginLeft: -8,
+        padding: "3px 8px 3px 3px",
+        height: "100%",
+        maxHeight: "none",
+        borderRight: "1px solid rgba(194, 194, 194, 0.56)"
+      }
+    },
+    MuiInputLabel: {
+      outlined: {
+        "&$shrink": {
+          transform: "translate(80px, -6px) scale(0.75)"
+        }
+      }
+    },
+    PrivateNotchedOutline: {
+      legend: {
+        marginLeft: 66
+      }
+    },
     MuiPickersDay: {
       day: {
         color: "#3b3a3a",
