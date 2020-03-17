@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 
-import { ReactComponent as SendMessage } from "../../../assets/sendMessage.svg";
 import { CONNECTED_STATUS } from "../../../constants";
+
 import {
   TextareaWrapper,
   StyledButton,
@@ -10,6 +10,8 @@ import {
   StyledError,
   StyledErrorWrapper
 } from "./styled";
+
+import { ReactComponent as SendMessage } from "../../../assets/sendMessage.svg";
 
 const MIN_ROWS = 1;
 const MAX_ROWS = 5;
