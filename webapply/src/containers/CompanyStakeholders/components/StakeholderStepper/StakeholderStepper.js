@@ -27,6 +27,7 @@ import { useStep } from "../../../../hooks/useStep";
 import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
+import { ChangeFullName } from "../../../../components/UpdatedFullNameContext";
 
 const timeInterval = 5000;
 
@@ -86,7 +87,7 @@ const StakeholderStepperComponent = ({
   };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
-
+  ChangeFullName({ firstName, middleName, lastName });
   const handleDeleteStakeholder = useCallback(() => {
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);

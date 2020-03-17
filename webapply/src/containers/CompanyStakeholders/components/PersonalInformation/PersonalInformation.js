@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -24,7 +24,6 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { ChangeFullName } from "../../../../components/UpdatedFullNameContext";
 
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
@@ -63,22 +62,19 @@ const personalInformationSchema = Yup.object().shape({
         return checkFullNameLength(firstName, middleName, lastName);
       }
     ),
-  lastName: Yup.string().when("isShareholderACompany", {
-    is: isShareholderACompany => !isShareholderACompany,
-    then: Yup.string()
-      .required(getRequiredMessage("Last name"))
-      .max(30, "Maximum 30 characters allowed")
-      .matches(NAME_REGEX, getInvalidMessage("Last name"))
-      .test("space validation", getInvalidMessage("Last name"), checkIsTrimmed)
-      .test(
-        "length validation",
-        "First, Middle and Last name combined have a limit of 77 characters",
-        function(lastName) {
-          const { firstName, middleName } = this.parent;
-          return checkFullNameLength(firstName, middleName, lastName);
-        }
-      )
-  }),
+  lastName: Yup.string()
+    .required(getRequiredMessage("Last name"))
+    .max(30, "Maximum 30 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Last name"))
+    .test("space validation", getInvalidMessage("Last name"), checkIsTrimmed)
+    .test(
+      "length validation",
+      "First, Middle and Last name combined have a limit of 77 characters",
+      function(lastName) {
+        const { firstName, middleName } = this.parent;
+        return checkFullNameLength(firstName, middleName, lastName);
+      }
+    ),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
@@ -92,13 +88,7 @@ const personalInformationSchema = Yup.object().shape({
 
 export const PersonalInformation = ({ index, handleContinue }) => {
   const classes = useStyles();
-
   const applicantInfo = useSelector(getApplicantInfo);
-  const [newFirstName, setNewFirstName] = useState("");
-  const [newMiddleName, setNewMiddleName] = useState("");
-  const [newLastName, setNewLastName] = useState("");
-
-  ChangeFullName({ firstName: newFirstName, middleName: newMiddleName, lastName: newLastName });
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
@@ -177,7 +167,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   changeProspect={createChangeProspectHandler(values)}
                   onChange={event => {
                     setFieldValue(event.target.name, event.target.value);
-                    setNewFirstName(event.target.value);
                   }}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
@@ -197,7 +186,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Input}
                 onChange={event => {
                   setFieldValue(event.target.name, event.target.value);
-                  setNewMiddleName(event.target.value);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
@@ -217,7 +205,6 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 component={Input}
                 onChange={event => {
                   setFieldValue(event.target.name, event.target.value);
-                  setNewLastName(event.target.value);
                 }}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
