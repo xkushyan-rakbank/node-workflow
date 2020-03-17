@@ -28,6 +28,11 @@ export const SubmitApplicationComponent = ({
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => NotificationsManager.add(trustMessageContent), [
+    NotificationsManager,
+    NotificationsManager
+  ]);
+
   const handleSubmit = useCallback(() => {
     updateViewId(pathname.replace(smeBaseName, ""), false);
     setIsSubmitting(true);
@@ -43,8 +48,6 @@ export const SubmitApplicationComponent = ({
   const isSubmitButtonEnable =
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
-
-  useEffect(() => NotificationsManager.add(trustMessageContent), [NotificationsManager]);
 
   if (isSubmitting) {
     return <ServerRequestLoadingScreen />;
