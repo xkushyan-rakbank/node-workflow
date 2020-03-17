@@ -21,7 +21,6 @@ export const FilledStakeholderCard = ({
 }) => {
   const classes = useStyles();
   const newFullName = useContext(UpdatedFullNameContext);
-  console.log(useContext(UpdatedFullNameContext));
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
@@ -32,10 +31,9 @@ export const FilledStakeholderCard = ({
         <Avatar firstName={firstName} lastName={lastName} index={index} />
 
         <div className={classes.userInfo}>
-          <div className={classes.nameField}>{`${(newFullName && newFullName.firstName) ||
-            firstName} ${(newFullName && newFullName.middleName) || middleName} ${(newFullName &&
-            newFullName.lastName) ||
-            lastName}`}</div>
+          <div
+            className={classes.nameField}
+          >{`${newFullName.firstName} ${newFullName.middleName} ${newFullName.lastName}`}</div>
           {accountSigningInfo && authorityTypeValueFromProspect && (
             <div className={classes.signatoryField}>{authorityTypeValue}</div>
           )}

@@ -14,7 +14,7 @@ export const UpdatedFullNameProvider = ({ children }) => {
   );
 };
 
-export const useFormNavigation = params => {
+export const ChangeFullName = params => {
   useEffect(() => {
     if (setValues) {
       setValues(params);
