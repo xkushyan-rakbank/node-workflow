@@ -42,7 +42,7 @@ const companyDetailsSchema = () =>
     companyCategory: Yup.string().required(getRequiredMessage("Company category"))
   });
 
-export const CompanyDetails = ({ handleContinue, handleFormChange }) => {
+export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +52,7 @@ export const CompanyDetails = ({ handleContinue, handleFormChange }) => {
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {handleFormChange(() => (
+      {createFormChangeHandler(() => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>

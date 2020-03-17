@@ -40,7 +40,7 @@ export const IndustryStep = ({
   industries,
   updateProspect,
   isIslamicBanking,
-  handleFormChange
+  createFormChangeHandler
 }) => {
   const classes = useStyles();
 
@@ -94,7 +94,7 @@ export const IndustryStep = ({
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {handleFormChange(({ values, setFieldValue }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
