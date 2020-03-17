@@ -47,9 +47,9 @@ export class GenesysChat {
     this.secureKey = "";
     this.lastPosition = 0;
     this.userInfo = {};
-    this.eventsCallback = "";
-    this.messagesCallback = "";
-    this.connectedCallback = "";
+    this.eventsCallback = () => {};
+    this.messagesCallback = () => {};
+    this.connectedCallback = () => {};
 
     this.configureChat();
   }

@@ -7,9 +7,9 @@ import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
 
-import { useStyles } from "./styled";
 import { ClosedChat } from "./components/ClosedChat";
 import { Portal } from "./components/Portal";
+import { useStyles } from "./styled";
 
 const WebChatComponent = lazy(() => import("./core"));
 
