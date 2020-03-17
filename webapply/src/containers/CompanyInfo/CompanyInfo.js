@@ -37,7 +37,7 @@ export const CompanyInfoPage = ({
 
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
+  const [activeStep, availableSteps, handleSetStep, handleSetNextStep, handleFormChange] = useStep(
     COMPANY_INFO_PAGE_ID,
     companyInfoSteps
   );
@@ -90,6 +90,7 @@ export const CompanyInfoPage = ({
             )}
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
+            handleFormChange={handleFormChange}
             stepForm={item.component}
           />
         ))}

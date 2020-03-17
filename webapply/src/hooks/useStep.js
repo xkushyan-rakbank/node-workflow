@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { getIn } from "formik";
+import isEqual from "lodash/isEqual";
 
 import { setStepStatus, setInitialSteps } from "../store/actions/completedSteps";
 import { getCompletedSteps } from "../store/selectors/completedSteps";
@@ -8,7 +10,7 @@ import { STEP_STATUS } from "../constants";
 export const useStep = (flowId, steps) => {
   const [activeStep, setActiveStep] = useState(steps[0].step);
   const dispatch = useDispatch();
-
+  const oldValue = useRef({});
   const availableSteps = useSelector(getCompletedSteps).filter(item => item.flowId === flowId);
 
   if (!availableSteps.length) {
@@ -43,5 +45,24 @@ export const useStep = (flowId, steps) => {
     }
   };
 
-  return [activeStep, availableSteps, handleSetStep, handleSetNextStep];
+  const handleFormChange = cb => props => {
+    const isValuesChanged = Object.keys(props.values).some(
+      key =>
+        getIn(props.touched, key) &&
+        !isEqual(getIn(props.values, key), getIn(oldValue.current, key))
+    );
+
+    if (isValuesChanged) {
+      const { status } = availableSteps.find(item => item.step === activeStep) || {};
+
+      if (status === STEP_STATUS.COMPLETED) {
+        dispatch(setStepStatus(flowId, activeStep, STEP_STATUS.AVAILABLE));
+      }
+      oldValue.current = props.values;
+    }
+
+    return cb(props);
+  };
+
+  return [activeStep, availableSteps, handleSetStep, handleSetNextStep, handleFormChange];
 };
