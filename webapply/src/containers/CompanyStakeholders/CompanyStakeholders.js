@@ -25,6 +25,7 @@ import routes from "../../routes";
 import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
 
 import { useStyles } from "./styled";
+import { changeFullName } from "./components/FullNameProvider/FullNameProvider";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -51,6 +52,14 @@ const CompanyStakeholdersComponent = ({
       createNewStakeholder();
     }
   }, [createNewStakeholder, stakeholders.length]);
+
+  useEffect(() => {
+    if (stakeholders.length) {
+      stakeholders.map(item => {
+        changeFullName(item);
+      });
+    }
+  }, [changeFullName]);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
@@ -167,7 +176,7 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify
 };
 
-export const CompanyStakeholders = connect(
+export const CompanyStakeholdersScreen = connect(
   mapStateToProps,
   mapDispatchToProps
 )(CompanyStakeholdersComponent);

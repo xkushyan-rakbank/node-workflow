@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { connect, useSelector } from "react-redux";
 
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
@@ -27,7 +27,7 @@ import { useStep } from "../../../../hooks/useStep";
 import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
-import { ChangeFullName } from "../../../../components/UpdatedFullNameContext";
+import { FullNameContext } from "../FullNameProvider/FullNameProvider";
 
 const timeInterval = 5000;
 
@@ -55,6 +55,8 @@ const StakeholderStepperComponent = ({
   stakeholders
 }) => {
   const classes = useStyles();
+  const stakeholdersFromContext = useContext(FullNameContext);
+  const stakeholder = stakeholdersFromContext.find(item => item.id === id);
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
@@ -87,7 +89,6 @@ const StakeholderStepperComponent = ({
   };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
-  ChangeFullName({ firstName, middleName, lastName });
   const handleDeleteStakeholder = useCallback(() => {
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
@@ -121,6 +122,7 @@ const StakeholderStepperComponent = ({
       <FilledStakeholderCard
         key={key}
         index={index}
+        id={id}
         editDisabled={Number.isInteger(editableStakeholder)}
         changeEditableStep={handleEditCompleted}
         datalist={datalist}
@@ -129,6 +131,7 @@ const StakeholderStepperComponent = ({
         lastName={lastName}
         accountSigningInfo={accountSigningInfo}
         kycDetails={kycDetails}
+        stakeholder={stakeholder}
       />
     );
   }
@@ -143,11 +146,14 @@ const StakeholderStepperComponent = ({
       index={orderIndex}
       isEditInProgress={isEditInProgress}
       editHandler={editHandler}
+      id={id}
+      stakeholder={stakeholder}
     >
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => (
           <StepComponent
             index={index}
+            id={id}
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}

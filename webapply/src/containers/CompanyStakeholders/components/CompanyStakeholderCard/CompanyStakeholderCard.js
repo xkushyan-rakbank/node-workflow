@@ -7,16 +7,14 @@ import { useStyles, EditButton } from "./styled";
 import expandMoreIcon from "../../../../assets/icons/arrowDown.svg";
 
 export const CompanyStakeholderCard = ({
-  firstName,
-  lastName,
-  middleName,
   className,
   index,
   isStatusShown,
   isStatusLoading,
   children,
   isEditInProgress,
-  editHandler
+  editHandler,
+  stakeholder
 }) => {
   const classes = useStyles();
 
@@ -24,15 +22,19 @@ export const CompanyStakeholderCard = ({
     <div className={cx(classes.wrapper, className)}>
       <div className={classes.contentWrapper}>
         <Avatar
-          firstName={firstName}
-          lastName={lastName}
+          firstName={stakeholder && stakeholder.firstName}
+          lastName={stakeholder && stakeholder.lastName}
           index={index}
-          isEmptyAvatar={!firstName}
+          isEmptyAvatar={stakeholder && !stakeholder.firstName}
         />
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>
-            {[firstName, middleName, lastName].filter(item => item).join(" ") || "New Stakeholder"}
+            {(stakeholder &&
+              [stakeholder.firstName, stakeholder.middleName, stakeholder.lastName]
+                .filter(item => item)
+                .join(" ")) ||
+              "New Stakeholder"}
           </div>
           {isStatusShown && <StatusLoader loading={isStatusLoading} />}
           {isEditInProgress && (

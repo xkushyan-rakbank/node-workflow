@@ -25,6 +25,8 @@ import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
+import { changeFullName } from "../FullNameProvider/FullNameProvider";
+
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -62,19 +64,22 @@ const personalInformationSchema = Yup.object().shape({
         return checkFullNameLength(firstName, middleName, lastName);
       }
     ),
-  lastName: Yup.string()
-    .required(getRequiredMessage("Last name"))
-    .max(30, "Maximum 30 characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("Last name"))
-    .test("space validation", getInvalidMessage("Last name"), checkIsTrimmed)
-    .test(
-      "length validation",
-      "First, Middle and Last name combined have a limit of 77 characters",
-      function(lastName) {
-        const { firstName, middleName } = this.parent;
-        return checkFullNameLength(firstName, middleName, lastName);
-      }
-    ),
+  lastName: Yup.string().when("isShareholderACompany", {
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.string()
+      .required(getRequiredMessage("Last name"))
+      .max(30, "Maximum 30 characters allowed")
+      .matches(NAME_REGEX, getInvalidMessage("Last name"))
+      .test("space validation", getInvalidMessage("Last name"), checkIsTrimmed)
+      .test(
+        "length validation",
+        "First, Middle and Last name combined have a limit of 77 characters",
+        function(lastName) {
+          const { firstName, middleName } = this.parent;
+          return checkFullNameLength(firstName, middleName, lastName);
+        }
+      )
+  }),
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
@@ -86,7 +91,7 @@ const personalInformationSchema = Yup.object().shape({
   )
 });
 
-export const PersonalInformation = ({ index, handleContinue }) => {
+export const PersonalInformation = ({ index, handleContinue, id }) => {
   const classes = useStyles();
   const applicantInfo = useSelector(getApplicantInfo);
 
@@ -96,6 +101,17 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       ? applicantInfo.fullName
       : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
+
+  const onChangeHandler = (values, { name, value }, setValues) => {
+    const data = {
+      ...values,
+      id,
+      [name]: value
+    };
+
+    setValues(data);
+    changeFullName(data);
+  };
 
   return (
     <Formik
@@ -112,7 +128,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched }) => (
+      {({ values, setFieldValue, errors, touched, setValues }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -165,9 +181,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   disabled={!!values.isShareholderACompany}
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
-                  onChange={event => {
-                    setFieldValue(event.target.name, event.target.value);
-                  }}
+                  onChange={event => onChangeHandler(values, event.target, setValues)}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
@@ -184,9 +198,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
-                onChange={event => {
-                  setFieldValue(event.target.name, event.target.value);
-                }}
+                onChange={event => onChangeHandler(values, event.target, setValues)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
@@ -203,9 +215,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
-                onChange={event => {
-                  setFieldValue(event.target.name, event.target.value);
-                }}
+                onChange={event => onChangeHandler(values, event.target, setValues)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
