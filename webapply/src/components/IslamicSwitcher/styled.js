@@ -27,17 +27,18 @@ export const useStyles = makeStyles(theme => ({
   },
   switcherWrapper: {
     position: "absolute",
-    zIndex: 2,
     backgroundColor: "transparent",
     top: 0,
     bottom: 0,
     right: 0,
     left: 0,
+    zIndex: -1,
     padding: "100px 16px 0",
     border: 0,
     cursor: "pointer",
     transition: "all .3s",
     [theme.breakpoints.only("xs")]: {
+      zIndex: 2,
       opacity: ({ isSwitcherShow }) => (isSwitcherShow ? 1 : 0),
       pointerEvents: ({ isSwitcherShow }) => (isSwitcherShow ? "auto" : "none")
     }
