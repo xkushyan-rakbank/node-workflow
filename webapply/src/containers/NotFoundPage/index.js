@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useCallback, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
-import routes from "../../routes";
+import routes, { smeBaseName } from "../../routes";
 
 import { useStyles } from "./styled";
 
@@ -12,9 +12,16 @@ import { ReactComponent as Arrow } from "../../assets/icons/whiteArrow.svg";
 
 export default function NotFoundPage() {
   const history = useHistory();
+  const { pathname } = useLocation();
   const classes = useStyles();
   const { notFound } = useIconsByAccount();
   useFormNavigation([false, false]);
+
+  useEffect(() => pathname === smeBaseName && history.push(routes.accountsComparison), [
+    history,
+    pathname,
+    smeBaseName
+  ]);
 
   const handleGoToHomePage = useCallback(() => {
     history.push(routes.accountsComparison);
