@@ -15,7 +15,7 @@ export const AccountTypeCardComponent = ({
 }) => {
   const classes = useStyles();
   const { scrollToSection } = useContext(VerticalPaginationContext);
-  const continueButtonClick = useCallback(() => {
+  const handleContinueButtonClick = useCallback(() => {
     setAccountType(accountType);
     handleClickMobile();
   }, [handleClickMobile, setAccountType, accountType]);
@@ -54,7 +54,7 @@ export const AccountTypeCardComponent = ({
         />
         <div className="show-on-mobile">
           <ContinueButton
-            handleClick={continueButtonClick}
+            handleClick={handleContinueButtonClick}
             label={buttonText}
             classes={{ buttonStyle: classes.continueButtonRoot }}
           />
