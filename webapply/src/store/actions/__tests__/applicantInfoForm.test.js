@@ -20,7 +20,7 @@ describe("applicantInfoForm actions", () => {
 
   it("should applicantInfoForm fail", () => {
     const payload = {};
-    const expectedAction = { type: applicantInfoForm.APPLICANT_INFO_FORM_FAIL, error: payload };
+    const expectedAction = { type: applicantInfoForm.APPLICANT_INFO_FORM_FAIL, payload };
     expect(applicantInfoForm.applicantInfoFormFail(payload)).toEqual(expectedAction);
   });
 });

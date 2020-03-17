@@ -50,7 +50,7 @@ const appConfigReducer = (state = initialState, action) => {
     case RECEIVE_APPCONFIG_SUCCESS:
       return {
         ...state,
-        ...action.data,
+        ...action.payload,
         loading: false
       };
     case LOGIN_INFO_FORM_SUCCESS:
@@ -69,7 +69,7 @@ const appConfigReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: "error"
+        error: action.payload || "error"
       };
     case SET_CONFIG:
       return {
@@ -79,7 +79,7 @@ const appConfigReducer = (state = initialState, action) => {
     case SET_PROSPECT:
       return {
         ...state,
-        prospect: action.prospect
+        prospect: action.payload
       };
     case RESET_PROSPECT:
       return {
@@ -93,7 +93,7 @@ const appConfigReducer = (state = initialState, action) => {
           ...state.prospect,
           generalInfo: {
             ...get(state, "prospect.generalInfo", {}),
-            prospectId: action.prospectId
+            prospectId: action.payload
           }
         }
       };
@@ -111,7 +111,7 @@ const appConfigReducer = (state = initialState, action) => {
     case SAVE_PROSPECT_MODEL:
       return {
         ...state,
-        prospectModel: action.prospectModel
+        prospectModel: action.payload
       };
     case LOGOUT:
       return {
