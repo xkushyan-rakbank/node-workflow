@@ -13,8 +13,9 @@ import routes from "../../routes";
 import { checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
-import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 import { useStyles } from "./styled";
+
+import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
