@@ -5,17 +5,16 @@ import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
 import { VerticalPaginationContext } from "../VerticalPagination";
-import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
+import { FormNavigationContext } from "./FormNavigationProvider";
+import { IslamicSwitcherWrapper } from "../IslamicSwitcherWrapper";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes from "../../routes";
 import { checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
-import { FormNavigationContext } from "./FormNavigationProvider";
-
-import { useStyles } from "./styled";
 import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
-import { detailedAccountRoutes } from "../../constants";
+import { useStyles } from "./styled";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -51,17 +50,15 @@ export const FormNavigationComponent = () => {
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
-        {detailedAccountRoutes.includes(pathname) && (
-          <IslamicBankingSwitcherMobile
-            className={classes.formNavBg}
-            isSwitcherShow={isSwitcherShow}
-            toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
-          >
-            <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-              What banking option do you prefer?
-            </Typography>
-          </IslamicBankingSwitcherMobile>
-        )}
+        <IslamicSwitcherWrapper
+          className={classes.formNavBg}
+          isSwitcherShow={isSwitcherShow}
+          toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
+        >
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            What banking option do you prefer?
+          </Typography>
+        </IslamicSwitcherWrapper>
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (

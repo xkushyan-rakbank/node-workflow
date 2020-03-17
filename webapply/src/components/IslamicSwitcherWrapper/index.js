@@ -1,0 +1,1 @@
+export { IslamicSwitcherWrapper } from "./IslamicSwitcherWrapper";

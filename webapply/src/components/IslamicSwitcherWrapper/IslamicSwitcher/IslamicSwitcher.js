@@ -1,18 +1,18 @@
 import React, { useCallback, useContext } from "react";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import ButtonGroup from "@material-ui/core/ButtonGroup/index";
 import Button from "@material-ui/core/Button/Button";
 import { connect } from "react-redux";
 import cx from "classnames";
 
 import { useStyles } from "./styled";
-import { ReactComponent as ConventionalIcon } from "../../assets/icons/conventional.svg";
-import { ReactComponent as IslamicIcon } from "../../assets/icons/islamic.svg";
-import * as appConfigSelectors from "../../store/selectors/appConfig";
-import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { CONVENTIONAL, detailedAccountRoutesMap, ISLAMIC } from "../../constants";
+import { ReactComponent as ConventionalIcon } from "../../../assets/icons/conventional.svg";
+import { ReactComponent as IslamicIcon } from "../../../assets/icons/islamic.svg";
+import * as appConfigSelectors from "../../../store/selectors/appConfig";
+import { MobileNotificationContext } from "../../Notifications/MobileNotification/MobileNotification";
+import { useTrackingHistory } from "../../../utils/useTrackingHistory";
+import { CONVENTIONAL, detailedAccountRoutesMap, ISLAMIC } from "../../../constants";
 
-const IslamicBankingSwitcher = ({ isIslamicBanking, accountType }) => {
+const IslamicSwitcherComponent = ({ isIslamicBanking, accountType }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const classes = useStyles({ isMobileNotificationActive });
   const pushHistory = useTrackingHistory();
@@ -63,4 +63,4 @@ const mapStateToProps = state => ({
   isIslamicBanking: appConfigSelectors.getIsIslamicBanking(state)
 });
 
-export default connect(mapStateToProps)(IslamicBankingSwitcher);
+export const IslamicSwitcher = connect(mapStateToProps)(IslamicSwitcherComponent);
