@@ -109,8 +109,8 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       [name]: value
     };
 
-    setValues(data);
     changeFullName(data);
+    setValues(data);
   };
 
   return (

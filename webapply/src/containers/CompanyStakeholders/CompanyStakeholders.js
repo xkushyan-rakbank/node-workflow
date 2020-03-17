@@ -59,7 +59,8 @@ const CompanyStakeholdersComponent = ({
         changeFullName(item);
       });
     }
-  }, [changeFullName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
