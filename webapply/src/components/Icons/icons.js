@@ -23,7 +23,7 @@ import { ReactComponent as InfoRed } from "../../assets/icons/infoRed.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Error } from "../../assets/images/error.svg";
 import { ReactComponent as File } from "../../assets/icons/file.svg";
-import { ReactComponent as Familiarization } from "../../assets/icons/white.svg";
+import { ReactComponent as Familiarization } from "../../assets/icons/familiarization.svg";
 
 export const iconComponents = {
   done: Done,
