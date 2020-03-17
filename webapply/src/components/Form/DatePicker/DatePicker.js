@@ -1,23 +1,17 @@
 import React, { memo } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
-import ruLocale from "date-fns/locale/ru";
 import { getIn } from "formik";
 
 import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { StyledKeyboardDatePicker } from "./StyledKeyboadDatePicker";
 import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
-import { useStyles } from "./styled";
 
 import { areEqualFieldProps } from "../utils";
+import { LocalizedUtils } from "./utils";
 
-class LocalizedUtils extends DateFnsUtils {
-  getWeekdays() {
-    return ["M", "T", "W", "T", "F", "S", "S"];
-  }
-}
+import { useStyles } from "./styled";
 
 const DatePickerBase = ({
   field,
@@ -40,7 +34,7 @@ const DatePickerBase = ({
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
-        <MuiPickersUtilsProvider utils={LocalizedUtils} locale={ruLocale}>
+        <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
             autoOk
             autoComplete="off"

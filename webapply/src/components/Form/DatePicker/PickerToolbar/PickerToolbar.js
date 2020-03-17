@@ -6,7 +6,7 @@ import isFuture from "date-fns/isFuture";
 import { PickerSelect } from "../PickerSelect/PickerSelect";
 import { useStyles } from "./styled";
 
-export const PickerToolbar = ({ date, onChange, disableFuture, ...rest }) => {
+export const PickerToolbar = ({ date, onChange, disableFuture }) => {
   const classes = useStyles();
 
   const onMonthChange = month => {
@@ -24,7 +24,12 @@ export const PickerToolbar = ({ date, onChange, disableFuture, ...rest }) => {
         <PickerSelect date={date} onChange={onMonthChange} type="month" />
       </div>
       <div className={classes.column}>
-        <PickerSelect date={date} onChange={onYearChange} type="year" />
+        <PickerSelect
+          isFutureDisabled={disableFuture}
+          date={date}
+          onChange={onYearChange}
+          type="year"
+        />
       </div>
     </div>
   );

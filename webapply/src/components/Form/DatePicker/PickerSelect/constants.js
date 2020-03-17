@@ -12,13 +12,3 @@ export const MONTH_OPTIONS = [
   { value: 10, label: "November" },
   { value: 11, label: "December" }
 ];
-
-export const getYearOptions = () => {
-  const years = [];
-  const now = new Date(Date.now());
-
-  for (let i = 1950; i <= now.getFullYear(); i++) {
-    years.push({ value: i, label: i });
-  }
-  return years;
-};

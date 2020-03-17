@@ -127,7 +127,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
         middleName: "",
         lastName: "",
         isShareholderACompany: false,
-        dateOfBirth: new Date(Date.now()),
+        dateOfBirth: "",
         isPEP: ""
       }}
       onSubmit={handleContinue}
