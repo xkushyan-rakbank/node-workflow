@@ -42,12 +42,17 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
 
   const kycDetailsPath = `prospect.signatoryInfo[${index}].kycDetails`;
 
-  const submitForm = useCallback(() => {
-    updateProspect({
-      [`${kycDetailsPath}.dualCitizenshipCountry`]: passportDetails.map(p => p.country).slice(1)
-    });
-    handleContinue();
-  }, [handleContinue, updateProspect, passportDetails, kycDetailsPath]);
+  const submitForm = useCallback(
+    values => {
+      updateProspect({
+        [`${kycDetailsPath}.dualCitizenshipCountry`]: values.passportDetails
+          .map(p => p.country)
+          .slice(1)
+      });
+      handleContinue();
+    },
+    [handleContinue, updateProspect, kycDetailsPath]
+  );
 
   return (
     <Formik
@@ -86,7 +91,12 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                           }}
                           changeProspect={(prospect, value) => {
                             if (passportIndex) {
-                              return prospect;
+                              return {
+                                ...prospect,
+                                [`${kycDetailsPath}.dualCitizenshipCountry`]: values.passportDetails
+                                  .map(p => p.country)
+                                  .slice(1)
+                              };
                             }
 
                             return {
