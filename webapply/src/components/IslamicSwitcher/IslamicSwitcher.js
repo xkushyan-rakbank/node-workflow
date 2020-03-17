@@ -10,7 +10,7 @@ import {
   ISLAMIC
 } from "../../constants";
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
-import { IslamicSwitcherButtons } from "./IslamicSwitcher/IslamicSwitcher";
+import { IslamicSwitcherButtons } from "./IslamicSwitcherButtons/IslamicSwitcherButtons";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 import { useStyles } from "./styled";
