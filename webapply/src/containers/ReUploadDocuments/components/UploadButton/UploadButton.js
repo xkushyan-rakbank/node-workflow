@@ -4,20 +4,16 @@ import { documentValidationSchema } from "../../../../utils/validation";
 import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
 import { ReactComponent as AddIcon } from "../../../../assets/icons/add-icon.svg";
 import { DocumentUploadError } from "../../../../components/DocumentUploadError/DocumentUploadError";
-import { ReactComponent as CloseIcon } from "../../../../assets/icons/close.svg";
 
 export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
   const classes = useStyles();
   const [error, setError] = useState("");
-
-  const startUploadDialog = () => inputEl.current.click();
-  const resetError = () => setError("");
-  const tryAgain = () => {
-    resetError();
-    startUploadDialog();
-  };
-
   const inputEl = useRef(null);
+
+  const uploadButtonClick = () => {
+    setError("");
+    inputEl.current.click();
+  };
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -42,7 +38,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
         onClick={fileUploadClick}
         ref={inputEl}
       />
-      <div className={classes.uploadButton} onClick={() => !error && startUploadDialog()}>
+      <div className={classes.uploadButton} onClick={uploadButtonClick}>
         {error ? (
           <FileIcon className={classes.errorIcon} width={18} height={24} />
         ) : (
@@ -52,11 +48,8 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
           <span className={classes.uploadButtonText}>
             {isFirstDocument ? "Upload document" : "Add another document"}
           </span>
-          {error && <DocumentUploadError error={error} tryAgainHandler={tryAgain} />}
+          {error && <DocumentUploadError error={error} />}
         </div>
-        {error && (
-          <CloseIcon width={24} height={24} className={classes.cancelIcon} onClick={resetError} />
-        )}
       </div>
     </>
   );

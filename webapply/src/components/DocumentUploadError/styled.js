@@ -14,7 +14,6 @@ export const useStyles = makeStyles({
   },
   errorLink: {
     textDecoration: "underline",
-    marginLeft: 4,
-    cursor: "pointer"
+    marginLeft: 4
   }
 });
