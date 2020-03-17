@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 
 import { VerticalPagination } from "../../components/VerticalPagination";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -19,18 +19,24 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const secondSection = useRef(null);
   const tableRef = useRef(null);
 
-  const scrollToSecondSection = () => {
+  const scrollToSecondSection = useCallback(() => {
     secondSection.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  }, []);
 
-  const scrollToTable = accountType => {
-    setSelectedAccount(accountType);
-    tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const handleClickMobile = useCallback(
+    accountType => {
+      setSelectedAccount(accountType);
+      tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    },
+    [setSelectedAccount]
+  );
 
-  const setAccountType = accountType => {
-    setSelectedAccount(accountType);
-  };
+  const setAccountType = useCallback(
+    accountType => {
+      setSelectedAccount(accountType);
+    },
+    [setSelectedAccount]
+  );
 
   return (
     <div className={classes.container}>
@@ -45,7 +51,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
           />
-          <AccountCard setAccountType={setAccountType} handleClickMobile={scrollToTable} />
+          <AccountCard setAccountType={setAccountType} handleClickMobile={handleClickMobile} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 
