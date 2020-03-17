@@ -30,7 +30,7 @@ export const SubmitApplicationComponent = ({
 
   useEffect(() => NotificationsManager.add(trustMessageContent), [
     NotificationsManager,
-    NotificationsManager
+    trustMessageContent
   ]);
 
   const handleSubmit = useCallback(() => {
