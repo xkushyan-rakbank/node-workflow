@@ -23,7 +23,7 @@ import { ReactComponent as InfoRed } from "../../assets/icons/infoRed.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Error } from "../../assets/images/error.svg";
 import { ReactComponent as File } from "../../assets/icons/file.svg";
-import { ReactComponent as White } from "../../assets/icons/white.svg";
+import { ReactComponent as Familiarization } from "../../assets/icons/white.svg";
 
 export const iconComponents = {
   done: Done,
@@ -51,7 +51,7 @@ export const iconComponents = {
   arrowDown: ArrowDown,
   error: Error,
   file: File,
-  white: White
+  familiarization: Familiarization
 };
 
 export const ICONS = {
@@ -80,5 +80,5 @@ export const ICONS = {
   arrowDown: "arrowDown",
   error: "error",
   file: "file",
-  white: "white"
+  familiarization: "familiarization"
 };

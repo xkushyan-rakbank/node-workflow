@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
 import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
@@ -10,7 +10,8 @@ import { BlockConfirm } from "./BlockConfirm/index";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
-import { NEXT, SUBMIT, notificationOptions } from "../../../../constants";
+import { NEXT, SUBMIT } from "../../../../constants";
+import { trustMessageContent } from "./constants";
 import { NotificationsManager } from "../../../../components/Notification";
 
 export const SubmitApplicationComponent = ({
@@ -26,6 +27,15 @@ export const SubmitApplicationComponent = ({
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = useCallback(() => {
+    updateViewId(pathname.replace(smeBaseName, ""), false);
+    setIsSubmitting(true);
+    sendProspectToAPI(NEXT, null, SUBMIT).then(
+      () => pushHistory(routes.ApplicationSubmitted, true),
+      () => setIsSubmitting(false)
+    );
+  }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, setIsSubmitting]);
   const isROSubmit =
     isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
   const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
@@ -34,16 +44,7 @@ export const SubmitApplicationComponent = ({
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
 
-  useEffect(() => NotificationsManager.add(notificationOptions), [NotificationsManager]);
-
-  const handleSubmit = () => {
-    updateViewId(pathname.replace(smeBaseName, ""), false);
-    setIsSubmitting(true);
-    sendProspectToAPI(NEXT, null, SUBMIT).then(
-      () => pushHistory(routes.ApplicationSubmitted, true),
-      () => setIsSubmitting(false)
-    );
-  };
+  useEffect(() => NotificationsManager.add(trustMessageContent), [NotificationsManager]);
 
   if (isSubmitting) {
     return <ServerRequestLoadingScreen />;
