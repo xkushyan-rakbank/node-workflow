@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import check_ic from "../../../../assets/images/icons/circle_checked_o.svg";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
@@ -15,6 +15,10 @@ export const AccountTypeCardComponent = ({
 }) => {
   const classes = useStyles();
   const { scrollToSection } = useContext(VerticalPaginationContext);
+  const continueButtonClick = useCallback(() => {
+    setAccountType(accountType);
+    handleClickMobile();
+  }, [handleClickMobile, setAccountType, accountType]);
 
   return (
     <div className={classes.container}>
@@ -50,7 +54,7 @@ export const AccountTypeCardComponent = ({
         />
         <div className="show-on-mobile">
           <ContinueButton
-            handleClick={handleClickMobile}
+            handleClick={continueButtonClick}
             label={buttonText}
             classes={{ buttonStyle: classes.continueButtonRoot }}
           />

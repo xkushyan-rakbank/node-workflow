@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import TableBody from "@material-ui/core/TableBody";
@@ -35,12 +35,24 @@ const BootstrapInput = withStyles(theme => ({
   }
 }))(InputBase);
 
-export const StyledTableBodyMobileComponent = () => {
+export const StyledTableBodyMobileComponent = ({ selectedAccount }) => {
   const classes = useStyles();
   const [mobileAccounts, setMobileAccounts] = useState([
     accountTypes.starter.id,
     accountTypes.currentAccount.id
   ]);
+
+  useEffect(() => {
+    const accountTypeId = Object.values(accountTypes).find(
+      value => value.accountName === selectedAccount
+    ).id;
+    const comparedAccounts = {
+      [accountTypes.starter.id]: [accountTypes.starter.id, accountTypes.currentAccount.id],
+      [accountTypes.currentAccount.id]: [accountTypes.currentAccount.id, accountTypes.elite.id],
+      [accountTypes.elite.id]: [accountTypes.elite.id, accountTypes.currentAccount.id]
+    };
+    setMobileAccounts(comparedAccounts[accountTypeId]);
+  }, [selectedAccount, setMobileAccounts]);
 
   return (
     <TableBody>
