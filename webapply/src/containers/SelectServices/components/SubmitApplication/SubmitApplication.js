@@ -11,7 +11,7 @@ import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NEXT, SUBMIT } from "../../../../constants";
-import { trustMessageContent } from "./constants";
+import { trustMessageContent, termsMessageContent } from "./constants";
 import { NotificationsManager } from "../../../../components/Notification";
 
 export const SubmitApplicationComponent = ({
@@ -22,24 +22,26 @@ export const SubmitApplicationComponent = ({
   sendProspectToAPI,
   isApplyEditApplication,
   updateViewId,
-  currentProspectStatus
+  currentProspectStatus,
+  isLinksVisited
 }) => {
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => NotificationsManager.add(trustMessageContent), [
-    NotificationsManager,
-    trustMessageContent
-  ]);
+  useEffect(() => NotificationsManager.add(trustMessageContent), []);
 
   const handleSubmit = useCallback(() => {
-    updateViewId(pathname.replace(smeBaseName, ""), false);
-    setIsSubmitting(true);
-    sendProspectToAPI(NEXT, null, SUBMIT).then(
-      () => pushHistory(routes.ApplicationSubmitted, true),
-      () => setIsSubmitting(false)
-    );
+    if (!isLinksVisited) {
+      NotificationsManager.add(termsMessageContent);
+    } else {
+      updateViewId(pathname.replace(smeBaseName, ""), false);
+      setIsSubmitting(true);
+      sendProspectToAPI(NEXT, null, SUBMIT).then(
+        () => pushHistory(routes.ApplicationSubmitted, true),
+        () => setIsSubmitting(false)
+      );
+    }
   }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, setIsSubmitting]);
   const isROSubmit =
     isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;

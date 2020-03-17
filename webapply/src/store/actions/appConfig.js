@@ -16,6 +16,7 @@ export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
 export const LOAD_META_DATA = "LOAD_META_DATA";
+export const SET_LINKS_CONDITION = "SET_LINKS_CONDITION";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -71,3 +72,5 @@ export const saveProspectModel = prospectModel => {
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });
 
 export const resetApplicantInfo = () => ({ type: RESET_APPLICANT_INFO });
+
+export const setLinksCondition = condition => ({ type: SET_LINKS_CONDITION, payload: condition });

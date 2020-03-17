@@ -6,7 +6,8 @@ import {
   getApplicationInfo,
   getAccountInfo,
   getSignatories,
-  getOrganizationInfo
+  getOrganizationInfo,
+  getLinksConditional
 } from "../../../../store/selectors/appConfig";
 import {
   getIsEditableStatusSearchInfo,
@@ -22,7 +23,8 @@ const mapStateToProps = state => ({
   signatoryInfo: getSignatories(state),
   organizationInfo: getOrganizationInfo(state),
   isApplyEditApplication: getIsEditableStatusSearchInfo(state),
-  currentProspectStatus: getProspectStatus(state)
+  currentProspectStatus: getProspectStatus(state),
+  isLinksVisited: getLinksConditional(state)
 });
 
 const mapDispatchToProps = {

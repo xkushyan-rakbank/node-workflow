@@ -14,7 +14,7 @@ const blockConfirmSchema = Yup.object({
   areTermsAgreed: Yup.boolean().oneOf([true], "Required")
 });
 
-export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
+export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking, setIsVisitedLink }) => {
   const classes = useStyles();
 
   const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
@@ -27,6 +27,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
         href={termConditionLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => setIsVisitedLink({ conditionLink: true })}
       >
         terms and conditions
       </a>{" "}
@@ -36,6 +37,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
         href={termEnrollmentLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => setIsVisitedLink({ enrollmentLink: true })}
       >
         terms of enrollment
       </a>
