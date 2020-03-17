@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import routes, { agentBaseName } from "./routes";
+import routes, { agentBaseName, smeBaseName } from "./routes";
 import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
@@ -125,6 +125,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
               <Redirect exact path="/" to={routes.accountsComparison} />
+              <Redirect exact path={`(${smeBaseName})?`} to={routes.accountsComparison} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
           </Suspense>
