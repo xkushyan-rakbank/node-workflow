@@ -1,5 +1,6 @@
 import routes, { smeBaseName } from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
+import { ICONS } from "../components/Icons";
 
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
@@ -209,6 +210,13 @@ export const screeningStatus = [
 ];
 
 export const SCREENING_FAIL_REASONS = ["Decline", "Match"];
+
+export const notificationOptions = {
+  message:
+    "Trust you have reviewed the details entered so far, as you will not be able to change them in the next page.",
+  title: "",
+  icon: ICONS.white
+};
 
 export const screeningStatusDefault = {
   icon: callbackRegular,

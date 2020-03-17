@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
 import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
@@ -10,7 +10,8 @@ import { BlockConfirm } from "./BlockConfirm/index";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
-import { NEXT, SUBMIT } from "../../../../constants";
+import { NEXT, SUBMIT, notificationOptions } from "../../../../constants";
+import { NotificationsManager } from "../../../../components/Notification";
 
 export const SubmitApplicationComponent = ({
   accountInfo: [account],
@@ -32,6 +33,8 @@ export const SubmitApplicationComponent = ({
   const isSubmitButtonEnable =
     isApplyEditApplication ||
     (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
+
+  useEffect(() => NotificationsManager.add(notificationOptions), [NotificationsManager]);
 
   const handleSubmit = () => {
     updateViewId(pathname.replace(smeBaseName, ""), false);
@@ -55,7 +58,6 @@ export const SubmitApplicationComponent = ({
         signatoryInfo={signatoryInfo}
         account={account}
       />
-
       {!isApplyEditApplication && <BlockConfirm setFormFields={setFormFields} />}
 
       <div className="linkContainer">
