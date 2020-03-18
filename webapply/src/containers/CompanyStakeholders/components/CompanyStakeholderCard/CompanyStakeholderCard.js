@@ -24,7 +24,12 @@ export const CompanyStakeholderCard = ({
   return (
     <div className={cx(classes.wrapper, className)}>
       <div className={classes.contentWrapper}>
-        <Avatar firstName={firstName} lastName={lastName} index={index} isEmptyAvatar={firstName} />
+        <Avatar
+          firstName={firstName}
+          lastName={lastName}
+          index={index}
+          isEmptyAvatar={!firstName}
+        />
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>

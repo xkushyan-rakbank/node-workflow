@@ -27,10 +27,7 @@ export const changeFullName = item => {
 };
 
 export const deleteStakeholderFromContext = id => {
-  const index = stakeholders.findIndex(e => e.id === id);
-  if (index !== -1) {
-    stakeholders.splice(index, 1);
-  }
+  stakeholders = stakeholders.filter(e => e.id !== id);
 
   setValues(stakeholders);
 };
