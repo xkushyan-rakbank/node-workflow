@@ -7,7 +7,7 @@ import {
   screenProspectRequest,
   screenProspectSuccess,
   screenProspectReset
-} from "../screenProspect";
+} from "../../../src/store/actions/screenProspect";
 
 describe("actions for screenProspect", () => {
   const prospectId = "12345";
