@@ -56,7 +56,7 @@ const StakeholderStepperComponent = ({
 }) => {
   const classes = useStyles();
   const stakeholdersFromContext = useContext(FullNameContext);
-  const stakeholder = stakeholdersFromContext.find(item => item.id === id);
+  const stakeholder = stakeholdersFromContext.find(item => item.id === id) || [];
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};

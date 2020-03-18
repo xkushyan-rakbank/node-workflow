@@ -8,15 +8,13 @@ import { useStyles } from "./styled";
 import { checkIsAccountInfoTypeNumber } from "../../../FinalQuestions/components/SignatorySummaryCard/utils";
 
 export const FilledStakeholderCard = ({
-  firstName,
-  lastName,
   accountSigningInfo,
   changeEditableStep,
   index,
   kycDetails: { shareHoldingPercentage } = {},
   datalist,
   editDisabled,
-  stakeholder
+  stakeholder: { firstName, lastName, middleName }
 }) => {
   const classes = useStyles();
 
@@ -30,10 +28,7 @@ export const FilledStakeholderCard = ({
         <Avatar firstName={firstName} lastName={lastName} index={index} />
 
         <div className={classes.userInfo}>
-          <div className={classes.nameField}>
-            {stakeholder &&
-              `${stakeholder.firstName} ${stakeholder.middleName} ${stakeholder.lastName}`}
-          </div>
+          <div className={classes.nameField}>{`${firstName} ${middleName} ${lastName}`}</div>
           {accountSigningInfo && authorityTypeValueFromProspect && (
             <div className={classes.signatoryField}>{authorityTypeValue}</div>
           )}

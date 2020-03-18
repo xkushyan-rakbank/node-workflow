@@ -14,27 +14,18 @@ export const CompanyStakeholderCard = ({
   children,
   isEditInProgress,
   editHandler,
-  stakeholder
+  stakeholder: { firstName, lastName, middleName }
 }) => {
   const classes = useStyles();
 
   return (
     <div className={cx(classes.wrapper, className)}>
       <div className={classes.contentWrapper}>
-        <Avatar
-          firstName={stakeholder && stakeholder.firstName}
-          lastName={stakeholder && stakeholder.lastName}
-          index={index}
-          isEmptyAvatar={stakeholder && !stakeholder.firstName}
-        />
+        <Avatar firstName={firstName} lastName={lastName} index={index} isEmptyAvatar={firstName} />
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>
-            {(stakeholder &&
-              [stakeholder.firstName, stakeholder.middleName, stakeholder.lastName]
-                .filter(item => item)
-                .join(" ")) ||
-              "New Stakeholder"}
+            {[firstName, middleName, lastName].filter(item => item).join(" ") || "New Stakeholder"}
           </div>
           {isStatusShown && <StatusLoader loading={isStatusLoading} />}
           {isEditInProgress && (
