@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
@@ -19,10 +19,15 @@ const blockConfirmSchema = Yup.object({
 export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
   const [isConditionLinkVisited, setIsConditionLinkVisited] = useState(false);
   const [isEnrollmentLinkVisited, setIsEnrollmentLinkVisited] = useState(false);
+  const classes = useStyles();
 
   const isAllLinksVisited = isConditionLinkVisited && isEnrollmentLinkVisited;
 
-  const classes = useStyles();
+  const handleShowNotification = useCallback(
+    () =>
+      !isAllLinksVisited && NotificationsManager && NotificationsManager.add(termsMessageContent),
+    [isAllLinksVisited]
+  );
 
   const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
 
@@ -84,14 +89,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
               component={Checkbox}
               inputProps={{ tabIndex: 0 }}
             />
-            <div
-              onClick={() => {
-                if (isAllLinksVisited) {
-                  return;
-                }
-                NotificationsManager.add(termsMessageContent);
-              }}
-            >
+            <div onClick={handleShowNotification}>
               <Field
                 name="areTermsAgreed"
                 label={termsAgreedLabel}
