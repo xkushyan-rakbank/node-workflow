@@ -1,28 +1,15 @@
-import { styled } from "@material-ui/core/styles";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { makeStyles } from "@material-ui/core/styles";
 
-export const BaseDatePicker = styled(KeyboardDatePicker)({
-  position: "relative",
-  "&::after": {
-    content: "''",
-    display: "block",
-    position: "absolute",
-    width: "1px",
-    height: "100%",
-    backgroundColor: "#ddd",
-    right: "56px",
-    zIndex: "-1"
-  },
-  "& fieldset": {
-    borderRadius: "8px !important",
-    border: "solid 1px rgba(194, 194, 194, 0.56)"
-  },
-  "& svg": {
-    fill: "#373737",
-    fontSize: "16px"
-  },
-  "& button": {
-    left: "4px",
-    outline: "none"
+export const useStyles = makeStyles({
+  root: {
+    "& label.Mui-focused": {
+      color: "#3b3a3a"
+    },
+    "& fieldset": {
+      borderColor: "rgba(194, 194, 194, 0.56)"
+    },
+    "& .Mui-focused fieldset": {
+      borderColor: "#373737 !important"
+    }
   }
 });
