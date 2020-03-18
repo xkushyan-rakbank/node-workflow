@@ -1,18 +1,18 @@
 package ae.rakbank.webapply.security;
 
 import ae.rakbank.webapply.filter.HttpServletRequestWritableWrapper;
-import ae.rakbank.webapply.filter.ResponseWrapper;
-import ae.rakbank.webapply.response.GenericResponse;
 import ae.rakbank.webapply.util.SecurityUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -32,8 +32,6 @@ public class SecurityFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             log.info("Encryption enabled");
-            ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
-            responseWrapper.setCharacterEncoding("UTF-8");
 
             byte[] randomKey = getKeyFromRequest((HttpServletRequest) request);
             byte[] decryptedData = null;
@@ -45,35 +43,14 @@ public class SecurityFilter implements Filter {
                 decryptedData = (securityUtil.decryptSymmetric(dataToDecrypt, spec));
             }
 
-            String result;
             if (decryptedData == null || decryptedData.length == 0) {
-                GenericResponse failed = GenericResponse.getFailedResponse(
-                        "Error while reading request payload, encrypted payload should be passed", "");
-                ObjectMapper mapper = new ObjectMapper();
-                result = mapper.writeValueAsString(failed);
-                responseWrapper.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                throw new IllegalStateException("Error while reading request payload, encrypted payload should be passed");
             } else {
-                HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request,
-                        decryptedData);
-
-                chain.doFilter(requestWrapper, responseWrapper);
-                result = encrypt(responseWrapper, spec);
+                HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request, decryptedData);
+                chain.doFilter(requestWrapper, response);
             }
 
-            if (result != null) {
-                response.setContentLength(result.length());
-                response.getWriter().write(result);
-            }
         }
-    }
-
-    private String encrypt(ResponseWrapper responseWrapper, SecretKeySpec spec) {
-        try {
-            return securityUtil.encryptSymmetric(responseWrapper.getCaptureAsString(), spec);
-        } catch (Exception e) {
-            log.error("error while encryption {}", e.getMessage());
-        }
-        return null;
     }
 
     private String decrypt(ServletRequest request) {

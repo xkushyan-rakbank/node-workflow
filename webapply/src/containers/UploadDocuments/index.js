@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import { getSignatories, getEndpoints, getProspectId } from "../../store/selectors/appConfig";
+import { getSignatories, getProspectId } from "../../store/selectors/appConfig";
 import {
   getProspectDocuments,
   getisLoadingDocuments,
@@ -24,7 +24,6 @@ const mapStateToProps = state => ({
   documents: getProspectDocuments(state),
   companyName: getOrganizationInfo(state).companyName,
   signatories: getSignatories(state),
-  uploadDocsEndpoints: getEndpoints(state),
   prospectID: getProspectId(state),
   isRequiredDocsUploaded: getIsRequiredDocsUploaded(state),
   progress: state.uploadDocuments.progress,

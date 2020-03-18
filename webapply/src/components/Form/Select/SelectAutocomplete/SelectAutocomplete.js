@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
+import { areEqualFieldProps } from "../../utils";
 import { useStyles, customStyles } from "./styled";
 
 const components = {
@@ -14,15 +15,15 @@ const components = {
   MultiValue
 };
 
-export const SelectAutocomplete = ({
+const SelectAutocompleteBase = ({
   extractValue = option => option.value,
   extractLabel = option => option.label || option.displayText,
   theme,
   label,
   shrink,
   options,
-  field,
-  form: { errors, touched, setFieldValue },
+  field: { onBlur, ...field },
+  form: { errors, touched, setFieldValue, setFieldTouched },
   multiple = false,
   disabled,
   contextualHelpText,
@@ -75,7 +76,10 @@ export const SelectAutocomplete = ({
           placeholder=""
           textFieldProps={{
             onFocus: () => setFocus(true),
-            onBlur: () => setFocus(false),
+            onBlur: () => {
+              setFocus(false);
+              setFieldTouched(field.name);
+            },
             label,
             error: !!isError,
             InputLabelProps: {
@@ -89,3 +93,5 @@ export const SelectAutocomplete = ({
     </FormControl>
   );
 };
+
+export const SelectAutocomplete = memo(SelectAutocompleteBase, areEqualFieldProps);

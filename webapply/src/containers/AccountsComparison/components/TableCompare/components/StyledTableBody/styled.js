@@ -35,27 +35,6 @@ export const useStyles = makeStyles(theme => ({
     border: "solid 1px #e8e8e8",
     backgroundColor: "#fff"
   },
-  containedButton: {
-    boxShadow: "none",
-    backgroundColor: "#fff",
-    height: "auto",
-    border: "1px solid #373737",
-    padding: "3px 15px",
-    minWidth: "120px",
-    fontFamily: "Open Sans",
-    "&:hover": {
-      backgroundColor: "#000",
-      "& span": {
-        color: "#fff"
-      }
-    }
-  },
-  containedButtonLabelStyle: {
-    color: "#373737",
-    fontSize: "14px",
-    textAlign: "center",
-    display: "block"
-  },
   tableRowRoot: {
     "& th": {
       fontSize: "14px",
@@ -158,14 +137,17 @@ export const useStyles = makeStyles(theme => ({
     "& span:last-child": {
       fontWeight: "400"
     },
-    "& button": {
+    "& a": {
       minWidth: "150px",
       minHeight: "40px",
       height: "auto",
-      backgroundColor: "#000",
-      "& span:first-child": {
-        color: "#fff",
-        fontSize: "16px"
+      "& div": {
+        backgroundColor: "#000",
+        height: "40px",
+        "& span:first-child": {
+          color: "#fff",
+          fontSize: "16px"
+        }
       }
     }
   },

@@ -1,6 +1,7 @@
 import { all, put, takeEvery, select } from "redux-saga/effects";
-import cloneDeep from "lodash/cloneDeep";
 import uniqueId from "lodash/uniqueId";
+
+import { cloneDeep } from "../../utils/cloneDeep";
 
 import {
   CREATE_NEW_STAKEHOLDER,
@@ -12,10 +13,19 @@ import {
 } from "../actions/stakeholders";
 import { removeSignatory } from "../actions/completedSteps";
 import { setConfig } from "../actions/appConfig";
+import { UAE } from "../../constants";
+import { getProspect, getProspectModel } from "../selectors/appConfig";
 
 function* createNewStakeholderSaga() {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const prospect = cloneDeep(getProspect(state));
+  const prospectModel = cloneDeep(getProspectModel(state));
+  const config = {
+    ...state.appConfig,
+    prospect,
+    prospectModel
+  };
+
   const stakeholderId = uniqueId();
   const stakeholdersIds = [
     ...state.stakeholders.stakeholdersIds,
@@ -23,6 +33,8 @@ function* createNewStakeholderSaga() {
   ];
 
   const signatoryInfoModel = cloneDeep(config.prospectModel.signatoryInfo[0]);
+  signatoryInfoModel.kycDetails.residenceCountry = UAE;
+  signatoryInfoModel.kycDetails.isUAEResident = true;
   config.prospect.signatoryInfo.push(signatoryInfoModel);
   const editableStakeholder = config.prospect.signatoryInfo.length - 1;
 
@@ -33,7 +45,12 @@ function* createNewStakeholderSaga() {
 
 function* deleteStakeholderSaga(action) {
   const state = yield select();
-  const config = cloneDeep(state.appConfig);
+  const prospect = cloneDeep(getProspect(state));
+  const config = {
+    ...state.appConfig,
+    prospect
+  };
+
   const stakeholdersIds = [...state.stakeholders.stakeholdersIds];
   const removedIndex = stakeholdersIds.indexOf(
     stakeholdersIds.find(item => item.id === action.stakeholderId)

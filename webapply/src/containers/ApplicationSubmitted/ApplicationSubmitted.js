@@ -5,15 +5,19 @@ import { connect } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
+import { formStepper } from "../../constants";
+
+import { useStyles } from "./styled";
 
 import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
-import { useStyles } from "./styled";
-import { useIconsByAccount } from "../../utils/useIconsByAccount";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
   const { submitted, bankingClock: BankingClock } = useIconsByAccount();
+  useFormNavigation([true, true, formStepper]);
 
   return accountNumbers.length > 0 ? (
     <div className={classes.container}>
@@ -48,8 +52,8 @@ const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => 
       </div>
       <div className={classes.infoBottom}>
         <InfoNote
-          text="Account numbers are provisional and subject to internal approvals. You will be able to make transactions on the accounts once they get activated."
-          style={{ marginTop: "20px", position: "static" }}
+          text="Account numbers are provisional and subject to internal approvals. You will only be able to make transactions on the accounts once they get activated."
+          className={classes.infoNote}
         />
       </div>
       <div className={classes.divider}>{""}</div>

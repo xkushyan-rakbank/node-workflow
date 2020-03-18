@@ -6,7 +6,7 @@ import uniqueId from "lodash/uniqueId";
 import Grid from "@material-ui/core/Grid";
 import get from "lodash/get";
 
-import { getOrgKYCDetails } from "../../../../store/selectors/appConfig";
+import { getOrgKYCDetails, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { MAX_INDUSTRIES_LENGTH } from "../../constants";
@@ -35,7 +35,13 @@ const industrySchema = Yup.object().shape({
   )
 });
 
-export const IndustryStep = ({ handleContinue, industries, updateProspect }) => {
+export const IndustryStep = ({
+  handleContinue,
+  industries,
+  updateProspect,
+  isIslamicBanking,
+  createFormChangeHandler
+}) => {
   const classes = useStyles();
 
   const addIndustryHandler = arrayHelper => () => {
@@ -67,6 +73,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
     });
   };
 
+  const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
+
   return (
     <Formik
       initialValues={{
@@ -86,7 +94,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {({ values, setFieldValue }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -107,7 +115,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           path={currentIndustry}
                           label="Industry"
                           component={SelectAutocomplete}
-                          datalistId="industry"
+                          datalistId={datalistId}
                           changeProspect={(prospect, value) => {
                             if (industryIndex) {
                               return prospect;
@@ -121,17 +129,10 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }}
                           shrink={true}
                           tabIndex="0"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
                               This should be selected as per the most relevant business / commercial
                               / licensed activity mentioned in the trade license
-                              <br />
-                              Example:
-                              <br />
-                              If business / commercial / licensed activity is {"'"}E Commerce{"'"},
-                              please select industry as {"'"}Services{"'"} & sub-industry as {"'"}
-                              Computer & IT Industry{"'"}
                             </>
                           }
                         />
@@ -142,7 +143,8 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           path={currentSubCategory}
                           label="Industry sub-category"
                           component={SelectAutocomplete}
-                          datalistId="industry"
+                          datalistId={datalistId}
+                          filterOptionsDeps={item.industry}
                           filterOptions={options => {
                             // All previous industries with selected industry
                             const previousSelectedIndustries = values.industries.filter(
@@ -174,17 +176,10 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
                           }}
                           disabled={!item.industry}
                           tabIndex="0"
-                          otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
                           contextualHelpText={
                             <>
                               This should be selected as per the most relevant business / commercial
                               / licensed activity mentioned in the trade license
-                              <br />
-                              Example:
-                              <br />
-                              If business / commercial / licensed activity is {"'"}E Commerce{"'"},
-                              please select industry as {"'"}Services{"'"} & sub-industry as {"'"}
-                              Computer & IT Industry{"'"}
                             </>
                           }
                         />
@@ -225,14 +220,15 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect }) => 
             <ContinueButton type="submit" />
           </Grid>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    industries: get(getOrgKYCDetails(state), "industryMultiSelect", [])
+    industries: get(getOrgKYCDetails(state), "industryMultiSelect", []),
+    isIslamicBanking: getIsIslamicBanking(state)
   };
 };
 

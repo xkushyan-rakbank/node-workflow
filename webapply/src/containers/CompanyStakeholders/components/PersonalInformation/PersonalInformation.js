@@ -81,6 +81,7 @@ const personalInformationSchema = Yup.object().shape({
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
+      .nullable()
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
@@ -116,7 +117,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched }) => (
+      {({ values, errors, touched, setFieldValue }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -234,7 +235,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
             path={`prospect.signatoryInfo[${index}].kycDetails.isPEP`}
             component={InlineRadioGroup}
             options={yesNoOptions}
-            isDisabled={!!values.isShareholderACompany}
+            disabled={!!values.isShareholderACompany}
             label="This Person, or a relative of this person by blood or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
             InputProps={{
               inputProps: { tabIndex: 0 }

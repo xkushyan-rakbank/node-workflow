@@ -1,27 +1,12 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import InputBase from "@material-ui/core/InputBase";
 
 export const useStyles = makeStyles(theme => ({
-  containedButton: {
-    boxShadow: "none",
-    backgroundColor: "#fff",
-    height: "auto",
-    border: "1px solid #373737",
-    padding: "3px 15px",
-    minWidth: 120,
-    minHeight: 32,
-    fontFamily: "Open Sans",
-    "&:hover": {
-      backgroundColor: "#000",
-      "& span": {
-        color: "#fff"
-      }
-    }
+  linkStyle: {
+    margin: 0
   },
-  containedButtonLabelStyle: {
-    color: "#373737",
-    fontSize: "14px",
-    textAlign: "center",
-    display: "block"
+  buttonStyle: {
+    height: 32
   },
   tableRowRoot: {
     "& td": {
@@ -104,3 +89,24 @@ export const useStyles = makeStyles(theme => ({
     position: "relative"
   }
 }));
+
+export const BootstrapInput = withStyles(theme => ({
+  root: {
+    width: "100%"
+  },
+  input: {
+    borderRadius: 4,
+    boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
+    width: "100%",
+    position: "relative",
+    backgroundColor: "#fff",
+    border: "1px solid #e8e8e8",
+    fontSize: 14,
+    textAlign: "left",
+    padding: "13px 26px 13px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:focus": {
+      backgroundColor: "#fff"
+    }
+  }
+}))(InputBase);

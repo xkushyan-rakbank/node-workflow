@@ -17,7 +17,7 @@ import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../cons
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
-import { SPECIAL_CHARACTERS_REGEX } from "../../../utils/validation";
+import { LICENSE_NUMBER_REGEX } from "../../../utils/validation";
 
 const initialValues = {
   licenseNumber: "",
@@ -34,20 +34,27 @@ const licenseInformationSchema = () =>
       .required(getRequiredMessage("License number"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_LICENSE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("License number")),
-    licenseIssueDate: Yup.date().required(getRequiredMessage("License issuing date")),
+      .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("License number")),
+    licenseIssueDate: Yup.date()
+      .nullable()
+      .typeError(getInvalidMessage("License issuing date"))
+      .required(getRequiredMessage("License issuing date")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
-    dateOfIncorporation: Yup.date().required(getRequiredMessage("Date of incorporation")),
+    dateOfIncorporation: Yup.date()
+      .nullable()
+      .typeError(getInvalidMessage("Date of incorporation"))
+      .required(getRequiredMessage("Date of incorporation")),
     yearsInBusiness: Yup.number()
       .min(0, "Must be more than 0")
+      .typeError(getInvalidMessage("Years in business"))
       .integer(getInvalidMessage("Years in business"))
   });
 
 const changeDateProspectHandler = (_, value, path) =>
   isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
-export const LicenseInformation = ({ handleContinue }) => {
+export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) => {
   const classes = useStyles();
   return (
     <Formik
@@ -56,7 +63,7 @@ export const LicenseInformation = ({ handleContinue }) => {
       validationSchema={licenseInformationSchema}
       onSubmit={handleContinue}
     >
-      {({ setFieldValue }) => (
+      {createFormChangeHandler(({ setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
@@ -94,7 +101,6 @@ export const LicenseInformation = ({ handleContinue }) => {
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
-                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -161,7 +167,7 @@ export const LicenseInformation = ({ handleContinue }) => {
             <ContinueButton type="submit" />
           </Grid>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

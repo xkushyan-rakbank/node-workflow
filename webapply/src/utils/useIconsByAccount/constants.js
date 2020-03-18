@@ -18,6 +18,7 @@ import overviewConventoinal from "../../assets/gif/overview_reg.gif";
 import paperPlaneRegular from "../../assets/gif/paperplane_regular.gif";
 import submittedRegular from "../../assets/gif/submitted_regular.gif";
 import successRegular from "../../assets/gif/submitted_regular.gif";
+import notFoundRegular from "../../assets/gif/declined_regular.gif";
 
 /* RAKIslamic */
 import { ReactComponent as balanceIslamic } from "../../assets/icons/islamic/balance.svg";
@@ -44,6 +45,7 @@ import overviewIslamic from "../../assets/gif/overview_islamic.gif";
 import paperPlaneIslamic from "../../assets/gif/paperplane_islamic.gif";
 import submittedIslamic from "../../assets/gif/submitted_islamic.gif";
 import successIslamic from "../../assets/gif/success_islamic.gif";
+import notFoundIslamic from "../../assets/gif/declined_islamic.gif";
 
 /* RAKElite */
 import { ReactComponent as processingEliteIc } from "../../assets/icons/elite/processing.svg";
@@ -67,6 +69,10 @@ import overviewElite from "../../assets/gif/overview_elite.gif";
 import paperPlaneElite from "../../assets/gif/paperplane_elite.gif";
 import submittedElite from "../../assets/gif/submitted_elite.gif";
 import successElite from "../../assets/gif/success_elite.gif";
+import notFoundElite from "../../assets/gif/declined_elite.gif";
+
+/*RakElite Islamic*/
+import overviewEliteIslamic from "../../assets/gif/overview_elite islamic.gif";
 
 export const conventionalIconsSet = {
   availability: availabilityConventional,
@@ -87,7 +93,8 @@ export const conventionalIconsSet = {
   awaiting: paperPlaneRegular,
   submitted: submittedRegular,
   success: successRegular,
-  bankingClock: bankingClockConventional
+  bankingClock: bankingClockConventional,
+  notFound: notFoundRegular
 };
 
 export const islamicIconsSet = {
@@ -114,7 +121,8 @@ export const islamicIconsSet = {
   awaiting: paperPlaneIslamic,
   submitted: submittedIslamic,
   success: successIslamic,
-  bankingClock: bankingClockIslamic
+  bankingClock: bankingClockIslamic,
+  notFound: notFoundIslamic
 };
 
 export const eliteIconsSet = {
@@ -139,5 +147,11 @@ export const eliteIconsSet = {
   awaiting: paperPlaneElite,
   submitted: submittedElite,
   success: successElite,
-  bankingClock: bankingClockElite
+  bankingClock: bankingClockElite,
+  notFound: notFoundElite
+};
+
+export const eliteIslamicIconsSet = {
+  ...eliteIconsSet,
+  overview: overviewEliteIslamic
 };

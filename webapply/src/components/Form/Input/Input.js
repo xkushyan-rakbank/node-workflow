@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import { getIn } from "formik";
@@ -6,24 +6,23 @@ import cx from "classnames";
 
 import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
 import { checkBrowserIsIE } from "../../../utils/checkBrowserIsIE";
+import { areEqualFieldProps } from "../utils";
 
 import { useStyles } from "./styled";
 
-export const Input = ({
+const InputBase = ({
   contextualHelpText,
   contextualHelpProps,
   placement,
   disabled,
   placeholder,
   label,
-  field,
+  field: { onBlur, ...field },
   shrink,
   infoTitle,
   form: { errors, touched },
   classes: extendedClasses,
   InputProps,
-  onFocus,
-  onBlur,
   ErrorMessageComponent = ErrorMessage,
   ...props
 }) => {
@@ -51,17 +50,16 @@ export const Input = ({
             classes: { input: classes.input, inputMultiline: classes.inputMultiline }
           }}
           InputLabelProps={{ shrink }}
-          onFocus={event => {
+          onFocus={() => {
             if (isIE) {
               setFocus(true);
             }
-            onFocus && onFocus(event);
           }}
           onBlur={event => {
             if (isIE) {
               setFocus(false);
             }
-            onBlur && onBlur(event);
+            onBlur(event);
           }}
         />
       </ContexualHelp>
@@ -75,3 +73,5 @@ export const Input = ({
     </FormControl>
   );
 };
+
+export const Input = memo(InputBase, areEqualFieldProps);

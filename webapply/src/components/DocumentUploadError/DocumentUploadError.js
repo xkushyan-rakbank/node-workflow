@@ -4,7 +4,7 @@ import { ReactComponent as AlertIcon } from "../../assets/icons/alert.svg";
 
 export const DocumentUploadError = ({
   error = "Oops! We couldn’t upload the document.",
-  tryAgainHandler
+  tryAgainHandler = () => {}
 }) => {
   const classes = useStyles();
 

@@ -1,0 +1,1 @@
+export { IslamicSwitcher } from "./IslamicSwitcher";

@@ -5,28 +5,28 @@ import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
 import { VerticalPaginationContext } from "../VerticalPagination";
-import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
+import { FormNavigationContext } from "./FormNavigationProvider";
+import { IslamicSwitcher } from "../IslamicSwitcher";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
-import routes, { agentBaseName } from "../../routes";
-import { formStepper, searchProspectStepper } from "../../constants";
-import { checkIsShowAccountInfo, checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
+import routes from "../../routes";
+import { checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
+import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
 import { useStyles } from "./styled";
-import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
-export const FormNavigationComponent = ({ isApplyEditApplication }) => {
+export const FormNavigationComponent = () => {
   const {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
-  const blobColor = useBlobColor();
-
+  const navContext = useContext(FormNavigationContext);
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
-
+  const blobColor = useBlobColor(!navContext);
   const classes = useStyles({
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
@@ -34,19 +34,13 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
     accountsComparisonPage: routes.accountsComparison === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
-  const isChatVisible =
-    !isApplyEditApplication &&
-    pathname.indexOf(agentBaseName) === -1 &&
-    ![
-      routes.accountsComparison,
-      routes.detailedAccount,
-      routes.applicationOverview,
-      routes.applicantInfo,
-      routes.verifyOtp,
-      routes.comeBackLogin,
-      routes.comeBackLoginVerification
-    ].includes(pathname);
-  const navigationSteps = pathname.startsWith(agentBaseName) ? searchProspectStepper : formStepper;
+
+  if (!navContext) {
+    return null;
+  }
+
+  const [isShowAccountInfo, isChatVisible, navigationSteps = []] = navContext;
+
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
   );
@@ -57,7 +51,7 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
-        <IslamicBankingSwitcherMobile
+        <IslamicSwitcher
           className={classes.formNavBg}
           isSwitcherShow={isSwitcherShow}
           toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
@@ -65,23 +59,21 @@ export const FormNavigationComponent = ({ isApplyEditApplication }) => {
           <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
             What banking option do you prefer?
           </Typography>
-        </IslamicBankingSwitcherMobile>
-        {checkIsShowAccountInfo(pathname) ? (
+        </IslamicSwitcher>
+        {isShowAccountInfo ? (
           <AccountInfo />
         ) : (
-          pathname !== routes.login && (
-            <ul>
-              {navigationSteps.map(step => (
-                <FormNavigationStep
-                  key={step.step}
-                  title={step.title}
-                  activeStep={activeStepIndex === step.step}
-                  isDisplayProgress={navigationSteps.length > 1}
-                  filled={activeStepIndex > step.step}
-                />
-              ))}
-            </ul>
-          )
+          <ul>
+            {navigationSteps.map(step => (
+              <FormNavigationStep
+                key={step.step}
+                title={step.title}
+                activeStep={activeStepIndex === step.step}
+                isDisplayProgress={navigationSteps.length > 1}
+                filled={activeStepIndex > step.step}
+              />
+            ))}
+          </ul>
         )}
         {isChatVisible && (
           <div className={classes.chatButton}>

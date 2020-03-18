@@ -10,7 +10,7 @@ export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
 export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
-export const DISPLAY_SCREEN_BASED_ON_VIEW_ID = "DISPLAY_SCREEN_BASED_ON_VIEW_ID";
+export const REMOVE_PROSPECT_ID = "REMOVE_PROSPECT_ID";
 export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
@@ -22,9 +22,9 @@ export const loadMetaData = (meta = {}) => ({
   payload: meta.freeField5 || ""
 });
 
-export const receiveAppConfig = (segment, accountType, isIslamicBanking) => {
-  return { type: RECEIVE_APPCONFIG, payload: { accountType, isIslamicBanking, segment } };
-};
+export const receiveAppConfig = () => ({
+  type: RECEIVE_APPCONFIG
+});
 
 export const receiveAppConfigSuccess = data => {
   return { type: RECEIVE_APPCONFIG_SUCCESS, data };
@@ -54,6 +54,10 @@ export const resetProspect = () => {
 
 export const updateProspectId = prospectId => {
   return { type: UPDATE_PROSPECT_ID, prospectId };
+};
+
+export const removeProspectId = () => {
+  return { type: REMOVE_PROSPECT_ID };
 };
 
 export const updateViewId = (viewId, isSendToApi) => {

@@ -3,18 +3,16 @@ import cx from "classnames";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import { ContainedButton } from "../../../../../../components/Buttons/ContainedButton";
-import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
-import { useStyles } from "./styled";
-import { accountsDataRows, accountTypes } from "../../constants";
-import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
 
-export const StyledTableBodyComponent = ({
-  selectedCurrentColumn,
-  handleSelectAccount,
-  handleHover,
-  refs
-}) => {
+import { LinkedButton } from "../../../../../../components/LinkedButton";
+import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
+import { accountsDataRows, accountTypes } from "../../constants";
+import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
+
+import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
+import { useStyles } from "./styled";
+
+export const StyledTableBodyComponent = ({ selectedCurrentColumn, handleHover, refs }) => {
   const classes = useStyles();
   return (
     <TableBody>
@@ -73,13 +71,9 @@ export const StyledTableBodyComponent = ({
               [classes.tableCellActive]: selectedCurrentColumn === index + TABLE_POSITION_OFFSET
             })}
           >
-            <ContainedButton
+            <LinkedButton
               label="Read more"
-              handleClick={() => handleSelectAccount(accountName)}
-              classes={{
-                buttonStyle: classes.containedButton,
-                labelStyle: classes.containedButtonLabelStyle
-              }}
+              to={detailedAccountRoutesMap[accountName][CONVENTIONAL]}
             />
           </TableCell>
         ))}

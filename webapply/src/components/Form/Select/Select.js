@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import cx from "classnames";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import {
@@ -13,9 +13,11 @@ import {
 import { getIn } from "formik";
 
 import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
+import { areEqualFieldProps } from "../utils";
+
 import { useStyles } from "./styled";
 
-export const CustomSelect = ({
+export const Field = ({
   extractId = option => option.key,
   extractValue = option => option.value,
   extractLabel = item => item.label || item.displayText,
@@ -47,7 +49,8 @@ export const CustomSelect = ({
     },
     PaperProps: {
       style: {
-        maxHeight: 300
+        maxHeight: 300,
+        marginTop: "6px"
       }
     }
   };
@@ -102,3 +105,5 @@ export const CustomSelect = ({
     </FormControl>
   );
 };
+
+export const CustomSelect = memo(Field, areEqualFieldProps);

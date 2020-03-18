@@ -42,7 +42,7 @@ const companyDetailsSchema = () =>
     companyCategory: Yup.string().required(getRequiredMessage("Company category"))
   });
 
-export const CompanyDetails = ({ handleContinue }) => {
+export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +52,7 @@ export const CompanyDetails = ({ handleContinue }) => {
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {() => (
+      {createFormChangeHandler(() => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -78,7 +78,6 @@ export const CompanyDetails = ({ handleContinue }) => {
                 component={SelectAutocomplete}
                 tabIndex="0"
                 isSearchable
-                otherProps={{ menuFullWidth: true, sinleValueWrap: true }}
               />
             </Grid>
           </Grid>
@@ -123,7 +122,7 @@ export const CompanyDetails = ({ handleContinue }) => {
             <ContinueButton type="submit" />
           </Grid>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

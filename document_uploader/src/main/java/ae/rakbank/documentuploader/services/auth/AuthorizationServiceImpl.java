@@ -29,6 +29,11 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         }
     }
 
+    @Override
+    public JwtPayload getPrincipal(String token) {
+        return jwtService.decrypt(token);
+    }
+
     private void validateCustomerJwtPayload(JwtPayload jwtPayload) {
         if (StringUtils.isEmpty(jwtPayload.getPhoneNumber())
                 || StringUtils.isEmpty(jwtPayload.getOauthAccessToken())
@@ -44,7 +49,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (StringUtils.isEmpty(jwtPayload.getOauthAccessToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthRefreshToken())
                 || StringUtils.isEmpty(jwtPayload.getOauthTokenExpiryTime())) {
-            log.error("JwtToken is not valid, field phoneNumber is required for the Agent");
+            log.error("JwtToken is not valid, Oauth details is required for the Agent");
             throw new ApiException("JwtToken is not valid, Oauth details is required for the Agent",
                     HttpStatus.UNAUTHORIZED);
         }

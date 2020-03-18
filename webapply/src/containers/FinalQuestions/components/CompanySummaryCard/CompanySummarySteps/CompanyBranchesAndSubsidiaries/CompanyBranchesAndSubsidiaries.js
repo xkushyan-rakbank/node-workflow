@@ -20,7 +20,7 @@ import {
   MAX_COMPANY_NAME_LENGTH,
   MAX_TRADE_LICENSE_LENGTH
 } from "../CompanyBusinessRelationships/constants";
-import { ALPHANUMERIC_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -44,7 +44,7 @@ const companyBranchesAndSubsidiariesSchema = () =>
           tradeLicenseNo: Yup.string()
             .required(getRequiredMessage("Trade license number"))
             .max(20, "Maximum 20 characters allowed")
-            .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade license number"))
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Trade license number"))
         })
       )
     }),
@@ -105,7 +105,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                     <Field
                       name="otherEntitiesInUAE"
                       path="prospect.orgKYCDetails.otherEntitiesInUAE"
-                      label="The company or shareholders have branches, subsidiaries or other companies in the UAE"
+                      label="The company or shareholders have other companies, branches or subsidiaries in the UAE"
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherEntitiesInUAE) {
@@ -224,7 +224,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                     <Field
                       name="otherEntitiesOutsideUAE"
                       path="prospect.orgKYCDetails.otherEntitiesOutsideUAE"
-                      label="The company or shareholders have branches, subsidiaries or other companies outside the UAE"
+                      label="The company or shareholders have other companies, branches or subsidiaries outside the UAE"
                       component={Checkbox}
                       onSelect={() => {
                         if (values.otherEntitiesOutsideUAE) {

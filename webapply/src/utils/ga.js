@@ -5,15 +5,6 @@ export const GA = {
   }
 };
 
-export const productTypes = {
-  RAK_STARTER_CONVENTIONAL: "RAKstarter-Conventional",
-  RAK_STARTER_ISLAMIC: "RAKstarter-Islamic",
-  CURRENT_ACCOUNT_CONVENTIONAL: "BBCurrentAccount-Conventional",
-  CURRENT_ACCOUNT_ISLAMIC: "BBCurrentAccount-Islamic",
-  RAK_ELITE_CONVENTIONAL: "RAKeliteBusiness-Conventional",
-  RAK_ELITE_ISLAMIC: "RAKeliteBusiness-Islamic"
-};
-
 export const GA_EVENTS = {
   PRODUCT_PAGE: "ProductPage", // ???
   PRODUCT_REVIEW_PAGE: "ProductReviewPage", // ???

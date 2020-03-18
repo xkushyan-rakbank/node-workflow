@@ -1,16 +1,5 @@
 import routes from "../../routes";
-
-export const checkIsShowAccountInfo = pathname =>
-  [
-    routes.accountsComparison,
-    routes.detailedAccount,
-    routes.applicationOverview,
-    routes.MyApplications,
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification,
-    routes.reUploadDocuments,
-    routes.ApplicationSubmitted
-  ].includes(pathname);
+import { applicationOverviewRoutes, detailedAccountRoutes } from "../../constants";
 
 export const checkIsShowSmallBg = pathname =>
   [
@@ -21,4 +10,4 @@ export const checkIsShowSmallBg = pathname =>
   ].includes(pathname);
 
 export const checkIsShowSmallMenu = pathname =>
-  ![routes.login, routes.detailedAccount, routes.applicationOverview].includes(pathname);
+  ![routes.login, ...detailedAccountRoutes, ...applicationOverviewRoutes].includes(pathname);

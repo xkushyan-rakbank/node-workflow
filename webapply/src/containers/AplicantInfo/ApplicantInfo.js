@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
-import { NAME_REGEX } from "./../../utils/validation";
 import {
   Input,
   CustomSelect,
@@ -13,18 +12,30 @@ import {
   SkeletonLoader
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
-import { receiveAppConfig } from "./../../store/actions/appConfig";
-import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
-import { UAE_CODE } from "../../constants";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { setToken } from "../../store/actions/reCaptcha";
-import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
-import routes from "../../routes";
+import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { NAME_REGEX } from "./../../utils/validation";
+import { receiveAppConfig } from "./../../store/actions/appConfig";
+import { applicantInfoFormPromisify } from "../../store/actions/applicantInfoForm";
+import { setToken } from "../../store/actions/reCaptcha";
+import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
+import {
+  getIsRecaptchaEnable,
+  getAccountType,
+  getIsIslamicBanking
+} from "../../store/selectors/appConfig";
+import {
+  UAE_CODE,
+  formStepper,
+  applicationOverviewRoutesMap,
+  ISLAMIC,
+  CONVENTIONAL
+} from "../../constants";
+import routes from "../../routes";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -55,16 +66,16 @@ const ApplicantInfoPage = ({
   reCaptchaToken,
   isRecaptchaEnable,
   resetScreeningError,
-  isConfigLoading
+  isConfigLoading,
+  accountType,
+  isIslamicBanking
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
+  useFormNavigation([false, false, formStepper]);
 
   useEffect(() => {
-    const pathname = typeof window !== "undefined" ? window.location.pathname : "/sme/";
-    const segment = pathname.substring(1, pathname.lastIndexOf("/"));
-
-    receiveAppConfig(segment);
+    receiveAppConfig();
   }, [receiveAppConfig]);
 
   useEffect(() => {
@@ -157,7 +168,6 @@ const ApplicantInfoPage = ({
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />
-
                 <Field
                   name="mobileNo"
                   path="prospect.applicantInfo.mobileNo"
@@ -183,7 +193,13 @@ const ApplicantInfoPage = ({
                 </ErrorBoundaryForReCaptcha>
               )}
               <div className="linkContainer">
-                <BackLink path={routes.accountsComparison} />
+                <BackLink
+                  path={
+                    applicationOverviewRoutesMap[accountType][
+                      isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                    ]
+                  }
+                />
                 <SubmitButton
                   disabled={
                     !values.fullName ||
@@ -207,7 +223,9 @@ const ApplicantInfoPage = ({
 const mapStateToProps = state => ({
   reCaptchaToken: state.reCaptcha.token,
   isConfigLoading: state.appConfig.loading,
-  isRecaptchaEnable: getIsRecaptchaEnable(state)
+  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  accountType: getAccountType(state),
+  isIslamicBanking: getIsIslamicBanking(state)
 });
 
 const mapDispatchToProps = {
