@@ -12,8 +12,7 @@ import {
   SAVE_PROSPECT_MODEL,
   SET_ACCESS_TOKEN,
   RESET_PROSPECT,
-  RESET_APPLICANT_INFO,
-  SET_LINKS_CONDITION
+  RESET_APPLICANT_INFO
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -31,8 +30,7 @@ export const initialState = {
   prospectError: false,
   searchInfo: { segment: "sme" },
   login: {},
-  prospectModel: {},
-  visitedLinks: {}
+  prospectModel: {}
 };
 
 const appConfigReducer = (state = initialState, action) => {
@@ -147,11 +145,6 @@ const appConfigReducer = (state = initialState, action) => {
             applyOnbehalf: false
           }
         }
-      };
-    case SET_LINKS_CONDITION:
-      return {
-        ...state,
-        visitedLinks: { ...state.visitedLinks, ...action.payload }
       };
     default:
       return state;

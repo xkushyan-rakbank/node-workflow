@@ -68,7 +68,3 @@ export const getAuthorizationHeader = state => {
 };
 
 export const getIsRecaptchaEnable = state => state.appConfig.recaptchaEnable;
-
-export const getLinksConditional = state =>
-  state.appConfig.visitedLinks.hasOwnProperty("conditionLink") &&
-  state.appConfig.visitedLinks.hasOwnProperty("enrollmentLink");
