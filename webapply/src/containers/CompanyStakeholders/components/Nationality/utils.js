@@ -8,21 +8,21 @@ const initialPassportDetails = {
   diplomatPassport: false
 };
 
-export const createAddCitizenshipHandler = (
-  values,
-  arrayHelper,
-  passportIndex,
-  setFieldValue
-) => () => {
+export const createAddCitizenshipHandler = (values, arrayHelper, passportIndex) => () => {
   const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
   const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
 
   if (!value) {
     arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
   } else {
-    values.passportDetails.forEach((el, index) => index > passportIndex && arrayHelper.pop());
+    values.passportDetails.forEach((_, index) => {
+      if (index > passportIndex) {
+        arrayHelper.form.setFieldTouched(`passportDetails[${index}]`, false);
+        arrayHelper.pop();
+      }
+    });
   }
-  setFieldValue(name, !value);
+  arrayHelper.form.setFieldValue(name, !value);
 };
 
 export const isAdditionalCitizenshipDisabled = (values, passportIndex, errors) => {

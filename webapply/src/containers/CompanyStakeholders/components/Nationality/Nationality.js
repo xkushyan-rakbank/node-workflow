@@ -51,7 +51,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
       validationSchema={nationalitySchema}
       validateOnChange={false}
     >
-      {({ values, setFieldValue, errors }) => (
+      {({ values, errors }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -104,8 +104,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                             onChange={createAddCitizenshipHandler(
                               values,
                               arrayHelper,
-                              passportIndex,
-                              setFieldValue
+                              passportIndex
                             )}
                             changeProspect={prospect => ({
                               ...prospect,

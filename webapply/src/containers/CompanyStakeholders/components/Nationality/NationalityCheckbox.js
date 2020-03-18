@@ -7,5 +7,5 @@ export const NationalityCheckbox = memo(
   CheckboxBase,
   (prevProps, nextProps) =>
     areEqualFieldProps(prevProps, nextProps) &&
-    prevProps.form.values.passportDetails.length === nextProps.form.values.passportDetails.length
+    prevProps.form.values.passportDetails === nextProps.form.values.passportDetails
 );
