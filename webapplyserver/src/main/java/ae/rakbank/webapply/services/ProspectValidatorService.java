@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class ProspectValidatorService {
 
@@ -33,11 +35,18 @@ public class ProspectValidatorService {
         }
     }
 
-    public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
-        if (UserRole.AGENT.equals(jwtPayload.getRole())) {
-            return;
-        }
+    public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) throws IllegalAccessException {
 
+        switch (Objects.requireNonNull(jwtPayload.getRole(), "Role cannot be empty")) {
+            case AGENT: break;
+            case CUSTOMER:
+                checkCustomer(responseForFiltering, jwtPayload);
+                break;
+            default: throw new IllegalAccessException("");
+        }
+    }
+
+    private void checkCustomer(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
         String phoneNumber = jwtPayload.getPhoneNumber();
         JsonNode responseBody = (JsonNode)responseForFiltering.getBody();
 

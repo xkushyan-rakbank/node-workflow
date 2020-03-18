@@ -2,11 +2,10 @@ package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.dto.JwtPayload;
+import ae.rakbank.webapply.services.ProspectValidatorService;
 import ae.rakbank.webapply.services.RecaptchaService;
-import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
-import ae.rakbank.webapply.services.ProspectValidatorService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -44,7 +43,6 @@ public class ProspectController {
     private final RecaptchaService captchaService;
     private final WebApplyController applyController;
     private final ProspectValidatorService prospectValidatorService;
-    private final AuthorizationService authorizationService;
 
     private JsonNode dehURIs = null;
     private String dehBaseUrl = null;
@@ -106,7 +104,7 @@ public class ProspectController {
     @GetMapping(value = "/{prospectId}", produces = "application/json")
     public ResponseEntity<Object> getProspectById(@AuthenticationPrincipal JwtPayload jwtPayload,
                                                   @PathVariable String segment,
-                                                  @PathVariable String prospectId) {
+                                                  @PathVariable String prospectId) throws IllegalAccessException {
         log.info("Begin getProspectById() method");
         log.debug(
                 String.format("getProspectById() method args, prospectId=[%s], segment=[%s]", prospectId, segment));
