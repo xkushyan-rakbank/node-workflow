@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import pick from "lodash/pick";
 
 export const StakeholdersNamesContext = React.createContext([]);
 
@@ -16,12 +17,15 @@ export const FullNameCompanyStakeholdersProvider = ({ children }) => {
 };
 
 export const changeFullName = item => {
-  const index = stakeholders.findIndex(elem => elem.id === item.id);
+  const data = pick(item, ["firstName", "middleName", "lastName", "id"]);
+  const index = stakeholders.findIndex(e => e.id === data.id);
   if (index === -1) {
-    stakeholders.push(item);
+    stakeholders.push(data);
   } else {
-    stakeholders[index] = item;
+    stakeholders[index] = data;
   }
+
+  setValues([...stakeholders]);
   if (setValues) {
     setValues([...stakeholders]);
   }
