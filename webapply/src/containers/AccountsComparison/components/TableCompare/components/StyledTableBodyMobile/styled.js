@@ -1,4 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import InputBase from "@material-ui/core/InputBase";
 
 export const useStyles = makeStyles(theme => ({
   linkStyle: {
@@ -88,3 +89,24 @@ export const useStyles = makeStyles(theme => ({
     position: "relative"
   }
 }));
+
+export const BootstrapInput = withStyles(theme => ({
+  root: {
+    width: "100%"
+  },
+  input: {
+    borderRadius: 4,
+    boxShadow: "5px 5px 25px 0 rgba(0, 0, 0, 0.07)",
+    width: "100%",
+    position: "relative",
+    backgroundColor: "#fff",
+    border: "1px solid #e8e8e8",
+    fontSize: 14,
+    textAlign: "left",
+    padding: "13px 26px 13px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:focus": {
+      backgroundColor: "#fff"
+    }
+  }
+}))(InputBase);

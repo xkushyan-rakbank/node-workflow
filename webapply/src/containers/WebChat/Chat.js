@@ -7,10 +7,11 @@ import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
 
+import { ClosedChat } from "./components/ClosedChat";
+import { Portal } from "./components/Portal";
 import { useStyles } from "./styled";
-import { ClosedChat } from "./ClosedChat";
 
-const WebChatComponent = lazy(() => import("./components/Chat"));
+const WebChatComponent = lazy(() => import("./core"));
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
@@ -37,25 +38,26 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
       <ClosedChat key="link" ref={closedChatRef} openChat={openChat} isMinimized={isMinimized} />
     ),
     isOpened && (
-      <div
-        key="window"
-        className={cx(classes.chatWrapper, {
-          [classes.mimimized]: isMinimized,
-          [classes.expand]: !isMinimized
-        })}
-      >
-        <Suspense fallback={<div>Loading...</div>}>
-          <WebChatComponent
-            onClose={closeWebChat}
-            onMinimize={minimizeChat}
-            isAuth={false}
-            onNewMessageReceive={handleReceiveNewMessage}
-            InitiatedCustomerName={name || searchName}
-            InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
-            EmailAddress={email}
-          />
-        </Suspense>
-      </div>
+      <Portal key="window" id="chat">
+        <div
+          className={cx(classes.chatWrapper, {
+            [classes.mimimized]: isMinimized,
+            [classes.expand]: !isMinimized
+          })}
+        >
+          <Suspense fallback={<div>Loading...</div>}>
+            <WebChatComponent
+              onClose={closeWebChat}
+              onMinimize={minimizeChat}
+              isAuth={false}
+              onNewMessageReceive={handleReceiveNewMessage}
+              InitiatedCustomerName={name || searchName}
+              InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
+              EmailAddress={email}
+            />
+          </Suspense>
+        </div>
+      </Portal>
     )
   ];
 };

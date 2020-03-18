@@ -7,7 +7,8 @@ export const useStyles = makeStyles(theme => ({
     body: {
       [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
         overflow: "hidden"
-      }
+      },
+      scrollBehavior: "smooth"
     }
   },
   paginationWrapper: {

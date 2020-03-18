@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 
 import { MessagesList } from "./elements/MessagesList";
 import { SendMessageInput } from "./elements/SendMessageInput";
-import { GenesysChat } from "../utils/GenesysChat";
 import { Header } from "./elements/Header";
+
+import { GenesysChat } from "../utils/GenesysChat";
 
 const Body = styled.div`
   display: flex;

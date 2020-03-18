@@ -216,6 +216,7 @@ export const useStyles = makeStyles(theme => ({
     alignSelf: "center"
   },
   noRecordsText: {
+    marginTop: "60px",
     alignSelf: "center",
     boxSizing: "border-box",
     maxWidth: "609px",
