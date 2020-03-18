@@ -109,7 +109,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
         firstName: "",
         middleName: "",
         lastName: "",
-        isShareholderACompany: "",
+        isShareholderACompany: false,
         dateOfBirth: "",
         isPEP: ""
       }}
