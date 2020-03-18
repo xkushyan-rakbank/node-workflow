@@ -10,6 +10,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     color: theme.palette.text.color
   },
+  checkbox: {},
   root: {
     marginRight: "auto"
   }
@@ -29,6 +30,7 @@ export const CustomCheckbox = ({
       control={
         <Checkbox
           onClick={onSelect}
+          classes={{ root: classes.checkbox }}
           icon={<Icon name={ICONS.uncheckedIcon} alt="checked icon" />}
           checkedIcon={<Icon name={ICONS.checkedIcon} alt="unchecked icon" />}
           {...rest}

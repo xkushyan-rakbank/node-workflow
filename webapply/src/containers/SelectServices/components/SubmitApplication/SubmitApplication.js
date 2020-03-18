@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
-import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
+import { PROSPECT_STATUSES } from "../../../../constants";
 
-import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
-import { BlockConfirm } from "./BlockConfirm/index";
-import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
+import { BlockConfirm } from "./BlockConfirm";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
+import { NotificationsManager } from "../../../../components/Notification";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NEXT, SUBMIT } from "../../../../constants";
+import { trustMessageContent, submitApplication } from "./constants";
 
 export const SubmitApplicationComponent = ({
   accountInfo: [account],
@@ -23,24 +23,21 @@ export const SubmitApplicationComponent = ({
   currentProspectStatus
 }) => {
   const pushHistory = useTrackingHistory();
-  const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => NotificationsManager.add(trustMessageContent), []);
+
   const isROSubmit =
     isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
   const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
 
-  const isSubmitButtonEnable =
-    isApplyEditApplication ||
-    (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
-
-  const handleSubmit = () => {
-    updateViewId(pathname.replace(smeBaseName, ""), false);
+  const handleSubmit = useCallback(() => {
     setIsSubmitting(true);
+    updateViewId(pathname.replace(smeBaseName, ""), false);
     sendProspectToAPI(NEXT, null, SUBMIT).then(
       () => pushHistory(routes.ApplicationSubmitted, true),
       () => setIsSubmitting(false)
     );
-  };
+  }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, pathname]);
 
   if (isSubmitting) {
     return <ServerRequestLoadingScreen />;
@@ -56,17 +53,7 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      {!isApplyEditApplication && <BlockConfirm setFormFields={setFormFields} />}
-
-      <div className="linkContainer">
-        <BackLink path={routes.selectServices} />
-        <SubmitButton
-          disabled={!isSubmitButtonEnable || isSubmitting}
-          label="Submit"
-          justify="flex-end"
-          handleClick={handleSubmit}
-        />
-      </div>
+      <BlockConfirm isCustomer={!isApplyEditApplication} handleSubmit={handleSubmit} />
     </>
   );
 };
