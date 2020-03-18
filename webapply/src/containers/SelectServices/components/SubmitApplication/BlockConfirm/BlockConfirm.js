@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
@@ -6,7 +6,6 @@ import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form
 import { BackLink } from "../../../../../components/Buttons/BackLink";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { NotificationsManager } from "../../../../../components/Notification";
-import { ServerRequestLoadingScreen } from "../../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { TermsAgreedLabel } from "./TermsAgreedLabel";
 import routes from "../../../../../routes";
 import { termsMessageContent, IS_ALL_LINKS_VISITED, NONE_VISITED } from "../constants";
@@ -44,58 +43,54 @@ export const BlockConfirmComponent = ({ isCustomer, isIslamicBanking, handleSubm
       validationSchema={isCustomer && blockConfirmSchema}
       validateOnChange={false}
     >
-      {({ isSubmitting }) =>
-        isSubmitting ? (
-          <ServerRequestLoadingScreen />
-        ) : (
-          <Form>
-            {isCustomer && (
-              <div className={classes.checkboxesWrapper}>
+      {() => (
+        <Form>
+          {(
+            <div className={classes.checkboxesWrapper}>
+              <Field
+                name="isInformationProvided"
+                label="I confirm that the information provided is true and complete"
+                component={Checkbox}
+                inputProps={{ tabIndex: 0 }}
+              />
+              <div onClick={handleShowNotification}>
                 <Field
-                  name="isInformationProvided"
-                  label="I confirm that the information provided is true and complete"
-                  component={Checkbox}
-                  inputProps={{ tabIndex: 0 }}
-                />
-                <div onClick={handleShowNotification}>
-                  <Field
-                    name="areTermsAgreed"
-                    label={
-                      <TermsAgreedLabel
-                        setIsLinkVisited={handleSetIsLinkVisited}
-                        isIslamicBanking={isIslamicBanking}
-                      />
-                    }
-                    disabled={!isAllLinksVisited}
-                    exhaustiveDeps={isLinkVisited}
-                    classes={{
-                      label: classes.checkboxLabel,
-                      checkbox: classes.checkbox
-                    }}
-                    component={Checkbox}
-                    inputProps={{ tabIndex: 0 }}
-                  />
-                </div>
-                <Field
-                  name="needCommunication"
-                  path="prospect.channelServicesInfo.marketingSMS"
-                  label="I want to receive marketing and promotional communication from RAKBANK"
+                  name="areTermsAgreed"
+                  label={
+                    <TermsAgreedLabel
+                      setIsLinkVisited={handleSetIsLinkVisited}
+                      isIslamicBanking={isIslamicBanking}
+                    />
+                  }
+                  disabled={!isAllLinksVisited}
+                  exhaustiveDeps={isLinkVisited}
+                  classes={{
+                    label: classes.checkboxLabel,
+                    checkbox: classes.checkbox
+                  }}
                   component={Checkbox}
                   inputProps={{ tabIndex: 0 }}
                 />
               </div>
-            )}
-            <div className="linkContainer">
-              <BackLink path={routes.selectServices} />
-              <SubmitButton
-                disabled={isCustomer && !isAllLinksVisited}
-                label="Submit"
-                justify="flex-end"
+              <Field
+                name="needCommunication"
+                path="prospect.channelServicesInfo.marketingSMS"
+                label="I want to receive marketing and promotional communication from RAKBANK"
+                component={Checkbox}
+                inputProps={{ tabIndex: 0 }}
               />
             </div>
-          </Form>
-        )
-      }
+          )}
+          <div className="linkContainer">
+            <BackLink path={routes.selectServices} />
+            <SubmitButton
+              disabled={isCustomer && !isAllLinksVisited}
+              label="Submit"
+              justify="flex-end"
+            />
+          </div>
+        </Form>
+      )}
     </Formik>
   );
 };

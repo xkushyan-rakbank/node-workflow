@@ -28,6 +28,7 @@ export const CheckboxBase = ({
   classes: extendedClasses,
   contextualHelpText,
   contextualHelpProps = {},
+  exhaustiveDeps,
   ...rest
 }) => {
   const errorMessage = getIn(errors, field.name);

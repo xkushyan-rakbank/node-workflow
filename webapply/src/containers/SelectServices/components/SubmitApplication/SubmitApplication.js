@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
 import { PROSPECT_STATUSES } from "../../../../constants";
@@ -6,6 +6,7 @@ import { PROSPECT_STATUSES } from "../../../../constants";
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
+import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { NotificationsManager } from "../../../../components/Notification";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NEXT, SUBMIT } from "../../../../constants";
@@ -22,7 +23,7 @@ export const SubmitApplicationComponent = ({
   currentProspectStatus
 }) => {
   const pushHistory = useTrackingHistory();
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => NotificationsManager.add(trustMessageContent), []);
 
   const isROSubmit =
@@ -30,12 +31,17 @@ export const SubmitApplicationComponent = ({
   const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
 
   const handleSubmit = useCallback(() => {
+    setIsSubmitting(true);
     updateViewId(pathname.replace(smeBaseName, ""), false);
-    return sendProspectToAPI(NEXT, null, SUBMIT).then(
+    sendProspectToAPI(NEXT, null, SUBMIT).then(
       () => pushHistory(routes.ApplicationSubmitted, true),
-      () => {}
+      () => setIsSubmitting(false)
     );
-  }, [updateViewId, sendProspectToAPI, pushHistory, pathname]);
+  }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, pathname]);
+
+  if (isSubmitting) {
+    return <ServerRequestLoadingScreen />;
+  }
 
   return (
     <>
