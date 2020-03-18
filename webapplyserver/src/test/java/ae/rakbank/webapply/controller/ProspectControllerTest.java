@@ -247,7 +247,6 @@ public class ProspectControllerTest {
         JwtPayload jwt = JwtPayload.builder()
                 .oauthAccessToken("666473634664563554534737464")
                 .role(UserRole.AGENT)
-                .phoneNumber("+37847563456")
                 .build();
         ResponseEntity<Object> responseEntity = prospectController.getProspectById(jwt, "sme", "123456789");
         assertNotNull(responseEntity);
