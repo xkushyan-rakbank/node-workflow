@@ -2,8 +2,7 @@ import routes from "../../../../routes";
 
 export const questions = [
   {
-    // eslint-disable-next-line prettier/prettier
-    // eslint-disable-next-line quotes
+    // eslint-disable-next-line
     question: 'What should I expect on "Submitting" the completed application?',
     answer: {
       __html:
