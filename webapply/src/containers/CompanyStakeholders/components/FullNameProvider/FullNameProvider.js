@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import pick from "lodash/pick";
 
+const FIELDS = ["firstName", "middleName", "lastName", "id"];
+const pickFields = item => pick(item, FIELDS);
+
 export const StakeholdersNamesContext = React.createContext([]);
 
 let setValues;
@@ -16,14 +19,13 @@ export const FullNameCompanyStakeholdersProvider = ({ children }) => {
   );
 };
 
-export const setInitialStakeholdersContext = stakeholders => {
-  if (setValues) {
-    setValues([...stakeholders]);
-  }
+export const setFullNames = data => {
+  stakeholders = data.map(pickFields);
+  setValues && setValues(stakeholders);
 };
 
 export const changeFullName = item => {
-  const data = pick(item, ["firstName", "middleName", "lastName", "id"]);
+  const data = pickFields(item);
   const index = stakeholders.findIndex(elem => elem.id === data.id);
   if (index === -1) {
     stakeholders.push(data);
@@ -31,15 +33,11 @@ export const changeFullName = item => {
     stakeholders[index] = data;
   }
 
-  if (setValues) {
-    setValues([...stakeholders]);
-  }
+  setValues && setValues([...stakeholders]);
 };
 
-export const deleteStakeholderContext = id => {
+export const deleteFullName = id => {
   stakeholders = stakeholders.filter(item => item.id !== id);
 
-  if (setValues) {
-    setValues([...stakeholders]);
-  }
+  setValues && setValues(stakeholders);
 };
