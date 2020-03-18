@@ -6,3 +6,10 @@ export const trustMessageContent = {
   title: "",
   icon: ICONS.info
 };
+
+export const termsMessageContent = {
+  message:
+    "It is important to read the terms and conditions as well as terms of enrollment before you proceed.",
+  title: "",
+  icon: ICONS.info
+};

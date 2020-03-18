@@ -24,6 +24,10 @@ export const SubmitApplicationComponent = ({
   updateViewId,
   currentProspectStatus
 }) => {
+  const isROSubmit =
+    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
+  const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
+
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,10 +41,7 @@ export const SubmitApplicationComponent = ({
       () => pushHistory(routes.ApplicationSubmitted, true),
       () => setIsSubmitting(false)
     );
-  }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, setIsSubmitting]);
-  const isROSubmit =
-    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
-  const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
+  }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, pathname]);
 
   const isSubmitButtonEnable =
     isApplyEditApplication ||

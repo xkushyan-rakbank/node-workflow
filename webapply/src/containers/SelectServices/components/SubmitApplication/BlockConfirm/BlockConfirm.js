@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
@@ -6,6 +6,8 @@ import { submitApplication, ISLAMIC, CONVENTIONAL } from "../../../../../constan
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
 
 import { useStyles } from "./styled";
+import { NotificationsManager } from "../../../../../components/Notification";
+import { termsMessageContent } from "../constants";
 
 const { termConditionLinks, termEnrollmentLinks } = submitApplication;
 
@@ -15,6 +17,11 @@ const blockConfirmSchema = Yup.object({
 });
 
 export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
+  const [isConditionLinkVisited, setIsConditionLinkVisited] = useState(false);
+  const [isEnrollmentLinkVisited, setIsEnrollmentLinkVisited] = useState(false);
+
+  const isAllLinksVisited = isConditionLinkVisited && isEnrollmentLinkVisited;
+
   const classes = useStyles();
 
   const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
@@ -27,6 +34,10 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
         href={termConditionLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={e => {
+          e.stopPropagation();
+          setIsConditionLinkVisited(true);
+        }}
       >
         terms and conditions
       </a>{" "}
@@ -36,6 +47,10 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
         href={termEnrollmentLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={e => {
+          e.stopPropagation();
+          setIsEnrollmentLinkVisited(true);
+        }}
       >
         terms of enrollment
       </a>
@@ -69,14 +84,25 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
               component={Checkbox}
               inputProps={{ tabIndex: 0 }}
             />
-
-            <Field
-              name="areTermsAgreed"
-              label={termsAgreedLabel}
-              onChange={e => setFieldsValue(e, setFieldValue, values)}
-              component={Checkbox}
-              inputProps={{ tabIndex: 0 }}
-            />
+            <div
+              onClick={() => {
+                if (isAllLinksVisited) {
+                  return;
+                }
+                NotificationsManager.add(termsMessageContent);
+              }}
+            >
+              <Field
+                name="areTermsAgreed"
+                label={termsAgreedLabel}
+                disabled={!isAllLinksVisited}
+                onChange={e => {
+                  setFieldsValue(e, setFieldValue, values);
+                }}
+                component={Checkbox}
+                inputProps={{ tabIndex: 0 }}
+              />
+            </div>
 
             <Field
               name="needCommunication"
