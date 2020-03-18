@@ -15,11 +15,14 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.util.StreamUtils;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class FileUtil {
+
+    private static final String LOCAL = "local";
 
     private final ResourceLoader resourceLoader;
     private final EnvironmentUtil environmentUtil;
@@ -54,6 +57,27 @@ public class FileUtil {
             }
             return objectMapper.readTree(fileContent);
         } catch (IOException e) {
+            log.error("error loading " + filename, e);
+        }
+        return null;
+    }
+
+    String getRSAPrivateKey() {
+        return loadFileContents("private.key", !environmentUtil.getWebApplyEnv().equals(LOCAL));
+    }
+
+    private String loadFileContents(String filename, boolean fromConfigDirectory) {
+        try {
+            if (fromConfigDirectory) {
+                File file = new File(environmentUtil.getConfigDir() + filename);
+
+                return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
+            } else {
+                Resource resource = resourceLoader.getResource("classpath:" + filename);
+
+                return StreamUtils.copyToString(resource.getInputStream(), StandardCharsets.UTF_8);
+            }
+        } catch (Exception e) {
             log.error("error loading " + filename, e);
         }
         return null;

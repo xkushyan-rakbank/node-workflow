@@ -83,6 +83,7 @@ const personalInformationSchema = Yup.object().shape({
   dateOfBirth: Yup.date().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
+      .nullable()
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
@@ -93,6 +94,7 @@ const personalInformationSchema = Yup.object().shape({
 
 export const PersonalInformation = ({ index, handleContinue, id }) => {
   const classes = useStyles();
+
   const applicantInfo = useSelector(getApplicantInfo);
 
   const createChangeProspectHandler = values => prospect => ({

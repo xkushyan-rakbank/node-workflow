@@ -17,7 +17,7 @@ export const AccountInfoScreen = ({
   title,
   subtitle
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ isShowApply });
 
   return (
     <div className={cx(classes.contentContainer, "small-menu-hide")}>

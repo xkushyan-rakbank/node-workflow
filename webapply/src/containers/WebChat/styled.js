@@ -78,7 +78,8 @@ export const useStyles = makeStyles(theme => ({
     position: "fixed",
     bottom: "40px",
     left: "40px",
-    transition: "all 0.3s ease"
+    transition: "all 0.3s ease",
+    zIndex: 100
   },
   mimimized: {
     bottom: "-105%"

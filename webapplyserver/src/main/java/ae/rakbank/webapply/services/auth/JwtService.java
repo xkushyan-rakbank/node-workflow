@@ -72,6 +72,11 @@ class JwtService {
                     .build();
             DecodedJWT jwt = verifier.verify(token);
 
+            if (jwt.getClaim("role").asString() == null) {
+                log.error("JwtToken is not valid, field role is required");
+                throw new ApiException("JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
+            }
+
             return JwtPayload.builder()
                     .oauthAccessToken(jwt.getClaim("OAuthToken").asString())
                     .oauthRefreshToken(jwt.getClaim("OAuthRefreshToken").asString())

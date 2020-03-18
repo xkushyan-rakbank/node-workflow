@@ -5,15 +5,16 @@ import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
 import { VerticalPaginationContext } from "../VerticalPagination";
-import { IslamicBankingSwitcherMobile } from "../IslamicBankingSwitcher/IslamicBankingSwitcherMobile";
+import { FormNavigationContext } from "./FormNavigationProvider";
+import { IslamicSwitcher } from "../IslamicSwitcher";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes from "../../routes";
 import { checkIsShowSmallBg, checkIsShowSmallMenu } from "./utils";
-import { FormNavigationContext } from "./FormNavigationProvider";
+import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 
 import { useStyles } from "./styled";
-import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
+
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
@@ -23,13 +24,9 @@ export const FormNavigationComponent = () => {
     location: { pathname }
   } = useHistory();
   const { isCurrentSectionVideo } = useContext(VerticalPaginationContext);
-  const [isShowAccountInfo, isChatVisible, navigationSteps = []] = useContext(
-    FormNavigationContext
-  );
-  const blobColor = useBlobColor();
-
+  const navContext = useContext(FormNavigationContext);
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
-
+  const blobColor = useBlobColor(!navContext);
   const classes = useStyles({
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
@@ -37,6 +34,12 @@ export const FormNavigationComponent = () => {
     accountsComparisonPage: routes.accountsComparison === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
+
+  if (!navContext) {
+    return null;
+  }
+
+  const [isShowAccountInfo, isChatVisible, navigationSteps = []] = navContext;
 
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
@@ -48,7 +51,7 @@ export const FormNavigationComponent = () => {
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
-        <IslamicBankingSwitcherMobile
+        <IslamicSwitcher
           className={classes.formNavBg}
           isSwitcherShow={isSwitcherShow}
           toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
@@ -56,7 +59,7 @@ export const FormNavigationComponent = () => {
           <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
             What banking option do you prefer?
           </Typography>
-        </IslamicBankingSwitcherMobile>
+        </IslamicSwitcher>
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (

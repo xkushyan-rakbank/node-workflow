@@ -53,9 +53,13 @@ export const useStyles = makeStyles(theme => ({
       paddingTop: 71,
       height: ({ isOpen, isSmallBg }) => {
         if (isOpen) return "calc(100vh - 50px)";
-        if (isSmallBg) return 190;
-        return 290;
-      }
+        if (isSmallBg) return 220;
+        return 340;
+      },
+      transition: theme.transitions.create("height", {
+        easing: theme.transitions.easing.linear,
+        duration: theme.transitions.duration.short
+      })
     },
     [theme.breakpoints.up("sm")]: {
       width: sideNavWidthMD,
@@ -95,11 +99,13 @@ export const useStyles = makeStyles(theme => ({
         background: ({ color }) => {
           switch (color) {
             case ELITE:
-              return "linear-gradient(to bottom, #8E2141, #B55774)";
+              return "linear-gradient(to bottom, #831334, #b1536f 90%, #b25470 100%)";
             case ISLAMIC:
               return "#417C35";
-            default:
+            case STANDART:
               return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+            default:
+              return "transparent";
           }
         }
       }
@@ -186,7 +192,8 @@ export const useStyles = makeStyles(theme => ({
     overflow: "auto",
     [theme.breakpoints.only("xs")]: {
       paddingLeft: 16,
-      paddingRight: 16
+      paddingRight: 16,
+      height: "100%"
     },
     [theme.breakpoints.up("sm")]: {
       width: sideNavWidthMD,

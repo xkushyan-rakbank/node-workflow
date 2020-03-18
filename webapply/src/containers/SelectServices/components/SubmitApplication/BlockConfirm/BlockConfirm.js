@@ -2,17 +2,12 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { submitApplication } from "../../../../../constants";
+import { submitApplication, ISLAMIC, CONVENTIONAL } from "../../../../../constants";
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
 
 import { useStyles } from "./styled";
 
-const {
-  termConditionUrl,
-  termConditionIslamicBankingUrl,
-  termOfEnrolmentUrl,
-  termOfEnrolmentIslamicBankingUrl
-} = submitApplication;
+const { termConditionLinks, termEnrollmentLinks } = submitApplication;
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
@@ -22,12 +17,14 @@ const blockConfirmSchema = Yup.object({
 export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
   const classes = useStyles();
 
+  const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
+
   const termsAgreedLabel = (
     <span>
       I agree with RAKBANK’s{" "}
       <a
         className={classes.link}
-        href={isIslamicBanking ? termConditionIslamicBankingUrl : termConditionUrl}
+        href={termConditionLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -36,7 +33,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
       and{" "}
       <a
         className={classes.link}
-        href={isIslamicBanking ? termOfEnrolmentIslamicBankingUrl : termOfEnrolmentUrl}
+        href={termEnrollmentLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -57,7 +54,7 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
         initialValues={{
           isInformationProvided: false,
           areTermsAgreed: false,
-          needCommunication: false
+          needCommunication: true
         }}
         onSubmit={() => {}}
         validationSchema={blockConfirmSchema}

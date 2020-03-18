@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import routes, { agentBaseName } from "./routes";
+import routes, { agentBaseName, smeBaseName } from "./routes";
 import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
@@ -35,7 +35,7 @@ const ApplicationOverview = lazy(() => import("./containers/ApplicationOverview"
 const ComeBackLogin = lazy(() => import("./containers/ComeBackLogin"));
 const ComeBackVerification = lazy(() => import("./containers/ComeBackVerification"));
 const MyApplications = lazy(() => import("./containers/MyApplications"));
-const NotFoundPage = lazy(() => import("./containers/NotFoundPage/index"));
+const NotFoundPage = lazy(() => import("./containers/NotFoundPage"));
 const SubmitApplication = lazy(() =>
   import("./containers/SelectServices/components/SubmitApplication")
 );
@@ -43,12 +43,6 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("beforeunload", () => {
-        localStorage.removeItem("videoAlreadyPlayed");
-      });
-    }
-
     receiveAppConfig();
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
@@ -131,6 +125,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
               <Redirect exact path="/" to={routes.accountsComparison} />
+              <Redirect exact path={`(${smeBaseName})?`} to={routes.accountsComparison} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
           </Suspense>

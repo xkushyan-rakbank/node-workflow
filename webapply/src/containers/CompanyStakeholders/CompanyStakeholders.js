@@ -100,7 +100,18 @@ const CompanyStakeholdersComponent = ({
 
       <div className={classes.stakeholdersTitleWrapper}>
         <ContexualHelp
-          title="This stakeholder should be defined / mentioned in valid legal document of the Company. Examples: - Sole Proprietorship Company > Trade License - Partnership Company > Trade License / Partners agreement / Share Certificate, etc - Limited Liability Company (LLC) > Trade License / Memorandum of Association / Articles of Association, etc"
+          title={
+            <>
+              This stakeholder should be defined / mentioned in valid legal document of the Company.
+              <br />
+              <b>Examples:</b>
+              <br />- Sole Proprietorship Company &gt; Trade License
+              <br />- Partnership Company &gt; Trade License / Partners agreement / Share
+              Certificate, etc
+              <br />- Limited Liability Company (LLC) &gt; Trade License / Memorandum of Association
+              / Articles of Association, etc
+            </>
+          }
           placement="right"
           isDisableHoverListener={false}
         >
