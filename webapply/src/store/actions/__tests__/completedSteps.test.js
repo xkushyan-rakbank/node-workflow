@@ -8,7 +8,7 @@ import {
 } from "../completedSteps";
 
 describe("actions for completedSteps", () => {
-  it("should set step", () => {
+  it("should create an action to set step", () => {
     const flowId = "companyInfo";
     const step = 1;
     const status = "COMPLETED";
@@ -18,7 +18,8 @@ describe("actions for completedSteps", () => {
     };
     expect(setStepStatus(flowId, step, status)).toEqual(expectedAction);
   });
-  it("should set initial steps", () => {
+
+  it("should create an action to set initial steps", () => {
     const steps = [];
     const expectedAction = {
       type: SET_INITIAL_STEPS,
@@ -26,8 +27,9 @@ describe("actions for completedSteps", () => {
     };
     expect(setInitialSteps(steps)).toEqual(expectedAction);
   });
-  it("should remove signatory", () => {
-    const signatoryId = 1;
+
+  it("should create an action to remove signatory", () => {
+    const signatoryId = "1";
     const expectedAction = {
       type: REMOVE_SIGNATORY,
       payload: { signatoryId }

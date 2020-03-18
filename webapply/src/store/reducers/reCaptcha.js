@@ -1,4 +1,4 @@
-import { SET_TOKEN, SET_ERROR } from "../actions/reCaptcha";
+import { SET_TOKEN } from "../actions/reCaptcha";
 import { handleActions } from "../../utils/redux-utils";
 import { RESET_APPLICANT_INFO } from "../actions/appConfig";
 
@@ -12,10 +12,6 @@ export default handleActions(
     [SET_TOKEN]: (state, { payload }) => ({
       ...state,
       token: payload
-    }),
-    [SET_ERROR]: (state, { payload }) => ({
-      ...state,
-      error: payload
     }),
     [RESET_APPLICANT_INFO]: state => ({
       ...state,
