@@ -50,7 +50,7 @@ export const AccountTypeCardComponent = ({
         />
         <div className="show-on-mobile">
           <ContinueButton
-            handleClick={handleClickMobile}
+            handleClick={() => handleClickMobile(accountType)}
             label={buttonText}
             classes={{ buttonStyle: classes.continueButtonRoot }}
           />
