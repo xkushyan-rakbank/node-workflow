@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
+import omit from "lodash/omit";
 import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
@@ -102,9 +103,10 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
 
-  const createChangeHandler = (values, { name, value }, setFieldValue) => {
+  const createChangeHandler = (values, setFieldValue) => event => {
+    const { name, value } = event.target;
     const data = {
-      ...values,
+      ...omit(values, ["firstName", "middleName", "lastName"]),
       id,
       [name]: value
     };
@@ -120,7 +122,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
         firstName: "",
         middleName: "",
         lastName: "",
-        isShareholderACompany: "",
+        isShareholderACompany: false,
         dateOfBirth: "",
         isPEP: ""
       }}
@@ -181,7 +183,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
                   disabled={!!values.isShareholderACompany}
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
-                  onChange={event => createChangeHandler(values, event.target, setFieldValue)}
+                  onChange={createChangeHandler(values, setFieldValue)}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
@@ -198,7 +200,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
-                onChange={event => createChangeHandler(values, event.target, setFieldValue)}
+                onChange={createChangeHandler(values, setFieldValue)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
@@ -215,7 +217,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
-                onChange={event => createChangeHandler(values, event.target, setFieldValue)}
+                onChange={createChangeHandler(values, setFieldValue)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
