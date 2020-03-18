@@ -4,7 +4,6 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
-import omit from "lodash/omit";
 import { format, isValid } from "date-fns";
 
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
@@ -106,7 +105,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
   const createChangeHandler = (values, setFieldValue) => event => {
     const { name, value } = event.target;
     const data = {
-      ...omit(values, ["firstName", "middleName", "lastName"]),
+      ...values,
       id,
       [name]: value
     };
