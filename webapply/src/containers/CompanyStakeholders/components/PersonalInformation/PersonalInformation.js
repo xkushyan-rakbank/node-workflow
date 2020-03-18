@@ -106,7 +106,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
   const createChangeHandler = (values, setFieldValue) => event => {
     const { name, value } = event.target;
     const data = {
-      ...omit(values, ["firstName", "middleName", "lastName"]),
+      ...values,
       id,
       [name]: value
     };
