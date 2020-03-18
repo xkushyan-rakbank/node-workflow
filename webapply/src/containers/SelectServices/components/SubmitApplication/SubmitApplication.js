@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 
 import routes, { smeBaseName } from "../../../../routes";
-import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
+import { PROSPECT_STATUSES } from "../../../../constants";
 
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
-import { BlockConfirm } from "./BlockConfirm/index";
-import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
+import { BlockConfirm } from "./BlockConfirm";
+import { NotificationsManager } from "../../../../components/Notification";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NEXT, SUBMIT } from "../../../../constants";
-import { trustMessageContent } from "./constants";
-import { NotificationsManager } from "../../../../components/Notification";
+import { trustMessageContent, submitApplication } from "./constants";
 
 export const SubmitApplicationComponent = ({
   accountInfo: [account],
@@ -23,7 +22,6 @@ export const SubmitApplicationComponent = ({
   currentProspectStatus
 }) => {
   const pushHistory = useTrackingHistory();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => NotificationsManager.add(trustMessageContent), []);
 
@@ -33,16 +31,11 @@ export const SubmitApplicationComponent = ({
 
   const handleSubmit = useCallback(() => {
     updateViewId(pathname.replace(smeBaseName, ""), false);
-    setIsSubmitting(true);
-    sendProspectToAPI(NEXT, null, SUBMIT).then(
+    return sendProspectToAPI(NEXT, null, SUBMIT).then(
       () => pushHistory(routes.ApplicationSubmitted, true),
-      () => setIsSubmitting(false)
+      () => {}
     );
-  }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, pathname]);
-
-  if (isSubmitting) {
-    return <ServerRequestLoadingScreen />;
-  }
+  }, [updateViewId, sendProspectToAPI, pushHistory, pathname]);
 
   return (
     <>
@@ -54,11 +47,7 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      <BlockConfirm
-        isCustomer={!isApplyEditApplication}
-        isSubmitting={isSubmitting}
-        handleSubmit={handleSubmit}
-      />
+      <BlockConfirm isCustomer={!isApplyEditApplication} handleSubmit={handleSubmit} />
     </>
   );
 };

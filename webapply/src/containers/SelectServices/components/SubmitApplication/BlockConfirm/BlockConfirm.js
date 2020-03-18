@@ -1,106 +1,73 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
-import { NotificationsManager } from "../../../../../components/Notification";
-import { submitApplication, ISLAMIC, CONVENTIONAL } from "../../../../../constants";
-import { termsMessageContent } from "../constants";
-
-import { useStyles } from "./styled";
-import routes from "../../../../../routes";
 import { BackLink } from "../../../../../components/Buttons/BackLink";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
+import { NotificationsManager } from "../../../../../components/Notification";
+import { ServerRequestLoadingScreen } from "../../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
+import { TermsAgreedLabel } from "./TermsAgreedLabel";
+import routes from "../../../../../routes";
+import { termsMessageContent, IS_ALL_LINKS_VISITED, NONE_VISITED } from "../constants";
 
-const { termConditionLinks, termEnrollmentLinks } = submitApplication;
+import { useStyles } from "./styled";
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
   areTermsAgreed: Yup.boolean().oneOf([true], "Required")
 });
 
-export const BlockConfirmComponent = ({
-  isCustomer,
-  isIslamicBanking,
-  handleSubmit,
-  isSubmitting
-}) => {
-  const [isConditionLinkVisited, setIsConditionLinkVisited] = useState(false);
-  const [isEnrollmentLinkVisited, setIsEnrollmentLinkVisited] = useState(false);
+export const BlockConfirmComponent = ({ isCustomer, isIslamicBanking, handleSubmit }) => {
   const classes = useStyles();
-
-  const isAllLinksVisited = isConditionLinkVisited && isEnrollmentLinkVisited;
+  const [isLinkVisited, setIsLinkVisited] = useState(NONE_VISITED);
+  const isAllLinksVisited = IS_ALL_LINKS_VISITED === isLinkVisited;
 
   const handleShowNotification = useCallback(
     () =>
       !isAllLinksVisited && NotificationsManager && NotificationsManager.add(termsMessageContent),
     [isAllLinksVisited]
   );
-
-  const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
-
-  const termsAgreedLabel = (
-    <span>
-      I agree with RAKBANK’s{" "}
-      <a
-        className={classes.link}
-        href={termConditionLinks[typeOfAccount]}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={e => {
-          e.stopPropagation();
-          setIsConditionLinkVisited(true);
-        }}
-      >
-        terms and conditions
-      </a>{" "}
-      and{" "}
-      <a
-        className={classes.link}
-        href={termEnrollmentLinks[typeOfAccount]}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={e => {
-          e.stopPropagation();
-          setIsEnrollmentLinkVisited(true);
-        }}
-      >
-        terms of enrollment
-      </a>
-    </span>
+  const handleSetIsLinkVisited = useCallback(
+    operation => setIsLinkVisited(isLinkVisited | operation),
+    [isLinkVisited, setIsLinkVisited]
   );
 
   return (
-    <div className={classes.checkboxesWrapper}>
-      <Formik
-        initialValues={{
-          isInformationProvided: false,
-          areTermsAgreed: false,
-          needCommunication: true
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={isCustomer && blockConfirmSchema}
-        validateOnChange={false}
-      >
-        {({ values }) => {
-          const isSubmitButtonEnable =
-            !isCustomer || (values.isInformationProvided && values.areTermsAgreed);
-          return (
-            <Form>
-              {isCustomer && (
+    <Formik
+      initialValues={{
+        isInformationProvided: false,
+        areTermsAgreed: false,
+        needCommunication: true
+      }}
+      onSubmit={handleSubmit}
+      validationSchema={isCustomer && blockConfirmSchema}
+      validateOnChange={false}
+    >
+      {({ isSubmitting }) =>
+        isSubmitting ? (
+          <ServerRequestLoadingScreen />
+        ) : (
+          <Form>
+            {isCustomer && (
+              <div className={classes.checkboxesWrapper}>
                 <Field
                   name="isInformationProvided"
                   label="I confirm that the information provided is true and complete"
                   component={Checkbox}
                   inputProps={{ tabIndex: 0 }}
                 />
-              )}
-              {isCustomer && (
                 <div onClick={handleShowNotification}>
                   <Field
                     name="areTermsAgreed"
-                    label={termsAgreedLabel}
+                    label={
+                      <TermsAgreedLabel
+                        setIsLinkVisited={handleSetIsLinkVisited}
+                        isIslamicBanking={isIslamicBanking}
+                      />
+                    }
                     disabled={!isAllLinksVisited}
+                    exhaustiveDeps={isLinkVisited}
                     classes={{
                       label: classes.checkboxLabel,
                       checkbox: classes.checkbox
@@ -109,9 +76,6 @@ export const BlockConfirmComponent = ({
                     inputProps={{ tabIndex: 0 }}
                   />
                 </div>
-              )}
-
-              {isCustomer && (
                 <Field
                   name="needCommunication"
                   path="prospect.channelServicesInfo.marketingSMS"
@@ -119,20 +83,19 @@ export const BlockConfirmComponent = ({
                   component={Checkbox}
                   inputProps={{ tabIndex: 0 }}
                 />
-              )}
-
-              <div className="linkContainer">
-                <BackLink path={routes.selectServices} />
-                <SubmitButton
-                  disabled={!isSubmitButtonEnable || isSubmitting}
-                  label="Submit"
-                  justify="flex-end"
-                />
               </div>
-            </Form>
-          );
-        }}
-      </Formik>
-    </div>
+            )}
+            <div className="linkContainer">
+              <BackLink path={routes.selectServices} />
+              <SubmitButton
+                disabled={isCustomer && !isAllLinksVisited}
+                label="Submit"
+                justify="flex-end"
+              />
+            </div>
+          </Form>
+        )
+      }
+    </Formik>
   );
 };

@@ -8,4 +8,5 @@ export const areEqualFieldProps = (prevProps, nextProps) =>
   getIn(prevProps.form.errors, prevProps.field.name) ===
     getIn(nextProps.form.errors, nextProps.field.name) &&
   prevProps.options === nextProps.options &&
-  prevProps.disabled === nextProps.disabled;
+  prevProps.disabled === nextProps.disabled &&
+  prevProps.exhaustiveDeps === nextProps.exhaustiveDeps;
