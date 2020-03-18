@@ -1,5 +1,6 @@
 package ae.rakbank.documentuploader.controller;
 
+import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 import ae.rakbank.documentuploader.services.ProspectValidatorService;
 import ae.rakbank.documentuploader.services.auth.AuthorizationService;
@@ -7,6 +8,7 @@ import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.util.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.http.entity.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -28,6 +32,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(DocumentUploadController.class)
 public class DocumentUploadControllerTest {
+
+    private static final String URI = "/api/v1/banks/RAK/prospects/cosme0001/documents";
+    private static final String HEALTH_URI = "/api/v1/health";
+    private static final String DOWNLOAD_URI = "/api/v1/banks/RAK/prospects/cosme0001/documents/ABC12345";
+    private static final String DOCUMENT_KEY = "documentKey";
+    private static final String DOC_FROM_TEST_CASE = "SampleDocFromTestCase";
+    private static final String FILE_INFO_KEY = "fileInfo";
+    private static final String AUTHORIZATION_KEY = "authorization";
+    private static final String MOCK_TOKEN = "mock token";
+    private static final String TEST_FILE_CONTENT = "some xml";
 
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +59,7 @@ public class DocumentUploadControllerTest {
 
     @Test
     public void health() throws Exception {
-        mockMvc.perform(get("/api/v1/health"))
+        mockMvc.perform(get(HEALTH_URI))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("buildDate")))
@@ -61,19 +75,18 @@ public class DocumentUploadControllerTest {
 
     @Test
     public void handleUploadDocument() throws Exception {
-        String uri = "/api/v1/banks/RAK/prospects/cosme0001/documents";
         MockMultipartFile file =
-                new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
+                new MockMultipartFile("file", "filename.txt", ContentType.TEXT_PLAIN.getMimeType(), TEST_FILE_CONTENT.getBytes());
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode fileInfo = objectMapper.createObjectNode();
-        fileInfo.put("documentKey", "SampleDocFromTestCase");
+        fileInfo.put(DOCUMENT_KEY, DOC_FROM_TEST_CASE);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .multipart(uri)
+                .multipart(URI)
                 .file(file)
-                .header("authorization", "mock token")
-                .param("fileInfo", fileInfo.toString()))
+                .header(AUTHORIZATION_KEY, MOCK_TOKEN)
+                .param(FILE_INFO_KEY, fileInfo.toString()))
                 .andExpect(status().is2xxSuccessful());
 
         then(this.docUploadService)
@@ -82,20 +95,19 @@ public class DocumentUploadControllerTest {
 
     @Test
     public void handleReUploadDocument() throws Exception {
-        String uri = "/api/v1/banks/RAK/prospects/cosme0001/documents";
         MockMultipartFile file =
-                new MockMultipartFile("file", "file.txt", "text/plain", "some xml".getBytes());
+                new MockMultipartFile("file", "file.txt", ContentType.TEXT_PLAIN.getMimeType(), TEST_FILE_CONTENT.getBytes());
 
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode fileInfo = objectMapper.createObjectNode();
-        fileInfo.put("documentKey", "SampleDocFromTestCase");
+        fileInfo.put(DOCUMENT_KEY, DOC_FROM_TEST_CASE);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .multipart(uri)
+                .multipart(URI)
                 .file(file)
-                .header("authorization", "mock token")
-                .param("fileInfo", fileInfo.toString())
+                .header(AUTHORIZATION_KEY, MOCK_TOKEN)
+                .param(FILE_INFO_KEY, fileInfo.toString())
                 .with(request -> {
                     request.setMethod("PUT");
                     return request;
@@ -109,20 +121,19 @@ public class DocumentUploadControllerTest {
 
     @Test
     public void handleReUploadDocumentWithEmptyFileInfo() throws Exception {
-        String uri = "/api/v1/banks/RAK/prospects/cosme0001/documents";
         MockMultipartFile file =
-                new MockMultipartFile("file", "file.txt", "text/plain", "some xml".getBytes());
+                new MockMultipartFile("file", "file.txt", ContentType.TEXT_PLAIN.getMimeType(), TEST_FILE_CONTENT.getBytes());
 
 
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode fileInfo = objectMapper.createObjectNode();
-        fileInfo.put("documentKey", "SampleDocFromTestCase");
+        fileInfo.put(DOCUMENT_KEY, DOC_FROM_TEST_CASE);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .multipart(uri)
+                .multipart(URI)
                 .file(file)
-                .header("authorization", "mock token")
-                .param("fileInfo", "")
+                .header(AUTHORIZATION_KEY, MOCK_TOKEN)
+                .param(FILE_INFO_KEY, "")
                 .with(request -> {
                     request.setMethod("PUT");
                     return request;
@@ -131,9 +142,13 @@ public class DocumentUploadControllerTest {
     }
 
     @Test
-    public void downloadFile() {
+    public void downloadFile() throws Exception {
 
-        //TODO
+        when(docUploadService.findOneByDocumentKey(anyString()))
+                .thenReturn(new FileDto(ContentType.APPLICATION_OCTET_STREAM.getMimeType(), "file.txt", "content".getBytes()));
 
+        mockMvc.perform(get(DOWNLOAD_URI).header(AUTHORIZATION_KEY, MOCK_TOKEN))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }

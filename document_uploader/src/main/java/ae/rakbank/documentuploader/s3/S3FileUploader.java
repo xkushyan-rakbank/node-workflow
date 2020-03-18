@@ -60,7 +60,8 @@ public class S3FileUploader {
     }
 
     private void uploadToS3(S3Client s3) {
-        try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir()))) {
+        try (DirectoryStream<Path> directoryStream =
+                     Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir()))) {
             directoryStream.forEach(path -> {
                 File file = path.toFile();
                 byte[] fileData;
