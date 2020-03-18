@@ -3,11 +3,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import routes, { smeBaseName } from "../../../../routes";
 import { submitApplication, PROSPECT_STATUSES } from "../../../../constants/index";
 
-import { BackLink } from "../../../../components/Buttons/BackLink";
 import { FormTitle } from "../FormTitle";
 import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm/index";
-import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NEXT, SUBMIT } from "../../../../constants";
@@ -25,7 +23,6 @@ export const SubmitApplicationComponent = ({
   currentProspectStatus
 }) => {
   const pushHistory = useTrackingHistory();
-  const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => NotificationsManager.add(trustMessageContent), []);
@@ -43,10 +40,6 @@ export const SubmitApplicationComponent = ({
     );
   }, [updateViewId, sendProspectToAPI, setIsSubmitting, pushHistory, pathname]);
 
-  const isSubmitButtonEnable =
-    isApplyEditApplication ||
-    (formFieldsValues.isInformationProvided && formFieldsValues.areTermsAgreed);
-
   if (isSubmitting) {
     return <ServerRequestLoadingScreen />;
   }
@@ -60,17 +53,12 @@ export const SubmitApplicationComponent = ({
         signatoryInfo={signatoryInfo}
         account={account}
       />
-      {!isApplyEditApplication && <BlockConfirm setFormFields={setFormFields} />}
 
-      <div className="linkContainer">
-        <BackLink path={routes.selectServices} />
-        <SubmitButton
-          disabled={!isSubmitButtonEnable || isSubmitting}
-          label="Submit"
-          justify="flex-end"
-          handleClick={handleSubmit}
-        />
-      </div>
+      <BlockConfirm
+        isCustomer={!isApplyEditApplication}
+        isSubmitting={isSubmitting}
+        handleSubmit={handleSubmit}
+      />
     </>
   );
 };
