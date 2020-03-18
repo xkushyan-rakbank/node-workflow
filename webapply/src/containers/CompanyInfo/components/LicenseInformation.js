@@ -54,7 +54,7 @@ const licenseInformationSchema = () =>
 const changeDateProspectHandler = (_, value, path) =>
   isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
-export const LicenseInformation = ({ handleContinue }) => {
+export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) => {
   const classes = useStyles();
   return (
     <Formik
@@ -63,7 +63,7 @@ export const LicenseInformation = ({ handleContinue }) => {
       validationSchema={licenseInformationSchema}
       onSubmit={handleContinue}
     >
-      {({ setFieldValue }) => (
+      {createFormChangeHandler(({ setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} sm={12}>
@@ -167,7 +167,7 @@ export const LicenseInformation = ({ handleContinue }) => {
             <ContinueButton type="submit" />
           </Grid>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

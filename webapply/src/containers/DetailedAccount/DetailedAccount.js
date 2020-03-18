@@ -1,7 +1,6 @@
 import React from "react";
 
 import { VerticalPagination } from "../../components/VerticalPagination";
-import IslamicBankingSwitcher from "../../components/IslamicBankingSwitcher/IslamicBankingSwitcher";
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
@@ -14,9 +13,6 @@ export const DetailedAccount = () => {
 
   return (
     <>
-      <div className="hide-on-mobile">
-        <IslamicBankingSwitcher />
-      </div>
       <VerticalPagination video={getVideoByAccountType(accountType, isIslamicBanking)}>
         <AccountBenefits />
         <AccountingSoftware />

@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/index";
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -9,6 +9,7 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "6px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.08)",
     [theme.breakpoints.only("xs")]: {
+      position: "absolute",
       padding: "30px 16px",
       left: 0,
       top: ({ isMobileNotificationActive }) =>

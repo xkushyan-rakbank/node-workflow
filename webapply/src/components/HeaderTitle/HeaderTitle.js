@@ -58,15 +58,15 @@ const HeaderTitleComponent = ({
               </div>
             </>
           )}
+          {![routes.searchProspect].includes(pathname) && (
+            <>
+              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+            </>
+          )}
           {!applicationOverviewRoutes.includes(pathname) && companyName && (
             <>
               for <span>{companyName}</span>
             </>
-          )}
-          {![routes.searchProspect].includes(pathname) && (
-            <div>
-              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application
-            </div>
           )}
         </span>
       </div>

@@ -25,8 +25,6 @@ export const FormLayoutComponent = ({
   const blobColor = useBlobColor();
 
   const isDisplayHeader = [
-    routes.MyApplications,
-    routes.comeBackLoginVerification,
     routes.verifyOtp,
     routes.applicantInfo,
     routes.companyInfo,
@@ -46,6 +44,10 @@ export const FormLayoutComponent = ({
     color: blobColor,
     fullContentWidth: checkIsShowSmallMenu(pathname)
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");

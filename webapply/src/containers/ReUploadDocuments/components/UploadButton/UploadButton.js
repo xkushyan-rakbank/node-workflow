@@ -8,9 +8,12 @@ import { DocumentUploadError } from "../../../../components/DocumentUploadError/
 export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
   const classes = useStyles();
   const [error, setError] = useState("");
-  const resetError = () => setError("");
-
   const inputEl = useRef(null);
+
+  const uploadButtonClick = () => {
+    setError("");
+    inputEl.current.click();
+  };
 
   const fileUploadClick = event => (event.target.value = null);
 
@@ -35,7 +38,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
         onClick={fileUploadClick}
         ref={inputEl}
       />
-      <div className={classes.uploadButton} onClick={() => inputEl.current.click()}>
+      <div className={classes.uploadButton} onClick={uploadButtonClick}>
         {error ? (
           <FileIcon className={classes.errorIcon} width={18} height={24} />
         ) : (
@@ -45,7 +48,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
           <span className={classes.uploadButtonText}>
             {isFirstDocument ? "Upload document" : "Add another document"}
           </span>
-          {error && <DocumentUploadError error={error} tryAgainHandler={resetError} />}
+          {error && <DocumentUploadError error={error} />}
         </div>
       </div>
     </>

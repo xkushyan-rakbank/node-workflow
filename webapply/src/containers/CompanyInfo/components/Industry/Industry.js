@@ -35,7 +35,13 @@ const industrySchema = Yup.object().shape({
   )
 });
 
-export const IndustryStep = ({ handleContinue, industries, updateProspect, isIslamicBanking }) => {
+export const IndustryStep = ({
+  handleContinue,
+  industries,
+  updateProspect,
+  isIslamicBanking,
+  createFormChangeHandler
+}) => {
   const classes = useStyles();
 
   const addIndustryHandler = arrayHelper => () => {
@@ -88,7 +94,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {({ values, setFieldValue }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -214,7 +220,7 @@ export const IndustryStep = ({ handleContinue, industries, updateProspect, isIsl
             <ContinueButton type="submit" />
           </Grid>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };
