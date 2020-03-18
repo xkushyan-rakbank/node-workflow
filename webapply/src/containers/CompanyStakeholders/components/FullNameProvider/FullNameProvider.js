@@ -25,3 +25,12 @@ export const changeFullName = item => {
 
   setValues(stakeholders);
 };
+
+export const deleteStakeholderFromContext = id => {
+  const index = stakeholders.findIndex(e => e.id === id);
+  if (index !== -1) {
+    stakeholders.splice(index, 1);
+  }
+
+  setValues(stakeholders);
+};
