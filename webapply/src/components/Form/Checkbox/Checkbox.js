@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { CustomCheckbox } from "./CustomCheckbox";
 import { InfoTitle } from "../../../components/InfoTitle";
 import { ContexualHelp, ErrorMessage } from "../../Notifications";
-import { areEqualFieldProps } from "../utils";
+import { areEqualFieldProps, omitProps } from "../utils";
 
 const useStyles = makeStyles({
   formControlRoot: {
@@ -28,7 +28,6 @@ export const CheckboxBase = ({
   classes: extendedClasses,
   contextualHelpText,
   contextualHelpProps = {},
-  exhaustiveDeps,
   ...rest
 }) => {
   const errorMessage = getIn(errors, field.name);
@@ -40,7 +39,7 @@ export const CheckboxBase = ({
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <CustomCheckbox
           {...field}
-          {...rest}
+          {...omitProps(rest)}
           classes={{ label: classes.label, checkbox: classes.checkbox }}
           label={label}
           value={value}
