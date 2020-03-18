@@ -24,7 +24,8 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     "& svg": {
       width: "24px",
-      stroke: "#fff"
+      stroke: "#fff",
+      fill: "#fff"
     }
   },
   errorMessage: {
