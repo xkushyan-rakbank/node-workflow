@@ -17,9 +17,7 @@ export const FullNameCompanyStakeholdersProvider = ({ children }) => {
 };
 
 export const setInitialStakeholdersContext = stakeholders => {
-  if (setValues) {
-    setValues([...stakeholders]);
-  }
+  setValues && setValues([...stakeholders]);
 };
 
 export const changeFullName = item => {
@@ -31,15 +29,11 @@ export const changeFullName = item => {
     stakeholders[index] = data;
   }
 
-  if (setValues) {
-    setValues([...stakeholders]);
-  }
+  setValues && setValues([...stakeholders]);
 };
 
-export const deleteStakeholderContext = id => {
+export const deleteStakeholderName = id => {
   stakeholders = stakeholders.filter(item => item.id !== id);
 
-  if (setValues) {
-    setValues([...stakeholders]);
-  }
+  setValues && setValues([...stakeholders]);
 };
