@@ -54,9 +54,7 @@ const CompanyStakeholdersComponent = ({
   }, [createNewStakeholder, stakeholders.length]);
 
   useEffect(() => {
-    stakeholders.map(item => {
-      changeFullName(item);
-    });
+    stakeholders.forEach(item => changeFullName(item));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
