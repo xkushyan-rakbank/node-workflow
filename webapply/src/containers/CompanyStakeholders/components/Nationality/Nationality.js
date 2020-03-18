@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { Formik, Form, FieldArray } from "formik";
@@ -37,26 +37,14 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-export const NationalityStep = ({ index, passportDetails, handleContinue, updateProspect }) => {
+export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
   const classes = useStyles();
 
   const kycDetailsPath = `prospect.signatoryInfo[${index}].kycDetails`;
 
-  const submitForm = useCallback(
-    values => {
-      updateProspect({
-        [`${kycDetailsPath}.dualCitizenshipCountry`]: values.passportDetails
-          .map(p => p.country)
-          .slice(1)
-      });
-      handleContinue();
-    },
-    [handleContinue, updateProspect, kycDetailsPath]
-  );
-
   return (
     <Formik
-      onSubmit={submitForm}
+      onSubmit={handleContinue}
       initialValues={{
         passportDetails: passportDetails.map(item => ({ ...item, id: uniqueId() }))
       }}
@@ -124,6 +112,9 @@ export const NationalityStep = ({ index, passportDetails, handleContinue, update
                               [`${kycDetailsPath}.passportDetails`]: values.passportDetails.map(
                                 ({ id, ...withoutId }) => withoutId
                               ),
+                              [`${kycDetailsPath}.dualCitizenshipCountry`]: values.passportDetails
+                                .map(p => p.country)
+                                .slice(1),
                               [`${kycDetailsPath}.dualCitizenship`]: !!passportIndex
                             })}
                             disabled={isAdditionalCitizenshipDisabled(

@@ -120,7 +120,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
         firstName: "",
         middleName: "",
         lastName: "",
-        isShareholderACompany: "",
+        isShareholderACompany: false,
         dateOfBirth: "",
         isPEP: ""
       }}

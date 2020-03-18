@@ -1,13 +1,17 @@
 import React, { memo } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import DateFnsUtils from "@date-io/date-fns";
 import { getIn } from "formik";
 
 import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
-import { BaseDatePicker } from "./styled";
+import { StyledKeyboardDatePicker } from "./StyledKeyboadDatePicker";
+import { PickerToolbar } from "./PickerToolbar/PickerToolbar";
+
 import { areEqualFieldProps } from "../utils";
+import { LocalizedUtils } from "./utils";
+
+import { useStyles } from "./styled";
 
 const DatePickerBase = ({
   field,
@@ -25,13 +29,13 @@ const DatePickerBase = ({
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const classes = useStyles();
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <BaseDatePicker
-            autoOk
+        <MuiPickersUtilsProvider utils={LocalizedUtils}>
+          <StyledKeyboardDatePicker
             autoComplete="off"
             label={label}
             minDate={minDate}
@@ -40,19 +44,23 @@ const DatePickerBase = ({
             margin="normal"
             format={format}
             inputVariant="outlined"
+            variant="inline"
             placeholder={placeholder}
             error={isError}
             invalidDateMessage={false}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}
-            InputLabelProps={{
-              shrink: true
-            }}
             {...field}
-            onChange={onChange}
             {...datePickerProps}
-            value={field.value === "" ? null : field.value}
+            InputAdornmentProps={{ position: "start" }}
+            value={field.value || null}
+            ToolbarComponent={PickerToolbar}
+            views={["date"]}
+            onChange={onChange}
+            classes={{
+              root: classes.root
+            }}
           />
         </MuiPickersUtilsProvider>
         {infoTitle && <InfoTitle title={infoTitle} />}
