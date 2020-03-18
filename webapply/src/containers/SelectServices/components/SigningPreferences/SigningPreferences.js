@@ -51,6 +51,7 @@ const signingPreferencesSchema = Yup.object({
     Yup.object().shape({
       TxnReconfirmingfullname: Yup.string()
         .required(getRequiredMessage("Full name"))
+        // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_RECONFIRMING_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
         .matches(NAME_REGEX, getInvalidMessage("Full name")),
       primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
