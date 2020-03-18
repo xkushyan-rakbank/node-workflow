@@ -110,7 +110,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
     };
 
     changeFullName(data);
-    setFieldValue(data);
+    setFieldValue(name, value);
   };
 
   return (
