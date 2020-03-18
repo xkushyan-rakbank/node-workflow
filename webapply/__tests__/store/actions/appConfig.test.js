@@ -1,4 +1,4 @@
-import * as appConfig from "../appConfig";
+import * as appConfig from "../../../src/store/actions/appConfig";
 
 describe("actions for app config", () => {
   it("should loadMetaData with undefined argument", () => {
