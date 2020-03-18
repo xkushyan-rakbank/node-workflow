@@ -2,12 +2,12 @@ import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { submitApplication, ISLAMIC, CONVENTIONAL } from "../../../../../constants";
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
+import { NotificationsManager } from "../../../../../components/Notification";
+import { submitApplication, ISLAMIC, CONVENTIONAL } from "../../../../../constants";
+import { termsMessageContent } from "../constants";
 
 import { useStyles } from "./styled";
-import { NotificationsManager } from "../../../../../components/Notification";
-import { termsMessageContent } from "../constants";
 
 const { termConditionLinks, termEnrollmentLinks } = submitApplication;
 
@@ -96,6 +96,10 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
                 disabled={!isAllLinksVisited}
                 onChange={e => {
                   setFieldsValue(e, setFieldValue, values);
+                }}
+                classes={{
+                  label: classes.label,
+                  checkbox: classes.checkbox
                 }}
                 component={Checkbox}
                 inputProps={{ tabIndex: 0 }}

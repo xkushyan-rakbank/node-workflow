@@ -14,6 +14,8 @@ const useStyles = makeStyles({
     width: "100%",
     display: "flex"
   },
+  checkbox: {},
+  label: {},
   infoTitle: {}
 });
 
@@ -38,6 +40,7 @@ export const CheckboxBase = ({
         <CustomCheckbox
           {...field}
           {...rest}
+          classes={{ label: classes.label, checkbox: classes.checkbox }}
           label={label}
           value={value}
           checked={field.value === value}
