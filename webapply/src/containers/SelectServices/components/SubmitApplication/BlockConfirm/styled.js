@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
       fill: "#000"
     }
   },
-  label: {
+  checkboxLabel: {
     "&.Mui-disabled": {
       color: theme.palette.text.color
     }
