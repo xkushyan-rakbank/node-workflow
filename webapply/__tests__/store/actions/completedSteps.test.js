@@ -5,7 +5,7 @@ import {
   setStepStatus,
   setInitialSteps,
   removeSignatory
-} from "../completedSteps";
+} from "../../../src/store/actions/completedSteps";
 
 describe("actions for completedSteps", () => {
   it("should create an action to set step", () => {

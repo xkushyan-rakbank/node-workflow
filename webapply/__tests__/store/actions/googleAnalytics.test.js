@@ -2,23 +2,18 @@ import {
   appendGaEventToAction,
   sendGoogleAnalyticsMetrics,
   SEND_GOOGLE_ANALYTICS_METRICS
-} from "../googleAnalytics";
+} from "../../../src/store/actions/googleAnalytics";
 
 describe("google analytics actions", () => {
-  it("should create an action to login loginInfoFormPromisify", () => {
-    const action = {};
+  it("should create an action to login info form promisify", () => {
     const gaEvent = {};
-    action.meta = {
-      ...(action.meta || {}),
-      analytics: {
-        eventType: gaEvent
+    const action = {
+      meta: {
+        analytics: {
+          eventType: gaEvent
+        }
       }
     };
-    expect(appendGaEventToAction(action)).toEqual(action);
-  });
-
-  it("should create an action to login loginInfoFormPromisify", () => {
-    const action = {};
     expect(appendGaEventToAction(action)).toEqual(action);
   });
 

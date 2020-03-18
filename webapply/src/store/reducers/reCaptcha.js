@@ -3,8 +3,7 @@ import { handleActions } from "../../utils/redux-utils";
 import { RESET_APPLICANT_INFO } from "../actions/appConfig";
 
 export const initialState = {
-  token: "",
-  error: ""
+  token: ""
 };
 
 export default handleActions(

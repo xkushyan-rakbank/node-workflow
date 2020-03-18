@@ -9,10 +9,10 @@ import {
   loginInfoFormSuccess,
   loginInfoFormError,
   logout
-} from "../loginForm";
+} from "../../../src/store/actions/loginForm";
 
 describe("applicantInfoForm actions", () => {
-  it("should create an action to login loginInfoFormPromisify", () => {
+  it("should create an action to login info form promisify", () => {
     const payload = {};
     const expectedAction = {
       type: LOGIN_INFO_FORM,
@@ -23,7 +23,7 @@ describe("applicantInfoForm actions", () => {
     expect(loginInfoFormPromisify(payload)).toEqual(expectedAction);
   });
 
-  it("should create an action to login infoFormSuccess", () => {
+  it("should create an action to login info form success", () => {
     const payload = {};
     const expectedAction = {
       type: LOGIN_INFO_FORM_SUCCESS,
@@ -32,7 +32,7 @@ describe("applicantInfoForm actions", () => {
     expect(loginInfoFormSuccess(payload)).toEqual(expectedAction);
   });
 
-  it("should create an action to login infoFormError", () => {
+  it("should create an action to login info form error", () => {
     const error = {};
     const expectedAction = {
       type: LOGIN_INFO_FORM_ERROR,

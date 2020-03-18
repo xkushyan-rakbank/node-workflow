@@ -15,7 +15,7 @@ import {
   verifyCodeSuccess,
   verifyCodeFailed,
   verifyClearError
-} from "../otp";
+} from "../../../src/store/actions/otp";
 
 describe("applicantInfoForm actions", () => {
   it("should create an action to generate otp code", () => {

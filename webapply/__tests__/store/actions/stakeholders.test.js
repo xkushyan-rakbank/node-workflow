@@ -1,5 +1,5 @@
-import { appendGaEventToAction } from "../googleAnalytics";
-import { GA_EVENTS } from "../../../utils/ga";
+import { appendGaEventToAction } from "../../../src/store/actions/googleAnalytics";
+import { GA_EVENTS } from "../../../src/utils/ga";
 
 import {
   CREATE_NEW_STAKEHOLDER,
@@ -14,7 +14,7 @@ import {
   updateStakeholdersIds,
   setFillStakeholder,
   setEditStakeholder
-} from "../stakeholders";
+} from "../../../src/store/actions/stakeholders";
 
 describe("stakeholders actions", () => {
   it("should create an action to create new stakeholder", () => {

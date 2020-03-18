@@ -19,7 +19,7 @@ import {
   downloadDocumentFile,
   addOtherDocument,
   deleteOtherDocument
-} from "../getProspectDocuments";
+} from "../../../src/store/actions/getProspectDocuments";
 
 describe("actions for completedSteps", () => {
   it("should create an action to retrieve document uploader", () => {
