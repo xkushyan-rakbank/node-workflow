@@ -8,9 +8,9 @@ const initialPassportDetails = {
   diplomatPassport: false
 };
 
-export const createAddCitizenshipHandler = (values, arrayHelper, passportIndex) => () => {
+export const createAddCitizenshipHandler = (arrayHelper, passportIndex) => () => {
   const name = `passportDetails[${passportIndex}].hasAnotherCitizenship`;
-  const value = values.passportDetails[passportIndex].hasAnotherCitizenship;
+  const value = arrayHelper.form.values.passportDetails[passportIndex].hasAnotherCitizenship;
 
   if (!value) {
     arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
@@ -18,7 +18,9 @@ export const createAddCitizenshipHandler = (values, arrayHelper, passportIndex) 
     arrayHelper.form.setTouched({
       passportDetails: arrayHelper.form.touched.passportDetails.slice(0, passportIndex + 1)
     });
-    values.passportDetails.forEach((_, index) => index > passportIndex && arrayHelper.pop());
+    arrayHelper.form.values.passportDetails.forEach(
+      (_, index) => index > passportIndex && arrayHelper.pop()
+    );
   }
   arrayHelper.form.setFieldValue(name, !value);
 };

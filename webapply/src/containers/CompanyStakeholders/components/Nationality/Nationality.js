@@ -101,11 +101,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                             path={`${passportDetailsPath}.hasAnotherCitizenship`}
                             label="This person has another citizenship"
                             component={NationalityCheckbox}
-                            onChange={createAddCitizenshipHandler(
-                              values,
-                              arrayHelper,
-                              passportIndex
-                            )}
+                            onChange={createAddCitizenshipHandler(arrayHelper, passportIndex)}
                             changeProspect={prospect => ({
                               ...prospect,
                               [`${kycDetailsPath}.passportDetails`]: values.passportDetails.map(
