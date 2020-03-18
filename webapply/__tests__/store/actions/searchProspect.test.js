@@ -16,7 +16,7 @@ import {
   getProspectOverviewPromisify,
   getProspectOverviewSuccess,
   getProspectOverviewFail
-} from "../searchProspect";
+} from "../../../src/store/actions/searchProspect";
 
 describe("actions for searchProspect", () => {
   it("should create an action to search applications request", () => {

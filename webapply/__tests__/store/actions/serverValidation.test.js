@@ -3,7 +3,7 @@ import {
   RESET_INPUTS_ERRORS,
   setInputsErrors,
   resetInputsErrors
-} from "../serverValidation";
+} from "../../../src/store/actions/serverValidation";
 
 describe("actions for server validation", () => {
   it("should create an action to set inputs errors", () => {
