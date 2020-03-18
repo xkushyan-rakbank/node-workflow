@@ -24,9 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-
 import { changeFullName } from "../FullNameProvider/FullNameProvider";
-
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -104,7 +102,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
 
-  const onChangeHandler = (values, { name, value }, setValues) => {
+  const createChangeHandler = (values, { name, value }, setFieldValue) => {
     const data = {
       ...values,
       id,
@@ -112,7 +110,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
     };
 
     changeFullName(data);
-    setValues(data);
+    setFieldValue(data);
   };
 
   return (
@@ -130,7 +128,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched, setValues }) => (
+      {({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -183,7 +181,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
                   disabled={!!values.isShareholderACompany}
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
-                  onChange={event => onChangeHandler(values, event.target, setValues)}
+                  onChange={event => createChangeHandler(values, event.target, setFieldValue)}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
@@ -200,7 +198,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
-                onChange={event => onChangeHandler(values, event.target, setValues)}
+                onChange={event => createChangeHandler(values, event.target, setFieldValue)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
@@ -217,7 +215,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
-                onChange={event => onChangeHandler(values, event.target, setValues)}
+                onChange={event => createChangeHandler(values, event.target, setFieldValue)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }

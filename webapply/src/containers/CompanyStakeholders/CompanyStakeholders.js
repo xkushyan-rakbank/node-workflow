@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
+import { changeFullName } from "./components/FullNameProvider/FullNameProvider";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
@@ -25,7 +26,6 @@ import routes from "../../routes";
 import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
 
 import { useStyles } from "./styled";
-import { changeFullName } from "./components/FullNameProvider/FullNameProvider";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -54,11 +54,9 @@ const CompanyStakeholdersComponent = ({
   }, [createNewStakeholder, stakeholders.length]);
 
   useEffect(() => {
-    if (stakeholders.length) {
-      stakeholders.map(item => {
-        changeFullName(item);
-      });
-    }
+    stakeholders.map(item => {
+      changeFullName(item);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
