@@ -98,8 +98,8 @@ export const BlockConfirmComponent = ({ setFormFields, isIslamicBanking }) => {
                   setFieldsValue(e, setFieldValue, values);
                 }}
                 classes={{
-                  label: classes.label,
-                  checkbox: classes.checkboxLabel
+                  label: classes.checkboxLabel,
+                  checkbox: classes.checkbox
                 }}
                 component={Checkbox}
                 inputProps={{ tabIndex: 0 }}
