@@ -1,5 +1,5 @@
 import { ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
-import * as applicantInfoForm from "../applicantInfoForm";
+import * as applicantInfoForm from "../../../src/store/actions/applicantInfoForm";
 
 describe("applicantInfoForm actions", () => {
   it("should applicantInfoFormPromisify", () => {
@@ -20,7 +20,7 @@ describe("applicantInfoForm actions", () => {
 
   it("should applicantInfoForm fail", () => {
     const payload = {};
-    const expectedAction = { type: applicantInfoForm.APPLICANT_INFO_FORM_FAIL, error: payload };
+    const expectedAction = { type: applicantInfoForm.APPLICANT_INFO_FORM_FAIL, payload };
     expect(applicantInfoForm.applicantInfoFormFail(payload)).toEqual(expectedAction);
   });
 });

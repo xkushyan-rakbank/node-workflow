@@ -1,6 +1,6 @@
-import * as appConfig from "../appConfig";
+import * as appConfig from "../../../src/store/actions/appConfig";
 
-describe("app config actions", () => {
+describe("actions for app config", () => {
   it("should loadMetaData with undefined argument", () => {
     const payload = undefined;
     const expectedAction = { type: appConfig.LOAD_META_DATA, payload: "" };
@@ -20,19 +20,19 @@ describe("app config actions", () => {
 
   it("should receiveAppConfig success", () => {
     const payload = {};
-    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_SUCCESS, data: payload };
+    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_SUCCESS, payload };
     expect(appConfig.receiveAppConfigSuccess(payload)).toEqual(expectedAction);
   });
 
   it("should receiveAppConfig fail", () => {
     const payload = {};
-    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_FAIL, error: payload };
+    const expectedAction = { type: appConfig.RECEIVE_APPCONFIG_FAIL, payload };
     expect(appConfig.receiveAppConfigFail(payload)).toEqual(expectedAction);
   });
 
   it("should update prospect without gaEvent", () => {
     const payload = {};
-    const expectedAction = { type: appConfig.UPDATE_PROSPECT, fields: payload };
+    const expectedAction = { type: appConfig.UPDATE_PROSPECT, payload };
     expect(appConfig.updateProspect(payload)).toEqual(expectedAction);
   });
 
@@ -41,7 +41,7 @@ describe("app config actions", () => {
     const payload = {};
     const expectedAction = {
       type: appConfig.UPDATE_PROSPECT,
-      fields: payload,
+      payload,
       meta: {
         analytics: {
           eventType: gaEvent
@@ -59,7 +59,7 @@ describe("app config actions", () => {
 
   it("should set prospect", () => {
     const payload = {};
-    const expectedAction = { type: appConfig.SET_PROSPECT, prospect: payload };
+    const expectedAction = { type: appConfig.SET_PROSPECT, payload };
     expect(appConfig.setProspect(payload)).toEqual(expectedAction);
   });
 
@@ -70,7 +70,7 @@ describe("app config actions", () => {
 
   it("should update prospectId", () => {
     const payload = "12345";
-    const expectedAction = { type: appConfig.UPDATE_PROSPECT_ID, prospectId: payload };
+    const expectedAction = { type: appConfig.UPDATE_PROSPECT_ID, payload };
     expect(appConfig.updateProspectId(payload)).toEqual(expectedAction);
   });
 
@@ -88,7 +88,7 @@ describe("app config actions", () => {
 
   it("should save prospectModel", () => {
     const payload = {};
-    const expectedAction = { type: appConfig.SAVE_PROSPECT_MODEL, prospectModel: payload };
+    const expectedAction = { type: appConfig.SAVE_PROSPECT_MODEL, payload };
     expect(appConfig.saveProspectModel(payload)).toEqual(expectedAction);
   });
 

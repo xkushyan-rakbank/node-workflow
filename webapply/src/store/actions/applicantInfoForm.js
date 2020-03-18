@@ -14,6 +14,6 @@ export const applicantInfoFormPromisify = data => ({
 export const applicantInfoFormSuccess = () => {
   return { type: APPLICANT_INFO_FORM_SUCCESS };
 };
-export const applicantInfoFormFail = error => {
-  return { type: APPLICANT_INFO_FORM_FAIL, error };
+export const applicantInfoFormFail = payload => {
+  return { type: APPLICANT_INFO_FORM_FAIL, payload };
 };
