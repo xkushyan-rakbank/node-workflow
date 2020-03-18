@@ -1,4 +1,4 @@
-import { UPDATE_ACCOUNT_NUMBERS, updateAccountNumbers } from "../accountNumbers";
+import { UPDATE_ACCOUNT_NUMBERS, updateAccountNumbers } from "../../../src/store/actions/accountNumbers";
 
 describe("actions for account numbers", () => {
   const payload = [];
