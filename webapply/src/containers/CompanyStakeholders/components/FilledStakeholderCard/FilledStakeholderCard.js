@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import cx from "classnames";
 import get from "lodash/get";
 
@@ -6,20 +6,22 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { useStyles } from "./styled";
 import { checkIsAccountInfoTypeNumber } from "../../../FinalQuestions/components/SignatorySummaryCard/utils";
+import { StakeholdersNamesContext } from "../FullNameProvider/FullNameProvider";
 
 export const FilledStakeholderCard = ({
-  firstName,
-  middleName,
-  lastName,
   accountSigningInfo,
   changeEditableStep,
   index,
   kycDetails: { shareHoldingPercentage } = {},
   datalist,
-  editDisabled
+  editDisabled,
+  id
 }) => {
   const classes = useStyles();
 
+  const stakeholdersFromContext = useContext(StakeholdersNamesContext);
+  const { firstName, lastName, middleName } =
+    stakeholdersFromContext.find(item => item.id === id) || {};
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);

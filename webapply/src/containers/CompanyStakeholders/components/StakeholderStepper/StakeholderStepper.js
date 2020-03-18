@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { connect, useSelector } from "react-redux";
 
+import { deleteFullName } from "../FullNameProvider/FullNameProvider";
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -86,8 +87,8 @@ const StakeholderStepperComponent = ({
   };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
-
   const handleDeleteStakeholder = useCallback(() => {
+    deleteFullName(id);
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
   }, [setIsDisplayConfirmation, deleteStakeholder, id]);
@@ -120,6 +121,7 @@ const StakeholderStepperComponent = ({
       <FilledStakeholderCard
         key={key}
         index={index}
+        id={id}
         editDisabled={Number.isInteger(editableStakeholder)}
         changeEditableStep={handleEditCompleted}
         datalist={datalist}
@@ -142,11 +144,13 @@ const StakeholderStepperComponent = ({
       index={orderIndex}
       isEditInProgress={isEditInProgress}
       editHandler={editHandler}
+      id={id}
     >
       <div className={classes.formContent}>
         {stakeHoldersSteps.map(item => (
           <StepComponent
             index={index}
+            id={id}
             key={item.step}
             title={item.title}
             subTitle={item.infoTitle}
