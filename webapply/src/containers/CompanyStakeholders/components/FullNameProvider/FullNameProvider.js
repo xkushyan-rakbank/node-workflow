@@ -16,23 +16,28 @@ export const FullNameCompanyStakeholdersProvider = ({ children }) => {
   );
 };
 
+export const setInitialStakeholdersContext = stakeholders => {
+  if (setValues) {
+    setValues([...stakeholders]);
+  }
+};
+
 export const changeFullName = item => {
   const data = pick(item, ["firstName", "middleName", "lastName", "id"]);
-  const index = stakeholders.findIndex(e => e.id === data.id);
+  const index = stakeholders.findIndex(elem => elem.id === data.id);
   if (index === -1) {
     stakeholders.push(data);
   } else {
     stakeholders[index] = data;
   }
 
-  setValues([...stakeholders]);
   if (setValues) {
     setValues([...stakeholders]);
   }
 };
 
 export const deleteStakeholderContext = id => {
-  stakeholders = stakeholders.filter(e => e.id !== id);
+  stakeholders = stakeholders.filter(item => item.id !== id);
 
   if (setValues) {
     setValues([...stakeholders]);

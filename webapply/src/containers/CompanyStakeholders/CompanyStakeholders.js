@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
-import { changeFullName } from "./components/FullNameProvider/FullNameProvider";
+import { setInitialStakeholdersContext } from "./components/FullNameProvider/FullNameProvider";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
@@ -54,7 +54,7 @@ const CompanyStakeholdersComponent = ({
   }, [createNewStakeholder, stakeholders.length]);
 
   useEffect(() => {
-    stakeholders.forEach(item => changeFullName(item));
+    setInitialStakeholdersContext(stakeholders);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
