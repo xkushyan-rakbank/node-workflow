@@ -28,10 +28,7 @@ export const SubmitApplicationComponent = ({
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => NotificationsManager.add(trustMessageContent), [
-    NotificationsManager,
-    trustMessageContent
-  ]);
+  useEffect(() => NotificationsManager.add(trustMessageContent), []);
 
   const handleSubmit = useCallback(() => {
     updateViewId(pathname.replace(smeBaseName, ""), false);
