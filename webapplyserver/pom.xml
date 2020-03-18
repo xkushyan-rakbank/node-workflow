@@ -187,6 +187,10 @@
                                     </limits>
                                 </rule>
                             </rules>
+                            <excludes>
+                                <exclude>**/*Config.*</exclude>
+                                <exclude>**/*Props.*</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                 </executions>
