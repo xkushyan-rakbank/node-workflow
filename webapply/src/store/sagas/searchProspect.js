@@ -44,7 +44,7 @@ function* getProspectOverviewSaga({ payload: { prospectId } }) {
     yield put(getProspectOverviewSuccess(prospect));
   } catch (error) {
     log(error);
-    yield put(getProspectOverviewFail());
+    yield put(getProspectOverviewFail(error));
   }
 }
 
