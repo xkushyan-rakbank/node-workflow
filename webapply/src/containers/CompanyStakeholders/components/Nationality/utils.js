@@ -20,7 +20,7 @@ export const createAddCitizenshipHandler = (
   if (!value) {
     arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
   } else {
-    values.passportDetails.forEach((el, index) => index >= passportIndex && arrayHelper.pop());
+    values.passportDetails.forEach((el, index) => index > passportIndex && arrayHelper.pop());
   }
   setFieldValue(name, !value);
 };
