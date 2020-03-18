@@ -70,13 +70,8 @@ const keyboardDatePickerTheme = createMuiTheme({
     MuiInputLabel: {
       outlined: {
         "&$shrink": {
-          transform: "translate(80px, -6px) scale(0.75)"
+          transform: "translate(13px, -6px) scale(0.75)"
         }
-      }
-    },
-    PrivateNotchedOutline: {
-      legend: {
-        marginLeft: 66
       }
     },
     MuiPickersDay: {
