@@ -1,14 +1,12 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import setMonth from "date-fns/setMonth";
-import setYear from "date-fns/setYear";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { FormControl } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
-import { MONTH_OPTIONS, getYearOptions } from "./constants";
+import { getYearOptions } from "../utils";
+import { MONTH_OPTIONS } from "./constants";
 import { useStyles } from "./styled";
 
 const StyledSelect = withStyles({
@@ -37,18 +35,14 @@ const StyledSelect = withStyles({
   }
 })(Select);
 
-export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) => {
-  const value = type === "month" ? date.getMonth() : date.getFullYear();
-  const options = type === "month" ? MONTH_OPTIONS : getYearOptions();
+export const PickerSelect = ({ date, onChange, type, isFutureDisabled }) => {
   const classes = useStyles();
+  const value = type === "month" ? date.getMonth() : date.getFullYear();
+  const options = type === "month" ? MONTH_OPTIONS : getYearOptions(isFutureDisabled);
 
-  const handleChange = useCallback(
-    ({ target: { value } }) => {
-      const changeDate = type === "month" ? setMonth : setYear;
-      onChange(changeDate(date, value));
-    },
-    [date, type, onChange]
-  );
+  const handleChange = event => {
+    onChange(event.target.value);
+  };
 
   return (
     <FormControl classes={{ root: classes.root }}>
@@ -84,10 +78,4 @@ export const PickerSelect = ({ date = new Date(Date.now()), onChange, type }) =>
       </StyledSelect>
     </FormControl>
   );
-};
-
-PickerSelect.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  onChange: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(["month", "year"])
 };
