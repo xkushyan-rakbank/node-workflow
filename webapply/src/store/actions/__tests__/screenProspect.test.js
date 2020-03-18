@@ -10,8 +10,9 @@ import {
 } from "../screenProspect";
 
 describe("actions for screenProspect", () => {
+  const prospectId = "12345";
+
   it("should create an action to screen prospect send", () => {
-    const prospectId = "12345";
     const expectedAction = {
       type: SCREEN_PROSPECT_SEND,
       payload: { prospectId }
@@ -20,7 +21,6 @@ describe("actions for screenProspect", () => {
   });
 
   it("should create an action to screen prospect request", () => {
-    const prospectId = "12345";
     const expectedAction = {
       type: SCREEN_PROSPECT_REQUEST,
       payload: { prospectId }
@@ -29,7 +29,6 @@ describe("actions for screenProspect", () => {
   });
 
   it("should create an action to screen prospect success", () => {
-    const prospectId = "12345";
     const screeningResult = {};
     const expectedAction = {
       type: SCREEN_PROSPECT_SUCCESS,
@@ -39,7 +38,6 @@ describe("actions for screenProspect", () => {
   });
 
   it("should create an action to screen prospect reset", () => {
-    const prospectId = "12345";
     const expectedAction = {
       type: SCREEN_PROSPECT_RESET,
       payload: { prospectId }
