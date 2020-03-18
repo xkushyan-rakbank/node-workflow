@@ -24,15 +24,15 @@ export const SubmitApplicationComponent = ({
   updateViewId,
   currentProspectStatus
 }) => {
-  const isROSubmit =
-    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
-  const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
-
   const pushHistory = useTrackingHistory();
   const [formFieldsValues, setFormFields] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => NotificationsManager.add(trustMessageContent), []);
+
+  const isROSubmit =
+    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
+  const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
 
   const handleSubmit = useCallback(() => {
     updateViewId(pathname.replace(smeBaseName, ""), false);
