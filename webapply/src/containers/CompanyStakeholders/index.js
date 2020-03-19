@@ -1,11 +1,11 @@
 import React from "react";
 import { CompanyStakeholdersScreen } from "./CompanyStakeholders";
-import { FullNameCompanyStakeholdersProvider } from "./components/FullNameProvider/FullNameProvider";
+import { StakeholdersNameProvider } from "./components/StakeholdersNameProvider/StakeholdersNameProvider";
 
 const CompanyStakeholders = () => (
-  <FullNameCompanyStakeholdersProvider>
+  <StakeholdersNameProvider>
     <CompanyStakeholdersScreen />
-  </FullNameCompanyStakeholdersProvider>
+  </StakeholdersNameProvider>
 );
 
 export default CompanyStakeholders;

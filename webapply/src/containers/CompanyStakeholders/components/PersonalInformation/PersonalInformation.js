@@ -24,7 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { changeFullName } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNameManager } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -111,7 +111,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
       [name]: value
     };
 
-    changeFullName(data);
+    StakeholdersNameManager && StakeholdersNameManager.changeStakeholderFullName(data);
     setFieldValue(name, value);
   };
 

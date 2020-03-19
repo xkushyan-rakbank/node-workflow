@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import cx from "classnames";
 
-import { StakeholdersNamesContext } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNamesContext } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 import StatusLoader from "../../../../components/StatusLoader";
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { useStyles, EditButton } from "./styled";
@@ -18,8 +18,9 @@ export const CompanyStakeholderCard = ({
   id
 }) => {
   const classes = useStyles();
-  const stakeholders = useContext(StakeholdersNamesContext);
-  const { firstName, lastName, middleName } = stakeholders.find(item => item.id === id) || {};
+  const stakeholdersName = useContext(StakeholdersNamesContext);
+  const { firstName, lastName, middleName } = stakeholdersName.find(item => item.id === id) || {};
+
   return (
     <div className={cx(classes.wrapper, className)}>
       <div className={classes.contentWrapper}>

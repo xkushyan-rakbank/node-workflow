@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { connect, useSelector } from "react-redux";
 
-import { deleteFullName } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNameManager } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -91,7 +91,7 @@ const StakeholderStepperComponent = ({
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
   const handleDeleteStakeholder = useCallback(() => {
-    deleteFullName(id);
+    StakeholdersNameManager && StakeholdersNameManager.deleteStakeholderFullName(id);
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
   }, [setIsDisplayConfirmation, deleteStakeholder, id]);
