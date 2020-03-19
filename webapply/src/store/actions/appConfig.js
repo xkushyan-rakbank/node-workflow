@@ -8,10 +8,8 @@ export const RESET_PROSPECT = "RESET_PROSPECT";
 export const SET_CONFIG = "SET_CONFIG";
 export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
-export const UPDATE_ACTION_TYPE = "UPDATE_ACTION_TYPE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const REMOVE_PROSPECT_ID = "REMOVE_PROSPECT_ID";
-export const UPDATE_SAVE_TYPE = "UPDATE_SAVE_TYPE";
 export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
@@ -26,16 +24,16 @@ export const receiveAppConfig = () => ({
   type: RECEIVE_APPCONFIG
 });
 
-export const receiveAppConfigSuccess = data => {
-  return { type: RECEIVE_APPCONFIG_SUCCESS, data };
+export const receiveAppConfigSuccess = payload => {
+  return { type: RECEIVE_APPCONFIG_SUCCESS, payload };
 };
 
-export const receiveAppConfigFail = error => {
-  return { type: RECEIVE_APPCONFIG_FAIL, error };
+export const receiveAppConfigFail = payload => {
+  return { type: RECEIVE_APPCONFIG_FAIL, payload };
 };
 
-export const updateProspect = (fields, gaEvent = null) => {
-  const action = { type: UPDATE_PROSPECT, fields };
+export const updateProspect = (payload, gaEvent = null) => {
+  const action = { type: UPDATE_PROSPECT, payload };
 
   return appendGaEventToAction(action, gaEvent);
 };
@@ -44,16 +42,16 @@ export const setConfig = payload => {
   return { type: SET_CONFIG, payload };
 };
 
-export const setProspect = prospect => {
-  return { type: SET_PROSPECT, prospect };
+export const setProspect = payload => {
+  return { type: SET_PROSPECT, payload };
 };
 
 export const resetProspect = () => {
   return { type: RESET_PROSPECT };
 };
 
-export const updateProspectId = prospectId => {
-  return { type: UPDATE_PROSPECT_ID, prospectId };
+export const updateProspectId = payload => {
+  return { type: UPDATE_PROSPECT_ID, payload };
 };
 
 export const removeProspectId = () => {
@@ -64,8 +62,8 @@ export const updateViewId = (viewId, isSendToApi) => {
   return { type: UPDATE_VIEW_ID, payload: { viewId, isSendToApi } };
 };
 
-export const saveProspectModel = prospectModel => {
-  return { type: SAVE_PROSPECT_MODEL, prospectModel };
+export const saveProspectModel = payload => {
+  return { type: SAVE_PROSPECT_MODEL, payload };
 };
 
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });

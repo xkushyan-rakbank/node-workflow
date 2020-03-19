@@ -8,10 +8,8 @@ import {
   getSignatories,
   getOrganizationInfo
 } from "../../../../store/selectors/appConfig";
-import {
-  getIsEditableStatusSearchInfo,
-  getProspectStatus
-} from "../../../../store/selectors/searchProspect";
+import { getProspectStatus } from "../../../../store/selectors/searchProspect";
+import { checkLoginStatus } from "../../../../store/selectors/loginSelector";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { updateViewId } from "../../../../store/actions/appConfig";
 import { SubmitApplicationComponent } from "./SubmitApplication";
@@ -21,8 +19,8 @@ const mapStateToProps = state => ({
   accountInfo: getAccountInfo(state),
   signatoryInfo: getSignatories(state),
   organizationInfo: getOrganizationInfo(state),
-  isApplyEditApplication: getIsEditableStatusSearchInfo(state),
-  currentProspectStatus: getProspectStatus(state)
+  currentProspectStatus: getProspectStatus(state),
+  isAgent: checkLoginStatus(state)
 });
 
 const mapDispatchToProps = {

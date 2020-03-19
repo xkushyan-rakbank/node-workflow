@@ -23,7 +23,9 @@ export const useStyles = makeStyles({
     alignItems: "center",
     justifyContent: "center",
     "& svg": {
-      width: "24px"
+      width: "24px",
+      stroke: "#fff",
+      fill: "#fff"
     }
   },
   errorMessage: {

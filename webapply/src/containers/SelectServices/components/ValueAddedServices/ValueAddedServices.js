@@ -5,7 +5,7 @@ import {
   rakValuePackagePlusName
 } from "./ExpandedOptionsCards/ExpandedDetailedOptionsCard";
 import { rakValuesList } from "./ExpandedOptionsCards/constants";
-import { accountNames } from "../../../../constants/index";
+import { accountNames } from "../../../../constants";
 import { RAK_VALUE_PACKAGE_PATH } from "./constants";
 
 import { useStyles } from "./styled";

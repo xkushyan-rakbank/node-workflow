@@ -23,7 +23,9 @@ const useStyles = makeStyles({
 
 const IconStyled = styled(Icon)({
   margin: "1px 6.4px 0 0",
-  width: "16px"
+  width: "16px",
+  fill: "#86868b",
+  stroke: "#86868b"
 });
 
 IconStyled.defaultProps = {
