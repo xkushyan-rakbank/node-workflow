@@ -18,8 +18,7 @@ export const FilledStakeholderCard = ({
   id
 }) => {
   const classes = useStyles();
-
-  const { stakeholdersName } = useContext(StakeholdersNamesContext);
+  const stakeholdersName = useContext(StakeholdersNamesContext);
   const { firstName, lastName, middleName } = stakeholdersName.find(item => item.id === id) || {};
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");

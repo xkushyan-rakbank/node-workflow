@@ -47,18 +47,13 @@ export const StakeholdersNameProvider = ({ children }) => {
     () => ({
       deleteStakeholderFullName,
       changeStakeholderFullName,
-      stakeholdersName,
       setStakeholderFullNames
     }),
-    [
-      deleteStakeholderFullName,
-      changeStakeholderFullName,
-      stakeholdersName,
-      setStakeholderFullNames
-    ]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
   return (
-    <StakeholdersNamesContext.Provider value={StakeholdersNameManager}>
+    <StakeholdersNamesContext.Provider value={stakeholdersName}>
       {children}
     </StakeholdersNamesContext.Provider>
   );
