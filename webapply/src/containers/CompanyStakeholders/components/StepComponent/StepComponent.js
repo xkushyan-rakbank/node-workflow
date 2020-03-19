@@ -14,6 +14,7 @@ export const StepComponent = ({
   setIsContinueDisabled,
   prospectInfo,
   handleContinue,
+  createFormChangeHandler,
   stepForm: Form,
   id
 }) => {
@@ -45,6 +46,7 @@ export const StepComponent = ({
             index={index}
             prospectInfo={prospectInfo}
             handleContinue={handleContinue}
+            createFormChangeHandler={createFormChangeHandler}
             id={id}
           />
         )}

@@ -32,7 +32,12 @@ const getCountryOfResidenceSchema = isSignatory =>
     })
   });
 
-const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
+const CountryOfResidenceStep = ({
+  index,
+  isSignatory,
+  handleContinue,
+  createFormChangeHandler
+}) => {
   const pathToEidNumber = `prospect.signatoryInfo[${index}].kycDetails.emirateIdDetails.eidNumber`;
   const pathToIsUAEResident = `prospect.signatoryInfo[${index}].kycDetails.isUAEResident`;
 
@@ -46,7 +51,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
       validationSchema={getCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
-      {({ values, setValues }) => (
+      {createFormChangeHandler(({ values, setValues }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -112,7 +117,7 @@ const CountryOfResidenceStep = ({ index, isSignatory, handleContinue }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

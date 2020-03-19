@@ -91,7 +91,7 @@ const personalInformationSchema = Yup.object().shape({
   )
 });
 
-export const PersonalInformation = ({ index, handleContinue, id }) => {
+export const PersonalInformation = ({ index, handleContinue, id, createFormChangeHandler }) => {
   const classes = useStyles();
 
   const applicantInfo = useSelector(getApplicantInfo);
@@ -130,7 +130,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched }) => (
+      {createFormChangeHandler(({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -260,7 +260,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };
