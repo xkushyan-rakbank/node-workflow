@@ -224,7 +224,7 @@ public class ProspectControllerTest {
                 .oauthAccessToken("666473634664563554534737464")
                 .phoneNumber("+37847563456")
                 .build();
-        ResponseEntity<Object> responseEntity = prospectController.getProspectById(jwt, "sme", "123456789");
+        prospectController.getProspectById(jwt, "sme", "123456789");
 
     }
 

@@ -24,8 +24,8 @@ public class ProspectValidatorService {
         }
 
         String phoneNumber = jwtPayload.getPhoneNumber();
-        JsonNode responseBody = (JsonNode)responseForFiltering.getBody();
-        ArrayNode rootNode = (ArrayNode)responseBody.get(ROOT_KEY);
+        JsonNode responseBody = (JsonNode) responseForFiltering.getBody();
+        ArrayNode rootNode = (ArrayNode) responseBody.get(ROOT_KEY);
 
         for (int i = 0; i < rootNode.size(); i++) {
             if (!phoneNumber.equals(rootNode.get(i).get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
@@ -35,20 +35,14 @@ public class ProspectValidatorService {
         }
     }
 
-    public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) throws IllegalAccessException {
-
-        switch (Objects.requireNonNull(jwtPayload.getRole(), "Role cannot be empty")) {
-            case AGENT: break;
-            case CUSTOMER:
-                checkCustomer(responseForFiltering, jwtPayload);
-                break;
-            default: throw new IllegalAccessException("");
+    public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
+        UserRole role = Objects.requireNonNull(jwtPayload.getRole());
+        if (UserRole.AGENT.equals(role)) {
+            return;
         }
-    }
 
-    private void checkCustomer(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
         String phoneNumber = jwtPayload.getPhoneNumber();
-        JsonNode responseBody = (JsonNode)responseForFiltering.getBody();
+        JsonNode responseBody = (JsonNode) responseForFiltering.getBody();
 
         if (!phoneNumber.equals(responseBody.get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
             throw new ApiException("The prospect is not allowed for current Customer", HttpStatus.FORBIDDEN);
