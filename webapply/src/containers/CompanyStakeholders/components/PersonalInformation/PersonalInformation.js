@@ -82,6 +82,7 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
       .nullable()
+      .max(new Date(), getInvalidMessage("Date of birth"))
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),

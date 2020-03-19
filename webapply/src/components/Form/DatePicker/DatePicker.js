@@ -48,6 +48,7 @@ const DatePickerBase = ({
             placeholder={placeholder}
             error={isError}
             invalidDateMessage={false}
+            maxDateMessage={false}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}

@@ -37,12 +37,14 @@ const licenseInformationSchema = () =>
       .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("License number")),
     licenseIssueDate: Yup.date()
       .nullable()
+      .max(new Date(), getInvalidMessage("License issuing date"))
       .typeError(getInvalidMessage("License issuing date"))
       .required(getRequiredMessage("License issuing date")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
     dateOfIncorporation: Yup.date()
       .nullable()
+      .max(new Date(), getInvalidMessage("Date of incorporation"))
       .typeError(getInvalidMessage("Date of incorporation"))
       .required(getRequiredMessage("Date of incorporation")),
     yearsInBusiness: Yup.number()
