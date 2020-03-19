@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useMemo } from "react";
+import React, { useReducer, useMemo } from "react";
 import pick from "lodash/pick";
 
 import { handleActions } from "../../../../utils/redux-utils";
@@ -13,7 +13,8 @@ export const StakeholdersNamesContext = React.createContext(StakeholdersNameMana
 const stakeholderReducer = handleActions({
   [INIT]: (state, { stakeholder }) => {
     const pickedFieldsStakeholders = stakeholder.map(pickFields);
-    return state.concat(pickedFieldsStakeholders);
+
+    return [...state, ...pickedFieldsStakeholders];
   },
   [CHANGE]: (state, { stakeholder }) => {
     const stakeholdersName = [...state];
@@ -32,26 +33,13 @@ const stakeholderReducer = handleActions({
 
 export const StakeholdersNameProvider = ({ children }) => {
   const [stakeholdersName, dispatch] = useReducer(stakeholderReducer, []);
-  const deleteStakeholderFullName = useCallback(
-    stakeholder => dispatch({ type: REMOVE, stakeholder }),
-    [dispatch]
-  );
-  const changeStakeholderFullName = useCallback(
-    stakeholder => dispatch({ type: CHANGE, stakeholder }),
-    [dispatch]
-  );
-  const setStakeholderFullNames = useCallback(
-    stakeholder => dispatch({ type: INIT, stakeholder }),
-    [dispatch]
-  );
   StakeholdersNameManager = useMemo(
     () => ({
-      deleteStakeholderFullName,
-      changeStakeholderFullName,
-      setStakeholderFullNames
+      deleteStakeholderFullName: stakeholder => dispatch({ type: REMOVE, stakeholder }),
+      changeStakeholderFullName: stakeholder => dispatch({ type: CHANGE, stakeholder }),
+      setStakeholderFullNames: stakeholder => dispatch({ type: INIT, stakeholder })
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [dispatch]
   );
   return (
     <StakeholdersNamesContext.Provider value={stakeholdersName}>
