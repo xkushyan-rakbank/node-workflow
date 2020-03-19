@@ -34,16 +34,16 @@ const stakeholderReducer = handleActions({
 export const StakeholdersNameProvider = ({ children }) => {
   const [stakeholdersName, dispatch] = useReducer(stakeholderReducer, []);
   const deleteStakeholderFullName = useCallback(
-    stakeholder => dispatch({ type: "remove", stakeholder }),
+    stakeholder => dispatch({ type: REMOVE, stakeholder }),
     [dispatch]
   );
   const changeStakeholderFullName = useCallback(
-    stakeholder => dispatch({ type: "change", stakeholder }),
+    stakeholder => dispatch({ type: CHANGE, stakeholder }),
     [dispatch]
   );
   const setStakeholderFullNames = useCallback(
     stakeholder => {
-      dispatch({ type: "init", stakeholder });
+      dispatch({ type: INIT, stakeholder });
     },
     [dispatch]
   );
