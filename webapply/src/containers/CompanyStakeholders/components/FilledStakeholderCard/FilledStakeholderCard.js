@@ -19,9 +19,8 @@ export const FilledStakeholderCard = ({
 }) => {
   const classes = useStyles();
 
-  const stakeholdersFromContext = useContext(StakeholdersNamesContext);
-  const { firstName, lastName, middleName } =
-    stakeholdersFromContext.find(item => item.id === id) || {};
+  const { stakeholders } = useContext(StakeholdersNamesContext);
+  const { firstName, lastName, middleName } = stakeholders.find(item => item.id === id) || {};
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);

@@ -18,7 +18,7 @@ export const CompanyStakeholderCard = ({
   id
 }) => {
   const classes = useStyles();
-  const stakeholders = useContext(StakeholdersNamesContext);
+  const { stakeholders } = useContext(StakeholdersNamesContext);
   const { firstName, lastName, middleName } = stakeholders.find(item => item.id === id) || {};
   return (
     <div className={cx(classes.wrapper, className)}>

@@ -25,6 +25,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
 
+import { pickFields } from "./utils";
 import { useStyles } from "./styled";
 
 const CompanyStakeholdersComponent = ({
@@ -41,7 +42,7 @@ const CompanyStakeholdersComponent = ({
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
 
-  const [setFullNames] = useContext(StakeholdersNamesContext);
+  const { setFullNames } = useContext(StakeholdersNamesContext);
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
@@ -55,7 +56,9 @@ const CompanyStakeholdersComponent = ({
   }, [createNewStakeholder, stakeholders.length]);
 
   useEffect(() => {
-    setFullNames(stakeholders);
+    const pickedFieldStakeholders = stakeholders.map(pickFields);
+
+    setFullNames(pickedFieldStakeholders);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

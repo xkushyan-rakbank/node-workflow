@@ -1,8 +1,4 @@
 import React, { useReducer, useCallback, useMemo } from "react";
-import pick from "lodash/pick";
-
-const FIELDS = ["firstName", "middleName", "lastName", "id"];
-const pickFields = item => pick(item, FIELDS);
 
 let StakeholdersManager = [];
 const StakeholdersNamesContext = React.createContext(StakeholdersManager);
@@ -10,11 +6,9 @@ const StakeholdersNamesContext = React.createContext(StakeholdersManager);
 const stakeholderReducer = (store, { type, stakeholder }) => {
   switch (type) {
     case "init":
-      // const stakeholders = stakeholder.map(pickFields);
       return store.concat(stakeholder);
     case "change":
       return changeStakeholderName(store, stakeholder);
-
     case "remove":
       return store.filter(item => item.id !== stakeholder.id);
 
@@ -25,10 +19,9 @@ const stakeholderReducer = (store, { type, stakeholder }) => {
 
 const FullNameCompanyStakeholdersProvider = ({ children }) => {
   const [stakeholders, dispatch] = useReducer(stakeholderReducer, []);
-  const removeStakeholder = useCallback(
-    stakeholder => dispatch({ type: "remove", id: stakeholder.id }),
-    [dispatch]
-  );
+  const deleteFullName = useCallback(stakeholder => dispatch({ type: "remove", stakeholder }), [
+    dispatch
+  ]);
   const changeFullName = useCallback(stakeholder => dispatch({ type: "change", stakeholder }), [
     dispatch
   ]);
@@ -37,12 +30,12 @@ const FullNameCompanyStakeholdersProvider = ({ children }) => {
   ]);
   StakeholdersManager = useMemo(
     () => ({
-      removeStakeholder,
+      deleteFullName,
       changeFullName,
       stakeholders,
       setFullNames
     }),
-    [removeStakeholder, changeFullName, stakeholders, setFullNames]
+    [deleteFullName, changeFullName, stakeholders, setFullNames]
   );
   return (
     <StakeholdersNamesContext.Provider value={StakeholdersManager}>
@@ -52,12 +45,11 @@ const FullNameCompanyStakeholdersProvider = ({ children }) => {
 };
 
 const changeStakeholderName = (stakeholders, item) => {
-  const data = pickFields(item);
-  const index = stakeholders.findIndex(elem => elem.id === data.id);
+  const index = stakeholders.findIndex(elem => elem.id === item.id);
   if (index === -1) {
-    stakeholders.push(data);
+    stakeholders.push(item);
   } else {
-    stakeholders[index] = data;
+    stakeholders[index] = item;
   }
 
   return stakeholders;

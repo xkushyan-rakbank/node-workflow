@@ -1,7 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { connect, useSelector } from "react-redux";
 
-import { deleteFullName } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNamesContext } from "../FullNameProvider/FullNameProvider";
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -62,6 +62,7 @@ const StakeholderStepperComponent = ({
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
     stakeHoldersSteps
   );
+  const { deleteFullName } = useContext(StakeholdersNamesContext);
 
   const setIsDisplayAddButton = useCallback(() => {
     setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);

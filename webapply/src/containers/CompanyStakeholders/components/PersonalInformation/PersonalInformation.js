@@ -24,6 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { pickFields } from "../../utils";
 import { StakeholdersNamesContext } from "../FullNameProvider/FullNameProvider";
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
@@ -93,7 +94,7 @@ const personalInformationSchema = Yup.object().shape({
 export const PersonalInformation = ({ index, handleContinue, id }) => {
   const classes = useStyles();
 
-  const [changeFullName] = useContext(StakeholdersNamesContext);
+  const { changeFullName } = useContext(StakeholdersNamesContext);
   const applicantInfo = useSelector(getApplicantInfo);
 
   const createChangeProspectHandler = values => prospect => ({
@@ -110,8 +111,9 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       id,
       [name]: value
     };
+    const pikedFieldsData = pickFields(data);
 
-    changeFullName(data);
+    changeFullName(pikedFieldsData);
     setFieldValue(name, value);
   };
 
