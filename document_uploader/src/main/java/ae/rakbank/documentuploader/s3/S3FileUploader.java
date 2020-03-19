@@ -67,18 +67,19 @@ public class S3FileUploader {
                 byte[] fileData;
                 try {
                     fileData = FileUtils.readFileToByteArray(file);
-                    MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
-                    String mimeType = fileTypeMap.getContentType(file.getName());
-
-                    // create the object in S3 bucket
-                    s3.putObject(ecsS3Factory.getS3Bucket(), file.getName(), fileData, mimeType);
-                    log.info(String.format("created object [%s/%s] for file [%s]", ecsS3Factory.getS3Bucket(),
-                            file.getName(), file.getName()));
-
-                    moveFileFromScannedDocsToS3Object(path, file);
                 } catch (IOException e) {
                     log.error("unable to read file contents into byte[]", e);
+                    return;
                 }
+                MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+                String mimeType = fileTypeMap.getContentType(file.getName());
+
+                // create the object in S3 bucket
+                s3.putObject(ecsS3Factory.getS3Bucket(), file.getName(), fileData, mimeType);
+                log.info(String.format("created object [%s/%s] for file [%s]", ecsS3Factory.getS3Bucket(),
+                        file.getName(), file.getName()));
+
+                moveFileFromScannedDocsToS3Object(path, file);
             });
         } catch (IOException e) {
             log.error("Error occured while iterating files ", e);
@@ -94,7 +95,7 @@ public class S3FileUploader {
             Files.move(path, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
             log.info("moved file from {} to {}", path, targetPath);
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Unable to move file from {} to {}", path, targetPath, e);
         }
     }
