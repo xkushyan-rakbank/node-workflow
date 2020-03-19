@@ -141,7 +141,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   contextualHelpText={
                                     <>
                                       The name of the other company, branch or subsidiary should be
-                                      as per their respective Trade Licenses.
+                                      as per their respective registration documents.
                                       <br /> Example <br /> Airlift Global Automation and Heavy
                                       Equipment Rental LLC
                                     </>
