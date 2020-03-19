@@ -10,9 +10,7 @@ import {
   UPDATE_PROSPECT,
   setConfig,
   updateProspect,
-  UPDATE_ACTION_TYPE,
   UPDATE_VIEW_ID,
-  UPDATE_SAVE_TYPE,
   saveProspectModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
@@ -71,15 +69,11 @@ function* updateProspectSaga(action) {
     prospect
   };
 
-  for (let name in action.fields) {
-    set(newConfig, name, action.fields[name]);
+  for (let name in action.payload) {
+    set(newConfig, name, action.payload[name]);
   }
 
   yield put(setConfig(newConfig));
-}
-
-function* updateActionTypeSaga({ actionType }) {
-  yield put(updateProspect({ "prospect.applicationInfo.actionType": actionType }));
 }
 
 function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
@@ -89,16 +83,10 @@ function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   }
 }
 
-function* updateSaveTypeSaga({ saveType }) {
-  yield put(updateProspect({ "prospect.applicationInfo.saveType": saveType }));
-}
-
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
     takeLatest(UPDATE_PROSPECT, updateProspectSaga),
-    takeLatest(UPDATE_ACTION_TYPE, updateActionTypeSaga),
-    takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
-    takeLatest(UPDATE_SAVE_TYPE, updateSaveTypeSaga)
+    takeLatest(UPDATE_VIEW_ID, updateViewIdSaga)
   ]);
 }
