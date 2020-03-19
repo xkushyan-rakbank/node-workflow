@@ -18,6 +18,7 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { sendRelatedValueToProspect } from "../../../../../../utils/sendRelatedValueToProspect";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
@@ -59,7 +60,7 @@ export const CompanyPreferredContactInformationComponent = ({
         validationSchema={companyPreferredContactInformationSchema}
         validateOnChange={false}
       >
-        {({ setFieldValue }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <Grid container spacing={3}>
               <Grid item sm={12}>
@@ -92,6 +93,11 @@ export const CompanyPreferredContactInformationComponent = ({
                         });
                       }
                     }}
+                    changeProspect={sendRelatedValueToProspect(
+                      values,
+                      "primaryMobileNo",
+                      "prospect.organizationInfo.contactDetails.primaryMobileNo"
+                    )}
                     inputProps={{ tabIndex: 0 }}
                   />
                   <Field
@@ -115,6 +121,11 @@ export const CompanyPreferredContactInformationComponent = ({
                     component={CustomSelect}
                     datalistId="countryCode"
                     shrink={false}
+                    changeProspect={sendRelatedValueToProspect(
+                      values,
+                      "primaryPhoneNo",
+                      "prospect.organizationInfo.contactDetails.primaryPhoneNo"
+                    )}
                     inputProps={{ tabIndex: 0 }}
                   />
 

@@ -13,6 +13,7 @@ import { UAE_CODE } from "../../../constants";
 import { getInvalidMessage } from "../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { sendRelatedValueToProspect } from "../../../utils/sendRelatedValueToProspect";
 
 const searchProspectSchema = Yup.object({
   fullName: Yup.string()
@@ -89,6 +90,11 @@ export const SearchProspectComponent = ({
                     path="searchInfo.countryCode"
                     datalistId="countryCode"
                     component={CustomSelect}
+                    changeProspect={sendRelatedValueToProspect(
+                      values,
+                      "mobileNo",
+                      "searchInfo.mobileNo"
+                    )}
                     shrink={false}
                     inputProps={{ tabIndex: 0 }}
                   />

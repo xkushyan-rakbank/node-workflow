@@ -36,6 +36,7 @@ import {
   CONVENTIONAL
 } from "../../constants";
 import routes from "../../routes";
+import { sendRelatedValueToProspect } from "../../utils/sendRelatedValueToProspect";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -165,10 +166,11 @@ const ApplicantInfoPage = ({
                   required
                   datalistId="countryCode"
                   component={CustomSelect}
-                  changeProspect={prospect => ({
-                    ...prospect,
-                    "prospect.applicantInfo.mobileNo": values.mobileNo
-                  })}
+                  changeProspect={sendRelatedValueToProspect(
+                    values,
+                    "mobileNo",
+                    "prospect.applicantInfo.mobileNo"
+                  )}
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />

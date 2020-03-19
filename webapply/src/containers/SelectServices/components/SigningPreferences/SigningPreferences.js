@@ -28,6 +28,7 @@ import {
   getInvalidMessage
 } from "../../../../utils/getValidationMessage";
 import { sortByOrder } from "../../../../utils/sortByOrder";
+import { sendRelatedValueToProspect } from "../../../../utils/sendRelatedValueToProspect";
 
 const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
@@ -89,11 +90,8 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({
-        values: { accountSigningInstn, accountSigningType, signatories },
-        setFieldValue,
-        errors
-      }) => {
+      {({ values, setFieldValue, errors }) => {
+        const { accountSigningInstn, accountSigningType, signatories } = values;
         const signatoriesErrors = Object.keys(get(errors, "signatories", [])).length;
         const isMaxAddedSignatories = signatories.length === MAX_SIGNATORIES;
 
@@ -194,6 +192,11 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 component={CustomSelect}
                                 shrink={false}
                                 inputProps={{ tabIndex: 0 }}
+                                changeProspect={sendRelatedValueToProspect(
+                                  values,
+                                  `signatories[${index}].primaryMobileNo`,
+                                  `${prospectPath}.primaryMobileNo`
+                                )}
                               />
                               <Field
                                 name={`signatories[${index}].primaryMobileNo`}
