@@ -1,30 +1,57 @@
-import React, { useState } from "react";
+import React, { useReducer, useCallback, useMemo } from "react";
 import pick from "lodash/pick";
 
 const FIELDS = ["firstName", "middleName", "lastName", "id"];
 const pickFields = item => pick(item, FIELDS);
 
-export const StakeholdersNamesContext = React.createContext([]);
+let StakeholdersManager = [];
+const StakeholdersNamesContext = React.createContext(StakeholdersManager);
 
-let setValues;
-let stakeholders = [];
+const stakeholderReducer = (store, { type, stakeholder }) => {
+  switch (type) {
+    case "init":
+      // const stakeholders = stakeholder.map(pickFields);
+      return store.concat(stakeholder);
+    case "change":
+      return changeStakeholderName(store, stakeholder);
 
-export const FullNameCompanyStakeholdersProvider = ({ children }) => {
-  const [contextValue, setContextValues] = useState([]);
-  setValues = setContextValues;
+    case "remove":
+      return store.filter(item => item.id !== stakeholder.id);
+
+    default:
+      return store;
+  }
+};
+
+const FullNameCompanyStakeholdersProvider = ({ children }) => {
+  const [stakeholders, dispatch] = useReducer(stakeholderReducer, []);
+  const removeStakeholder = useCallback(
+    stakeholder => dispatch({ type: "remove", id: stakeholder.id }),
+    [dispatch]
+  );
+  const changeFullName = useCallback(stakeholder => dispatch({ type: "change", stakeholder }), [
+    dispatch
+  ]);
+  const setFullNames = useCallback(stakeholder => dispatch({ type: "init", stakeholder }), [
+    dispatch
+  ]);
+  StakeholdersManager = useMemo(
+    () => ({
+      removeStakeholder,
+      changeFullName,
+      stakeholders,
+      setFullNames
+    }),
+    [removeStakeholder, changeFullName, stakeholders, setFullNames]
+  );
   return (
-    <StakeholdersNamesContext.Provider value={contextValue}>
+    <StakeholdersNamesContext.Provider value={StakeholdersManager}>
       {children}
     </StakeholdersNamesContext.Provider>
   );
 };
 
-export const setFullNames = data => {
-  stakeholders = data.map(pickFields);
-  setValues && setValues(stakeholders);
-};
-
-export const changeFullName = item => {
+const changeStakeholderName = (stakeholders, item) => {
   const data = pickFields(item);
   const index = stakeholders.findIndex(elem => elem.id === data.id);
   if (index === -1) {
@@ -33,11 +60,7 @@ export const changeFullName = item => {
     stakeholders[index] = data;
   }
 
-  setValues && setValues([...stakeholders]);
+  return stakeholders;
 };
 
-export const deleteFullName = id => {
-  stakeholders = stakeholders.filter(item => item.id !== id);
-
-  setValues && setValues(stakeholders);
-};
+export { StakeholdersNamesContext, FullNameCompanyStakeholdersProvider };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -24,7 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { changeFullName } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNamesContext } from "../FullNameProvider/FullNameProvider";
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -93,6 +93,7 @@ const personalInformationSchema = Yup.object().shape({
 export const PersonalInformation = ({ index, handleContinue, id }) => {
   const classes = useStyles();
 
+  const [changeFullName] = useContext(StakeholdersNamesContext);
   const applicantInfo = useSelector(getApplicantInfo);
 
   const createChangeProspectHandler = values => prospect => ({
