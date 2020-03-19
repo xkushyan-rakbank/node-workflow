@@ -18,16 +18,17 @@ export const SubmitApplicationComponent = ({
   applicationInfo,
   organizationInfo: { companyName },
   sendProspectToAPI,
-  isApplyEditApplication,
   updateViewId,
-  currentProspectStatus
+  currentProspectStatus,
+  isAgent
 }) => {
   const pushHistory = useTrackingHistory();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  useEffect(() => NotificationsManager.add(trustMessageContent), []);
+  useEffect(() => {
+    !isAgent && NotificationsManager.add(trustMessageContent);
+  }, [isAgent]);
 
-  const isROSubmit =
-    isApplyEditApplication && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
+  const isROSubmit = isAgent && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
   const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
 
   const handleSubmit = useCallback(() => {
@@ -53,7 +54,7 @@ export const SubmitApplicationComponent = ({
         account={account}
       />
 
-      <BlockConfirm isCustomer={!isApplyEditApplication} handleSubmit={handleSubmit} />
+      <BlockConfirm handleSubmit={handleSubmit} isAgent={isAgent} />
     </>
   );
 };
