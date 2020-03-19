@@ -35,7 +35,12 @@ const preferredContactInformationSchema = Yup.object().shape({
   })
 });
 
-const PreferredContactInformationStep = ({ isSignatory, index, handleContinue }) => (
+const PreferredContactInformationStep = ({
+  isSignatory,
+  index,
+  handleContinue,
+  createFormChangeHandler
+}) => (
   <Formik
     initialValues={{
       primaryEmail: "",
@@ -48,7 +53,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
     validationSchema={isSignatory && preferredContactInformationSchema}
     validateOnChange={false}
   >
-    {() => (
+    {createFormChangeHandler(() => (
       <Form>
         <Grid container spacing={3}>
           <Grid item sm={12}>
@@ -121,7 +126,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
 
         <SubmitButton />
       </Form>
-    )}
+    ))}
   </Formik>
 );
 

@@ -43,6 +43,7 @@ const initialValues = {
 
 const ShareholdingStep = ({
   handleContinue,
+  createFormChangeHandler,
   totalPercentageWithoutCurrentStakeholder,
   isSoleProprietor,
   index
@@ -62,7 +63,7 @@ const ShareholdingStep = ({
       validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
     >
-      {({ values, setFieldValue }) => {
+      {createFormChangeHandler(({ values, setFieldValue }) => {
         const shareholderHandler = createShareholderHandler({ values, setFieldValue });
         return (
           <Form>
@@ -102,7 +103,7 @@ const ShareholdingStep = ({
             <SubmitButton />
           </Form>
         );
-      }}
+      })}
     </Formik>
   );
 };

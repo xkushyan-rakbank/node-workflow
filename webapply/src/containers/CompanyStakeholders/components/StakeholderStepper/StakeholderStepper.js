@@ -58,10 +58,13 @@ const StakeholderStepperComponent = ({
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
-    `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
-    stakeHoldersSteps
-  );
+  const [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler
+  ] = useStep(`${COMPANY_STAKEHOLDER_ID}${stakeholderId}`, stakeHoldersSteps);
 
   const setIsDisplayAddButton = useCallback(() => {
     setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
@@ -160,6 +163,7 @@ const StakeholderStepperComponent = ({
             )}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
+            createFormChangeHandler={createFormChangeHandler}
             stepForm={item.component}
           />
         ))}

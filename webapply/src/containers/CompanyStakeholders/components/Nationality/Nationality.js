@@ -37,7 +37,12 @@ const nationalitySchema = Yup.object().shape({
   )
 });
 
-export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
+export const NationalityStep = ({
+  index,
+  passportDetails,
+  handleContinue,
+  createFormChangeHandler
+}) => {
   const classes = useStyles();
 
   const kycDetailsPath = `prospect.signatoryInfo[${index}].kycDetails`;
@@ -51,7 +56,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
       validationSchema={nationalitySchema}
       validateOnChange={false}
     >
-      {({ values, errors }) => (
+      {createFormChangeHandler(({ values, errors }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -152,7 +157,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
           </Grid>
           <SubmitButton tabIndex={values.passportDetails.length * 2} />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

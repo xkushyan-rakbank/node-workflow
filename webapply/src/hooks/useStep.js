@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { getIn } from "formik";
 import isEqual from "lodash/isEqual";
 
@@ -13,18 +13,20 @@ export const useStep = (flowId, steps) => {
   const dispatch = useDispatch();
   const availableSteps = useSelector(getCompletedSteps).filter(item => item.flowId === flowId);
 
-  if (!availableSteps.length) {
-    dispatch(
-      setInitialSteps(
-        steps.map(step => ({
-          flowId,
-          step: step.step,
-          status: STEP_STATUS.NOT_AVAILABLE
-        }))
-      )
-    );
-    setActiveStep(steps[0].step);
-  }
+  useEffect(() => {
+    if (!availableSteps.length) {
+      dispatch(
+        setInitialSteps(
+          steps.map(step => ({
+            flowId,
+            step: step.step,
+            status: STEP_STATUS.NOT_AVAILABLE
+          }))
+        )
+      );
+      setActiveStep(steps[0].step);
+    }
+  }, [availableSteps, dispatch, steps, setActiveStep, flowId]);
 
   const handleSetNextStep = step => {
     const nextStep = step < steps.length ? step + 1 : null;
@@ -46,7 +48,7 @@ export const useStep = (flowId, steps) => {
   };
 
   const handleFormChange = useCallback(
-    (prevValues, props) => {
+    (props, prevValues) => {
       const isValuesChanged = Object.keys(props.values).some(
         key =>
           getIn(props.touched, key) &&
