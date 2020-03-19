@@ -23,17 +23,6 @@ const serverErrorsReducer = (state = initialState, action) => {
           {}
         )
       };
-    case actions.PATCH_INPUTS_ERRORS:
-      return {
-        ...state,
-        inputs: action.payload.reduce(
-          (acc, item) => {
-            acc[composeInputKeyFromValidationData(item)] = item;
-            return acc;
-          },
-          { ...state.inputs }
-        )
-      };
     case actions.RESET_INPUTS_ERRORS:
       return {
         ...state,
