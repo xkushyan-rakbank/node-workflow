@@ -17,7 +17,7 @@ const blockConfirmSchema = Yup.object({
   areTermsAgreed: Yup.boolean().oneOf([true], "Required")
 });
 
-export const BlockConfirmComponent = ({ isCustomer, isIslamicBanking, handleSubmit }) => {
+export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent }) => {
   const classes = useStyles();
   const [isLinkVisited, setIsLinkVisited] = useState(NONE_VISITED);
   const isAllLinksVisited = IS_ALL_LINKS_VISITED === isLinkVisited;
@@ -40,12 +40,12 @@ export const BlockConfirmComponent = ({ isCustomer, isIslamicBanking, handleSubm
         needCommunication: true
       }}
       onSubmit={handleSubmit}
-      validationSchema={isCustomer && blockConfirmSchema}
+      validationSchema={!isAgent && blockConfirmSchema}
       validateOnChange={false}
     >
       {() => (
         <Form>
-          {(
+          {!isAgent && (
             <div className={classes.checkboxesWrapper}>
               <Field
                 name="isInformationProvided"
@@ -84,7 +84,7 @@ export const BlockConfirmComponent = ({ isCustomer, isIslamicBanking, handleSubm
           <div className="linkContainer">
             <BackLink path={routes.selectServices} />
             <SubmitButton
-              disabled={isCustomer && !isAllLinksVisited}
+              disabled={!isAgent && !isAllLinksVisited}
               label="Submit"
               justify="flex-end"
             />
