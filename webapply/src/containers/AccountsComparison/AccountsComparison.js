@@ -14,7 +14,7 @@ import { useStyles } from "./styled";
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const classes = useStyles();
   useFormNavigation([true, false]);
-  const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.accountName);
+  const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
 
   const secondSection = useRef(null);
   const tableRef = useRef(null);

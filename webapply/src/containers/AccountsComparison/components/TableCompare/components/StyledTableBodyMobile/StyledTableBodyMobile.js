@@ -18,9 +18,8 @@ export const StyledTableBodyMobileComponent = ({ selectedAccount }) => {
   const [mobileAccounts, setMobileAccounts] = useState(COMPARED_ACCOUNTS_TYPES.starter);
 
   useEffect(() => {
-    const accountTypeId = Object.values(accountTypes).find(
-      value => value.accountName === selectedAccount
-    ).id;
+    const accountTypeId = Object.values(accountTypes).find(value => value.name === selectedAccount)
+      .id;
     setMobileAccounts(COMPARED_ACCOUNTS_TYPES[accountTypeId]);
   }, [selectedAccount, setMobileAccounts]);
 
