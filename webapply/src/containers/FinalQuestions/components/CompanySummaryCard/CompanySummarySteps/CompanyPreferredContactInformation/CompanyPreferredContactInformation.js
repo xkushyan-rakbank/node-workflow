@@ -110,6 +110,11 @@ export const CompanyPreferredContactInformationComponent = ({
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
+                    changeProspect={checkLinkedFields(
+                      values,
+                      "primaryMobCountryCode",
+                      "prospect.organizationInfo.contactDetails.primaryMobCountryCode"
+                    )}
                   />
                 </InputGroup>
               </Grid>
@@ -138,6 +143,11 @@ export const CompanyPreferredContactInformationComponent = ({
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
+                    changeProspect={checkLinkedFields(
+                      values,
+                      "primaryPhoneCountryCode",
+                      "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
+                    )}
                   />
                 </InputGroup>
               </Grid>

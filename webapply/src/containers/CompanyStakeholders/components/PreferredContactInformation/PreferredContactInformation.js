@@ -95,6 +95,11 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                   inputProps: { tabIndex: 0 }
                 }}
                 contextualHelpText="This number will be used as primary contact for any future communication"
+                changeProspect={checkLinkedFields(
+                  values,
+                  "primaryMobCountryCode",
+                  `prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`
+                )}
               />
             </InputGroup>
           </Grid>

@@ -105,6 +105,11 @@ export const SearchProspectComponent = ({
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
+                    changeProspect={checkLinkedFields(
+                      values,
+                      "countryCode",
+                      "searchInfo.countryCode"
+                    )}
                   />
                 </InputGroup>
               </Grid>

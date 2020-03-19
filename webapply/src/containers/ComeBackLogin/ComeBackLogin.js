@@ -152,6 +152,11 @@ const ComeBackLoginComponent = ({
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
+                    changeProspect={checkLinkedFields(
+                      values,
+                      "countryCode",
+                      "prospect.applicantInfo.countryCode"
+                    )}
                   />
                 </InputGroup>
               )}

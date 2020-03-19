@@ -207,6 +207,11 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 InputProps={{
                                   inputProps: { tabIndex: 0 }
                                 }}
+                                changeProspect={checkLinkedFields(
+                                  values,
+                                  `signatories[${index}].primaryMobCountryCode`,
+                                  `${prospectPath}.primaryMobCountryCode`
+                                )}
                               />
                             </InputGroup>
                           </Grid>
