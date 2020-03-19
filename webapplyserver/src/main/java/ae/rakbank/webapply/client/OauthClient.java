@@ -26,6 +26,7 @@ public class OauthClient {
 
     private final FileUtil fileUtil;
     private final DehUtil dehUtil;
+    private final RestTemplate restTemplate;
 
     private JsonNode oAuthUri;
     private String oAuthBaseUrl;
@@ -60,7 +61,6 @@ public class OauthClient {
         String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
         log.info(String.format("Invoke API: Endpoint=[%s], request=[%s] ", url, request.getBody().toString()));
 
-        RestTemplate restTemplate = new RestTemplate();
         try {
 
             return restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);

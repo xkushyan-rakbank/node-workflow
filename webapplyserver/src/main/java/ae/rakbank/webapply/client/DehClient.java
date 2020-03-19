@@ -36,9 +36,11 @@ public class DehClient {
     private final FileUtil fileUtil;
     private final AuthorizationService authorizationService;
     private final DehUtil dehUtil;
+    private final RestTemplate restTemplate;
 
     private ObjectNode defaultDatalist = null;
     private JsonNode appConfigJSON = null;
+
 
     @PostConstruct
     public void init() {
@@ -63,7 +65,6 @@ public class DehClient {
             request = getHttpEntityRequest(requestBodyJSON, oauthAccessToken);
         }
 
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<?> response;
         try {
             if (MediaType.APPLICATION_JSON.equals(mediaType)) {
@@ -101,8 +102,6 @@ public class DehClient {
             return new ResponseEntity<>(defaultDatalist, null, HttpStatus.OK);
         }
         String methodName = "getDatalistJSON()";
-
-        RestTemplate restTemplate = new RestTemplate();
 
         String dehBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("DehBaseUrl").asText();
         JsonNode dehURIs = appConfigJSON.get("DehURIs");

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class ProspectValidatorService {
 
@@ -22,8 +24,8 @@ public class ProspectValidatorService {
         }
 
         String phoneNumber = jwtPayload.getPhoneNumber();
-        JsonNode responseBody = (JsonNode)responseForFiltering.getBody();
-        ArrayNode rootNode = (ArrayNode)responseBody.get(ROOT_KEY);
+        JsonNode responseBody = (JsonNode) responseForFiltering.getBody();
+        ArrayNode rootNode = (ArrayNode) responseBody.get(ROOT_KEY);
 
         for (int i = 0; i < rootNode.size(); i++) {
             if (!phoneNumber.equals(rootNode.get(i).get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
@@ -34,12 +36,13 @@ public class ProspectValidatorService {
     }
 
     public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
-        if (UserRole.AGENT.equals(jwtPayload.getRole())) {
+        UserRole role = Objects.requireNonNull(jwtPayload.getRole());
+        if (UserRole.AGENT.equals(role)) {
             return;
         }
 
         String phoneNumber = jwtPayload.getPhoneNumber();
-        JsonNode responseBody = (JsonNode)responseForFiltering.getBody();
+        JsonNode responseBody = (JsonNode) responseForFiltering.getBody();
 
         if (!phoneNumber.equals(responseBody.get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
             throw new ApiException("The prospect is not allowed for current Customer", HttpStatus.FORBIDDEN);
