@@ -27,7 +27,7 @@ import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
 
 import { useStyles } from "./styled";
-import { sendRelatedValueToProspect } from "../../utils/sendRelatedValueToProspect";
+import { checkLinkedFields } from "../../utils/checkLinkedFields";
 
 export const MAX_LENGTH_EMAIL = 50;
 
@@ -133,7 +133,7 @@ const ComeBackLoginComponent = ({
                     datalistId="countryCode"
                     extractLabel={item => item.displayText}
                     component={CustomSelect}
-                    changeProspect={sendRelatedValueToProspect(
+                    changeProspect={checkLinkedFields(
                       values,
                       "mobileNo",
                       "prospect.applicantInfo.mobileNo"

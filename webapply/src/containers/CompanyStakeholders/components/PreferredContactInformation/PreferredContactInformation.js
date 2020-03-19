@@ -15,7 +15,7 @@ import {
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { sendRelatedValueToProspect } from "../../../../utils/sendRelatedValueToProspect";
+import { checkLinkedFields } from "../../../../utils/checkLinkedFields";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
@@ -77,7 +77,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                 disabled={!isSignatory}
                 datalistId="countryCode"
                 inputProps={{ tabIndex: 0 }}
-                changeProspect={sendRelatedValueToProspect(
+                changeProspect={checkLinkedFields(
                   values,
                   "primaryMobileNo",
                   `prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`

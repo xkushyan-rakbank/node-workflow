@@ -36,7 +36,7 @@ import {
   CONVENTIONAL
 } from "../../constants";
 import routes from "../../routes";
-import { sendRelatedValueToProspect } from "../../utils/sendRelatedValueToProspect";
+import { checkLinkedFields } from "../../utils/checkLinkedFields";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -166,7 +166,7 @@ const ApplicantInfoPage = ({
                   required
                   datalistId="countryCode"
                   component={CustomSelect}
-                  changeProspect={sendRelatedValueToProspect(
+                  changeProspect={checkLinkedFields(
                     values,
                     "mobileNo",
                     "prospect.applicantInfo.mobileNo"

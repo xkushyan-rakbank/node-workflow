@@ -28,7 +28,7 @@ import {
   getInvalidMessage
 } from "../../../../utils/getValidationMessage";
 import { sortByOrder } from "../../../../utils/sortByOrder";
-import { sendRelatedValueToProspect } from "../../../../utils/sendRelatedValueToProspect";
+import { checkLinkedFields } from "../../../../utils/checkLinkedFields";
 
 const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
@@ -192,7 +192,7 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
                                 component={CustomSelect}
                                 shrink={false}
                                 inputProps={{ tabIndex: 0 }}
-                                changeProspect={sendRelatedValueToProspect(
+                                changeProspect={checkLinkedFields(
                                   values,
                                   `signatories[${index}].primaryMobileNo`,
                                   `${prospectPath}.primaryMobileNo`

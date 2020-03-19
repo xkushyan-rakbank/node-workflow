@@ -18,7 +18,7 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { sendRelatedValueToProspect } from "../../../../../../utils/sendRelatedValueToProspect";
+import { checkLinkedFields } from "../../../../../../utils/checkLinkedFields";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
@@ -93,7 +93,7 @@ export const CompanyPreferredContactInformationComponent = ({
                         });
                       }
                     }}
-                    changeProspect={sendRelatedValueToProspect(
+                    changeProspect={checkLinkedFields(
                       values,
                       "primaryMobileNo",
                       "prospect.organizationInfo.contactDetails.primaryMobileNo"
@@ -121,7 +121,7 @@ export const CompanyPreferredContactInformationComponent = ({
                     component={CustomSelect}
                     datalistId="countryCode"
                     shrink={false}
-                    changeProspect={sendRelatedValueToProspect(
+                    changeProspect={checkLinkedFields(
                       values,
                       "primaryPhoneNo",
                       "prospect.organizationInfo.contactDetails.primaryPhoneNo"
