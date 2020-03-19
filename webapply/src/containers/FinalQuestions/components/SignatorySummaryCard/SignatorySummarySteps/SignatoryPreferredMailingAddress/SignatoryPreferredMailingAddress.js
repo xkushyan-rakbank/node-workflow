@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
+import { ContexualHelp } from "../../../../../../components/Notifications";
+import { Icon, ICONS } from "../../../../../../components/Icons";
 import { ALPHANUMERIC_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import {
   Input,
@@ -41,14 +43,7 @@ const signatoryPreferredMailingAddressSchema = () =>
     emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
   });
 
-export const SignatoryPreferredMailingAddressComponent = ({
-  index,
-  handleContinue,
-  organisationAddressLine2,
-  organisationAddressLine1,
-  organisationPoBox,
-  organisationEmirateCity
-}) => {
+export const SignatoryPreferredMailingAddress = ({ index, handleContinue }) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -72,30 +67,37 @@ export const SignatoryPreferredMailingAddressComponent = ({
         validationSchema={signatoryPreferredMailingAddressSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setValues }) => (
           <Form>
-            <Field
-              name="sameAsCompanyAddress"
-              path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
-              component={Checkbox}
-              label="Same as Company Address"
-              onSelect={() => {
-                setFieldValue(
-                  "addressLine2",
-                  !values.sameAsCompanyAddress ? organisationAddressLine2 : ""
-                );
-                setFieldValue(
-                  "addressLine1",
-                  !values.sameAsCompanyAddress ? organisationAddressLine1 : ""
-                );
-                setFieldValue(
-                  "emirateCity",
-                  !values.sameAsCompanyAddress ? organisationEmirateCity : ""
-                );
-                setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
-              }}
-              inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
-            />
+            <div className={classes.sameAsCompanyAddressBox}>
+              <Field
+                name="sameAsCompanyAddress"
+                classes={{ formControlRoot: classes.sameAsCompanyAddressCheckbox }}
+                path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
+                component={Checkbox}
+                label="Same as Company Address"
+                onSelect={() => {
+                  if (values.sameAsCompanyAddress) {
+                    setValues({
+                      addressLine2: "",
+                      addressLine1: "",
+                      emirateCity: "",
+                      poBox: ""
+                    });
+                  }
+                }}
+                inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
+              />
+              <ContexualHelp
+                title="Select this checkbox if you want the Company address to be the preferred mailing address."
+                placement="right"
+                isDisableHoverListener={false}
+              >
+                <span className={classes.questionIcon}>
+                  <Icon name={ICONS.question} alt="question" className={classes.questionIcon} />
+                </span>
+              </ContexualHelp>
+            </div>
             <Grid container spacing={3} className={classes.flexContainer}>
               <Grid item sm={12}>
                 <Field
