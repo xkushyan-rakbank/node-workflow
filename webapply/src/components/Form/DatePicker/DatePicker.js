@@ -21,6 +21,7 @@ const DatePickerBase = ({
   placeholder = "__/__/____",
   format = "dd/MM/yyyy",
   minDate = new Date(1950, 0, 1),
+  maxDate = new Date(),
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
   contextualHelpText,
@@ -39,6 +40,7 @@ const DatePickerBase = ({
             autoComplete="off"
             label={label}
             minDate={minDate}
+            maxDate={maxDate}
             disabled={disabled}
             disableFuture
             margin="normal"
@@ -48,6 +50,7 @@ const DatePickerBase = ({
             placeholder={placeholder}
             error={isError}
             invalidDateMessage={false}
+            maxDateMessage={false}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}
