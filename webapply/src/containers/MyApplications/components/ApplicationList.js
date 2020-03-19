@@ -12,17 +12,10 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
       <div className={classes.applicationRow}>
-        {app.organizationInfo.companyName ? (
-          <div className={app.status ? classes.oneThirdWidth : classes.fullWidth}>
-            <div className={classes.companyName}>{app.organizationInfo.companyName}</div>
-            <div className={classes.listAccount}>{app.applicationInfo.accountType}</div>
-          </div>
-        ) : (
-          <div className={app.status ? classes.oneThirdWidth : classes.fullWidth}>
-            <div className={classes.companyName}>{app.applicantInfo.fullName}</div>
-            <div className={classes.listAccount}>{app.applicantInfo.email}</div>
-          </div>
-        )}
+        <div className={app.status ? classes.oneThirdWidth : classes.fullWidth}>
+          <div className={classes.companyName}>{app.organizationInfo.companyName}</div>
+          <div className={classes.listAccount}>{app.applicationInfo.accountType}</div>
+        </div>
         {app.status
           ? [
               <div key="status" className={classes.oneThirdWidth}>
