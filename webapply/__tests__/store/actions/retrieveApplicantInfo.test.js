@@ -47,7 +47,7 @@ describe("retrieve application info actions", () => {
   });
 
   it("should create an action to get prospect info success", () => {
-    const { prospect } = {};
+    const prospect = {};
     const expectedAction = {
       type: GET_PROSPECT_INFO_SUCCESS,
       payload: { prospect }
