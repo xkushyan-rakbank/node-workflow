@@ -13,7 +13,7 @@ export const StakeholdersNamesContext = React.createContext(StakeholdersNameMana
 const stakeholderReducer = handleActions({
   [INIT]: (state, { stakeholder }) => {
     const pickedFieldsStakeholders = stakeholder.map(pickFields);
-    return state.concat(pickedFieldsStakeholders);
+    return [...state, pickedFieldsStakeholders];
   },
   [CHANGE]: (state, { stakeholder }) => {
     const stakeholdersName = [...state];
