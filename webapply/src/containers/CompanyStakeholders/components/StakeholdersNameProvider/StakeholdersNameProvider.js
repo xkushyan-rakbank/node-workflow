@@ -9,25 +9,23 @@ const pickFields = item => pick(item, FIELDS);
 export let StakeholdersNameManager = {};
 export const StakeholdersNamesContext = React.createContext(StakeholdersNameManager);
 
-const changeStakeholderName = (stakeholders, item) => {
-  const stakeholdersName = [...stakeholders];
-  const data = pickFields(item);
-  const index = stakeholdersName.findIndex(elem => elem.id === data.id);
-  if (index === -1) {
-    stakeholdersName.push(data);
-  } else {
-    stakeholdersName[index] = data;
-  }
-
-  return stakeholdersName;
-};
-
 const stakeholderReducer = handleActions({
   [INIT]: (state, { stakeholder }) => {
     const pickedFieldsStakeholders = stakeholder.map(pickFields);
     return state.concat(pickedFieldsStakeholders);
   },
-  [CHANGE]: (state, { stakeholder }) => changeStakeholderName(state, stakeholder),
+  [CHANGE]: (state, { stakeholder }) => {
+    const stakeholdersName = [...state];
+    const item = pickFields(stakeholder);
+    const index = stakeholdersName.findIndex(elem => elem.id === item.id);
+    if (index === -1) {
+      stakeholdersName.push(item);
+    } else {
+      stakeholdersName[index] = item;
+    }
+
+    return stakeholdersName;
+  },
   [REMOVE]: (state, { stakeholder }) => state.filter(item => item.id !== stakeholder.id)
 });
 
@@ -42,9 +40,7 @@ export const StakeholdersNameProvider = ({ children }) => {
     [dispatch]
   );
   const setStakeholderFullNames = useCallback(
-    stakeholder => {
-      dispatch({ type: INIT, stakeholder });
-    },
+    stakeholder => dispatch({ type: INIT, stakeholder }),
     [dispatch]
   );
   StakeholdersNameManager = useMemo(
