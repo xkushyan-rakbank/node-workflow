@@ -1,8 +1,8 @@
-import React, { useCallback, useState, useEffect, useContext } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
-import { StakeholdersNamesContext } from "./components/StakeholdersNameProvider/StakeholdersNameProvider";
+import { StakeholdersNameManager } from "./components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
@@ -41,7 +41,7 @@ const CompanyStakeholdersComponent = ({
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
 
-  const { setStakeholderFullNames } = useContext(StakeholdersNamesContext);
+  const { setStakeholderFullNames } = StakeholdersNameManager;
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );

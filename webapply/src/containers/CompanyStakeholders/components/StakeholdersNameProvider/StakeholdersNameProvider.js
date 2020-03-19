@@ -4,8 +4,8 @@ import pick from "lodash/pick";
 const FIELDS = ["firstName", "middleName", "lastName", "id"];
 const pickFields = item => pick(item, FIELDS);
 
-let StakeholdersNameManager = [];
-const StakeholdersNamesContext = React.createContext(StakeholdersNameManager);
+export let StakeholdersNameManager = {};
+export const StakeholdersNamesContext = React.createContext(StakeholdersNameManager);
 
 const stakeholderReducer = (store, { type, stakeholder }) => {
   switch (type) {
@@ -21,7 +21,7 @@ const stakeholderReducer = (store, { type, stakeholder }) => {
   }
 };
 
-const StakeholdersNameProvider = ({ children }) => {
+export const StakeholdersNameProvider = ({ children }) => {
   const [stakeholdersName, dispatch] = useReducer(stakeholderReducer, []);
   const deleteStakeholderFullName = useCallback(
     stakeholder => dispatch({ type: "remove", stakeholder }),
@@ -71,5 +71,3 @@ const changeStakeholderName = (stakeholders, item) => {
 
   return stakeholdersName;
 };
-
-export { StakeholdersNamesContext, StakeholdersNameProvider };
