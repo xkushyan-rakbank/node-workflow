@@ -109,7 +109,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
                 label="Country of incorporation"
                 path="prospect.organizationInfo.countryOfIncorporation"
                 datalistId="countryOfIncorporation"
-                contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
+                contextualHelpText="This should be same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 isSearchable
                 component={SelectAutocomplete}
@@ -124,7 +124,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
                 name="dateOfIncorporation"
                 label="Date of incorporation"
                 path="prospect.organizationInfo.dateOfIncorporation"
-                contextualHelpText="This should be the same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
+                contextualHelpText="This should be same as in Trade License. If the Company does not hold an UAE Trade License, please share company registration details as per other company documents"
                 contextualHelpProps={{ isDisableHoverListener: false }}
                 component={DatePicker}
                 onChange={value => {
