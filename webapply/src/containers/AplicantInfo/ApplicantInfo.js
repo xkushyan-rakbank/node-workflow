@@ -165,6 +165,10 @@ const ApplicantInfoPage = ({
                   required
                   datalistId="countryCode"
                   component={CustomSelect}
+                  changeProspect={prospect => ({
+                    ...prospect,
+                    "prospect.applicantInfo.mobileNo": values.mobileNo
+                  })}
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />

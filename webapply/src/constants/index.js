@@ -39,41 +39,6 @@ export const digitRegExp = new RegExp("^[0-9]$");
 export const CONVENTIONAL = "conventional";
 export const ISLAMIC = "islamic";
 
-export let submitApplication = {
-  termCondition: "terms & conditions",
-  termsOfEnrolment: "terms of enrolment",
-  termConditionLinks: {
-    [CONVENTIONAL]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29+J00781+RAK++Debit+Card+-+Bisiness+A4-T%26C-New+Guide-EN%26AR%28withe+out+c....pdf?MOD=AJPERES&CVID=lTLVCHV",
-    [ISLAMIC]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/32cb9ff6-706a-489b-98fb-55d639b97c16/%28K%29+J00203+-+Debit+Card+T%26C+Business+A4+02.04.17.pdf?MOD=AJPERES&CVID=IQ7xQCk"
-  },
-  termEnrollmentLinks: {
-    [CONVENTIONAL]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/b0cd7557-1926-43d7-873e-d43942313ca8/TOE+-+Conventional.pdf?MOD=AJPERES",
-    [ISLAMIC]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES"
-  },
-  formTitle: "Submit application",
-  formInfo:
-    "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
-};
-
-if (process.env.REACT_APP_SERVER_ENV === "production") {
-  submitApplication.termConditionLinks = {
-    [CONVENTIONAL]:
-      "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29+J00781+RAK++Debit+Card+-+Bisiness+A4-T%26C-New+Guide-EN%26AR%28withe+out+c....pdf?MOD=AJPERES&CVID=lTLVCHV",
-    [ISLAMIC]:
-      "https://rakbank.ae/wps/wcm/connect/32cb9ff6-706a-489b-98fb-55d639b97c16/%28K%29+J00203+-+Debit+Card+T%26C+Business+A4+02.04.17.pdf?MOD=AJPERES&CVID=IQ7xQCk"
-  };
-  submitApplication.termEnrollmentLinks = {
-    [CONVENTIONAL]:
-      "https://rakbank.ae/wps/wcm/connect/b0cd7557-1926-43d7-873e-d43942313ca8/TOE+-+Conventional.pdf?MOD=AJPERES",
-    [ISLAMIC]:
-      "https://rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES"
-  };
-}
-
 export const accountNames = {
   starter: "RAKStarter",
   currentAccount: "Current Account",

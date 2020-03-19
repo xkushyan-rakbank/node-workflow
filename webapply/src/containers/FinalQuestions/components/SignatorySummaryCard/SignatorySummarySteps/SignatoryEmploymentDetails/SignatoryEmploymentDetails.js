@@ -133,7 +133,7 @@ export const SignatoryEmploymentDetailsComponent = ({ index, companyName, handle
                     label="Designation"
                     placeholder="Designation"
                     component={Input}
-                    contextualHelpText="If unemployment, then mention the designation as 'Unemployed'"
+                    contextualHelpText="If unemployed, then mention the designation as 'Unemployed'"
                     InputProps={{
                       inputProps: { maxLength: MAX_DESIGNATION_LENGTH, tabIndex: 0 }
                     }}

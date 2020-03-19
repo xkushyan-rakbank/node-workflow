@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { StakeholderStepper } from "./components/StakeholderStepper/StakeholderStepper";
+import { setFullNames } from "./components/FullNameProvider/FullNameProvider";
 import { AddStakeholderButton } from "./components/AddStakeholderButton/AddStakeholderButton";
 import { ContexualHelp, ErrorMessage } from "../../components/Notifications";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
@@ -51,6 +52,11 @@ const CompanyStakeholdersComponent = ({
       createNewStakeholder();
     }
   }, [createNewStakeholder, stakeholders.length]);
+
+  useEffect(() => {
+    setFullNames(stakeholders);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
@@ -178,7 +184,7 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify
 };
 
-export const CompanyStakeholders = connect(
+export const CompanyStakeholdersScreen = connect(
   mapStateToProps,
   mapDispatchToProps
 )(CompanyStakeholdersComponent);

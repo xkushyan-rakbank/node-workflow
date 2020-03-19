@@ -51,7 +51,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
       validationSchema={nationalitySchema}
       validateOnChange={false}
     >
-      {({ values, setFieldValue, errors }) => (
+      {({ values, errors }) => (
         <Form>
           <Grid container spacing={3}>
             <FieldArray
@@ -101,12 +101,7 @@ export const NationalityStep = ({ index, passportDetails, handleContinue }) => {
                             path={`${passportDetailsPath}.hasAnotherCitizenship`}
                             label="This person has another citizenship"
                             component={NationalityCheckbox}
-                            onChange={createAddCitizenshipHandler(
-                              values,
-                              arrayHelper,
-                              passportIndex,
-                              setFieldValue
-                            )}
+                            onChange={createAddCitizenshipHandler(arrayHelper, passportIndex)}
                             changeProspect={prospect => ({
                               ...prospect,
                               [`${kycDetailsPath}.passportDetails`]: values.passportDetails.map(

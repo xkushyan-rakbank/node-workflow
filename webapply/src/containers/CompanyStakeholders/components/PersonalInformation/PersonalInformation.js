@@ -24,7 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-
+import { changeFullName } from "../FullNameProvider/FullNameProvider";
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -82,6 +82,7 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
       .nullable()
+      .max(new Date(), getInvalidMessage("Date of birth"))
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
@@ -90,7 +91,7 @@ const personalInformationSchema = Yup.object().shape({
   )
 });
 
-export const PersonalInformation = ({ index, handleContinue }) => {
+export const PersonalInformation = ({ index, handleContinue, id }) => {
   const classes = useStyles();
 
   const applicantInfo = useSelector(getApplicantInfo);
@@ -101,6 +102,18 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       ? applicantInfo.fullName
       : [values.firstName, values.middleName, values.lastName].filter(item => item).join(" ")
   });
+
+  const createChangeHandler = (values, setFieldValue) => event => {
+    const { name, value } = event.target;
+    const data = {
+      ...values,
+      id,
+      [name]: value
+    };
+
+    changeFullName(data);
+    setFieldValue(name, value);
+  };
 
   return (
     <Formik
@@ -117,7 +130,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, errors, touched, setFieldValue }) => (
+      {({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -170,6 +183,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                   disabled={!!values.isShareholderACompany}
                   component={Input}
                   changeProspect={createChangeProspectHandler(values)}
+                  onChange={createChangeHandler(values, setFieldValue)}
                   InputProps={{
                     inputProps: { maxLength: 30, tabIndex: 0 }
                   }}
@@ -186,6 +200,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Middle Name (Optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                onChange={createChangeHandler(values, setFieldValue)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
@@ -202,6 +217,7 @@ export const PersonalInformation = ({ index, handleContinue }) => {
                 placeholder="Last name"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
+                onChange={createChangeHandler(values, setFieldValue)}
                 changeProspect={createChangeProspectHandler(values)}
                 InputProps={{
                   inputProps: { maxLength: 30, tabIndex: 0 }
