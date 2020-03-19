@@ -16,25 +16,12 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
     <div className={classes.gridContainer} key={app.prospectId}>
       <div className={classes.application}>
         <WavesBG className={classes.containerBg} alt="waves background" />
-        {app.organizationInfo.companyName ? (
-          <>
-            <Typography variant="h6" component="span" classes={{ root: classes.title }}>
-              {app.organizationInfo.companyName}
-            </Typography>
-            <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-              {app.applicationInfo.accountType}
-            </Typography>
-          </>
-        ) : (
-          <>
-            <Typography variant="h6" component="span" classes={{ root: classes.title }}>
-              {app.applicantInfo.fullName}
-            </Typography>
-            <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-              {app.applicantInfo.email}
-            </Typography>
-          </>
-        )}
+        <Typography variant="h6" component="span" classes={{ root: classes.title }}>
+          {app.organizationInfo.companyName}
+        </Typography>
+        <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
+          {app.applicationInfo.accountType}
+        </Typography>
         {app.status
           ? [
               <div key="status" className={classes.status}>
