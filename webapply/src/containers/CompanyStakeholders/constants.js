@@ -53,6 +53,4 @@ export const stakeHoldersSteps = [
   }
 ];
 
-export const FIELDS = ["firstName", "middleName", "lastName", "id"];
-
 export const COMPANY_STAKEHOLDER_ID = "companyStakeholder_";

@@ -62,7 +62,6 @@ const StakeholderStepperComponent = ({
     `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
     stakeHoldersSteps
   );
-  const { deleteStakeholderFullName } = StakeholdersNameManager;
 
   const setIsDisplayAddButton = useCallback(() => {
     setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
@@ -89,7 +88,7 @@ const StakeholderStepperComponent = ({
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
   const handleDeleteStakeholder = useCallback(() => {
-    deleteStakeholderFullName(id);
+    StakeholdersNameManager && StakeholdersNameManager.deleteStakeholderFullName(id);
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
   }, [setIsDisplayConfirmation, deleteStakeholder, id]);

@@ -41,7 +41,6 @@ const CompanyStakeholdersComponent = ({
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
 
-  const { setStakeholderFullNames } = StakeholdersNameManager;
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
@@ -55,7 +54,7 @@ const CompanyStakeholdersComponent = ({
   }, [createNewStakeholder, stakeholders.length]);
 
   useEffect(() => {
-    setStakeholderFullNames(stakeholders);
+    StakeholdersNameManager && StakeholdersNameManager.setStakeholderFullNames(stakeholders);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

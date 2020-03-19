@@ -93,7 +93,6 @@ const personalInformationSchema = Yup.object().shape({
 export const PersonalInformation = ({ index, handleContinue, id }) => {
   const classes = useStyles();
 
-  const { changeStakeholderFullName } = StakeholdersNameManager;
   const applicantInfo = useSelector(getApplicantInfo);
 
   const createChangeProspectHandler = values => prospect => ({
@@ -111,7 +110,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       [name]: value
     };
 
-    changeStakeholderFullName(data);
+    StakeholdersNameManager && StakeholdersNameManager.changeStakeholderFullName(data);
     setFieldValue(name, value);
   };
 

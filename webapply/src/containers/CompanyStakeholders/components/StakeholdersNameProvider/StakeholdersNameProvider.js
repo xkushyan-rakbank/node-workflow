@@ -1,25 +1,35 @@
 import React, { useReducer, useCallback, useMemo } from "react";
 import pick from "lodash/pick";
+import { handleActions } from "../../../../utils/redux-utils";
 
-const FIELDS = ["firstName", "middleName", "lastName", "id"];
+import { FIELDS, INIT, CHANGE, REMOVE } from "./constants";
+
 const pickFields = item => pick(item, FIELDS);
 
 export let StakeholdersNameManager = {};
 export const StakeholdersNamesContext = React.createContext(StakeholdersNameManager);
 
-const stakeholderReducer = (store, { type, stakeholder }) => {
-  switch (type) {
-    case "init":
-      return store.concat(stakeholder);
-    case "change":
-      return changeStakeholderName(store, stakeholder);
-    case "remove":
-      return store.filter(item => item.id !== stakeholder.id);
-
-    default:
-      return store;
+const changeStakeholderName = (stakeholders, item) => {
+  const stakeholdersName = [...stakeholders];
+  const data = pickFields(item);
+  const index = stakeholdersName.findIndex(elem => elem.id === data.id);
+  if (index === -1) {
+    stakeholdersName.push(data);
+  } else {
+    stakeholdersName[index] = data;
   }
+
+  return stakeholdersName;
 };
+
+const stakeholderReducer = handleActions({
+  [INIT]: (state, { stakeholder }) => {
+    const pickedFieldsStakeholders = stakeholder.map(pickFields);
+    return state.concat(pickedFieldsStakeholders);
+  },
+  [CHANGE]: (state, { stakeholder }) => changeStakeholderName(state, stakeholder),
+  [REMOVE]: (state, { stakeholder }) => state.filter(item => item.id !== stakeholder.id)
+});
 
 export const StakeholdersNameProvider = ({ children }) => {
   const [stakeholdersName, dispatch] = useReducer(stakeholderReducer, []);
@@ -33,8 +43,7 @@ export const StakeholdersNameProvider = ({ children }) => {
   );
   const setStakeholderFullNames = useCallback(
     stakeholder => {
-      const pickedFieldsStakeholders = stakeholder.map(pickFields);
-      dispatch({ type: "init", stakeholder: pickedFieldsStakeholders });
+      dispatch({ type: "init", stakeholder });
     },
     [dispatch]
   );
@@ -57,17 +66,4 @@ export const StakeholdersNameProvider = ({ children }) => {
       {children}
     </StakeholdersNamesContext.Provider>
   );
-};
-
-const changeStakeholderName = (stakeholders, item) => {
-  const stakeholdersName = [...stakeholders];
-  const data = pickFields(item);
-  const index = stakeholdersName.findIndex(elem => elem.id === data.id);
-  if (index === -1) {
-    stakeholdersName.push(data);
-  } else {
-    stakeholdersName[index] = data;
-  }
-
-  return stakeholdersName;
 };
