@@ -141,7 +141,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   contextualHelpText={
                                     <>
                                       The name of the other company, branch or subsidiary should be
-                                      as per their respective registration documents.
+                                      as per their respective Trade license.
                                       <br /> Example <br /> Airlift Global Automation and Heavy
                                       Equipment Rental LLC
                                     </>
@@ -163,7 +163,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   label="Trade License Number"
                                   placeholder="Trade License Number"
                                   component={Input}
-                                  contextualHelpText="The Licence Number of the other company, branch or subsidiary
+                                  contextualHelpText="The License Number of the other company, branch or subsidiary
                                   should be as per their respective Trade License."
                                   InputProps={{
                                     inputProps: { maxLength: MAX_TRADE_LICENSE_LENGTH, tabIndex: 0 }
@@ -259,7 +259,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                   contextualHelpText={
                                     <>
                                       The name of the other company, branch or subsidiary should be
-                                      as per their respective Trade Licenses.
+                                      as per their respective registration documents.
                                       <br /> Example <br /> Airlift Global Automation and Heavy
                                       Equipment Rental LLC
                                     </>
