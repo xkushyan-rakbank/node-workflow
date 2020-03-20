@@ -11,6 +11,7 @@ export const ServicesSteps = ({
   activeStep,
   clickHandler,
   handleContinue,
+  createFormChangeHandler,
   isSubmit,
   completedSteps
 }) => {
@@ -37,6 +38,7 @@ export const ServicesSteps = ({
           >
             <Component
               goToNext={() => handleContinue(stepData.eventName)}
+              createFormChangeHandler={createFormChangeHandler}
               activeStep={activeStep}
             />
           </div>
