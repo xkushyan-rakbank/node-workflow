@@ -23,9 +23,11 @@ import {
 } from "../../store/selectors/stakeholder";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
+import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH, STEP_STATUS } from "../../constants";
 
 import { useStyles } from "./styled";
+import { getCompletedSteps } from "../../store/selectors/completedSteps";
+import { COMPANY_STAKEHOLDER_ID } from "./constants";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,
@@ -36,6 +38,7 @@ const CompanyStakeholdersComponent = ({
   stakeholdersIds,
   hasSignatories,
   sendProspectToAPI,
+  completedSteps,
   isLoading
 }) => {
   const pushHistory = useTrackingHistory();
@@ -61,7 +64,11 @@ const CompanyStakeholdersComponent = ({
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
     stakeholders.length < 1 ||
-    !stakeholdersIds.every(stakeholder => stakeholder.done) ||
+    completedSteps.some(
+      completedStep =>
+        completedStep.flowId.startsWith(COMPANY_STAKEHOLDER_ID) &&
+        completedStep.status !== STEP_STATUS.COMPLETED
+    ) ||
     isLowPercentage ||
     !hasSignatories;
 
@@ -173,6 +180,7 @@ const mapStateToProps = state => {
     stakeholdersIds,
     stakeholders: stakeholdersSelector(state),
     percentage: percentageSelector(state),
+    completedSteps: getCompletedSteps(state),
     hasSignatories: checkIsHasSignatories(state)
   };
 };
