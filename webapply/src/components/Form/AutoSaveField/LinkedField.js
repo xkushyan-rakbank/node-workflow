@@ -5,6 +5,7 @@ import { AutoSaveField } from "./AutoSaveField";
 export const LinkedField = ({
   linkedFieldName,
   linkedPath,
+  onChange = () => {},
   changeProspect = prospect => prospect,
   ...rest
 }) => {
@@ -15,7 +16,7 @@ export const LinkedField = ({
       onChange={e => {
         setFieldValue(rest.name, e.target.value);
         getIn(values, linkedFieldName) && setFieldTouched(linkedFieldName, true);
-        rest.onChange && rest.onChange(e);
+        onChange(e);
       }}
       changeProspect={(prospect, value, path, errors) => {
         const newProspect = getIn(errors, linkedFieldName)
