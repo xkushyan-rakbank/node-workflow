@@ -44,8 +44,8 @@ export const addPhoneNoValidationToYup = () => {
       ),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, getInvalidMessage(fieldName))
-        .min(MIN_NON_UAE_PHONE_LENGTH, `${getInvalidMessage(fieldName)}`)
-        .max(MAX_NON_UAE_PHONE_LENGTH, `${getInvalidMessage(fieldName)}`)
+        .min(MIN_NON_UAE_PHONE_LENGTH, getInvalidMessage(fieldName))
+        .max(MAX_NON_UAE_PHONE_LENGTH, getInvalidMessage(fieldName))
     });
   });
 };
