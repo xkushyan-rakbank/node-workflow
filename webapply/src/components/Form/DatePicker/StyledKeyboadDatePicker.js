@@ -51,6 +51,11 @@ const keyboardDatePickerTheme = createMuiTheme({
         minHeight: 155
       }
     },
+    MuiInputBase: {
+      root: {
+        height: 56
+      }
+    },
     MuiIconButton: {
       root: {
         "&:hover": {
