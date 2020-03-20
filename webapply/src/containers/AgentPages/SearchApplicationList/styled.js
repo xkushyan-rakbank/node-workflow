@@ -49,7 +49,8 @@ export const useStyles = makeStyles({
     marginTop: 5,
     minHeight: "18px",
     marginRight: "5px",
-    wordBreak: "break-word"
+    wordBreak: "break-word",
+    wordWrap: "break-word"
   },
   status: {
     borderRadius: "4px",
