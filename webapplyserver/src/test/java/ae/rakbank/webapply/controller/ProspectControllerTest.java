@@ -2,19 +2,17 @@ package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.dto.JwtPayload;
-import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.ProspectValidatorService;
 import ae.rakbank.webapply.services.RecaptchaService;
 import ae.rakbank.webapply.stub.ConfigFactory;
+import ae.rakbank.webapply.stub.JwtPayloadStub;
 import ae.rakbank.webapply.stub.RequestFactory;
 import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -47,9 +45,6 @@ public class ProspectControllerTest {
 
     @Mock
     private WebApplyController applyController;
-
-    @Mock
-    private ProspectValidatorService prospectValidatorService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -160,11 +155,7 @@ public class ProspectControllerTest {
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
 
-        JwtPayload jwt = JwtPayload.builder()
-                .oauthAccessToken("666473634664563554534737464")
-                .role(UserRole.CUSTOMER)
-                .phoneNumber("+37847563456")
-                .build();
+        JwtPayload jwt = JwtPayloadStub.newCustomerJwt("123456789");
         ResponseEntity<Object> responseEntity = prospectController.getProspectById(jwt, "sme", "123456789");
         assertNotNull(responseEntity);
         JsonNode body = (JsonNode) responseEntity.getBody();
@@ -184,10 +175,7 @@ public class ProspectControllerTest {
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
 
-        JwtPayload jwt = JwtPayload.builder()
-                .oauthAccessToken("666473634664563554534737464")
-                .phoneNumber("+37847563456")
-                .build();
+        JwtPayload jwt = JwtPayloadStub.newNoRoleJwt();
         prospectController.getProspectById(jwt, "sme", "123456789");
 
     }
@@ -200,10 +188,7 @@ public class ProspectControllerTest {
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
 
-        JwtPayload jwt = JwtPayload.builder()
-                .oauthAccessToken("666473634664563554534737464")
-                .role(UserRole.AGENT)
-                .build();
+        JwtPayload jwt = JwtPayloadStub.newAgentJwt();
         ResponseEntity<Object> responseEntity = prospectController.getProspectById(jwt, "sme", "123456789");
         assertNotNull(responseEntity);
         JsonNode body = (JsonNode) responseEntity.getBody();
@@ -223,35 +208,20 @@ public class ProspectControllerTest {
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
 
-        JwtPayload jwt = JwtPayload.builder()
-                .oauthAccessToken("666473634664563554534737464")
-                .role(UserRole.CUSTOMER)
-                .phoneNumber("+37847563456")
-                .build();
-        ResponseEntity<Object> responseEntity = prospectController.getProspectById(jwt, "sme", "123456789");
+        JwtPayload jwt = JwtPayloadStub.newCustomerJwt("123456789");
+        prospectController.getProspectById(jwt, "sme", "123456789");
 
     }
 
     @Test
     public void updateSMEProspect() {
 
-        ObjectNode jsonNodes = objectMapper.createObjectNode();
-
-        jsonNodes.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
+        JsonNode jsonNodes = ResponseFactory.newProspectByIdResponse();
 
         ObjectNode dehResponse = objectMapper.createObjectNode();
-
         dehResponse.put("prospectId", "123456789");
 
-        JwtPayload jwt = JwtPayload.builder()
-                .oauthAccessToken("666473634664563554534737464")
-                .role(UserRole.CUSTOMER)
-                .phoneNumber("+37847563456")
-                .prospectId("123456789")
-                .build();
+        JwtPayload jwt = JwtPayloadStub.newCustomerJwt("123456789");
 
         ResponseEntity<Object> responseEntity = ResponseEntity.ok(dehResponse);
 
@@ -273,39 +243,18 @@ public class ProspectControllerTest {
     @Test
     public void searchProspect() {
 
-        ObjectNode jsonNodes = objectMapper.createObjectNode();
+        JsonNode searchRequest = RequestFactory.newSearchProspectRequest();
 
-        jsonNodes.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
+        JwtPayload jwt = JwtPayloadStub.newCustomerJwt("123456789");
 
-        ObjectNode dehResponse = objectMapper.createObjectNode();
-
-        dehResponse.put("prospectId", "123456789");
-
-        JsonNode applicationInfo1 = objectMapper.createObjectNode().put("mobileNo", "+37847563456");
-        JsonNode applicationInfo2 = objectMapper.createObjectNode().put("mobileNo", "+37847563456");
-        JsonNode applicationInfo3 = objectMapper.createObjectNode().put("mobileNo", "+37847563457");
-
-        dehResponse.set("searchResult", objectMapper.createArrayNode()
-                .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo1))
-                .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo2))
-                .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo3)));
-
-        JwtPayload jwt = JwtPayload.builder()
-                .oauthAccessToken("666473634664563554534737464")
-                .role(UserRole.CUSTOMER)
-                .phoneNumber("+37847563456")
-                .prospectId("123456789")
-                .build();
+        JsonNode dehResponse = ResponseFactory.newSearchProspectResponse();
 
         ResponseEntity<Object> responseEntity = ResponseEntity.ok(dehResponse);
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.POST,
-                jsonNodes, "searchProspect()", MediaType.APPLICATION_JSON, jwt.getOauthAccessToken())).thenReturn(responseEntity);
+                searchRequest, "searchProspect()", MediaType.APPLICATION_JSON, jwt.getOauthAccessToken())).thenReturn(responseEntity);
 
-        ResponseEntity<Object> updateResponse = prospectController.searchProspect(jwt, jsonNodes, "mse");
+        ResponseEntity<Object> updateResponse = prospectController.searchProspect(jwt, searchRequest, "mse");
 
         assertNotNull(updateResponse);
         JsonNode node = (JsonNode) updateResponse.getBody();
@@ -315,7 +264,7 @@ public class ProspectControllerTest {
         assertEquals(dehResponse, node);
 
         Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.POST,
-                jsonNodes, "searchProspect()", MediaType.APPLICATION_JSON, jwt.getOauthAccessToken());
+                searchRequest, "searchProspect()", MediaType.APPLICATION_JSON, jwt.getOauthAccessToken());
 
     }
 }
