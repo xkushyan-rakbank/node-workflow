@@ -9,9 +9,6 @@ const mapStateToProps = state => ({
   chequeBookApplied: get(getAccountInfo(state)[0], "chequeBookApplied", "")
 });
 
-const mapDispatchToProps = {};
-
-export const CompanyPreferredContactInformation = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CompanyPreferredContactInformationComponent);
+export const CompanyPreferredContactInformation = connect(mapStateToProps)(
+  CompanyPreferredContactInformationComponent
+);
