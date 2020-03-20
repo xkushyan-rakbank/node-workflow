@@ -8,7 +8,8 @@ import {
   CustomSelect,
   Input,
   InputGroup,
-  AutoSaveField as Field
+  AutoSaveField as Field,
+  LinkedField
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/InfoTitle";
 import { UAE_CODE } from "../../../../../../constants";
@@ -18,7 +19,6 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { checkLinkedFields } from "../../../../../../utils/checkLinkedFields";
 
 const companyPreferredContactInformationSchema = Yup.object().shape({
   primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
@@ -60,7 +60,7 @@ export const CompanyPreferredContactInformationComponent = ({
         validationSchema={companyPreferredContactInformationSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, setFieldTouched }) => (
           <Form>
             <Grid container spacing={3}>
               <Grid item sm={12}>
@@ -79,9 +79,11 @@ export const CompanyPreferredContactInformationComponent = ({
             <Grid item container spacing={3}>
               <Grid item md={6} sm={12}>
                 <InputGroup>
-                  <Field
+                  <LinkedField
                     name="primaryMobCountryCode"
+                    linkedFieldName="primaryMobileNo"
                     path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
+                    linkedPath="prospect.organizationInfo.contactDetails.primaryMobileNo"
                     datalistId="countryCode"
                     shrink={false}
                     component={CustomSelect}
@@ -92,17 +94,15 @@ export const CompanyPreferredContactInformationComponent = ({
                           "prospect.accountInfo[0].chequeBookApplied": false
                         });
                       }
+                      values.primaryMobileNo && setFieldTouched("primaryMobileNo", true);
                     }}
-                    changeProspect={checkLinkedFields(
-                      values,
-                      "primaryMobileNo",
-                      "prospect.organizationInfo.contactDetails.primaryMobileNo"
-                    )}
                     inputProps={{ tabIndex: 0 }}
                   />
-                  <Field
+                  <LinkedField
                     name="primaryMobileNo"
+                    linkedFieldName="primaryMobCountryCode"
                     path="prospect.organizationInfo.contactDetails.primaryMobileNo"
+                    linkedPath="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
                     label="Mobile number"
                     placeholder="55xxxxxxx"
                     component={Input}
@@ -110,44 +110,33 @@ export const CompanyPreferredContactInformationComponent = ({
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
-                    changeProspect={checkLinkedFields(
-                      values,
-                      "primaryMobCountryCode",
-                      "prospect.organizationInfo.contactDetails.primaryMobCountryCode"
-                    )}
                   />
                 </InputGroup>
               </Grid>
               <Grid item md={6} sm={12}>
                 <InputGroup>
-                  <Field
+                  <LinkedField
                     name="primaryPhoneCountryCode"
+                    linkedFieldName="primaryPhoneNo"
                     path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
+                    linkedPath="prospect.organizationInfo.contactDetails.primaryPhoneNo"
                     component={CustomSelect}
                     datalistId="countryCode"
                     shrink={false}
-                    changeProspect={checkLinkedFields(
-                      values,
-                      "primaryPhoneNo",
-                      "prospect.organizationInfo.contactDetails.primaryPhoneNo"
-                    )}
                     inputProps={{ tabIndex: 0 }}
                   />
 
-                  <Field
+                  <LinkedField
                     name="primaryPhoneNo"
+                    linkedFieldName="primaryPhoneCountryCode"
                     path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
+                    linkedPath="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
                     label="Landline number (optional)"
                     placeholder="42xxxxxx"
                     component={Input}
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
-                    changeProspect={checkLinkedFields(
-                      values,
-                      "primaryPhoneCountryCode",
-                      "prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
-                    )}
                   />
                 </InputGroup>
               </Grid>

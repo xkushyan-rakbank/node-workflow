@@ -10,12 +10,12 @@ import {
   AutoSaveField as Field,
   CustomSelect,
   Input,
-  InputGroup
+  InputGroup,
+  LinkedField
 } from "../../../../components/Form";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { checkLinkedFields } from "../../../../utils/checkLinkedFields";
 
 const preferredContactInformationSchema = Yup.object().shape({
   primaryEmail: Yup.string()
@@ -49,7 +49,7 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
     validationSchema={isSignatory && preferredContactInformationSchema}
     validateOnChange={false}
   >
-    {({ values }) => (
+    {() => (
       <Form>
         <Grid container spacing={3}>
           <Grid item sm={12}>
@@ -69,24 +69,23 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
         <Grid item container spacing={3}>
           <Grid item md={6} sm={12}>
             <InputGroup>
-              <Field
+              <LinkedField
                 name="primaryMobCountryCode"
+                linkedFieldName="primaryMobileNo"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
                 component={CustomSelect}
                 shrink={false}
                 disabled={!isSignatory}
                 datalistId="countryCode"
                 inputProps={{ tabIndex: 0 }}
-                changeProspect={checkLinkedFields(
-                  values,
-                  "primaryMobileNo",
-                  `prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`
-                )}
               />
 
-              <Field
+              <LinkedField
                 name="primaryMobileNo"
+                linkedFieldName="primaryMobCountryCode"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
                 label="Mobile Number"
                 placeholder="55xxxxxxx"
                 component={Input}
@@ -95,11 +94,6 @@ const PreferredContactInformationStep = ({ isSignatory, index, handleContinue })
                   inputProps: { tabIndex: 0 }
                 }}
                 contextualHelpText="This number will be used as primary contact for any future communication"
-                changeProspect={checkLinkedFields(
-                  values,
-                  "primaryMobCountryCode",
-                  `prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`
-                )}
               />
             </InputGroup>
           </Grid>

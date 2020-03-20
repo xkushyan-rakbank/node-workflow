@@ -10,7 +10,8 @@ import {
   CustomSelect,
   InputGroup,
   AutoSaveField as Field,
-  SkeletonLoader
+  SkeletonLoader,
+  LinkedField
 } from "./../../components/Form";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -27,7 +28,6 @@ import routes from "./../../routes";
 import { UAE_CODE } from "../../constants";
 
 import { useStyles } from "./styled";
-import { checkLinkedFields } from "../../utils/checkLinkedFields";
 
 export const MAX_LENGTH_EMAIL = 50;
 
@@ -126,25 +126,24 @@ const ComeBackLoginComponent = ({
                 <SkeletonLoader />
               ) : (
                 <InputGroup>
-                  <Field
+                  <LinkedField
                     name="countryCode"
+                    linkedFieldName="mobileNo"
                     path="prospect.applicantInfo.countryCode"
+                    linkedPath="prospect.applicantInfo.mobileNo"
                     required
                     datalistId="countryCode"
                     extractLabel={item => item.displayText}
                     component={CustomSelect}
-                    changeProspect={checkLinkedFields(
-                      values,
-                      "mobileNo",
-                      "prospect.applicantInfo.mobileNo"
-                    )}
                     shrink={false}
                     inputProps={{ tabIndex: 0 }}
                   />
 
-                  <Field
+                  <LinkedField
                     name="mobileNo"
+                    linkedFieldName="countryCode"
                     path="prospect.applicantInfo.mobileNo"
+                    linkedPath="prospect.applicantInfo.countryCode"
                     label="Your Mobile Number"
                     placeholder="Mobile Number"
                     component={Input}
@@ -152,11 +151,6 @@ const ComeBackLoginComponent = ({
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
-                    changeProspect={checkLinkedFields(
-                      values,
-                      "countryCode",
-                      "prospect.applicantInfo.countryCode"
-                    )}
                   />
                 </InputGroup>
               )}

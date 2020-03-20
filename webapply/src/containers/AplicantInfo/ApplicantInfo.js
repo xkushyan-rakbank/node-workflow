@@ -9,7 +9,8 @@ import {
   CustomSelect,
   InputGroup,
   AutoSaveField as Field,
-  SkeletonLoader
+  SkeletonLoader,
+  LinkedField
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
@@ -36,7 +37,6 @@ import {
   CONVENTIONAL
 } from "../../constants";
 import routes from "../../routes";
-import { checkLinkedFields } from "../../utils/checkLinkedFields";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -160,23 +160,22 @@ const ApplicantInfoPage = ({
               <SkeletonLoader />
             ) : (
               <InputGroup>
-                <Field
+                <LinkedField
                   name="countryCode"
+                  linkedFieldName="mobileNo"
                   path="prospect.applicantInfo.countryCode"
+                  linkedPath="prospect.applicantInfo.mobileNo"
                   required
                   datalistId="countryCode"
                   component={CustomSelect}
-                  changeProspect={checkLinkedFields(
-                    values,
-                    "mobileNo",
-                    "prospect.applicantInfo.mobileNo"
-                  )}
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />
-                <Field
+                <LinkedField
                   name="mobileNo"
+                  linkedFieldName="countryCode"
                   path="prospect.applicantInfo.mobileNo"
+                  linkedPath="prospect.applicantInfo.countryCode"
                   label="Your Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
@@ -184,11 +183,6 @@ const ApplicantInfoPage = ({
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}
-                  changeProspect={checkLinkedFields(
-                    values,
-                    "countryCode",
-                    "prospect.applicantInfo.countryCode"
-                  )}
                 />
               </InputGroup>
             )}
