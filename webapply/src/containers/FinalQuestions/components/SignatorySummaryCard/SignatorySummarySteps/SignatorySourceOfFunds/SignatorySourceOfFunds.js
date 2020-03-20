@@ -66,13 +66,13 @@ export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChange
                 datalistId="wealthType"
                 label="Source of funds"
                 onChange={selectedValue => {
+                  const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
                   let fields = {
                     sourceOfWealth: selectedValue.map(value => ({
                       wealthType: value,
                       others: withOption ? values.others : ""
                     }))
                   };
-                  const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
 
                   if (!withOption) {
                     fields.others = "";
