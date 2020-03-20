@@ -75,21 +75,13 @@ const SignatoryRightsComponent = ({
               contextualHelpProps={{ isDisableHoverListener: false }}
               contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
               tabIndex="0"
-              changeProspect={(prospect, value) => {
-                if (value === SOLE_PROPRIETOR) {
-                  return {
-                    ...prospect,
-                    [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: true,
-                    [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: 100
-                  };
-                } else {
-                  return {
-                    ...prospect,
-                    [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: "",
-                    [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: ""
-                  };
-                }
-              }}
+              changeProspect={(prospect, value) => ({
+                ...prospect,
+                [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]:
+                  value === SOLE_PROPRIETOR ? value : "",
+                [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]:
+                  value === SOLE_PROPRIETOR || ""
+              })}
             />
           </Grid>
 
