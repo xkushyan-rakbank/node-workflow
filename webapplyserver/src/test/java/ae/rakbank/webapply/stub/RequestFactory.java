@@ -13,4 +13,14 @@ public class RequestFactory {
                 .put("mobileNo", "+37847563456")
                 .put("email", "email@localhost"));
     }
+
+    public static JsonNode newSearchProspectRequest() {
+        return objectMapper.createObjectNode()
+                .put("prospectId", "123456789")
+                .set("applicantInfo", objectMapper.createObjectNode()
+                        .put("countryCode", "UAE")
+                        .put("mobileNo", "+37847563456")
+                        .put("email", "email@localhost"));
+    }
+
 }

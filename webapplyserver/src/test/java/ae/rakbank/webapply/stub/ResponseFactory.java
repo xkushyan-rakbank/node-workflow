@@ -30,4 +30,17 @@ public class ResponseFactory {
                         .put("email", "email@localhost"));
     }
 
+    public static JsonNode newSearchProspectResponse() {
+        JsonNode applicationInfo1 = objectMapper.createObjectNode().put("mobileNo", "+37847563456");
+        JsonNode applicationInfo2 = objectMapper.createObjectNode().put("mobileNo", "+37847563456");
+        JsonNode applicationInfo3 = objectMapper.createObjectNode().put("mobileNo", "+37847563457");
+        return objectMapper.createObjectNode()
+                .put("prospectId", "123456789")
+                .set("searchResult", objectMapper.createArrayNode()
+                        .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo1))
+                        .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo2))
+                        .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo3)));
+    }
+
+
 }
