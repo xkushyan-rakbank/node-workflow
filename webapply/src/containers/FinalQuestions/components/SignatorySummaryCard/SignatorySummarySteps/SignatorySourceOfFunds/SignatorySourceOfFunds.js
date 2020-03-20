@@ -1,5 +1,6 @@
-import React, { useCallback } from "react";
+import React from "react";
 import * as Yup from "yup";
+import get from "lodash/get";
 import { Formik, Form } from "formik";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
@@ -15,12 +16,12 @@ import {
   MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH,
   SPECIAL_CHARACTERS_REGEX
 } from "../../../../../../utils/validation";
-import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
 
+import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import { useStyles } from "./styled";
 
 export const signatorySourceOfFundsSchema = Yup.object().shape({
@@ -41,93 +42,85 @@ export const signatorySourceOfFundsSchema = Yup.object().shape({
     })
 });
 
-export const SignatorySourceOfFunds = ({ index, handleContinue }) => {
+export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChangeHandler }) => {
   const classes = useStyles();
 
-  const handleSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   return (
-    <div className={classes.formWrapper}>
-      <Formik
-        initialValues={{
-          sourceOfWealth: [],
-          others: ""
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={signatorySourceOfFundsSchema}
-        validateOnChange={false}
-      >
-        {({ values, setFieldValue, setFieldTouched }) => (
-          <Form>
-            <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={12} xs={12}>
-                <Field
-                  multiple
-                  name="sourceOfWealth"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`}
-                  datalistId="wealthType"
-                  label="Source of funds"
-                  onChange={selectedValue => {
-                    const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
-                    if (!withOption) {
-                      setFieldValue("others", "");
-                    }
+    <Formik
+      initialValues={{
+        sourceOfWealth: [],
+        others: ""
+      }}
+      onSubmit={handleContinue}
+      validationSchema={signatorySourceOfFundsSchema}
+      validateOnChange={false}
+    >
+      {createFormChangeHandler(({ values, setValues }) => (
+        <Form>
+          <Grid container spacing={3} className={classes.flexContainer}>
+            <Grid item md={12} xs={12}>
+              <Field
+                multiple
+                name="sourceOfWealth"
+                path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`}
+                datalistId="wealthType"
+                label="Source of funds"
+                onChange={selectedValue => {
+                  const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
+                  let fields = {
+                    sourceOfWealth: selectedValue.map(value => ({
+                      wealthType: value,
+                      others: withOption ? values.others : ""
+                    }))
+                  };
 
-                    setFieldValue(
-                      "sourceOfWealth",
-                      selectedValue.map(value => ({
-                        wealthType: value,
-                        others: withOption ? values.others : ""
-                      }))
-                    );
-                  }}
-                  extractValue={value => value.wealthType}
-                  contextualHelpText="Select the most prominent source of capital to fund the company"
-                  contextualHelpProps={{ isDisableHoverListener: false }}
-                  component={SelectAutocomplete}
-                  tabIndex="0"
-                  isSearchable
-                />
-                <InfoTitle
-                  classes={{
-                    wrapper: classes.infoTitles
-                  }}
-                  title="You can select multiple values"
-                />
-              </Grid>
-              <Grid
-                className={cx({
-                  hidden: !(values.sourceOfWealth || [])
-                    .map(item => item.wealthType)
-                    .includes(OTHER_SOURCE_OF_WEALTH)
-                })}
-                item
-                md={12}
-                sm={12}
-              >
-                <Field
-                  name="others"
-                  path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth[0].others`}
-                  label="Other (Specify)"
-                  placeholder="Other (Specify)"
-                  initialValue={
-                    (values.sourceOfWealth.length && values.sourceOfWealth[0].others) || ""
+                  if (!withOption) {
+                    fields.others = "";
                   }
-                  component={Input}
-                  InputProps={{
-                    inputProps: { maxLength: MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH, tabIndex: 0 }
-                  }}
-                />
-              </Grid>
+                  setValues(fields);
+                }}
+                extractValue={value => value.wealthType}
+                contextualHelpText="Select the most prominent source of capital to fund the company"
+                contextualHelpProps={{ isDisableHoverListener: false }}
+                component={SelectAutocomplete}
+                tabIndex="0"
+                isSearchable
+              />
+              <InfoTitle
+                classes={{
+                  wrapper: classes.infoTitles
+                }}
+                title="You can select multiple values"
+              />
             </Grid>
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            <Grid
+              className={cx({
+                hidden: !(values.sourceOfWealth || [])
+                  .map(item => item.wealthType)
+                  .includes(OTHER_SOURCE_OF_WEALTH)
+              })}
+              item
+              md={12}
+              sm={12}
+            >
+              <Field
+                name="others"
+                path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth[0].others`}
+                label="Other (Specify)"
+                placeholder="Other (Specify)"
+                initialValue={get(values, "sourceOfWealth[0].others", "")}
+                component={Input}
+                InputProps={{
+                  inputProps: { maxLength: MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH, tabIndex: 0 }
+                }}
+              />
+            </Grid>
+          </Grid>
+          <div className={classes.buttonWrapper}>
+            <ContinueButton type="submit" />
+          </div>
+        </Form>
+      ))}
+    </Formik>
   );
 };
