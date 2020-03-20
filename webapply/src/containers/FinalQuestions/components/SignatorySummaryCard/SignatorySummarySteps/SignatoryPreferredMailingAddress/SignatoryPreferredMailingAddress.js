@@ -84,7 +84,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   addressLine2: !values.sameAsCompanyAddress ? organisationAddressLine2 : "",
                   addressLine1: !values.sameAsCompanyAddress ? organisationAddressLine1 : "",
                   emirateCity: !values.sameAsCompanyAddress ? organisationEmirateCity : "",
-                  poBox: !values.sameAsCompanyAddress ? organisationPoBox : ""
+                  poBox: !values.sameAsCompanyAddress ? organisationPoBox : "",
+                  country: DEFAULT_SIGNATORY_COUNTRY
                 });
               }}
               inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
