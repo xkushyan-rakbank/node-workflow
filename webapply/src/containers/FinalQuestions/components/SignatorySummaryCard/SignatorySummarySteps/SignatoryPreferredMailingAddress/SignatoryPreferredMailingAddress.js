@@ -93,6 +93,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   !values.sameAsCompanyAddress ? organisationEmirateCity : ""
                 );
                 setFieldValue("poBox", !values.sameAsCompanyAddress ? organisationPoBox : "");
+                setFieldValue("country", DEFAULT_SIGNATORY_COUNTRY);
               }}
               inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
             />
