@@ -13,7 +13,8 @@ import {
   InputGroup,
   CustomSelect,
   CheckboxGroup,
-  AutoSaveField as Field
+  AutoSaveField as Field,
+  LinkedField
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { Divider } from "../Divider";
@@ -195,17 +196,21 @@ export const SigningPreferencesComponent = ({
                           <Grid container spacing={3}>
                             <Grid item md={6} sm={12}>
                               <InputGroup>
-                                <Field
+                                <LinkedField
                                   name={`signatories[${index}].primaryMobCountryCode`}
+                                  linkedFieldName={`signatories[${index}].primaryMobileNo`}
                                   path={`${prospectPath}.primaryMobCountryCode`}
+                                  linkedPath={`${prospectPath}.primaryMobileNo`}
                                   datalistId="countryCode"
                                   component={CustomSelect}
                                   shrink={false}
                                   inputProps={{ tabIndex: 0 }}
                                 />
-                                <Field
+                                <LinkedField
                                   name={`signatories[${index}].primaryMobileNo`}
+                                  linkedFieldName={`signatories[${index}].primaryMobCountryCode`}
                                   path={`${prospectPath}.primaryMobileNo`}
+                                  linkedPath={`${prospectPath}.primaryMobCountryCode`}
                                   label="Primary mobile number"
                                   placeholder="55xxxxxxx"
                                   component={Input}
