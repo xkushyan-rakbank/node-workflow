@@ -19,10 +19,13 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   const [isSubmit, setIsSubmit] = useState(false);
   const pushHistory = useTrackingHistory();
 
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
-    SELECT_SERVICES_PAGE_ID,
-    servicesSteps
-  );
+  const [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler
+  ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps);
   const isAllStepsCompleted = !availableSteps.some(
     step => step.step < STEP_3 && step.status !== STEP_STATUS.COMPLETED
   );
@@ -64,6 +67,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
         isSubmit={isSubmit}
         clickHandler={createSetStepHandler}
         handleContinue={setNextStep}
+        createFormChangeHandler={createFormChangeHandler}
       />
 
       <div className={classes.linkContainer}>

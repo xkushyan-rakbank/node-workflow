@@ -53,6 +53,7 @@ export const ChannelsComponent = ({
   isHasSignatories,
   stakeholders,
   goToNext,
+  createFormChangeHandler,
   updateProspect,
   primaryMobCountryCode,
   accountCurrencies: selectedCurrency
@@ -90,7 +91,7 @@ export const ChannelsComponent = ({
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({ values, setFieldValue }) => (
+      {createFormChangeHandler(({ values, setValues }) => (
         <Form>
           <Subtitle title="Business debit Cards" />
           <ContexualHelp
@@ -152,8 +153,10 @@ export const ChannelsComponent = ({
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
-              setFieldValue("mailStatements", false);
-              setFieldValue("eStatements", true);
+              setValues({
+                mailStatements: false,
+                eStatements: true
+              });
             }}
             inputProps={{ tabIndex: 0 }}
           />
@@ -164,8 +167,10 @@ export const ChannelsComponent = ({
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {
-              setFieldValue("eStatements", false);
-              setFieldValue("mailStatements", true);
+              setValues({
+                eStatements: false,
+                mailStatements: true
+              });
             }}
             inputProps={{ tabIndex: 0 }}
           />
@@ -186,7 +191,7 @@ export const ChannelsComponent = ({
             </Grid>
           </Grid>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };
