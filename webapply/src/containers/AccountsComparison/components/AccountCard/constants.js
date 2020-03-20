@@ -1,13 +1,14 @@
 import { accountTitles } from "../../../../constants";
-import startups_ic from "../../../../assets/icons/startups_ic.svg";
-import businesses_ic from "../../../../assets/icons/growing_businesses_ic.svg";
-import established_businesses_ic from "../../../../assets/icons/established_businesses_ic.svg";
 import { accountTypes } from "../TableCompare/constants";
+
+import { ReactComponent as Startups } from "../../../../assets/icons/startups_ic.svg";
+import { ReactComponent as Businesses } from "../../../../assets/icons/growing_businesses_ic.svg";
+import { ReactComponent as EstablishedBusinesses } from "../../../../assets/icons/established_businesses_ic.svg";
 
 export const accountTypesDescription = [
   {
     name: accountTitles.starter,
-    icon: startups_ic,
+    Icon: Startups,
     title: "For Startups \nand Entrepreneurs",
     description: [
       "Zero balance account",
@@ -18,7 +19,7 @@ export const accountTypesDescription = [
   },
   {
     name: accountTitles.currentAccount,
-    icon: businesses_ic,
+    Icon: Businesses,
     title: "For Growing Businesses",
     description: [
       "Low balance account",
@@ -29,7 +30,7 @@ export const accountTypesDescription = [
   },
   {
     name: accountTitles.elite,
-    icon: established_businesses_ic,
+    Icon: EstablishedBusinesses,
     title: "For Established Businesses",
     description: [
       "Select free services",
