@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import * as Yup from "yup";
 import cx from "classnames";
 
@@ -71,7 +71,7 @@ const getPercentValue = (values, name, totalMonthlyCreditsAED) => {
     : 100 - totalMonthlyCashAmountInPercent;
 };
 
-const createChangeProspectHandler = values => (prospect, name, path, errors) => {
+const createChangeProspectHandler = values => (_, __, ___, errors) => {
   const isDataValid = !Object.values(linkedFields).some(
     field => field.isFillByUser && (!values[field.name] || errors[field.name])
   );
@@ -159,195 +159,189 @@ const commonInputProps = {
   endAdornment: <InputAdornment position="end">{COMPANY_CURRENCY}</InputAdornment>
 };
 
-export const CompanyAnticipatedTransactions = ({ handleContinue }) => {
+export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChangeHandler }) => {
   const classes = useStyles();
 
-  const onSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   return (
-    <div>
-      <Formik
-        initialValues={{
-          annualFinTurnoverAmtInAED: "",
-          maxAmtSingleTxnCashAED: "",
-          maxAmtSingleTxnNonCashAED: "",
-          totalMonthlyCashAmountInFigures: "",
-          totalMonthlyNonCashAmountInFigures: ""
-        }}
-        onSubmit={onSubmit}
-        validationSchema={companyAnticipatedTransactionsSchema}
-        validateOnChange={false}
-      >
-        {({ values }) => (
-          <Form autoComplete="off">
-            <h4 className={classes.groupLabel}>Annual turnover</h4>
-            <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item sm={12}>
-                <Field
-                  name="annualFinTurnoverAmtInAED"
-                  path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
-                  label="Annual Financial Turnover"
-                  autoComplete="none"
-                  placeholder={PLACEHOLDER}
+    <Formik
+      initialValues={{
+        annualFinTurnoverAmtInAED: "",
+        maxAmtSingleTxnCashAED: "",
+        maxAmtSingleTxnNonCashAED: "",
+        totalMonthlyCashAmountInFigures: "",
+        totalMonthlyNonCashAmountInFigures: ""
+      }}
+      onSubmit={handleContinue}
+      validationSchema={companyAnticipatedTransactionsSchema}
+      validateOnChange={false}
+    >
+      {createFormChangeHandler(({ values }) => (
+        <Form autoComplete="off">
+          <h4 className={classes.groupLabel}>Annual turnover</h4>
+          <Grid container spacing={3} className={classes.flexContainer}>
+            <Grid item sm={12}>
+              <Field
+                name="annualFinTurnoverAmtInAED"
+                path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
+                label="Annual Financial Turnover"
+                autoComplete="none"
+                placeholder={PLACEHOLDER}
+                InputProps={{
+                  ...commonInputProps,
+                  inputComponent: FormatDecimalNumberInput,
+                  inputProps: {
+                    maxLength: ANNUAL_TURNOVER_MAX_LENGTH,
+                    tabIndex: 0
+                  }
+                }}
+                component={Input}
+                contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
+                changeProspect={createChangeProspectHandler(values)}
+              />
+            </Grid>
+          </Grid>
+          <div className={classes.divider} />
+          <h4 className={classes.groupLabel}>Monthly transactions</h4>
+          <Grid container spacing={3} className={classes.flexContainer}>
+            <Grid item sm={12}>
+              <FormControl className="formControl">
+                <TextField
+                  className={classes.disabledInput}
+                  variant="outlined"
+                  autoComplete="off"
+                  disabled
                   InputProps={{
                     ...commonInputProps,
-                    inputComponent: FormatDecimalNumberInput,
                     inputProps: {
-                      maxLength: ANNUAL_TURNOVER_MAX_LENGTH,
-                      tabIndex: 0
+                      tabIndex: -1
                     }
                   }}
-                  component={Input}
-                  contextualHelpText="Mention the Turnover per annum of the company. For new companies, give the expected turnover per annum"
-                  changeProspect={createChangeProspectHandler(values)}
-                />
-              </Grid>
-            </Grid>
-            <div className={classes.divider} />
-            <h4 className={classes.groupLabel}>Monthly transactions</h4>
-            <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item sm={12}>
-                <FormControl className="formControl">
-                  <TextField
-                    className={classes.disabledInput}
-                    variant="outlined"
-                    autoComplete="off"
-                    disabled
-                    InputProps={{
-                      ...commonInputProps,
-                      inputProps: {
-                        tabIndex: -1
-                      }
-                    }}
-                    value={getTotalMonthlyCreditsText(
-                      getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED)
-                    )}
-                  />
-                  <InfoTitle
-                    classes={{ wrapper: classes.infoTitles }}
-                    title="This section is calculated based on the company’s Annual Financial Turnover"
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="totalMonthlyCashAmountInFigures"
-                  path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
-                  label="Part of Monthly Total in Cash"
-                  placeholder={PLACEHOLDER}
-                  autoComplete="off"
-                  component={Input}
-                  contextualHelpText={
-                    <>
-                      Approximate amount that the company expects to receive in a month in Cash.
-                      <br />
-                      Enter 0 if there are no cash transactions.
-                    </>
-                  }
-                  InputProps={{
-                    ...commonInputProps,
-                    inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
-                  }}
-                  changeProspect={createChangeProspectHandler(values)}
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="totalMonthlyNonCashAmountInFigures"
-                  autoComplete="off"
-                  path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
-                  label="Part of Monthly Total in Non-Cash"
-                  placeholder={PLACEHOLDER}
-                  component={Input}
-                  contextualHelpText={
-                    <>
-                      Approximate amount that the company expects to receive in a month in modes
-                      other than Cash.
-                      <br />
-                      Enter 0 if there are no non-cash transactions.
-                    </>
-                  }
-                  InputProps={{
-                    ...commonInputProps,
-                    inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
-                  }}
-                  changeProspect={createChangeProspectHandler(values)}
+                  value={getTotalMonthlyCreditsText(
+                    getTotalMonthlyCreditsValue(values.annualFinTurnoverAmtInAED)
+                  )}
                 />
                 <InfoTitle
-                  classes={{
-                    wrapper: cx(classes.infoTitles, classes.nonCashTitle)
-                  }}
-                  title="Non-cash: cheque / EFT / internal transfer / point of sale"
+                  classes={{ wrapper: classes.infoTitles }}
+                  title="This section is calculated based on the company’s Annual Financial Turnover"
                 />
-              </Grid>
+              </FormControl>
             </Grid>
-            <div className={classes.divider} />
-
-            <h4 className={classes.groupLabel}>Maximum amount expected in a single transaction</h4>
-
-            <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="maxAmtSingleTxnCashAED"
-                  label="Maximum amount in Cash"
-                  autoComplete="off"
-                  path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
-                  placeholder={PLACEHOLDER}
-                  InputProps={{
-                    ...commonInputProps,
-                    inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
-                  }}
-                  component={Input}
-                  contextualHelpText={
-                    <>
-                      Approximate amount that the company expects to receive in single transaction
-                      in Cash.
-                      <br />
-                      Enter 0 if there are no cash transactions.
-                    </>
-                  }
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="maxAmtSingleTxnNonCashAED"
-                  label="Maximum amount in Non-Cash"
-                  path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
-                  placeholder={PLACEHOLDER}
-                  InputProps={{
-                    ...commonInputProps,
-                    inputComponent: FormatDecimalNumberInput,
-                    inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
-                  }}
-                  component={Input}
-                  contextualHelpText={
-                    <>
-                      Approximate amount that the company expects to receive in single transaction
-                      in modes other than Cash.
-                      <br />
-                      Enter 0 if there are no non-cash transactions.
-                    </>
-                  }
-                />
-                <InfoTitle
-                  classes={{
-                    wrapper: cx(classes.infoTitles, classes.nonCashTitle)
-                  }}
-                  title="Non-cash: cheque / EFT / internal transfer / point of sale"
-                />
-              </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="totalMonthlyCashAmountInFigures"
+                path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
+                label="Part of Monthly Total in Cash"
+                placeholder={PLACEHOLDER}
+                autoComplete="off"
+                component={Input}
+                contextualHelpText={
+                  <>
+                    Approximate amount that the company expects to receive in a month in Cash.
+                    <br />
+                    Enter 0 if there are no cash transactions.
+                  </>
+                }
+                InputProps={{
+                  ...commonInputProps,
+                  inputComponent: FormatDecimalNumberInput,
+                  inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
+                }}
+                changeProspect={createChangeProspectHandler(values)}
+              />
             </Grid>
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="totalMonthlyNonCashAmountInFigures"
+                autoComplete="off"
+                path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyNonCashCreditsAED.amountInFigures"
+                label="Part of Monthly Total in Non-Cash"
+                placeholder={PLACEHOLDER}
+                component={Input}
+                contextualHelpText={
+                  <>
+                    Approximate amount that the company expects to receive in a month in modes other
+                    than Cash.
+                    <br />
+                    Enter 0 if there are no non-cash transactions.
+                  </>
+                }
+                InputProps={{
+                  ...commonInputProps,
+                  inputComponent: FormatDecimalNumberInput,
+                  inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
+                }}
+                changeProspect={createChangeProspectHandler(values)}
+              />
+              <InfoTitle
+                classes={{
+                  wrapper: cx(classes.infoTitles, classes.nonCashTitle)
+                }}
+                title="Non-cash: cheque / EFT / internal transfer / point of sale"
+              />
+            </Grid>
+          </Grid>
+          <div className={classes.divider} />
+
+          <h4 className={classes.groupLabel}>Maximum amount expected in a single transaction</h4>
+
+          <Grid container spacing={3} className={classes.flexContainer}>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="maxAmtSingleTxnCashAED"
+                label="Maximum amount in Cash"
+                autoComplete="off"
+                path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnCashAED"
+                placeholder={PLACEHOLDER}
+                InputProps={{
+                  ...commonInputProps,
+                  inputComponent: FormatDecimalNumberInput,
+                  inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
+                }}
+                component={Input}
+                contextualHelpText={
+                  <>
+                    Approximate amount that the company expects to receive in single transaction in
+                    Cash.
+                    <br />
+                    Enter 0 if there are no cash transactions.
+                  </>
+                }
+              />
+            </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="maxAmtSingleTxnNonCashAED"
+                label="Maximum amount in Non-Cash"
+                path="prospect.orgKYCDetails.anticipatedTransactionsDetails.maxAmtSingleTxnNonCashAED"
+                placeholder={PLACEHOLDER}
+                InputProps={{
+                  ...commonInputProps,
+                  inputComponent: FormatDecimalNumberInput,
+                  inputProps: { tabIndex: 0, maxLength: ANNUAL_TURNOVER_MAX_LENGTH }
+                }}
+                component={Input}
+                contextualHelpText={
+                  <>
+                    Approximate amount that the company expects to receive in single transaction in
+                    modes other than Cash.
+                    <br />
+                    Enter 0 if there are no non-cash transactions.
+                  </>
+                }
+              />
+              <InfoTitle
+                classes={{
+                  wrapper: cx(classes.infoTitles, classes.nonCashTitle)
+                }}
+                title="Non-cash: cheque / EFT / internal transfer / point of sale"
+              />
+            </Grid>
+          </Grid>
+          <div className={classes.buttonWrapper}>
+            <ContinueButton type="submit" />
+          </div>
+        </Form>
+      ))}
+    </Formik>
   );
 };
