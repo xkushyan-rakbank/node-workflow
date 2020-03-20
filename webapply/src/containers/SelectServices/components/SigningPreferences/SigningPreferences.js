@@ -90,8 +90,11 @@ export const SigningPreferencesComponent = ({ goToNext, updateProspect, organiza
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({ values, setFieldValue, errors }) => {
-        const { accountSigningInstn, accountSigningType, signatories } = values;
+      {({
+        values: { accountSigningInstn, accountSigningType, signatories },
+        setFieldValue,
+        errors
+      }) => {
         const signatoriesErrors = Object.keys(get(errors, "signatories", [])).length;
         const isMaxAddedSignatories = signatories.length === MAX_SIGNATORIES;
 
