@@ -37,7 +37,7 @@ public class ProspectValidatorServiceTest {
     }
 
     @Test(expected = ApiException.class)
-    public void testCheckNotOwnerOneProspect() {
+    public void testCheckNotOwnerOneProspect() throws IllegalAccessException {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
@@ -47,7 +47,7 @@ public class ProspectValidatorServiceTest {
     }
 
     @Test
-    public void testCheckOwnerOneProspect() {
+    public void testCheckOwnerOneProspect() throws IllegalAccessException {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 

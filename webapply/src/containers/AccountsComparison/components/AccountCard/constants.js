@@ -1,4 +1,4 @@
-import { accountNames } from "../../../../constants";
+import { accountTitles } from "../../../../constants";
 import startups_ic from "../../../../assets/icons/startups_ic.svg";
 import businesses_ic from "../../../../assets/icons/growing_businesses_ic.svg";
 import established_businesses_ic from "../../../../assets/icons/established_businesses_ic.svg";
@@ -6,7 +6,7 @@ import { accountTypes } from "../TableCompare/constants";
 
 export const accountTypesDescription = [
   {
-    name: accountNames.starter,
+    name: accountTitles.starter,
     icon: startups_ic,
     title: "For Startups \nand Entrepreneurs",
     description: [
@@ -17,7 +17,7 @@ export const accountTypesDescription = [
     buttonText: accountTypes.starter.name
   },
   {
-    name: accountNames.currentAccount,
+    name: accountTitles.currentAccount,
     icon: businesses_ic,
     title: "For Growing Businesses",
     description: [
@@ -28,7 +28,7 @@ export const accountTypesDescription = [
     buttonText: accountTypes.currentAccount.name
   },
   {
-    name: accountNames.elite,
+    name: accountTitles.elite,
     icon: established_businesses_ic,
     title: "For Established Businesses",
     description: [

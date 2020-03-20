@@ -4,15 +4,15 @@ import { useEffect } from "react";
 import { usePrevious } from "../../utils/usePrevious";
 
 const FormikEffectBase = ({ onChange, formik }) => {
-  const { values } = formik;
+  const { values, touched } = formik;
   const prevValues = usePrevious(values);
 
   useEffect(() => {
     if (prevValues) {
-      onChange(prevValues, formik);
+      onChange(formik, prevValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values]);
+  }, [values, touched]);
 
   return null;
 };

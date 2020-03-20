@@ -25,7 +25,13 @@ const signatoryRightsSchema = Yup.object().shape({
   })
 });
 
-const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateProspect }) => {
+const SignatoryRightsComponent = ({
+  handleContinue,
+  index,
+  stakeholders,
+  updateProspect,
+  createFormChangeHandler
+}) => {
   return (
     <Formik
       initialValues={{
@@ -36,7 +42,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
       validationSchema={signatoryRightsSchema}
       validateOnChange={false}
     >
-      {({ values, setFieldValue, setFieldTouched }) => (
+      {createFormChangeHandler(({ values, setFieldValue, setFieldTouched }) => (
         <Form>
           <Grid container>
             <Field
@@ -84,7 +90,7 @@ const SignatoryRightsComponent = ({ handleContinue, index, stakeholders, updateP
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

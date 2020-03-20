@@ -6,7 +6,7 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import { useStyles } from "./styled";
 import { checkIsAccountInfoTypeNumber } from "../../../FinalQuestions/components/SignatorySummaryCard/utils";
-import { StakeholdersNamesContext } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNamesContext } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 
 export const FilledStakeholderCard = ({
   accountSigningInfo,
@@ -18,10 +18,8 @@ export const FilledStakeholderCard = ({
   id
 }) => {
   const classes = useStyles();
-
-  const stakeholdersFromContext = useContext(StakeholdersNamesContext);
-  const { firstName, lastName, middleName } =
-    stakeholdersFromContext.find(item => item.id === id) || {};
+  const stakeholdersName = useContext(StakeholdersNamesContext);
+  const { firstName, lastName, middleName } = stakeholdersName.find(item => item.id === id) || {};
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
   const authorityTypeValueFromProspect = get(accountSigningInfo, "authorityType");
   const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);

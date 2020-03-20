@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { connect, useSelector } from "react-redux";
 
-import { deleteFullName } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNameManager } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStakeholderCard";
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
@@ -58,10 +58,13 @@ const StakeholderStepperComponent = ({
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const { id: stakeholderId = null } = useSelector(getStakeholdersIds)[index] || {};
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
-    `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
-    stakeHoldersSteps
-  );
+  const [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler
+  ] = useStep(`${COMPANY_STAKEHOLDER_ID}${stakeholderId}`, stakeHoldersSteps);
 
   const setIsDisplayAddButton = useCallback(() => {
     setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
@@ -88,7 +91,7 @@ const StakeholderStepperComponent = ({
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
   const handleDeleteStakeholder = useCallback(() => {
-    deleteFullName(id);
+    StakeholdersNameManager && StakeholdersNameManager.deleteStakeholderFullName(id);
     setIsDisplayConfirmation(false);
     deleteStakeholder(id);
   }, [setIsDisplayConfirmation, deleteStakeholder, id]);
@@ -160,6 +163,7 @@ const StakeholderStepperComponent = ({
             )}
             clickHandler={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
+            createFormChangeHandler={createFormChangeHandler}
             stepForm={item.component}
           />
         ))}

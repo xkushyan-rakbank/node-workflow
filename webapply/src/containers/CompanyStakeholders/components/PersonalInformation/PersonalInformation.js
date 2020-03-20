@@ -24,7 +24,7 @@ import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { changeFullName } from "../FullNameProvider/FullNameProvider";
+import { StakeholdersNameManager } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -82,6 +82,7 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
       .nullable()
+      .max(new Date(), getInvalidMessage("Date of birth"))
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
@@ -90,7 +91,7 @@ const personalInformationSchema = Yup.object().shape({
   )
 });
 
-export const PersonalInformation = ({ index, handleContinue, id }) => {
+export const PersonalInformation = ({ index, handleContinue, id, createFormChangeHandler }) => {
   const classes = useStyles();
 
   const applicantInfo = useSelector(getApplicantInfo);
@@ -110,7 +111,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       [name]: value
     };
 
-    changeFullName(data);
+    StakeholdersNameManager && StakeholdersNameManager.changeStakeholderFullName(data);
     setFieldValue(name, value);
   };
 
@@ -129,7 +130,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
       validationSchema={personalInformationSchema}
       validateOnChange={true}
     >
-      {({ values, setFieldValue, errors, touched }) => (
+      {createFormChangeHandler(({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
             <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
@@ -259,7 +260,7 @@ export const PersonalInformation = ({ index, handleContinue, id }) => {
 
           <SubmitButton />
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

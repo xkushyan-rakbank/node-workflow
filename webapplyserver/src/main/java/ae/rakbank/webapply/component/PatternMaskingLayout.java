@@ -17,6 +17,10 @@ public class PatternMaskingLayout extends PatternLayout {
 
     private final boolean isEnabled;
 
+    PatternMaskingLayout(Boolean isEnable) {
+        this.isEnabled = isEnable;
+    }
+
     public PatternMaskingLayout() {
         isEnabled = Boolean.parseBoolean(System.getenv("LOGGER_MASKING_FLAG"));
     }

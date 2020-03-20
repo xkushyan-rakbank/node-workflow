@@ -45,7 +45,7 @@ export const accountNames = {
   elite: "RAKelite"
 };
 
-export const accountNamesShow = {
+export const accountTitles = {
   starter: "RAKstarter",
   currentAccount: "Current Account",
   elite: "Business Elite"
