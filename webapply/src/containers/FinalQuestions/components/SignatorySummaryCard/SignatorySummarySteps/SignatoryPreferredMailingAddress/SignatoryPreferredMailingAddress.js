@@ -43,7 +43,14 @@ const signatoryPreferredMailingAddressSchema = () =>
     emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
   });
 
-export const SignatoryPreferredMailingAddress = ({ index, handleContinue }) => {
+export const SignatoryPreferredMailingAddressComponent = ({
+  index,
+  handleContinue,
+  organisationAddressLine2,
+  organisationAddressLine1,
+  organisationPoBox,
+  organisationEmirateCity
+}) => {
   const classes = useStyles();
 
   const handleSubmit = useCallback(() => {
@@ -77,14 +84,12 @@ export const SignatoryPreferredMailingAddress = ({ index, handleContinue }) => {
                 component={Checkbox}
                 label="Same as Company Address"
                 onSelect={() => {
-                  if (values.sameAsCompanyAddress) {
-                    setValues({
-                      addressLine2: "",
-                      addressLine1: "",
-                      emirateCity: "",
-                      poBox: ""
-                    });
-                  }
+                  setValues({
+                    addressLine2: !values.sameAsCompanyAddress ? organisationAddressLine2 : "",
+                    addressLine1: !values.sameAsCompanyAddress ? organisationAddressLine1 : "",
+                    emirateCity: !values.sameAsCompanyAddress ? organisationEmirateCity : "",
+                    poBox: !values.sameAsCompanyAddress ? organisationPoBox : ""
+                  });
                 }}
                 inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
               />
