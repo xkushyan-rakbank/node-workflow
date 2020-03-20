@@ -6,6 +6,9 @@ import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.ProspectValidatorService;
 import ae.rakbank.webapply.services.RecaptchaService;
+import ae.rakbank.webapply.stub.ConfigFactory;
+import ae.rakbank.webapply.stub.RequestFactory;
+import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -54,18 +57,7 @@ public class ProspectControllerTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
 
-        ObjectNode config = objectMapper.createObjectNode();
-        ObjectNode dehURIs = objectMapper.createObjectNode();
-
-        dehURIs.put("createProspectUri", "/deh-uri");
-        dehURIs.put("getProspectUri", "/deh-uri");
-        dehURIs.put("updateProspectUri", "/deh-uri");
-        dehURIs.put("searchProspectUri", "/deh-uri");
-
-        config.set("DehURIs", dehURIs);
-        config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
-
-        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(config);
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newProspectControllerConfig());
 
         prospectController = new ProspectController(fileUtil, dehClient, captchaService, applyController, new ProspectValidatorService());
         prospectController.init();
@@ -75,27 +67,23 @@ public class ProspectControllerTest {
     public void createSMEProspect() {
 
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        ObjectNode jsonNodes = objectMapper.createObjectNode();
 
-        jsonNodes.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
+        JsonNode createProspectRequest = RequestFactory.newCreateProspectRequest();
+
         ObjectNode dehResponse = objectMapper.createObjectNode();
-
         dehResponse.put("prospectId", "123456789");
 
         ResponseEntity<Object> dehResponseEntity = ResponseEntity.ok(dehResponse);
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri",
-                HttpMethod.POST, jsonNodes, "createSMEProspect()", MediaType.APPLICATION_JSON, null)).thenReturn(dehResponseEntity);
+                HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null)).thenReturn(dehResponseEntity);
 
         ObjectNode otpResponse = objectMapper.createObjectNode();
         ResponseEntity<Object> otpResponseEntity = ResponseEntity.ok(otpResponse);
 
         Mockito.when(applyController.generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true))).thenReturn(otpResponseEntity);
 
-        ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, jsonNodes, "sme");
+        ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, createProspectRequest, "sme");
 
         assertNotNull(prospect);
         assertEquals(HttpStatus.OK, prospect.getStatusCode());
@@ -104,7 +92,7 @@ public class ProspectControllerTest {
 
         Mockito.verify(applyController).generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true));
         Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri",
-                HttpMethod.POST, jsonNodes, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
+                HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
 
     }
 
@@ -112,34 +100,30 @@ public class ProspectControllerTest {
     public void createSMEProspectIfOtpResponseIsError() {
 
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        ObjectNode jsonNodes = objectMapper.createObjectNode();
 
-        jsonNodes.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
+        JsonNode createProspectRequest = RequestFactory.newCreateProspectRequest();
+
         ObjectNode dehResponse = objectMapper.createObjectNode();
-
         dehResponse.put("prospectId", "123456789");
 
         ResponseEntity<Object> dehResponseEntity = ResponseEntity.ok(dehResponse);
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri",
-                HttpMethod.POST, jsonNodes, "createSMEProspect()", MediaType.APPLICATION_JSON, null)).thenReturn(dehResponseEntity);
+                HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null)).thenReturn(dehResponseEntity);
 
         ObjectNode otpResponse = objectMapper.createObjectNode();
         ResponseEntity<Object> otpResponseEntity = ResponseEntity.badRequest().build();
 
         Mockito.when(applyController.generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true))).thenReturn(otpResponseEntity);
 
-        ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, jsonNodes, "sme");
+        ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, createProspectRequest, "sme");
 
         assertNotNull(prospect);
         assertEquals(HttpStatus.BAD_REQUEST, prospect.getStatusCode());
 
         Mockito.verify(applyController).generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true));
         Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri",
-                HttpMethod.POST, jsonNodes, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
+                HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
 
     }
 
@@ -147,43 +131,31 @@ public class ProspectControllerTest {
     public void createSMEProspectIfDehResponseIsError() {
 
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        ObjectNode jsonNodes = objectMapper.createObjectNode();
 
-        jsonNodes.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
+        JsonNode createProspectRequest = RequestFactory.newCreateProspectRequest();
+
         ObjectNode dehResponse = objectMapper.createObjectNode();
-
         dehResponse.put("prospectId", "123456789");
 
         ResponseEntity<Object> dehResponseEntity = ResponseEntity.badRequest().build();
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri",
-                HttpMethod.POST, jsonNodes, "createSMEProspect()", MediaType.APPLICATION_JSON, null)).thenReturn(dehResponseEntity);
+                HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null)).thenReturn(dehResponseEntity);
 
-        ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, jsonNodes, "sme");
+        ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, createProspectRequest, "sme");
 
         assertNotNull(prospect);
         assertEquals(HttpStatus.BAD_REQUEST, prospect.getStatusCode());
 
         Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri",
-                HttpMethod.POST, jsonNodes, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
+                HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
 
     }
 
     @Test
     public void getProspectByIdForAllowedCustomer() throws IllegalAccessException {
 
-        ObjectNode prospect = objectMapper.createObjectNode();
-        prospect.put("prospectId", "123456789");
-
-        prospect.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
-
-        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(prospect);
+        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(ResponseFactory.newProspectByIdResponse());
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
@@ -207,15 +179,7 @@ public class ProspectControllerTest {
     @Test(expected = NullPointerException.class)
     public void getProspectByIdWhenRoleIsNotPresent() throws IllegalAccessException {
 
-        ObjectNode prospect = objectMapper.createObjectNode();
-        prospect.put("prospectId", "123456789");
-
-        prospect.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
-
-        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(prospect);
+        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(ResponseFactory.newProspectByIdResponse());
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
@@ -231,15 +195,7 @@ public class ProspectControllerTest {
     @Test
     public void getProspectByIdForAgent() throws IllegalAccessException {
 
-        ObjectNode prospect = objectMapper.createObjectNode();
-        prospect.put("prospectId", "123456789");
-
-        prospect.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+37847563456")
-                .put("email", "email@localhost"));
-
-        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(prospect);
+        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(ResponseFactory.newProspectByIdResponse());
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
@@ -262,15 +218,7 @@ public class ProspectControllerTest {
     @Test(expected = ApiException.class)
     public void getProspectByIdForNotAllowedCustomer() throws IllegalAccessException {
 
-        ObjectNode prospect = objectMapper.createObjectNode();
-        prospect.put("prospectId", "123456789");
-
-        prospect.set("applicantInfo", objectMapper.createObjectNode()
-                .put("countryCode", "UAE")
-                .put("mobileNo", "+378475634561")
-                .put("email", "email@localhost"));
-
-        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(prospect);
+        ResponseEntity<Object> prospectByIdResponse = ResponseEntity.ok(ResponseFactory.newProspectByIdWithWrongPhoneNumberResponse());
 
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET,
                 null, "getProspectById()", MediaType.APPLICATION_JSON, "666473634664563554534737464")).thenReturn(prospectByIdResponse);
