@@ -1,11 +1,8 @@
 import React from "react";
 import { useFormikContext, getIn } from "formik";
-import get from "lodash/get";
-import omit from "lodash/omit";
 import { AutoSaveField } from "./AutoSaveField";
 
 export const LinkedField = ({
-  name,
   linkedFieldName,
   linkedPath,
   changeProspect = prospect => prospect,
@@ -15,17 +12,16 @@ export const LinkedField = ({
 
   return (
     <AutoSaveField
-      name={name}
       onChange={e => {
-        setFieldValue(name, e.target.value);
-        get(values, linkedFieldName) && setFieldTouched(linkedFieldName, true);
+        setFieldValue(rest.name, e.target.value);
+        getIn(values, linkedFieldName) && setFieldTouched(linkedFieldName, true);
+        rest.onChange && rest.onChange(e);
       }}
       changeProspect={(prospect, value, path, errors) => {
-        const currentProspect = changeProspect(prospect, value, path, errors);
         const newProspect = getIn(errors, linkedFieldName)
-          ? omit(currentProspect, path)
-          : { ...currentProspect, [linkedPath]: get(values, linkedFieldName) };
-        return newProspect;
+          ? {}
+          : { ...prospect, [linkedPath]: getIn(values, linkedFieldName) };
+        return changeProspect(newProspect, value, path, errors);
       }}
       {...rest}
     />
