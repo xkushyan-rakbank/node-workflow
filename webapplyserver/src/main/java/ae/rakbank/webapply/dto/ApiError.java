@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AllArgsConstructor
 public class ApiError implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
 
     private HttpStatus status;
