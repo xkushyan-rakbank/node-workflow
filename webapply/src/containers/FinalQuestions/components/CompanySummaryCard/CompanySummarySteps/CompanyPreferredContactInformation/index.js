@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import get from "lodash/get";
 
-import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyPreferredContactInformationComponent } from "./CompanyPreferredContactInformation";
 import { getOrganizationInfo, getAccountInfo } from "../../../../../../store/selectors/appConfig";
 
@@ -10,9 +9,7 @@ const mapStateToProps = state => ({
   chequeBookApplied: get(getAccountInfo(state)[0], "chequeBookApplied", "")
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
+const mapDispatchToProps = {};
 
 export const CompanyPreferredContactInformation = connect(
   mapStateToProps,

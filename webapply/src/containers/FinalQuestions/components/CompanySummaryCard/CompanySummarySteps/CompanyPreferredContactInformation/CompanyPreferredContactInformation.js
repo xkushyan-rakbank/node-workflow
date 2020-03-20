@@ -38,7 +38,6 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
 
 export const CompanyPreferredContactInformationComponent = ({
   chequeBookApplied,
-  updateProspect,
   handleContinue
 }) => {
   const classes = useStyles();
@@ -60,7 +59,7 @@ export const CompanyPreferredContactInformationComponent = ({
         validationSchema={companyPreferredContactInformationSchema}
         validateOnChange={false}
       >
-        {({ values, setFieldValue, setFieldTouched }) => (
+        {() => (
           <Form>
             <Grid container spacing={3}>
               <Grid item sm={12}>
@@ -87,15 +86,11 @@ export const CompanyPreferredContactInformationComponent = ({
                     datalistId="countryCode"
                     shrink={false}
                     component={CustomSelect}
-                    onChange={e => {
-                      setFieldValue("primaryMobCountryCode", e.target.value);
-                      if (e.target.value !== UAE_CODE && chequeBookApplied) {
-                        updateProspect({
-                          "prospect.accountInfo[0].chequeBookApplied": false
-                        });
-                      }
-                      values.primaryMobileNo && setFieldTouched("primaryMobileNo", true);
-                    }}
+                    changeProspect={(prospect, value) =>
+                      value !== UAE_CODE && chequeBookApplied
+                        ? { ...prospect, "prospect.accountInfo[0].chequeBookApplied": false }
+                        : prospect
+                    }
                     inputProps={{ tabIndex: 0 }}
                   />
                   <LinkedField
