@@ -10,7 +10,8 @@ import {
   AutoSaveField as Field,
   CustomSelect,
   Input,
-  InputGroup
+  InputGroup,
+  LinkedField
 } from "../../../../components/Form";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
@@ -73,9 +74,11 @@ const PreferredContactInformationStep = ({
         <Grid item container spacing={3}>
           <Grid item md={6} sm={12}>
             <InputGroup>
-              <Field
+              <LinkedField
                 name="primaryMobCountryCode"
+                linkedFieldName="primaryMobileNo"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
                 component={CustomSelect}
                 shrink={false}
                 disabled={!isSignatory}
@@ -83,9 +86,11 @@ const PreferredContactInformationStep = ({
                 inputProps={{ tabIndex: 0 }}
               />
 
-              <Field
+              <LinkedField
                 name="primaryMobileNo"
+                linkedFieldName="primaryMobCountryCode"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
                 label="Mobile Number"
                 placeholder="55xxxxxxx"
                 component={Input}

@@ -8,7 +8,8 @@ import {
   CustomSelect,
   Input,
   InputGroup,
-  AutoSaveField as Field
+  AutoSaveField as Field,
+  LinkedField
 } from "../../../../../../components/Form";
 import { InfoTitle } from "../../../../../../components/InfoTitle";
 import { UAE_CODE } from "../../../../../../constants";
@@ -37,7 +38,6 @@ const companyPreferredContactInformationSchema = Yup.object().shape({
 
 export const CompanyPreferredContactInformationComponent = ({
   chequeBookApplied,
-  updateProspect,
   handleContinue,
   createFormChangeHandler
 }) => {
@@ -56,7 +56,7 @@ export const CompanyPreferredContactInformationComponent = ({
       validationSchema={companyPreferredContactInformationSchema}
       validateOnChange={false}
     >
-      {createFormChangeHandler(({ setFieldValue }) => (
+      {createFormChangeHandler(() => (
         <Form>
           <Grid container spacing={3}>
             <Grid item sm={12}>
@@ -75,25 +75,26 @@ export const CompanyPreferredContactInformationComponent = ({
           <Grid item container spacing={3}>
             <Grid item md={6} sm={12}>
               <InputGroup>
-                <Field
+                <LinkedField
                   name="primaryMobCountryCode"
+                  linkedFieldName="primaryMobileNo"
                   path="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
+                  linkedPath="prospect.organizationInfo.contactDetails.primaryMobileNo"
                   datalistId="countryCode"
                   shrink={false}
                   component={CustomSelect}
-                  onChange={e => {
-                    setFieldValue("primaryMobCountryCode", e.target.value);
-                    if (e.target.value !== UAE_CODE && chequeBookApplied) {
-                      updateProspect({
-                        "prospect.accountInfo[0].chequeBookApplied": false
-                      });
-                    }
-                  }}
+                  changeProspect={(prospect, value) =>
+                    value !== UAE_CODE && chequeBookApplied
+                      ? { ...prospect, "prospect.accountInfo[0].chequeBookApplied": false }
+                      : prospect
+                  }
                   inputProps={{ tabIndex: 0 }}
                 />
-                <Field
+                <LinkedField
                   name="primaryMobileNo"
+                  linkedFieldName="primaryMobCountryCode"
                   path="prospect.organizationInfo.contactDetails.primaryMobileNo"
+                  linkedPath="prospect.organizationInfo.contactDetails.primaryMobCountryCode"
                   label="Mobile number"
                   placeholder="55xxxxxxx"
                   component={Input}
@@ -106,18 +107,22 @@ export const CompanyPreferredContactInformationComponent = ({
             </Grid>
             <Grid item md={6} sm={12}>
               <InputGroup>
-                <Field
+                <LinkedField
                   name="primaryPhoneCountryCode"
+                  linkedFieldName="primaryPhoneNo"
                   path="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
+                  linkedPath="prospect.organizationInfo.contactDetails.primaryPhoneNo"
                   component={CustomSelect}
                   datalistId="countryCode"
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />
 
-                <Field
+                <LinkedField
                   name="primaryPhoneNo"
+                  linkedFieldName="primaryPhoneCountryCode"
                   path="prospect.organizationInfo.contactDetails.primaryPhoneNo"
+                  linkedPath="prospect.organizationInfo.contactDetails.primaryPhoneCountryCode"
                   label="Landline number (optional)"
                   placeholder="42xxxxxx"
                   component={Input}
