@@ -8,7 +8,7 @@ name: $(BuildID)_$(Date:yyyyMMdd)$(Rev:.rr)
 pr:
   branches:
     include:
-      - develop
+      - development
       - release
 #trigger: none
 trigger:
