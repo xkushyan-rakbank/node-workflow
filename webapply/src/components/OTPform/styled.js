@@ -35,8 +35,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    marginTop: "42px",
-    marginBottom: "80px"
+    marginTop: "42px"
   },
   nextButton: {
     width: "auto",
