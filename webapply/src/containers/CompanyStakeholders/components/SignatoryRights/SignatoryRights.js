@@ -36,7 +36,7 @@ const SignatoryRightsComponent = ({
     <Formik
       initialValues={{
         authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
-        isSignatory: ""
+        isSignatory: false
       }}
       onSubmit={handleContinue}
       validationSchema={signatoryRightsSchema}
