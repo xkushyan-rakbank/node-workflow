@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="375px" height="272px" viewBox="0 0 375 272" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>elite-mobile-small-blob</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="65.982227%" x2="29.8326624%" y2="79.2664566%" id="linearGradient-1">
+            <stop stop-color="#974860" offset="0%"></stop>
+            <stop stop-color="#6A0B27" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="50%" x2="5.61418182%" y2="70.2780221%" id="linearGradient-2">
+            <stop stop-color="#AA5871" offset="0%"></stop>
+            <stop stop-color="#740D2B" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="32.3185778%" x2="0%" y2="70.9861059%" id="linearGradient-3">
+            <stop stop-color="#CF7793" offset="0%"></stop>
+            <stop stop-color="#811131" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="elite-mobile-small-blob">
+            <path d="M0,0 L375,0 L375,239 C313.492742,261 251.326967,272 188.502674,272 C125.678381,272 62.8441563,261 0,239 L0,0 Z" id="oval-3" fill="url(#linearGradient-1)"></path>
+            <path d="M0,225.797334 L0,0 L375,0 L375,148.841417 C335.561497,189.484801 280.748663,218.801341 210.561497,236.791036 C140.374332,254.780731 70.1871658,251.116164 0,225.797334 Z" id="oval-2" fill="url(#linearGradient-2)"></path>
+            <path d="M0,0 L375,0 L375,15.9000069 C350.26738,91.1810291 303.141711,147.475245 233.622995,184.782654 C164.104278,222.090063 86.2299465,232.083119 0,214.761822 L0,0 Z" id="oval-1" fill="url(#linearGradient-3)"></path>
+        </g>
+    </g>
+</svg>
