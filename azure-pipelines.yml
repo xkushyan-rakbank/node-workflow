@@ -12,7 +12,7 @@ pr:
       - release
 #trigger: none
 trigger:
-  - develop
+  - development
   - release
 #  - releases/*
 
