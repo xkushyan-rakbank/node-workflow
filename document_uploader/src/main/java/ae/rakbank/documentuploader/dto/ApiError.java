@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ApiError {
+public class ApiError implements ApiErrorInterface{
 
     public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
 
@@ -79,6 +79,7 @@ public class ApiError {
         this.stackTrace = getReducedStackTrace(ex.getStackTrace());
     }
 
+    @Override
     public String toJsonString() {
         ObjectMapper mapper = new ObjectMapper();
         try {

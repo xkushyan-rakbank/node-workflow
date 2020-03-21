@@ -22,28 +22,32 @@
 			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
-			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
+			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+			"ShouldSendErrorDebugDetails": true
 		},
 		"dev": {
 			"s3AccessKeyId": "ecs_test_user",
 			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
-			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
+			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+			"ShouldSendErrorDebugDetails": true
 		},
 		"uat": {
 			"s3AccessKeyId": "ecs_test_user",
 			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
-			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
+			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+			"ShouldSendErrorDebugDetails": false
 		},
 		"prod": {
 			"s3AccessKeyId": "ecs_test_user",
 			"s3SecretKey": "514axUUg+OO0n/DnDTCvc8m+kUehHO8LYzy4kTYa",
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
-			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p"
+			"JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
+			"ShouldSendErrorDebugDetails": false
 		}
 	}
 }

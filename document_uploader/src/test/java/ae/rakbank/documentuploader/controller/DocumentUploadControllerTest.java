@@ -4,11 +4,13 @@ import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 import ae.rakbank.documentuploader.services.ProspectValidatorService;
 import ae.rakbank.documentuploader.services.auth.AuthorizationService;
-import ae.rakbank.documentuploader.util.EnvironmentUtil;
+import ae.rakbank.documentuploader.stub.util.FileUtilStub;
+import ae.rakbank.documentuploader.util.FileUtil;
 import ae.rakbank.documentuploader.util.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.http.entity.ContentType;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(DocumentUploadController.class)
+@WebMvcTest({DocumentUploadController.class, FileUtil.class})
 public class DocumentUploadControllerTest {
 
     private static final String URI = "/api/v1/banks/RAK/prospects/cosme0001/documents";
@@ -49,13 +51,18 @@ public class DocumentUploadControllerTest {
     @MockBean
     private DocumentUploadService docUploadService;
     @MockBean
-    private EnvironmentUtil environmentUtil;
-    @MockBean
     private AuthorizationService authorizationService;
     @MockBean
     private ProspectValidatorService prospectValidatorService;
     @MockBean
     private SecurityUtil securityUtil;
+//    @MockBean
+//    private FileUtil fileUtil;
+
+//    @Before
+//    public void init() {
+//        when(fileUtil.getAppConfigJSON()).thenReturn(FileUtilStub.getAppConfigJSON());
+//    }
 
     @Test
     public void health() throws Exception {
