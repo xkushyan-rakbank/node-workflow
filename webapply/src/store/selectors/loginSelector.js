@@ -1,8 +1,5 @@
-/**
- * @param {Store} state
- * @return {login}
- */
-
 export const checkLoginStatus = state => state.login.loginStatus;
 
-export const getAgentName = state => state.login.loginResponse.agentName;
+export const getLoginResponse = state => state.login.loginResponse || {};
+
+export const getAgentName = state => getLoginResponse(state).agentName;
