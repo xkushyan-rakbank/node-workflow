@@ -42,10 +42,10 @@ public class AdviceController {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         String errorDebugDetails = appConfigJSON.get("OtherConfigs")
                 .get(EnvUtil.getEnv()).get("ShouldSendErrorDebugDetails").asText();
-        if (!StringUtils.isEmpty(errorDebugDetails)) {
+        if (StringUtils.isEmpty(errorDebugDetails)) {
             shouldSendErrorDebugDetails = false;
         } else {
-            shouldSendErrorDebugDetails = Boolean.getBoolean(errorDebugDetails);
+            shouldSendErrorDebugDetails = Boolean.valueOf(errorDebugDetails);
         }
     }
 
