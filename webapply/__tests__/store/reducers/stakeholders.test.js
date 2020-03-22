@@ -38,6 +38,6 @@ describe("stakeholders reducer test", () => {
   });
 
   it("check default action type", () => {
-    expect(reducer(initialState, UNMATCHED_ACTION)).toStrictEqual(initialState);
+    expect(reducer(undefined, UNMATCHED_ACTION)).toStrictEqual(initialState);
   });
 });
