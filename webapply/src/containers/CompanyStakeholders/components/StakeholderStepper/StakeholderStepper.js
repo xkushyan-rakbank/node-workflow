@@ -20,7 +20,7 @@ import { useStyles } from "./styled";
 import { CONTINUE } from "../../../../constants";
 import {
   getStakeholdersIds,
-  stakeholdersState,
+  getStakeholdersState,
   stakeholdersSelector
 } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
@@ -185,7 +185,7 @@ const StakeholderStepperComponent = ({
 };
 
 const mapStateToProps = state => {
-  const { editableStakeholder } = stakeholdersState(state);
+  const { editableStakeholder } = getStakeholdersState(state);
 
   return {
     isStatusShown: state.stakeholders.isStatusShown,
