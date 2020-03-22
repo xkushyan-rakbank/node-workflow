@@ -10,7 +10,8 @@ import {
   CustomSelect,
   InputGroup,
   AutoSaveField as Field,
-  SkeletonLoader
+  SkeletonLoader,
+  LinkedField
 } from "./../../components/Form";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -125,24 +126,24 @@ const ComeBackLoginComponent = ({
                 <SkeletonLoader />
               ) : (
                 <InputGroup>
-                  <Field
+                  <LinkedField
                     name="countryCode"
+                    linkedFieldName="mobileNo"
                     path="prospect.applicantInfo.countryCode"
+                    linkedPath="prospect.applicantInfo.mobileNo"
                     required
                     datalistId="countryCode"
                     extractLabel={item => item.displayText}
                     component={CustomSelect}
-                    changeProspect={prospect => ({
-                      ...prospect,
-                      "prospect.applicantInfo.mobileNo": values.mobileNo
-                    })}
                     shrink={false}
                     inputProps={{ tabIndex: 0 }}
                   />
 
-                  <Field
+                  <LinkedField
                     name="mobileNo"
+                    linkedFieldName="countryCode"
                     path="prospect.applicantInfo.mobileNo"
+                    linkedPath="prospect.applicantInfo.countryCode"
                     label="Your Mobile Number"
                     placeholder="Mobile Number"
                     component={Input}

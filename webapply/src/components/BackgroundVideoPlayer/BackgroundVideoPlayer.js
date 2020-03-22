@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import { createPortal } from "react-dom";
 import cx from "classnames";
 
-import Fab from "@material-ui/core/Fab/index";
-import expandMoreIcon from "../../assets/icons/arrowDown.svg";
-import { useStyles } from "./styled";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
+import { ExpandMoreButton } from "./ExpandMoreButton";
+
+import { useStyles } from "./styled";
 
 export const BackgroundVideoPlayer = ({
   handleClick,
@@ -34,26 +34,8 @@ export const BackgroundVideoPlayer = ({
       </video>
 
       <div className={classes.buttonContainer}>
-        <Fab
-          variant="extended"
-          className={`${classes.scrollButton} hide-on-mobile`}
-          name={1}
-          onClick={handleClick}
-        >
-          Read more
-          <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
-        </Fab>
-        <div className="show-on-mobile">
-          <Fab
-            variant="extended"
-            className={classes.scrollButton}
-            name={1}
-            onClick={handleClickMobile}
-          >
-            Read more
-            <img src={expandMoreIcon} className={classes.expandMoreIc} alt="scroll down" />
-          </Fab>
-        </div>
+        <ExpandMoreButton className={classes.hideOnMobile} onClick={handleClick} />
+        <ExpandMoreButton className={classes.displayOnMobile} onClick={handleClickMobile} />
       </div>
     </div>,
     document.getElementById("root")
