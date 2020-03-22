@@ -17,11 +17,14 @@ import {
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
-  getStakeholdersState,
   checkIsHasSignatories,
-  percentageSelector
+  percentageSelector,
+  getStakeholdersIds
 } from "../../store/selectors/stakeholder";
-import { getIsStakeholderStepsCompleted } from "../../store/selectors/completedSteps";
+import {
+  getIsAnyStakeholderStepsCompleted,
+  getIsStakeholderStepsCompleted
+} from "../../store/selectors/completedSteps";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
@@ -38,6 +41,7 @@ const CompanyStakeholdersComponent = ({
   hasSignatories,
   sendProspectToAPI,
   isStakeholderStepsCompleted,
+  isAnyStakeholderStepsCompleted,
   isLoading
 }) => {
   const pushHistory = useTrackingHistory();
@@ -141,10 +145,10 @@ const CompanyStakeholdersComponent = ({
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
-      {stakeholders.length > 0 && (stakeholdersIds[0].done && !hasSignatories) && (
+      {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && !hasSignatories) && (
         <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
       )}
-      {stakeholders.length > 0 && (stakeholdersIds[0].done && isLowPercentage) && (
+      {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && isLowPercentage) && (
         <ErrorMessage
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
           or edit the shareholding % for the added stakeholders.`}
@@ -164,18 +168,15 @@ const CompanyStakeholdersComponent = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { stakeholdersIds } = getStakeholdersState(state);
-
-  return {
-    isLoading: state.sendProspectToAPI.loading,
-    stakeholdersIds,
-    stakeholders: stakeholdersSelector(state),
-    percentage: percentageSelector(state),
-    isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
-    hasSignatories: checkIsHasSignatories(state)
-  };
-};
+const mapStateToProps = state => ({
+  isLoading: state.sendProspectToAPI.loading,
+  stakeholdersIds: getStakeholdersIds(state),
+  stakeholders: stakeholdersSelector(state),
+  percentage: percentageSelector(state),
+  isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
+  isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
+  hasSignatories: checkIsHasSignatories(state)
+});
 
 const mapDispatchToProps = {
   deleteStakeholder,

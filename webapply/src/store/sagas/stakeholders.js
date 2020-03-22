@@ -8,7 +8,6 @@ import {
   DELETE_STAKEHOLDER,
   changeEditableStakeholder,
   updateStakeholdersIds,
-  SET_FILL_STAKEHOLDER,
   SET_EDIT_STAKEHOLDER
 } from "../actions/stakeholders";
 import { removeSignatory } from "../actions/completedSteps";
@@ -18,16 +17,16 @@ import { getSignatoryModel } from "../selectors/appConfig";
 import { getStakeholders, getStakeholdersIds } from "../selectors/stakeholder";
 
 function* createNewStakeholderSaga() {
-  const stakeholders = select(getStakeholders);
-  const stakeholdersIds = select(getStakeholdersIds);
-  const newStakeholder = cloneDeep(select(getSignatoryModel));
+  const stakeholders = yield select(getStakeholders);
+  const stakeholdersIds = yield select(getStakeholdersIds);
+  const newStakeholder = cloneDeep(yield select(getSignatoryModel));
 
   newStakeholder.kycDetails.residenceCountry = UAE;
   newStakeholder.kycDetails.isUAEResident = true;
 
   const stakeholderId = uniqueId();
 
-  const updatedStakeholdersIds = [...stakeholdersIds, { id: stakeholderId, done: false }];
+  const updatedStakeholdersIds = [...stakeholdersIds, { id: stakeholderId }];
 
   yield put(updateStakeholdersIds(updatedStakeholdersIds));
   yield put(changeEditableStakeholder(updatedStakeholdersIds.length - 1));
@@ -54,16 +53,6 @@ function* deleteStakeholderSaga({ stakeholderId }) {
   yield put(changeEditableStakeholder());
 }
 
-function* setFillStakeholderSaga({ payload }) {
-  const stakeholdersIds = yield select(getStakeholdersIds);
-  const updatedStakeholdersIds = stakeholdersIds.map((currentValue, index) => ({
-    ...currentValue,
-    done: payload.index === index ? payload.done : currentValue.done
-  }));
-
-  yield put(updateStakeholdersIds(updatedStakeholdersIds));
-}
-
 function* setEditStakeholderSaga({ payload }) {
   const stakeholdersIds = yield select(getStakeholdersIds);
   const updatedStakeholdersIds = stakeholdersIds.map((currentValue, index) => ({
@@ -78,7 +67,6 @@ export default function* appConfigSaga() {
   yield all([
     takeEvery(CREATE_NEW_STAKEHOLDER, createNewStakeholderSaga),
     takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga),
-    takeEvery(SET_FILL_STAKEHOLDER, setFillStakeholderSaga),
     takeEvery(SET_EDIT_STAKEHOLDER, setEditStakeholderSaga)
   ]);
 }
