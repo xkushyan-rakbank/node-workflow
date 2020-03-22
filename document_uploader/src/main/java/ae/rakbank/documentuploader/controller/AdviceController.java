@@ -45,7 +45,7 @@ public class AdviceController {
         if (!StringUtils.isEmpty(errorDebugDetails)) {
             shouldSendErrorDebugDetails = false;
         } else {
-            shouldSendErrorDebugDetails = Boolean.getBoolean(errorDebugDetails);
+            shouldSendErrorDebugDetails = Boolean.valueOf(errorDebugDetails);
         }
     }
 

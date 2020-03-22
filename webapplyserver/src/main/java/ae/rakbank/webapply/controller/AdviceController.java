@@ -38,7 +38,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         if (!StringUtils.isEmpty(errorDebugDetails)) {
             shouldSendErrorDebugDetails = false;
         } else {
-            shouldSendErrorDebugDetails = Boolean.getBoolean(errorDebugDetails);
+            shouldSendErrorDebugDetails = Boolean.valueOf(errorDebugDetails);
         }
     }
 
