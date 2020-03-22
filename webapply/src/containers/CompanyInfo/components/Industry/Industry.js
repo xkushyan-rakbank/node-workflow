@@ -225,12 +225,10 @@ export const IndustryStep = ({
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    industries: get(getOrgKYCDetails(state), "industryMultiSelect", []),
-    isIslamicBanking: getIsIslamicBanking(state)
-  };
-};
+const mapStateToProps = state => ({
+  industries: get(getOrgKYCDetails(state), "industryMultiSelect", []),
+  isIslamicBanking: getIsIslamicBanking(state)
+});
 
 const mapDispatchToProps = {
   updateProspect

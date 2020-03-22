@@ -3,7 +3,7 @@ import { useLocation, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { checkLoginStatus, getAgentName } from "../../store/selectors/loginSelector";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
+import { getCompanyName } from "../../store/selectors/appConfig";
 import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { getIsIslamicBanking } from "../../store/selectors/appConfig";
@@ -16,7 +16,7 @@ import { accountTypes } from "../../containers/AccountsComparison/components/Tab
 const HeaderTitleComponent = ({
   islamicBanking,
   accountType,
-  organizationInfo: { companyName },
+  companyName,
   isAgent,
   withoutMarginBottom,
   logout,
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
   isAgent: checkLoginStatus(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),
-  organizationInfo: getOrganizationInfo(state)
+  companyName: getCompanyName(state)
 });
 
 const mapDispatchToProps = {
