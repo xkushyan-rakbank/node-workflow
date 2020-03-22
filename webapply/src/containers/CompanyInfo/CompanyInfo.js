@@ -14,8 +14,8 @@ import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProsp
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
   getApplicantInfo,
-  getOrganizationInfo,
-  getIsSendingProspect
+  getIsSendingProspect,
+  getCompanyName
 } from "../../store/selectors/appConfig";
 import { CONTINUE, NEXT, formStepper, STEP_STATUS } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
@@ -30,7 +30,7 @@ export const CompanyInfoPage = ({
   sendProspectToAPI,
   loading,
   fullName,
-  organizationInfo: { companyName },
+  companyName,
   isComeFromROScreens
 }) => {
   useFormNavigation([false, true, formStepper]);
@@ -116,7 +116,7 @@ export const CompanyInfoPage = ({
 const mapStateToProps = state => ({
   loading: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
-  organizationInfo: getOrganizationInfo(state),
+  companyName: getCompanyName(state),
   isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 
