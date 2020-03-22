@@ -35,10 +35,11 @@ function* receiveAppConfigSaga() {
     }
 
     const newConfig = response.data;
-    let signatoryModel;
+    const signatoryModel = newConfig.prospect
+      ? cloneDeep(newConfig.prospect.signatoryInfo[0])
+      : null;
 
     if (newConfig.prospect) {
-      signatoryModel = cloneDeep(newConfig.prospect.signatoryInfo[0]);
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
