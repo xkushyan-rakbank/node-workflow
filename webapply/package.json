@@ -55,7 +55,7 @@
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "eslint": "eslint src/",
-    "test": "jest --verbose",
+    "test": "jest",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
