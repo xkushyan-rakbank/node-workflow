@@ -11,7 +11,13 @@ export const FinalQuestionStepComponent = ({
   stepsArray,
   page
 }) => {
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(page, stepsArray);
+  const [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler
+  ] = useStep(page, stepsArray);
 
   const handleContinue = useCallback(
     eventName => () => {
@@ -46,6 +52,7 @@ export const FinalQuestionStepComponent = ({
       )}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue(item.eventName)}
+      createFormChangeHandler={createFormChangeHandler}
       stepForm={item.component}
     />
   ));

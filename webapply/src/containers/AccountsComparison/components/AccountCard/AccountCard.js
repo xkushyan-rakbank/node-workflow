@@ -7,13 +7,10 @@ export const AccountCardComponent = ({ setAccountType, handleClickMobile }) => {
   const classes = useStyles();
   return (
     <div className={classes.cardsContainer}>
-      {accountTypesDescription.map(({ name, icon, title, description, buttonText }) => (
+      {accountTypesDescription.map(({ name, ...item }) => (
         <div key={name} className={classes.cardsContainerItem}>
           <AccountTypeCard
-            iconSrc={icon}
-            title={title}
-            description={description}
-            buttonText={buttonText}
+            {...item}
             accountType={name}
             setAccountType={setAccountType}
             handleClickMobile={handleClickMobile}

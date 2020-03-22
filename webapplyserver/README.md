@@ -70,6 +70,7 @@ Open Issues / Refactor:
 
 ## Logging settings:
 To enable masking for security sensitive data in log output add environment variable with name 
-_LOGGER_MASKING_FLAG_ with _true_ value, if you don't need mask data don't use this variable.
+_LOGGER_MASKING_FLAG_ with _true_ value, if you don't need mask data don't use this variable,
+WEBAPPLY_LOGGING_LEVEL - logging level
 
 example: `export LOGGER_MASKING_FLAG=true`

@@ -1,3 +1,4 @@
+export const sideNavWidthXL = 590;
 export const sideNavWidthLG = 530;
 export const sideNavWidthMD = 380;
 export const sideNavWidthSM = 320;

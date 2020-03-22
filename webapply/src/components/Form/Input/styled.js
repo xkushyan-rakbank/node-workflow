@@ -107,7 +107,7 @@ export const useStyles = makeStyles(theme => {
       "&::-moz-placeholder": placeholder,
       "&:-ms-input-placeholder": placeholder,
       "&::-ms-input-placeholder": placeholder,
-      "label[data-shrink=false] + $formControl &": {
+      "label[data-shrink=false] + .MuiInputBase-formControl &": {
         "&::-webkit-input-placeholder": placeholderHidden,
         "&::-moz-placeholder": placeholderHidden,
         "&:-ms-input-placeholder": placeholderHidden,

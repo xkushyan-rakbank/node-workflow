@@ -4,7 +4,13 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import omit from "lodash/omit";
 
-import { Input, CustomSelect, InputGroup, AutoSaveField as Field } from "../../../components/Form";
+import {
+  Input,
+  CustomSelect,
+  InputGroup,
+  AutoSaveField as Field,
+  LinkedField
+} from "../../../components/Form";
 import { NAME_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { MAX_EMAIL_LENGTH } from "./constants";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
@@ -84,18 +90,22 @@ export const SearchProspectComponent = ({
             <Grid container spacing={3}>
               <Grid item md={6} sm={12}>
                 <InputGroup>
-                  <Field
+                  <LinkedField
                     name="countryCode"
+                    linkedFieldName="mobileNo"
                     path="searchInfo.countryCode"
+                    linkedPath="searchInfo.mobileNo"
                     datalistId="countryCode"
                     component={CustomSelect}
                     shrink={false}
                     inputProps={{ tabIndex: 0 }}
                   />
 
-                  <Field
+                  <LinkedField
                     name="mobileNo"
+                    linkedFieldName="countryCode"
                     path="searchInfo.mobileNo"
+                    linkedPath="searchInfo.countryCode"
                     label="Mobile Number"
                     placeholder="Mobile Number"
                     contextualHelpText="This should be the mobile number of the person who has registered for WebApply and initiated the application on behalf of the company."

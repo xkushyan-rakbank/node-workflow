@@ -31,7 +31,12 @@ const accountDetailsSchema = Yup.object({
   receiveInterest: Yup.bool()
 });
 
-export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspect }) => {
+export const AccountDetailsComponent = ({
+  goToNext,
+  createFormChangeHandler,
+  islamicBanking,
+  updateProspect
+}) => {
   const classes = useStyles();
 
   return (
@@ -46,7 +51,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({ values, setFieldValue }) => (
+      {createFormChangeHandler(({ values, setFieldValue, setValues }) => (
         <Form>
           <Subtitle title="Select currencies" />
           <Field
@@ -75,8 +80,10 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 isSearchable
                 component={SelectAutocomplete}
                 onChange={id => {
-                  setFieldValue("branchCity", id);
-                  setFieldValue("branchID", "");
+                  setValues({
+                    branchCity: id,
+                    branchID: ""
+                  });
                 }}
                 tabIndex="0"
               />
@@ -94,8 +101,10 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                 }
                 onChange={id => {
                   setFieldValue("branchID", id);
-                  updateProspect({ [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id });
-                  updateProspect({ "prospect.organizationInfo.branchID": id });
+                  updateProspect({
+                    [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id,
+                    "prospect.organizationInfo.branchID": id
+                  });
                 }}
                 label="Branch"
                 placeholder="Branch"
@@ -124,7 +133,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
             <ContinueButton type="submit" />
           </div>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

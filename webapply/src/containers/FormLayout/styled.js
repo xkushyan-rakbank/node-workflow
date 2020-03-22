@@ -48,7 +48,7 @@ export const useStyles = makeStyles(theme => ({
     flex: "1 1 auto",
     minHeight: "0px",
     minWidth: "1px",
-    transition: theme.transitions.default,
+    transition: theme.transitions.create("all"),
     "& h2": {
       fontSize: "46px",
       fontWeight: "600",

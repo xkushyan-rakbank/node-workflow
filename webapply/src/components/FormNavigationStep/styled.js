@@ -17,6 +17,7 @@ export const useStyles = makeStyles(theme => ({
     },
     "& span": {
       position: "absolute",
+      top: "1px",
       left: "20px",
       marginLeft: "0"
     },

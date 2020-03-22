@@ -38,7 +38,7 @@ const InlineRadioGroupBase = ({
         <RadioGroup
           aria-label={label}
           name={field.name}
-          value={field.value}
+          value={JSON.stringify(field.value)}
           onChange={handleChange}
           className={cx(
             classes.inlineFormControl,
@@ -53,7 +53,7 @@ const InlineRadioGroupBase = ({
                 disabled={isDisabled}
                 color="secondary"
                 key={item.key}
-                value={item.value}
+                value={JSON.stringify(item.value)}
                 label={item.label}
                 onSelect={onSelect}
               />
