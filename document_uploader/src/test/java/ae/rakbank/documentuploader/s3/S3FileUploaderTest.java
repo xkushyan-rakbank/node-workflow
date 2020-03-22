@@ -1,7 +1,7 @@
 package ae.rakbank.documentuploader.s3;
 
 import ae.rakbank.documentuploader.exception.S3ReadFileException;
-import ae.rakbank.documentuploader.util.EnvironmentUtil;
+import ae.rakbank.documentuploader.util.EnvUtil;
 import com.emc.object.s3.S3Client;
 import com.emc.object.s3.bean.GetObjectResult;
 import org.apache.commons.io.IOUtils;
@@ -26,14 +26,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@PrepareForTest(IOUtils.class)
+@PrepareForTest({IOUtils.class, EnvUtil.class})
 @RunWith(PowerMockRunner.class)
 public class S3FileUploaderTest {
 
     @Mock
     private ECSS3Factory ecsS3Factory;
-    @Mock
-    private EnvironmentUtil environmentUtil;
     @Mock
     private S3Client s3Client;
 
@@ -43,9 +41,10 @@ public class S3FileUploaderTest {
     @Before
     public void initBefore() throws URISyntaxException, UnsupportedEncodingException {
 
-        when(environmentUtil.getScannedDocsDir())
+        PowerMockito.mockStatic(EnvUtil.class);
+        when(EnvUtil.getScannedDocsDir())
                 .thenReturn("./src/test/resources/scanned_docs");
-        when(environmentUtil.getS3ObjectsDir())
+        when(EnvUtil.getS3ObjectsDir())
                 .thenReturn("./src/test/resources/scanned_docs");
 
         when(ecsS3Factory.getS3Client())

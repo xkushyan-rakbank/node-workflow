@@ -3,10 +3,10 @@ package ae.rakbank.documentuploader.services;
 import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.exception.ApiException;
 import ae.rakbank.documentuploader.exception.DocumentUploadException;
-import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.exception.AmazonS3FileNotFoundException;
 import ae.rakbank.documentuploader.s3.S3FileUploader;
+import ae.rakbank.documentuploader.util.EnvUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -33,7 +33,6 @@ import java.util.Date;
 public class DocumentUploadServiceImpl implements DocumentUploadService {
 
     private final S3FileUploader s3FileUploader;
-    private final EnvironmentUtil environmentUtil;
     private final FileValidatorService fileValidatorService;
 
     @Override
@@ -107,8 +106,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                     "Cannot store file with relative path outside current directory " + originalFilename);
         }
         try (InputStream inputStream = file.getInputStream()) {
-            log.info("Initialiaing uploads dir: " + environmentUtil.getUploadDir());
-            Path uploadsDir = Paths.get(environmentUtil.getUploadDir());
+            log.info("Initialiaing uploads dir: " + EnvUtil.getUploadDir());
+            Path uploadsDir = Paths.get(EnvUtil.getUploadDir());
 
             Files.copy(inputStream, uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);
             log.info(String.format("ProspectId=%s, File [%s] created/replaced.", prospectId, uploadsDir.resolve(documentKey)));

@@ -1,8 +1,8 @@
 package ae.rakbank.documentuploader.s3;
 
 import ae.rakbank.documentuploader.exception.S3ReadFileException;
-import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.dto.FileDto;
+import ae.rakbank.documentuploader.util.EnvUtil;
 import com.emc.object.s3.S3Client;
 import com.emc.object.s3.bean.GetObjectResult;
 import lombok.RequiredArgsConstructor;
@@ -30,20 +30,19 @@ import java.util.stream.Stream;
 public class S3FileUploader {
 
     private final ECSS3Factory ecsS3Factory;
-    private final EnvironmentUtil environmentUtil;
 
     @Async
     @Scheduled(cron = "0 0/5 * * * ?")
     public void uploadFilesToS3Bucket() {
         log.info("[Begin] uploadFilesToS3Bucket() method");
 
-        log.info("Initializing scanned docs dir: " + environmentUtil.getScannedDocsDir());
-        Path scannedDocsDir = Paths.get(environmentUtil.getScannedDocsDir());
+        log.info("Initializing scanned docs dir: " + EnvUtil.getScannedDocsDir());
+        Path scannedDocsDir = Paths.get(EnvUtil.getScannedDocsDir());
         long totalDocs = 0;
         try (Stream<Path> pathStream = Files.list(scannedDocsDir)) {
             totalDocs = pathStream.count();
         } catch (IOException e) {
-            log.error("Error occurred while listing documents from " + environmentUtil.getScannedDocsDir(), e);
+            log.error("Error occurred while listing documents from " + EnvUtil.getScannedDocsDir(), e);
         }
 
         log.info("{} documents found in {}", totalDocs, scannedDocsDir);
@@ -61,7 +60,7 @@ public class S3FileUploader {
 
     private void uploadToS3(S3Client s3) {
         try (DirectoryStream<Path> directoryStream =
-                     Files.newDirectoryStream(Paths.get(environmentUtil.getScannedDocsDir()))) {
+                     Files.newDirectoryStream(Paths.get(EnvUtil.getScannedDocsDir()))) {
             directoryStream.forEach(path -> {
                 File file = path.toFile();
                 byte[] fileData;
@@ -88,8 +87,8 @@ public class S3FileUploader {
 
     private void moveFileFromScannedDocsToS3Object(Path path, File file) {
         log.info("Moving file " + file.getName() + " from scanned docs to S3Object");
-        log.info("S3Objects dir = " + environmentUtil.getS3ObjectsDir());
-        Path targetPath = Paths.get(environmentUtil.getS3ObjectsDir() + File.separator + file.getName());
+        log.info("S3Objects dir = " + EnvUtil.getS3ObjectsDir());
+        Path targetPath = Paths.get(EnvUtil.getS3ObjectsDir() + File.separator + file.getName());
         try {
             // move the file to sObject directory
             Files.move(path, targetPath, StandardCopyOption.REPLACE_EXISTING);
@@ -102,7 +101,8 @@ public class S3FileUploader {
 
     public Optional<FileDto> downloadFile(String documentKey) {
         try {
-            final GetObjectResult<InputStream> object = ecsS3Factory.getS3Client().getObject(ecsS3Factory.getS3Bucket(), documentKey);
+            final GetObjectResult<InputStream> object =
+                    ecsS3Factory.getS3Client().getObject(ecsS3Factory.getS3Bucket(), documentKey);
             return Optional.of(object).map(obj -> mapS3ObjectToFileDto(object, documentKey));
         } catch (URISyntaxException e) {
             log.info(e.getMessage(), e);

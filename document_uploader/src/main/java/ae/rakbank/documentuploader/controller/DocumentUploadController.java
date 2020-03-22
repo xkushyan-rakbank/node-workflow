@@ -4,9 +4,9 @@ import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.exception.ApiException;
 import ae.rakbank.documentuploader.services.ProspectValidatorService;
 import ae.rakbank.documentuploader.services.auth.AuthorizationService;
-import ae.rakbank.documentuploader.util.EnvironmentUtil;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 import ae.rakbank.documentuploader.dto.FileDto;
+import ae.rakbank.documentuploader.util.EnvUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,6 @@ public class DocumentUploadController {
     private String appName;
 
     private final DocumentUploadService docUploadService;
-    private final EnvironmentUtil environmentUtil;
     private final AuthorizationService authorizationService;
     private final ProspectValidatorService prospectValidatorService;
 
@@ -45,7 +44,7 @@ public class DocumentUploadController {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode response = objectMapper.createObjectNode();
         response.put("buildDate", buildDate);
-        if (!environmentUtil.isWebApplyEnvProd()) {
+        if (!EnvUtil.isProd()) {
             response.put("project", appName);
         }
         return new ResponseEntity<>(response, headers, HttpStatus.OK);

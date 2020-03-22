@@ -1,21 +1,18 @@
 package ae.rakbank.documentuploader.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-
-import javax.annotation.PostConstruct;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.util.StreamUtils;
 
 @Slf4j
 @Component
@@ -23,53 +20,42 @@ import org.springframework.util.StreamUtils;
 public class FileUtil {
 
     private static final String LOCAL = "local";
+    private static final String APP_CONFIG_JSON = "DocUploadConfig.json";
 
     private final ResourceLoader resourceLoader;
-    private final EnvironmentUtil environmentUtil;
 
-    private JsonNode docUploadConfig;
+    public JsonNode getAppConfigJSON() {
+        return loadJSONFile(APP_CONFIG_JSON, !EnvUtil.getEnv().equals(LOCAL));
+    }
 
-    @PostConstruct
-    public void loadConfigFiles() {
-        docUploadConfig = loadJSONFile("DocUploadConfig.json", true);
+    public String getRSAPublicKey() {
+        return loadFileContents("public.key", !EnvUtil.getEnv().equals(LOCAL));
+    }
+
+    String getRSAPrivateKey() {
+        return loadFileContents("private.key", !EnvUtil.getEnv().equals(LOCAL));
     }
 
     private JsonNode loadJSONFile(String filename, boolean fromConfigDirectory) {
-        log.info("loading " + filename);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String fileContent;
-        File file = new File(environmentUtil.getConfigDir() + filename);
+        String fileContent = loadFileContents(filename, fromConfigDirectory);
+
+        if (fileContent == null) {
+            return null;
+        }
         try {
-            if (fromConfigDirectory && file.exists()) {
-                log.info("Read JSON file from {}{}", environmentUtil.getConfigDir(), filename);
-
-                fileContent = FileUtils.readFileToString(new File(environmentUtil.getConfigDir() + filename),
-                        StandardCharsets.UTF_8);
-            } else {
-                if (fromConfigDirectory) {
-                    log.error(String.format("FileNotFoundException: Read JSON file from %s%s",
-                            environmentUtil.getConfigDir(), filename));
-                }
-                log.info("Read JSON file from classpath:" + filename);
-
-                Resource resource = resourceLoader.getResource("classpath:" + filename);
-                fileContent = FileUtils.readFileToString(resource.getFile(), "UTF-8");
-            }
+            ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readTree(fileContent);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("error loading " + filename, e);
         }
         return null;
     }
 
-    String getRSAPrivateKey() {
-        return loadFileContents("private.key", !environmentUtil.getWebApplyEnv().equals(LOCAL));
-    }
-
+    @SuppressWarnings("Duplicates")
     private String loadFileContents(String filename, boolean fromConfigDirectory) {
         try {
             if (fromConfigDirectory) {
-                File file = new File(environmentUtil.getConfigDir() + filename);
+                File file = new File(EnvUtil.getConfigDir() + filename);
 
                 return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
             } else {
@@ -81,9 +67,5 @@ public class FileUtil {
             log.error("error loading " + filename, e);
         }
         return null;
-    }
-
-    public JsonNode getDocUploadConfigJson() {
-        return docUploadConfig;
     }
 }

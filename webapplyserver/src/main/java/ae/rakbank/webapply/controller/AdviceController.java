@@ -33,7 +33,8 @@ public class AdviceController extends ResponseEntityExceptionHandler {
     @PostConstruct
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
-        String errorDebugDetails = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("JwtSecret").asText();
+        String errorDebugDetails = appConfigJSON.get("OtherConfigs")
+                .get(EnvUtil.getEnv()).get("ShouldSendErrorDebugDetails").asText();
         if (!StringUtils.isEmpty(errorDebugDetails)) {
             shouldSendErrorDebugDetails = false;
         } else {
