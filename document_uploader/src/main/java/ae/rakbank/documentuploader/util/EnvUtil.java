@@ -12,11 +12,6 @@ public class EnvUtil {
     private EnvUtil() {
     }
 
-    public static void main(String[] args) {
-        System.out.println(env);
-        System.out.println(webApplyDir);
-    }
-
     private static String env = System.getenv("WEB_APPLY_ENV");
 
     private static String webApplyDir = System.getenv("WEB_APPLY_DIR");
