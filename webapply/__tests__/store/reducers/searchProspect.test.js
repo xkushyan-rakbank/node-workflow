@@ -35,6 +35,10 @@ describe("searchProspect reducer test", () => {
     );
   });
 
+  it("SEARCH_APPLICATIONS_SUCCESS action type with undefined payload", () => {
+    expect(reducer(initialState, searchApplicationsSuccess(undefined))).toStrictEqual(initialState);
+  });
+
   it("SEARCH_APPLICATIONS_FAILURE action type", () => {
     const searchResults = [MOCK_SEARCH_RESULT, MOCK_SEARCH_RESULT];
     const updatedState = {
