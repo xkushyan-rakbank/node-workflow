@@ -116,7 +116,7 @@ export const CompanyInfoPage = ({
 const mapStateToProps = state => ({
   loading: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
-  getCompanyName: getCompanyName(state),
+  companyName: getCompanyName(state),
   isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 
