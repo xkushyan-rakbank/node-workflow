@@ -15,8 +15,6 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
     inputEl.current.click();
   };
 
-  const fileUploadClick = event => (event.target.value = null);
-
   const fileUploadChange = () => {
     const file = inputEl.current.files[0];
 
@@ -35,7 +33,6 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
         name="file"
         type="file"
         onChange={fileUploadChange}
-        onClick={fileUploadClick}
         ref={inputEl}
       />
       <div className={classes.uploadButton} onClick={uploadButtonClick}>
