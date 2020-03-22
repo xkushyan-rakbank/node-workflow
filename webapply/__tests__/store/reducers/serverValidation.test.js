@@ -1,8 +1,9 @@
 import reducer, { initialState } from "../../../src/store/reducers/serverValidation";
 import { setInputsErrors, resetInputsErrors } from "../../../src/store/actions/serverValidation";
 import { FieldsValidationError } from "../../../src/api/serverErrors";
+import { UNMATCHED_ACTION } from "../../../__mocks__/storeMock";
 
-describe("serverValidation reducer", () => {
+describe("serverValidation reducer test", () => {
   const exampleErrorMsg = new FieldsValidationError({
     message: "Error response from DEH Server",
     errorType: "FieldsValidation",
@@ -37,5 +38,9 @@ describe("serverValidation reducer", () => {
       }
     };
     expect(reducer(updatedState, resetInputsErrors())).toStrictEqual(initialState);
+  });
+
+  it("check default action type", () => {
+    expect(reducer(initialState, UNMATCHED_ACTION)).toStrictEqual(initialState);
   });
 });

@@ -6,42 +6,43 @@
 console.log('@@@ webapply'); // eslint-disable-line
 
 module.exports = {
-  collectCoverage: true,
+  // collectCoverage: true,
 
-  collectCoverageFrom: ["src/**/*.js", "!src/**/index.js", "!**/constants/**"],
+  // collectCoverageFrom: ["src/**/*.js", "!src/**/index.js", "!**/constants/**"],
 
-  coverageDirectory: "coverage",
+  // coverageDirectory: "coverage",
 
-  coverageReporters: getCoverageReporters(),
+  // coverageReporters: getCoverageReporters(),
 
-  moduleDirectories: ["node_modules", "src"],
+  // moduleDirectories: ["node_modules", "src"],
 
-  moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node"],
+  // moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node"],
 
-  setupFiles: ["./src/setupTests.js"],
+  // setupFiles: ["./src/setupTests.js"],
 
-  testEnvironment: "jsdom",
+  // testEnvironment: "jsdom",
 
-  testPathIgnorePatterns: [
-    "/node_modules/",
-    "./src/setupTests.js",
-    "./src/constants",
-    "./src/assets"
-  ],
+  // testPathIgnorePatterns: [
+  //   "/node_modules/",
+  //   "./src/setupTests.js",
+  //   "./src/constants",
+  //   "./src/assets"
+  // ],
 
-  coverageThreshold: {
-    global: {
-      statements: 80,
-      branches: 80,
-      functions: 80,
-      lines: 80
-    }
-  },
+  // coverageThreshold: {
+  //   global: {
+  //     statements: 80,
+  //     branches: 80,
+  //     functions: 80,
+  //     lines: 80
+  //   }
+  // },
 
   moduleNameMapper: {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
       "<rootDir>/__mocks__/fileMock.js"
-  }
+  },
+  testRegex: 'reducers/.*\.test\.js$'
 };
 
 function getCoverageReporters() {

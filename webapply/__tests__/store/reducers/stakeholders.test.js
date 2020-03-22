@@ -4,8 +4,9 @@ import {
   changeEditableStakeholder,
   updateStakeholdersIds
 } from "../../../src/store/actions/stakeholders";
+import { UNMATCHED_ACTION } from "../../../__mocks__/storeMock";
 
-describe("stakeholders reducer", () => {
+describe("stakeholders reducer test", () => {
   it("CHANGE_EDITABLE_STAKEHOLDER action type", () => {
     const stakeholderIndex = 2;
     const expectedState = {
@@ -34,5 +35,9 @@ describe("stakeholders reducer", () => {
     expect(reducer(initialState, updateStakeholdersIds(stakeholdersIds))).toStrictEqual(
       expectedState
     );
+  });
+
+  it("check default action type", () => {
+    expect(reducer(initialState, UNMATCHED_ACTION)).toStrictEqual(initialState);
   });
 });
