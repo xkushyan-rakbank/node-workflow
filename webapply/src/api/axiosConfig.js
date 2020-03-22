@@ -52,7 +52,7 @@ apiClient.interceptors.request.use(config => {
       ...config,
       headers: {
         ...config.headers,
-        Pragma: "no-cache",
+        "Cache-Control": "no-cache",
         "Content-Type": "application/json",
         [SYM_KEY_HEADER]: encryptedSymKey
       },
