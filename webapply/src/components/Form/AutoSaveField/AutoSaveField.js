@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormikContext, Field, getIn } from "formik";
 import get from "lodash/get";
@@ -36,7 +36,7 @@ export const AutoSaveField = ({
   const [isLoadedDefaultValueFromStore, setIsLoadedDefaultValueFromStore] = useState(
     !isLoadDefaultValueFromStore
   );
-  const [timer, setTimer] = useState(null);
+  const timer = useRef(null);
 
   useEffect(() => {
     if (!isLoadedDefaultValueFromStore && path) {
@@ -75,8 +75,8 @@ export const AutoSaveField = ({
         }
       }, 500);
 
-      if (timer) clearTimeout(timer);
-      setTimer(newTimer);
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = newTimer;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoadedDefaultValueFromStore, value]);
@@ -84,7 +84,6 @@ export const AutoSaveField = ({
   const options = useMemo(() => {
     if (path && datalistId && datalist) {
       const fieldConfig = datalist[datalistId] || [];
-
       return filterOptions(fieldConfig);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

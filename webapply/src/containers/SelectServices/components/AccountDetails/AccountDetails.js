@@ -31,12 +31,7 @@ const accountDetailsSchema = Yup.object({
   receiveInterest: Yup.bool()
 });
 
-export const AccountDetailsComponent = ({
-  goToNext,
-  createFormChangeHandler,
-  islamicBanking,
-  updateProspect
-}) => {
+export const AccountDetailsComponent = ({ goToNext, createFormChangeHandler, islamicBanking }) => {
   const classes = useStyles();
 
   return (
@@ -97,13 +92,11 @@ export const AccountDetailsComponent = ({
                     .filter(city => city.code === values.branchCity)
                     .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
                 }
-                onChange={id => {
-                  setFieldValue("branchID", id);
-                  updateProspect({
-                    [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id,
-                    "prospect.organizationInfo.branchID": id
-                  });
-                }}
+                changeProspect={(prospect, id) => ({
+                  ...prospect,
+                  [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id,
+                  "prospect.organizationInfo.branchID": id
+                })}
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}

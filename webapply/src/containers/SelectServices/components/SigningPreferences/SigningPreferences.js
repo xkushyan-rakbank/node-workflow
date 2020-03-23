@@ -134,9 +134,12 @@ export const SigningPreferencesComponent = ({
                 onSelect={e => {
                   setFieldValue("accountSigningType", e.target.value);
                   setFieldValue("accountSigningInstn", "");
+                }}
+                changeProspect={prospect => {
                   if (accountSigningInstn) {
-                    updateProspect({ [pathSignatoryInfo]: "" });
+                    return { ...prospect, [pathSignatoryInfo]: "" };
                   }
+                  return prospect;
                 }}
                 component={CheckboxGroup}
                 classes={{ root: classes.radioButtonRoot }}
