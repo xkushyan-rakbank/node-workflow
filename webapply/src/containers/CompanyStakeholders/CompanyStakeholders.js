@@ -17,15 +17,17 @@ import {
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
   stakeholdersSelector,
-  stakeholdersState,
   checkIsHasSignatories,
-  percentageSelector
+  percentageSelector,
+  getStakeholdersIds
 } from "../../store/selectors/stakeholder";
-import { getCompletedSteps } from "../../store/selectors/completedSteps";
+import {
+  getIsAnyStakeholderStepsCompleted,
+  getIsStakeholderStepsCompleted
+} from "../../store/selectors/completedSteps";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH, STEP_STATUS } from "../../constants";
-import { COMPANY_STAKEHOLDER_ID } from "./constants";
+import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -38,7 +40,8 @@ const CompanyStakeholdersComponent = ({
   stakeholdersIds,
   hasSignatories,
   sendProspectToAPI,
-  completedSteps,
+  isStakeholderStepsCompleted,
+  isAnyStakeholderStepsCompleted,
   isLoading
 }) => {
   const pushHistory = useTrackingHistory();
@@ -63,13 +66,7 @@ const CompanyStakeholdersComponent = ({
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
-    stakeholders.length < 1 ||
-    completedSteps.some(
-      ({ flowId, status }) =>
-        flowId.startsWith(COMPANY_STAKEHOLDER_ID) && status !== STEP_STATUS.COMPLETED
-    ) ||
-    isLowPercentage ||
-    !hasSignatories;
+    stakeholders.length < 1 || !isStakeholderStepsCompleted || isLowPercentage || !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
     sendProspectToAPI(NEXT).then(isScreeningError => {
@@ -148,10 +145,10 @@ const CompanyStakeholdersComponent = ({
           <AddStakeholderButton handleClick={addNewStakeholder} />
         </div>
       )}
-      {stakeholders.length > 0 && (stakeholdersIds[0].done && !hasSignatories) && (
+      {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && !hasSignatories) && (
         <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
       )}
-      {stakeholders.length > 0 && (stakeholdersIds[0].done && isLowPercentage) && (
+      {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && isLowPercentage) && (
         <ErrorMessage
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
           or edit the shareholding % for the added stakeholders.`}
@@ -171,18 +168,15 @@ const CompanyStakeholdersComponent = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { stakeholdersIds } = stakeholdersState(state);
-
-  return {
-    isLoading: state.sendProspectToAPI.loading,
-    stakeholdersIds,
-    stakeholders: stakeholdersSelector(state),
-    percentage: percentageSelector(state),
-    completedSteps: getCompletedSteps(state),
-    hasSignatories: checkIsHasSignatories(state)
-  };
-};
+const mapStateToProps = state => ({
+  isLoading: state.sendProspectToAPI.loading,
+  stakeholdersIds: getStakeholdersIds(state),
+  stakeholders: stakeholdersSelector(state),
+  percentage: percentageSelector(state),
+  isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
+  isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
+  hasSignatories: checkIsHasSignatories(state)
+});
 
 const mapDispatchToProps = {
   deleteStakeholder,

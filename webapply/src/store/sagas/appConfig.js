@@ -11,7 +11,7 @@ import {
   setConfig,
   updateProspect,
   UPDATE_VIEW_ID,
-  saveProspectModel
+  saveSignatoryModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
@@ -35,10 +35,11 @@ function* receiveAppConfigSaga() {
     }
 
     const newConfig = response.data;
-    let prospectModel;
+    const signatoryModel = newConfig.prospect
+      ? cloneDeep(newConfig.prospect.signatoryInfo[0])
+      : null;
 
     if (newConfig.prospect) {
-      prospectModel = cloneDeep(newConfig.prospect);
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
@@ -50,8 +51,8 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
-    if (prospectModel) {
-      yield put(saveProspectModel(prospectModel));
+    if (signatoryModel) {
+      yield put(saveSignatoryModel(signatoryModel));
     }
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());
