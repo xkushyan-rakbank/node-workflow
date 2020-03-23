@@ -6,14 +6,16 @@ import isFuture from "date-fns/isFuture";
 import { PickerSelect } from "../PickerSelect/PickerSelect";
 import { useStyles } from "./styled";
 
-export const PickerToolbar = ({ date, onChange, disableFuture }) => {
+export const PickerToolbar = ({ date, onChange, disableFuture, onMonthChange, onYearChange }) => {
   const classes = useStyles();
 
-  const onMonthChange = month => {
+  const onMonthChangeHandler = month => {
     const newDate = setMonth(date, month);
+    onMonthChange(true);
     onChange(disableFuture && isFuture(newDate) ? new Date() : newDate);
   };
-  const onYearChange = year => {
+  const onYearChangeHandler = year => {
+    onYearChange(true);
     const newDate = setYear(date, year);
     onChange(disableFuture && isFuture(newDate) ? new Date() : newDate);
   };
@@ -21,13 +23,13 @@ export const PickerToolbar = ({ date, onChange, disableFuture }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.column}>
-        <PickerSelect date={date} onChange={onMonthChange} type="month" />
+        <PickerSelect date={date} onChange={onMonthChangeHandler} type="month" />
       </div>
       <div className={classes.column}>
         <PickerSelect
           isFutureDisabled={disableFuture}
           date={date}
-          onChange={onYearChange}
+          onChange={onYearChangeHandler}
           type="year"
         />
       </div>

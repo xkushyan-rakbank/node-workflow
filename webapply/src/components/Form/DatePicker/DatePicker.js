@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { getIn } from "formik";
@@ -31,13 +31,17 @@ const DatePickerBase = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const classes = useStyles();
+  const [isSelectedMonth, setMonth] = useState(false);
+  const [isSelectedYear, setYear] = useState(false);
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
-            autoOk
+            autoOk={isSelectedMonth && isSelectedYear}
+            onMonthChange={setMonth}
+            onYearChange={setYear}
             autoComplete="off"
             label={label}
             minDate={minDate}
