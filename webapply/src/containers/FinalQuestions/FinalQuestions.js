@@ -84,11 +84,7 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
       </div>
       <div className={classes.linkContainer}>
         <BackLink path={routes.stakeholdersInfo} />
-        <NextStepButton
-          disabled={!isAllStepsCompleted}
-          handleClick={goToUploadDocument}
-          label="Next Step"
-        />
+        <NextStepButton handleClick={goToUploadDocument} label="Next Step" />
       </div>
     </>
   );

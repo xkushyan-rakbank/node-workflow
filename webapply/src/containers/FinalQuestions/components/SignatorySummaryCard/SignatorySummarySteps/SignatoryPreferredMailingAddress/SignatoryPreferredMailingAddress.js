@@ -81,6 +81,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
               label="Same as Company Address"
               onSelect={() => {
                 setValues({
+                  sameAsCompanyAddress: !values.sameAsCompanyAddress,
                   addressLine2: !values.sameAsCompanyAddress ? organisationAddressLine2 : "",
                   addressLine1: !values.sameAsCompanyAddress ? organisationAddressLine1 : "",
                   emirateCity: !values.sameAsCompanyAddress ? organisationEmirateCity : "",

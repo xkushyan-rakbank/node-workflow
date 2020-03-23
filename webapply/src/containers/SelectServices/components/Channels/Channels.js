@@ -90,7 +90,7 @@ export const ChannelsComponent = ({
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {createFormChangeHandler(({ values, setValues }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Subtitle title="Business debit Cards" />
           <ContexualHelp
@@ -152,10 +152,8 @@ export const ChannelsComponent = ({
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
-              setValues({
-                mailStatements: false,
-                eStatements: true
-              });
+              setFieldValue("mailStatements", false);
+              setFieldValue("eStatements", true);
             }}
             inputProps={{ tabIndex: 0 }}
           />
@@ -166,10 +164,8 @@ export const ChannelsComponent = ({
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {
-              setValues({
-                eStatements: false,
-                mailStatements: true
-              });
+              setFieldValue("eStatements", false);
+              setFieldValue("mailStatements", true);
             }}
             inputProps={{ tabIndex: 0 }}
           />
