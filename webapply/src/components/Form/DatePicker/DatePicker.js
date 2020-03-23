@@ -31,8 +31,8 @@ const DatePickerBase = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const classes = useStyles();
-  const [isSelectedMonth, setMonth] = useState(false);
-  const [isSelectedYear, setYear] = useState(false);
+  const [isSelectedMonth, setMothIsSelected] = useState(false);
+  const [isSelectedYear, setYearIsSelected] = useState(false);
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
@@ -40,8 +40,8 @@ const DatePickerBase = ({
         <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
             autoOk={isSelectedMonth && isSelectedYear}
-            onMonthChange={setMonth}
-            onYearChange={setYear}
+            onMonthChange={setMothIsSelected}
+            onYearChange={setYearIsSelected}
             autoComplete="off"
             label={label}
             minDate={minDate}
