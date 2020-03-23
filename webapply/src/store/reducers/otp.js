@@ -1,7 +1,7 @@
 import * as actions from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 
-const initialState = {
+export const initialState = {
   isGenerating: false,
   isGenerated: false,
   isPending: false,
