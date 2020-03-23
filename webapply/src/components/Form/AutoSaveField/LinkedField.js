@@ -1,30 +1,33 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useFormikContext, getIn } from "formik";
 import { AutoSaveField } from "./AutoSaveField";
 
-export const LinkedField = ({
-  linkedFieldName,
-  linkedPath,
-  onChange = () => {},
-  changeProspect = prospect => prospect,
-  ...rest
-}) => {
+export const LinkedField = ({ linkedFieldName, linkedPath, onChange, changeProspect, ...rest }) => {
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
+  const linkedFieldValue = getIn(values, linkedFieldName);
+  const onChangeHandler = useCallback(
+    e => {
+      setFieldValue(rest.name, e.target.value);
+      linkedFieldValue && setFieldTouched(linkedFieldName, true);
+      if (typeof onChange === "function") {
+        onChange(e);
+      }
+    },
+    [onChange, linkedFieldName, linkedFieldValue]
+  );
+
+  const changeProspectHandler = useCallback((prospect, value, path, errors) => {
+    const newProspect = getIn(errors, linkedFieldName)
+      ? {}
+      : { ...prospect, [linkedPath]: getIn(values, linkedFieldName) };
+    if (typeof changeProspect === "function") {
+      return changeProspect(newProspect, value, path, errors);
+    } else {
+      return newProspect;
+    }
+  }, []);
 
   return (
-    <AutoSaveField
-      onChange={e => {
-        setFieldValue(rest.name, e.target.value);
-        getIn(values, linkedFieldName) && setFieldTouched(linkedFieldName, true);
-        onChange(e);
-      }}
-      changeProspect={(prospect, value, path, errors) => {
-        const newProspect = getIn(errors, linkedFieldName)
-          ? {}
-          : { ...prospect, [linkedPath]: getIn(values, linkedFieldName) };
-        return changeProspect(newProspect, value, path, errors);
-      }}
-      {...rest}
-    />
+    <AutoSaveField onChange={onChangeHandler} changeProspect={changeProspectHandler} {...rest} />
   );
 };
