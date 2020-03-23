@@ -31,7 +31,7 @@ const StyledSelect = withStyles({
     color: "#3b3a3a",
     fontSize: "17px",
     right: "12px",
-    top: "8px"
+    top: "20px"
   }
 })(Select);
 
