@@ -141,6 +141,7 @@ export const SigningPreferencesComponent = ({
                   if (accountSigningInstn) {
                     return { ...prospect, [pathSignatoryInfo]: "" };
                   }
+                  return prospect;
                 }}
                 component={CheckboxGroup}
                 classes={{ root: classes.radioButtonRoot }}
