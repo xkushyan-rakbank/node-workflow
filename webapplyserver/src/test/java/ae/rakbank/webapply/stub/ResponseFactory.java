@@ -42,5 +42,9 @@ public class ResponseFactory {
                         .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo3)));
     }
 
+    public static JsonNode newLoginResponse() {
+        return objectMapper.createObjectNode().put("login", "ok");
+    }
+
 
 }
