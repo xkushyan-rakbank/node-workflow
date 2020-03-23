@@ -101,7 +101,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   <br />
                   <br />
                   Kindly note, the Business Debit Card of this stakeholder will be delivered to this
-                  to this address
+                  to this address.
                 </span>
               }
               placement="right"
