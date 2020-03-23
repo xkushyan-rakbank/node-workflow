@@ -23,4 +23,28 @@ public class RequestFactory {
                         .put("email", "email@localhost"));
     }
 
+    public static JsonNode newGenerateOtpRequest() {
+        return objectMapper.createObjectNode()
+                .put("action", "generate")
+                .put("prospectId", "123456789")
+                .put("mobileNo", "+37847563456");
+    }
+
+    public static JsonNode newGenerateOtpInvalidRequest() {
+        return objectMapper.createObjectNode()
+                .put("action", "generate");
+    }
+
+    public static JsonNode newGenerateOtpWithNoProspectIdRequest() {
+        return objectMapper.createObjectNode()
+                .put("action", "generate")
+                .put("mobileNo", "+37847563456")
+                .put("recaptchaToken", "re-captcha-token");
+    }
+
+    public static JsonNode newLoginRequest() {
+        return objectMapper.createObjectNode().put("username", "theusername")
+                .put("password", "thepassword");
+    }
+
 }
