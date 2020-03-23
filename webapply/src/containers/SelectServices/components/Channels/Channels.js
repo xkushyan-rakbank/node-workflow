@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Grid } from "@material-ui/core";
 
 import { checkIsChequeBookApplied, checkIsDebitCardApplied } from "./utils";
-import { NAME_REGEX } from "../../../../utils/validation";
+import { NAME_REGEX, MAX_NAME_IN_BUSINESS_LENGTH } from "../../../../utils/validation";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
@@ -18,7 +18,6 @@ import { ContexualHelp } from "../../../../components/Notifications";
 
 import { useStyles } from "./styled";
 
-const MAX_LENGTH_NAME_ON_DEBIT_CARD = 15;
 // eslint-disable-next-line max-len
 const DEBIT_CARD_INFO =
   "Business debit cards will be issued for eligible AED accounts only and they will be mailed by courier to your preferred address";
@@ -31,7 +30,7 @@ const channelsSchema = Yup.object({
     Yup.object().shape({
       nameOnDebitCard: Yup.string()
         .required(getRequiredMessage("Name on debit card"))
-        .max(19, "Max length is 19 symbols")
+        .max(MAX_NAME_IN_BUSINESS_LENGTH, `Max length is ${MAX_NAME_IN_BUSINESS_LENGTH} symbols`)
         .matches(NAME_REGEX, getInvalidMessage("Name on debit card"))
     })
   )
@@ -83,7 +82,7 @@ export const ChannelsComponent = ({
         mailStatements: false,
         signatory: (isHasSignatories && isDebitCardApplied ? stakeholders : []).map(
           ({ firstName, lastName }) => ({
-            nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_LENGTH_NAME_ON_DEBIT_CARD)
+            nameOnDebitCard: `${firstName} ${lastName}`.slice(0, MAX_NAME_IN_BUSINESS_LENGTH)
           })
         )
       }}
@@ -91,7 +90,7 @@ export const ChannelsComponent = ({
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {createFormChangeHandler(({ values, setValues }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Subtitle title="Business debit Cards" />
           <ContexualHelp
@@ -153,10 +152,8 @@ export const ChannelsComponent = ({
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
-              setValues({
-                mailStatements: false,
-                eStatements: true
-              });
+              setFieldValue("mailStatements", false);
+              setFieldValue("eStatements", true);
             }}
             inputProps={{ tabIndex: 0 }}
           />
@@ -167,10 +164,8 @@ export const ChannelsComponent = ({
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {
-              setValues({
-                eStatements: false,
-                mailStatements: true
-              });
+              setFieldValue("eStatements", false);
+              setFieldValue("mailStatements", true);
             }}
             inputProps={{ tabIndex: 0 }}
           />

@@ -9,7 +9,7 @@ import {
   REMOVE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
-  SAVE_PROSPECT_MODEL,
+  SAVE_SIGNATORY_MODEL,
   SET_ACCESS_TOKEN,
   RESET_PROSPECT,
   RESET_APPLICANT_INFO
@@ -30,7 +30,7 @@ export const initialState = {
   prospectError: false,
   searchInfo: { segment: "sme" },
   login: {},
-  prospectModel: {}
+  signatoryModel: {}
 };
 
 const appConfigReducer = (state = initialState, action) => {
@@ -108,10 +108,10 @@ const appConfigReducer = (state = initialState, action) => {
           }
         }
       };
-    case SAVE_PROSPECT_MODEL:
+    case SAVE_SIGNATORY_MODEL:
       return {
         ...state,
-        prospectModel: action.payload
+        signatoryModel: action.payload
       };
     case LOGOUT:
       return {
