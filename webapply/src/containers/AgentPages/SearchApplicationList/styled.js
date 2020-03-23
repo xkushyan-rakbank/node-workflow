@@ -10,7 +10,6 @@ export const useStyles = makeStyles({
   applicationRow: {
     borderBottom: "1px solid #e6e6e6",
     display: "flex",
-    alignItems: "center",
     padding: "24px 20px 19px 30px",
     color: "#263d4c"
   },
@@ -32,8 +31,7 @@ export const useStyles = makeStyles({
     fontSize: "18px",
     fontWeight: 600,
     lineHeight: 1,
-    color: "#263d4c",
-    marginTop: "-23px"
+    color: "#263d4c"
   },
   notFound: {
     fontSize: "18px",
@@ -70,7 +68,8 @@ export const useStyles = makeStyles({
   column: {
     width: "40%",
     "&:last-child": {
-      width: "20%"
+      width: "20%",
+      alignSelf: "center"
     }
   },
   heading: {
