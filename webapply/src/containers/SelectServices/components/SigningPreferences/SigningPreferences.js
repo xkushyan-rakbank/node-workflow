@@ -136,8 +136,10 @@ export const SigningPreferencesComponent = ({
                     accountSigningType: e.target.value,
                     accountSigningInstn: ""
                   });
+                }}
+                changeProspect={prospect => {
                   if (accountSigningInstn) {
-                    updateProspect({ [pathSignatoryInfo]: "" });
+                    return { ...prospect, [pathSignatoryInfo]: "" };
                   }
                 }}
                 component={CheckboxGroup}
