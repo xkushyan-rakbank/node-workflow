@@ -2,10 +2,12 @@ import React, { useCallback } from "react";
 import { useFormikContext, getIn } from "formik";
 import { AutoSaveField } from "./AutoSaveField";
 
+const noop = () => {};
+
 export const LinkedField = ({
   linkedFieldName,
   linkedPath,
-  onChange,
+  onChange = noop,
   changeProspect = prospect => prospect,
   ...rest
 }) => {
@@ -15,9 +17,7 @@ export const LinkedField = ({
     e => {
       setFieldValue(rest.name, e.target.value);
       linkedFieldValue && setFieldTouched(linkedFieldName, true);
-      if (typeof onChange === "function") {
-        onChange(e);
-      }
+      onChange(e);
     },
     [onChange, linkedFieldName, linkedFieldValue]
   );

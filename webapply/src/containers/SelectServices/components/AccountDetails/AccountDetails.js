@@ -46,7 +46,7 @@ export const AccountDetailsComponent = ({ goToNext, createFormChangeHandler, isl
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {createFormChangeHandler(({ values, setFieldValue, setValues }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Subtitle title="Select currencies" />
           <Field
@@ -75,10 +75,8 @@ export const AccountDetailsComponent = ({ goToNext, createFormChangeHandler, isl
                 isSearchable
                 component={SelectAutocomplete}
                 onChange={id => {
-                  setValues({
-                    branchCity: id,
-                    branchID: ""
-                  });
+                  setFieldValue("branchCity", id);
+                  setFieldValue("branchID", "");
                 }}
                 tabIndex="0"
               />
