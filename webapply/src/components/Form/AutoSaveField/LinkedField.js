@@ -26,11 +26,11 @@ export const LinkedField = ({
     (prospect, value, path, errors) => {
       const newProspect = getIn(errors, linkedFieldName)
         ? {}
-        : { ...prospect, [linkedPath]: getIn(values, linkedFieldName) };
+        : { ...prospect, [linkedPath]: linkedFieldValue };
       return changeProspect(newProspect, value, path, errors);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [linkedFieldValue]
   );
 
   return (
