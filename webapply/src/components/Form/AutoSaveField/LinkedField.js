@@ -20,11 +20,7 @@ export const LinkedField = ({ linkedFieldName, linkedPath, onChange, changeProsp
     const newProspect = getIn(errors, linkedFieldName)
       ? {}
       : { ...prospect, [linkedPath]: getIn(values, linkedFieldName) };
-    if (typeof changeProspect === "function") {
-      return changeProspect(newProspect, value, path, errors);
-    } else {
-      return newProspect;
-    }
+    return changeProspect ? changeProspect(newProspect, value, path, errors) : newProspect;
   }, []);
 
   return (

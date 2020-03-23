@@ -64,12 +64,9 @@ export const AutoSaveField = ({
         if (!isEqual(oldValue, value)) {
           validateForm().then(errors => {
             if (!getIn(errors, name)) {
-              let prospect;
-              if (typeof changeProspect === "function") {
-                prospect = changeProspect({ [path]: value }, value, path, errors);
-              } else {
-                prospect = { [path]: value };
-              }
+              const prospect = changeProspect
+                ? changeProspect({ [path]: value }, value, path, errors)
+                : { [path]: value };
               dispatch(updateProspect(prospect));
             } else if (!touch) {
               setFieldTouched(name);
@@ -89,10 +86,7 @@ export const AutoSaveField = ({
   const options = useMemo(() => {
     if (path && datalistId && datalist) {
       const fieldConfig = datalist[datalistId] || [];
-      if (typeof filterOptions === "function") {
-        return filterOptions(fieldConfig);
-      }
-      return fieldConfig;
+      return filterOptions ? filterOptions(fieldConfig) : fieldConfig;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, datalistId, filterOptions, filterOptionsDeps]);
