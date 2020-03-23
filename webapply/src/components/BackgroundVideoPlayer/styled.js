@@ -69,7 +69,6 @@ export const useStyles = makeStyles(theme => ({
     textTransform: "inherit",
     letterSpacing: "normal",
     padding: "12px 30px",
-    height: "auto",
     [theme.breakpoints.only("xs")]: {
       minHeight: "48px"
     }
