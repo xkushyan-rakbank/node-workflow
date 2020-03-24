@@ -6,14 +6,11 @@ import { RISK_RATING, COMPANY_CHECK_NAMES } from "../../constants";
 export const getOrganizationScreeningResults = state =>
   get(getOverviewOrganizationInfo(state), "screeningInfo.screeningResults", []);
 
-export const getProspectRiskScore = state => getOverviewApplicationInfo(state).riskScore || "0.0";
-
-const screeningResults = state => getOrganizationScreeningResults(state);
-const riskScore = state => getProspectRiskScore(state);
+export const getProspectRiskScore = state => getOverviewApplicationInfo(state).riskScore;
 
 export const getCompanyChecks = createSelector(
-  screeningResults,
-  riskScore,
+  getOrganizationScreeningResults,
+  getProspectRiskScore,
   (screeningResults, riskScore) => [
     ...COMPANY_CHECK_NAMES.map(check => ({
       ...check,
@@ -21,7 +18,8 @@ export const getCompanyChecks = createSelector(
     })),
     {
       ...RISK_RATING,
-      screeningReason: riskScore
+      screeningStatus: riskScore && parseFloat(riskScore) > 0 ? "Completed" : "Incomplete",
+      screeningReason: riskScore || "Null"
     }
   ]
 );
