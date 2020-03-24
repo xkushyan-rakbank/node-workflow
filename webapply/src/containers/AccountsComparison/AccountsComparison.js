@@ -22,17 +22,10 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const scrollToSecondSection = useCallback(() => scrollToDOMNode(secondSection), []);
   const scrollToThirdSection = useCallback(() => scrollToDOMNode(tableRef), []);
 
-  const handleClickMobile = useCallback(
+  const handleSetAccountType = useCallback(
     accountType => {
       setSelectedAccount(accountType);
       scrollToThirdSection();
-    },
-    [setSelectedAccount, scrollToThirdSection]
-  );
-
-  const setAccountType = useCallback(
-    accountType => {
-      setSelectedAccount(accountType);
     },
     [setSelectedAccount]
   );
@@ -51,7 +44,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
           />
-          <AccountCard setAccountType={setAccountType} handleClickMobile={handleClickMobile} />
+          <AccountCard handleSetAccountType={handleSetAccountType} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 
