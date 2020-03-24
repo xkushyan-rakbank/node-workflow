@@ -43,8 +43,10 @@ public class ResponseFactory {
     }
 
     public static JsonNode newLoginResponse() {
-        return objectMapper.createObjectNode().put("login", "ok");
+        return objectMapper.createObjectNode()
+                .put("login", "ok")
+                .put("refresh_token", "refresh-token-value")
+                .put("access_token", "access-token-value");
     }
-
 
 }

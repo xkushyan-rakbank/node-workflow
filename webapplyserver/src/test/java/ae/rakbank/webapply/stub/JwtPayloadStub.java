@@ -30,6 +30,13 @@ public class JwtPayloadStub {
                 .build();
     }
 
+    public static JwtPayload newCustomerJwtWithNoPhoneNumber() {
+        return JwtPayload.builder()
+                .oauthAccessToken("666473634664563554534737464")
+                .role(UserRole.CUSTOMER)
+                .build();
+    }
+
     public static JwtPayload newAgentJwt() {
         return JwtPayload.builder()
                 .oauthAccessToken("666473634664563554534737464")
