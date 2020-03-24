@@ -9,7 +9,7 @@ import {
   verifyCodeFailed,
   verifyClearError,
 } from "../../../src/store/actions/otp";
-import {applicantInfoFormPromisify} from "../../../src/store/actions/applicantInfoForm"
+import { applicantInfoFormPromisify } from "../../../src/store/actions/applicantInfoForm"
 
 describe("otp reducer test", () => {
   it("VERIFY_OTP action type", () => {
@@ -22,7 +22,7 @@ describe("otp reducer test", () => {
     };
     expect(reducer(initialState, verifyOtp(payload))).toStrictEqual(expectedState)
   })
-  it("APPLICANT_INFO_FORM action type", () => {
+  it("APPLICANT_INFO_FORM, GENERATE_OTP_CODE actions type", () => {
     const payload = {};
     const expectedState = {
       ...initialState,
@@ -37,22 +37,6 @@ describe("otp reducer test", () => {
       error: ""
     };
     expect(reducer(initialState, applicantInfoFormPromisify(payload))).toStrictEqual(expectedState);
-  });
-
-  it("GENERATE_OTP_CODE action type", () => {
-    const payload = {};
-    const expectedState = {
-      ...initialState,
-      verificationError: false,
-      isVerified: false,
-      isGenerating: true,
-      isGenerated: false,
-      mode: "",
-      otpTokenValidityInSec: "",
-      otpTokenValidUntil: "",
-      isPending: false,
-      error: ""
-    };
     expect(reducer(initialState, generateOtpCode(payload))).toStrictEqual(expectedState);
   });
 

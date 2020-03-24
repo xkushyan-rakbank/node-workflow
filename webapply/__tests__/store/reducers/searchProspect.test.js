@@ -79,9 +79,7 @@ describe("searchProspect reducer test", () => {
   });
 
   it("LOGOUT action type", () => {
-    const updatedState = {
-     initialState
-    };
+    const updatedState = {};
     expect(reducer(updatedState, logout())).toStrictEqual(initialState);
   });
 });
