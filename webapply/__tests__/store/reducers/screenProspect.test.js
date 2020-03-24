@@ -38,7 +38,7 @@ describe("screenProspect reducer test", () => {
     const updatedState = {
       [prospectId]: {},
     };
-    const { [prospectId]: { }, ...expectedState } = updatedState;
+    const expectedState = {}
     expect(reducer(updatedState, screenProspectReset(prospectId))).toStrictEqual(expectedState);
   });
 });

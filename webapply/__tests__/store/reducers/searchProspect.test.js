@@ -31,7 +31,7 @@ describe("searchProspect reducer test", () => {
   });
 
   it("SEARCH_APPLICATIONS_SUCCESS action type with undefined payload", () => {
-    expect(reducer(initialState, searchApplicationsSuccess(undefined))).toStrictEqual(initialState);
+    expect(reducer(initialState, searchApplicationsSuccess(undefined)).searchResults).toStrictEqual([]);
   });
 
   it("SEARCH_APPLICATIONS_FAILURE action type", () => {
