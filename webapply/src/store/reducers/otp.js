@@ -1,7 +1,17 @@
-import * as actions from "../actions/otp";
+import {
+  VERIFY_OTP,
+  GENERATE_OTP_CODE,
+  SET_PENDING,
+  SET_GENERATING,
+  GENERATE_CODE_SUCCESS,
+  VERIFY_CODE_SUCCESS,
+  VERIFY_CODE_FAILED,
+  VERIFY_CLEAR_ERROR
+} from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
+import { handleActions } from "../../utils/redux-utils";
 
-const initialState = {
+export const initialState = {
   isGenerating: false,
   isGenerated: false,
   isPending: false,
@@ -14,82 +24,74 @@ const initialState = {
   attempts: 0
 };
 
-const otpReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actions.VERIFY_OTP: {
-      return {
-        ...state,
-        verificationError: false,
-        isVerified: false,
-        isPending: true
-      };
-    }
-    case APPLICANT_INFO_FORM:
-    case actions.GENERATE_OTP_CODE: {
-      return {
-        ...state,
-        verificationError: false,
-        isVerified: false,
-        isGenerating: true,
-        isGenerated: false,
-        mode: "",
-        otpTokenValidityInSec: "",
-        otpTokenValidUntil: "",
-        isPending: false,
-        error: ""
-      };
-    }
-    case actions.SET_PENDING: {
-      return {
-        ...state,
-        isPending: action.payload
-      };
-    }
-    case actions.SET_GENERATING: {
-      return {
-        ...state,
-        isGenerating: action.payload
-      };
-    }
-    case actions.GENERATE_CODE_SUCCESS: {
-      return {
-        ...state,
-        ...action.payload,
-        isGenerating: false,
-        isGenerated: true,
-        isPending: false,
-        generatedAt: Date.now()
-      };
-    }
-    case actions.VERIFY_CODE_SUCCESS: {
-      return {
-        ...state,
-        isGenerating: false,
-        isGenerated: false,
-        isVerified: true,
-        verificationError: false,
-        isPending: false,
-        attempts: 0
-      };
-    }
-    case actions.VERIFY_CODE_FAILED: {
-      return {
-        ...state,
-        isVerified: false,
-        verificationError: true,
-        isPending: false,
-        attempts: state.attempts + 1
-      };
-    }
-    case actions.VERIFY_CLEAR_ERROR: {
-      return {
-        ...state,
-        verificationError: false
-      };
-    }
-    default:
-      return state;
-  }
-};
-
-export default otpReducer;
+export default handleActions(
+  {
+    [VERIFY_OTP]: state => ({
+      ...state,
+      verificationError: false,
+      isVerified: false,
+      isPending: true
+    }),
+    [APPLICANT_INFO_FORM]: state => ({
+      ...state,
+      verificationError: false,
+      isVerified: false,
+      isGenerating: true,
+      isGenerated: false,
+      mode: "",
+      otpTokenValidityInSec: "",
+      otpTokenValidUntil: "",
+      isPending: false,
+      error: ""
+    }),
+    [GENERATE_OTP_CODE]: state => ({
+      ...state,
+      verificationError: false,
+      isVerified: false,
+      isGenerating: true,
+      isGenerated: false,
+      mode: "",
+      otpTokenValidityInSec: "",
+      otpTokenValidUntil: "",
+      isPending: false,
+      error: ""
+    }),
+    [SET_PENDING]: (state, action) => ({
+      ...state,
+      isPending: action.payload
+    }),
+    [SET_GENERATING]: (state, action) => ({
+      ...state,
+      isGenerating: action.payload
+    }),
+    [GENERATE_CODE_SUCCESS]: (state, action) => ({
+      ...state,
+      ...action.payload,
+      isGenerating: false,
+      isGenerated: true,
+      isPending: false,
+      generatedAt: Date.now()
+    }),
+    [VERIFY_CODE_SUCCESS]: state => ({
+      ...state,
+      isGenerating: false,
+      isGenerated: false,
+      isVerified: true,
+      verificationError: false,
+      isPending: false,
+      attempts: 0
+    }),
+    [VERIFY_CODE_FAILED]: state => ({
+      ...state,
+      isVerified: false,
+      verificationError: true,
+      isPending: false,
+      attempts: state.attempts + 1
+    }),
+    [VERIFY_CLEAR_ERROR]: state => ({
+      ...state,
+      verificationError: false
+    })
+  },
+  initialState
+);

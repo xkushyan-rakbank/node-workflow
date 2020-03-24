@@ -1,5 +1,6 @@
-import * as actions from "../actions/serverValidation";
+import { SET_INPUTS_ERRORS, RESET_INPUTS_ERRORS } from "../actions/serverValidation";
 import routes from "./../../routes";
+import { handleActions } from "../../utils/redux-utils";
 
 export const replaceDollarsAndDot = (str = "") => str.replace(/\$+ |\.$/g, "");
 
@@ -7,31 +8,28 @@ export const initialState = {
   inputs: {}
 };
 
-const serverErrorsReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case actions.SET_INPUTS_ERRORS:
-      return {
-        ...state,
-        inputs: action.payload.reduce(
-          (acc, item) => ({
-            ...acc,
-            [composeInputKeyFromValidationData(item)]: {
-              ...item,
-              message: replaceDollarsAndDot(item.message)
-            }
-          }),
-          {}
-        )
-      };
-    case actions.RESET_INPUTS_ERRORS:
-      return {
-        ...state,
-        inputs: {}
-      };
-    default:
-      return state;
-  }
-};
+export default handleActions(
+  {
+    [SET_INPUTS_ERRORS]: (state, action) => ({
+      ...state,
+      inputs: action.payload.reduce(
+        (acc, item) => ({
+          ...acc,
+          [composeInputKeyFromValidationData(item)]: {
+            ...item,
+            message: replaceDollarsAndDot(item.message)
+          }
+        }),
+        {}
+      )
+    }),
+    [RESET_INPUTS_ERRORS]: (state, action) => ({
+      ...state,
+      inputs: {}
+    })
+  },
+  initialState
+);
 
 export function composeInputKeyFromValidationData(validationData) {
   const pathname = window.location.pathname;
@@ -47,5 +45,3 @@ export function composeInputKeyFromValidationData(validationData) {
     return `prospect.${replaced}`;
   }
 }
-
-export default serverErrorsReducer;
