@@ -9,7 +9,7 @@ import {
   VERIFY_CLEAR_ERROR
 } from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
-import { handleActions } from "../../utils/redux-utils";
+import { handleActions, composeActions } from "../../utils/redux-utils";
 
 export const initialState = {
   isGenerating: false,
@@ -32,19 +32,7 @@ export default handleActions(
       isVerified: false,
       isPending: true
     }),
-    [APPLICANT_INFO_FORM]: state => ({
-      ...state,
-      verificationError: false,
-      isVerified: false,
-      isGenerating: true,
-      isGenerated: false,
-      mode: "",
-      otpTokenValidityInSec: "",
-      otpTokenValidUntil: "",
-      isPending: false,
-      error: ""
-    }),
-    [GENERATE_OTP_CODE]: state => ({
+    [composeActions(GENERATE_OTP_CODE, APPLICANT_INFO_FORM)]: state => ({
       ...state,
       verificationError: false,
       isVerified: false,
