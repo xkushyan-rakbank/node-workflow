@@ -60,7 +60,8 @@ public class ConfigFactory {
                 .set("OtherConfigs", objectMapper.createObjectNode()
                         .set("local", objectMapper.createObjectNode()
                                 .put("OAuthUsername", "theoauthusername")
-                                .put("OAuthPassword", "theoauthpassword")));
+                                .put("OAuthPassword", "theoauthpassword")
+                                .put("JwtSecret", "1234")));
     }
 
 }
