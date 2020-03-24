@@ -11,7 +11,6 @@ import {
 } from "../../../src/store/actions/otp";
 import {applicantInfoFormPromisify} from "../../../src/store/actions/applicantInfoForm"
 
-
 describe("otp reducer test", () => {
   it("VERIFY_OTP action type", () => {
     const payload = {}
@@ -39,6 +38,7 @@ describe("otp reducer test", () => {
     };
     expect(reducer(initialState, applicantInfoFormPromisify(payload))).toStrictEqual(expectedState);
   });
+
   it("GENERATE_OTP_CODE action type", () => {
     const payload = {};
     const expectedState = {

@@ -1,6 +1,6 @@
 import reducer, { initialState } from "../../../src/store/reducers/loginForm";
 import { loginInfoFormSuccess, logout } from "../../../src/store/actions/loginForm";
-  
+
   describe("loginForm reducer test", () => {
     it("LOGIN_INFO_FORM_SUCCESS action type", () => {
       const payload = {};
