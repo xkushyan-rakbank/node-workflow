@@ -31,25 +31,24 @@ const DatePickerBase = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const classes = useStyles();
-  const [isSelectedDate, setIsDateSelected] = useState({
+  const [selectedDate, setSelectedDate] = useState({
     isSelectedMonth: false,
     isSelectedYear: false
   });
-  const { isSelectedMonth, isSelectedYear } = isSelectedDate;
 
   const setMonthIsSelected = useCallback(() => {
-    setIsDateSelected({ ...isSelectedDate, isSelectedMonth: true });
-  }, [isSelectedDate, setIsDateSelected]);
+    setSelectedDate({ ...selectedDate, isSelectedMonth: true });
+  }, [selectedDate, setSelectedDate]);
   const setYearIsSelected = useCallback(() => {
-    setIsDateSelected({ ...isSelectedDate, isSelectedYear: true });
-  }, [isSelectedDate, setIsDateSelected]);
+    setSelectedDate({ ...selectedDate, isSelectedYear: true });
+  }, [selectedDate, setSelectedDate]);
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
-            autoOk={isSelectedMonth && isSelectedYear}
+            autoOk={Object.values(selectedDate).every(Boolean)}
             onMonthChange={setMonthIsSelected}
             onYearChange={setYearIsSelected}
             autoComplete="off"
