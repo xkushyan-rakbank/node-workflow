@@ -7,11 +7,6 @@ import {
   setErrorOccurredWhilePerforming,
   getProspectOverviewSuccess
 } from "../../../src/store/actions/searchProspect";
-import {
-  MOCK_SEARCH_RESULT,
-  MOCK_PROSPECT_OBJECT,
-  UNMATCHED_ACTION
-} from "../../../__mocks__/storeMock";
 import { logout } from "../../../src/store/actions/loginForm";
 
 describe("searchProspect reducer test", () => {
@@ -24,7 +19,7 @@ describe("searchProspect reducer test", () => {
   });
 
   it("SEARCH_APPLICATIONS_SUCCESS action type", () => {
-    const searchResults = [MOCK_SEARCH_RESULT, MOCK_SEARCH_RESULT];
+    const searchResults = [1, 2];
     const expectedState = {
       ...initialState,
       searchResults,
@@ -40,7 +35,7 @@ describe("searchProspect reducer test", () => {
   });
 
   it("SEARCH_APPLICATIONS_FAILURE action type", () => {
-    const searchResults = [MOCK_SEARCH_RESULT, MOCK_SEARCH_RESULT];
+    const searchResults = [1, 2];
     const updatedState = {
       ...initialState,
       searchResults,
@@ -73,24 +68,20 @@ describe("searchProspect reducer test", () => {
   });
 
   it("GET_PROSPECT_OVERVIEW_SUCCESS action type", () => {
+    const prospect = {}
     const expectedState = {
       ...initialState,
-      prospectOverview: MOCK_PROSPECT_OBJECT
+      prospectOverview: prospect
     };
-    expect(reducer(initialState, getProspectOverviewSuccess(MOCK_PROSPECT_OBJECT))).toStrictEqual(
+    expect(reducer(initialState, getProspectOverviewSuccess(prospect))).toStrictEqual(
       expectedState
     );
   });
 
   it("LOGOUT action type", () => {
     const updatedState = {
-      ...initialState,
-      prospectOverview: MOCK_PROSPECT_OBJECT
+     initialState
     };
     expect(reducer(updatedState, logout())).toStrictEqual(initialState);
-  });
-
-  it("check default action type", () => {
-    expect(reducer(initialState, UNMATCHED_ACTION)).toStrictEqual(initialState);
   });
 });

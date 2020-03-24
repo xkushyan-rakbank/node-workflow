@@ -7,7 +7,6 @@ import {
   setScreeningError,
   resetScreeningError
 } from "../../../src/store/actions/sendProspectToAPI";
-import { UNMATCHED_ACTION } from "../../../__mocks__/storeMock";
 
 describe("sendProspectToAPI reducer test", () => {
   it("SEND_PROSPECT_TO_API action type", () => {
@@ -66,9 +65,5 @@ describe("sendProspectToAPI reducer test", () => {
       screeningError
     };
     expect(reducer(updatedState, resetScreeningError())).toStrictEqual(initialState);
-  });
-
-  it("check default action type", () => {
-    expect(reducer(undefined, UNMATCHED_ACTION)).toStrictEqual(initialState);
   });
 });
