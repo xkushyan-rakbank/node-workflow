@@ -55,4 +55,12 @@ public class ConfigFactory {
 
     }
 
+    public static JsonNode newOtherConfig() {
+        return objectMapper.createObjectNode()
+                .set("OtherConfigs", objectMapper.createObjectNode()
+                        .set("local", objectMapper.createObjectNode()
+                                .put("OAuthUsername", "theoauthusername")
+                                .put("OAuthPassword", "theoauthpassword")));
+    }
+
 }
