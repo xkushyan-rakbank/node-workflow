@@ -23,7 +23,6 @@ export const useStyles = makeStyles(theme => ({
       position: "absolute",
       left: 0,
       width: "100%",
-      transform: ({ currentSectionIndex }) => `translateY(-${100 * currentSectionIndex}vh)`,
       transition: `transform ${transitionDuration}ms`
     }
   },
