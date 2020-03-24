@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef, useCallback } from "react";
 
-import { VerticalPagination } from "../../components/VerticalPagination";
+import { VerticalPagination, scrollToDOMNode } from "../../components/VerticalPagination";
 import { AccountBenefits } from "./AccountBenefits";
 import { AccountingSoftware } from "./AccountingSoftware";
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
@@ -11,11 +11,25 @@ export const DetailedAccount = () => {
   const { accountType, isIslamicBanking } = useAccountTypeByPathname();
   useFormNavigation([true, false]);
 
+  const secondSection = useRef(null);
+  const thirdSection = useRef(null);
+
+  const scrollToSecondSection = useCallback(() => scrollToDOMNode(secondSection), []);
+  const scrollToThirdSection = useCallback(() => scrollToDOMNode(thirdSection), []);
+
   return (
     <>
-      <VerticalPagination video={getVideoByAccountType(accountType, isIslamicBanking)}>
-        <AccountBenefits />
-        <AccountingSoftware />
+      <VerticalPagination
+        scrollToSecondSection={scrollToSecondSection}
+        scrollToThirdSection={scrollToThirdSection}
+        video={getVideoByAccountType(accountType, isIslamicBanking)}
+      >
+        <div ref={secondSection}>
+          <AccountBenefits />
+        </div>
+        <div ref={thirdSection}>
+          <AccountingSoftware />
+        </div>
       </VerticalPagination>
     </>
   );

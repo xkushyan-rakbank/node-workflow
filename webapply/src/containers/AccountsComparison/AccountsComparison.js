@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from "react";
 
-import { VerticalPagination } from "../../components/VerticalPagination";
+import { VerticalPagination, scrollToDOMNode } from "../../components/VerticalPagination";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
@@ -19,16 +19,15 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const secondSection = useRef(null);
   const tableRef = useRef(null);
 
-  const scrollToSecondSection = useCallback(() => {
-    secondSection.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+  const scrollToSecondSection = useCallback(() => scrollToDOMNode(secondSection), []);
+  const scrollToThirdSection = useCallback(() => scrollToDOMNode(tableRef), []);
 
   const handleClickMobile = useCallback(
     accountType => {
       setSelectedAccount(accountType);
-      tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollToThirdSection();
     },
-    [setSelectedAccount]
+    [setSelectedAccount, scrollToThirdSection]
   );
 
   const setAccountType = useCallback(
@@ -43,6 +42,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
       <VerticalPagination
         video={getVideoByAccountType()}
         scrollToSecondSection={scrollToSecondSection}
+        scrollToThirdSection={scrollToThirdSection}
         showVideoOnMobile
         hasVideo
       >

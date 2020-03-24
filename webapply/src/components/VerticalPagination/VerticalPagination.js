@@ -11,14 +11,15 @@ export const VerticalPaginationComponent = ({
   children,
   showVideoOnMobile = false,
   hasVideo = false,
-  scrollToSecondSection,
+  scrollToSecondSection = () => {},
+  scrollToThirdSection = () => {},
   video
 }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const { currentSectionIndex, scrollToSection, isCanScroll, setHasVideo } = useContext(
     VerticalPaginationContext
   );
-  const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
+  const classes = useStyles({ isMobileNotificationActive });
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const poster = (video && video.poster) || "";
@@ -36,6 +37,14 @@ export const VerticalPaginationComponent = ({
     },
     [scrollToSection, childrenCount]
   );
+
+  useEffect(() => {
+    if (currentSectionIndex === 1) scrollToSecondSection();
+  }, [currentSectionIndex, scrollToSecondSection]);
+
+  useEffect(() => {
+    if (currentSectionIndex === 2) scrollToThirdSection();
+  }, [currentSectionIndex, scrollToThirdSection]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
