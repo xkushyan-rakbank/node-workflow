@@ -23,7 +23,7 @@ export default handleActions(
         {}
       )
     }),
-    [RESET_INPUTS_ERRORS]: (state, action) => ({
+    [RESET_INPUTS_ERRORS]: state => ({
       ...state,
       inputs: {}
     })

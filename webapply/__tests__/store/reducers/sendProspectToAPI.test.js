@@ -57,12 +57,9 @@ describe("sendProspectToAPI reducer test", () => {
   });
 
   it("RESET_SCREENING_ERROR action type", () => {
-    const screeningError = {
-      error: "error message"
-    };
     const updatedState = {
       ...initialState,
-      screeningError
+      screeningError: initialState.screeningError
     };
     expect(reducer(updatedState, resetScreeningError())).toStrictEqual(initialState);
   });

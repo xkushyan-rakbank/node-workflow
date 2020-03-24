@@ -4,11 +4,13 @@ import {
   screenProspectSuccess,
   screenProspectReset
 } from "../../../src/store/actions/screenProspect";
-import { REQUEST_LOADING, REQUEST_SUCCESS } from "../../../src/constants";
 
 describe("screenProspect reducer test", () => {
+  const REQUEST_SUCCESS = "success"
+
   it("SCREEN_PROSPECT_REQUEST action type", () => {
     const prospectId = "123456";
+    const REQUEST_LOADING = "loading";
     const expectedState = {
       ...initialState,
       [prospectId]: {
