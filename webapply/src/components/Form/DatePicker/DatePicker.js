@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useState, useCallback } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { getIn } from "formik";
@@ -31,8 +31,18 @@ const DatePickerBase = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const classes = useStyles();
-  const [isSelectedMonth, setMothIsSelected] = useState(false);
-  const [isSelectedYear, setYearIsSelected] = useState(false);
+  const [isSelectedDate, setIsDateSelected] = useState({
+    isSelectedMonth: false,
+    isSelectedYear: false
+  });
+  const { isSelectedMonth, isSelectedYear } = isSelectedDate;
+
+  const setMonthIsSelected = useCallback(() => {
+    setIsDateSelected({ ...isSelectedDate, isSelectedMonth: true });
+  }, [isSelectedDate, setIsDateSelected]);
+  const setYearIsSelected = useCallback(() => {
+    setIsDateSelected({ ...isSelectedDate, isSelectedYear: true });
+  }, [isSelectedDate, setIsDateSelected]);
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
@@ -40,7 +50,7 @@ const DatePickerBase = ({
         <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
             autoOk={isSelectedMonth && isSelectedYear}
-            onMonthChange={setMothIsSelected}
+            onMonthChange={setMonthIsSelected}
             onYearChange={setYearIsSelected}
             autoComplete="off"
             label={label}
