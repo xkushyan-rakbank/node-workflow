@@ -11,6 +11,7 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
+import findLastIndex from "lodash/findLastIndex";
 
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
@@ -42,7 +43,8 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  VIEW_IDS
+  VIEW_IDS,
+  STEP_STATUS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
@@ -87,7 +89,20 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
+const changeLastStepStatus = (steps, flowId) => {
+  const lastElIdx = findLastIndex(steps, ["flowId", flowId]);
+  const newSteps = [...steps];
+  newSteps[lastElIdx].status = STEP_STATUS.COMPLETED;
+  return newSteps;
+};
+
+function* sendProspectToAPISaga({
+  payload: {
+    saveType,
+    actionType,
+    step: { flowId, activeStep, steps }
+  }
+}) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -95,7 +110,17 @@ function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
     const state = yield select();
     const prospect = getProspect(state);
 
-    yield put(sendProspectRequest(prospect, saveType, actionType));
+    const newProspect = { ...prospect };
+
+    if (flowId && activeStep === steps.length) {
+      const newCompletedSteps = changeLastStepStatus(state.completedSteps, flowId);
+      newProspect.freeFieldsInfo = {
+        ...(newProspect.freeFieldsInfo || {}),
+        freeField5: JSON.stringify({ completedSteps: newCompletedSteps })
+      };
+    }
+
+    yield put(sendProspectRequest(newProspect, saveType, actionType));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }

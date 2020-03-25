@@ -12,17 +12,26 @@ export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
 
-export const sendProspectToAPI = (saveType = NEXT, actionType = SAVE) => {
-  return { type: SEND_PROSPECT_TO_API, payload: { saveType, actionType } };
+export const sendProspectToAPI = (
+  saveType = NEXT,
+  actionType = SAVE,
+  step = { activeStep: null, flowId: "", steps: [] }
+) => {
+  return { type: SEND_PROSPECT_TO_API, payload: { saveType, actionType, step } };
 };
 
-export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null, actionType = SAVE) => {
+export const sendProspectToAPIPromisify = (
+  saveType = NEXT,
+  gaEvent = null,
+  actionType = SAVE,
+  step = { activeStep: null, flowId: "", steps: [] }
+) => {
   const action = {
     type: SEND_PROSPECT_TO_API,
     [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
     [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
     [CALLBACK_ARGUMENT]: action => action.payload,
-    payload: { saveType, actionType }
+    payload: { saveType, actionType, step }
   };
 
   return appendGaEventToAction(action, gaEvent);

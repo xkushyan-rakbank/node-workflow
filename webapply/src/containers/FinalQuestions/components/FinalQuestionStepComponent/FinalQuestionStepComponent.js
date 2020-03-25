@@ -21,7 +21,11 @@ export const FinalQuestionStepComponent = ({
 
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(CONTINUE, eventName).then(
+      sendProspectToAPI(CONTINUE, eventName, undefined, {
+        activeStep,
+        flowId: page,
+        steps: stepsArray
+      }).then(
         () => {
           handleSetNextStep(activeStep);
           if (activeStep === stepsArray.length) {
@@ -32,7 +36,15 @@ export const FinalQuestionStepComponent = ({
         () => {}
       );
     },
-    [sendProspectToAPI, handleSetNextStep, index, stepsArray, handleFinalStepContinue, activeStep]
+    [
+      sendProspectToAPI,
+      handleSetNextStep,
+      index,
+      stepsArray,
+      handleFinalStepContinue,
+      activeStep,
+      page
+    ]
   );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);

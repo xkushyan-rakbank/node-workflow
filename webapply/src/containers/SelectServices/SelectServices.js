@@ -43,7 +43,11 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
 
   const setNextStep = useCallback(
     event => {
-      sendProspectToAPI(CONTINUE, event).then(() => handleSetNextStep(activeStep), () => {});
+      sendProspectToAPI(CONTINUE, event, undefined, {
+        activeStep,
+        flowId: SELECT_SERVICES_PAGE_ID,
+        steps: servicesSteps
+      }).then(() => handleSetNextStep(activeStep), () => {});
     },
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );

@@ -47,7 +47,11 @@ export const CompanyInfoPage = ({
   const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(CONTINUE, event).then(
+    sendProspectToAPI(CONTINUE, event, undefined, {
+      activeStep,
+      flowId: COMPANY_INFO_PAGE_ID,
+      steps: companyInfoSteps
+    }).then(
       () => {
         handleSetNextStep(activeStep);
       },

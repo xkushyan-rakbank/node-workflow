@@ -69,7 +69,11 @@ const StakeholderStepperComponent = ({
   }, [setIsShowingAddButton, stakeholders.length]);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(CONTINUE, event).then(
+    sendProspectToAPI(CONTINUE, event, undefined, {
+      activeStep,
+      flowId: `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
+      steps: stakeHoldersSteps
+    }).then(
       () => {
         if (activeStep === STEP_6) {
           changeEditableStakeholder();
