@@ -60,7 +60,7 @@ export const StyledTableBodyComponent = ({ selectedCurrentColumn, handleHover, r
 
       <TableRow classes={{ root: classes.tableRowRoot }}>
         <TableCell component="th" scope="row" />
-        {Object.entries(accountTypes).map(([_, { name, position, accountName }], index) => (
+        {Object.values(accountTypes).map(({ name, position, accountName }, index) => (
           <TableCell
             ref={refs[index]}
             data-name={name}
