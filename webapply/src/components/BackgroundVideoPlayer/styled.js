@@ -73,16 +73,5 @@ export const useStyles = makeStyles(theme => ({
     width: "22px",
     marginLeft: 18,
     pointerEvents: "none"
-  },
-  hideOnMobile: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "inherit"
-    }
-  },
-  displayOnMobile: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
   }
 }));

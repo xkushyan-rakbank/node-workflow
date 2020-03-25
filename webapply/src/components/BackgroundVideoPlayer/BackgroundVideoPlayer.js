@@ -32,8 +32,7 @@ export const BackgroundVideoPlayer = ({
       </video>
 
       <div className={classes.buttonContainer}>
-        <ExpandMoreButton className={classes.hideOnMobile} onClick={handleClick} />
-        <ExpandMoreButton className={classes.displayOnMobile} onClick={handleClick} />
+        <ExpandMoreButton onClick={handleClick} />
       </div>
     </div>,
     document.getElementById("root")

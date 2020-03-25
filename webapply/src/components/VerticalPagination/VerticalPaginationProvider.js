@@ -34,8 +34,7 @@ export const VerticalPaginationProvider = ({ children }) => {
     () => ({
       currentSectionIndex,
       isCanScroll,
-      setCurrentSection,
-      isCurrentSectionVideo: currentSectionIndex === 0
+      setCurrentSection
     }),
     [currentSectionIndex, isCanScroll, setCurrentSection]
   );
