@@ -1,66 +1,66 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
+
 import { StyledTableHeader } from "./components/StyledTableHeader";
 import { StyledTableBody } from "./components/StyledTableBody";
 import { StyledTableBodyMobile } from "./components/StyledTableBodyMobile";
+import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
+import { useWindowSize } from "../../../../utils/useWindowSize";
+
 import { sizes, accountTypes } from "./constants";
 import { useStyles } from "./styled";
-import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
+
+const { INITIAL_OFFSET, OFFSET } = sizes;
 
 export const TableCompareComponent = ({ history, selectedAccount }) => {
-  const { INITIAL_OFFSET, OFFSET } = sizes;
   const [offset, setOffset] = useState(INITIAL_OFFSET);
-  const [activeAccount, setActiveAccount] = useState(accountTypes.currentAccount.position);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
+  const [width] = useWindowSize();
   const classes = useStyles();
 
   const RAKstarter = useRef(null);
   const CurrentAccount = useRef(null);
   const RAKElite = useRef(null);
   const refs = [RAKstarter, CurrentAccount, RAKElite];
-  const highlightSelectedAccount = useCallback(handleHighlightSelectedAccount, [selectedAccount]);
+
+  const handleHighlightSelectedAccount = useCallback(
+    position => {
+      const positionRefsMaps = {
+        [accountTypes.starter.position]: RAKstarter,
+        [accountTypes.currentAccount.position]: CurrentAccount,
+        [accountTypes.elite.position]: RAKElite
+      };
+      const ref = positionRefsMaps[position];
+
+      if (ref) {
+        setOffset(ref.current.offsetLeft + OFFSET);
+        setSelectedCurrentColumn(position);
+      }
+    },
+    [setOffset, setSelectedCurrentColumn]
+  );
 
   useEffect(() => {
-    highlightSelectedAccount(selectedAccount);
-  }, [selectedAccount, highlightSelectedAccount]);
+    const timer = setTimeout(() => handleHighlightSelectedAccount(selectedCurrentColumn), 4);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [width, handleHighlightSelectedAccount]);
 
-  function handleHighlightSelectedAccount(account) {
-    if (account === activeAccount) {
-      return;
-    }
+  useEffect(() => {
+    const { position } = Object.values(accountTypes).find(item => item.name === selectedAccount);
 
-    switch (account) {
-      case accountTypes.starter.name:
-        setOffset(RAKstarter.current.offsetLeft + OFFSET);
-        setActiveAccount(account);
-        setSelectedCurrentColumn(accountTypes.starter.position);
-        break;
-      case accountTypes.currentAccount.name:
-        setOffset(CurrentAccount.current.offsetLeft + OFFSET);
-        setActiveAccount(account);
-        setSelectedCurrentColumn(accountTypes.currentAccount.position);
-        break;
-      case accountTypes.elite.name:
-        setOffset(RAKElite.current.offsetLeft + OFFSET);
-        setActiveAccount(account);
-        setSelectedCurrentColumn(accountTypes.elite.position);
-        break;
-      default:
-        setOffset(CurrentAccount.current.offsetLeft + OFFSET);
-        setActiveAccount(account);
-        setSelectedCurrentColumn(accountTypes.currentAccount.position);
-    }
-  }
+    handleHighlightSelectedAccount(position);
+  }, [selectedAccount, handleHighlightSelectedAccount]);
 
   const handleSelectAccount = accountType => {
     history.push(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
   };
 
   const handleHover = e => {
-    const { currentTarget } = e;
-    const { name } = currentTarget.dataset;
-    handleHighlightSelectedAccount(name);
+    const { order } = e.currentTarget.dataset;
+
+    handleHighlightSelectedAccount(parseInt(order, 10));
   };
 
   return (

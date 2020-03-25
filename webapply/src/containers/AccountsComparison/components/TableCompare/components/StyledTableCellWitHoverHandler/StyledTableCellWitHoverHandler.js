@@ -16,6 +16,7 @@ export const StyledTableCellWitHoverHandlerComponent = ({
   return (
     <TableCell
       data-name={name}
+      data-order={order}
       {...props}
       onMouseEnter={handleHover}
       classes={{ root: classes.tableCellRoot }}
