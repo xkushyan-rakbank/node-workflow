@@ -45,7 +45,7 @@ export const VerticalPaginationComponent = ({
     } else if (currentSectionIndex === 2) {
       scrollToThirdSection();
     }
-  }, [currentSectionIndex, scrollToSecondSection, firstSection.current]);
+  }, [currentSectionIndex, scrollToSecondSection, scrollToThirdSection, firstSection]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);

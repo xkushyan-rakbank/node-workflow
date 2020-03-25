@@ -27,7 +27,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
       setSelectedAccount(accountType);
       scrollToThirdSection();
     },
-    [setSelectedAccount]
+    [setSelectedAccount, scrollToThirdSection]
   );
 
   return (
