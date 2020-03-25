@@ -23,6 +23,21 @@ public class JwtTokenStub {
             "QzVBOEExRUU5MTA0MDRGNTY1NzZGRCIsIm9hdXRoVG9rZW5FeHBpcnlUaW1lIjoiMjAyMC0wMy0xMVQxMzowMDo1Mi4zMzkifQ" +
             ".f-hfwIr3w1RvEVXroRvkAjnsf6vKWvRmXBRF-lJLyJY";
 
+    private static final String ENCRYPTED_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJPQXV0aFRva2VuIjoiYWNjZXNzLX" +
+            "Rva2VuIiwicm9sZSI6IkNVU1RPTUVSIiwicGhvbmVOdW1iZXIiOiIxMjM0MTIzNDEiLCJPQXV0aFJlZnJlc2hUb2tlbiI6InJlZnJlc2" +
+            "gtdG9rZW4iLCJvYXV0aFRva2VuRXhwaXJ5VGltZSI6IjIwMjAtMDEtMDFUMDA6MDAifQ.sFO0vQ4rbbGTIB31QRZhDb7By7886DmBU-cCEbRAEug";
+
+    private static final String ENCRYPTED_TOKEN_WITHOUT_ROLE = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6" +
+            "IjEyMzQxMjM0MSIsIm9hdXRoVG9rZW5FeHBpcnlUaW1lIjoiMjAyMC0wMS0wMVQwMDowMCJ9.Ewda0v4WSuR1RXW_EChZHPgr2Hlybosd8BteBS2Ozj8";
+
+    public static String getEncryptedToken() {
+        return ENCRYPTED_TOKEN;
+    }
+
+    public static String getEncryptedTokenWithoutRole() {
+        return ENCRYPTED_TOKEN_WITHOUT_ROLE;
+    }
+
     public static String getCustomerJwtTokenWithProspect(String prospectId) {
         JwtPayload jwtPayload = JwtPayload.builder()
                 .oauthAccessToken(TEST_ACCESS_TOKEN)
