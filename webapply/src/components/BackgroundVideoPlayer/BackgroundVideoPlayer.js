@@ -9,7 +9,6 @@ import { useStyles } from "./styled";
 
 export const BackgroundVideoPlayer = ({
   handleClick,
-  handleClickMobile,
   videoWrapperClass,
   video: { mp4, webm, poster }
 }) => {
@@ -34,7 +33,7 @@ export const BackgroundVideoPlayer = ({
 
       <div className={classes.buttonContainer}>
         <ExpandMoreButton className={classes.hideOnMobile} onClick={handleClick} />
-        <ExpandMoreButton className={classes.displayOnMobile} onClick={handleClickMobile} />
+        <ExpandMoreButton className={classes.displayOnMobile} onClick={handleClick} />
       </div>
     </div>,
     document.getElementById("root")

@@ -1,51 +1,37 @@
 import React, { useRef, useContext, useEffect, useCallback } from "react";
 import cx from "classnames";
 
-import { BackgroundVideoPlayer } from "../BackgroundVideoPlayer";
 import { VerticalPaginationContext } from "./VerticalPaginationProvider";
-import { getAverage, scrollToDOMNode } from "./utils";
+import { getAverage } from "./utils";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 import { useStyles } from "./styled";
 
-export const VerticalPaginationComponent = ({
-  children,
-  showVideoOnMobile = false,
-  scrollToSecondSection = () => {},
-  scrollToThirdSection = () => {},
-  video
-}) => {
+export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
-  const { currentSectionIndex, scrollToSection, isCanScroll } = useContext(
+  const { currentSectionIndex, setCurrentSection, isCanScroll } = useContext(
     VerticalPaginationContext
   );
   const classes = useStyles({ isMobileNotificationActive });
   const scrollings = useRef([]);
-  const firstSection = useRef(null);
   const prevTime = useRef(new Date().getTime());
-  const childrenCount = children.length + 1;
+  const childrenCount = children.length;
 
   const handleKeyDown = useCallback(
     e => {
       if (e.keyCode === 38 || e.keyCode === 33) {
-        scrollToSection(currentIndex => (currentIndex <= 0 ? currentIndex : currentIndex - 1));
+        setCurrentSection(currentIndex => (currentIndex <= 0 ? currentIndex : currentIndex - 1));
       } else if (e.keyCode === 40 || e.keyCode === 34) {
-        scrollToSection(currentIndex =>
+        setCurrentSection(currentIndex =>
           currentIndex === childrenCount - 1 ? currentIndex : currentIndex + 1
         );
       }
     },
-    [scrollToSection, childrenCount]
+    [setCurrentSection, childrenCount]
   );
 
   useEffect(() => {
-    if (currentSectionIndex === 0) {
-      scrollToDOMNode(firstSection);
-    } else if (currentSectionIndex === 1) {
-      scrollToSecondSection();
-    } else if (currentSectionIndex === 2) {
-      scrollToThirdSection();
-    }
-  }, [currentSectionIndex, scrollToSecondSection, scrollToThirdSection, firstSection]);
+    scrollToSection(currentSectionIndex);
+  }, [scrollToSection, currentSectionIndex]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
@@ -78,36 +64,21 @@ export const VerticalPaginationComponent = ({
       const isAccelerating = averageEnd >= averageMiddle;
 
       if (isAccelerating) {
-        scrollToSection(nextSectionIndex);
+        setCurrentSection(nextSectionIndex);
       }
     }
-  };
-
-  const handleClick = e => {
-    scrollToSection(parseInt(e.currentTarget.name));
   };
 
   return (
     <>
       <div className={classes.paginationWrapper} onWheel={handleWheel}>
-        <div
-          ref={firstSection}
-          className={cx(classes.videoWrapper, { "hide-on-mobile": !showVideoOnMobile })}
-        >
-          <BackgroundVideoPlayer
-            video={video}
-            videoWrapperClass={cx({ "hide-on-mobile": !showVideoOnMobile })}
-            scrollToSection={scrollToSection}
-            handleClick={handleClick}
-            handleClickMobile={scrollToSecondSection}
-            currentSectionIndex={currentSectionIndex}
-          />
-        </div>
-        {React.Children.map(children, child => (
+        {React.Children.map(children, (child, index) => (
           <div
-            className={cx(classes.childWrapper, {
-              [classes.childWrapperWithHeader]: child.props.withHeader
-            })}
+            className={cx(
+              classes.childWrapper,
+              { [classes.videoWrapper]: index === 0 },
+              child.props.className
+            )}
           >
             {child}
           </div>
@@ -121,7 +92,7 @@ export const VerticalPaginationComponent = ({
               className={cx(classes.paginationDot, {
                 [classes.current]: currentSectionIndex === i
               })}
-              onClick={() => scrollToSection(i)}
+              onClick={() => setCurrentSection(i)}
             />
           ))}
         </div>

@@ -16,7 +16,7 @@ export const VerticalPaginationProvider = ({ children }) => {
     setCurrentSectionIndex(0);
   }, [location]);
 
-  const scrollToSection = useCallback(
+  const setCurrentSection = useCallback(
     sectionIndex => {
       isCanScroll.current = false;
 
@@ -34,10 +34,10 @@ export const VerticalPaginationProvider = ({ children }) => {
     () => ({
       currentSectionIndex,
       isCanScroll,
-      scrollToSection,
+      setCurrentSection,
       isCurrentSectionVideo: currentSectionIndex === 0
     }),
-    [currentSectionIndex, isCanScroll, scrollToSection]
+    [currentSectionIndex, isCanScroll, setCurrentSection]
   );
 
   return (

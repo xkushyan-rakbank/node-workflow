@@ -78,7 +78,6 @@ export const useStyles = makeStyles(theme => ({
     cursor: "auto"
   },
   videoWrapper: {
-    height: "100vh",
     [theme.breakpoints.only("xs")]: {
       height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 444 : 380),
       marginBottom: 40
