@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { normalScrollHeight } from "../../constants";
 import { sideNavWidthCollapsed, sideNavWidthLG, sideNavWidthMD } from "../../constants/styles";
 
 export const useStyles = makeStyles(theme => ({
@@ -13,9 +12,6 @@ export const useStyles = makeStyles(theme => ({
     overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 10,
-    [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
-      transform: ({ currentSectionIndex }) => `translateY(-${100 * currentSectionIndex}vh)`
-    },
     [theme.breakpoints.only("xs")]: {
       top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 64 : 0),
       height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 704 : 640),
@@ -77,16 +73,5 @@ export const useStyles = makeStyles(theme => ({
     width: "22px",
     marginLeft: 18,
     pointerEvents: "none"
-  },
-  hideOnMobile: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "inherit"
-    }
-  },
-  displayOnMobile: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
   }
 }));

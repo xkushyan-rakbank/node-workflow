@@ -14,4 +14,4 @@ export const useWindowSize = () => {
   }, [setSize]);
 
   return size;
-}
+};

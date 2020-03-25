@@ -1,6 +1,10 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 
-import { VerticalPagination, scrollToDOMNode } from "../../components/VerticalPagination";
+import {
+  VerticalPagination,
+  scrollToDOMNode,
+  VerticalPaginationContext
+} from "../../components/VerticalPagination";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
@@ -10,35 +14,40 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 import { useStyles } from "./styled";
+import { BackgroundVideoPlayer } from "../../components/BackgroundVideoPlayer";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const classes = useStyles();
   useFormNavigation([true, false]);
+  const { setCurrentSection } = useContext(VerticalPaginationContext);
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
 
+  const firstSection = useRef(null);
   const secondSection = useRef(null);
   const tableRef = useRef(null);
 
-  const scrollToSecondSection = useCallback(() => scrollToDOMNode(secondSection), []);
-  const scrollToThirdSection = useCallback(() => scrollToDOMNode(tableRef), []);
+  const scrollToSection = useCallback(
+    i => scrollToDOMNode([firstSection, secondSection, tableRef][i]),
+    []
+  );
 
   const handleSetAccountType = useCallback(
     accountType => {
       setSelectedAccount(accountType);
-      scrollToThirdSection();
+      setCurrentSection(2);
     },
-    [setSelectedAccount, scrollToThirdSection]
+    [setSelectedAccount, setCurrentSection]
   );
 
   return (
     <div className={classes.container}>
-      <VerticalPagination
-        video={getVideoByAccountType()}
-        scrollToSecondSection={scrollToSecondSection}
-        scrollToThirdSection={scrollToThirdSection}
-        showVideoOnMobile
-        hasVideo
-      >
+      <VerticalPagination scrollToSection={scrollToSection}>
+        <div ref={firstSection}>
+          <BackgroundVideoPlayer
+            video={getVideoByAccountType()}
+            handleClick={() => setCurrentSection(1)}
+          />
+        </div>
         <div ref={secondSection}>
           <SectionTitleWithInfo
             title="Business accounts for every business stage"

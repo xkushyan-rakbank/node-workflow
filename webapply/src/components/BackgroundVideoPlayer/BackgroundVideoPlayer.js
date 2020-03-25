@@ -9,13 +9,11 @@ import { useStyles } from "./styled";
 
 export const BackgroundVideoPlayer = ({
   handleClick,
-  currentSectionIndex,
-  handleClickMobile,
   videoWrapperClass,
   video: { mp4, webm, poster }
 }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
-  const classes = useStyles({ isMobileNotificationActive, currentSectionIndex });
+  const classes = useStyles({ isMobileNotificationActive });
 
   return createPortal(
     <div className={cx(classes.container, videoWrapperClass)}>
@@ -34,8 +32,7 @@ export const BackgroundVideoPlayer = ({
       </video>
 
       <div className={classes.buttonContainer}>
-        <ExpandMoreButton className={classes.hideOnMobile} onClick={handleClick} />
-        <ExpandMoreButton className={classes.displayOnMobile} onClick={handleClickMobile} />
+        <ExpandMoreButton onClick={handleClick} />
       </div>
     </div>,
     document.getElementById("root")
