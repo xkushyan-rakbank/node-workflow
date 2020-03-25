@@ -10,21 +10,19 @@ import { useStyles } from "./styled";
 export const VerticalPaginationComponent = ({
   children,
   showVideoOnMobile = false,
-  hasVideo = false,
   scrollToSecondSection = () => {},
   scrollToThirdSection = () => {},
   video
 }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
-  const { currentSectionIndex, scrollToSection, isCanScroll, setHasVideo } = useContext(
+  const { currentSectionIndex, scrollToSection, isCanScroll } = useContext(
     VerticalPaginationContext
   );
   const classes = useStyles({ isMobileNotificationActive });
   const scrollings = useRef([]);
   const firstSection = useRef(null);
   const prevTime = useRef(new Date().getTime());
-  const poster = (video && video.poster) || "";
-  const childrenCount = children.length + (poster ? 1 : 0);
+  const childrenCount = children.length + 1;
 
   const handleKeyDown = useCallback(
     e => {
@@ -53,10 +51,6 @@ export const VerticalPaginationComponent = ({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
-
-  useEffect(() => {
-    setHasVideo(hasVideo);
-  }, [setHasVideo, hasVideo]);
 
   const handleWheel = e => {
     const offset = e.deltaY < 0 ? -1 : 1;
@@ -119,7 +113,7 @@ export const VerticalPaginationComponent = ({
           </div>
         ))}
       </div>
-      {(poster && currentSectionIndex === 0) || (
+      {currentSectionIndex !== 0 && (
         <div className={classes.paginationDots}>
           {new Array(childrenCount).fill(null).map((_, i) => (
             <button

@@ -37,7 +37,6 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
         scrollToSecondSection={scrollToSecondSection}
         scrollToThirdSection={scrollToThirdSection}
         showVideoOnMobile
-        hasVideo
       >
         <div ref={secondSection}>
           <SectionTitleWithInfo
