@@ -5,12 +5,15 @@ import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Slf4j
 @Component
 public class ProspectValidatorService {
 
@@ -25,8 +28,13 @@ public class ProspectValidatorService {
 
         String phoneNumber = jwtPayload.getPhoneNumber();
         JsonNode responseBody = (JsonNode) responseForFiltering.getBody();
-        ArrayNode rootNode = (ArrayNode) responseBody.get(ROOT_KEY);
 
+        if (responseBody.get(ROOT_KEY) instanceof NullNode) {
+            log.warn("The searchResult node in DEH json response is null");
+            return;
+        }
+
+        ArrayNode rootNode = (ArrayNode) responseBody.get(ROOT_KEY);
         for (int i = 0; i < rootNode.size(); i++) {
             if (!phoneNumber.equals(rootNode.get(i).get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
                 rootNode.remove(i);
