@@ -22,7 +22,14 @@ export default function NotFoundPage() {
 
   return (
     <div className={classes.appStatus}>
-      <img src={notFound} alt="NotFound" width="auto" height={232} />
+      <img
+        src={notFound}
+        className={classes.appStatusImg}
+        alt="NotFound"
+        width="auto"
+        height={232}
+      />
+      <span className={classes.appStatusText}>Sorry, we couldn{"'"}t find that page.</span>
       <ContainedButton
         label={
           <span className={classes.buttonText}>
