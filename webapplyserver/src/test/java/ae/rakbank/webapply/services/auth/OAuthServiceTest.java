@@ -10,6 +10,7 @@ import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
+@Ignore
 public class OAuthServiceTest {
 
     private OAuthService oAuthService;

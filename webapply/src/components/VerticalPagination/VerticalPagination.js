@@ -19,11 +19,9 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   const handleKeyDown = useCallback(
     e => {
       if (e.keyCode === 38 || e.keyCode === 33) {
-        setCurrentSection(currentIndex => (currentIndex <= 0 ? currentIndex : currentIndex - 1));
+        setCurrentSection(currentIndex => Math.max(0, currentIndex - 1));
       } else if (e.keyCode === 40 || e.keyCode === 34) {
-        setCurrentSection(currentIndex =>
-          currentIndex === childrenCount - 1 ? currentIndex : currentIndex + 1
-        );
+        setCurrentSection(currentIndex => Math.min(childrenCount - 1, currentIndex + 1));
       }
     },
     [setCurrentSection, childrenCount]
