@@ -1,11 +1,11 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-import uniqueId from "lodash/uniqueId";
 import * as actions from "../actions/retrieveApplicantInfo";
 import { setConfig, loadMetaData } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
+import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 
 function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -35,17 +35,22 @@ function* getProspectIdInfo({ payload }) {
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
 
     yield put(setConfig(config));
+
     if (freeFieldsInfo) {
       yield put(loadMetaData(freeFieldsInfo));
+      if (freeFieldsInfo.freeField5) {
+        const { completedSteps = [] } = JSON.parse(freeFieldsInfo.freeField5);
+        const stakeholdersIds = completedSteps
+          .filter(({ flowId }) => flowId.startsWith(COMPANY_STAKEHOLDER_ID))
+          .map(({ flowId }) => ({ id: flowId.split("_")[1], isEditting: false }))
+          .reduce((acc, i) => {
+            if (!acc.some(a => a.id === i.id)) acc.push(i);
+            return acc;
+          }, []);
+        yield put(updateStakeholdersIds(stakeholdersIds));
+      }
     }
 
-    const stakeholdersIds = config.prospect.signatoryInfo.map(() => ({
-      id: uniqueId(),
-      done: false,
-      isEditting: false
-    }));
-
-    yield put(updateStakeholdersIds(stakeholdersIds));
     yield put(actions.getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);

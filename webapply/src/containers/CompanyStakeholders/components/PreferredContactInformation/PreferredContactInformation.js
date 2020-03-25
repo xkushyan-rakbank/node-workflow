@@ -17,24 +17,25 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
-const preferredContactInformationSchema = Yup.object().shape({
-  primaryEmail: Yup.string()
-    .required(getRequiredMessage("E-mail address"))
-    .email(getInvalidMessage("E-mail address"))
-    .max(50, getInvalidMessage("E-mail address")),
-  primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
-  primaryMobileNo: Yup.string()
-    .required(getRequiredMessage("Mobile number"))
-    .phoneNo({
-      codeFieldName: "primaryMobCountryCode",
-      fieldName: "Mobile number"
-    }),
-  primaryPhoneNo: Yup.string().phoneNo({
-    codeFieldName: "primaryPhoneCountryCode",
-    fieldName: "Landline number",
-    isLandline: true
-  })
-});
+const preferredContactInformationSchema = () =>
+  Yup.object().shape({
+    primaryEmail: Yup.string()
+      .required(getRequiredMessage("E-mail address"))
+      .email(getInvalidMessage("E-mail address"))
+      .max(50, getInvalidMessage("E-mail address")),
+    primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
+    primaryMobileNo: Yup.string()
+      .required(getRequiredMessage("Mobile number"))
+      .phoneNo({
+        codeFieldName: "primaryMobCountryCode",
+        fieldName: "Mobile number"
+      }),
+    primaryPhoneNo: Yup.string().phoneNo({
+      codeFieldName: "primaryPhoneCountryCode",
+      fieldName: "Landline number",
+      isLandline: true
+    })
+  });
 
 const PreferredContactInformationStep = ({
   isSignatory,
