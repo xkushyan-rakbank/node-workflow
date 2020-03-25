@@ -1,8 +1,13 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   container: {
-    minHeight: "100vh",
-    paddingTop: "15vh"
+    marginBottom: 40,
+    [theme.breakpoints.up("sm")]: {
+      boxSizing: "border-box",
+      minHeight: "100vh",
+      paddingTop: "15vh",
+      marginBottom: 0
+    }
   }
-});
+}));

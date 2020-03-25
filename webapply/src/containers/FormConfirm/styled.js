@@ -4,13 +4,12 @@ export const useStyles = makeStyles({
   centeredContainer: {
     marginTop: 0
   },
-  container: {
-    "& .title": {
-      marginBottom: "0",
-      fontSize: "48px"
-    }
+  heading: {
+    fontSize: 48,
+    lineHeight: "56px"
   },
   title: {
-    fontSize: "20px"
+    marginTop: 0,
+    fontSize: 20
   }
 });

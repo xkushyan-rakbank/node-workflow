@@ -14,7 +14,7 @@ export const FormConfirm = () => {
 
   return (
     <div className={classes.container}>
-      <h2 className="title">Confirm It’s You</h2>
+      <h2 className={classes.heading}>Confirm It’s You</h2>
       <OTPform
         redirectRoute={routes.companyInfo}
         classes={{
