@@ -12,19 +12,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   paginationWrapper: {
-    [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
-      position: "relative",
-      height: "100vh",
-      overflow: "hidden"
-    }
-  },
-  paginationContent: {
-    [`${theme.breakpoints.up("sm")} and (min-height: ${normalScrollHeight + 1}px)`]: {
-      position: "absolute",
-      left: 0,
-      width: "100%",
-      transition: `transform ${transitionDuration}ms`
-    }
+    position: "relative"
   },
   childWrapper: {
     display: "flex",
@@ -57,7 +45,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   paginationDots: {
-    position: "absolute",
+    position: "fixed",
     top: "50vh",
     right: "30px",
     width: "10px",
