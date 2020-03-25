@@ -15,6 +15,7 @@ export const StyledTableHeaderCellWitHoverHandlerComponent = ({
   return (
     <TableCell
       data-name={name}
+      data-order={order}
       onMouseEnter={handleHover}
       classes={{ root: classes.tableHeaderCellRoot, head: classes.tableHeaderCellHead }}
       className={cx({ [classes.tableHeaderCellActive]: order === selectedCurrentColumn })}
