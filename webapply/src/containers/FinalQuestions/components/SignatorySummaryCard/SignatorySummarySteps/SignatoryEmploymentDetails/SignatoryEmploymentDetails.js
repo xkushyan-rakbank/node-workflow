@@ -34,10 +34,13 @@ export const signatoryEmploymentDetailsSchema = () =>
     qualification: Yup.string().required(getRequiredMessage("Qualification")),
     employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
     totalExperienceYrs: Yup.string()
-      .required(getRequiredMessage("Number of years of experience"))
+      .required(getRequiredMessage("Background information of the signatory"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
-      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Number of years of experience")),
+      .matches(
+        TOTAL_EXPERIENCE_YRS_REGEX,
+        getInvalidMessage("Background information of the signatory")
+      ),
     otherEmploymentType: Yup.string().when("employmentType", {
       is: value => value === OTHER_OPTION_CODE,
       then: Yup.string()

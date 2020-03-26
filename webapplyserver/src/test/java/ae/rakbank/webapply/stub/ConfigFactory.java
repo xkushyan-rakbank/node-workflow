@@ -23,6 +23,22 @@ public class ConfigFactory {
 
     }
 
+    public static ObjectNode newWebapplyControllerConfig() {
+
+        ObjectNode config = objectMapper.createObjectNode();
+        ObjectNode dehURIs = objectMapper.createObjectNode();
+
+        dehURIs.put("getProspectDocumentsUri", "/deh-uri");
+        dehURIs.put("getProspectDocumentByIdUri", "/deh-uri-by-id");
+        dehURIs.put("authenticateUserUri", "/login");
+
+        config.set("DehURIs", dehURIs);
+        config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
+
+        return config;
+
+    }
+
     public static JsonNode newProspectControllerConfig() {
         ObjectNode config = objectMapper.createObjectNode();
         ObjectNode dehURIs = objectMapper.createObjectNode();
@@ -37,6 +53,15 @@ public class ConfigFactory {
 
         return config;
 
+    }
+
+    public static JsonNode newOtherConfig() {
+        return objectMapper.createObjectNode()
+                .set("OtherConfigs", objectMapper.createObjectNode()
+                        .set("local", objectMapper.createObjectNode()
+                                .put("OAuthUsername", "theoauthusername")
+                                .put("OAuthPassword", "theoauthpassword")
+                                .put("JwtSecret", "1234")));
     }
 
 }

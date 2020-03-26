@@ -88,8 +88,8 @@ describe("actions for app config", () => {
 
   it("should save prospectModel", () => {
     const payload = {};
-    const expectedAction = { type: appConfig.SAVE_PROSPECT_MODEL, payload };
-    expect(appConfig.saveProspectModel(payload)).toEqual(expectedAction);
+    const expectedAction = { type: appConfig.SAVE_SIGNATORY_MODEL, payload };
+    expect(appConfig.saveSignatoryModel(payload)).toEqual(expectedAction);
   });
 
   it("should set accessToken", () => {

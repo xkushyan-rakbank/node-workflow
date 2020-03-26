@@ -1,34 +1,20 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 
 import { OTPform } from "../../components/OTPform";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { formStepper } from "../../constants";
 import routes from "../../routes";
 
-const useStyles = makeStyles({
-  centeredContainer: {
-    marginTop: 0
-  },
-  container: {
-    "& .title": {
-      marginBottom: "0",
-      fontSize: "48px"
-    }
-  },
-  title: {
-    fontSize: "20px"
-  }
-});
+import { useStyles } from "./styled";
 
 export const FormConfirm = () => {
   const classes = useStyles();
 
-  useFormNavigation([true, false]);
+  useFormNavigation([false, false, formStepper]);
 
   return (
     <div className={classes.container}>
-      <h2 className="title">Confirm It’s You</h2>
-
+      <h2 className={classes.heading}>Confirm It’s You</h2>
       <OTPform
         redirectRoute={routes.companyInfo}
         classes={{

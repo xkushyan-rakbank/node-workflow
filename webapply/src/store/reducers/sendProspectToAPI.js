@@ -30,7 +30,7 @@ export default handleActions(
     }),
     [RESET_FORM_STEP]: (state, action) => ({
       ...state,
-      resetStep: action.resetStep
+      resetStep: action.payload
     }),
     [SET_SCREENING_ERROR]: (state, action) => ({
       ...state,

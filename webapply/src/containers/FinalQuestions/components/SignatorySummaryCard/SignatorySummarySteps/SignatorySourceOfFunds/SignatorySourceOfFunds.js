@@ -55,7 +55,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChange
       validationSchema={signatorySourceOfFundsSchema}
       validateOnChange={false}
     >
-      {createFormChangeHandler(({ values, setValues }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3} className={classes.flexContainer}>
             <Grid item md={12} xs={12}>
@@ -67,17 +67,15 @@ export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChange
                 label="Source of funds"
                 onChange={selectedValue => {
                   const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
-                  let fields = {
-                    sourceOfWealth: selectedValue.map(value => ({
-                      wealthType: value,
-                      others: withOption ? values.others : ""
-                    }))
-                  };
+                  const sourceOfWealth = selectedValue.map(value => ({
+                    wealthType: value,
+                    others: withOption ? values.others : ""
+                  }));
 
+                  setFieldValue("sourceOfWealth", sourceOfWealth);
                   if (!withOption) {
-                    fields.others = "";
+                    setFieldValue("others", "");
                   }
-                  setValues(fields);
                 }}
                 extractValue={value => value.wealthType}
                 contextualHelpText="Select the most prominent source of capital to fund the company"

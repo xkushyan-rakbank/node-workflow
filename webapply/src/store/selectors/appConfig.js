@@ -4,7 +4,7 @@ export const getDatalist = state => state.appConfig.datalist || {};
 
 export const getProspect = state => state.appConfig.prospect || {};
 
-export const getProspectModel = state => state.appConfig.prospectModel || {};
+export const getSignatoryModel = state => state.appConfig.signatoryModel || {};
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
@@ -14,9 +14,9 @@ export const getAccountNumbers = state => state.accountNumbers;
 
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
-export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
+export const getCompanyName = state => getOrganizationInfo(state).companyName;
 
-export const getIsCompanyStakeholder = state => getOrgKYCDetails(state).isShareholderACompany;
+export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
@@ -41,8 +41,6 @@ export const getSignatoriesSteps = state =>
   state.completedSteps.filter(item => item.flowId.includes(COMPANY_SIGNATORY_ID)) || [];
 
 export const getProspectId = state => getGeneralInfo(state).prospectId;
-
-export const getAgentLogin = state => state.login;
 
 export const getReCaptchaSiteKey = state => state.appConfig.reCaptchaSiteKey;
 

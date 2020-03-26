@@ -13,14 +13,13 @@ import {
 } from "../../../../store/actions/sendProspectToAPI";
 import {
   changeEditableStakeholder,
-  setFillStakeholder,
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
 import { CONTINUE } from "../../../../constants";
 import {
+  getEditableStakeholder,
   getStakeholdersIds,
-  stakeholdersState,
   stakeholdersSelector
 } from "../../../../store/selectors/stakeholder";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
@@ -44,7 +43,6 @@ const StakeholderStepperComponent = ({
   sendProspectToAPI,
   loading: isStatusLoading,
   changeEditableStakeholder,
-  setFillStakeholder,
   setEditStakeholder,
   isEditInProgress,
   kycDetails,
@@ -74,7 +72,6 @@ const StakeholderStepperComponent = ({
     sendProspectToAPI(CONTINUE, event).then(
       () => {
         if (activeStep === STEP_6) {
-          setFillStakeholder(index, true);
           changeEditableStakeholder();
           setIsShowSuccessFilled(true);
           setIsShowingAddButton(false);
@@ -184,22 +181,17 @@ const StakeholderStepperComponent = ({
   );
 };
 
-const mapStateToProps = state => {
-  const { editableStakeholder } = stakeholdersState(state);
-
-  return {
-    isStatusShown: state.stakeholders.isStatusShown,
-    stakeholders: stakeholdersSelector(state),
-    loading: getIsSendingProspect(state),
-    datalist: getDatalist(state),
-    editableStakeholder
-  };
-};
+const mapStateToProps = state => ({
+  isStatusShown: state.stakeholders.isStatusShown,
+  stakeholders: stakeholdersSelector(state),
+  loading: getIsSendingProspect(state),
+  datalist: getDatalist(state),
+  editableStakeholder: getEditableStakeholder(state)
+});
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
-  setFillStakeholder,
   setEditStakeholder,
   setScreeningError
 };

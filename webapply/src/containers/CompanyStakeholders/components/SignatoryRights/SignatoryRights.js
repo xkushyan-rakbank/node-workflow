@@ -5,7 +5,6 @@ import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
-import { updateProspect } from "../../../../store/actions/appConfig";
 import { stakeholdersSelector } from "../../../../store/selectors/stakeholder";
 import {
   InlineRadioGroup,
@@ -29,14 +28,13 @@ const SignatoryRightsComponent = ({
   handleContinue,
   index,
   stakeholders,
-  updateProspect,
   createFormChangeHandler
 }) => {
   return (
     <Formik
       initialValues={{
         authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
-        isSignatory: ""
+        isSignatory: false
       }}
       onSubmit={handleContinue}
       validationSchema={signatoryRightsSchema}
@@ -54,9 +52,6 @@ const SignatoryRightsComponent = ({
               onSelect={() => {
                 if (values.isSignatory) {
                   setFieldValue("authorityType", "");
-                  updateProspect({
-                    [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
-                  });
                   setFieldTouched("authorityType", false);
                 }
               }}
@@ -96,11 +91,4 @@ const mapStateToProps = state => ({
   stakeholders: stakeholdersSelector(state)
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export const SignatoryRights = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignatoryRightsComponent);
+export const SignatoryRights = connect(mapStateToProps)(SignatoryRightsComponent);

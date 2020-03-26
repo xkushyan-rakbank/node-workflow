@@ -37,6 +37,7 @@ const DatePickerBase = ({
       <FormControl className="formControl">
         <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
+            autoOk
             autoComplete="off"
             label={label}
             minDate={minDate}

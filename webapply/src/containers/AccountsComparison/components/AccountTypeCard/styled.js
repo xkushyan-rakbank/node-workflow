@@ -74,7 +74,7 @@ export const useStyles = makeStyles(theme => ({
       listStyle: "none",
       position: "relative",
       whiteSpace: "pre-wrap",
-      "& img": {
+      "& svg": {
         position: "absolute",
         left: "-23px",
         top: 3

@@ -1,6 +1,10 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useContext } from "react";
 
-import { VerticalPagination } from "../../components/VerticalPagination";
+import {
+  VerticalPagination,
+  scrollToDOMNode,
+  VerticalPaginationContext
+} from "../../components/VerticalPagination";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { AccountCard } from "./components/AccountCard";
 import { InfoNote } from "../../components/InfoNote";
@@ -10,48 +14,47 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
 
 import { useStyles } from "./styled";
+import { BackgroundVideoPlayer } from "../../components/BackgroundVideoPlayer";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const classes = useStyles();
   useFormNavigation([true, false]);
+  const { setCurrentSection } = useContext(VerticalPaginationContext);
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
 
+  const firstSection = useRef(null);
   const secondSection = useRef(null);
   const tableRef = useRef(null);
 
-  const scrollToSecondSection = useCallback(() => {
-    secondSection.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
-
-  const handleClickMobile = useCallback(
-    accountType => {
-      setSelectedAccount(accountType);
-      tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    },
-    [setSelectedAccount]
+  const scrollToSection = useCallback(
+    i => scrollToDOMNode([firstSection, secondSection, tableRef][i]),
+    []
   );
 
-  const setAccountType = useCallback(
+  const handleSetAccountType = useCallback(
     accountType => {
       setSelectedAccount(accountType);
+      setCurrentSection(2);
     },
-    [setSelectedAccount]
+    [setSelectedAccount, setCurrentSection]
   );
 
   return (
     <div className={classes.container}>
-      <VerticalPagination
-        video={getVideoByAccountType()}
-        scrollToSecondSection={scrollToSecondSection}
-        showVideoOnMobile
-        hasVideo
-      >
+      <VerticalPagination scrollToSection={scrollToSection}>
+        <div ref={firstSection}>
+          <BackgroundVideoPlayer
+            video={getVideoByAccountType()}
+            handleClick={() => setCurrentSection(1)}
+          />
+        </div>
         <div ref={secondSection}>
           <SectionTitleWithInfo
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
+            smallInfo
           />
-          <AccountCard setAccountType={setAccountType} handleClickMobile={handleClickMobile} />
+          <AccountCard handleSetAccountType={handleSetAccountType} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 
@@ -59,6 +62,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
           <SectionTitleWithInfo
             title="Compare the accounts"
             info="Our three business accounts, side by side"
+            smallInfo
           />
           <TableCompare selectedAccount={selectedAccount} />
           <InfoNote

@@ -81,6 +81,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
               label="Same as Company Address"
               onSelect={() => {
                 setValues({
+                  sameAsCompanyAddress: !values.sameAsCompanyAddress,
                   addressLine2: !values.sameAsCompanyAddress ? organisationAddressLine2 : "",
                   addressLine1: !values.sameAsCompanyAddress ? organisationAddressLine1 : "",
                   emirateCity: !values.sameAsCompanyAddress ? organisationEmirateCity : "",
@@ -91,7 +92,19 @@ export const SignatoryPreferredMailingAddressComponent = ({
               inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
             />
             <ContexualHelp
-              title="Select this checkbox if you want the Company address to be the preferred mailing address."
+              title={
+                <span>
+                  Select this checkbox if you want the Company address to be the preferred mailing
+                  address.
+                  <br />
+                  <br />
+                  If not, please enter the Residence address in below fields.
+                  <br />
+                  <br />
+                  Kindly note, the Business Debit Card of this stakeholder will be delivered to this
+                  address.
+                </span>
+              }
               placement="right"
               isDisableHoverListener={false}
             >
