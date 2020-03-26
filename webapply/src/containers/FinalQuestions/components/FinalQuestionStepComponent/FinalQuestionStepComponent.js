@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
 import { useStep } from "../../../../hooks/useStep";
-import { CONTINUE, STEP_STATUS } from "../../../../constants";
+import { CONTINUE, STEP_STATUS, SAVE } from "../../../../constants";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -21,7 +21,7 @@ export const FinalQuestionStepComponent = ({
 
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(CONTINUE, eventName, undefined, {
+      sendProspectToAPI(CONTINUE, eventName, SAVE, {
         activeStep,
         flowId: page,
         steps: stepsArray

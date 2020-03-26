@@ -16,7 +16,7 @@ import {
   setEditStakeholder
 } from "../../../../store/actions/stakeholders";
 import { useStyles } from "./styled";
-import { CONTINUE } from "../../../../constants";
+import { CONTINUE, SAVE } from "../../../../constants";
 import {
   getEditableStakeholder,
   getStakeholdersIds,
@@ -69,7 +69,7 @@ const StakeholderStepperComponent = ({
   }, [setIsShowingAddButton, stakeholders.length]);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(CONTINUE, event, undefined, {
+    sendProspectToAPI(CONTINUE, event, SAVE, {
       activeStep,
       flowId: `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
       steps: stakeHoldersSteps
