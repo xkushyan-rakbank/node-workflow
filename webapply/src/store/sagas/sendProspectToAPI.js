@@ -90,14 +90,14 @@ function* setScreeningResults({ preScreening }) {
 function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
   try {
     yield put(resetInputsErrors());
-    yield put(resetFormStep({ resetStep: true }));
+    yield put(resetFormStep(true));
 
     const state = yield select();
     const prospect = getProspect(state);
 
     yield put(sendProspectRequest(prospect, saveType, actionType));
   } finally {
-    yield put(resetFormStep({ resetStep: false }));
+    yield put(resetFormStep(false));
   }
 }
 
@@ -179,7 +179,7 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {
       log({ error });
-      yield put(sendProspectToAPIFail(error));
+      yield put(sendProspectToAPIFail());
     }
   }
 }
