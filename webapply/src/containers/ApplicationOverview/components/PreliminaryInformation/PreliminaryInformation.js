@@ -16,7 +16,7 @@ export const PreliminaryInformation = () => {
   const { interrogation: Interrogation, signature: Signature } = useIconsByAccount();
 
   return (
-    <>
+    <div className={classes.container}>
       <SectionTitleWithInfo title="Two easy steps" />
       <div className={classes.indent}>
         <IconCardsContainer>
@@ -35,6 +35,6 @@ export const PreliminaryInformation = () => {
         <div className={classes.title}>Have more questions? Here are some answers</div>
         <CommonQuestions questions={questions} />
       </div>
-    </>
+    </div>
   );
 };

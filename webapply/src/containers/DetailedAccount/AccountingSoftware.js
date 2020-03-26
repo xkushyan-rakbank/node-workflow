@@ -18,7 +18,11 @@ export const AccountingSoftware = () => {
   return (
     <>
       <div className={classes.indent}>
-        <SectionTitleWithInfo title="Get things done with RAKvalue" info="Automate and save time" />
+        <SectionTitleWithInfo
+          title="Get things done with RAKvalue"
+          info="Automate and save time"
+          smallInfo
+        />
       </div>
       <ExpandedOptionsCards />
     </>
