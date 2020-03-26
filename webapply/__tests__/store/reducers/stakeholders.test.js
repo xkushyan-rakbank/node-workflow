@@ -1,5 +1,4 @@
 import reducer, { initialState } from "../../../src/store/reducers/stakeholders";
-import uniqueId from "lodash/uniqueId";
 import {
   changeEditableStakeholder,
   updateStakeholdersIds
