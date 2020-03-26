@@ -3,7 +3,7 @@ import { updateAccountNumbers } from "../../../src/store/actions/accountNumbers"
 
 describe("acount numbers reducers", () => {
   it("should create a reducer to update account numbers", () => {
-    const payload = [];
+    const payload = [1];
     expect(reducer(initialState, updateAccountNumbers(payload))).toStrictEqual(payload);
   });
 });

@@ -1,6 +1,6 @@
-import get from "lodash/get";
 import { REHYDRATE } from "redux-persist";
 import reducer, { initialState } from "../../../src/store/reducers/appConfig";
+
 import {
   receiveAppConfig,
   receiveAppConfigSuccess,
@@ -20,11 +20,7 @@ import { UAE_CODE } from "../../../src/constants";
 describe("app config reducer", () => {
   it("should create a reducer to rehydrate", () => {
     const action = { type: REHYDRATE };
-    const expectedState = {
-      ...initialState,
-      prospect: get(action, "payload.appConfig.prospect", initialState.prospect)
-    };
-    expect(reducer(initialState, action)).toStrictEqual(expectedState);
+    expect(reducer(initialState, action)).toStrictEqual(initialState);
   });
 
   it("should create a reducer to receive app config", () => {
@@ -50,7 +46,7 @@ describe("app config reducer", () => {
     const action = {};
     const expectedState = {
       ...initialState,
-      authorizationToken: get(action, "payload.access_token", initialState.authorizationToken)
+      authorizationToken: undefined
     };
     expect(reducer(initialState, loginInfoFormSuccess(action))).toStrictEqual(expectedState);
   });
@@ -107,7 +103,7 @@ describe("app config reducer", () => {
       prospect: {
         ...initialState.prospect,
         generalInfo: {
-          ...get(initialState, "prospect.generalInfo", {}),
+          ...undefined,
           prospectId: payload
         }
       }
@@ -121,7 +117,7 @@ describe("app config reducer", () => {
       prospect: {
         ...initialState.prospect,
         generalInfo: {
-          ...get(initialState, "prospect.generalInfo", {}),
+          ...undefined,
           prospectId: ""
         }
       }
@@ -132,7 +128,7 @@ describe("app config reducer", () => {
   it("should create a reducer to save prospect model", () => {
     const expectedState = {
       ...initialState,
-      prospectModel: initialState.payload
+      signatoryModel: initialState.payload
     };
     expect(reducer(initialState, saveSignatoryModel())).toStrictEqual(expectedState);
   });

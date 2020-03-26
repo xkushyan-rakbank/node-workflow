@@ -31,7 +31,7 @@ export const initialState = {
   prospectError: false,
   searchInfo: { segment: "sme" },
   login: {},
-  prospectModel: {}
+  signatoryModel: {}
 };
 
 export default handleActions(

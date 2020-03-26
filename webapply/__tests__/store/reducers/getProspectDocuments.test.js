@@ -44,7 +44,7 @@ describe("applicant info form reducer test", () => {
     expect(reducer(initialState, retrieveDocDetails())).toStrictEqual(expectedState);
   });
 
-  it("should create reducer to upload files fail", () => {
+  it("should create reducer to get prospect document success", () => {
     const expectedState = {
       ...initialState,
       isLoading: false
@@ -52,7 +52,7 @@ describe("applicant info form reducer test", () => {
     expect(reducer(initialState, getProspectDocumentsSuccess())).toStrictEqual(expectedState);
   });
 
-  it("should create reducer to upload files fail", () => {
+  it("should create reducer to get prospect documents fail", () => {
     const expectedState = {
       ...initialState,
       isLoading: true

@@ -5,7 +5,7 @@ export const initialState = [];
 
 export default handleActions(
   {
-    [UPDATE_ACCOUNT_NUMBERS]: (state, action) => [...action.payload]
+    [UPDATE_ACCOUNT_NUMBERS]: (_, { payload }) => [...payload]
   },
-  initialState
+  []
 );
