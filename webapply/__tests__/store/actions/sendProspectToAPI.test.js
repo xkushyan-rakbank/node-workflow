@@ -1,3 +1,4 @@
+import { CALLBACK_ARGUMENT, ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
 import {
   PROSPECT_AUTO_SAVE,
   RESET_FORM_STEP,
@@ -18,7 +19,6 @@ import {
   sendProspectRequest
 } from "../../../src/store/actions/sendProspectToAPI";
 import { NEXT, SAVE } from "../../../src/constants";
-import { CALLBACK_ARGUMENT, ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
 
 describe("actions for sendProspectToAPI", () => {
   it("should create send prospect to API action (default arguments)", () => {
@@ -60,15 +60,16 @@ describe("actions for sendProspectToAPI", () => {
     const saveType = NEXT;
     const actionType = SAVE;
     const gaEvent = "some event";
+    const step = { flowId: "companyInfo", activeStep: 3, steps: [] };
 
     const expectedAction = {
       type: SEND_PROSPECT_TO_API,
       [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
       [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
       [CALLBACK_ARGUMENT]: action => action.payload,
-      payload: { saveType, gaEvent, actionType }
+      payload: { saveType, gaEvent, actionType, step }
     };
-    expect(sendProspectToAPIPromisify(saveType, gaEvent, actionType)).toEqual(expectedAction);
+    expect(sendProspectToAPIPromisify(saveType, gaEvent, actionType, step)).toEqual(expectedAction);
   });
 
   it("should create send prospect to API success action", () => {
@@ -108,7 +109,7 @@ describe("actions for sendProspectToAPI", () => {
     const newProspect = {};
     const expectedAction = {
       type: SEND_PROSPECT_REQUEST,
-      payload: { saveType: NEXT, actionType: SAVE, newProspect }
+      payload: { saveType: NEXT, actionType: SAVE, newProspect, step: {} }
     };
     expect(sendProspectRequest(newProspect)).toEqual(expectedAction);
   });
@@ -117,10 +118,11 @@ describe("actions for sendProspectToAPI", () => {
     const newProspect = {};
     const saveType = NEXT;
     const actionType = SAVE;
+    const step = { flowId: "companyInfo", activeStep: 3, steps: [] };
     const expectedAction = {
       type: SEND_PROSPECT_REQUEST,
-      payload: { saveType, actionType, newProspect }
+      payload: { saveType, actionType, newProspect, step }
     };
-    expect(sendProspectRequest(newProspect, saveType, actionType)).toEqual(expectedAction);
+    expect(sendProspectRequest(newProspect, saveType, actionType, step)).toEqual(expectedAction);
   });
 });
