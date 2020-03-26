@@ -36,8 +36,8 @@ export const questions = [
   {
     question: "How do I check the status of my submitted application?",
     answer: {
-      __html:
-        "You can check the status of your application by accessing the link sent to your email Id."
+      // eslint-disable-next-line max-len
+      __html: `You can check the status of your application by accessing <a href="${routes.comeBackLogin}" target="_blank">the link</a> sent to your email Id.`
     },
     id: 4
   }

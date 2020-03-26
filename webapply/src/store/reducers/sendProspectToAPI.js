@@ -33,7 +33,7 @@ const sendProspectToAPIReducer = (state = initialState, action) => {
     case RESET_FORM_STEP:
       return {
         ...state,
-        resetStep: action.resetStep
+        resetStep: action.payload
       };
     case SET_SCREENING_ERROR:
       return {

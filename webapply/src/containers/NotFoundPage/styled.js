@@ -10,9 +10,14 @@ export const useStyles = makeStyles({
     width: "100%",
     backgroundColor: "#ffffff",
     maxWidth: 780,
-    margin: "0 auto"
+    margin: "0 auto",
   },
-
+  appStatusImg: {
+    marginBottom: "40px"
+  },
+  appStatusText: {
+    marginBottom: "10px"
+  },
   buttonText: {
     "& svg": {
       width: "24px",

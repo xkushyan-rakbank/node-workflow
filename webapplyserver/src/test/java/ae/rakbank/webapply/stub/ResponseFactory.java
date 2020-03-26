@@ -42,5 +42,12 @@ public class ResponseFactory {
                         .add(objectMapper.createObjectNode().set("applicantInfo", applicationInfo3)));
     }
 
+    public static JsonNode newLoginResponse() {
+        return objectMapper.createObjectNode()
+                .put("expires_in", 100)
+                .put("login", "ok")
+                .put("refresh_token", "refresh-token-value")
+                .put("access_token", "access-token-value");
+    }
 
 }

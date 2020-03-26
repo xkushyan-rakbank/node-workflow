@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { VerticalPaginationContext } from "../../../../components/VerticalPagination";
 
 import { useStyles } from "./styled";
 
@@ -12,12 +11,10 @@ export const AccountTypeCardComponent = ({
   title,
   description,
   buttonText,
-  setAccountType,
-  handleClickMobile,
+  handleSetAccountType,
   accountType
 }) => {
   const classes = useStyles();
-  const { scrollToSection } = useContext(VerticalPaginationContext);
 
   return (
     <div className={classes.container}>
@@ -43,21 +40,10 @@ export const AccountTypeCardComponent = ({
 
       <div className={classes.buttonWrapper}>
         <ContinueButton
-          handleClick={() => {
-            setAccountType(accountType);
-            scrollToSection(2);
-          }}
+          handleClick={() => handleSetAccountType(accountType)}
           label={buttonText}
           classes={{ buttonStyle: classes.continueButtonRoot }}
-          className="hide-on-mobile"
         />
-        <div className="show-on-mobile">
-          <ContinueButton
-            handleClick={() => handleClickMobile(accountType)}
-            label={buttonText}
-            classes={{ buttonStyle: classes.continueButtonRoot }}
-          />
-        </div>
       </div>
     </div>
   );

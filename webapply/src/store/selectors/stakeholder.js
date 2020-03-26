@@ -2,13 +2,14 @@ import { createSelector } from "reselect";
 import get from "lodash/get";
 import { getSignatories } from "./appConfig";
 
-export const stakeholders = state => get(state, "appConfig.prospect.signatoryInfo", []);
-export const stakeholdersState = state => state.stakeholders;
-export const stakeholdersIds = state => state.stakeholders.stakeholdersIds;
+export const getStakeholders = state => get(state, "appConfig.prospect.signatoryInfo", []);
+export const getStakeholdersState = state => state.stakeholders;
+export const getEditableStakeholder = state => getStakeholdersState(state).editableStakeholder;
+export const getStakeholdersIds = state => getStakeholdersState(state).stakeholdersIds;
 
 export const stakeholdersSelector = createSelector(
-  stakeholders,
-  stakeholdersIds,
+  getStakeholders,
+  getStakeholdersIds,
   (stakeholders, stakeholdersIds) =>
     stakeholders.map((item, index) => ({
       ...item,
@@ -17,7 +18,7 @@ export const stakeholdersSelector = createSelector(
 );
 
 export const percentageSelector = state => {
-  const stakeholdersList = stakeholders(state);
+  const stakeholdersList = getStakeholders(state);
   return stakeholdersList.reduce(
     (previousValue, currentValue) =>
       previousValue + +currentValue.kycDetails.shareHoldingPercentage,
@@ -37,5 +38,3 @@ export const percentageSelectorWithoutCurrentStakeholder = (state, index) => {
 
 export const checkIsHasSignatories = state =>
   stakeholdersSelector(state).some(stakeholder => get(stakeholder, "kycDetails.isSignatory"));
-
-export const getStakeholdersIds = state => state.stakeholders.stakeholdersIds;

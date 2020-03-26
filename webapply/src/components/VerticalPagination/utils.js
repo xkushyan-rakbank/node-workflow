@@ -4,3 +4,6 @@ export function getAverage(elements, number) {
 
   return Math.ceil(sum / number);
 }
+
+export const scrollToDOMNode = ref => 
+  ref.current && ref.current.parentNode.scrollIntoView({ behavior: "smooth", block: "start" });

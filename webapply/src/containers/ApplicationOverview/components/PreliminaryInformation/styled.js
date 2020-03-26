@@ -1,12 +1,19 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
+  container: {
+    marginTop: 80,
+    [theme.breakpoints.only("xs")]: {
+      marginTop: 41
+    }
+  },
   answers: {
     marginBottom: 60,
     marginTop: 60,
     borderRadius: "8px",
     overflow: "auto",
     [theme.breakpoints.only("xs")]: {
+      marginTop: 40,
       overflow: "inherit"
     }
   },
@@ -16,8 +23,9 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "16px",
     fontWeight: "600",
     [theme.breakpoints.only("xs")]: {
+      marginBottom: 20,
       minWidth: "auto",
-      padding: "20px 16px",
+      padding: 0,
       borderRadius: "8px 8px 0 0"
     }
   },
@@ -27,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
     color: "#373737",
     marginTop: 50,
     [theme.breakpoints.only("xs")]: {
-      fontSize: 14
+      marginTop: 40
     }
   },
   cardsWrapper: {

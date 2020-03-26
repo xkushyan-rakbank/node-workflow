@@ -98,7 +98,7 @@ export const SigningPreferencesComponent = ({
       {createFormChangeHandler(
         ({
           values: { accountSigningInstn, accountSigningType, signatories },
-          setValues,
+          setFieldValue,
           errors
         }) => {
           const signatoriesErrors = Object.keys(get(errors, "signatories", [])).length;
@@ -132,13 +132,14 @@ export const SigningPreferencesComponent = ({
                 datalistId="accountSignType"
                 filterOptions={options => sortByOrder(options, ["100", "000", "101"])}
                 onSelect={e => {
-                  setValues({
-                    accountSigningType: e.target.value,
-                    accountSigningInstn: ""
-                  });
+                  setFieldValue("accountSigningType", e.target.value);
+                  setFieldValue("accountSigningInstn", "");
+                }}
+                changeProspect={prospect => {
                   if (accountSigningInstn) {
-                    updateProspect({ [pathSignatoryInfo]: "" });
+                    return { ...prospect, [pathSignatoryInfo]: "" };
                   }
+                  return prospect;
                 }}
                 component={CheckboxGroup}
                 classes={{ root: classes.radioButtonRoot }}

@@ -52,6 +52,7 @@ apiClient.interceptors.request.use(config => {
       ...config,
       headers: {
         ...config.headers,
+        "Cache-Control": "no-cache",
         "Content-Type": "application/json",
         [SYM_KEY_HEADER]: encryptedSymKey
       },
@@ -137,7 +138,7 @@ apiClient.interceptors.response.use(
       if (status === 400 && errorType === "ReCaptchaError") {
         serverError = new ReCaptchaError(jsonData);
         notificationOptions = { title: "ReCaptchaError", message: errors };
-      } else if (status === 400 && errors) {
+      } else if ([400, 504].includes(status) && errors) {
         if (HANDLED_ERROR_CODES.includes(errors[0].errorCode)) {
           serverError = new ErrorOccurredWhilePerforming(jsonData);
           notificationOptions = null;
