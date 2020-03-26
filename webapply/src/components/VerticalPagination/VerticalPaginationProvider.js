@@ -9,6 +9,7 @@ export const VerticalPaginationProvider = ({ children }) => {
   // reset scroll params when location changes.
   const location = useLocation();
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [isActive, setActive] = useState(false);
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
 
@@ -34,9 +35,11 @@ export const VerticalPaginationProvider = ({ children }) => {
     () => ({
       currentSectionIndex,
       isCanScroll,
-      setCurrentSection
+      setCurrentSection,
+      isActive,
+      setActive
     }),
-    [currentSectionIndex, isCanScroll, setCurrentSection]
+    [currentSectionIndex, isCanScroll, setCurrentSection, isActive, setActive]
   );
 
   return (

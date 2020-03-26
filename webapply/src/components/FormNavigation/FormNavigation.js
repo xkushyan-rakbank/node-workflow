@@ -23,7 +23,7 @@ export const FormNavigationComponent = () => {
   const {
     location: { pathname }
   } = useHistory();
-  const { currentSectionIndex } = useContext(VerticalPaginationContext);
+  const { currentSectionIndex, isActive } = useContext(VerticalPaginationContext);
   const navContext = useContext(FormNavigationContext);
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
   const blobColor = useBlobColor(!navContext);
@@ -47,7 +47,11 @@ export const FormNavigationComponent = () => {
   const activeStepIndex = (activeStep || {}).step;
 
   return (
-    <div className={cx(classes.formNav, classes.formNavBg, { active: currentSectionIndex === 0 })}>
+    <div
+      className={cx(classes.formNav, classes.formNavBg, {
+        active: isActive && currentSectionIndex === 0
+      })}
+    >
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
