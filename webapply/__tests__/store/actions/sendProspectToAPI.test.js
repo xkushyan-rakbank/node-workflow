@@ -51,7 +51,7 @@ describe("actions for sendProspectToAPI", () => {
       [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
       [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
       [CALLBACK_ARGUMENT]: action => action.payload,
-      payload: { saveType: NEXT, gaEvent: null, actionType: SAVE }
+      payload: { saveType: NEXT, gaEvent: null, actionType: SAVE, step: null }
     };
     expect(sendProspectToAPIPromisify()).toEqual(expectedAction);
   });
@@ -60,7 +60,7 @@ describe("actions for sendProspectToAPI", () => {
     const saveType = NEXT;
     const actionType = SAVE;
     const gaEvent = "some event";
-    const step = { flowId: "companyInfo", activeStep: 3, steps: [] };
+    const step = { flowId: "companyInfo", activeStep: 3 };
 
     const expectedAction = {
       type: SEND_PROSPECT_TO_API,
@@ -109,7 +109,7 @@ describe("actions for sendProspectToAPI", () => {
     const newProspect = {};
     const expectedAction = {
       type: SEND_PROSPECT_REQUEST,
-      payload: { saveType: NEXT, actionType: SAVE, newProspect, step: {} }
+      payload: { saveType: NEXT, actionType: SAVE, newProspect, step: null }
     };
     expect(sendProspectRequest(newProspect)).toEqual(expectedAction);
   });
@@ -118,7 +118,7 @@ describe("actions for sendProspectToAPI", () => {
     const newProspect = {};
     const saveType = NEXT;
     const actionType = SAVE;
-    const step = { flowId: "companyInfo", activeStep: 3, steps: [] };
+    const step = { flowId: "companyInfo", activeStep: 3 };
     const expectedAction = {
       type: SEND_PROSPECT_REQUEST,
       payload: { saveType, actionType, newProspect, step }

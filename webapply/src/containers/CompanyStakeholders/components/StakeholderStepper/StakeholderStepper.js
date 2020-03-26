@@ -71,8 +71,7 @@ const StakeholderStepperComponent = ({
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event, SAVE, {
       activeStep,
-      flowId: `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
-      steps: stakeHoldersSteps
+      flowId: `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`
     }).then(
       () => {
         if (activeStep === STEP_6) {

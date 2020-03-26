@@ -21,11 +21,7 @@ export const FinalQuestionStepComponent = ({
 
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(CONTINUE, eventName, SAVE, {
-        activeStep,
-        flowId: page,
-        steps: stepsArray
-      }).then(
+      sendProspectToAPI(CONTINUE, eventName, SAVE, { activeStep, flowId: page }).then(
         () => {
           handleSetNextStep(activeStep);
           if (activeStep === stepsArray.length) {

@@ -131,29 +131,20 @@ function* prospectAutoSave() {
   }
 }
 
-function* sendProspectToAPI({
-  payload: {
-    newProspect,
-    saveType,
-    actionType,
-    step: { flowId, activeStep, steps }
-  }
-}) {
+function* sendProspectToAPI({ payload: { newProspect, saveType, actionType, step } }) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
-    const completedSteps =
-      flowId && activeStep === steps.length
-        ? state.completedSteps.map(completedStep => {
-            if (completedStep.flowId === flowId && completedStep.step === activeStep) {
-              return { ...completedStep, status: STEP_STATUS.COMPLETED };
-            } else {
-              return completedStep;
-            }
-          })
-        : state.completedSteps;
+    const completedSteps = step
+      ? state.completedSteps.map(completedStep => {
+          if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
+            return { ...completedStep, status: STEP_STATUS.COMPLETED };
+          }
+          return completedStep;
+        })
+      : state.completedSteps;
 
     newProspect.applicationInfo.saveType = saveType;
     newProspect.applicationInfo.actionType = actionType;

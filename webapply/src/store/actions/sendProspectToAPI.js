@@ -20,7 +20,7 @@ export const sendProspectToAPIPromisify = (
   saveType = NEXT,
   gaEvent = null,
   actionType = SAVE,
-  step = {}
+  step = null
 ) => {
   const action = {
     type: SEND_PROSPECT_TO_API,
@@ -57,6 +57,11 @@ export const resetScreeningError = () => {
   return { type: RESET_SCREENING_ERROR };
 };
 
-export const sendProspectRequest = (newProspect, saveType = NEXT, actionType = SAVE, step = {}) => {
+export const sendProspectRequest = (
+  newProspect,
+  saveType = NEXT,
+  actionType = SAVE,
+  step = null
+) => {
   return { type: SEND_PROSPECT_REQUEST, payload: { saveType, actionType, newProspect, step } };
 };
