@@ -57,7 +57,7 @@ export const useStyles = makeStyles(theme => ({
       paddingTop: 71,
       height: ({ isOpen, isSmallBg }) => {
         if (isOpen) return "calc(100vh - 50px)";
-        if (isSmallBg) return 220;
+        if (isSmallBg) return 190;
         return 340;
       },
       transition: theme.transitions.create("height", {

@@ -54,11 +54,13 @@ export const useStyles = makeStyles(theme => ({
   title: {
     color: "#373737",
     fontSize: 20,
+    lineHeight: "26px",
     margin: "22px 0 0 0",
     fontWeight: "600"
   },
   info: {
     color: "#373737",
-    fontSize: 18
+    fontSize: 20,
+    lineHeight: "26px"
   }
 }));

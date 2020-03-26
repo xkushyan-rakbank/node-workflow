@@ -8,7 +8,6 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.only("xs")]: {
       marginTop: "50px",
-      padding: "0 16px",
       boxSizing: "border-box"
     }
   },

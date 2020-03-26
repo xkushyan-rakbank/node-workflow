@@ -37,12 +37,12 @@ export const sendProspectToAPISuccess = isScreeningError => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, payload: isScreeningError };
 };
 
-export const sendProspectToAPIFail = error => {
-  return { type: SEND_PROSPECT_TO_API_FAIL, error };
+export const sendProspectToAPIFail = () => {
+  return { type: SEND_PROSPECT_TO_API_FAIL };
 };
 
-export const resetFormStep = ({ resetStep }) => {
-  return { type: RESET_FORM_STEP, resetStep };
+export const resetFormStep = isResetStep => {
+  return { type: RESET_FORM_STEP, payload: isResetStep };
 };
 
 export const prospectAutoSave = () => {
