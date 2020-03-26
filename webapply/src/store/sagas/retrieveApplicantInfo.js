@@ -42,12 +42,15 @@ function* getProspectIdInfo({ payload }) {
         const { completedSteps = [] } = JSON.parse(freeFieldsInfo.freeField5);
         const stakeholdersIds = completedSteps
           .filter(({ flowId }) => flowId.startsWith(COMPANY_STAKEHOLDER_ID))
-          .map(({ flowId }) => ({ id: flowId.split("_")[1], isEditting: false }))
-          .reduce((acc, i) => {
-            if (!acc.some(a => a.id === i.id)) acc.push(i);
-            return acc;
-          }, []);
-        yield put(updateStakeholdersIds(stakeholdersIds));
+          .reduce((acc, { flowId }) => {
+            const id = flowId.split("_")[1];
+            return {
+              ...acc,
+              [id]: { id, isEditting: false }
+            };
+          }, {});
+
+        yield put(updateStakeholdersIds(Object.values(stakeholdersIds)));
       }
     }
 
