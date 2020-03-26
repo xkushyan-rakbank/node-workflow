@@ -103,7 +103,7 @@ describe("app config reducer", () => {
       prospect: {
         ...initialState.prospect,
         generalInfo: {
-          ...undefined,
+          undefined,
           prospectId: payload
         }
       }
@@ -117,7 +117,7 @@ describe("app config reducer", () => {
       prospect: {
         ...initialState.prospect,
         generalInfo: {
-          ...undefined,
+          undefined,
           prospectId: ""
         }
       }
