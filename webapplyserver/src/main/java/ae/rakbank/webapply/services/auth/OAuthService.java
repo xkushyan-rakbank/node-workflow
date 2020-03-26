@@ -75,8 +75,12 @@ class OAuthService {
 
     LocalDateTime getExpireTime(ResponseEntity<JsonNode> oAuthObjectResponse) {
         // minus 10 seconds to prevent access_token expire error while calling the API
-        int seconds = oAuthObjectResponse.getBody().get("expires_in").asInt() - 10;
-        return LocalDateTime.now().plusSeconds(seconds);
+        int expiresIn = oAuthObjectResponse.getBody().get("expires_in").asInt();
+        LocalDateTime now = LocalDateTime.now();
+        int seconds = expiresIn - 10;
+        LocalDateTime jwtExpireTime = now.plusSeconds(seconds);
+        log.info("[getExpireTime] >> Expire in variable: {}, Local date time now: {}, JWT token exp time: {} <<", expiresIn, now, jwtExpireTime);
+        return jwtExpireTime;
     }
 
     private ResponseEntity<JsonNode> getNewVirtualUserOauthObject() {
