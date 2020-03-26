@@ -38,7 +38,7 @@ export const useStyles = makeStyles(theme => ({
       fontSize: 38
     },
     [theme.breakpoints.only("xs")]: {
-      width: 310,
+      width: 328,
       marginTop: "auto",
       marginBottom: props => (props.isShowApply ? 10 : "auto"),
       fontSize: 32,
