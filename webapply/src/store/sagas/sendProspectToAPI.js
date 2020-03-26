@@ -11,7 +11,6 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
-import findLastIndex from "lodash/findLastIndex";
 
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
@@ -89,20 +88,7 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-const changeLastStepStatus = (steps, flowId) => {
-  const lastElIdx = findLastIndex(steps, ["flowId", flowId]);
-  const newSteps = [...steps];
-  newSteps[lastElIdx].status = STEP_STATUS.COMPLETED;
-  return newSteps;
-};
-
-function* sendProspectToAPISaga({
-  payload: {
-    saveType,
-    actionType,
-    step: { flowId, activeStep, steps }
-  }
-}) {
+function* sendProspectToAPISaga({ payload: { saveType, actionType, step } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep({ resetStep: true }));
@@ -110,17 +96,7 @@ function* sendProspectToAPISaga({
     const state = yield select();
     const prospect = getProspect(state);
 
-    const newProspect = { ...prospect };
-
-    if (flowId && activeStep === steps.length) {
-      const newCompletedSteps = changeLastStepStatus(state.completedSteps, flowId);
-      newProspect.freeFieldsInfo = {
-        ...(newProspect.freeFieldsInfo || {}),
-        freeField5: JSON.stringify({ completedSteps: newCompletedSteps })
-      };
-    }
-
-    yield put(sendProspectRequest(newProspect, saveType, actionType));
+    yield put(sendProspectRequest(prospect, saveType, actionType, step));
   } finally {
     yield put(resetFormStep({ resetStep: false }));
   }
@@ -155,17 +131,35 @@ function* prospectAutoSave() {
   }
 }
 
-function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) {
+function* sendProspectToAPI({
+  payload: {
+    newProspect,
+    saveType,
+    actionType,
+    step: { flowId, activeStep, steps }
+  }
+}) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
+    const completedSteps =
+      flowId && activeStep === steps.length
+        ? state.completedSteps.map(completedStep => {
+            if (completedStep.flowId === flowId && completedStep.step === activeStep) {
+              return { ...completedStep, status: STEP_STATUS.COMPLETED };
+            } else {
+              return completedStep;
+            }
+          })
+        : state.completedSteps;
+
     newProspect.applicationInfo.saveType = saveType;
     newProspect.applicationInfo.actionType = actionType;
     newProspect.freeFieldsInfo = {
       ...(newProspect.freeFieldsInfo || {}),
-      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
+      freeField5: JSON.stringify({ completedSteps })
     };
 
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
