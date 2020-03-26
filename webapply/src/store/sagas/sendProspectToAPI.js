@@ -42,7 +42,8 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  VIEW_IDS
+  VIEW_IDS,
+  STEP_STATUS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
@@ -87,7 +88,7 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
+function* sendProspectToAPISaga({ payload: { saveType, actionType, step } }) {
   try {
     yield put(resetInputsErrors());
     yield put(resetFormStep(true));
@@ -95,7 +96,7 @@ function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
     const state = yield select();
     const prospect = getProspect(state);
 
-    yield put(sendProspectRequest(prospect, saveType, actionType));
+    yield put(sendProspectRequest(prospect, saveType, actionType, step));
   } finally {
     yield put(resetFormStep(false));
   }
@@ -130,17 +131,26 @@ function* prospectAutoSave() {
   }
 }
 
-function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) {
+function* sendProspectToAPI({ payload: { newProspect, saveType, actionType, step } }) {
   try {
     const state = yield select();
     const prospectId = getProspectId(state);
     const headers = getAuthorizationHeader(state);
 
+    const completedSteps = step
+      ? state.completedSteps.map(completedStep => {
+          if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
+            return { ...completedStep, status: STEP_STATUS.COMPLETED };
+          }
+          return completedStep;
+        })
+      : state.completedSteps;
+
     newProspect.applicationInfo.saveType = saveType;
     newProspect.applicationInfo.actionType = actionType;
     newProspect.freeFieldsInfo = {
       ...(newProspect.freeFieldsInfo || {}),
-      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
+      freeField5: JSON.stringify({ completedSteps })
     };
 
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
