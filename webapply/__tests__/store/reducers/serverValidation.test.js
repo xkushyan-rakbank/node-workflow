@@ -1,4 +1,4 @@
-import reducer, { initialState, composeInputKeyFromValidationData, replaceDollarsAndDot } from "../../../src/store/reducers/serverValidation";
+import reducer, { initialState, composeInputKeyFromValidationData } from "../../../src/store/reducers/serverValidation";
 import { setInputsErrors, resetInputsErrors } from "../../../src/store/actions/serverValidation";
 
 describe("serverValidation reducer test", () => {
@@ -35,29 +35,22 @@ describe("serverValidation reducer test", () => {
     const data = { fieldPath: "applicantInfo.email" };
     const dataProspect = { fieldPath: "prospect.applicantInfo.email" };
     const windowSpy = jest.spyOn(global, 'window', 'get');
-    const mock = jest.fn(composeInputKeyFromValidationData);
-    
-    expect(mock(dataProspect)).toStrictEqual("prospect.applicantInfo.email");
+
+    expect(composeInputKeyFromValidationData(dataProspect)).toStrictEqual("prospect.applicantInfo.email");
 
     windowSpy.mockImplementation(() => ({
       location: {
         pathname: '/agent/Login'
       }
     }));
-    expect(mock(data)).toStrictEqual("login.applicantInfo.email");
+    expect(composeInputKeyFromValidationData(data)).toStrictEqual("login.applicantInfo.email");
 
     windowSpy.mockImplementation(() => ({
       location: {
         pathname: '/agent/SearchProspect'
       }
     }));
-    expect(mock(data)).toStrictEqual("searchInfo.applicantInfo.email");
+    expect(composeInputKeyFromValidationData(data)).toStrictEqual("searchInfo.applicantInfo.email");
     windowSpy.mockRestore();
-  })
-
-  it('replaceDollarsAndDot function', () => {
-    const mock = jest.fn(replaceDollarsAndDot);
-    expect(mock("test.")).toStrictEqual("test");
-    expect(mock(undefined)).toStrictEqual("");
   })
 });

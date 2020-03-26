@@ -1,7 +1,7 @@
 import { SET_INPUTS_ERRORS, RESET_INPUTS_ERRORS } from "../actions/serverValidation";
 import routes from "./../../routes";
 import { handleActions } from "../../utils/redux-utils";
-
+/* istanbul ignore next */
 export const replaceDollarsAndDot = (str = "") => str.replace(/\$+ |\.$/g, "");
 
 export const initialState = {
