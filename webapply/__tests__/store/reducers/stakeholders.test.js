@@ -1,4 +1,4 @@
-import reducer, { initialState } from "../../../src/store/reducers/stakeholders";
+import reducer from "../../../src/store/reducers/stakeholders";
 import {
   changeEditableStakeholder,
   updateStakeholdersIds
@@ -7,24 +7,17 @@ import {
 describe("stakeholders reducer test", () => {
   it("CHANGE_EDITABLE_STAKEHOLDER action type", () => {
     const stakeholderIndex = 2;
-    const expectedState = {
-      ...initialState,
+
+    expect(reducer(undefined, changeEditableStakeholder(stakeholderIndex))).toMatchObject({
       editableStakeholder: stakeholderIndex
-    };
-    expect(reducer(initialState, changeEditableStakeholder(stakeholderIndex))).toStrictEqual(
-      expectedState
-    );
+    });
   });
 
   it("UPDATE_STAKEHOLDERS_IDS action type", () => {
-    const stakeholdersIds = []
-    const expectedState = {
-      ...initialState,
-      stakeholdersIds
-    };
+    const stakeholdersIds = [];
 
-    expect(reducer(initialState, updateStakeholdersIds(stakeholdersIds))).toStrictEqual(
-      expectedState
-    );
+    expect(reducer(undefined, updateStakeholdersIds(stakeholdersIds))).toMatchObject({
+      stakeholdersIds
+    });
   });
 });

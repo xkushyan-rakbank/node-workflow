@@ -9,13 +9,13 @@ export const initialState = {
 
 export default handleActions(
   {
-    [CHANGE_EDITABLE_STAKEHOLDER]: (state, action) => ({
+    [CHANGE_EDITABLE_STAKEHOLDER]: (state, { payload }) => ({
       ...state,
-      editableStakeholder: action.editableStakeholder
+      editableStakeholder: payload
     }),
-    [UPDATE_STAKEHOLDERS_IDS]: (state, action) => ({
+    [UPDATE_STAKEHOLDERS_IDS]: (state, { payload }) => ({
       ...state,
-      stakeholdersIds: action.stakeholdersIds
+      stakeholdersIds: payload
     })
   },
   initialState
