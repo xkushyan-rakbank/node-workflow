@@ -12,7 +12,6 @@ export const useStyles = makeStyles({
     maxWidth: "650px",
     margin: "0 auto",
     "& > img": {
-      marginBottom: "-55px",
       width: "460px"
     }
   },
