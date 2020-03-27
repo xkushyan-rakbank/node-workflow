@@ -51,14 +51,14 @@ describe("actions for sendProspectToAPI", () => {
       type: SEND_PROSPECT_TO_API,
       [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
       [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+      [CALLBACK_ARGUMENT]: action => action.payload,
       payload
     };
 
     const actualAction = sendProspectToAPIPromisify();
-    const { [CALLBACK_ARGUMENT]: callback, ...rest } = actualAction;
 
-    expect(rest).toEqual(expectedAction);
-    expect(callback(actualAction)).toEqual(payload);
+    expect(actualAction).toMatchObject(expectedAction);
+    expect(actualAction[CALLBACK_ARGUMENT](actualAction)).toEqual(payload);
   });
 
   it("should create promisified send prospect to API action (custom arguments)", () => {
@@ -76,15 +76,15 @@ describe("actions for sendProspectToAPI", () => {
       type: SEND_PROSPECT_TO_API,
       [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
       [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+      [CALLBACK_ARGUMENT]: action => action.payload,
       payload,
       meta: { analytics: { eventType: gaEvent } }
     };
 
     const actualAction = sendProspectToAPIPromisify(saveType, gaEvent, actionType, step);
-    const { [CALLBACK_ARGUMENT]: callback, ...rest } = actualAction;
 
-    expect(rest).toEqual(expectedAction);
-    expect(callback(actualAction)).toEqual(payload);
+    expect(actualAction).toMatchObject(expectedAction);
+    expect(actualAction[CALLBACK_ARGUMENT](actualAction)).toEqual(payload);
   });
 
   it("should create send prospect to API success action", () => {
