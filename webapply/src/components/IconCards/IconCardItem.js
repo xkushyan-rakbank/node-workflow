@@ -39,8 +39,12 @@ const style = theme => ({
   iconCardTitle: {
     paddingTop: "2px",
     paddingBottom: "20px",
-    fontSize: "18px",
-    fontWeight: "600"
+    fontSize: 20,
+    lineHeight: "26px",
+    fontWeight: "600",
+    [theme.breakpoints.only("xs")]: {
+      marginRight: "auto"
+    }
   },
   iconCardText: {
     fontSize: "16px",

@@ -52,6 +52,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
           <SectionTitleWithInfo
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
+            smallInfo
           />
           <AccountCard handleSetAccountType={handleSetAccountType} />
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
@@ -61,6 +62,7 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
           <SectionTitleWithInfo
             title="Compare the accounts"
             info="Our three business accounts, side by side"
+            smallInfo
           />
           <TableCompare selectedAccount={selectedAccount} />
           <InfoNote

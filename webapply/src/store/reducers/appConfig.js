@@ -1,5 +1,6 @@
 import get from "lodash/get";
 import { REHYDRATE } from "redux-persist";
+import { handleActions } from "../../utils/redux-utils";
 
 import {
   RECEIVE_APPCONFIG,
@@ -33,122 +34,102 @@ export const initialState = {
   signatoryModel: {}
 };
 
-const appConfigReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case REHYDRATE: {
-      return {
-        ...state,
-        prospect: get(action, "payload.appConfig.prospect", state.prospect)
-      };
-    }
-    case RECEIVE_APPCONFIG:
-      return {
-        ...state,
-        loading: true,
-        error: ""
-      };
-    case RECEIVE_APPCONFIG_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        loading: false
-      };
-    case LOGIN_INFO_FORM_SUCCESS:
-      return {
-        ...state,
-        authorizationToken: get(action, "payload.access_token", state.authorizationToken)
-      };
-    case SET_ACCESS_TOKEN: {
-      return {
-        ...state,
-        authorizationToken: action.payload
-      };
-    }
-
-    case RECEIVE_APPCONFIG_FAIL:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload || "error"
-      };
-    case SET_CONFIG:
-      return {
-        ...state,
-        ...action.payload
-      };
-    case SET_PROSPECT:
-      return {
-        ...state,
-        prospect: action.payload
-      };
-    case RESET_PROSPECT:
-      return {
-        ...state,
-        prospect: initialState.prospect
-      };
-    case UPDATE_PROSPECT_ID:
-      return {
-        ...state,
-        prospect: {
-          ...state.prospect,
-          generalInfo: {
-            ...get(state, "prospect.generalInfo", {}),
-            prospectId: action.payload
-          }
+export default handleActions(
+  {
+    [REHYDRATE]: (state, action) => ({
+      ...state,
+      prospect: get(action, "payload.appConfig.prospect", state.prospect)
+    }),
+    [RECEIVE_APPCONFIG]: state => ({
+      ...state,
+      loading: true,
+      error: ""
+    }),
+    [RECEIVE_APPCONFIG_SUCCESS]: (state, action) => ({
+      ...state,
+      ...action.payload,
+      loading: false
+    }),
+    [LOGIN_INFO_FORM_SUCCESS]: (state, action) => ({
+      ...state,
+      authorizationToken: get(action, "payload.access_token", state.authorizationToken)
+    }),
+    [SET_ACCESS_TOKEN]: (state, action) => ({
+      ...state,
+      authorizationToken: action.payload
+    }),
+    [RECEIVE_APPCONFIG_FAIL]: (state, action) => ({
+      ...state,
+      loading: false,
+      error: action.payload || "error"
+    }),
+    [SET_CONFIG]: (state, action) => ({
+      ...state,
+      ...action.payload
+    }),
+    [SET_PROSPECT]: (state, action) => ({
+      ...state,
+      prospect: action.payload
+    }),
+    [RESET_PROSPECT]: state => ({
+      ...state,
+      prospect: initialState.prospect
+    }),
+    [UPDATE_PROSPECT_ID]: (state, action) => ({
+      ...state,
+      prospect: {
+        ...state.prospect,
+        generalInfo: {
+          ...get(state, "prospect.generalInfo", {}),
+          prospectId: action.payload
         }
-      };
-    case REMOVE_PROSPECT_ID:
-      return {
-        ...state,
-        prospect: {
-          ...state.prospect,
-          generalInfo: {
-            ...get(state, "prospect.generalInfo", {}),
-            prospectId: ""
-          }
+      }
+    }),
+    [REMOVE_PROSPECT_ID]: state => ({
+      ...state,
+      prospect: {
+        ...state.prospect,
+        generalInfo: {
+          ...get(state, "prospect.generalInfo", {}),
+          prospectId: ""
         }
-      };
-    case SAVE_SIGNATORY_MODEL:
-      return {
-        ...state,
-        signatoryModel: action.payload
-      };
-    case LOGOUT:
-      return {
-        ...state,
-        login: {
-          userName: "",
-          password: ""
-        },
-        searchInfo: {
-          ...state.searchInfo,
+      }
+    }),
+    [SAVE_SIGNATORY_MODEL]: (state, action) => ({
+      ...state,
+      signatoryModel: action.payload
+    }),
+    [LOGOUT]: state => ({
+      ...state,
+      login: {
+        userName: "",
+        password: ""
+      },
+      searchInfo: {
+        ...state.searchInfo,
+        fullName: "",
+        countryCode: UAE_CODE,
+        mobileNo: "",
+        leadNumber: "",
+        tradeLicenseNo: "",
+        email: ""
+      },
+      prospect: {}
+    }),
+    [RESET_APPLICANT_INFO]: state => ({
+      ...state,
+      authorizationToken: null,
+      prospect: {
+        ...state.prospect,
+        applicantInfo: {
           fullName: "",
+          email: "",
           countryCode: UAE_CODE,
           mobileNo: "",
-          leadNumber: "",
-          tradeLicenseNo: "",
-          email: ""
-        },
-        prospect: {}
-      };
-    case RESET_APPLICANT_INFO:
-      return {
-        ...state,
-        authorizationToken: null,
-        prospect: {
-          ...state.prospect,
-          applicantInfo: {
-            fullName: "",
-            email: "",
-            countryCode: UAE_CODE,
-            mobileNo: "",
-            applyOnbehalf: false
-          }
+          applyOnbehalf: false
         }
-      };
-    default:
-      return state;
-  }
-};
-
-export default appConfigReducer;
+      }
+    })
+  },
+  initialState
+);

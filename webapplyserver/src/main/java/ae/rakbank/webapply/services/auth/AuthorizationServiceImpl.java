@@ -38,13 +38,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public String validateAndUpdateJwtToken(String jwtToken) {
         JwtPayload jwtPayload = jwtService.decrypt(jwtToken);
+        log.info("[getExpireTime] >> Parsed jwt token: {}", jwtToken);
         if (UserRole.AGENT.equals(jwtPayload.getRole())) {
             validateAndUpdateAgentJwtPayload(jwtPayload);
         } else if (UserRole.CUSTOMER.equals(jwtPayload.getRole())) {
             validateAndUpdateCustomerJwtPayload(jwtPayload);
         } else {
-            log.error("JwtToken is not valid, field role is required");
-            throw new ApiException("JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
+            log.error("[getExpireTime] >> JwtToken is not valid, field role is required");
+            throw new ApiException("[getExpireTime] >> JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
         }
         return jwtService.encrypt(jwtPayload);
     }

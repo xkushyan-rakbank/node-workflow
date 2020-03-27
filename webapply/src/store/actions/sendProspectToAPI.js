@@ -16,13 +16,18 @@ export const sendProspectToAPI = (saveType = NEXT, actionType = SAVE) => {
   return { type: SEND_PROSPECT_TO_API, payload: { saveType, actionType } };
 };
 
-export const sendProspectToAPIPromisify = (saveType = NEXT, gaEvent = null, actionType = SAVE) => {
+export const sendProspectToAPIPromisify = (
+  saveType = NEXT,
+  gaEvent = null,
+  actionType = SAVE,
+  step = null
+) => {
   const action = {
     type: SEND_PROSPECT_TO_API,
     [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
     [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
     [CALLBACK_ARGUMENT]: action => action.payload,
-    payload: { saveType, actionType }
+    payload: { saveType, actionType, step }
   };
 
   return appendGaEventToAction(action, gaEvent);
@@ -32,12 +37,12 @@ export const sendProspectToAPISuccess = isScreeningError => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, payload: isScreeningError };
 };
 
-export const sendProspectToAPIFail = error => {
-  return { type: SEND_PROSPECT_TO_API_FAIL, error };
+export const sendProspectToAPIFail = () => {
+  return { type: SEND_PROSPECT_TO_API_FAIL };
 };
 
-export const resetFormStep = ({ resetStep }) => {
-  return { type: RESET_FORM_STEP, resetStep };
+export const resetFormStep = isResetStep => {
+  return { type: RESET_FORM_STEP, payload: isResetStep };
 };
 
 export const prospectAutoSave = () => {
@@ -52,6 +57,11 @@ export const resetScreeningError = () => {
   return { type: RESET_SCREENING_ERROR };
 };
 
-export const sendProspectRequest = (newProspect, saveType = NEXT, actionType = SAVE) => {
-  return { type: SEND_PROSPECT_REQUEST, payload: { saveType, actionType, newProspect } };
+export const sendProspectRequest = (
+  newProspect,
+  saveType = NEXT,
+  actionType = SAVE,
+  step = null
+) => {
+  return { type: SEND_PROSPECT_REQUEST, payload: { saveType, actionType, newProspect, step } };
 };
