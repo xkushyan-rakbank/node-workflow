@@ -5,6 +5,10 @@ import { composeInputKeyFromValidationData } from "../../../src/utils/composeInp
 jest.mock("../../../src/utils/composeInputKeyFromValidationData");
 
 describe("serverValidation reducer test", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("SET_INPUTS_ERRORS action type", () => {
     composeInputKeyFromValidationData.mockReturnValue("test");
     expect(reducer(undefined, setInputsErrors([{ message: "txt" }]))).toMatchObject({
