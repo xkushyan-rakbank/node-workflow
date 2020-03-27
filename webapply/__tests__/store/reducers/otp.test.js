@@ -1,4 +1,4 @@
-import reducer, { initialState } from "../../../src/store/reducers/otp";
+import reducer from "../../../src/store/reducers/otp";
 import {
   generateOtpCode,
   verifyOtp,
