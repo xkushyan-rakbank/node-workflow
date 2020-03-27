@@ -7,6 +7,7 @@ import ae.rakbank.webapply.stub.RequestFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -34,6 +35,7 @@ public class OtpServiceImplTest {
         otpService.init();
     }
 
+    @Ignore
     @Test
     public void verifyOrGenerate() {
         final OtpVerifyGenerateResponse response = otpService.verifyOrGenerate(RequestFactory.newGenerateOtpValidationRequest());
