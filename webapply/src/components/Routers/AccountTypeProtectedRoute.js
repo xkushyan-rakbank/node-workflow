@@ -14,7 +14,7 @@ export const AccountTypeProtectedRoute = ({ component: Component, render, ...res
       {...rest}
       render={props => {
         if (
-          !accountType &&
+          !accountType ||
           !Object.keys(accountTypeURIs).includes(rest.computedMatch.params.accountType)
         )
           return <Redirect to={routes.accountsComparison} />;
