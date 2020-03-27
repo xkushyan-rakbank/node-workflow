@@ -9,58 +9,45 @@ import {
 } from "../../../src/store/actions/sendProspectToAPI";
 
 describe("sendProspectToAPI reducer test", () => {
-  it("SEND_PROSPECT_TO_API action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle SEND_PROSPECT_TO_API action type", () => {
+    expect(reducer(undefined, sendProspectToAPI())).toMatchObject({
       loading: true
-    };
-    expect(reducer(initialState, sendProspectToAPI())).toStrictEqual(expectedState);
+    });
   });
 
-  it("SEND_PROSPECT_TO_API_SUCCESS action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle SEND_PROSPECT_TO_API_SUCCESS action type", () => {
+    expect(reducer({ ...initialState, loading: true }, sendProspectToAPISuccess())).toMatchObject({
       loading: false
-    };
-    expect(reducer({ ...initialState, loading: true }, sendProspectToAPISuccess())).toStrictEqual(
-      expectedState
-    );
+    });
   });
 
-  it("SEND_PROSPECT_TO_API_FAIL action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle SEND_PROSPECT_TO_API_FAIL action type", () => {
+    expect(reducer({ ...initialState, loading: true }, sendProspectToAPIFail())).toMatchObject({
       loading: false
-    };
-    expect(reducer({ ...initialState, loading: true }, sendProspectToAPIFail())).toStrictEqual(
-      expectedState
-    );
+    });
   });
 
-  it("RESET_FORM_STEP action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle RESET_FORM_STEP action type", () => {
+    expect(reducer(undefined, resetFormStep(true))).toMatchObject({
       resetStep: true
-    };
-    expect(reducer(initialState, resetFormStep(true))).toStrictEqual(expectedState);
+    });
   });
 
-  it("SET_SCREENING_ERROR action type", () => {
+  it("should handle SET_SCREENING_ERROR action type", () => {
     const screeningError = {
       error: "error message"
     };
-    const expectedState = {
-      ...initialState,
+
+    expect(reducer(undefined, setScreeningError(screeningError))).toMatchObject({
       screeningError
-    };
-    expect(reducer(initialState, setScreeningError(screeningError))).toStrictEqual(expectedState);
+    });
   });
 
-  it("RESET_SCREENING_ERROR action type", () => {
-    const updatedState = {
-      ...initialState,
-      screeningError: initialState.screeningError
-    };
-    expect(reducer(updatedState, resetScreeningError())).toStrictEqual(initialState);
+  it("should handle RESET_SCREENING_ERROR action type", () => {
+    expect(
+      reducer({ ...initialState, screeningError: "some error" }, resetScreeningError())
+    ).toMatchObject({
+      screeningError: {}
+    });
   });
 });
