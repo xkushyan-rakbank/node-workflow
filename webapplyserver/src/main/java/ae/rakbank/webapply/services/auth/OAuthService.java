@@ -80,7 +80,7 @@ class OAuthService {
             log.info("[getExpireTime] >> Setting up refresh token");
             jwtPayload.setOauthTokenExpiryTime(getExpireTime(oauthResponse));
         }
-        log.info("Jwt payload now is: {}", jwtPayload);
+        log.info("[getExpireTime] >> Jwt payload now is: {}", jwtPayload);
     }
 
     LocalDateTime getExpireTime(ResponseEntity<JsonNode> oAuthObjectResponse) {
