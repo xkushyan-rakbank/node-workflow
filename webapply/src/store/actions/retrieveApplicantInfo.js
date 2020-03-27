@@ -10,8 +10,8 @@ export const retrieveApplicantInfo = payload => {
   return { type: RETRIEVE_APPLICANT_INFO, payload };
 };
 
-export const retrieveApplicantInfoSuccess = payload => {
-  return { type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload };
+export const retrieveApplicantInfoSuccess = searchResults => {
+  return { type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload: searchResults };
 };
 
 export const getProspectInfoPromisify = prospectId => {

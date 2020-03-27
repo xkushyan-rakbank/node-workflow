@@ -6,8 +6,6 @@ import {
 import { REQUEST_LOADING, REQUEST_SUCCESS } from "../../constants";
 import { handleActions } from "../../utils/redux-utils";
 
-export const initialState = {};
-
 export default handleActions(
   {
     [SCREEN_PROSPECT_REQUEST]: (state, action) => ({
@@ -29,5 +27,5 @@ export default handleActions(
       return rest;
     }
   },
-  initialState
+  {}
 );

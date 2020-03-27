@@ -40,7 +40,7 @@ export default handleActions(
     }),
     [SET_ERROR_OCCURRED_WHILE_PERFORMING]: (state, { payload }) => ({
       ...state,
-      ...payload
+      errorCode: payload.errorCode
     }),
     [GET_PROSPECT_OVERVIEW_SUCCESS]: (state, { payload: { prospect } }) => ({
       ...state,

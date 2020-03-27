@@ -5,15 +5,15 @@ export const LOGIN_INFO_FORM_SUCCESS = "LOGIN_INFO_FORM_SUCCESS";
 export const LOGIN_INFO_FORM_ERROR = "LOGIN_INFO_FORM_ERROR";
 export const LOGOUT = "LOGOUT";
 
-export const loginInfoFormPromisify = payload => ({
+export const loginInfoFormPromisify = response => ({
   type: LOGIN_INFO_FORM,
   [WAIT_FOR_ACTION]: LOGIN_INFO_FORM_SUCCESS,
   [ERROR_ACTION]: LOGIN_INFO_FORM_ERROR,
-  payload
+  payload: response
 });
 
-export const loginInfoFormSuccess = payload => {
-  return { type: LOGIN_INFO_FORM_SUCCESS, payload };
+export const loginInfoFormSuccess = response => {
+  return { type: LOGIN_INFO_FORM_SUCCESS, payload: response };
 };
 
 export const loginInfoFormError = error => {

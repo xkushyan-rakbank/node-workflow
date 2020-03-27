@@ -8,16 +8,12 @@ export const initialState = {
 
 export default handleActions(
   {
-    [LOGIN_INFO_FORM_SUCCESS]: (state, action) => ({
+    [LOGIN_INFO_FORM_SUCCESS]: (state, { payload }) => ({
       ...state,
-      loginResponse: action.payload,
+      loginResponse: payload,
       loginStatus: true
     }),
-    [LOGOUT]: state => ({
-      ...state,
-      loginResponse: {},
-      loginStatus: false
-    })
+    [LOGOUT]: () => initialState
   },
   initialState
 );

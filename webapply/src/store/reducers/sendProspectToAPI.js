@@ -6,6 +6,7 @@ import {
   RESET_SCREENING_ERROR,
   RESET_FORM_STEP
 } from "../actions/sendProspectToAPI";
+import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   loading: false,
@@ -13,41 +14,32 @@ export const initialState = {
   screeningError: {}
 };
 
-const sendProspectToAPIReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SEND_PROSPECT_TO_API:
-      return {
-        ...state,
-        loading: true
-      };
-    case SEND_PROSPECT_TO_API_SUCCESS:
-      return {
-        ...state,
-        loading: false
-      };
-    case SEND_PROSPECT_TO_API_FAIL:
-      return {
-        ...state,
-        loading: false
-      };
-    case RESET_FORM_STEP:
-      return {
-        ...state,
-        resetStep: action.payload
-      };
-    case SET_SCREENING_ERROR:
-      return {
-        ...state,
-        screeningError: action.payload
-      };
-    case RESET_SCREENING_ERROR:
-      return {
-        ...state,
-        screeningError: initialState.screeningError
-      };
-    default:
-      return state;
-  }
-};
-
-export default sendProspectToAPIReducer;
+export default handleActions(
+  {
+    [SEND_PROSPECT_TO_API]: state => ({
+      ...state,
+      loading: true
+    }),
+    [SEND_PROSPECT_TO_API_SUCCESS]: state => ({
+      ...state,
+      loading: false
+    }),
+    [SEND_PROSPECT_TO_API_FAIL]: state => ({
+      ...state,
+      loading: false
+    }),
+    [RESET_FORM_STEP]: (state, action) => ({
+      ...state,
+      resetStep: action.payload
+    }),
+    [SET_SCREENING_ERROR]: (state, action) => ({
+      ...state,
+      screeningError: action.payload
+    }),
+    [RESET_SCREENING_ERROR]: state => ({
+      ...state,
+      screeningError: initialState.screeningError
+    })
+  },
+  initialState
+);
