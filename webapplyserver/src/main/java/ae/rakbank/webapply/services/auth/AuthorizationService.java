@@ -3,8 +3,6 @@ package ae.rakbank.webapply.services.auth;
 import ae.rakbank.webapply.dto.JwtPayload;
 import org.springframework.http.HttpHeaders;
 
-import javax.servlet.http.HttpServletResponse;
-
 public interface AuthorizationService {
 
     String validateAndUpdateJwtToken(String jwtToken);

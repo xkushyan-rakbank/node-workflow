@@ -63,7 +63,14 @@ public class OauthClient {
 
         try {
 
-            return restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+            if (requestMap.containsKey("refresh_token")) {
+                log.warn("[getExpireTime] >>  [REFRESH flow]  >>   map for request is contain refresh_token, invoke call with REFRESH token");
+            }
+
+            log.info("[getExpireTime] >>  invoke call to OAuth service..");
+            ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+            log.info("[getExpireTime] >>  get success response, {}", responseEntity.getBody());
+            return responseEntity;
 
         } catch (HttpClientErrorException e) {
             log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
