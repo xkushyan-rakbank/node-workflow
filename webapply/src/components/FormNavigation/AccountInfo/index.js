@@ -26,7 +26,8 @@ export const AccountInfo = props => {
   const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
 
   const pushHistory = useTrackingHistory();
-  const { pathname } = useLocation();
+  const { pathname: locationPath } = useLocation();
+  const pathname = locationPath.replace(/\/$/, "");
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());
