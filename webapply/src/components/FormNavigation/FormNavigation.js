@@ -4,7 +4,6 @@ import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
-import { VerticalPaginationContext } from "../VerticalPagination";
 import { FormNavigationContext } from "./FormNavigationProvider";
 import { IslamicSwitcher } from "../IslamicSwitcher";
 import { AccountInfo } from "./AccountInfo";
@@ -23,7 +22,6 @@ export const FormNavigationComponent = () => {
   const {
     location: { pathname }
   } = useHistory();
-  const { currentSectionIndex, isActive } = useContext(VerticalPaginationContext);
   const navContext = useContext(FormNavigationContext);
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
   const blobColor = useBlobColor(!navContext);
@@ -39,7 +37,7 @@ export const FormNavigationComponent = () => {
     return null;
   }
 
-  const [isShowAccountInfo, isChatVisible, navigationSteps = []] = navContext;
+  const [isShowAccountInfo, isChatVisible, navigationSteps = [], isCollapsible = true] = navContext;
 
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
@@ -47,11 +45,7 @@ export const FormNavigationComponent = () => {
   const activeStepIndex = (activeStep || {}).step;
 
   return (
-    <div
-      className={cx(classes.formNav, classes.formNavBg, {
-        active: isActive && currentSectionIndex === 0
-      })}
-    >
+    <div className={cx(classes.formNav, classes.formNavBg, { active: !isCollapsible })}>
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />

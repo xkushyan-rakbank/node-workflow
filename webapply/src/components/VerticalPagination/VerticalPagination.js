@@ -8,7 +8,7 @@ import { useStyles } from "./styled";
 
 export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
-  const { currentSectionIndex, setCurrentSection, isCanScroll, setActive } = useContext(
+  const { currentSectionIndex, setCurrentSection, isCanScroll } = useContext(
     VerticalPaginationContext
   );
   const classes = useStyles({ isMobileNotificationActive });
@@ -26,11 +26,6 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
     },
     [setCurrentSection, childrenCount]
   );
-
-  useEffect(() => {
-    setActive(true);
-    return () => setActive(false);
-  }, [setActive]);
 
   useEffect(() => {
     scrollToSection(currentSectionIndex);
