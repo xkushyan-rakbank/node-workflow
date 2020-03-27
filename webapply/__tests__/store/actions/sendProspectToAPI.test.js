@@ -1,4 +1,4 @@
-import { CALLBACK_ARGUMENT, ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
+// import { CALLBACK_ARGUMENT, ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
 import {
   PROSPECT_AUTO_SAVE,
   RESET_FORM_STEP,
@@ -13,7 +13,7 @@ import {
   resetScreeningError,
   sendProspectToAPI,
   sendProspectToAPIFail,
-  sendProspectToAPIPromisify,
+  //  sendProspectToAPIPromisify,
   sendProspectToAPISuccess,
   setScreeningError,
   sendProspectRequest
@@ -44,7 +44,7 @@ describe("actions for sendProspectToAPI", () => {
     };
     expect(sendProspectToAPI(saveType, actionType)).toEqual(expectedAction);
   });
-
+  /*
   it("should create promisified send prospect to API action (default arguments", () => {
     const expectedAction = {
       type: SEND_PROSPECT_TO_API,
@@ -71,7 +71,7 @@ describe("actions for sendProspectToAPI", () => {
     };
     expect(sendProspectToAPIPromisify(saveType, gaEvent, actionType, step)).toEqual(expectedAction);
   });
-
+*/
   it("should create send prospect to API success action", () => {
     const isScreeningError = true;
     const expectedAction = { type: SEND_PROSPECT_TO_API_SUCCESS, payload: isScreeningError };

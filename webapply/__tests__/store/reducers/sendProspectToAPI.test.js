@@ -42,7 +42,7 @@ describe("sendProspectToAPI reducer test", () => {
       ...initialState,
       resetStep: true
     };
-    expect(reducer(initialState, resetFormStep({ resetStep: true }))).toStrictEqual(expectedState);
+    expect(reducer(initialState, resetFormStep(true))).toStrictEqual(expectedState);
   });
 
   it("SET_SCREENING_ERROR action type", () => {

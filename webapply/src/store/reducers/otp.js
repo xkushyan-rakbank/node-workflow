@@ -52,9 +52,8 @@ export default handleActions(
       ...state,
       isGenerating: action.payload
     }),
-    [GENERATE_CODE_SUCCESS]: (state, action) => ({
+    [GENERATE_CODE_SUCCESS]: state => ({
       ...state,
-      ...action.payload,
       isGenerating: false,
       isGenerated: true,
       isPending: false,

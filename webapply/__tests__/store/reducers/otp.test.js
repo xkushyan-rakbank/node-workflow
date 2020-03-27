@@ -7,25 +7,21 @@ import {
   generateCodeSuccess,
   verifyCodeSuccess,
   verifyCodeFailed,
-  verifyClearError,
+  verifyClearError
 } from "../../../src/store/actions/otp";
-import { applicantInfoFormPromisify } from "../../../src/store/actions/applicantInfoForm"
+import { applicantInfoFormPromisify } from "../../../src/store/actions/applicantInfoForm";
 
 describe("otp reducer test", () => {
-  it("VERIFY_OTP action type", () => {
-    const payload = {}
-    const expectedState = {
-      ...initialState,
+  it("should handle VERIFY_OTP action type", () => {
+    expect(reducer(undefined, verifyOtp())).toMatchObject({
       verificationError: false,
       isVerified: false,
       isPending: true
-    };
-    expect(reducer(initialState, verifyOtp(payload))).toStrictEqual(expectedState)
-  })
-  it("APPLICANT_INFO_FORM, GENERATE_OTP_CODE actions type", () => {
-    const payload = {};
+    });
+  });
+
+  it("should handle APPLICANT_INFO_FORM, GENERATE_OTP_CODE actions type", () => {
     const expectedState = {
-      ...initialState,
       verificationError: false,
       isVerified: false,
       isGenerating: true,
@@ -36,70 +32,59 @@ describe("otp reducer test", () => {
       isPending: false,
       error: ""
     };
-    expect(reducer(initialState, applicantInfoFormPromisify(payload))).toStrictEqual(expectedState);
-    expect(reducer(initialState, generateOtpCode(payload))).toStrictEqual(expectedState);
+
+    expect(reducer(undefined, applicantInfoFormPromisify({}))).toMatchObject(expectedState);
+    expect(reducer(undefined, generateOtpCode(""))).toMatchObject(expectedState);
   });
 
-  it("SET_PENDING action type", () => {
-    const payload = true;
-    const expectedState = {
-      ...initialState,
-      isPending: payload
-    };
-    expect(reducer(initialState, setOtpPendingRequest(payload))).toStrictEqual(expectedState)
-  })
+  it("should handle SET_PENDING action type", () => {
+    const isPending = true;
 
-  it("SET_GENERATING action type", () => {
-    const payload = true;
-    const expectedState = {
-      ...initialState,
-      isGenerating: payload
-    };
-    expect(reducer(initialState, setGeneratingCode(payload))).toStrictEqual(expectedState)
-  })
+    expect(reducer(undefined, setOtpPendingRequest(isPending))).toMatchObject({ isPending });
+  });
 
-  it("GENERATE_CODE_SUCCESS action type", () => {
-    const payload = {};
-    const expectedState = {
-      ...initialState,
-      ...payload,
+  it("should handle SET_GENERATING action type", () => {
+    const isGenerating = true;
+
+    expect(reducer(undefined, setGeneratingCode(isGenerating))).toMatchObject({ isGenerating });
+  });
+
+  it("should handle GENERATE_CODE_SUCCESS action type", () => {
+    const now = 1479427200000;
+    const spy = jest.spyOn(Date, "now").mockImplementation(() => now);
+
+    expect(reducer(undefined, generateCodeSuccess())).toMatchObject({
       isGenerating: false,
       isGenerated: true,
       isPending: false,
-      generatedAt: Date.now()
-    }
-    expect(reducer(initialState, generateCodeSuccess())).toStrictEqual(expectedState)
-  })
+      generatedAt: now
+    });
+    spy.mockRestore();
+  });
 
-  it("VERIFY_CODE_SUCCESS action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle VERIFY_CODE_SUCCESS action type", () => {
+    expect(reducer(undefined, verifyCodeSuccess())).toMatchObject({
       isGenerating: false,
       isGenerated: false,
       isVerified: true,
       verificationError: false,
       isPending: false,
       attempts: 0
-    }
-    expect(reducer(initialState, verifyCodeSuccess())).toStrictEqual(expectedState)
-  })
+    });
+  });
 
-  it("VERIFY_CODE_FAILED action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle VERIFY_CODE_FAILED action type", () => {
+    expect(reducer(undefined, verifyCodeFailed())).toMatchObject({
       isVerified: false,
       verificationError: true,
       isPending: false,
-      attempts: initialState.attempts + 1
-    }
-    expect(reducer(initialState, verifyCodeFailed())).toStrictEqual(expectedState)
-  })
+      attempts: 1
+    });
+  });
 
-  it("VERIFY_CLEAR_ERROR action type", () => {
-    const expectedState = {
-      ...initialState,
+  it("should handle VERIFY_CLEAR_ERROR action type", () => {
+    expect(reducer(undefined, verifyClearError())).toMatchObject({
       verificationError: false
-    }
-    expect(reducer(initialState, verifyClearError())).toStrictEqual(expectedState)
-  })
-})
+    });
+  });
+});

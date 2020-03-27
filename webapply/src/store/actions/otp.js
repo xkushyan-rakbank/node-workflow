@@ -16,9 +16,9 @@ export const generateOtpCode = payload => ({
   }
 });
 
-export const verifyOtp = payload => ({
+export const verifyOtp = code => ({
   type: VERIFY_OTP,
-  payload
+  payload: { code }
 });
 
 export const setOtpPendingRequest = payload => ({
