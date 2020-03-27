@@ -2,9 +2,11 @@ package ae.rakbank.webapply.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@ToString
 @Data
 @Builder
 public class JwtPayload {
