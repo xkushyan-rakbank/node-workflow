@@ -21,7 +21,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
     const file = inputEl.current.files[0];
 
     try {
-      if (file) {
+      if (inputEl.current.value) {
         documentValidationSchema.validateSync({ file }, { abortEarly: false });
         uploadDocument(file);
       }
