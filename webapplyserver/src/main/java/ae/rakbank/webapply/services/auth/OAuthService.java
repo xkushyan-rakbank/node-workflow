@@ -71,13 +71,13 @@ class OAuthService {
         boolean after = now.isAfter(jwtPayload.getOauthTokenExpiryTime());
         log.info("[getExpireTime] >> Checking expiration: now is {}, oauthToken: {}, result: {}", now, jwtPayload.getOauthTokenExpiryTime(), after);
         if (after) {
-            log.warn("[getExpireTime] >> Access token is invalid, try to get new one with valid refresh token..");
+            log.warn("[getExpireTime] >> [REFRESH flow]  >>>  Access token is invalid, try to get new one with valid refresh token..");
             ResponseEntity<JsonNode> oauthResponse = oauthClient.refreshAccessToken(jwtPayload.getOauthRefreshToken());
-            log.info("[getExpireTime] >> Getting access token from DEH");
+            log.info("[getExpireTime] >> [REFRESH flow]  >>>  Getting access token from DEH");
             jwtPayload.setOauthAccessToken(oauthResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText());
-            log.info("[getExpireTime] >> Setting up access token");
+            log.info("[getExpireTime] >> [REFRESH flow]  >>>  Setting up access token");
             jwtPayload.setOauthRefreshToken(oauthResponse.getBody().get(OAUTH_REFRESH_TOKEN_KEY).asText());
-            log.info("[getExpireTime] >> Setting up refresh token");
+            log.info("[getExpireTime] >> [REFRESH flow]  >>>  Setting up refresh token");
             jwtPayload.setOauthTokenExpiryTime(getExpireTime(oauthResponse));
         }
         log.info("[getExpireTime] >> Jwt payload now is: {}", jwtPayload);

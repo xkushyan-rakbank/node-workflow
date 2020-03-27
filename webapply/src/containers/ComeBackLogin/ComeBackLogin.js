@@ -19,6 +19,7 @@ import ReCaptcha from "../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { setToken } from "../../store/actions/reCaptcha";
+import { resetProspect } from "../../store/actions/appConfig";
 import { generateOtpCode } from "../../store/actions/otp";
 import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
 import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
@@ -45,13 +46,20 @@ const ComeBackLoginComponent = ({
   generateOtpCode,
   isOtpGenerated,
   setToken,
+  resetProspect,
   recaptchaToken,
   isRecaptchaEnable,
   isGenerating,
   isConfigLoading
 }) => {
-  const pushHistory = useTrackingHistory();
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
+  useFormNavigation([true, false]);
+
+  useEffect(() => {
+    resetProspect();
+  }, [resetProspect]);
+
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
@@ -73,8 +81,6 @@ const ComeBackLoginComponent = ({
   const handleVerifiedFailed = useCallback(() => {
     setToken(null);
   }, [setToken]);
-
-  useFormNavigation([true, false]);
 
   useEffect(() => {
     if (isOtpGenerated) {
@@ -197,7 +203,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   generateOtpCode,
-  setToken
+  setToken,
+  resetProspect
 };
 
 export const ComeBackLogin = connect(

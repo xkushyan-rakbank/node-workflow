@@ -17,7 +17,7 @@ import {
   getIsSendingProspect,
   getCompanyName
 } from "../../store/selectors/appConfig";
-import { CONTINUE, NEXT, formStepper, STEP_STATUS } from "../../constants";
+import { CONTINUE, NEXT, formStepper, STEP_STATUS, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import routes from "./../../routes";
 
@@ -47,7 +47,10 @@ export const CompanyInfoPage = ({
   const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(CONTINUE, event).then(
+    sendProspectToAPI(CONTINUE, event, SAVE, {
+      activeStep,
+      flowId: COMPANY_INFO_PAGE_ID
+    }).then(
       () => {
         handleSetNextStep(activeStep);
       },
