@@ -43,7 +43,9 @@ describe("actions for searchProspect", () => {
   });
 
   it("should create an action to set error occurred while performing", () => {
-    const payload = {};
+    const payload = {
+      errorCode: 500
+    };
     const expectedAction = { type: SET_ERROR_OCCURRED_WHILE_PERFORMING, payload };
     expect(setErrorOccurredWhilePerforming(payload)).toEqual(expectedAction);
   });

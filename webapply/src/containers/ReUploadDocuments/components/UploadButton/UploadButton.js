@@ -15,12 +15,16 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
     inputEl.current.click();
   };
 
+  const fileUploadClick = event => (event.target.value = null);
+
   const fileUploadChange = () => {
     const file = inputEl.current.files[0];
 
     try {
-      documentValidationSchema.validateSync({ file }, { abortEarly: false });
-      uploadDocument(file);
+      if (inputEl.current.value) {
+        documentValidationSchema.validateSync({ file }, { abortEarly: false });
+        uploadDocument(file);
+      }
     } catch (error) {
       return setError(error.message);
     }
@@ -33,6 +37,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
         name="file"
         type="file"
         onChange={fileUploadChange}
+        onClick={fileUploadClick}
         ref={inputEl}
       />
       <div className={classes.uploadButton} onClick={uploadButtonClick}>

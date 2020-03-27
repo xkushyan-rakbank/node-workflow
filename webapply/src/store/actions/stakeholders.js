@@ -16,15 +16,15 @@ export const createNewStakeholder = () => {
 };
 
 export const deleteStakeholder = stakeholderId => {
-  return { type: DELETE_STAKEHOLDER, stakeholderId };
+  return { type: DELETE_STAKEHOLDER, payload: stakeholderId };
 };
 
 export const changeEditableStakeholder = editableStakeholder => {
-  return { type: CHANGE_EDITABLE_STAKEHOLDER, editableStakeholder };
+  return { type: CHANGE_EDITABLE_STAKEHOLDER, payload: editableStakeholder };
 };
 
 export const updateStakeholdersIds = stakeholdersIds => {
-  return { type: UPDATE_STAKEHOLDERS_IDS, stakeholdersIds };
+  return { type: UPDATE_STAKEHOLDERS_IDS, payload: stakeholdersIds };
 };
 
 export const setEditStakeholder = (index, isEditting) => {
