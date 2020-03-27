@@ -42,11 +42,11 @@ describe("stakeholders actions", () => {
   });
 
   it("should create an action to update stakeholder", () => {
-    const stakeholdersIds = {};
+    const stakeholdersIds = [];
 
     expect(updateStakeholdersIds(stakeholdersIds)).toStrictEqual({
       type: UPDATE_STAKEHOLDERS_IDS,
-      stakeholdersIds
+      payload: stakeholdersIds
     });
   });
 

@@ -5,7 +5,7 @@ import {
 } from "../../../src/store/actions/stakeholders";
 
 describe("stakeholders reducer test", () => {
-  it("CHANGE_EDITABLE_STAKEHOLDER action type", () => {
+  it("should handle CHANGE_EDITABLE_STAKEHOLDER action type", () => {
     const stakeholderIndex = 2;
 
     expect(reducer(undefined, changeEditableStakeholder(stakeholderIndex))).toMatchObject({
@@ -13,7 +13,7 @@ describe("stakeholders reducer test", () => {
     });
   });
 
-  it("UPDATE_STAKEHOLDERS_IDS action type", () => {
+  it("should handle UPDATE_STAKEHOLDERS_IDS action type", () => {
     const stakeholdersIds = [];
 
     expect(reducer(undefined, updateStakeholdersIds(stakeholdersIds))).toMatchObject({

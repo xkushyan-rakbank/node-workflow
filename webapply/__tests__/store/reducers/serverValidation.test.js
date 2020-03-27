@@ -1,56 +1,24 @@
-import reducer, { initialState, composeInputKeyFromValidationData } from "../../../src/store/reducers/serverValidation";
+import reducer from "../../../src/store/reducers/serverValidation";
 import { setInputsErrors, resetInputsErrors } from "../../../src/store/actions/serverValidation";
+import { composeInputKeyFromValidationData } from "../../../src/utils/composeInputKeyFromValidationData";
+
+jest.mock("../../../src/utils/composeInputKeyFromValidationData");
 
 describe("serverValidation reducer test", () => {
-  const payload = [
-    {
-      fieldPath: "applicantInfo.email",
-      errorCode: "INV0001",
-      errorType: "invalid",
-      message: "The text entered is not a valid email format",
-      developerText: "Invalid email formal for field applicantInfo.email, [format=email]"
-    }
-  ]
-
   it("SET_INPUTS_ERRORS action type", () => {
-    const expectedState = {
-      ...initialState,
+    composeInputKeyFromValidationData.mockReturnValue("test");
+    expect(reducer(undefined, setInputsErrors([{ message: "txt" }]))).toMatchObject({
       inputs: {
-        "prospect.applicantInfo.email": payload[0]
+        test: {
+          message: "txt"
+        }
       }
-    };
-
-    expect(reducer(initialState, setInputsErrors(payload))).toStrictEqual(expectedState);
+    });
   });
 
   it("RESET_INPUTS_ERRORS action type", () => {
-    const updatedState = {
-      ...initialState,
+    expect(reducer({ inputs: "some inputs" }, resetInputsErrors())).toMatchObject({
       inputs: {}
-    };
-    expect(reducer(updatedState, resetInputsErrors())).toStrictEqual(initialState);
+    });
   });
-
-  it('composeInputKeyFromValidationData function', () => {
-    const data = { fieldPath: "applicantInfo.email" };
-    const dataProspect = { fieldPath: "prospect.applicantInfo.email" };
-    const windowSpy = jest.spyOn(global, 'window', 'get');
-
-    expect(composeInputKeyFromValidationData(dataProspect)).toStrictEqual("prospect.applicantInfo.email");
-
-    windowSpy.mockImplementation(() => ({
-      location: {
-        pathname: '/agent/Login'
-      }
-    }));
-    expect(composeInputKeyFromValidationData(data)).toStrictEqual("login.applicantInfo.email");
-
-    windowSpy.mockImplementation(() => ({
-      location: {
-        pathname: '/agent/SearchProspect'
-      }
-    }));
-    expect(composeInputKeyFromValidationData(data)).toStrictEqual("searchInfo.applicantInfo.email");
-    windowSpy.mockRestore();
-  })
 });
