@@ -47,6 +47,7 @@ public class ConfigFactory {
         dehURIs.put("getProspectUri", "/deh-uri");
         dehURIs.put("updateProspectUri", "/deh-uri");
         dehURIs.put("searchProspectUri", "/deh-uri");
+        dehURIs.put("otpUri", "/otp");
 
         config.set("DehURIs", dehURIs);
         config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
@@ -55,13 +56,32 @@ public class ConfigFactory {
 
     }
 
+    public static JsonNode newOtpConfig() {
+        ObjectNode config = objectMapper.createObjectNode();
+        ObjectNode dehURIs = objectMapper.createObjectNode();
+
+        dehURIs.put("otpUri", "/otp");
+
+        config.set("DehURIs", dehURIs);
+        config.set("OtherConfigs", objectMapper.createObjectNode()
+                .set("local", objectMapper.createObjectNode()
+                        .put("OAuthUsername", "theoauthusername")
+                        .put("OAuthPassword", "theoauthpassword")
+                        .put("JwtSecret", "1234")
+                        .put("OtpEnabled", "Y")));
+        config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
+
+        return config;
+    }
+
     public static JsonNode newOtherConfig() {
         return objectMapper.createObjectNode()
                 .set("OtherConfigs", objectMapper.createObjectNode()
                         .set("local", objectMapper.createObjectNode()
                                 .put("OAuthUsername", "theoauthusername")
                                 .put("OAuthPassword", "theoauthpassword")
-                                .put("JwtSecret", "1234")));
+                                .put("JwtSecret", "1234")
+                                .put("OtpEnabled", "Y")));
     }
 
 }

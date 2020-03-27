@@ -30,9 +30,17 @@ public class RequestFactory {
                 .put("mobileNo", "+37847563456");
     }
 
-    public static JsonNode newGenerateOtpInvalidRequest() {
+    public static JsonNode newGenerateOtpGenerationRequest() {
         return objectMapper.createObjectNode()
                 .put("action", "generate");
+    }
+
+    public static JsonNode newGenerateOtpValidationRequest() {
+        return objectMapper.createObjectNode()
+                .put("action", "validate")
+                .put("phoneNo", "+37847563456")
+                .put("prospectId", "123456789")
+                .put("otp", "111222333");
     }
 
     public static JsonNode newGenerateOtpWithNoProspectIdRequest() {
