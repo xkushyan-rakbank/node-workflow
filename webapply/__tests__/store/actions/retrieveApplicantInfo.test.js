@@ -34,16 +34,19 @@ describe("retrieve application info actions", () => {
 
   it("should create an action to login info form promisify", () => {
     const prospectId = "12";
+    const prospect = "some prospect";
     const expectedAction = {
       type: GET_PROSPECT_INFO_REQUEST,
       [WAIT_FOR_ACTION]: GET_PROSPECT_INFO_SUCCESS,
       [ERROR_ACTION]: GET_PROSPECT_INFO_FAIL,
-      [CALLBACK_ARGUMENT]: ({ payload: { prospect } }) => prospect,
       payload: {
         prospectId
       }
     };
-    expect(getProspectInfoPromisify(prospectId)).toMatchObject(expectedAction);
+    const result = getProspectInfoPromisify(prospectId);
+
+    expect(result).toMatchObject(expectedAction);
+    expect(result[CALLBACK_ARGUMENT]({ payload: { prospect } })).toEqual(prospect);
   });
 
   it("should create an action to get prospect info success", () => {
