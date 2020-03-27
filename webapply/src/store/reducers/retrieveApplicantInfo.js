@@ -7,9 +7,9 @@ export const initialState = {
 
 export default handleActions(
   {
-    [RETRIEVE_APPLICANT_INFO_SUCCESS]: (state, action) => ({
+    [RETRIEVE_APPLICANT_INFO_SUCCESS]: (state, { payload }) => ({
       ...state,
-      searchResults: action.payload
+      searchResults: payload
     })
   },
   initialState

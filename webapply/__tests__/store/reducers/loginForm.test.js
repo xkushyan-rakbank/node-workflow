@@ -11,6 +11,6 @@ describe("loginForm reducer test", () => {
   });
 
   it("should handle LOGOUT action type", () => {
-    expect(reducer({}, logout())).toStrictEqual(initialState);
+    expect(reducer({}, logout())).toEqual(initialState);
   });
 });
