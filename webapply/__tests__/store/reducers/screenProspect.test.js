@@ -1,4 +1,4 @@
-import reducer, { initialState } from "../../../src/store/reducers/screenProspect";
+import reducer from "../../../src/store/reducers/screenProspect";
 import {
   screenProspectRequest,
   screenProspectSuccess,
@@ -7,38 +7,34 @@ import {
 import { REQUEST_LOADING, REQUEST_SUCCESS } from "../../../src/constants";
 
 describe("screenProspect reducer test", () => {
-  it("SCREEN_PROSPECT_REQUEST action type", () => {
+  it("should handle SCREEN_PROSPECT_REQUEST action type", () => {
     const prospectId = "123456";
-    const expectedState = {
-      ...initialState,
+
+    expect(reducer(undefined, screenProspectRequest(prospectId))).toStrictEqual({
       [prospectId]: {
         status: REQUEST_LOADING
       }
-    };
-    expect(reducer(initialState, screenProspectRequest(prospectId))).toStrictEqual(expectedState);
+    });
   });
 
-  it("SCREEN_PROSPECT_SUCCESS action type", () => {
+  it("should handle SCREEN_PROSPECT_SUCCESS action type", () => {
     const prospectId = "123456";
     const screeningResult = {};
-    const expectedState = {
-      ...initialState,
+
+    expect(reducer(undefined, screenProspectSuccess(prospectId, screeningResult))).toStrictEqual({
       [prospectId]: {
         status: REQUEST_SUCCESS,
         data: { screeningResult, prospectId }
       }
-    };
-    expect(reducer(initialState, screenProspectSuccess(prospectId, screeningResult))).toStrictEqual(
-      expectedState
-    );
+    });
   });
 
-  it("SCREEN_PROSPECT_RESET action type", () => {
+  it("should handle SCREEN_PROSPECT_RESET action type", () => {
     const prospectId = "123456";
     const updatedState = {
-      [prospectId]: {},
+      [prospectId]: {}
     };
-    const expectedState = {}
-    expect(reducer(updatedState, screenProspectReset(prospectId))).toStrictEqual(expectedState);
+
+    expect(reducer(updatedState, screenProspectReset(prospectId))).toStrictEqual({});
   });
 });
