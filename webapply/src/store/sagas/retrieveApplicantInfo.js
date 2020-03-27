@@ -1,9 +1,15 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-import * as actions from "../actions/retrieveApplicantInfo";
+import {
+  retrieveApplicantInfoSuccess,
+  getProspectInfoSuccess,
+  getProspectInfoFail,
+  RETRIEVE_APPLICANT_INFO,
+  GET_PROSPECT_INFO_REQUEST
+} from "../actions/retrieveApplicantInfo";
 import { setConfig, loadMetaData } from "../actions/appConfig";
 import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader } from "../selectors/appConfig";
+import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 
@@ -20,7 +26,7 @@ function* retrieveApplicantInfoSaga({ payload }) {
     };
 
     const response = yield call(retrieveApplicantInfos.applicant, inputParam);
-    yield put(actions.retrieveApplicantInfoSuccess(response.data));
+    yield put(retrieveApplicantInfoSuccess(response.data));
   } catch (error) {
     log(error);
   }
@@ -33,6 +39,11 @@ function* getProspectIdInfo({ payload }) {
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
+    const newStakeholder = yield select(getSignatoryModel);
+
+    if (!config.prospect.signatoryInfo.length) {
+      config.prospect.signatoryInfo = [newStakeholder];
+    }
 
     yield put(setConfig(config));
 
@@ -57,14 +68,14 @@ function* getProspectIdInfo({ payload }) {
       }
     }
 
-    yield put(actions.getProspectInfoSuccess(config.prospect));
+    yield put(getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);
-    yield put(actions.getProspectInfoFail());
+    yield put(getProspectInfoFail());
   }
 }
 
 export default function* retrieveApplicantSaga() {
-  yield all([takeLatest(actions.RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
-  yield all([takeLatest(actions.GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)]);
+  yield all([takeLatest(RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
+  yield all([takeLatest(GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)]);
 }
