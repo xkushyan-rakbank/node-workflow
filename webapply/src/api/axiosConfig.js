@@ -105,7 +105,6 @@ apiClient.interceptors.response.use(
   },
   error => {
     const {
-      status,
       data,
       config: { symKey }
     } = error.response;
@@ -135,25 +134,23 @@ apiClient.interceptors.response.use(
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
-      if (status === 400 && errorType === "ReCaptchaError") {
+      if (errorType === "ReCaptchaError") {
         serverError = new ReCaptchaError(jsonData);
         notificationOptions = { title: "ReCaptchaError", message: errors };
-      } else if (status === 400 && errors) {
-        if (HANDLED_ERROR_CODES.includes(errors[0].errorCode)) {
-          serverError = new ErrorOccurredWhilePerforming(jsonData);
-          notificationOptions = null;
-        } else if (errorType === "FieldsValidation") {
-          serverError = new FieldsValidationError(jsonData);
-          notificationOptions = {
-            title: "Validation Error On Server",
-            message: get(jsonData, "errors[0].message", "Validation Error")
-          };
-        }
+      } else if (errorType === "FieldsValidation") {
+        serverError = new FieldsValidationError(jsonData);
+        notificationOptions = {
+          title: "Validation Error On Server",
+          message: get(jsonData, "errors[0].message", "Validation Error")
+        };
+      } else if (HANDLED_ERROR_CODES.includes(get(errors, "[0].errorCode"))) {
+        serverError = new ErrorOccurredWhilePerforming(jsonData);
+        notificationOptions = null;
       } else {
         log(jsonData);
         try {
           if (jsonData.status) {
-            if (IGNORE_ERROR_CODES.includes(errors[0].errorCode)) {
+            if (IGNORE_ERROR_CODES.includes(get(errors, "[0].errorCode"))) {
               notificationOptions = null;
             } else {
               const errorMessages = errors.map(({ message }) => message);
