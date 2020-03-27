@@ -71,6 +71,7 @@ class AuthorizationFilter extends GenericFilterBean {
                                     .setHeader(AuthConstants.JWT_TOKEN_KEY, authorizationService.getTokenFromPrincipal(principal));
                         });
             } catch (Exception e) {
+                log.info("Unauthorized exception: ", e);
                 sendUnauthorizedErrorToClient((HttpServletResponse) response);
                 throw new UnauthorizedException(e);
             }

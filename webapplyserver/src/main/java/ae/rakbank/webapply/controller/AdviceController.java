@@ -81,6 +81,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public void accessDeniedExceptionHandler(AccessDeniedException e) {
+        log.error(e.getMessage(), e);
         throw e;
     }
 
