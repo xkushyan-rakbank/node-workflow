@@ -1,4 +1,4 @@
-// import { CALLBACK_ARGUMENT, ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
+import { CALLBACK_ARGUMENT, ERROR_ACTION, WAIT_FOR_ACTION } from "redux-wait-for-action";
 import {
   PROSPECT_AUTO_SAVE,
   RESET_FORM_STEP,
@@ -13,14 +13,21 @@ import {
   resetScreeningError,
   sendProspectToAPI,
   sendProspectToAPIFail,
-  //  sendProspectToAPIPromisify,
+  sendProspectToAPIPromisify,
   sendProspectToAPISuccess,
   setScreeningError,
   sendProspectRequest
 } from "../../../src/store/actions/sendProspectToAPI";
 import { NEXT, SAVE } from "../../../src/constants";
+import { appendGaEventToAction } from "../../../src/store/actions/googleAnalytics";
+
+jest.mock("../../../src/store/actions/googleAnalytics");
 
 describe("actions for sendProspectToAPI", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should create send prospect to API action (default arguments)", () => {
     const expectedAction = {
       type: SEND_PROSPECT_TO_API,
@@ -44,49 +51,50 @@ describe("actions for sendProspectToAPI", () => {
     };
     expect(sendProspectToAPI(saveType, actionType)).toEqual(expectedAction);
   });
-  /*
+
   it("should create promisified send prospect to API action (default arguments", () => {
-    const payload = { saveType: NEXT, actionType: SAVE, step: null };
-    const expectedAction = {
-      type: SEND_PROSPECT_TO_API,
-      [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
-      [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
-      [CALLBACK_ARGUMENT]: action => action.payload,
-      payload
-    };
+    const result = "some result";
+    appendGaEventToAction.mockImplementation(() => result);
 
-    const actualAction = sendProspectToAPIPromisify();
-
-    expect(actualAction).toMatchObject(expectedAction);
-    expect(actualAction[CALLBACK_ARGUMENT](actualAction)).toEqual(payload);
+    expect(sendProspectToAPIPromisify()).toEqual(result);
+    expect(appendGaEventToAction.mock.calls[0]).toMatchObject([
+      {
+        type: SEND_PROSPECT_TO_API,
+        [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
+        [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+        payload: { saveType: NEXT, actionType: SAVE, step: null }
+      },
+      null
+    ]);
+    expect(
+      appendGaEventToAction.mock.calls[0][0][CALLBACK_ARGUMENT]({ payload: "some payload" })
+    ).toEqual("some payload");
   });
 
   it("should create promisified send prospect to API action (custom arguments)", () => {
+    const result = "some result";
+    appendGaEventToAction.mockImplementation(() => result);
+
     const saveType = NEXT;
     const actionType = SAVE;
     const gaEvent = "some event";
     const step = { flowId: "companyInfo", activeStep: 3 };
-    const payload = {
-      saveType,
-      actionType,
-      step
-    };
 
-    const expectedAction = {
-      type: SEND_PROSPECT_TO_API,
-      [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
-      [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
-      [CALLBACK_ARGUMENT]: action => action.payload,
-      payload,
-      meta: { analytics: { eventType: gaEvent } }
-    };
-
-    const actualAction = sendProspectToAPIPromisify(saveType, gaEvent, actionType, step);
-
-    expect(actualAction).toMatchObject(expectedAction);
-    expect(actualAction[CALLBACK_ARGUMENT](actualAction)).toEqual(payload);
+    expect(sendProspectToAPIPromisify(saveType, gaEvent, actionType, step)).toEqual(result);
+    expect(appendGaEventToAction.mock.calls[0]).toMatchObject([
+      {
+        type: SEND_PROSPECT_TO_API,
+        [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
+        [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+        payload: { saveType, actionType, step }
+      },
+      gaEvent
+    ]);
+    expect(
+      appendGaEventToAction.mock.calls[0][0][CALLBACK_ARGUMENT]({ payload: "some payload" })
+    ).toEqual("some payload");
   });
-*/
+
   it("should create send prospect to API success action", () => {
     const isScreeningError = true;
     const expectedAction = { type: SEND_PROSPECT_TO_API_SUCCESS, payload: isScreeningError };
