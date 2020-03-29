@@ -140,9 +140,9 @@ const CompanyStakeholdersComponent = ({
           );
         })}
       </div>
-      {isShowingAddButton && !isLoading && (
+      {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton handleClick={addNewStakeholder} />
+          <AddStakeholderButton disabled={isLoading} handleClick={addNewStakeholder} />
         </div>
       )}
       {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && !hasSignatories) && (
