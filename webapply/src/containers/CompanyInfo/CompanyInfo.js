@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
@@ -28,7 +28,7 @@ import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
-  isSendingProspect,
+  loading,
   fullName,
   companyName,
   isComeFromROScreens
@@ -44,26 +44,26 @@ export const CompanyInfoPage = ({
     handleSetNextStep,
     createFormChangeHandler
   ] = useStep(COMPANY_INFO_PAGE_ID, companyInfoSteps);
-  const [isLoading, setIsLoading] = useState(false);
   const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event, SAVE, {
       activeStep,
       flowId: COMPANY_INFO_PAGE_ID
-    }).then(() => handleSetNextStep(activeStep), () => {});
+    }).then(
+      () => {
+        handleSetNextStep(activeStep);
+      },
+      () => {}
+    );
   };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    setIsLoading(true);
-    sendProspectToAPI(NEXT).then(
-      isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
-      },
-      () => setIsLoading(false)
-    );
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
+    });
   }, [pushHistory, sendProspectToAPI]);
 
   return (
@@ -80,7 +80,7 @@ export const CompanyInfoPage = ({
             <div className={classes.title}>
               {activeStep !== STEP_1 ? companyName : "Company Name"}
             </div>
-            {isSendingProspect && <StatusLoader />}
+            {loading && <StatusLoader />}
           </>
         }
         defaultAvatarIcon={companyInfoIcon}
@@ -108,8 +108,8 @@ export const CompanyInfoPage = ({
           justify="flex-end"
           label="Next Step"
           disabled={!isAllStepsCompleted}
-          isDisplayLoader={isLoading}
           handleClick={handleClickNextStep}
+          withRightArrow
         />
       </div>
     </>
@@ -117,7 +117,7 @@ export const CompanyInfoPage = ({
 };
 
 const mapStateToProps = state => ({
-  isSendingProspect: getIsSendingProspect(state),
+  loading: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
   companyName: getCompanyName(state),
   isComeFromROScreens: getIsEditableStatusSearchInfo(state)

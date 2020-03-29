@@ -24,18 +24,13 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
   const companySteps = useSelector(getCompanySteps);
   const isCompanyStepsCompleted = checkAllStepsCompleted(companySteps);
   const signatoriesSteps = useSelector(getSignatoriesSteps);
-  const [isLoading, setIsLoading] = useState(false);
   const isAllStepsCompleted = checkAllStepsCompleted(signatoriesSteps) && isCompanyStepsCompleted;
   const pushHistory = useTrackingHistory();
 
   const goToUploadDocument = () => {
-    setIsLoading(true);
-    sendProspectToAPI(NEXT).then(
-      isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.uploadDocuments, true);
-      },
-      () => setIsLoading(false)
-    );
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.uploadDocuments, true);
+    });
   };
 
   const handleFinalStepContinue = useCallback(
@@ -91,7 +86,6 @@ export const FinalQuestionsComponent = ({ signatories, sendProspectToAPI }) => {
         <BackLink path={routes.stakeholdersInfo} />
         <NextStepButton
           disabled={!isAllStepsCompleted}
-          isDisplayLoader={isLoading}
           handleClick={goToUploadDocument}
           label="Next Step"
         />
