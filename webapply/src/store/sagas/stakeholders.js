@@ -37,7 +37,7 @@ function* createNewStakeholderSaga() {
   );
 }
 
-function* deleteStakeholderSaga({ stakeholderId }) {
+function* deleteStakeholderSaga({ payload: stakeholderId }) {
   const stakeholdersIds = yield select(getStakeholdersIds);
   const stakeholders = yield select(getStakeholders);
 
