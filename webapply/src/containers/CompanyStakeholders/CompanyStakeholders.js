@@ -43,7 +43,7 @@ const CompanyStakeholdersComponent = ({
   sendProspectToAPI,
   isStakeholderStepsCompleted,
   isAnyStakeholderStepsCompleted,
-  IsSendingProspect
+  isSendingProspect
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
@@ -148,7 +148,7 @@ const CompanyStakeholdersComponent = ({
       </div>
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton disabled={IsSendingProspect} handleClick={addNewStakeholder} />
+          <AddStakeholderButton disabled={isSendingProspect} handleClick={addNewStakeholder} />
         </div>
       )}
       {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && !hasSignatories) && (
@@ -176,7 +176,7 @@ const CompanyStakeholdersComponent = ({
 };
 
 const mapStateToProps = state => ({
-  IsSendingProspect: getIsSendingProspect(state),
+  isSendingProspect: getIsSendingProspect(state),
   stakeholdersIds: getStakeholdersIds(state),
   stakeholders: stakeholdersSelector(state),
   percentage: percentageSelector(state),
