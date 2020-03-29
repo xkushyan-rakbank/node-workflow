@@ -2,16 +2,16 @@ import React from "react";
 import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
-import { styled } from "@material-ui/styles";
 
-import { ReactComponent as Icon } from "./../../assets/icons/whiteArrow.svg";
-
-const ArrowIcon = styled(Icon)({
-  width: "24px",
-  height: "24px"
-});
+import { ReactComponent as Arrow } from "./../../assets/icons/whiteArrow.svg";
+import { ReactComponent as Loader } from "./../../assets/icons/loader.svg";
 
 const styles = {
+  "@keyframes rotate": {
+    "100%": {
+      transform: "rotate(360deg)"
+    }
+  },
   buttonStyle: {
     minHeight: "56px",
     borderRadius: "28px",
@@ -20,11 +20,6 @@ const styles = {
     textTransform: "none",
     padding: "15px 32px",
     backgroundColor: "#3b3a3a",
-    "& svg": {
-      verticalAlign: "top",
-      marginLeft: 18,
-      marginRight: -10
-    },
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.7)"
     }
@@ -36,6 +31,19 @@ const styles = {
     color: "#ffffff",
     justifyContent: "space-between",
     textTransform: "none"
+  },
+  loader: {
+    width: "24px",
+    height: "24px",
+    margin: "0 auto",
+    animation: "$rotate 2s linear infinite"
+  },
+  arrow: {
+    width: "24px",
+    height: "24px",
+    verticalAlign: "top",
+    marginLeft: 18,
+    marginRight: -10
   }
 };
 
@@ -49,6 +57,7 @@ const BaseButton = ({
   color = "primary",
   component = "button",
   withRightArrow,
+  isDisplayLoader,
   classes,
   name,
   ...props
@@ -62,13 +71,19 @@ const BaseButton = ({
       root: cx(classes.buttonStyle, className),
       label: classes.labelStyle
     }}
-    disabled={disabled}
+    disabled={isDisplayLoader || disabled}
     onClick={handleClick}
     name={name}
     {...props}
   >
-    {label}
-    {withRightArrow && <ArrowIcon alt="rightArrowWhite" />}
+    {isDisplayLoader ? (
+      <Loader className={classes.loader} alt="loading" />
+    ) : (
+      [
+        label,
+        withRightArrow && <Arrow key="arrow" className={classes.arrow} alt="rightArrowWhite" />
+      ]
+    )}
   </Button>
 );
 
