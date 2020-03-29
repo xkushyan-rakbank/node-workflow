@@ -176,11 +176,9 @@ const ComeBackLoginComponent = ({
               <div className={cx(classes.btnWrapper, "linkContainer")}>
                 <SubmitButton
                   disabled={
-                    !values.email ||
-                    !values.mobileNo ||
-                    isGenerating ||
-                    (isRecaptchaEnable && !recaptchaToken)
+                    !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
                   }
+                  isDisplayLoader={isGenerating}
                   justify="flex-end"
                   label="Next Step"
                 />
