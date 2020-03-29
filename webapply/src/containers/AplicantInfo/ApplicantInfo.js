@@ -87,15 +87,12 @@ const ApplicantInfoPage = ({
     values => {
       setIsLoading(true);
       submit(values).then(
-        () => {
+        () =>
           pushHistory(
             process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
             true
-          );
-        },
-        () => {
-          setIsLoading(false);
-        }
+          ),
+        () => setIsLoading(false)
       );
     },
     [submit, pushHistory]
@@ -210,9 +207,9 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    isLoading ||
                     (!reCaptchaToken && isRecaptchaEnable)
                   }
+                  isDisplayLoader={isLoading}
                   justify="flex-end"
                   label="Next Step"
                 />
