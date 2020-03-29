@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import SectionTitle from "../../components/SectionTitle";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
@@ -16,14 +16,13 @@ import { useStyles } from "./styled";
 
 export const UploadDocument = ({
   retrieveDocDetails,
-  isLoadingDocuments,
+  isLoading,
   documents,
   isRequiredDocsUploaded,
   ...rest
 }) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
-  const [isLoading, setIsLoading] = useState(false);
   useFormNavigation([false, true, formStepper]);
 
   useEffect(() => {
@@ -31,13 +30,9 @@ export const UploadDocument = ({
   }, [retrieveDocDetails]);
 
   const goToSelectService = () => {
-    setIsLoading(true);
-    rest.sendProspectToAPI(NEXT).then(
-      isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.selectServices, true);
-      },
-      () => setIsLoading(false)
-    );
+    rest.sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.selectServices, true);
+    });
   };
 
   const isDisabledNextStep =
@@ -52,7 +47,7 @@ export const UploadDocument = ({
       <p className="formDescription">
         Remember we asked you to have the papers ready? Now it’s time to upload them.
       </p>
-      {isLoadingDocuments ? (
+      {isLoading ? (
         <DocumentsSkeleton />
       ) : (
         <>
@@ -73,7 +68,6 @@ export const UploadDocument = ({
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
           disabled={isDisabledNextStep}
-          isDisplayLoader={isLoading}
           handleClick={goToSelectService}
           label="Next Step"
           justify="flex-end"

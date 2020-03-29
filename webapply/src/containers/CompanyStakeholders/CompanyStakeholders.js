@@ -15,7 +15,6 @@ import {
   deleteStakeholder
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { getIsSendingProspect } from "../../store/selectors/appConfig";
 import {
   stakeholdersSelector,
   checkIsHasSignatories,
@@ -43,12 +42,11 @@ const CompanyStakeholdersComponent = ({
   sendProspectToAPI,
   isStakeholderStepsCompleted,
   isAnyStakeholderStepsCompleted,
-  IsSendingProspect
+  isLoading
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isShowingAddButton, setIsShowingAddButton] = useState(
     stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
   );
@@ -71,13 +69,9 @@ const CompanyStakeholdersComponent = ({
     stakeholders.length < 1 || !isStakeholderStepsCompleted || isLowPercentage || !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
-    setIsLoading(true);
-    sendProspectToAPI(NEXT).then(
-      isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.finalQuestions, true);
-      },
-      () => setIsLoading(false)
-    );
+    sendProspectToAPI(NEXT).then(isScreeningError => {
+      if (!isScreeningError) pushHistory(routes.finalQuestions, true);
+    });
   }, [pushHistory, sendProspectToAPI]);
 
   const handleDeleteStakeholder = useCallback(
@@ -148,7 +142,7 @@ const CompanyStakeholdersComponent = ({
       </div>
       {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton disabled={IsSendingProspect} handleClick={addNewStakeholder} />
+          <AddStakeholderButton disabled={isLoading} handleClick={addNewStakeholder} />
         </div>
       )}
       {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && !hasSignatories) && (
@@ -165,10 +159,9 @@ const CompanyStakeholdersComponent = ({
 
         <NextStepButton
           handleClick={goToFinalQuestions}
-          isDisplayLoader={isLoading}
-          disabled={isDisableNextStep}
           label="Next Step"
           justify="flex-end"
+          disabled={isDisableNextStep}
         />
       </div>
     </>
@@ -176,7 +169,7 @@ const CompanyStakeholdersComponent = ({
 };
 
 const mapStateToProps = state => ({
-  IsSendingProspect: getIsSendingProspect(state),
+  isLoading: state.sendProspectToAPI.loading,
   stakeholdersIds: getStakeholdersIds(state),
   stakeholders: stakeholdersSelector(state),
   percentage: percentageSelector(state),

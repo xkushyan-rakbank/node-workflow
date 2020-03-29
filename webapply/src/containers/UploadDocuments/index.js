@@ -28,7 +28,7 @@ const mapStateToProps = state => ({
   isRequiredDocsUploaded: getIsRequiredDocsUploaded(state),
   progress: state.uploadDocuments.progress,
   uploadErrorMessage: state.uploadDocuments.uploadErrors,
-  isLoadingDocuments: getisLoadingDocuments(state),
+  isLoading: getisLoadingDocuments(state),
   prospectStatusInfo: getProspectStatus(state),
   isApplyEditApplication: getIsEditableStatusSearchInfo(state)
 });
