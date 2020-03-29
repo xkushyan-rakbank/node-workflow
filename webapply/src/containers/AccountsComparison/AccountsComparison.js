@@ -18,8 +18,8 @@ import { BackgroundVideoPlayer } from "../../components/BackgroundVideoPlayer";
 
 export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   const classes = useStyles();
-  useFormNavigation([true, false]);
-  const { setCurrentSection } = useContext(VerticalPaginationContext);
+  const { setCurrentSection, currentSectionIndex } = useContext(VerticalPaginationContext);
+  useFormNavigation([true, false, [], !!currentSectionIndex]);
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
 
   const firstSection = useRef(null);
