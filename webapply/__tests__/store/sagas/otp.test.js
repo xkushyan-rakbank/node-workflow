@@ -41,6 +41,10 @@ describe("otp saga test", () => {
   beforeEach(() => {
     dispatched = [];
     jest.clearAllMocks();
+    getAuthorizationHeader.mockReturnValue(header);
+    getProspectId.mockReturnValue(prospectId);
+    getApplicantInfo.mockReturnValue(applicantInfo);
+    log.mockReturnValue(null);
   });
 
   it("should handle otpSagas saga", () => {
@@ -52,9 +56,6 @@ describe("otp saga test", () => {
 
   it("should generate otp", async () => {
     const payload = { test: "some payload" };
-
-    getAuthorizationHeader.mockReturnValue(header);
-    getProspectId.mockReturnValue(prospectId);
     const spy = jest.spyOn(otp, "generate").mockReturnValue(null);
 
     await runSaga(store, generateOtp, { payload }).toPromise();
@@ -72,10 +73,6 @@ describe("otp saga test", () => {
 
   it("should log error when generate otp is failed", async () => {
     const payload = { test: "some payload" };
-
-    getAuthorizationHeader.mockReturnValue(header);
-    getProspectId.mockReturnValue(prospectId);
-    log.mockReturnValue(null);
     const spy = jest.spyOn(otp, "generate").mockImplementation(() => {
       throw error;
     });
@@ -92,10 +89,6 @@ describe("otp saga test", () => {
   });
 
   it("should handle verify otp successful", async () => {
-    getAuthorizationHeader.mockReturnValue(header);
-    getProspectId.mockReturnValue(prospectId);
-    getApplicantInfo.mockReturnValue(applicantInfo);
-
     const spy = jest.spyOn(otp, "verify").mockReturnValue({ data: { verified: true } });
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
@@ -113,10 +106,6 @@ describe("otp saga test", () => {
   });
 
   it("should handle verify otp failed", async () => {
-    getAuthorizationHeader.mockReturnValue(header);
-    getProspectId.mockReturnValue(prospectId);
-    getApplicantInfo.mockReturnValue(applicantInfo);
-
     const spy = jest.spyOn(otp, "verify").mockReturnValue({ data: { verified: false } });
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
@@ -134,10 +123,6 @@ describe("otp saga test", () => {
   });
 
   it("should handle verify otp failed", async () => {
-    getAuthorizationHeader.mockReturnValue(header);
-    getProspectId.mockReturnValue(prospectId);
-    getApplicantInfo.mockReturnValue(applicantInfo);
-
     const spy = jest.spyOn(otp, "verify").mockReturnValue({ data: { verified: false } });
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
@@ -155,11 +140,6 @@ describe("otp saga test", () => {
   });
 
   it("should log error when verify otp is failed", async () => {
-    getAuthorizationHeader.mockReturnValue(header);
-    getProspectId.mockReturnValue(prospectId);
-    getApplicantInfo.mockReturnValue(applicantInfo);
-    log.mockReturnValue(null);
-
     const spy = jest.spyOn(otp, "verify").mockImplementation(() => {
       throw error;
     });
