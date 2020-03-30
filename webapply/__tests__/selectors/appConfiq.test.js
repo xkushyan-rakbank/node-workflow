@@ -22,8 +22,7 @@ import {
    getReCaptchaSiteKey,
    getServicePricingGuideUrl,
    getUrlsReadMore,
-   getAuthToken,
-   getIsRecaptchaEnable,
+   getAuthToken, getIsRecaptchaEnable,
 } from "../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
