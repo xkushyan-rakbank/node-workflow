@@ -154,9 +154,9 @@ describe("appConfig selector test", () => {
    });
 
    it("should return IsRecaptchaEnable", () => {
-      state.appConfig.recaptchaEnable = true;
+      state.appConfig = {recaptchaEnable: true};
       expect(getIsRecaptchaEnable(state)).toBe( true);
    });
 
-
+   console.log(state);
 });
