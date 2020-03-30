@@ -67,11 +67,10 @@ export const useStyles = makeStyles(theme => ({
     left: 0
   },
   menuItem: {
+    height: 48,
     display: "flex",
     width: "100%",
     alignItems: "center",
-    paddingTop: "8px",
-    justifyContent: "space-between",
     whiteSpace: "normal",
     lineHeight: "normal"
   }
