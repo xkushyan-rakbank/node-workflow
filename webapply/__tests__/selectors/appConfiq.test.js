@@ -1,29 +1,49 @@
-import {getDatalist, getProspect, getSignatoryModel, getSignatories, getAccountInfo, getAccountNumbers, getOrganizationInfo, getCompanyName, getOrgKYCDetails, getGeneralInfo, getApplicantInfo, getSendProspectToAPIInfo, getIsSendingProspect, getScreeningError, getApplicationInfo, getIsIslamicBanking, getAccountType, getCompanySteps, getSignatoriesSteps, getProspectId, getReCaptchaSiteKey, getServicePricingGuideUrl, getUrlsReadMore, getAuthToken, getAuthorizationHeader, getIsRecaptchaEnable} from "../../src/store/selectors/appConfig";
+import {
+   getDatalist,
+   getProspect,
+   getSignatoryModel,
+   getSignatories,
+   getAccountInfo,
+   getAccountNumbers,
+   getOrganizationInfo,
+   getCompanyName,
+   getOrgKYCDetails,
+   getGeneralInfo,
+   getApplicantInfo,
+   getSendProspectToAPIInfo,
+   getIsSendingProspect,
+   getScreeningError,
+   getApplicationInfo,
+   getIsIslamicBanking,
+   getAccountType,
+   getCompanySteps,
+   getSignatoriesSteps,
+   getProspectId,
+   getReCaptchaSiteKey,
+   getServicePricingGuideUrl,
+   getUrlsReadMore,
+   getAuthToken,
+   getIsRecaptchaEnable
+} from "../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
    const state = {appConfig: {}};
 
    it("should return data list", () => {
-      state.appConfig.datalist = {countryOfIncorporation: [{
+      state.appConfig.datalist = {country: [{
          displayText: "Afghanistan"}]};
-      expect(getDatalist(state).countryOfIncorporation).toMatchObject([{
+      expect(getDatalist(state).country).toMatchObject([{
          displayText: "Afghanistan"}]);
    }) ;
 
    it("should return prospect", () => {
-      state.appConfig.prospect = {applicantInfo: {fullName:"John Dou"}, generalInfo: {}, applicationInfo: {}};
-      expect(getProspect(state).applicantInfo).toMatchObject({fullName:"John Dou"});
+      state.appConfig.prospect = {prospectInfo: {fullName:"John Dou"}};
+      expect(getProspect(state).prospectInfo).toMatchObject({fullName:"John Dou"});
    });
 
    it("should return signatoryModel", () => {
-      state.appConfig.signatoryModel = {
-         salutation:"MR.",
-         signatoryId:"",
-         gender:"MR."};
-      expect(getSignatoryModel(state)).toMatchObject({
-         salutation:"MR.",
-         signatoryId:"",
-         gender:"MR."});
+      state.appConfig.signatoryModel = {someSignatoryModelField: "some value."};
+      expect(getSignatoryModel(state)).toMatchObject({someSignatoryModelField: "some value."});
    });
 
    it("should return signatoryInfo", () => {
@@ -63,16 +83,10 @@ describe("appConfig selector test", () => {
 
    it("should return applicantInfo", () => {
       state.appConfig.prospect.applicantInfo = {
-         fullName:"John Dou",
-         email:"test@cc.cc",
-         countryCode:"971",
-         mobileNo:"056685458"
+         applicantInfoField:"applicantInfo value"
       };
       expect(getApplicantInfo(state)).toMatchObject({
-         fullName:"John Dou",
-         email:"test@cc.cc",
-         countryCode:"971",
-         mobileNo:"056685458"
+         applicantInfoField:"applicantInfo value",
       });
    });
 
@@ -126,12 +140,12 @@ describe("appConfig selector test", () => {
    });
 
    it("should return ReCaptchaSiteKey", () => {
-      state.appConfig.reCaptchaSiteKey = "somespecialstring";
-      expect(getReCaptchaSiteKey(state)).toBe( "somespecialstring");
+      state.appConfig = {reCaptchaSiteKey: "some special string"};
+      expect(getReCaptchaSiteKey(state)).toBe( "some special string");
    });
 
    it("should return ServicePricingGuideUrl", () => {
-      state.appConfig.servicePricingGuideUrl = "https://dsd.sdsd.we/dss";
+      state.appConfig = {servicePricingGuideUrl: "https://dsd.sdsd.we/dss"};
       expect(getServicePricingGuideUrl(state)).toBe( "https://dsd.sdsd.we/dss");
    });
 
@@ -142,14 +156,16 @@ describe("appConfig selector test", () => {
          rakValuePlusIslamicReadMoreUrl: "https://rakValuePlusIslamicReadMoreUrl.sdsd.we/dss",
          rakValueMaxIslamicReadMoreUrl: "https://rakValueMaxIslamicReadMoreUrl.sdsd.we/dss"
       };
-      expect(getUrlsReadMore(state).rakValuePlusReadMoreUrl).toBe( "https://rakValuePlusReadMoreUrl.we/dss");
-      expect(getUrlsReadMore(state).rakValueMaxReadMoreUrl).toBe( "https://rakValueMaxReadMoreUrl.we/dss");
-      expect(getUrlsReadMore(state).rakValuePlusIslamicReadMoreUrl).toBe( "https://rakValuePlusIslamicReadMoreUrl.sdsd.we/dss");
-      expect(getUrlsReadMore(state).rakValueMaxIslamicReadMoreUrl).toBe( "https://rakValueMaxIslamicReadMoreUrl.sdsd.we/dss");
+      expect(getUrlsReadMore(state)).toMatchObject( {
+         rakValuePlusReadMoreUrl: "https://rakValuePlusReadMoreUrl.we/dss",
+         rakValueMaxReadMoreUrl: "https://rakValueMaxReadMoreUrl.we/dss",
+         rakValuePlusIslamicReadMoreUrl: "https://rakValuePlusIslamicReadMoreUrl.sdsd.we/dss",
+         rakValueMaxIslamicReadMoreUrl: "https://rakValueMaxIslamicReadMoreUrl.sdsd.we/dss"
+      });
    });
 
    it("should return AuthToken", () => {
-      state.appConfig.authorizationToken = "some secret string";
+      state.appConfig = {authorizationToken: "some secret string"};
       expect(getAuthToken(state)).toBe( "some secret string");
    });
 

@@ -53,7 +53,7 @@
     "build": "react-scripts build",
     "server:mock": "cd ../wiremock/ && java -jar wiremock-standalone-2.24.1.jar",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
+    "prettier": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md, test.js}\"",
     "eslint": "eslint src/",
     "test": "jest",
     "eject": "react-scripts eject",
