@@ -23,7 +23,7 @@ import {
    getServicePricingGuideUrl,
    getUrlsReadMore,
    getAuthToken,
-   getIsRecaptchaEnable
+   getIsRecaptchaEnable,
 } from "../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
