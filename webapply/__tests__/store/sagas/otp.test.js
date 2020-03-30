@@ -60,8 +60,8 @@ describe("otp saga test", () => {
 
     await runSaga(store, generateOtp, { payload }).toPromise();
 
-    expect(getAuthorizationHeader.mock.calls[0][0]).toStrictEqual(state);
-    expect(getProspectId.mock.calls[0][0]).toStrictEqual(state);
+    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
+    expect(getProspectId.mock.calls[0]).toEqual([state]);
     expect(spy.mock.calls[0]).toEqual([{ ...payload, prospectId }, header]);
     expect(dispatched).toEqual([
       { type: GENERATE_CODE_SUCCESS },
@@ -79,10 +79,10 @@ describe("otp saga test", () => {
 
     await runSaga(store, generateOtp, { payload }).toPromise();
 
-    expect(getAuthorizationHeader.mock.calls[0][0]).toStrictEqual(state);
-    expect(getProspectId.mock.calls[0][0]).toStrictEqual(state);
+    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
+    expect(getProspectId.mock.calls[0]).toEqual([state]);
     expect(spy.mock.calls[0]).toEqual([{ ...payload, prospectId }, header]);
-    expect(log.mock.calls[0][0]).toStrictEqual(error);
+    expect(log.mock.calls[0]).toEqual([error]);
     expect(dispatched).toEqual([{ type: SET_GENERATING, payload: false }]);
 
     spy.mockRestore();
@@ -93,9 +93,9 @@ describe("otp saga test", () => {
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
 
-    expect(getAuthorizationHeader.mock.calls[0][0]).toStrictEqual(state);
-    expect(getProspectId.mock.calls[0][0]).toStrictEqual(state);
-    expect(getApplicantInfo.mock.calls[0][0]).toStrictEqual(state);
+    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
+    expect(getProspectId.mock.calls[0]).toEqual([state]);
+    expect(getApplicantInfo.mock.calls[0]).toEqual([state]);
     expect(spy.mock.calls[0]).toEqual([{ ...applicantInfo, otpToken, prospectId }, header]);
     expect(dispatched).toEqual([
       { type: VERIFY_CODE_SUCCESS },
@@ -110,9 +110,9 @@ describe("otp saga test", () => {
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
 
-    expect(getAuthorizationHeader.mock.calls[0][0]).toStrictEqual(state);
-    expect(getProspectId.mock.calls[0][0]).toStrictEqual(state);
-    expect(getApplicantInfo.mock.calls[0][0]).toStrictEqual(state);
+    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
+    expect(getProspectId.mock.calls[0]).toEqual([state]);
+    expect(getApplicantInfo.mock.calls[0]).toEqual([state]);
     expect(spy.mock.calls[0]).toEqual([{ ...applicantInfo, otpToken, prospectId }, header]);
     expect(dispatched).toEqual([
       { type: VERIFY_CODE_FAILED },
@@ -127,9 +127,9 @@ describe("otp saga test", () => {
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
 
-    expect(getAuthorizationHeader.mock.calls[0][0]).toStrictEqual(state);
-    expect(getProspectId.mock.calls[0][0]).toStrictEqual(state);
-    expect(getApplicantInfo.mock.calls[0][0]).toStrictEqual(state);
+    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
+    expect(getProspectId.mock.calls[0]).toEqual([state]);
+    expect(getApplicantInfo.mock.calls[0]).toEqual([state]);
     expect(spy.mock.calls[0]).toEqual([{ ...applicantInfo, otpToken, prospectId }, header]);
     expect(dispatched).toEqual([
       { type: VERIFY_CODE_FAILED },
@@ -146,11 +146,11 @@ describe("otp saga test", () => {
 
     await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
 
-    expect(getAuthorizationHeader.mock.calls[0][0]).toStrictEqual(state);
-    expect(getProspectId.mock.calls[0][0]).toStrictEqual(state);
-    expect(getApplicantInfo.mock.calls[0][0]).toStrictEqual(state);
+    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
+    expect(getProspectId.mock.calls[0]).toEqual([state]);
+    expect(getApplicantInfo.mock.calls[0]).toEqual([state]);
     expect(spy.mock.calls[0]).toEqual([{ ...applicantInfo, otpToken, prospectId }, header]);
-    expect(log.mock.calls[0][0]).toStrictEqual(error);
+    expect(log.mock.calls[0]).toEqual([error]);
     expect(dispatched).toEqual([{ type: SET_PENDING, payload: false }]);
 
     spy.mockRestore();
