@@ -23,6 +23,7 @@ import org.springframework.util.StreamUtils;
 public class FileUtil {
 
     private static final String LOCAL = "local";
+    public static final String DOC_UPLOAD_CONFIG_JSON = "DocUploadConfig.json";
 
     private final ResourceLoader resourceLoader;
     private final EnvironmentUtil environmentUtil;
@@ -31,7 +32,7 @@ public class FileUtil {
 
     @PostConstruct
     public void loadConfigFiles() {
-        docUploadConfig = loadJSONFile("DocUploadConfig.json", true);
+        docUploadConfig = loadJSONFile(DOC_UPLOAD_CONFIG_JSON, true);
     }
 
     private JsonNode loadJSONFile(String filename, boolean fromConfigDirectory) {
