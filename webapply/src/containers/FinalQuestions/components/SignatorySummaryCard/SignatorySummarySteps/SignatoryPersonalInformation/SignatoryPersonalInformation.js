@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import { useStyles } from "./styled";
-import { NAME_REGEX } from "../../../../../../utils/validation";
+import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import {
   Input,
@@ -28,7 +28,7 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
       .required(getRequiredMessage("Other"))
-      .matches(NAME_REGEX, getInvalidMessage("Other"))
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
   })
 });
 
