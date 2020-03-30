@@ -13,6 +13,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 
 public class OtpServiceImplTest {
 
@@ -35,9 +37,10 @@ public class OtpServiceImplTest {
         otpService.init();
     }
 
-    @Ignore
     @Test
     public void verifyOrGenerate() {
+        Mockito.when(dehClient.invokeApiEndpoint(url, HttpMethod.POST, requestJSON,
+                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null)).thenReturn();
         final OtpVerifyGenerateResponse response = otpService.verifyOrGenerate(RequestFactory.newGenerateOtpValidationRequest());
         final OtpVerifyGenerateResponse ok = response.ifVerifySuccessThen(() -> System.out.printf("OK"));
         final Boolean result = ok.execute(HttpEntity::hasBody);
