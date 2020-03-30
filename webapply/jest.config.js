@@ -8,7 +8,7 @@ console.log('@@@ webapply'); // eslint-disable-line
 module.exports = {
   collectCoverage: true,
 
-  collectCoverageFrom: ["src/**/*.js", "!src/**/index.js", "!**/constants/**"],
+  collectCoverageFrom: ["src/**/*.js", "!src/**/index.js", "!**/constants/**", "!**/components/**"],
 
   coverageDirectory: "coverage",
 
@@ -28,7 +28,7 @@ module.exports = {
     "./src/constants",
     "./src/assets"
   ],
-
+  /*
   coverageThreshold: {
     global: {
       statements: 80,
@@ -37,7 +37,7 @@ module.exports = {
       lines: 80
     }
   },
-
+  */
   moduleNameMapper: {
     "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
       "<rootDir>/__mocks__/fileMock.js"
