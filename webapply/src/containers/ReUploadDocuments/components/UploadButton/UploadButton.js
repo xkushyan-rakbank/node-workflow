@@ -22,7 +22,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
 
     try {
       if (inputEl.current.value) {
-        documentValidationSchema.validateSync({ file }, { abortEarly: false });
+        documentValidationSchema.validateSync({ file });
         uploadDocument(file);
       }
     } catch (error) {
