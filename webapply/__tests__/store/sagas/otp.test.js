@@ -122,23 +122,6 @@ describe("otp saga test", () => {
     spy.mockRestore();
   });
 
-  it("should handle verify otp failed", async () => {
-    const spy = jest.spyOn(otp, "verify").mockReturnValue({ data: { verified: false } });
-
-    await runSaga(store, verifyOtp, { payload: otpToken }).toPromise();
-
-    expect(getAuthorizationHeader.mock.calls[0]).toEqual([state]);
-    expect(getProspectId.mock.calls[0]).toEqual([state]);
-    expect(getApplicantInfo.mock.calls[0]).toEqual([state]);
-    expect(spy.mock.calls[0]).toEqual([{ ...applicantInfo, otpToken, prospectId }, header]);
-    expect(dispatched).toEqual([
-      { type: VERIFY_CODE_FAILED },
-      { type: SET_PENDING, payload: false }
-    ]);
-
-    spy.mockRestore();
-  });
-
   it("should log error when verify otp is failed", async () => {
     const spy = jest.spyOn(otp, "verify").mockImplementation(() => {
       throw error;
