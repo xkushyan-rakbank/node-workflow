@@ -1,4 +1,5 @@
 import { runSaga } from "redux-saga";
+import pick from "lodash/pick";
 
 import searchProspectSaga, {
   searchProspectFormSaga,
@@ -26,7 +27,6 @@ describe("searchProspect saga test", () => {
   const state = "some state";
   const header = "some header";
   const prospectId = "some prospectId";
-
   const store = {
     dispatch: action => dispatched.push(action),
     getState: () => state
@@ -47,20 +47,11 @@ describe("searchProspect saga test", () => {
   });
 
   it("should search prospect", async () => {
-    const data = [];
-    const emptyPayload = {
-      fullName: "",
-      mobileNo: "",
-      countryCode: "",
-      leadNumber: "",
-      tradeLicenseNo: "",
-      email: ""
-    };
-
-    const emptyInputParam = {
+    const data = "some data";
+    const input = {
       applicantName: "",
-      countryCode: "",
       mobileNo: "",
+      countryCode: "",
       leadNumber: "",
       tradeLicenseNo: "",
       email: "",
@@ -69,9 +60,9 @@ describe("searchProspect saga test", () => {
 
     const spy = jest
       .spyOn(search, "searchApplication")
-      .mockReturnValue({ data: { searchResult: [] } });
-    await runSaga(store, searchProspectFormSaga, { payload: emptyPayload }).toPromise();
-    expect(spy.mock.calls[0]).toEqual([{ ...emptyInputParam }, header]);
+      .mockReturnValue({ data: { searchResult: data } });
+    await runSaga(store, searchProspectFormSaga, { payload: {} }).toPromise();
+    expect(spy.mock.calls[0]).toEqual([input, header]);
     expect(dispatched).toEqual([{ type: SEARCH_APPLICATIONS_SUCCESS, payload: data }]);
     spy.mockRestore();
   });
@@ -85,14 +76,9 @@ describe("searchProspect saga test", () => {
       tradeLicenseNo: "some tradeLicenseNo",
       email: "some email"
     };
-
-    const inputParam = {
-      applicantName: "some fullName",
-      countryCode: "some countryCode",
-      mobileNo: "some mobileNo",
-      leadNumber: "some leadNumber",
-      tradeLicenseNo: "some tradeLicenseNo",
-      email: "some email",
+    const input = {
+      applicantName: payload.fullName,
+      ...pick(payload, ["countryCode", "mobileNo", "leadNumber", "tradeLicenseNo", "email"]),
       eidNumber: ""
     };
 
@@ -101,15 +87,15 @@ describe("searchProspect saga test", () => {
     });
 
     await runSaga(store, searchProspectFormSaga, { payload }).toPromise();
-    expect(spy.mock.calls[0]).toEqual([{ ...inputParam }, header]);
+    expect(spy.mock.calls[0]).toEqual([input, header]);
     expect(log.mock.calls[0]).toEqual([error]);
     expect(dispatched).toEqual([{ type: SEARCH_APPLICATIONS_FAILURE }]);
     spy.mockRestore();
   });
 
   it("should handle get prospect overview", async () => {
-    const prospect = {};
-    const spy = jest.spyOn(prospectApi, "get").mockReturnValue({ data: {} });
+    const prospect = "some prospect";
+    const spy = jest.spyOn(prospectApi, "get").mockReturnValue({ data: prospect });
 
     await runSaga(store, getProspectOverviewSaga, { payload: { prospectId } }).toPromise();
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
