@@ -7,6 +7,7 @@ import ae.rakbank.webapply.stub.ProspectsResponseStub;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static ae.rakbank.webapply.services.ProspectValidatorService.ROOT_KEY;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ProspectValidatorServiceTest {
