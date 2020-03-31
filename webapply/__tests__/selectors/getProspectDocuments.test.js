@@ -26,7 +26,8 @@ describe("getProspectDocuments selector test", () => {
     stakeholdersDocuments,
     otherDocuments
   };
-  const state = { uploadDocuments };
+  const state = { uploadDocuments, appConfig: { prospect: { documents } } };
+
   it("should return upload documents", () => {
     expect(getUploadDocuments(state)).toEqual(uploadDocuments);
   });
@@ -44,7 +45,7 @@ describe("getProspectDocuments selector test", () => {
   });
 
   it("should return prospect documents", () => {
-    expect(getProspectDocuments({ appConfig: { prospect: { documents } } })).toEqual(documents);
+    expect(getProspectDocuments(state)).toEqual(documents);
   });
 
   it("should return empty array when otherDocuments is not set", () => {
@@ -52,14 +53,14 @@ describe("getProspectDocuments selector test", () => {
   });
 
   it("should return other documents array", () => {
-    expect(getOtherDocuments({ appConfig: { prospect: { documents } } })).toEqual(otherDocuments);
+    expect(getOtherDocuments(state)).toEqual(otherDocuments);
   });
 
-  it("should return true when isLoading equal true", () => {
+  it("should return are documents loading", () => {
     expect(getisLoadingDocuments(state)).toBe(true);
   });
 
-  it("should return true when all required docs are uploaded", () => {
-    expect(getIsRequiredDocsUploaded({ appConfig: { prospect: { documents } } })).toBe(true);
+  it("should return are all required docs uploaded", () => {
+    expect(getIsRequiredDocsUploaded(state)).toBe(true);
   });
 });
