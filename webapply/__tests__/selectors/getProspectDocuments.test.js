@@ -17,7 +17,10 @@ describe("getProspectDocuments selector test", () => {
     uploadErrors,
     isLoading: true
   };
-  const companyDocuments = [{ uploadStatus: "Uploaded", required: true }, { uploadStatus: "Uploaded", required: true }];
+  const companyDocuments = [
+    { uploadStatus: "Uploaded", required: true },
+    { uploadStatus: "Uploaded", required: true }
+  ];
   const stakeholdersDocuments = {
     O_: { documents: [{ uploadStatus: "Uploaded" }, { uploadStatus: "Uploaded" }] }
   };
@@ -69,7 +72,7 @@ describe("getProspectDocuments selector test", () => {
     expect(getIsRequiredDocsUploaded(state)).toBe(true);
   });
 
-  it("should return false when companyDocuments and stakeholdersDocuments doesn't set", () => {
+  it("should return 0 when companyDocuments and stakeholdersDocuments is not exists", () => {
     expect(getIsRequiredDocsUploaded({ appConfig: { prospect: { documents: {} } } })).toBe(0);
   });
 });
