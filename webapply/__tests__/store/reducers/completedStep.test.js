@@ -29,6 +29,11 @@ describe("completedSteps reducer test", () => {
     expect(log).toBeCalled();
   });
 
+  it("should handle LOAD_META_DATA action type with no json", () => {
+    const state = {};
+    expect(reducer(state, { type: LOAD_META_DATA })).toStrictEqual(state);
+  });
+
   it("should handle SET_STEP_STATUS action type", () => {
     const step = { flowId: "test" };
     const status = "some status";
