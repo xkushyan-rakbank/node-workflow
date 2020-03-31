@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.34",
     "@material-ui/pickers": "^3.2.7",
+    "@rakbank/web-chat": "^0.1.4",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cometd": "^3.1.10",
