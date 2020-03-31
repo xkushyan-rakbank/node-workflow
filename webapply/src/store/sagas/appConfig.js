@@ -19,7 +19,7 @@ import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../const
 import { getIsIslamicBanking, getAccountType, getProspect } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
-function* receiveAppConfigSaga() {
+export function* receiveAppConfigSaga() {
   try {
     const accountType = yield select(getAccountType);
     let response = null;
@@ -62,7 +62,7 @@ function* receiveAppConfigSaga() {
   }
 }
 
-function* updateProspectSaga(action) {
+export function* updateProspectSaga(action) {
   const state = yield select();
   const prospect = cloneDeep(getProspect(state));
   const newConfig = {
@@ -77,7 +77,7 @@ function* updateProspectSaga(action) {
   yield put(setConfig(newConfig));
 }
 
-function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
+export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
     yield put(sendProspectToAPI(CONTINUE));
