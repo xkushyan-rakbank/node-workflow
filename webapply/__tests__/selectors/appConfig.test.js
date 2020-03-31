@@ -17,7 +17,8 @@ import {
   getServicePricingGuideUrl,
   getUrlsReadMore,
   getAuthToken,
-  getIsRecaptchaEnable
+  getIsRecaptchaEnable,
+  getAuthorizationHeader
 } from "../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
@@ -71,24 +72,48 @@ describe("appConfig selector test", () => {
     expect(getDatalist(state)).toBe(datalist);
   });
 
+  it("should return empty object when datalist is not set", () => {
+    expect(getDatalist({ appConfig: {} })).toEqual({});
+  });
+
   it("should return prospect", () => {
     expect(getProspect(state)).toBe(prospect);
+  });
+
+  it("should return empty object when prospect is not set", () => {
+    expect(getProspect({ appConfig: {} })).toEqual({});
   });
 
   it("should return signatoryModel", () => {
     expect(getSignatoryModel(state)).toBe(signatoryModel);
   });
 
+  it("should return empty object when signatoryModel is not set", () => {
+    expect(getSignatoryModel({ appConfig: {} })).toEqual({});
+  });
+
   it("should return signatoryInfo", () => {
     expect(getSignatories(state)).toBe(signatoryInfo);
+  });
+
+  it("should return empty array when signatoryInfo is not set", () => {
+    expect(getSignatories({ appConfig: {} })).toEqual([]);
   });
 
   it("should return accountInfo", () => {
     expect(getAccountInfo(state)).toBe(accountInfo);
   });
 
+  it("should return empty array when accountInfo is not set", () => {
+    expect(getAccountInfo({ appConfig: {} })).toEqual([]);
+  });
+
   it("should return organizationInfo", () => {
     expect(getOrganizationInfo(state)).toBe(organizationInfo);
+  });
+
+  it("should return empty object when organizationInfo is not set", () => {
+    expect(getOrganizationInfo({ appConfig: {} })).toEqual({});
   });
 
   it("should return companyName", () => {
@@ -99,16 +124,36 @@ describe("appConfig selector test", () => {
     expect(getOrgKYCDetails(state)).toBe(orgKYCDetails);
   });
 
+  it("should return empty object when orgKYCDetails is not set", () => {
+    expect(getOrgKYCDetails({ appConfig: {} })).toEqual({});
+  });
+
   it("should return generalInfo", () => {
     expect(getGeneralInfo(state)).toBe(generalInfo);
+  });
+
+  it("should return empty object when generalInfo is not set", () => {
+    expect(getGeneralInfo({ appConfig: {} })).toEqual({});
+  });
+
+  it("should return empty object when generalInfo is not set", () => {
+    expect(getGeneralInfo({ appConfig: {} })).toEqual({});
   });
 
   it("should return applicantInfo", () => {
     expect(getApplicantInfo(state)).toBe(applicantInfo);
   });
 
+  it("should return empty object when applicantInfo is not set", () => {
+    expect(getApplicantInfo({ appConfig: {} })).toEqual({});
+  });
+
   it("should return applicationInfo", () => {
     expect(getApplicationInfo(state)).toBe(applicationInfo);
+  });
+
+  it("should return empty object when applicationInfo is not set", () => {
+    expect(getApplicationInfo({ appConfig: {} })).toEqual({});
   });
 
   it("should return value of islamicBanking", () => {
@@ -137,6 +182,20 @@ describe("appConfig selector test", () => {
 
   it("should return auth token", () => {
     expect(getAuthToken(state)).toBe(authorizationToken);
+  });
+
+  it("should return auth headers", () => {
+    expect(getAuthorizationHeader(state)).toEqual({
+      headers: {
+        Authorization: `Bearer ${authorizationToken}`
+      }
+    });
+  });
+
+  it("should return empty headers when authorizationToken is not set", () => {
+    expect(getAuthorizationHeader({ appConfig: {} })).toEqual({
+      headers: {}
+    });
   });
 
   it("should return is recaptcha enable", () => {

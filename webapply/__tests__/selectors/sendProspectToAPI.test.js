@@ -13,6 +13,10 @@ describe("sendProspectToAPI selector test", () => {
     expect(getSendProspectToAPIInfo({ sendProspectToAPI })).toBe(sendProspectToAPI);
   });
 
+  it("should return empty object when sendProspectToAPI is not set", () => {
+    expect(getSendProspectToAPIInfo({})).toEqual({});
+  });
+
   it("should return loading field value", () => {
     expect(getIsSendingProspect({ sendProspectToAPI })).toBe(loading);
   });
