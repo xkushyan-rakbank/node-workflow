@@ -4,6 +4,7 @@ import {
   getIsStakeholderStepsCompleted,
   getStakeholderSteps
 } from "../../src/store/selectors/completedSteps";
+import { getCompanySteps, getSignatoriesSteps } from "../../src/store/selectors/appConfig";
 
 describe("completedSteps selector test", () => {
   const companyStep = { flowId: "companyInfo", step: 1, status: "COMPLETED" };
@@ -17,10 +18,22 @@ describe("completedSteps selector test", () => {
     step: 2,
     status: "NOT_AVAILABLE"
   };
+  const finalQuestionStep = {
+    flowId: "finalQuestionsCompany",
+    step: 1,
+    status: "COMPLETED"
+  };
+  const companySignatoryStep = {
+    flowId: "companySignatory_1",
+    step: 1,
+    status: "COMPLETED"
+  };
   const completedSteps = [
     companyStep,
     completedCompanyStakeholderStep,
-    notCompletedCompanyStakeholderStep
+    notCompletedCompanyStakeholderStep,
+    finalQuestionStep,
+    companySignatoryStep
   ];
   const state = { completedSteps };
 
@@ -57,5 +70,13 @@ describe("completedSteps selector test", () => {
     expect(
       getIsStakeholderStepsCompleted({ completedSteps: [completedCompanyStakeholderStep] })
     ).toBe(true);
+  });
+
+  it("should return final questions steps", () => {
+    expect(getCompanySteps(state)).toEqual([finalQuestionStep])
+  });
+
+  it("should return company signatory steps", () => {
+    expect(getSignatoriesSteps(state)).toEqual([companySignatoryStep]);
   });
 });
