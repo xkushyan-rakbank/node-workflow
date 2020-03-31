@@ -12,7 +12,7 @@ export const getisLoadingDocuments = state => state.uploadDocuments.isLoading;
 
 const UPLOADED_STATE = "Uploaded";
 
-const checkIfRequiredDocsUploaded = docs =>
+export const checkIfRequiredDocsUploaded = docs =>
   docs.length && docs.filter(doc => doc.required).every(doc => doc.uploadStatus === UPLOADED_STATE);
 
 export const getIsRequiredDocsUploaded = state => {

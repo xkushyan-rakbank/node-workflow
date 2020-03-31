@@ -5,7 +5,8 @@ import {
   getOtherDocuments,
   getProgress,
   getProspectDocuments,
-  getUploadErrors
+  getUploadErrors,
+  checkIfRequiredDocsUploaded
 } from "../../src/store/selectors/getProspectDocuments";
 
 describe("getProspectDocuments selector test", () => {
@@ -16,7 +17,7 @@ describe("getProspectDocuments selector test", () => {
     uploadErrors,
     isLoading: true
   };
-  const companyDocuments = [{ uploadStatus: "Uploaded" }, { uploadStatus: "Uploaded" }];
+  const companyDocuments = [{ uploadStatus: "Uploaded", required: true }, { uploadStatus: "Uploaded", required: true }];
   const stakeholdersDocuments = {
     O_: { documents: [{ uploadStatus: "Uploaded" }, { uploadStatus: "Uploaded" }] }
   };
@@ -60,7 +61,15 @@ describe("getProspectDocuments selector test", () => {
     expect(getisLoadingDocuments(state)).toBe(true);
   });
 
-  it("should return are all required docs uploaded", () => {
+  it("should return true when all required docs have uploadStatus equal Uploaded ", () => {
+    expect(checkIfRequiredDocsUploaded(companyDocuments)).toBe(true);
+  });
+
+  it("should return true when all required docs uploaded", () => {
     expect(getIsRequiredDocsUploaded(state)).toBe(true);
+  });
+
+  it("should return false when companyDocuments and stakeholdersDocuments doesn't set", () => {
+    expect(getIsRequiredDocsUploaded({ appConfig: { prospect: { documents: {} } } })).toBe(0);
   });
 });
