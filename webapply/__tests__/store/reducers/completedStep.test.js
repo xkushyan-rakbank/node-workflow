@@ -15,13 +15,21 @@ describe("completedSteps reducer test", () => {
   });
 
   it("should handle LOAD_META_DATA action type", () => {
+    const completedSteps = ["1"];
+
     expect(
-      // eslint-disable-next-line quotes
-      reducer(undefined, { type: LOAD_META_DATA, payload: '{"completedSteps": ["1"]}' })
-    ).toStrictEqual(["1"]);
+      reducer(undefined, {
+        type: LOAD_META_DATA,
+        payload: JSON.stringify({ completedSteps })
+      })
+    ).toStrictEqual(completedSteps);
   });
 
-  it("should handle LOAD_META_DATA action type with bad json", () => {
+  it("should handle LOAD_META_DATA action type with when is loaded data is empty", () => {
+    expect(reducer(undefined, { type: LOAD_META_DATA })).toStrictEqual(initialState);
+  });
+
+  it("should handle LOAD_META_DATA action type when is loaded data have bad json format", () => {
     log.mockReturnValue(null);
     expect(reducer(undefined, { type: LOAD_META_DATA, payload: "bad json" })).toStrictEqual(
       initialState
