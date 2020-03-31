@@ -30,8 +30,8 @@ describe("completedSteps reducer test", () => {
   });
 
   it("should handle LOAD_META_DATA action type with no json", () => {
-    const state = {};
-    expect(reducer(state, { type: LOAD_META_DATA })).toStrictEqual(state);
+    // eslint-disable-next-line quotes
+    expect(reducer(undefined, { type: LOAD_META_DATA })).toStrictEqual(initialState);
   });
 
   it("should handle SET_STEP_STATUS action type", () => {
