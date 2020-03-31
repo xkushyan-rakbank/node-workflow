@@ -64,11 +64,11 @@ describe("getProspectDocuments selector test", () => {
     expect(getisLoadingDocuments(state)).toBe(true);
   });
 
-  it("should return true when all required docs have uploadStatus equal Uploaded ", () => {
+  it("should return are all required docs have upload status Uploaded", () => {
     expect(checkIfRequiredDocsUploaded(companyDocuments)).toBe(true);
   });
 
-  it("should return true when all required docs uploaded", () => {
+  it("should return are all required docs was uploaded", () => {
     expect(getIsRequiredDocsUploaded(state)).toBe(true);
   });
 
