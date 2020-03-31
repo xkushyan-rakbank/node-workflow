@@ -13,7 +13,7 @@ jest.mock("../../../src/utils/loggger");
 describe("screenProspect saga test", () => {
   let dispatched = [];
   const state = "some state";
-  const payload = { prospectId: "some id" };
+  const prospectId = "some id";
   const data = "some data";
   const error = "some error";
   const store = {
@@ -35,11 +35,11 @@ describe("screenProspect saga test", () => {
   it("should screening prospect success", async () => {
     const spy = jest.spyOn(screening, "send").mockReturnValue({ data });
 
-    await runSaga(store, screenProspectSaga, { payload }).toPromise();
+    await runSaga(store, screenProspectSaga, { payload: { prospectId } }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([payload.prospectId]);
+    expect(spy.mock.calls[0]).toEqual([prospectId]);
     expect(dispatched).toMatchObject([
-      { type: SCREEN_PROSPECT_SUCCESS, payload: { ...payload, screeningResult: data } }
+      { type: SCREEN_PROSPECT_SUCCESS, payload: { prospectId, screeningResult: data } }
     ]);
 
     spy.mockRestore();
@@ -51,9 +51,9 @@ describe("screenProspect saga test", () => {
       throw error;
     });
 
-    await runSaga(store, screenProspectSaga, { payload }).toPromise();
+    await runSaga(store, screenProspectSaga, { payload: { prospectId } }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([payload.prospectId]);
+    expect(spy.mock.calls[0]).toEqual([prospectId]);
     expect(log.mock.calls[0]).toEqual([error]);
 
     spy.mockRestore();
