@@ -50,4 +50,24 @@ public class ResponseFactory {
                 .put("access_token", "access-token-value");
     }
 
+    public static JsonNode newOtpVerifyResponseVerified() {
+        return objectMapper.createObjectNode()
+                .put("verified", "true");
+    }
+
+    public static JsonNode newOtpVerifyResponseUnverified() {
+        return objectMapper.createObjectNode()
+                .put("verified", "false");
+    }
+
+    public static JsonNode newOtpVerifyResponseInvalid() {
+        return objectMapper.createObjectNode()
+                .put("result", "false");
+    }
+
+    public static JsonNode newOtpGenerateResponse() {
+        return objectMapper.createObjectNode()
+                .put("generated", "true");
+    }
+
 }
