@@ -11,11 +11,7 @@ describe("google analytics test", () => {
     jest.clearAllMocks();
   });
 
-  afterAll(() => {
-    jest.restoreAllMocks();
-  });
-
-  it("should trigger event", () => {
+  it("should trigger event and function must be called with args", () => {
     const windowSpy = jest.spyOn(global, "window", "get");
     const args = {
       event: "ProductPage",

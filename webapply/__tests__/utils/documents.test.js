@@ -7,26 +7,26 @@ import {
 } from "../../src/utils/documents";
 
 describe("documents utils tests", () => {
-  it("should return empty company docs array with if input data passed as null", () => {
+  it("should return empty company docs array when input data passed as null", () => {
     const existDocs = null;
     const incomeDocs = null;
     expect(concatCompanyDocs(existDocs, incomeDocs)).toStrictEqual([]);
   });
 
-  it("should return concated company docs", () => {
+  it("should return concated company docs array", () => {
     const existDocs = [{ documentType: "MOA" }];
     const incomeDocs = [{ documentType: "MOA" }, { documentType: "TradeLicenseNo" }];
     const concated = [{ documentType: "MOA" }, { documentType: "TradeLicenseNo" }];
     expect(concatCompanyDocs(existDocs, incomeDocs)).toStrictEqual(concated);
   });
 
-  it("should return empty stakeholders docs object if input data passed as null", () => {
+  it("should return empty stakeholders docs object when input data passed as null", () => {
     const neededDocs = null;
     const uploadedDocs = null;
     expect(concatStakeholdersDocs(neededDocs, uploadedDocs)).toStrictEqual({});
   });
 
-  it("should return concated stakeholders docs", () => {
+  it("should return concated stakeholders docs object", () => {
     const neededDocs = {
       signatory_1: {
         documents: [{ documentKey: "1", documentTitle: "One" }]
@@ -49,7 +49,7 @@ describe("documents utils tests", () => {
     expect(typeof createDocumentMapper()).toBe("function");
   });
 
-  it("should return the same document if documentKey did't match", () => {
+  it("should return the same document when documentKey doesn't match", () => {
     const document = {
       documentKey: "Passport-0"
     };
@@ -69,12 +69,12 @@ describe("documents utils tests", () => {
     expect(mapFn(document)).toStrictEqual(docWithProps);
   });
 
-  it("should return empty docs if input data passed as null", () => {
+  it("should return empty docs array when input data passed as null", () => {
     const docs = null;
     expect(appendDocumentKey(docs)).toStrictEqual([]);
   });
 
-  it("should return docs with document key", () => {
+  it("should return docs array with document key", () => {
     const docs = [
       { documentType: "Passport", documentKey: null, documentTitle: "First" },
       { documentType: "Passport", documentKey: null, documentTitle: "Second" }
