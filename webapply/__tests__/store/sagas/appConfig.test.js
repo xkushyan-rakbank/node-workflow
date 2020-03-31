@@ -12,14 +12,14 @@ import appConfigSaga, {
   updateViewIdSaga
 } from "../../../src/store/sagas/appConfig";
 import {
-  updateProspect,
-  setConfig,
   RECEIVE_APPCONFIG,
   UPDATE_PROSPECT,
   UPDATE_VIEW_ID,
   saveSignatoryModel,
   receiveAppConfigSuccess,
-  receiveAppConfigFail
+  receiveAppConfigFail,
+  updateProspect,
+  setConfig
 } from "../../../src/store/actions/appConfig";
 import {
   sendProspectToAPI,
@@ -182,33 +182,24 @@ describe("appConfig sagas tests", () => {
     cloneDeep.mockReturnValue(prospect);
 
     await runSaga(
-      {
-        dispatch: action => dispatched.push(action),
-        getState: () => state
-      },
+      { dispatch: action => dispatched.push(action), getState: () => state },
       updateProspectSaga,
       action
     ).toPromise();
 
     expect(getProspect.mock.calls[0]).toEqual([state]);
     expect(cloneDeep.mock.calls[0]).toEqual([prospect]);
-
     expect(dispatched).toEqual([setConfig(newConfig)]);
   });
 
   describe("should handle updateViewIdSaga", () => {
     const viewId = "some viewId";
+
     it("without sentToApi action", async () => {
       const isSendToApi = false;
       const action = { payload: { viewId, isSendToApi } };
 
-      await runSaga(
-        {
-          dispatch: action => dispatched.push(action)
-        },
-        updateViewIdSaga,
-        action
-      );
+      await runSaga({ dispatch: action => dispatched.push(action) }, updateViewIdSaga, action);
 
       expect(dispatched).toEqual([updateProspect({ "prospect.applicationInfo.viewId": viewId })]);
     });
@@ -217,13 +208,7 @@ describe("appConfig sagas tests", () => {
       const isSendToApi = true;
       const action = { payload: { viewId, isSendToApi } };
 
-      await runSaga(
-        {
-          dispatch: action => dispatched.push(action)
-        },
-        updateViewIdSaga,
-        action
-      );
+      await runSaga({ dispatch: action => dispatched.push(action) }, updateViewIdSaga, action);
 
       expect(dispatched).toEqual([
         updateProspect({ "prospect.applicationInfo.viewId": viewId }),
