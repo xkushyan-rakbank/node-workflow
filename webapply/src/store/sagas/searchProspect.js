@@ -12,7 +12,7 @@ import { log } from "../../utils/loggger";
 import { getAuthorizationHeader } from "../selectors/appConfig";
 import { prospect as prospectApi } from "../../api/apiClient";
 
-function* searchProspectFormSaga({ payload }) {
+export function* searchProspectFormSaga({ payload }) {
   try {
     const state = yield select();
     const headers = getAuthorizationHeader(state);
@@ -35,7 +35,7 @@ function* searchProspectFormSaga({ payload }) {
   }
 }
 
-function* getProspectOverviewSaga({ payload: { prospectId } }) {
+export function* getProspectOverviewSaga({ payload: { prospectId } }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     const response = yield call(prospectApi.get, prospectId, headers);
