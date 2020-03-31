@@ -198,9 +198,8 @@ describe("appConfig selector test", () => {
         expect(getUrlsReadMore({ appConfig: { ...urls } })).toEqual(urls);
     });
     it("should return AuthToken", () => {
-        expect(
-            getAuthToken({ appConfig: { authorizationToken: "some secret string" } })
-        ).toBe("some secret string");
+        const authorizationToken = "some secret string" ;
+        expect(getAuthToken({ appConfig: { authorizationToken } })).toBe(authorizationToken);
     });
     it("should return IsRecaptchaEnable", () => {
         expect(getIsRecaptchaEnable({ appConfig: { recaptchaEnable: true } })).toBe(true);
