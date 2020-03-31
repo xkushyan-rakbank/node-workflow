@@ -11,7 +11,7 @@ import { authentication } from "../../../src/api/apiClient";
 
 jest.mock("../../../src/utils/loggger");
 
-describe("otp saga test", () => {
+describe("loginInfoFormSaga test", () => {
   let dispatched = [];
   const state = "some state";
   const payload = "some payload";
@@ -27,7 +27,7 @@ describe("otp saga test", () => {
     jest.clearAllMocks();
   });
 
-  it("should handle otpSagas saga", () => {
+  it("should handle loginInfoForm saga", () => {
     const gen = loginInfoFormSaga().next().value;
     expect(gen.type).toEqual("ALL");
     expect(gen.payload[0].payload.args[0]).toEqual(LOGIN_INFO_FORM);
