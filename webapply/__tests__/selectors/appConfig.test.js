@@ -27,10 +27,9 @@ import {
 } from "../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
-    const appConfig = { prospect: {} };
     it("should return data list", () => {
         const datalist = { country: [{ displayText: "Afghanistan" }] };
-        expect(getDatalist({ appConfig: { ...appConfig, datalist } }).country).toMatchObject([
+        expect(getDatalist({ appConfig: { datalist } }).country).toMatchObject([
             {
                 displayText: "Afghanistan"
             }
@@ -40,15 +39,14 @@ describe("appConfig selector test", () => {
         expect(
             getProspect({
                 appConfig: {
-                    ...appConfig,
-                    prospect: { ...appConfig.prospect, prospectInfo: { fullName: "John Dou" } }
+                    prospect: { prospectInfo: { fullName: "John Dou" } }
                 }
             })
         ).toMatchObject({ prospectInfo: { fullName: "John Dou" } });
     });
     it("should return signatoryModel", () => {
         const signatoryModel = { someSignatoryModelField: "some value." };
-        expect(getSignatoryModel({ appConfig: { ...appConfig, signatoryModel } })).toMatchObject({
+        expect(getSignatoryModel({ appConfig: { signatoryModel } })).toMatchObject({
             someSignatoryModelField: "some value."
         });
     });
@@ -56,7 +54,7 @@ describe("appConfig selector test", () => {
         const signatoryInfo = [{ testSignatoryInfoField: "some text" }];
         expect(
             getSignatories({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, signatoryInfo } }
+                appConfig: { prospect: { signatoryInfo } }
             })
         ).toMatchObject([{ testSignatoryInfoField: "some text" }]);
     });
@@ -64,7 +62,7 @@ describe("appConfig selector test", () => {
         const accountInfo = [{ testAccountInfoField: "some text" }];
         expect(
             getAccountInfo({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, accountInfo } }
+                appConfig: { prospect: { accountInfo } }
             })
         ).toMatchObject([{ testAccountInfoField: "some text" }]);
     });
@@ -75,7 +73,7 @@ describe("appConfig selector test", () => {
         const organizationInfo = { testDatalistField: "1" };
         expect(
             getOrganizationInfo({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, organizationInfo } }
+                appConfig: { prospect: { organizationInfo } }
             })
         ).toMatchObject({ testDatalistField: "1" });
     });
@@ -83,7 +81,7 @@ describe("appConfig selector test", () => {
         const organizationInfo = { companyName: "Test Company name" };
         expect(
             getCompanyName({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, organizationInfo } }
+                appConfig: { prospect: { organizationInfo } }
             })
         ).toBe("Test Company name");
     });
@@ -91,7 +89,7 @@ describe("appConfig selector test", () => {
         const orgKYCDetails = { testDatalistField: "1" };
         expect(
             getOrgKYCDetails({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, orgKYCDetails } }
+                appConfig: { prospect: { orgKYCDetails } }
             })
         ).toMatchObject({ testDatalistField: "1" });
     });
@@ -99,7 +97,7 @@ describe("appConfig selector test", () => {
         const generalInfo = { prospectId: "123456" };
         expect(
             getGeneralInfo({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, generalInfo } }
+                appConfig: { prospect: { generalInfo } }
             })
         ).toMatchObject({ prospectId: "123456" });
     });
@@ -109,7 +107,7 @@ describe("appConfig selector test", () => {
         };
         expect(
             getApplicantInfo({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, applicantInfo } }
+                appConfig: { prospect: { applicantInfo } }
             })
         ).toMatchObject({
             applicantInfoField: "applicantInfo value"
@@ -130,7 +128,7 @@ describe("appConfig selector test", () => {
         const applicationInfo = { islamicBanking: false, accountType: "elite" };
         expect(
             getApplicationInfo({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, applicationInfo } }
+                appConfig: { prospect: { applicationInfo } }
             })
         ).toMatchObject({ islamicBanking: false, accountType: "elite" });
     });
@@ -138,7 +136,7 @@ describe("appConfig selector test", () => {
         const applicationInfo = { islamicBanking: true, accountType: "elite" };
         expect(
             getIsIslamicBanking({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, applicationInfo } }
+                appConfig: { prospect: { applicationInfo } }
             })
         ).toBe(true);
     });
@@ -146,7 +144,7 @@ describe("appConfig selector test", () => {
         const applicationInfo = { islamicBanking: true, accountType: "elite" };
         expect(
             getAccountType({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, applicationInfo } }
+                appConfig: { prospect: { applicationInfo } }
             })
         ).toBe("elite");
     });
@@ -174,19 +172,19 @@ describe("appConfig selector test", () => {
         const generalInfo = { prospectId: "17683" };
         expect(
             getProspectId({
-                appConfig: { ...appConfig, prospect: { ...appConfig.prospect, generalInfo } }
+                appConfig: { prospect: { generalInfo } }
             })
         ).toBe("17683");
     });
     it("should return ReCaptchaSiteKey", () => {
         expect(
-            getReCaptchaSiteKey({ appConfig: { ...appConfig, reCaptchaSiteKey: "some special string" } })
+            getReCaptchaSiteKey({ appConfig: { reCaptchaSiteKey: "some special string" } })
         ).toBe("some special string");
     });
     it("should return ServicePricingGuideUrl", () => {
         expect(
             getServicePricingGuideUrl({
-                appConfig: { ...appConfig, servicePricingGuideUrl: "https://dsd.sdsd.we/dss" }
+                appConfig: { servicePricingGuideUrl: "https://dsd.sdsd.we/dss" }
             })
         ).toBe("https://dsd.sdsd.we/dss");
     });
@@ -197,14 +195,14 @@ describe("appConfig selector test", () => {
             rakValuePlusIslamicReadMoreUrl: "https://rakValuePlusIslamicReadMoreUrl.sdsd.we/dss",
             rakValueMaxIslamicReadMoreUrl: "https://rakValueMaxIslamicReadMoreUrl.sdsd.we/dss"
         };
-        expect(getUrlsReadMore({ appConfig: { ...appConfig, ...urls } })).toMatchObject({ ...urls });
+        expect(getUrlsReadMore({ appConfig: { ...urls } })).toEqual(urls);
     });
     it("should return AuthToken", () => {
         expect(
-            getAuthToken({ appConfig: { ...appConfig, authorizationToken: "some secret string" } })
+            getAuthToken({ appConfig: { authorizationToken: "some secret string" } })
         ).toBe("some secret string");
     });
     it("should return IsRecaptchaEnable", () => {
-        expect(getIsRecaptchaEnable({ appConfig: { ...appConfig, recaptchaEnable: true } })).toBe(true);
+        expect(getIsRecaptchaEnable({ appConfig: { recaptchaEnable: true } })).toBe(true);
     });
 });
