@@ -7,12 +7,10 @@ import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.stub.JwtPayloadStub;
 import org.apache.logging.log4j.util.Strings;
-import org.assertj.core.util.Lists;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -24,8 +22,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
@@ -55,7 +53,7 @@ public class AuthorizationFilterTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        List<String> urls = Lists.list("/exclude1", "/exclude2");
+        List<String> urls = Arrays.asList("/exclude1", "/exclude2");
         filter = new AuthorizationFilter(authorizationService, urls);
     }
 
@@ -162,7 +160,7 @@ public class AuthorizationFilterTest {
         Mockito.verify(authorizationService).getPrincipal(JWT_UPDATED_TOKEN);
         Mockito.verify(response).setHeader(AuthConstants.JWT_TOKEN_KEY, "jwt_response_token");
         Mockito.verify(filterChain).doFilter(request, response);
-        Mockito.verify(jwtPayload, new Times(0)).setProspectId(ArgumentMatchers.any());
+        Mockito.verify(jwtPayload, new Times(0)).setProspectId(Matchers.any());
     }
 
     @Test
