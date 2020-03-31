@@ -30,6 +30,10 @@ jobs:
         inputs:
           versionSpec: 10.x
 
+      - task: npmAuthenticate@0
+        inputs:
+          workingFile: '.npmrc'
+
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(Dev_build) N
           echo "##vso[task.setvariable variable=REACT_APP_RECAPTCHA_ENABLE;]N"
