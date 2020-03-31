@@ -32,7 +32,7 @@ jobs:
 
       - task: npmAuthenticate@0
         inputs:
-          workingFile: '.npmrc'
+          workingFile: 'webapply/.npmrc'
 
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(Dev_build) N
@@ -50,7 +50,7 @@ jobs:
           cd webapply
           #yarn
           #yarn build
-          npm install
+          npm install --verbose
           npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
