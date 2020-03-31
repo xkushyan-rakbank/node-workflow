@@ -1,207 +1,145 @@
 import {
-    getDatalist,
-    getProspect,
-    getSignatoryModel,
-    getSignatories,
-    getAccountInfo,
-    getAccountNumbers,
-    getOrganizationInfo,
-    getCompanyName,
-    getOrgKYCDetails,
-    getGeneralInfo,
-    getApplicantInfo,
-    getSendProspectToAPIInfo,
-    getIsSendingProspect,
-    getScreeningError,
-    getApplicationInfo,
-    getIsIslamicBanking,
-    getAccountType,
-    getCompanySteps,
-    getSignatoriesSteps,
-    getProspectId,
-    getReCaptchaSiteKey,
-    getServicePricingGuideUrl,
-    getUrlsReadMore,
-    getAuthToken,
-    getIsRecaptchaEnable
+  getDatalist,
+  getProspect,
+  getSignatoryModel,
+  getSignatories,
+  getAccountInfo,
+  getOrganizationInfo,
+  getCompanyName,
+  getOrgKYCDetails,
+  getGeneralInfo,
+  getApplicantInfo,
+  getApplicationInfo,
+  getIsIslamicBanking,
+  getAccountType,
+  getProspectId,
+  getReCaptchaSiteKey,
+  getServicePricingGuideUrl,
+  getUrlsReadMore,
+  getAuthToken,
+  getIsRecaptchaEnable
 } from "../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
-    it("should return data list", () => {
-        const datalist = { country: [{ displayText: "Afghanistan" }] };
-        expect(getDatalist({ appConfig: { datalist } }).country).toMatchObject([
-            {
-                displayText: "Afghanistan"
-            }
-        ]);
-    });
-    it("should return prospect", () => {
-        expect(
-            getProspect({
-                appConfig: {
-                    prospect: { prospectInfo: { fullName: "John Dou" } }
-                }
-            })
-        ).toMatchObject({ prospectInfo: { fullName: "John Dou" } });
-    });
-    it("should return signatoryModel", () => {
-        const signatoryModel = { someSignatoryModelField: "some value." };
-        expect(getSignatoryModel({ appConfig: { signatoryModel } })).toMatchObject({
-            someSignatoryModelField: "some value."
-        });
-    });
-    it("should return signatoryInfo", () => {
-        const signatoryInfo = [{ testSignatoryInfoField: "some text" }];
-        expect(
-            getSignatories({
-                appConfig: { prospect: { signatoryInfo } }
-            })
-        ).toMatchObject([{ testSignatoryInfoField: "some text" }]);
-    });
-    it("should return accountInfo", () => {
-        const accountInfo = [{ testAccountInfoField: "some text" }];
-        expect(
-            getAccountInfo({
-                appConfig: { prospect: { accountInfo } }
-            })
-        ).toMatchObject([{ testAccountInfoField: "some text" }]);
-    });
-    it("should return accountNumbers", () => {
-        expect(getAccountNumbers({ accountNumbers: ["usd, uae"] })).toMatchObject(["usd, uae"]);
-    });
-    it("should return organizationInfo", () => {
-        const organizationInfo = { testDatalistField: "1" };
-        expect(
-            getOrganizationInfo({
-                appConfig: { prospect: { organizationInfo } }
-            })
-        ).toMatchObject({ testDatalistField: "1" });
-    });
-    it("should return companyName", () => {
-        const organizationInfo = { companyName: "Test Company name" };
-        expect(
-            getCompanyName({
-                appConfig: { prospect: { organizationInfo } }
-            })
-        ).toBe("Test Company name");
-    });
-    it("should return orgKYCDetails", () => {
-        const orgKYCDetails = { testDatalistField: "1" };
-        expect(
-            getOrgKYCDetails({
-                appConfig: { prospect: { orgKYCDetails } }
-            })
-        ).toMatchObject({ testDatalistField: "1" });
-    });
-    it("should return generalInfo", () => {
-        const generalInfo = { prospectId: "123456" };
-        expect(
-            getGeneralInfo({
-                appConfig: { prospect: { generalInfo } }
-            })
-        ).toMatchObject({ prospectId: "123456" });
-    });
-    it("should return applicantInfo", () => {
-        const applicantInfo = {
-            applicantInfoField: "applicantInfo value"
-        };
-        expect(
-            getApplicantInfo({
-                appConfig: { prospect: { applicantInfo } }
-            })
-        ).toMatchObject({
-            applicantInfoField: "applicantInfo value"
-        });
-    });
-    it("should return sendProspectToAPI", () => {
-        expect(getSendProspectToAPIInfo({ sendProspectToAPI: { loading: false } })).toMatchObject({
-            loading: false
-        });
-    });
-    it("should return loading field value", () => {
-        expect(getIsSendingProspect({ sendProspectToAPI: { loading: true } })).toBe(true);
-    });
-    it("should return screeningError", () => {
-        expect(getScreeningError({ sendProspectToAPI: { screeningError: "error" } })).toBe("error");
-    });
-    it("should return applicationInfo", () => {
-        const applicationInfo = { islamicBanking: false, accountType: "elite" };
-        expect(
-            getApplicationInfo({
-                appConfig: { prospect: { applicationInfo } }
-            })
-        ).toMatchObject({ islamicBanking: false, accountType: "elite" });
-    });
-    it("should return value islamicBanking", () => {
-        const applicationInfo = { islamicBanking: true, accountType: "elite" };
-        expect(
-            getIsIslamicBanking({
-                appConfig: { prospect: { applicationInfo } }
-            })
-        ).toBe(true);
-    });
-    it("should return value accountType", () => {
-        const applicationInfo = { islamicBanking: true, accountType: "elite" };
-        expect(
-            getAccountType({
-                appConfig: { prospect: { applicationInfo } }
-            })
-        ).toBe("elite");
-    });
-    it("should return final questions company steps ", () => {
-        const completedSteps = [
-            { flowId: "companyInfo", step: 1, status: "COMPLETED" },
-            { flowId: "finalQuestionsCompany", step: 1, status: "COMPLETED" },
-            { flowId: "companySignatory_8", step: 2, status: "NOT_AVAILABLE" }
-        ];
-        expect(getCompanySteps({ completedSteps })).toMatchObject([
-            { flowId: "finalQuestionsCompany", step: 1, status: "COMPLETED" }
-        ]);
-    });
-    it("should return Signatories company steps", () => {
-        const completedSteps = [
-            { flowId: "companyInfo", step: 1, status: "COMPLETED" },
-            { flowId: "finalQuestionsCompany", step: 1, status: "COMPLETED" },
-            { flowId: "companySignatory_8", step: 2, status: "NOT_AVAILABLE" }
-        ];
-        expect(getSignatoriesSteps({ completedSteps })).toMatchObject([
-            { flowId: "companySignatory_8", step: 2, status: "NOT_AVAILABLE" }
-        ]);
-    });
-    it("should return ProspectId", () => {
-        const generalInfo = { prospectId: "17683" };
-        expect(
-            getProspectId({
-                appConfig: { prospect: { generalInfo } }
-            })
-        ).toBe("17683");
-    });
-    it("should return ReCaptchaSiteKey", () => {
-        expect(
-            getReCaptchaSiteKey({ appConfig: { reCaptchaSiteKey: "some special string" } })
-        ).toBe("some special string");
-    });
-    it("should return ServicePricingGuideUrl", () => {
-        expect(
-            getServicePricingGuideUrl({
-                appConfig: { servicePricingGuideUrl: "https://dsd.sdsd.we/dss" }
-            })
-        ).toBe("https://dsd.sdsd.we/dss");
-    });
-    it("should return UrlsReadMore", () => {
-        const urls = {
-            rakValuePlusReadMoreUrl: "https://rakValuePlusReadMoreUrl.we/dss",
-            rakValueMaxReadMoreUrl: "https://rakValueMaxReadMoreUrl.we/dss",
-            rakValuePlusIslamicReadMoreUrl: "https://rakValuePlusIslamicReadMoreUrl.sdsd.we/dss",
-            rakValueMaxIslamicReadMoreUrl: "https://rakValueMaxIslamicReadMoreUrl.sdsd.we/dss"
-        };
-        expect(getUrlsReadMore({ appConfig: { ...urls } })).toEqual(urls);
-    });
-    it("should return AuthToken", () => {
-        const authorizationToken = "some secret string" ;
-        expect(getAuthToken({ appConfig: { authorizationToken } })).toBe(authorizationToken);
-    });
-    it("should return IsRecaptchaEnable", () => {
-        expect(getIsRecaptchaEnable({ appConfig: { recaptchaEnable: true } })).toBe(true);
-    });
+  const datalist = "some datalist";
+  const signatoryModel = "some signatory model";
+  const signatoryInfo = "some signatory info";
+  const accountInfo = "some account info";
+  const companyName = "some company name";
+  const organizationInfo = { companyName };
+  const orgKYCDetails = "some org kyc details";
+  const prospectId = "some prospect id";
+  const generalInfo = { prospectId };
+  const applicantInfo = "some applicantInfo value";
+  const islamicBanking = false;
+  const accountType = "some account type";
+  const applicationInfo = { islamicBanking, accountType };
+  const prospect = {
+    signatoryInfo,
+    accountInfo,
+    organizationInfo,
+    orgKYCDetails,
+    generalInfo,
+    applicantInfo,
+    applicationInfo
+  };
+  const reCaptchaSiteKey = "some key";
+  const servicePricingGuideUrl = "some url";
+  const readMoreUrls = {
+    rakValuePlusReadMoreUrl: "some url 1",
+    rakValueMaxReadMoreUrl: "some url 2",
+    rakValuePlusIslamicReadMoreUrl: "some url 3",
+    rakValueMaxIslamicReadMoreUrl: "some url 4"
+  };
+  const authorizationToken = "some secret string";
+  const recaptchaEnable = true;
+  const state = {
+    appConfig: {
+      datalist,
+      prospect,
+      signatoryModel,
+      signatoryInfo,
+      reCaptchaSiteKey,
+      servicePricingGuideUrl,
+      ...readMoreUrls,
+      authorizationToken,
+      recaptchaEnable
+    }
+  };
+
+  it("should return datalist", () => {
+    expect(getDatalist(state)).toBe(datalist);
+  });
+
+  it("should return prospect", () => {
+    expect(getProspect(state)).toBe(prospect);
+  });
+
+  it("should return signatoryModel", () => {
+    expect(getSignatoryModel(state)).toBe(signatoryModel);
+  });
+
+  it("should return signatoryInfo", () => {
+    expect(getSignatories(state)).toBe(signatoryInfo);
+  });
+
+  it("should return accountInfo", () => {
+    expect(getAccountInfo(state)).toBe(accountInfo);
+  });
+
+  it("should return organizationInfo", () => {
+    expect(getOrganizationInfo(state)).toBe(organizationInfo);
+  });
+
+  it("should return companyName", () => {
+    expect(getCompanyName(state)).toBe(companyName);
+  });
+
+  it("should return orgKYCDetails", () => {
+    expect(getOrgKYCDetails(state)).toBe(orgKYCDetails);
+  });
+
+  it("should return generalInfo", () => {
+    expect(getGeneralInfo(state)).toBe(generalInfo);
+  });
+
+  it("should return applicantInfo", () => {
+    expect(getApplicantInfo(state)).toBe(applicantInfo);
+  });
+
+  it("should return applicationInfo", () => {
+    expect(getApplicationInfo(state)).toBe(applicationInfo);
+  });
+
+  it("should return value of islamicBanking", () => {
+    expect(getIsIslamicBanking(state)).toBe(islamicBanking);
+  });
+
+  it("should return value of accountType", () => {
+    expect(getAccountType(state)).toBe(accountType);
+  });
+
+  it("should return prospect id", () => {
+    expect(getProspectId(state)).toBe(prospectId);
+  });
+
+  it("should return recaptcha site key", () => {
+    expect(getReCaptchaSiteKey(state)).toBe(reCaptchaSiteKey);
+  });
+
+  it("should return value of ServicePricingGuideUrl", () => {
+    expect(getServicePricingGuideUrl(state)).toBe(servicePricingGuideUrl);
+  });
+
+  it("should return value of urlsReadMore", () => {
+    expect(getUrlsReadMore(state)).toEqual(readMoreUrls);
+  });
+
+  it("should return auth token", () => {
+    expect(getAuthToken(state)).toBe(authorizationToken);
+  });
+
+  it("should return is recaptcha enable", () => {
+    expect(getIsRecaptchaEnable(state)).toBe(recaptchaEnable);
+  });
 });
