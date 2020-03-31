@@ -56,7 +56,7 @@ public class ConfigFactory {
 
     }
 
-    public static JsonNode newOtpConfig() {
+    public static JsonNode newOtpConfigEnabled() {
         ObjectNode config = objectMapper.createObjectNode();
         ObjectNode dehURIs = objectMapper.createObjectNode();
 
@@ -69,6 +69,24 @@ public class ConfigFactory {
                         .put("OAuthPassword", "theoauthpassword")
                         .put("JwtSecret", "1234")
                         .put("OtpEnabled", "Y")));
+        config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
+
+        return config;
+    }
+
+    public static JsonNode newOtpConfigDisabled() {
+        ObjectNode config = objectMapper.createObjectNode();
+        ObjectNode dehURIs = objectMapper.createObjectNode();
+
+        dehURIs.put("otpUri", "/otp");
+
+        config.set("DehURIs", dehURIs);
+        config.set("OtherConfigs", objectMapper.createObjectNode()
+                .set("local", objectMapper.createObjectNode()
+                        .put("OAuthUsername", "theoauthusername")
+                        .put("OAuthPassword", "theoauthpassword")
+                        .put("JwtSecret", "1234")
+                        .put("OtpEnabled", "N")));
         config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
 
         return config;

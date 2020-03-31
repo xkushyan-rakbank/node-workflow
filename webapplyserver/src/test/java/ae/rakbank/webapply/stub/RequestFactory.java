@@ -37,7 +37,7 @@ public class RequestFactory {
 
     public static JsonNode newGenerateOtpValidationRequest() {
         return objectMapper.createObjectNode()
-                .put("action", "validate")
+                .put("action", "verify")
                 .put("phoneNo", "+37847563456")
                 .put("prospectId", "123456789")
                 .put("otp", "111222333");
