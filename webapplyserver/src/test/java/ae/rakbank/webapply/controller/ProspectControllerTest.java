@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -76,16 +76,16 @@ public class ProspectControllerTest {
         ObjectNode otpResponse = objectMapper.createObjectNode();
         ResponseEntity<Object> otpResponseEntity = ResponseEntity.ok(otpResponse);
 
-        Mockito.when(applyController.generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true))).thenReturn(otpResponseEntity);
+        Mockito.when(applyController.generateVerifyOTP(Matchers.any(), Matchers.eq(true))).thenReturn(otpResponseEntity);
 
         ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, createProspectRequest, "sme");
 
         assertNotNull(prospect);
         assertEquals(HttpStatus.OK, prospect.getStatusCode());
         assertNotNull(prospect.getBody());
-        assertEquals("123456789", ((JsonNode)prospect.getBody()).get("prospectId").asText());
+        assertEquals("123456789", ((JsonNode) prospect.getBody()).get("prospectId").asText());
 
-        Mockito.verify(applyController).generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true));
+        Mockito.verify(applyController).generateVerifyOTP(Matchers.any(), Matchers.eq(true));
         Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri",
                 HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
 
@@ -109,14 +109,14 @@ public class ProspectControllerTest {
         ObjectNode otpResponse = objectMapper.createObjectNode();
         ResponseEntity<Object> otpResponseEntity = ResponseEntity.badRequest().build();
 
-        Mockito.when(applyController.generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true))).thenReturn(otpResponseEntity);
+        Mockito.when(applyController.generateVerifyOTP(Matchers.any(), Matchers.eq(true))).thenReturn(otpResponseEntity);
 
         ResponseEntity<Object> prospect = prospectController.createSMEProspect(request, createProspectRequest, "sme");
 
         assertNotNull(prospect);
         assertEquals(HttpStatus.BAD_REQUEST, prospect.getStatusCode());
 
-        Mockito.verify(applyController).generateVerifyOTP(ArgumentMatchers.any(), ArgumentMatchers.eq(true));
+        Mockito.verify(applyController).generateVerifyOTP(Matchers.any(), Matchers.eq(true));
         Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri",
                 HttpMethod.POST, createProspectRequest, "createSMEProspect()", MediaType.APPLICATION_JSON, null);
 

@@ -7,23 +7,21 @@ import ae.rakbank.webapply.util.CriteriaParamsValidator;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.internal.verification.Times;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class ConfigControllerTest {
 
@@ -143,7 +141,7 @@ public class ConfigControllerTest {
         ObjectNode cachedValue = objectMapper.createObjectNode();
         ResponseEntity<JsonNode> ok = ResponseEntity.ok(cachedValue);
 
-        Mockito.when(configService.getCachedData(ArgumentMatchers.any(HttpHeaders.class), ArgumentMatchers.eq(cacheKey), ArgumentMatchers.eq(cacheKey))).thenReturn(ok);
+        Mockito.when(configService.getCachedData(Matchers.any(HttpHeaders.class), Matchers.eq(cacheKey), Matchers.eq(cacheKey))).thenReturn(ok);
 
         ResponseEntity<JsonNode> webApplyConfigReduced = configController.getWebApplyConfigReduced(request, "customer", "sme", "RAKStarter", "desktop");
 
@@ -169,7 +167,7 @@ public class ConfigControllerTest {
 
         Mockito.when(configService.buildAppInitialState("sme", "RAKStarter", "customer", "desktop", cachedValue)).thenReturn(cachedValue);
 
-        Mockito.when(configService.getCachedData(ArgumentMatchers.any(HttpHeaders.class), ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(null);
+        Mockito.when(configService.getCachedData(Matchers.any(HttpHeaders.class), Matchers.any(), Matchers.any())).thenReturn(null);
 
         ResponseEntity<JsonNode> webApplyConfigReduced = configController.getWebApplyConfigReduced(request, "customer", "sme", "RAKStarter", "desktop");
 
@@ -190,7 +188,7 @@ public class ConfigControllerTest {
 
         Mockito.when(dehClient.getDatalistJSON("sme")).thenReturn(badRequest);
 
-        Mockito.when(configService.getCachedData(ArgumentMatchers.any(HttpHeaders.class), ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(null);
+        Mockito.when(configService.getCachedData(Matchers.any(HttpHeaders.class), Matchers.any(), Matchers.any())).thenReturn(null);
 
         ResponseEntity<JsonNode> webApplyConfigReduced = configController.getWebApplyConfigReduced(request, "customer", "sme", "RAKStarter", "desktop");
 
@@ -208,7 +206,7 @@ public class ConfigControllerTest {
 
         Mockito.when(dehClient.getDatalistJSON("sme")).thenReturn(null);
 
-        Mockito.when(configService.getCachedData(ArgumentMatchers.any(HttpHeaders.class), ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(null);
+        Mockito.when(configService.getCachedData(Matchers.any(HttpHeaders.class), Matchers.any(), Matchers.any())).thenReturn(null);
 
         ResponseEntity<JsonNode> webApplyConfigReduced = configController.getWebApplyConfigReduced(request, "customer", "sme", "RAKStarter", "desktop");
 
