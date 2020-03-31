@@ -1,52 +1,57 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { otp } from "../../api/apiClient";
 import { getApplicantInfo, getProspectId, getAuthorizationHeader } from "../selectors/appConfig";
-import * as otpActions from "../actions/otp";
+import {
+  setGeneratingCode,
+  generateCodeSuccess,
+  verifyCodeSuccess,
+  verifyCodeFailed,
+  setOtpPendingRequest,
+  GENERATE_OTP_CODE,
+  VERIFY_OTP
+} from "../actions/otp";
 import { log } from "../../utils/loggger";
 
-function* generateOtp(action) {
+export function* generateOtp(action) {
   try {
-    const state = yield select();
-    const headers = getAuthorizationHeader(state);
-    yield call(otp.generate, { ...action.payload, prospectId: getProspectId(state) }, headers);
+    const headers = yield select(getAuthorizationHeader);
+    const prospectId = yield select(getProspectId);
 
-    yield put(otpActions.generateCodeSuccess());
+    yield call(otp.generate, { ...action.payload, prospectId }, headers);
+    yield put(generateCodeSuccess());
   } catch (error) {
     log(error);
   } finally {
-    yield put(otpActions.setGeneratingCode(false));
+    yield put(setGeneratingCode(false));
   }
 }
 
-function* verifyOtp({ payload: otpToken }) {
+export function* verifyOtp({ payload: otpToken }) {
   try {
-    const state = yield select();
-    const headers = getAuthorizationHeader(state);
-    const applicantInfo = getApplicantInfo(state);
+    const headers = yield select(getAuthorizationHeader);
+    const applicantInfo = yield select(getApplicantInfo);
+    const prospectId = yield select(getProspectId);
 
     const payload = {
       email: applicantInfo.email,
-      prospectId: getProspectId(state),
+      prospectId,
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
       otpToken
     };
     const { data } = yield call(otp.verify, payload, headers);
     if (data.verified) {
-      yield put(otpActions.verifyCodeSuccess());
+      yield put(verifyCodeSuccess());
     } else {
-      yield put(otpActions.verifyCodeFailed());
+      yield put(verifyCodeFailed());
     }
   } catch (error) {
     log(error);
   } finally {
-    yield put(otpActions.setOtpPendingRequest(false));
+    yield put(setOtpPendingRequest(false));
   }
 }
 
 export default function* otpSagas() {
-  yield all([
-    takeLatest(otpActions.GENERATE_OTP_CODE, generateOtp),
-    takeLatest(otpActions.VERIFY_OTP, verifyOtp)
-  ]);
+  yield all([takeLatest(GENERATE_OTP_CODE, generateOtp), takeLatest(VERIFY_OTP, verifyOtp)]);
 }
