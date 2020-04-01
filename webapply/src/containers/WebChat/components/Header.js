@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import Close from "../../assets/close.svg";
-import Minimize from "../../assets/minimize.svg";
+import Close from "../../../assets/icons/chat-close.svg";
+import Minimize from "../../../assets/icons/chat-minimize.svg";
 
 const HeaderStyled = styled.div`
   box-sizing: border-box;

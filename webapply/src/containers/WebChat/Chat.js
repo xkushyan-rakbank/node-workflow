@@ -1,7 +1,8 @@
-import React, { useCallback, useRef, lazy, Suspense } from "react";
+import React, { useCallback, useRef, Suspense } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 import get from "lodash/get";
+import { Chat as WebChatComponent } from "@rakbank/web-chat";
 
 import { useWebChatState } from "./hooks/useWebChatState";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
@@ -10,8 +11,7 @@ import { getSearchResults } from "../../store/selectors/searchProspect";
 import { ClosedChat } from "./components/ClosedChat";
 import { Portal } from "./components/Portal";
 import { useStyles } from "./styled";
-
-const WebChatComponent = lazy(() => import("./core"));
+import { Header } from "./components/Header";
 
 const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
   const classes = useStyles();
@@ -51,9 +51,15 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
               onMinimize={minimizeChat}
               isAuth={false}
               onNewMessageReceive={handleReceiveNewMessage}
-              InitiatedCustomerName={name || searchName}
-              InitiatedCustomerMobile={`${countryCode}${mobileNo}`}
-              EmailAddress={email}
+              initiatedCustomerName={name || searchName}
+              initiatedCustomerMobile={`${countryCode}${mobileNo}`}
+              emailAddress={email}
+              config={{
+                channel: "/service/chatV2/Customer-Onboarding",
+                channelId: "WBA",
+                apiPath: process.env.REACT_APP_CHAT_API_PATH
+              }}
+              Header={Header}
             />
           </Suspense>
         </div>
