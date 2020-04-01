@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FileUtil {
 
     private static final String LOCAL = "local";
-    private static final String APP_CONFIG_JSON = "DocUploadConfig.json";
+    public static final String APP_CONFIG_JSON = "DocUploadConfig.json";
 
     private final ResourceLoader resourceLoader;
 

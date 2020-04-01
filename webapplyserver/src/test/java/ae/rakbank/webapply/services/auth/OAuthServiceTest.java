@@ -18,12 +18,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletContext;
-
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-@Ignore
+
 public class OAuthServiceTest {
 
     private OAuthService oAuthService;
@@ -58,6 +58,7 @@ public class OAuthServiceTest {
         assertEquals("access-token-value", token);
     }
 
+    @Ignore
     @Test
     public void getUpdateContextOauthToken() {
 
@@ -76,6 +77,7 @@ public class OAuthServiceTest {
         assertEquals("access-token-value", token);
     }
 
+    @Ignore
     @Test
     public void getUpdateContextOauthTokenIfResponseIsError() {
 
