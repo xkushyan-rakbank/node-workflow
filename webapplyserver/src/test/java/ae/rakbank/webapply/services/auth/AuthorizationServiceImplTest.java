@@ -10,7 +10,7 @@ import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -107,7 +107,7 @@ public class AuthorizationServiceImplTest {
         ResponseEntity<JsonNode> dehResponseEntity = ResponseEntity.ok(newLoginResponse);
         Mockito.when(oauthClient.authorize("theusername", "thepassword")).thenReturn(dehResponseEntity);
         Mockito.when(oAuthService.getExpireTime(dehResponseEntity)).thenReturn(LocalDateTime.of(2020, 01, 01, 00, 00));
-        Mockito.when(jwtService.encrypt(ArgumentMatchers.any(JwtPayload.class))).thenReturn("result-token");
+        Mockito.when(jwtService.encrypt(Matchers.any(JwtPayload.class))).thenReturn("result-token");
 
         String agentJwtToken = authorizationService.createAgentJwtToken("theusername", "thepassword");
         assertNotNull(agentJwtToken);
@@ -127,7 +127,7 @@ public class AuthorizationServiceImplTest {
         JsonNode dehResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> dehResponseEntity = ResponseEntity.ok(dehResponse);
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenReturn(dehResponseEntity);
-        Mockito.when(jwtService.encrypt(ArgumentMatchers.any(JwtPayload.class))).thenReturn("result-token");
+        Mockito.when(jwtService.encrypt(Matchers.any(JwtPayload.class))).thenReturn("result-token");
         String token = authorizationService.createCustomerJwtToken("+37847563456", "123456789");
         assertNotNull(token);
     }

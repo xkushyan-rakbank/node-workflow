@@ -1,6 +1,8 @@
 import { runSaga } from "redux-saga";
 
-import loginInfoFormSaga, { screenProspectSaga } from "../../../src/store/sagas/screenProspect";
+import screenProspectSaga, {
+  screenProspectFormSaga
+} from "../../../src/store/sagas/screenProspect";
 import {
   SCREEN_PROSPECT_SEND,
   SCREEN_PROSPECT_SUCCESS
@@ -27,7 +29,7 @@ describe("screenProspect saga test", () => {
   });
 
   it("should handle screenProspectSaga", () => {
-    const gen = loginInfoFormSaga().next().value;
+    const gen = screenProspectSaga().next().value;
     expect(gen.type).toEqual("FORK");
     expect(gen.payload.args[0]).toEqual(SCREEN_PROSPECT_SEND);
   });
@@ -35,7 +37,7 @@ describe("screenProspect saga test", () => {
   it("should screening prospect success", async () => {
     const spy = jest.spyOn(screening, "send").mockReturnValue({ data });
 
-    await runSaga(store, screenProspectSaga, { payload: { prospectId } }).toPromise();
+    await runSaga(store, screenProspectFormSaga, { payload: { prospectId } }).toPromise();
 
     expect(spy.mock.calls[0]).toEqual([prospectId]);
     expect(dispatched).toMatchObject([
@@ -51,7 +53,7 @@ describe("screenProspect saga test", () => {
       throw error;
     });
 
-    await runSaga(store, screenProspectSaga, { payload: { prospectId } }).toPromise();
+    await runSaga(store, screenProspectFormSaga, { payload: { prospectId } }).toPromise();
 
     expect(spy.mock.calls[0]).toEqual([prospectId]);
     expect(log.mock.calls[0]).toEqual([error]);
