@@ -24,9 +24,9 @@ export function usePortal(id) {
     parentElem.appendChild(rootElemRef.current);
 
     return function removeElement() {
-      rootElemRef.current.remove();
+      parentElem.removeChild(rootElemRef.current);
       if (parentElem.childNodes.length === -1) {
-        parentElem.remove();
+        document.body.removeChild(parentElem);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
