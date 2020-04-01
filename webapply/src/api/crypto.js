@@ -18,6 +18,7 @@ export const encryptSymmetricKey = (pem, symKey) => {
   return encryptedSymKey64;
 };
 
+/* istanbul ignore next */
 export const encrypt = (pubKey, payload) => {
   const symKeyBytes = forge.random.getBytesSync(16);
   const symKey = forge.util.encode64(symKeyBytes);

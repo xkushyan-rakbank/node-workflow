@@ -7,7 +7,7 @@ import {
   GET_PROSPECT_INFO_REQUEST
 } from "../actions/retrieveApplicantInfo";
 import { setConfig, loadMetaData } from "../actions/appConfig";
-import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
+import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
@@ -15,6 +15,7 @@ import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/con
 
 function* retrieveApplicantInfoSaga({ payload }) {
   try {
+    const headers = yield select(getAuthorizationHeader);
     const inputParam = {
       applicantName: payload.fullName || "",
       countryCode: payload.countryCode || "",
@@ -25,7 +26,7 @@ function* retrieveApplicantInfoSaga({ payload }) {
       eidNumber: ""
     };
 
-    const response = yield call(retrieveApplicantInfos.applicant, inputParam);
+    const response = yield call(searchApi.searchApplication, inputParam, headers);
     yield put(retrieveApplicantInfoSuccess(response.data));
   } catch (error) {
     log(error);
@@ -34,8 +35,7 @@ function* retrieveApplicantInfoSaga({ payload }) {
 
 function* getProspectIdInfo({ payload }) {
   try {
-    const state = yield select();
-    const headers = getAuthorizationHeader(state);
+    const headers = yield select(getAuthorizationHeader);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
     const freeFieldsInfo = config.prospect.freeFieldsInfo;

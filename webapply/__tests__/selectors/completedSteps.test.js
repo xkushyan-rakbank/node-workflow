@@ -73,7 +73,7 @@ describe("completedSteps selector test", () => {
   });
 
   it("should return final questions steps", () => {
-    expect(getCompanySteps(state)).toEqual([finalQuestionStep])
+    expect(getCompanySteps(state)).toEqual([finalQuestionStep]);
   });
 
   it("should return company signatory steps", () => {

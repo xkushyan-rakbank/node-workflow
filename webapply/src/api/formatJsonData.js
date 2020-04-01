@@ -6,6 +6,6 @@ export const formatJsonData = ({ stackTrace = [], status }) => {
 
   return {
     status,
-    stackTrace: `StackTrace: ${stack.join(", ")}`
+    stackTrace: stack.length ? `StackTrace: ${stack.join(", ")}` : ""
   };
 };
