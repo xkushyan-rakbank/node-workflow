@@ -37,7 +37,7 @@ public class EncodeResponseAdviserTest {
         String encryptedPayload = "encrypted payload";
 
         HttpHeaders headers = HeadersFactory.newHttpHeadersForSymKeyEncoding();
-        byte[] key = "sym-key".getBytes(StandardCharsets.UTF_8);
+        byte[] key = "key".getBytes(StandardCharsets.UTF_8);
 
         Mockito.when(request.getHeaders()).thenReturn(headers);
         Mockito.when(securityUtil.decryptAsymmetric(Objects.requireNonNull(headers.get("x-sym-key")).get(0))).thenReturn(key);
@@ -71,7 +71,7 @@ public class EncodeResponseAdviserTest {
         String bodyToEncrypt = "body to encrypt by sym key";
 
         HttpHeaders headers = HeadersFactory.newHttpHeadersForSymKeyEncoding();
-        byte[] key = "sym-key".getBytes(StandardCharsets.UTF_8);
+        byte[] key = "key".getBytes(StandardCharsets.UTF_8);
 
         Mockito.when(request.getHeaders()).thenReturn(headers);
         Mockito.when(securityUtil.decryptAsymmetric(Objects.requireNonNull(headers.get("x-sym-key")).get(0))).thenReturn(key);
