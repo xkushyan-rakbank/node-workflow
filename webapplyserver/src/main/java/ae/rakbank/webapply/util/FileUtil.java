@@ -20,11 +20,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class FileUtil {
 
     private static final String LOCAL = "local";
+    static final String APP_CONFIG_JSON = "appConfig.json";
 
     private final ResourceLoader resourceLoader;
 
     public JsonNode getAppConfigJSON() {
-        return loadJSONFile("appConfig.json", !EnvUtil.getEnv().equals(LOCAL));
+        return loadJSONFile(APP_CONFIG_JSON, !EnvUtil.getEnv().equals(LOCAL));
     }
 
     public JsonNode getSMEProspectJSON() {
