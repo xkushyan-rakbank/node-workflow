@@ -1,17 +1,16 @@
-import { getSelectedTypeCurrency } from "../../../src/store/selectors/SelectServices";
+import { getSelectedTypeCurrency } from "../../../src/store/selectors/selectServices";
 
 describe("selectServices selector test", () => {
   it("should get selected type currency with AED", () => {
-    const accountCurrencies = ["AED", "EUR"];
-    expect(getSelectedTypeCurrency(accountCurrencies)).toEqual({
+    expect(getSelectedTypeCurrency(["AED", "EUR"])).toEqual({
       isSelectedLocalCurrency: true,
       isSelectForeignCurrencyAndLocal: true,
       isSelectOnlyForeignCurrency: false
     });
   });
+
   it("should get selected type currency without AED", () => {
-    const accountCurrencies = ["EUR"];
-    expect(getSelectedTypeCurrency(accountCurrencies)).toEqual({
+    expect(getSelectedTypeCurrency(["EUR"])).toEqual({
       isSelectedLocalCurrency: false,
       isSelectForeignCurrencyAndLocal: false,
       isSelectOnlyForeignCurrency: true
