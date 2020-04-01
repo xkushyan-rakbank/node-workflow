@@ -8,7 +8,7 @@ import {
   getApplicationInfo
 } from "../../store/selectors/appConfig";
 import { updateProspect } from "../../store/actions/appConfig";
-import { getSelectedTypeCurrency } from "../../store/selectors/SelectServices";
+import { getSelectedTypeCurrency } from "../../store/selectors/selectServices";
 
 import { ValueAddedServicesComponent } from "./components/ValueAddedServices/ValueAddedServices";
 
