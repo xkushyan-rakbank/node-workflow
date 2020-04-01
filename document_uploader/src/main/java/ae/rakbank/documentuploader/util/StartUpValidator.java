@@ -16,7 +16,7 @@ import java.util.Map;
 
 import static ae.rakbank.documentuploader.constants.MandatoryVariables.BASE_URLS_LIST;
 import static ae.rakbank.documentuploader.constants.MandatoryVariables.OTHER_CONFIGS_LIST;
-import static ae.rakbank.documentuploader.util.FileUtil.DOC_UPLOAD_CONFIG_JSON;
+import static ae.rakbank.documentuploader.util.FileUtil.APP_CONFIG_JSON;
 
 @Slf4j
 @Component
@@ -24,7 +24,6 @@ import static ae.rakbank.documentuploader.util.FileUtil.DOC_UPLOAD_CONFIG_JSON;
 public class StartUpValidator {
 
     private final FileUtil fileUtil;
-    private final EnvironmentUtil environmentUtil;
 
     private ObjectMapper mapper;
     private String currentEnv;
@@ -34,9 +33,9 @@ public class StartUpValidator {
 
     @PostConstruct
     public void init() {
-        currentEnv = environmentUtil.getWebApplyEnv();
+        currentEnv = EnvUtil.getEnv();
         log.info("Current environment is {}", currentEnv);
-        JsonNode docUploadConfigJson = fileUtil.getDocUploadConfigJson();
+        JsonNode docUploadConfigJson = fileUtil.getAppConfigJSON();
         mapper = new ObjectMapper();
         errors = new ArrayList<>();
         validateEnvAndSource(docUploadConfigJson);
@@ -51,7 +50,7 @@ public class StartUpValidator {
             errors.add("the environment is not defined");
         }
         if (docUploadConfigJson == null || docUploadConfigJson instanceof NullNode) {
-            errors.add("the source file '" + DOC_UPLOAD_CONFIG_JSON + "' with mandatory variables is not defined");
+            errors.add("the source file '" + APP_CONFIG_JSON + "' with mandatory variables is not defined");
         }
         if (!errors.isEmpty()) {
             throw new StartUpException(String.join(", ", errors));
