@@ -3,8 +3,7 @@ package ae.rakbank.webapply.security;
 import ae.rakbank.webapply.constants.AuthConstants;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +31,7 @@ import java.util.regex.Pattern;
 
 import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
 
-@Log4j2
+@Slf4j
 @Component
 class AuthorizationFilter extends GenericFilterBean {
 
