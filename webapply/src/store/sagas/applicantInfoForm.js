@@ -19,9 +19,10 @@ export function* applicantInfoFormSaga({ payload }) {
 
     let prospectUpdated = {
       ...state.appConfig.prospect,
-      applicantInfo: { ...payload, saveType: NEXT, actionType: SAVE }
+      applicantInfo: payload
     };
-
+    prospectUpdated.applicationInfo.saveType = NEXT;
+    prospectUpdated.applicationInfo.actionType = SAVE;
     yield put(updateProspect({ prospect: prospectUpdated }));
     if (getIsRecaptchaEnable(state)) {
       prospectUpdated = {

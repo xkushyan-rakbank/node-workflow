@@ -23,20 +23,23 @@ jest.mock("../../../src/utils/loggger");
 describe("applicantInfoForm saga test", () => {
   let dispatched = [];
   const stateWithToken = {
-    appConfig: { prospect: 1, recaptchaEnable: true },
+    appConfig: { prospect: { applicationInfo: {} }, recaptchaEnable: true },
     reCaptcha: { token: "token" }
   };
   const state = {
-    appConfig: { prospect: 1 }
+    appConfig: { prospect: { applicationInfo: {} } }
   };
   const payload = {};
   const error = "some error";
   const stateHeaders = { headers: {} };
   const data = "some data";
-  const prospectUpdated = { prospect: { applicantInfo: { actionType: "save", saveType: "next" } } };
+  const prospectUpdated = {
+    prospect: { applicationInfo: { actionType: "save", saveType: "next" }, applicantInfo: {} }
+  };
   const prospectUpdatedWithToken = {
     prospect: {
-      applicantInfo: { actionType: "save", saveType: "next" },
+      applicationInfo: { actionType: "save", saveType: "next" },
+      applicantInfo: {},
       recaptchaToken: stateWithToken.reCaptcha.token
     }
   };
