@@ -8,7 +8,7 @@ import {
 } from "../actions/screenProspect";
 import { log } from "../../utils/loggger";
 
-export function* screenProspectSaga({ payload: { prospectId } }) {
+export function* screenProspectFormSaga({ payload: { prospectId } }) {
   put(screenProspectRequest(prospectId));
   try {
     const response = yield call(screening.send, prospectId);
@@ -19,6 +19,6 @@ export function* screenProspectSaga({ payload: { prospectId } }) {
   }
 }
 
-export default function* loginInfoFormSaga() {
+export default function* screenProspectSaga() {
   yield takeLatest(SCREEN_PROSPECT_SEND, screenProspectSaga);
 }

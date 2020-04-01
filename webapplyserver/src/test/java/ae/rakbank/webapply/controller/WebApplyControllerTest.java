@@ -102,7 +102,7 @@ public class WebApplyControllerTest {
 
     @Test(expected = NullPointerException.class)
     public void generateVerifyOTPGenerateWithInvalidRequest() {
-        JsonNode request = RequestFactory.newGenerateOtpInvalidRequest();
+        JsonNode request = RequestFactory.newGenerateOtpGenerationRequest();
 
         JsonNode response = objectMapper.createObjectNode().put("response", "should-be-this-one");
 
