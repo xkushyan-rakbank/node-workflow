@@ -1,6 +1,4 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
 import { gaEventsMap } from "../../src/utils/useTrackingHistory/constants";
 import routes from "../../src/routes";
