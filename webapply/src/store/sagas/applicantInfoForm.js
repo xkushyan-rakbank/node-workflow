@@ -13,16 +13,15 @@ import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/app
 import { FieldsValidationError } from "../../api/serverErrors";
 import { NEXT, SAVE } from "../../constants";
 
-function* applicantInfoFormSaga({ payload }) {
+export function* applicantInfoFormSaga({ payload }) {
   try {
     const state = yield select();
 
     let prospectUpdated = {
       ...state.appConfig.prospect,
-      applicantInfo: payload
+      applicantInfo: { ...payload, saveType: NEXT, actionType: SAVE }
     };
-    prospectUpdated.applicationInfo.saveType = NEXT;
-    prospectUpdated.applicationInfo.actionType = SAVE;
+
     yield put(updateProspect({ prospect: prospectUpdated }));
     if (getIsRecaptchaEnable(state)) {
       prospectUpdated = {
