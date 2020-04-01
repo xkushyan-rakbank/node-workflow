@@ -27,6 +27,7 @@ export function* receiveAppConfigSaga() {
     if (accountType) {
       response = yield call(config.load, accountType);
     } else {
+      /* istanbul ignore if  */
       if (process.env.NODE_ENV === "development") {
         response = yield call(config.load, accountNames.starter);
       } else {

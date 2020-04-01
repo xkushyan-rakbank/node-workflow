@@ -34,6 +34,8 @@ jest.mock("../../../src/store/selectors/appConfig");
 
 describe("appConfig sagas tests", () => {
   let dispatched = [];
+  const state = "some state";
+  const store = { dispatch: action => dispatched.push(action), getState: () => state };
 
   beforeEach(() => {
     dispatched = [];
@@ -88,11 +90,10 @@ describe("appConfig sagas tests", () => {
       getIsIslamicBanking.mockReturnValue(isIslamicBanking);
       cloneDeep.mockReturnValue(signatory);
 
-      await runSaga(
-        { dispatch: action => dispatched.push(action), getState: () => state },
-        receiveAppConfigSaga
-      );
+      await runSaga(store, receiveAppConfigSaga);
 
+      expect(getAccountType).toHaveBeenCalledWith(state);
+      expect(getIsIslamicBanking).toHaveBeenCalledWith(state);
       expect(spy.mock.calls[0]).toEqual([accountType]);
       expect(dispatched).toEqual([
         saveSignatoryModel(signatory),
@@ -100,6 +101,7 @@ describe("appConfig sagas tests", () => {
         sendProspectToAPISuccess()
       ]);
     });
+
     it("with not defined account type", async () => {
       const accountType = "";
       const newConfig = {
@@ -119,11 +121,10 @@ describe("appConfig sagas tests", () => {
       getIsIslamicBanking.mockReturnValue(isIslamicBanking);
       cloneDeep.mockReturnValue(signatory);
 
-      await runSaga(
-        { dispatch: action => dispatched.push(action), getState: () => state },
-        receiveAppConfigSaga
-      );
+      await runSaga(store, receiveAppConfigSaga);
 
+      expect(getAccountType).toHaveBeenCalledWith(state);
+      expect(getIsIslamicBanking).toHaveBeenCalledWith(state);
       expect(spy.mock.calls[0]).toEqual([null]);
       expect(dispatched).toEqual([
         saveSignatoryModel(signatory),
@@ -131,6 +132,7 @@ describe("appConfig sagas tests", () => {
         sendProspectToAPISuccess()
       ]);
     });
+
     it("call returns empty prospect", async () => {
       const accountType = "some account type";
       const response = {
@@ -140,14 +142,13 @@ describe("appConfig sagas tests", () => {
       const spy = jest.spyOn(config, "load").mockReturnValue(response);
       getAccountType.mockReturnValue(accountType);
 
-      await runSaga(
-        { dispatch: action => dispatched.push(action), getState: () => state },
-        receiveAppConfigSaga
-      );
+      await runSaga(store, receiveAppConfigSaga);
 
+      expect(getAccountType).toHaveBeenCalledWith(state);
       expect(spy.mock.calls[0]).toEqual([accountType]);
       expect(dispatched).toEqual([receiveAppConfigSuccess({}), sendProspectToAPISuccess()]);
     });
+
     it("should throw error", async () => {
       const accountType = "some account type";
       const error = "some error";
@@ -157,10 +158,7 @@ describe("appConfig sagas tests", () => {
       });
       getAccountType.mockReturnValue(accountType);
 
-      await runSaga(
-        { dispatch: action => dispatched.push(action), getState: () => state },
-        receiveAppConfigSaga
-      );
+      await runSaga(store, receiveAppConfigSaga);
 
       expect(spy.mock.calls[0]).toEqual([accountType]);
       expect(dispatched).toEqual([receiveAppConfigFail(error)]);
@@ -169,7 +167,7 @@ describe("appConfig sagas tests", () => {
 
   it("should handle updateProspectSaga", async () => {
     const prospect = { some: "field" };
-    const state = { appConfig: { prospect } };
+    const stateWithProspect = { appConfig: { prospect } };
     const action = { payload: { "prospect.another": "field" } };
     const newConfig = {
       prospect: {
@@ -182,12 +180,12 @@ describe("appConfig sagas tests", () => {
     cloneDeep.mockReturnValue(prospect);
 
     await runSaga(
-      { dispatch: action => dispatched.push(action), getState: () => state },
+      { ...store, getState: () => stateWithProspect },
       updateProspectSaga,
       action
     ).toPromise();
 
-    expect(getProspect.mock.calls[0]).toEqual([state]);
+    expect(getProspect.mock.calls[0]).toEqual([stateWithProspect]);
     expect(cloneDeep.mock.calls[0]).toEqual([prospect]);
     expect(dispatched).toEqual([setConfig(newConfig)]);
   });
@@ -199,7 +197,7 @@ describe("appConfig sagas tests", () => {
       const isSendToApi = false;
       const action = { payload: { viewId, isSendToApi } };
 
-      await runSaga({ dispatch: action => dispatched.push(action) }, updateViewIdSaga, action);
+      await runSaga(store, updateViewIdSaga, action);
 
       expect(dispatched).toEqual([updateProspect({ "prospect.applicationInfo.viewId": viewId })]);
     });
@@ -208,7 +206,7 @@ describe("appConfig sagas tests", () => {
       const isSendToApi = true;
       const action = { payload: { viewId, isSendToApi } };
 
-      await runSaga({ dispatch: action => dispatched.push(action) }, updateViewIdSaga, action);
+      await runSaga(store, updateViewIdSaga, action);
 
       expect(dispatched).toEqual([
         updateProspect({ "prospect.applicationInfo.viewId": viewId }),
