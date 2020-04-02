@@ -257,11 +257,6 @@ export const TOO_MANY_STAKEHOLDERS = {
   screeningStatus: "Not completed",
   screeningLabel: "Too many Stakeholders"
 };
-export const RISK_RATING = {
-  screeningType: "Risk Rating",
-  screeningStatus: "Not Completed",
-  screeningLabel: "Risk Rating"
-};
 
 export const COMPANY_CHECK_NAMES = [
   DEDUPE_CHECK,
