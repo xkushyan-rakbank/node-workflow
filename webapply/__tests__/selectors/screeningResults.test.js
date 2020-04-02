@@ -4,7 +4,6 @@ import {
   getProspectRiskScore
 } from "../../src/store/selectors/screeningResults";
 import {
-  DEDUPE_CHECK,
   BLACKLIST_CHECK,
   COUNTRYOFINCORPORATION_CHECK,
   ISSHAREHOLDERACOMPANY_CHECK,
@@ -12,7 +11,8 @@ import {
   NEGATIVE_LIST_CHECK,
   RAKSTARTER_ACCOUNT_CHECK,
   TOO_MANY_STAKEHOLDERS,
-  RISK_RATING
+  RISK_RATING,
+  COMPANY_CHECK_NAMES
 } from "../../src/constants";
 
 describe("screeningResults test", () => {
@@ -22,6 +22,18 @@ describe("screeningResults test", () => {
     screeningLabel: "Dedupe",
     screeningReason: "Match"
   };
+  const company_check_name = [
+    { ...dedup },
+    { ...BLACKLIST_CHECK },
+    { ...NEGATIVE_LIST_CHECK },
+    { ...COUNTRYOFINCORPORATION_CHECK },
+    { ...VIRTUAL_CURRENCY_CHECK },
+    { ...RAKSTARTER_ACCOUNT_CHECK },
+    { ...ISSHAREHOLDERACOMPANY_CHECK },
+    { ...TOO_MANY_STAKEHOLDERS },
+    { ...RISK_RATING, screeningStatus: "Completed", screeningReason: 1 }
+  ];
+
   const state = {
     searchProspect: {
       prospectOverview: {
@@ -62,29 +74,12 @@ describe("screeningResults test", () => {
         }
       })
     ).toEqual([
-      { ...DEDUPE_CHECK },
-      { ...BLACKLIST_CHECK },
-      { ...NEGATIVE_LIST_CHECK },
-      { ...COUNTRYOFINCORPORATION_CHECK },
-      { ...VIRTUAL_CURRENCY_CHECK },
-      { ...RAKSTARTER_ACCOUNT_CHECK },
-      { ...ISSHAREHOLDERACOMPANY_CHECK },
-      { ...TOO_MANY_STAKEHOLDERS },
+      ...COMPANY_CHECK_NAMES,
       { ...RISK_RATING, screeningStatus: "Incomplete", screeningReason: "Null" }
     ]);
   });
 
   it("should return company checks array", () => {
-    expect(getCompanyChecks(state)).toEqual([
-      { ...dedup },
-      { ...BLACKLIST_CHECK },
-      { ...NEGATIVE_LIST_CHECK },
-      { ...COUNTRYOFINCORPORATION_CHECK },
-      { ...VIRTUAL_CURRENCY_CHECK },
-      { ...RAKSTARTER_ACCOUNT_CHECK },
-      { ...ISSHAREHOLDERACOMPANY_CHECK },
-      { ...TOO_MANY_STAKEHOLDERS },
-      { ...RISK_RATING, screeningStatus: "Completed", screeningReason: 1 }
-    ]);
+    expect(getCompanyChecks(state)).toEqual(company_check_name);
   });
 });
