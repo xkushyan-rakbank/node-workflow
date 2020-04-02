@@ -14,12 +14,13 @@ describe("useOnClickOutside test", () => {
     };
     const event = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
 
-    const { container, rerender } = render(<TestComponent />);
+    const { container, unmount } = render(<TestComponent />);
 
     fireEvent(container.querySelector("#test"), event);
     expect(fn).not.toHaveBeenCalled();
     fireEvent(container, event);
     expect(fn).toHaveBeenCalled();
-    rerender();
+
+    unmount();
   });
 });
