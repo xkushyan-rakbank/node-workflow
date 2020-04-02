@@ -1,7 +1,7 @@
 import {
   getApplicantInfo,
   getApplicantProspectInfo
-} from "../../src/store/selectors/retrieveApplicantInfo";
+} from "../../../src/store/selectors/retrieveApplicantInfo";
 
 describe("retrieveApplicantInfo test", () => {
   const searchResult = "some search result";

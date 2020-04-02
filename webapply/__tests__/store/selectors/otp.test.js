@@ -3,7 +3,7 @@ import {
   getIsGenerating,
   isOtpGenerated,
   isOtpVerified
-} from "../../src/store/selectors/otp";
+} from "../../../src/store/selectors/otp";
 
 describe("otp test", () => {
   const isGenerated = false;

@@ -2,14 +2,14 @@ import {
   getCompanyChecks,
   getOrganizationScreeningResults,
   getProspectRiskScore
-} from "../../src/store/selectors/screeningResults";
+} from "../../../src/store/selectors/screeningResults";
 import {
   getOverviewApplicationInfo,
   getOverviewOrganizationInfo
-} from "../../src/store/selectors/searchProspect";
+} from "../../../src/store/selectors/searchProspect";
 
-jest.mock("../../src/store/selectors/searchProspect");
-jest.mock("../../src/constants", () => ({
+jest.mock("../../../src/store/selectors/searchProspect");
+jest.mock("../../../src/constants", () => ({
   COMPANY_CHECK_NAMES: [
     {
       screeningType: "Dedupe Check",
@@ -50,7 +50,7 @@ describe("screeningResults test", () => {
     expect(getProspectRiskScore(state)).toBe(1);
   });
 
-  it("should return default companyChecks when screeningResults and riskScore are not set", () => {
+  it("should get default companyChecks value when screeningResults and riskScore are not set", () => {
     getOverviewApplicationInfo.mockReturnValue({ riskScore: 0 });
     getOverviewOrganizationInfo.mockReturnValue({ screeningInfo: {} });
     expect(
@@ -71,7 +71,7 @@ describe("screeningResults test", () => {
     ]);
   });
 
-  it("should return company checks array", () => {
+  it("should return companyChecks", () => {
     getOverviewApplicationInfo.mockReturnValue({ riskScore });
     getOverviewOrganizationInfo.mockReturnValue({
       screeningInfo: { screeningResults: [screeningResults] }
