@@ -218,33 +218,28 @@ export const STEP_STATUS = {
 // Company Check list
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
-  screeningStatus: "Completed",
-  screeningLabel: "Negative List",
-  screeningReason: "No Match"
+  screeningStatus: "Not completed",
+  screeningLabel: "Negative List"
 };
 export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Virtual Currency",
-  screeningReason: "Proceed"
+  screeningLabel: "Virtual Currency"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Country of Incorporation",
-  screeningReason: "Proceed"
+  screeningLabel: "Country of Incorporation"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAK-Starter Account Validation",
   screeningStatus: "Not completed",
-  screeningLabel: "RAK-Starter Account Validation",
-  screeningReason: "Proceed"
+  screeningLabel: "RAK-Starter Account Validation"
 };
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Dedupe",
-  screeningReason: "No Match"
+  screeningLabel: "Dedupe"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "Company is a Stakeholder Check",
@@ -255,20 +250,12 @@ export const ISSHAREHOLDERACOMPANY_CHECK = {
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Blacklist",
-  screeningReason: "No Match"
+  screeningLabel: "Blacklist"
 };
 export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Too many Stakeholders",
-  screeningReason: "Proceed"
-};
-export const RISK_RATING = {
-  screeningType: "Risk Rating",
-  screeningStatus: "Completed",
-  screeningLabel: "Risk Rating",
-  screeningReason: "Proceed"
+  screeningLabel: "Too many Stakeholders"
 };
 
 export const COMPANY_CHECK_NAMES = [
