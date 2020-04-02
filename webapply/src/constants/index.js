@@ -289,6 +289,8 @@ export const RAKSTARTER_ISLAMIC_ROUTE_PARAM = "rakstarter-islamic";
 export const CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM = "current-account-islamic";
 export const ELITE_ISLAMIC_ROUTE_PARAM = "business-elite-islamic";
 
+export const AUTO_SAVE_INTERVAL = 40000;
+
 export const accountTypeURIs = {
   [RAKSTARTER_ROUTE_PARAM]: {
     accountType: accountNames.starter,
