@@ -218,7 +218,7 @@ export const STEP_STATUS = {
 // Company Check list
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
-  screeningStatus: "Not Completed",
+  screeningStatus: "Not completed",
   screeningLabel: "Negative List"
 };
 export const VIRTUAL_CURRENCY_CHECK = {
