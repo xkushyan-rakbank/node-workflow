@@ -18,8 +18,8 @@ export const getCompanyChecks = createSelector(
     })),
     {
       ...RISK_RATING,
-      screeningStatus: riskScore && parseFloat(riskScore) > 0 ? "Completed" : "Incomplete",
-      screeningReason: riskScore || "Null"
+      screeningStatus: riskScore,
+      screeningReason: riskScore
     }
   ]
 );
