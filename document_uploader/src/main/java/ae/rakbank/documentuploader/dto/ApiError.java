@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 
@@ -19,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class ApiError implements ApiErrorInterface{
 
     public static final String TIMESTAMP_PATTERN = "yyyy-MM-dd HH:mm:ss,SSS";
@@ -32,10 +30,6 @@ public class ApiError implements ApiErrorInterface{
     private JsonNode errors;
     private String exceptionClassName;
     private StackTraceElement[] stackTrace;
-
-    private ApiError() {
-        initTimestamp();
-    }
 
     public ApiError(HttpStatus status) {
         this();

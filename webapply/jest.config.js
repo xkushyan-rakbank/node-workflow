@@ -10,11 +10,13 @@ module.exports = {
 
   collectCoverageFrom: [
     "src/**/*.js",
+    "!src/*.js",
     "!src/**/index.js",
     "!src/**/constants.js",
     "!**/constants/**",
     "!**/components/**",
-    "!src/stories/**"
+    "!src/stories/**",
+    "!src/containers/WebChat/**"
   ],
 
   coverageDirectory: "coverage",
