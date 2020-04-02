@@ -4,66 +4,55 @@ import {
   getProspectRiskScore
 } from "../../src/store/selectors/screeningResults";
 import {
-  BLACKLIST_CHECK,
-  COUNTRYOFINCORPORATION_CHECK,
-  ISSHAREHOLDERACOMPANY_CHECK,
-  VIRTUAL_CURRENCY_CHECK,
-  NEGATIVE_LIST_CHECK,
-  RAKSTARTER_ACCOUNT_CHECK,
-  TOO_MANY_STAKEHOLDERS,
-  RISK_RATING,
-  COMPANY_CHECK_NAMES
-} from "../../src/constants";
+  getOverviewApplicationInfo,
+  getOverviewOrganizationInfo
+} from "../../src/store/selectors/searchProspect";
+
+jest.mock("../../src/store/selectors/searchProspect");
+jest.mock("../../src/constants", () => ({
+  COMPANY_CHECK_NAMES: [
+    {
+      screeningType: "Dedupe Check",
+      screeningStatus: "Not completed"
+    }
+  ]
+}));
 
 describe("screeningResults test", () => {
-  const dedup = {
+  const screeningResults = {
     screeningType: "Dedupe Check",
-    screeningStatus: "Completed",
-    screeningLabel: "Dedupe",
-    screeningReason: "Match"
+    screeningStatus: "Completed"
   };
-  const company_check_name = [
-    { ...dedup },
-    { ...BLACKLIST_CHECK },
-    { ...NEGATIVE_LIST_CHECK },
-    { ...COUNTRYOFINCORPORATION_CHECK },
-    { ...VIRTUAL_CURRENCY_CHECK },
-    { ...RAKSTARTER_ACCOUNT_CHECK },
-    { ...ISSHAREHOLDERACOMPANY_CHECK },
-    { ...TOO_MANY_STAKEHOLDERS },
-    { ...RISK_RATING, screeningStatus: "Completed", screeningReason: 1 }
-  ];
-
+  const riskScore = 1;
   const state = {
     searchProspect: {
       prospectOverview: {
-        applicationInfo: { riskScore: 1 },
-        organizationInfo: {
-          screeningInfo: {
-            screeningResults: [dedup]
-          }
-        }
+        applicationInfo: { riskScore },
+        organizationInfo: { screeningInfo: { screeningResults: [screeningResults] } }
       }
     }
   };
 
   it("should return screeningResults value", () => {
-    expect(getOrganizationScreeningResults(state)).toEqual([dedup]);
+    getOverviewOrganizationInfo.mockReturnValue({
+      screeningInfo: { screeningResults: [screeningResults] }
+    });
+    expect(getOrganizationScreeningResults(state)).toEqual([screeningResults]);
   });
 
   it("should return empty array when screeningResults is not set", () => {
-    expect(
-      getOrganizationScreeningResults({
-        searchProspect: { prospectOverview: { organizationInfo: { screeningInfo: {} } } }
-      })
-    ).toEqual([]);
+    getOverviewOrganizationInfo.mockReturnValue({ screeningInfo: {} });
+    expect(getOrganizationScreeningResults(state)).toEqual([]);
   });
 
   it("should return riskScore value", () => {
+    getOverviewApplicationInfo.mockReturnValue({ riskScore });
     expect(getProspectRiskScore(state)).toBe(1);
   });
 
-  it("should return default company checks array when screeningResults and riskScore are not set", () => {
+  it("should return default companyChecks when screeningResults and riskScore are not set", () => {
+    getOverviewApplicationInfo.mockReturnValue({ riskScore: 0 });
+    getOverviewOrganizationInfo.mockReturnValue({ screeningInfo: {} });
     expect(
       getCompanyChecks({
         searchProspect: {
@@ -74,12 +63,23 @@ describe("screeningResults test", () => {
         }
       })
     ).toEqual([
-      ...COMPANY_CHECK_NAMES,
-      { ...RISK_RATING, screeningStatus: "Incomplete", screeningReason: "Null" }
+      { screeningType: "Dedupe Check", screeningStatus: "Not completed" },
+      {
+        screeningReason: "Null",
+        screeningStatus: "Incomplete"
+      }
     ]);
   });
 
   it("should return company checks array", () => {
-    expect(getCompanyChecks(state)).toEqual(company_check_name);
+    getOverviewApplicationInfo.mockReturnValue({ riskScore });
+    getOverviewOrganizationInfo.mockReturnValue({
+      screeningInfo: { screeningResults: [screeningResults] }
+    });
+
+    expect(getCompanyChecks(state)).toEqual([
+      { ...screeningResults },
+      { screeningReason: 1, screeningStatus: "Completed" }
+    ]);
   });
 });
