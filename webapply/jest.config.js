@@ -12,6 +12,7 @@ module.exports = {
     "src/**/*.js",
     "!src/*.js",
     "!src/**/index.js",
+    "!src/**/styled.js",
     "!src/**/constants.js",
     "!**/constants/**",
     "!**/components/**",
