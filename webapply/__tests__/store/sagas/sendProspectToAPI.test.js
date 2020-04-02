@@ -41,6 +41,11 @@ import {
   getProspectId,
   getScreeningError
 } from "../../../src/store/selectors/appConfig";
+import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
+import { updateAccountNumbers } from "../../../src/store/actions/accountNumbers";
+import { getCompletedSteps } from "../../../src/store/selectors/completedSteps";
+import { setErrorOccurredWhilePerforming } from "../../../src/store/actions/searchProspect";
+import { updateProspect } from "../../../src/store/actions/appConfig";
 import {
   AUTO,
   AUTO_SAVE_INTERVAL,
@@ -52,13 +57,8 @@ import {
   VIEW_IDS
 } from "../../../src/constants";
 import { getErrorScreensIcons } from "../../../src/utils/getErrorScreenIcons/getErrorScreenIcons";
-import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
-import { prospect } from "../../../src/api/apiClient";
-import { updateAccountNumbers } from "../../../src/store/actions/accountNumbers";
-import { getCompletedSteps } from "../../../src/store/selectors/completedSteps";
 import { ErrorOccurredWhilePerforming, FieldsValidationError } from "../../../src/api/serverErrors";
-import { setErrorOccurredWhilePerforming } from "../../../src/store/actions/searchProspect";
-import { updateProspect } from "../../../src/store/actions/appConfig";
+import { prospect } from "../../../src/api/apiClient";
 
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/store/selectors/completedSteps");
