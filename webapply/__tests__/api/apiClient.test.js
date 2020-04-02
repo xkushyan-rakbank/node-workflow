@@ -16,17 +16,15 @@ import {
 import { getQueryString, buildURI } from "../../src/utils/buildURI";
 
 jest.mock("../../src/utils/buildURI");
-jest.mock("../../src/api/axiosConfig", () => {
-  return {
-    __esModule: true,
-    default: {
-      request: jest.fn(request => request)
-    },
-    uploadClient: {
-      request: jest.fn(request => request)
-    }
-  };
-});
+jest.mock("../../src/api/axiosConfig", () => ({
+  __esModule: true,
+  default: {
+    request: jest.fn(request => request)
+  },
+  uploadClient: {
+    request: jest.fn(request => request)
+  }
+}));
 
 describe("api client test", () => {
   const url = "<some url>";
