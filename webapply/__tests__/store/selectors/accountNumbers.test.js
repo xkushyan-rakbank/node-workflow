@@ -1,4 +1,4 @@
-import { getAccountNumbers } from "../../src/store/selectors/appConfig";
+import { getAccountNumbers } from "../../../src/store/selectors/appConfig";
 
 describe("accountNumbers selector test", () => {
   const accountNumbers = "some account numbers";

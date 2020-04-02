@@ -2,7 +2,7 @@ import {
   getSendProspectToAPIInfo,
   getIsSendingProspect,
   getScreeningError
-} from "../../src/store/selectors/appConfig";
+} from "../../../src/store/selectors/appConfig";
 
 describe("sendProspectToAPI selector test", () => {
   const loading = true;

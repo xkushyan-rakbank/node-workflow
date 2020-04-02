@@ -7,7 +7,7 @@ import {
   getProspectDocuments,
   getUploadErrors,
   checkIfRequiredDocsUploaded
-} from "../../src/store/selectors/getProspectDocuments";
+} from "../../../src/store/selectors/getProspectDocuments";
 
 describe("getProspectDocuments selector test", () => {
   const progress = "some progress";

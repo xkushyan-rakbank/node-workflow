@@ -3,8 +3,8 @@ import {
   getIsAnyStakeholderStepsCompleted,
   getIsStakeholderStepsCompleted,
   getStakeholderSteps
-} from "../../src/store/selectors/completedSteps";
-import { getCompanySteps, getSignatoriesSteps } from "../../src/store/selectors/appConfig";
+} from "../../../src/store/selectors/completedSteps";
+import { getCompanySteps, getSignatoriesSteps } from "../../../src/store/selectors/appConfig";
 
 describe("completedSteps selector test", () => {
   const companyStep = { flowId: "companyInfo", step: 1, status: "COMPLETED" };

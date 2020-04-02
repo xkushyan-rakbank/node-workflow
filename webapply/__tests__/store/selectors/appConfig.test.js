@@ -19,7 +19,7 @@ import {
   getAuthToken,
   getIsRecaptchaEnable,
   getAuthorizationHeader
-} from "../../src/store/selectors/appConfig";
+} from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
   const datalist = "some datalist";
