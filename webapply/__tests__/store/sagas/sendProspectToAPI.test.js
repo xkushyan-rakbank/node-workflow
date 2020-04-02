@@ -47,6 +47,7 @@ import { getCompletedSteps } from "../../../src/store/selectors/completedSteps";
 import { setErrorOccurredWhilePerforming } from "../../../src/store/actions/searchProspect";
 import { updateProspect } from "../../../src/store/actions/appConfig";
 import {
+  APP_STOP_SCREEN_RESULT,
   AUTO,
   AUTO_SAVE_INTERVAL,
   CONTINUE,
@@ -88,16 +89,42 @@ describe("sendProspectToAPI sagas tests", () => {
     );
   });
 
-  it("should handle watchRequest", () => {
-    const chan = channel();
-    const action = { payload: { saveType: CONTINUE } };
-    const actions = [action];
-    const gen = watchRequest();
+  describe("should handle watchRequest", () => {
+    it("with actions", () => {
+      const chan = channel();
+      const action = { payload: { saveType: CONTINUE } };
+      const actions = [action];
+      const gen = watchRequest();
 
-    expect(gen.next().value).toEqual(actionChannel(SEND_PROSPECT_REQUEST));
-    expect(gen.next(chan).value).toEqual(flush(chan));
-    expect(gen.next(actions).value).toEqual(call(sendProspectToAPI, action));
-    expect(gen.next().value).toEqual(delay(1000));
+      expect(gen.next().value).toEqual(actionChannel(SEND_PROSPECT_REQUEST));
+      expect(gen.next(chan).value).toEqual(flush(chan));
+      expect(gen.next(actions).value).toEqual(call(sendProspectToAPI, action));
+      expect(gen.next().value).toEqual(delay(1000));
+    });
+
+    it("without actions", () => {
+      const chan = channel();
+      const actions = [];
+      const gen = watchRequest();
+
+      expect(gen.next().value).toEqual(actionChannel(SEND_PROSPECT_REQUEST));
+      expect(gen.next(chan).value).toEqual(flush(chan));
+      expect(gen.next(actions).value).toEqual(delay(1000));
+    });
+
+    it("with other saveType", () => {
+      const saveType = "some save type";
+      const chan = channel();
+      const action = { payload: { saveType } };
+
+      const actions = [action];
+      const gen = watchRequest();
+
+      expect(gen.next().value).toEqual(actionChannel(SEND_PROSPECT_REQUEST));
+      expect(gen.next(chan).value).toEqual(flush(chan));
+      expect(gen.next(actions).value).toEqual(call(sendProspectToAPI, action));
+      expect(gen.next().value).toEqual(delay(1000));
+    });
   });
 
   describe("should handle setScreeningResults", () => {
@@ -302,6 +329,50 @@ describe("sendProspectToAPI sagas tests", () => {
       expect(dispatched).toEqual([
         updateAccountNumbers(response.data.accountInfo),
         sendProspectToAPISuccess(false)
+      ]);
+    });
+
+    it("without accountInfo", async () => {
+      const response = { data: {} };
+      const action = { payload: { newProspect, saveType, actionType, step } };
+
+      const expectedProspectWithChangedStep = {
+        accountInfo: [{ accountNo }],
+        applicationInfo: { saveType, actionType },
+        freeFieldsInfo: {
+          freeField5: JSON.stringify({
+            completedSteps: [{ flowId, step: activeStep, status: STEP_STATUS.COMPLETED }]
+          })
+        }
+      };
+
+      const spy = jest.spyOn(prospect, "update").mockImplementation(() => response);
+
+      await runSaga(store, sendProspectToAPI, action);
+      expect(spy.mock.calls[0]).toEqual([prospectId, expectedProspectWithChangedStep, headers]);
+      expect(dispatched).toEqual([sendProspectToAPISuccess(false)]);
+    });
+
+    it("with preScreening error", async () => {
+      const responseWithPrescreeningError = {
+        data: {
+          accountInfo: [{ accountNo }],
+          preScreening: { statusOverAll: APP_STOP_SCREEN_RESULT, screeningResults: [] }
+        }
+      };
+      const action = { payload: { newProspect, saveType, actionType } };
+
+      const spy = jest
+        .spyOn(prospect, "update")
+        .mockImplementation(() => responseWithPrescreeningError);
+
+      await runSaga(store, sendProspectToAPI, action);
+
+      expect(spy.mock.calls[0]).toEqual([prospectId, expectedProspect, headers]);
+      expect(dispatched).toEqual([
+        updateAccountNumbers(response.data.accountInfo),
+        setScreeningError(screeningStatusDefault),
+        sendProspectToAPISuccess(true)
       ]);
     });
 
