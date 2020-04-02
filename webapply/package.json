@@ -98,6 +98,7 @@
     "@storybook/addon-links": "^5.2.6",
     "@storybook/addons": "^5.2.6",
     "@storybook/react": "^5.2.6",
+    "@testing-library/react": "^10.0.2",
     "@testing-library/react-hooks": "^3.2.1",
     "browserslist": "^4.11.1",
     "enzyme": "^3.8.0",

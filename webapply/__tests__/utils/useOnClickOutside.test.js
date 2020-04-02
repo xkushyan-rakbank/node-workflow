@@ -1,22 +1,9 @@
 import React, { useRef } from "react";
-import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render, fireEvent } from "@testing-library/react";
 
 import { useOnClickOutside } from "../../src/utils/useOnClickOutside";
 
 describe("useOnClickOutside test", () => {
-  let container;
-
-  beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(container);
-    container = null;
-  });
-
   it("should handle callback on click outside", () => {
     let fn = jest.fn();
     const TestComponent = () => {
@@ -25,19 +12,14 @@ describe("useOnClickOutside test", () => {
 
       return <div id="test" ref={ref} />;
     };
+    const event = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
 
-    act(() => {
-      ReactDOM.render(<TestComponent />, container);
-    });
-    act(() => {
-      container
-        .querySelector("div#test")
-        .dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
-    });
+    const { container, rerender } = render(<TestComponent />);
+
+    fireEvent(container.querySelector("#test"), event);
     expect(fn).not.toHaveBeenCalled();
-    act(() => {
-      container.dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
-    });
+    fireEvent(container, event);
     expect(fn).toHaveBeenCalled();
+    rerender();
   });
 });
