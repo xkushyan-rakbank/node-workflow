@@ -12,11 +12,7 @@ import StatusLoader from "../../components/StatusLoader";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import {
-  getApplicantInfo,
-  getIsSendingProspect,
-  getCompanyName
-} from "../../store/selectors/appConfig";
+import { getApplicantInfo, getCompanyName } from "../../store/selectors/appConfig";
 import { CONTINUE, NEXT, formStepper, STEP_STATUS, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import routes from "./../../routes";
@@ -25,6 +21,7 @@ import { companyInfoSteps, STEP_1, COMPANY_INFO_PAGE_ID } from "./constants";
 import { useStyles } from "./styled";
 
 import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,

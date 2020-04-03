@@ -8,7 +8,7 @@ import { SignatorySummaryCard } from "./components/SignatorySummaryCard";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { ContinueButton } from "../../components/Buttons/ContinueButton";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { getSignatoriesSteps, getCompanySteps } from "../../store/selectors/appConfig";
+import { getCompanySteps, getSignatoriesSteps } from "../../store/selectors/completedSteps";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper, NEXT } from "../../constants";

@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
 
-import { getSignatories, getProspectId } from "../../store/selectors/appConfig";
 import {
-  getProspectDocuments,
-  getisLoadingDocuments,
-  getIsRequiredDocsUploaded
-} from "../../store/selectors/getProspectDocuments";
+  getSignatories,
+  getProspectId,
+  getIsRequiredDocsUploaded,
+  getDocuments
+} from "../../store/selectors/appConfig";
+import { getisLoadingDocuments } from "../../store/selectors/getProspectDocuments";
 import { UploadDocument } from "./UploadDocument";
 import {
   retrieveDocDetails,
@@ -21,7 +22,7 @@ import {
 } from "../../store/selectors/searchProspect";
 
 const mapStateToProps = state => ({
-  documents: getProspectDocuments(state),
+  documents: getDocuments(state),
   companyName: getOrganizationInfo(state).companyName,
   signatories: getSignatories(state),
   prospectID: getProspectId(state),

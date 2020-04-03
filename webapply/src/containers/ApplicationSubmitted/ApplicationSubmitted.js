@@ -7,12 +7,13 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
-import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
+import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { formStepper } from "../../constants";
 
 import { useStyles } from "./styled";
 
 import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
+import { getAccountNumbers } from "../../store/selectors/accountNumbers";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();

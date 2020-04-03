@@ -15,13 +15,12 @@ import {
   deleteStakeholder
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { getIsSendingProspect } from "../../store/selectors/appConfig";
 import {
   stakeholdersSelector,
   checkIsHasSignatories,
   percentageSelector,
   getStakeholdersIds
-} from "../../store/selectors/stakeholder";
+} from "../../store/selectors/stakeholders";
 import {
   getIsAnyStakeholderStepsCompleted,
   getIsStakeholderStepsCompleted
@@ -31,6 +30,7 @@ import routes from "../../routes";
 import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
 
 import { useStyles } from "./styled";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 
 const CompanyStakeholdersComponent = ({
   deleteStakeholder: deleteHandler,

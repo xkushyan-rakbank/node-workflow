@@ -9,38 +9,28 @@ export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
 export const GET_PROSPECT_DOCUMENTS_FAIL = "GET_PROSPECT_DOCUMENTS_FAIL";
 export const DOWNLOAD_DOCUMENT_FILE = "DOWNLOAD_DOCUMENT_FILE";
 
-export const retrieveDocDetails = () => {
-  return { type: RETRIEVE_DOC_UPLOADER };
-};
+export const retrieveDocDetails = () => ({ type: RETRIEVE_DOC_UPLOADER });
 
-export const docUpload = payload => {
-  return { type: DOC_UPLOADER, payload };
-};
+export const docUpload = payload => ({ type: DOC_UPLOADER, payload });
 
-export const cancelDocUpload = documentKey => {
-  return { type: CANCEL_DOC_UPLOAD, payload: { documentKey } };
-};
+export const cancelDocUpload = documentKey => ({
+  type: CANCEL_DOC_UPLOAD,
+  payload: { documentKey }
+});
 
-export const uploadFilesProgress = progress => {
-  return { type: UPLOAD_FILES_PROGRESS, progress };
-};
+export const uploadFilesProgress = progress => ({ type: UPLOAD_FILES_PROGRESS, progress });
 
-export const uploadFilesFail = error => {
-  return { type: UPLOAD_FILES_FAIL, error };
-};
+export const uploadFilesFail = error => ({ type: UPLOAD_FILES_FAIL, error });
 
 export const getProspectDocumentsSuccess = () => ({ type: GET_PROSPECT_DOCUMENTS_SUCCESS });
 
 export const getProspectDocumentsFail = () => ({ type: GET_PROSPECT_DOCUMENTS_FAIL });
 
-export const downloadDocumentFile = (prospectId, documentKey, fileName) => {
-  return { type: DOWNLOAD_DOCUMENT_FILE, payload: { prospectId, documentKey, fileName } };
-};
+export const downloadDocumentFile = (prospectId, documentKey, fileName) => ({
+  type: DOWNLOAD_DOCUMENT_FILE,
+  payload: { prospectId, documentKey, fileName }
+});
 
-export const addOtherDocument = document => {
-  return { type: ADD_OTHER_DOCUMENT, payload: document };
-};
+export const addOtherDocument = document => ({ type: ADD_OTHER_DOCUMENT, payload: document });
 
-export const deleteOtherDocument = index => {
-  return { type: DELETE_OTHER_DOCUMENT, payload: index };
-};
+export const deleteOtherDocument = index => ({ type: DELETE_OTHER_DOCUMENT, payload: index });

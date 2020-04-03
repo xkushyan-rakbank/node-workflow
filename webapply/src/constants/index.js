@@ -278,6 +278,8 @@ export const ELITE_ISLAMIC_ROUTE_PARAM = "business-elite-islamic";
 
 export const AUTO_SAVE_INTERVAL = 40000;
 
+export const UPLOADED = "Uploaded";
+
 export const accountTypeURIs = {
   [RAKSTARTER_ROUTE_PARAM]: {
     accountType: accountNames.starter,

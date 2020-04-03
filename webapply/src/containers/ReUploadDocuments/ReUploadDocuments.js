@@ -15,13 +15,10 @@ import {
   retrieveDocDetails
 } from "../../store/actions/getProspectDocuments";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import {
-  getOtherDocuments,
-  getProgress,
-  getUploadErrors
-} from "../../store/selectors/getProspectDocuments";
+import { getProgress, getUploadErrors } from "../../store/selectors/getProspectDocuments";
+import { getOtherDocuments } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { NEXT, OTHER_DOCUMENTS, SUBMIT } from "../../constants";
+import { NEXT, OTHER_DOCUMENTS, SUBMIT, UPLOADED } from "../../constants";
 import routes from "../../routes";
 
 import { MAX_OTHER_DOCUMENTS } from "./constants";
@@ -66,7 +63,7 @@ export const ReUploadDocuments = () => {
       data.append("file", file);
 
       const successfulUploadProps = {
-        uploadStatus: "Uploaded",
+        uploadStatus: UPLOADED,
         submittedDt: file.lastModifiedDate,
         fileFormat: file.type
       };
@@ -91,7 +88,7 @@ export const ReUploadDocuments = () => {
   };
 
   const isSubmitButtonActive =
-    otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === "Uploaded");
+    otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === UPLOADED);
 
   const submitForm = useCallback(() => {
     dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(
