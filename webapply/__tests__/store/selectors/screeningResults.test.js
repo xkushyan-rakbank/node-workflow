@@ -57,7 +57,7 @@ describe("screeningResults test", () => {
       getCompanyChecks({
         searchProspect: {
           prospectOverview: {
-            applicationInfo: {},
+            applicationInfo: {riskScore: 0},
             organizationInfo: { screeningInfo: {} }
           }
         }
@@ -65,9 +65,11 @@ describe("screeningResults test", () => {
     ).toEqual([
       { screeningType: "Dedupe Check", screeningStatus: "Not completed" },
       {
-        screeningReason: "Null",
-        screeningStatus: "Incomplete"
-      }
+        screeningLabel: "Risk Rating",
+        screeningReason: 0,
+        screeningStatus: "Not completed",
+        screeningType: "Risk Rating"
+  }
     ]);
   });
 
@@ -79,7 +81,12 @@ describe("screeningResults test", () => {
 
     expect(getCompanyChecks(state)).toEqual([
       { ...screeningResults },
-      { screeningReason: 1, screeningStatus: "Completed" }
+      {
+        screeningLabel: "Risk Rating",
+        screeningReason: 1,
+        screeningStatus: "Completed",
+        screeningType: "Risk Rating",
+      }
     ]);
   });
 });
