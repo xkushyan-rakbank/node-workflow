@@ -15,13 +15,13 @@ import {
   deleteStakeholder
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { getIsSendingProspect } from "../../store/selectors/appConfig";
 import {
   stakeholdersSelector,
   checkIsHasSignatories,
   percentageSelector,
   getStakeholdersIds
-} from "../../store/selectors/stakeholder";
+} from "../../store/selectors/stakeholders";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 import {
   getIsAnyStakeholderStepsCompleted,
   getIsStakeholderStepsCompleted

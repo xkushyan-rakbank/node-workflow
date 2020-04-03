@@ -10,7 +10,7 @@ import searchProspect from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
-import uploadDocuments from "./getProspectDocuments";
+import uploadDocuments from "./uploadDocuments";
 import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
 

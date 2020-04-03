@@ -18,7 +18,8 @@ import {
   getUrlsReadMore,
   getAuthToken,
   getIsRecaptchaEnable,
-  getAuthorizationHeader
+  getAuthorizationHeader,
+  getAppConfig
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
@@ -54,19 +55,26 @@ describe("appConfig selector test", () => {
   };
   const authorizationToken = "some secret string";
   const recaptchaEnable = true;
-  const state = {
-    appConfig: {
-      datalist,
-      prospect,
-      signatoryModel,
-      signatoryInfo,
-      reCaptchaSiteKey,
-      servicePricingGuideUrl,
-      ...readMoreUrls,
-      authorizationToken,
-      recaptchaEnable
-    }
+  const appConfig = {
+    datalist,
+    prospect,
+    signatoryModel,
+    signatoryInfo,
+    reCaptchaSiteKey,
+    servicePricingGuideUrl,
+    ...readMoreUrls,
+    authorizationToken,
+    recaptchaEnable
   };
+  const state = { appConfig };
+
+  it("should return appConfig", () => {
+    expect(getAppConfig(state)).toBe(appConfig);
+  });
+
+  it("should return empty object when appConfig is not set", () => {
+    expect(getAppConfig({})).toEqual({});
+  });
 
   it("should return datalist", () => {
     expect(getDatalist(state)).toBe(datalist);

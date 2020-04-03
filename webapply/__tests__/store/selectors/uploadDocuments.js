@@ -1,13 +1,15 @@
 import {
   getUploadDocuments,
-  getisLoadingDocuments,
+  getIsLoadingDocuments,
+  getProgress,
+  getUploadErrors
+} from "../../../src/store/selectors/uploadDocuments";
+import {
+  checkIfRequiredDocsUploaded,
   getIsRequiredDocsUploaded,
   getOtherDocuments,
-  getProgress,
-  getProspectDocuments,
-  getUploadErrors,
-  checkIfRequiredDocsUploaded
-} from "../../../src/store/selectors/getProspectDocuments";
+  getDocuments
+} from "../../../src/store/selectors/appConfig";
 
 describe("getProspectDocuments selector test", () => {
   const progress = "some progress";
@@ -45,11 +47,11 @@ describe("getProspectDocuments selector test", () => {
   });
 
   it("should return empty object when documents is not set", () => {
-    expect(getProspectDocuments({ appConfig: { prospect: {} } })).toEqual({});
+    expect(getDocuments({ appConfig: { prospect: {} } })).toEqual({});
   });
 
   it("should return prospect documents", () => {
-    expect(getProspectDocuments(state)).toEqual(documents);
+    expect(getDocuments(state)).toEqual(documents);
   });
 
   it("should return empty array when otherDocuments is not set", () => {
@@ -61,7 +63,7 @@ describe("getProspectDocuments selector test", () => {
   });
 
   it("should return are documents loading", () => {
-    expect(getisLoadingDocuments(state)).toBe(true);
+    expect(getIsLoadingDocuments(state)).toBe(true);
   });
 
   it("should return are all required docs have upload status Uploaded", () => {

@@ -2,13 +2,14 @@ import { createSelector } from "reselect";
 import get from "lodash/get";
 import { getSignatories } from "./appConfig";
 
-export const getStakeholders = state => get(state, "appConfig.prospect.signatoryInfo", []);
 export const getStakeholdersState = state => state.stakeholders;
+
 export const getEditableStakeholder = state => getStakeholdersState(state).editableStakeholder;
+
 export const getStakeholdersIds = state => getStakeholdersState(state).stakeholdersIds;
 
 export const stakeholdersSelector = createSelector(
-  getStakeholders,
+  getSignatories,
   getStakeholdersIds,
   (stakeholders, stakeholdersIds) =>
     stakeholders.map((item, index) => ({
@@ -18,7 +19,7 @@ export const stakeholdersSelector = createSelector(
 );
 
 export const percentageSelector = state => {
-  const stakeholdersList = getStakeholders(state);
+  const stakeholdersList = getSignatories(state);
   return stakeholdersList.reduce(
     (previousValue, currentValue) =>
       previousValue + +currentValue.kycDetails.shareHoldingPercentage,

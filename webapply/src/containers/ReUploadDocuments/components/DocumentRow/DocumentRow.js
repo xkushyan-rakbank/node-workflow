@@ -1,5 +1,5 @@
 import React from "react";
-import { BYTES_IN_MEGABYTE } from "../../../../constants";
+import { BYTES_IN_MEGABYTE, UPLOADED } from "../../../../constants";
 import { useStyles } from "./styled";
 
 import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
@@ -14,7 +14,7 @@ export const DocumentRow = ({
   documentProgress,
   removeDocument
 }) => {
-  const isUploaded = uploadStatus === "Uploaded";
+  const isUploaded = uploadStatus === UPLOADED;
   const classes = useStyles({ isUploaded });
   const isUploading = typeof documentProgress === "number" && !isUploaded;
 

@@ -29,9 +29,10 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking,
-  getScreeningError
+  getIsIslamicBanking
 } from "../selectors/appConfig";
+import { getCompletedSteps } from "../selectors/completedSteps";
+import { getScreeningError } from "../selectors/sendProspectToAPI";
 import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
@@ -49,7 +50,6 @@ import {
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
-import { getCompletedSteps } from "../selectors/completedSteps";
 
 export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);

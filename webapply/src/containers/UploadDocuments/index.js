@@ -1,17 +1,18 @@
 import { connect } from "react-redux";
 
-import { getSignatories, getProspectId } from "../../store/selectors/appConfig";
 import {
-  getProspectDocuments,
-  getisLoadingDocuments,
-  getIsRequiredDocsUploaded
-} from "../../store/selectors/getProspectDocuments";
+  getSignatories,
+  getProspectId,
+  getIsRequiredDocsUploaded,
+  getDocuments
+} from "../../store/selectors/appConfig";
+import { getIsLoadingDocuments } from "../../store/selectors/uploadDocuments";
 import { UploadDocument } from "./UploadDocument";
 import {
   retrieveDocDetails,
   docUpload,
   cancelDocUpload
-} from "../../store/actions/getProspectDocuments";
+} from "../../store/actions/uploadDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
@@ -21,14 +22,14 @@ import {
 } from "../../store/selectors/searchProspect";
 
 const mapStateToProps = state => ({
-  documents: getProspectDocuments(state),
+  documents: getDocuments(state),
   companyName: getOrganizationInfo(state).companyName,
   signatories: getSignatories(state),
   prospectID: getProspectId(state),
   isRequiredDocsUploaded: getIsRequiredDocsUploaded(state),
   progress: state.uploadDocuments.progress,
   uploadErrorMessage: state.uploadDocuments.uploadErrors,
-  isLoadingDocuments: getisLoadingDocuments(state),
+  isLoadingDocuments: getIsLoadingDocuments(state),
   prospectStatusInfo: getProspectStatus(state),
   isApplyEditApplication: getIsEditableStatusSearchInfo(state)
 });
