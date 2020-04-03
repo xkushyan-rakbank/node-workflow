@@ -13,7 +13,7 @@ import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfi
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 
-function* retrieveApplicantInfoSaga({ payload }) {
+export function* retrieveApplicantInfoSaga({ payload }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     const inputParam = {
@@ -33,7 +33,7 @@ function* retrieveApplicantInfoSaga({ payload }) {
   }
 }
 
-function* getProspectIdInfo({ payload }) {
+export function* getProspectIdInfo({ payload }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
@@ -76,6 +76,8 @@ function* getProspectIdInfo({ payload }) {
 }
 
 export default function* retrieveApplicantSaga() {
-  yield all([takeLatest(RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
-  yield all([takeLatest(GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)]);
+  yield all([
+    takeLatest(RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga),
+    takeLatest(GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)
+  ]);
 }

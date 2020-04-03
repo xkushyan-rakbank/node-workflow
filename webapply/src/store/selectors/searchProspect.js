@@ -14,6 +14,14 @@ export const getOverviewDocuments = state => getProspectOverview(state).document
 
 export const getOverviewSignatories = state => getProspectOverview(state).signatoryInfo || [];
 
+export const getFilledOverviewSignatories = createSelector(
+  getOverviewSignatories,
+  signatories =>
+    signatories.filter(
+      signatory => (signatory.firstName && signatory.lastName) || signatory.fullName
+    )
+);
+
 export const getOverviewOrganizationInfo = state =>
   getProspectOverview(state).organizationInfo || [];
 
