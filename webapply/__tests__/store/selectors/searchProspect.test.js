@@ -1,5 +1,8 @@
+import set from "lodash/set";
+
 import {
   getOverviewSignatories,
+  getFilledOverviewSignatories,
   getOverviewApplicationInfo,
   getErrorCode,
   getIsEditableStatusSearchInfo,
@@ -72,6 +75,18 @@ describe("searchProspect test", () => {
 
   it("should return signatoryInfo", () => {
     expect(getOverviewSignatories(state)).toBe(signatoryInfo);
+  });
+
+  it("should return value of signatoryInfo filter by filled", () => {
+    let newState;
+
+    newState = set({}, "searchProspect.prospectOverview.signatoryInfo", [{ firstName: "" }]);
+    expect(getFilledOverviewSignatories(newState)).toEqual([]);
+
+    newState = set({}, "searchProspect.prospectOverview.signatoryInfo", [
+      { firstName: "a", lastName: "" }
+    ]);
+    expect(getFilledOverviewSignatories(newState)).toEqual([]);
   });
 
   it("should return empty array when organizationInfo is not set", () => {
