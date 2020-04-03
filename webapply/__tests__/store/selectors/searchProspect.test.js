@@ -87,6 +87,9 @@ describe("searchProspect test", () => {
       { firstName: "a", lastName: "" }
     ]);
     expect(getFilledOverviewSignatories(newState)).toEqual([]);
+
+    newState = set({}, "searchProspect.prospectOverview.signatoryInfo", [{ fullName: "a" }]);
+    expect(getFilledOverviewSignatories(newState)).toEqual([{ fullName: "a" }]);
   });
 
   it("should return empty array when organizationInfo is not set", () => {
