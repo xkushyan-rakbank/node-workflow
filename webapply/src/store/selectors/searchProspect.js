@@ -7,6 +7,13 @@ export const getProspectOverview = state => state.searchProspect.prospectOvervie
 export const getProspectOverviewId = state => getProspectOverview(state).generalInfo.prospectId;
 export const getOverviewDocuments = state => getProspectOverview(state).documents;
 export const getOverviewSignatories = state => getProspectOverview(state).signatoryInfo || [];
+export const getFilledOverviewSignatories = createSelector(
+  getOverviewSignatories,
+  signatories =>
+    signatories.filter(
+      signatory => (signatory.firstName && signatory.lastName) || signatory.fullName
+    )
+);
 export const getOverviewOrganizationInfo = state =>
   getProspectOverview(state).organizationInfo || [];
 export const getOverviewApplicationInfo = state => getProspectOverview(state).applicationInfo || {};

@@ -4,17 +4,17 @@ import get from "lodash/get";
 import cx from "classnames";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
-import { titles } from "./constants";
-import { getOverviewSignatories } from "../../../../store/selectors/searchProspect";
-
-import { useStyles } from "./styled";
+import { getFilledOverviewSignatories } from "../../../../store/selectors/searchProspect";
 import {
   getCompanyChecks,
   getOrganizationScreeningResults
 } from "../../../../store/selectors/screeningResults";
 
+import { useStyles } from "./styled";
+import { titles } from "./constants";
+
 export const CheckList = () => {
-  const signatoryInfo = useSelector(getOverviewSignatories);
+  const signatoryInfo = useSelector(getFilledOverviewSignatories);
   const companyChecks = useSelector(getCompanyChecks);
   const companyInfo = useSelector(getOrganizationScreeningResults);
   const classes = useStyles();
