@@ -26,7 +26,7 @@ import {
   sendProspectToAPISuccess
 } from "../../../src/store/actions/sendProspectToAPI";
 import { cloneDeep } from "../../../src/utils/cloneDeep";
-import { CONTINUE, UAE, UAE_CODE, UAE_CURRENCY } from "../../../src/constants";
+import { UAE, UAE_CODE, UAE_CURRENCY, AUTO } from "../../../src/constants";
 import { config } from "../../../src/api/apiClient";
 
 jest.mock("../../../src/utils/cloneDeep");
@@ -210,7 +210,7 @@ describe("appConfig sagas tests", () => {
 
       expect(dispatched).toEqual([
         updateProspect({ "prospect.applicationInfo.viewId": viewId }),
-        sendProspectToAPI(CONTINUE)
+        sendProspectToAPI(AUTO)
       ]);
     });
   });
