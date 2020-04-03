@@ -4,4 +4,4 @@ export const getProgress = state => getUploadDocuments(state).progress;
 
 export const getUploadErrors = state => getUploadDocuments(state).uploadErrors;
 
-export const getisLoadingDocuments = state => getUploadDocuments(state).isLoading;
+export const getIsLoadingDocuments = state => getUploadDocuments(state).isLoading;

@@ -5,7 +5,7 @@ import {
   GET_PROSPECT_DOCUMENTS_SUCCESS,
   RETRIEVE_DOC_UPLOADER,
   GET_PROSPECT_DOCUMENTS_FAIL
-} from "../actions/getProspectDocuments";
+} from "../actions/uploadDocuments";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {

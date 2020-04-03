@@ -3,7 +3,9 @@ import get from "lodash/get";
 import { getSignatories } from "./appConfig";
 
 export const getStakeholdersState = state => state.stakeholders;
+
 export const getEditableStakeholder = state => getStakeholdersState(state).editableStakeholder;
+
 export const getStakeholdersIds = state => getStakeholdersState(state).stakeholdersIds;
 
 export const stakeholdersSelector = createSelector(

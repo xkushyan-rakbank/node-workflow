@@ -1,9 +1,9 @@
 import {
   getUploadDocuments,
-  getisLoadingDocuments,
+  getIsLoadingDocuments,
   getProgress,
   getUploadErrors
-} from "../../../src/store/selectors/getProspectDocuments";
+} from "../../../src/store/selectors/uploadDocuments";
 import {
   checkIfRequiredDocsUploaded,
   getIsRequiredDocsUploaded,
@@ -63,7 +63,7 @@ describe("getProspectDocuments selector test", () => {
   });
 
   it("should return are documents loading", () => {
-    expect(getisLoadingDocuments(state)).toBe(true);
+    expect(getIsLoadingDocuments(state)).toBe(true);
   });
 
   it("should return are all required docs have upload status Uploaded", () => {

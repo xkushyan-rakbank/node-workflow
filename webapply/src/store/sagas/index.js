@@ -5,7 +5,7 @@ import applicantInfoSaga from "./applicantInfoForm";
 import sendProspectToAPISagas from "./sendProspectToAPI";
 import otpSaga from "./otp";
 import loginForm from "./loginForm";
-import retrieveUploadDoc from "./getProspectDocuments";
+import retrieveUploadDoc from "./uploadDocuments";
 import searchProspectSaga from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import stakeholders from "./stakeholders";

@@ -13,9 +13,9 @@ import {
   deleteOtherDocument,
   docUpload,
   retrieveDocDetails
-} from "../../store/actions/getProspectDocuments";
+} from "../../store/actions/uploadDocuments";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import { getProgress, getUploadErrors } from "../../store/selectors/getProspectDocuments";
+import { getProgress, getUploadErrors } from "../../store/selectors/uploadDocuments";
 import { getOtherDocuments } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { NEXT, OTHER_DOCUMENTS, SUBMIT, UPLOADED } from "../../constants";
