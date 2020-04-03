@@ -38,7 +38,8 @@ import {
   getAuthorizationHeader,
   getIsIslamicBanking,
   getProspect,
-  getProspectId} from "../../../src/store/selectors/appConfig";
+  getProspectId
+} from "../../../src/store/selectors/appConfig";
 import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
 import { updateAccountNumbers } from "../../../src/store/actions/accountNumbers";
 import { getCompletedSteps } from "../../../src/store/selectors/completedSteps";
