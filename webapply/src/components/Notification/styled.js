@@ -46,8 +46,7 @@ export const useStyles = makeStyles({
     margin: "0",
     fontSize: "12px",
     lineHeight: 1.33,
-    color: "#86868b",
-    overflow: "scroll"
+    color: "#86868b"
   },
   closeIcon: {
     width: 24,
