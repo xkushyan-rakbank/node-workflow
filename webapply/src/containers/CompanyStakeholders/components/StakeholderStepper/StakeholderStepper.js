@@ -7,6 +7,7 @@ import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import { getDatalist } from "../../../../store/selectors/appConfig";
+import { getIsSendingProspect } from "../../../../store/selectors/sendProspectToAPI";
 import {
   sendProspectToAPIPromisify,
   setScreeningError
@@ -27,7 +28,6 @@ import { useStep } from "../../../../hooks/useStep";
 import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
-import { getIsSendingProspect } from "../../../../store/selectors/sendProspectToAPI";
 
 const timeInterval = 5000;
 

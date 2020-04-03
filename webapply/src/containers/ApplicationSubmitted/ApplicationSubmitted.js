@@ -8,12 +8,12 @@ import { InfoNote } from "../../components/InfoNote";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
+import { getAccountNumbers } from "../../store/selectors/accountNumbers";
 import { formStepper } from "../../constants";
 
 import { useStyles } from "./styled";
 
 import { ReactComponent as DotsBg } from "../../assets/images/dots_bg.svg";
-import { getAccountNumbers } from "../../store/selectors/accountNumbers";
 
 const ApplicationSubmittedComponent = ({ accountNumbers, organizationInfo }) => {
   const classes = useStyles();
