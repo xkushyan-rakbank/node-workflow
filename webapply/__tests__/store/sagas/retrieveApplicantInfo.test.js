@@ -16,7 +16,6 @@ import {
 import { getAuthorizationHeader, getSignatoryModel } from "../../../src/store/selectors/appConfig";
 import { search, prospect } from "../../../src/api/apiClient";
 import { log } from "../../../src/utils/loggger";
-// import { updateStakeholdersIds } from "../../../src/store/actions/stakeholders";
 
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/utils/loggger");
@@ -35,8 +34,9 @@ describe("searchProspect saga test", () => {
     email: "",
     eidNumber: ""
   };
+  const prospectId = "some prospect id";
   const getProspectInfoPayload = {
-    prospectId: 1
+    prospectId
   };
   const retrieveApplicantInfoPayload = {
     fullName: "",
@@ -82,7 +82,7 @@ describe("searchProspect saga test", () => {
       payload: retrieveApplicantInfoPayload
     }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([{ ...inputParam }, header]);
+    expect(spy.mock.calls[0]).toEqual([inputParam, header]);
     expect(dispatched).toEqual([{ type: RETRIEVE_APPLICANT_INFO_SUCCESS, payload: {} }]);
   });
 
@@ -116,7 +116,7 @@ describe("searchProspect saga test", () => {
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([getProspectInfoPayload.prospectId, header]);
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
       { type: SET_CONFIG, payload: { prospect: data } },
       { type: LOAD_META_DATA, payload: data.freeFieldsInfo.freeField5 },
@@ -145,7 +145,7 @@ describe("searchProspect saga test", () => {
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([getProspectInfoPayload.prospectId, header]);
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: LOAD_META_DATA, payload: failedData.freeFieldsInfo.freeField5 },
@@ -171,7 +171,7 @@ describe("searchProspect saga test", () => {
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([getProspectInfoPayload.prospectId, header]);
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(log).toBeCalled();
     expect(dispatched).toEqual([
       { type: SET_CONFIG, payload: { prospect: failedData } },
@@ -190,7 +190,7 @@ describe("searchProspect saga test", () => {
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([getProspectInfoPayload.prospectId, header]);
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: GET_PROSPECT_INFO_SUCCESS, payload: { prospect: failedData } }
@@ -204,7 +204,7 @@ describe("searchProspect saga test", () => {
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([getProspectInfoPayload.prospectId, header]);
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: LOAD_META_DATA, payload: "" },
