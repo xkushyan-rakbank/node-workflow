@@ -20,6 +20,7 @@ jest.mock("../../src/utils/useIconsByAccount/constants", () => ({
 
 describe("useIconsByAccount test", () => {
   const state = "some state";
+
   afterEach(() => {
     jest.clearAllMocks();
     useSelector.mockRestore();
@@ -29,47 +30,46 @@ describe("useIconsByAccount test", () => {
     useSelector.mockImplementation(cb => cb(state));
   });
 
-  it("should call getIsIslamicBanking and getAccountType mock", () => {
-    it("should getIsIslamicBanking return true", () => {
-      getIsIslamicBanking.mockReturnValue(true);
+  it("should return eliteIslamicIconsSet when account type is elite", () => {
+    getIsIslamicBanking.mockReturnValue(true);
+    getAccountType.mockReturnValue(accountNames.elite);
 
-      it("should return eliteIslamicIconsSet when account type is elite", () => {
-        getAccountType.mockReturnValue(accountNames.elite);
+    const { result } = renderHook(() => useIconsByAccount());
 
-        const { result } = renderHook(() => useIconsByAccount());
+    expect(useIconsByAccount(result.current)).toBe("eliteIslamicIconsSet");
+    expect(getAccountType).toHaveBeenCalledWith(state);
+    expect(getIsIslamicBanking).toHaveBeenCalledWith(state);
+  });
 
-        expect(useIconsByAccount(result.current)).toBe("eliteIslamicIconsSet");
-      });
+  it("should return eliteIslamicIconsSet when account type is starter", () => {
+    getIsIslamicBanking.mockReturnValue(true);
+    getAccountType.mockReturnValue(accountNames.starter);
 
-      it("should return eliteIslamicIconsSet when account type is starter", () => {
-        getAccountType.mockReturnValue(accountNames.starter);
+    const { result } = renderHook(() => useIconsByAccount());
 
-        const { result } = renderHook(() => useIconsByAccount());
+    expect(useIconsByAccount(result.current)).toBe("islamicIconsSet");
+    expect(getAccountType).toHaveBeenCalledWith(state);
+    expect(getIsIslamicBanking).toHaveBeenCalledWith(state);
+  });
 
-        expect(useIconsByAccount(result.current)).toBe("islamicIconsSet");
-      });
-    });
+  it("should return conventionalIconsSet when account type is empty", () => {
+    getIsIslamicBanking.mockReturnValue(false);
+    getAccountType.mockReturnValue("");
 
-    it("should getIsIslamicBanking return false", () => {
-      getIsIslamicBanking.mockReturnValue(false);
+    const { result } = renderHook(() => useIconsByAccount());
 
-      it("should return conventionalIconsSet when account type is empty", () => {
-        getAccountType.mockReturnValue("");
+    expect(useIconsByAccount(result.current)).toBe("conventionalIconsSet");
+    expect(getAccountType).toHaveBeenCalledWith(state);
+    expect(getIsIslamicBanking).toHaveBeenCalledWith(state);
+  });
 
-        const { result } = renderHook(() => useIconsByAccount());
+  it("should return eliteIconsSet when account type is elite", () => {
+    getIsIslamicBanking.mockReturnValue(false);
+    getAccountType.mockReturnValue(accountNames.elite);
 
-        expect(useIconsByAccount(result.current)).toBe("conventionalIconsSet");
-      });
+    const { result } = renderHook(() => useIconsByAccount());
 
-      it("should return eliteIconsSet when account type is elite", () => {
-        getAccountType.mockReturnValue(accountNames.elite);
-
-        const { result } = renderHook(() => useIconsByAccount());
-
-        expect(useIconsByAccount(result.current)).toBe("eliteIconsSet");
-      });
-    });
-
+    expect(useIconsByAccount(result.current)).toBe("eliteIconsSet");
     expect(getAccountType).toHaveBeenCalledWith(state);
     expect(getIsIslamicBanking).toHaveBeenCalledWith(state);
   });
