@@ -55,9 +55,6 @@ export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
 export const MAX_EMAIL_LENGTH = 50;
-export const MAX_STAKEHOLDERS_LENGTH = 12;
-export const MAX_SHAREHOLDERS_LENGTH = 4;
-export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
@@ -74,9 +71,6 @@ const HAPPENED_WHILE_PERFORMING_AUDIT_WHILE_UPDATE_PROSPECT = "10004";
 const NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD = "I001F/12000";
 const ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS = "EXP101";
 const COMMON_SERVER_ERROR = "INV0001";
-
-export const RO_LOCKED_ERROR_CODE = "12013";
-export const APPS_NOT_FOUND_ERROR_CODE = "12009";
 
 const RO_STOP =
   "We noticed that your application is incomplete. Not to worry, our team is already working on it.";
