@@ -1,12 +1,12 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles/index";
 
 import {
   sideNavWidthSM,
   sideNavWidthMD,
   sideNavWidthLG,
   sideNavWidthCollapsed
-} from "../../constants/styles";
-import { ELITE, ISLAMIC, STANDART } from "../../utils/useBlobColor/constants";
+} from "../../../constants/styles";
+import { ELITE, ISLAMIC, STANDART } from "../../../utils/useBlobColor/constants";
 
 export const useStyles = makeStyles(theme => ({
   formLayout: {
@@ -60,8 +60,8 @@ export const useStyles = makeStyles(theme => ({
       }
     },
     [theme.breakpoints.only("sm")]: {
-      paddingLeft: ({ fullContentWidth }) =>
-        fullContentWidth ? sideNavWidthCollapsed : sideNavWidthSM
+      paddingLeft: ({ isFullContentWidth }) =>
+        isFullContentWidth ? sideNavWidthCollapsed : sideNavWidthSM
     },
     [theme.breakpoints.up("md")]: {
       paddingLeft: sideNavWidthMD
@@ -86,7 +86,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mainContainer: {
-    width: ({ fullContentWidth }) => (fullContentWidth ? 780 : 634),
+    width: ({ isFullContentWidth }) => (isFullContentWidth ? 780 : 634),
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",
