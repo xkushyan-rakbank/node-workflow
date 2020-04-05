@@ -2,9 +2,10 @@ import {
   getCompletedSteps,
   getIsAnyStakeholderStepsCompleted,
   getIsStakeholderStepsCompleted,
-  getStakeholderSteps
-} from "../../src/store/selectors/completedSteps";
-import { getCompanySteps, getSignatoriesSteps } from "../../src/store/selectors/appConfig";
+  getStakeholderSteps,
+  getCompanySteps,
+  getSignatoriesSteps
+} from "../../../src/store/selectors/completedSteps";
 
 describe("completedSteps selector test", () => {
   const companyStep = { flowId: "companyInfo", step: 1, status: "COMPLETED" };

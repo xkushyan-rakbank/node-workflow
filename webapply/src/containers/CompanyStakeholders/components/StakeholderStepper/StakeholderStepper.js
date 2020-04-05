@@ -6,7 +6,8 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
-import { getIsSendingProspect, getDatalist } from "../../../../store/selectors/appConfig";
+import { getDatalist } from "../../../../store/selectors/appConfig";
+import { getIsSendingProspect } from "../../../../store/selectors/sendProspectToAPI";
 import {
   sendProspectToAPIPromisify,
   setScreeningError
@@ -21,7 +22,7 @@ import {
   getEditableStakeholder,
   getStakeholdersIds,
   stakeholdersSelector
-} from "../../../../store/selectors/stakeholder";
+} from "../../../../store/selectors/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
 import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";

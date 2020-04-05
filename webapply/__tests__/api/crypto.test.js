@@ -84,5 +84,4 @@ describe("crypto utils test", () => {
     expect(encodeSpy).toHaveBeenCalledWith("some encode utf8 data");
     expect(encode64Spy).toHaveBeenCalledWith("some encode data");
   });
-
 });

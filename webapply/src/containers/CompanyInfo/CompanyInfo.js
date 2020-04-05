@@ -12,11 +12,8 @@ import StatusLoader from "../../components/StatusLoader";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import {
-  getApplicantInfo,
-  getIsSendingProspect,
-  getCompanyName
-} from "../../store/selectors/appConfig";
+import { getApplicantInfo, getCompanyName } from "../../store/selectors/appConfig";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 import { CONTINUE, NEXT, formStepper, STEP_STATUS, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import routes from "./../../routes";

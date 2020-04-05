@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import { createSelector } from "reselect";
 import { getOverviewOrganizationInfo, getOverviewApplicationInfo } from "./searchProspect";
-import { RISK_RATING, COMPANY_CHECK_NAMES } from "../../constants";
+import { COMPANY_CHECK_NAMES } from "../../constants";
 
 export const getOrganizationScreeningResults = state =>
   get(getOverviewOrganizationInfo(state), "screeningInfo.screeningResults", []);
@@ -17,9 +17,10 @@ export const getCompanyChecks = createSelector(
       ...(screeningResults.find(s => s.screeningType === check.screeningType) || {})
     })),
     {
-      ...RISK_RATING,
-      screeningStatus: riskScore && parseFloat(riskScore) > 0 ? "Completed" : "Incomplete",
-      screeningReason: riskScore || "Null"
+      screeningType: "Risk Rating",
+      screeningLabel: "Risk Rating",
+      screeningStatus: riskScore ? "Completed" : "Not completed",
+      screeningReason: riskScore
     }
   ]
 );

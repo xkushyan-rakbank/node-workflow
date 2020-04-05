@@ -1,8 +1,8 @@
 import {
-  getSendProspectToAPIInfo,
   getIsSendingProspect,
-  getScreeningError
-} from "../../src/store/selectors/appConfig";
+  getScreeningError,
+  getSendProspectToAPIInfo
+} from "../../../src/store/selectors/sendProspectToAPI";
 
 describe("sendProspectToAPI selector test", () => {
   const loading = true;

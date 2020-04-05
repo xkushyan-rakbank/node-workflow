@@ -2,7 +2,7 @@ import {
   getReCaptcha,
   getReCaptchaError,
   getReCaptchaToken
-} from "../../src/store/selectors/reCaptcha";
+} from "../../../src/store/selectors/reCaptcha";
 
 describe("reCaptcha test", () => {
   const token = "some token value";

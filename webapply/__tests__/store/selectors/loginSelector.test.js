@@ -2,7 +2,7 @@ import {
   checkLoginStatus,
   getAgentName,
   getLoginResponse
-} from "../../src/store/selectors/loginSelector";
+} from "../../../src/store/selectors/loginSelector";
 
 describe("loginSelector test", () => {
   const loginStatus = "some login status";

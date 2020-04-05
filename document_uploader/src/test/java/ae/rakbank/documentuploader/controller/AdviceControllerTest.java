@@ -9,6 +9,7 @@ import ae.rakbank.documentuploader.util.EnvUtil;
 import ae.rakbank.documentuploader.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +23,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
-
-import java.io.File;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
@@ -103,5 +102,39 @@ public class AdviceControllerTest {
         assertNotNull(objectResponseEntity.getHeaders().get("Exception"));
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, objectResponseEntity.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, objectResponseEntity.getHeaders().getContentType());
+    }
+
+    @Test
+    public void reducedApiErrorTest(){
+        JsonNode jsonNode = FileUtilStub.getAppConfigJSON();
+        JsonNode otherConfigs = jsonNode.get("OtherConfigs").get(EnvUtil.getEnv());//.get("ShouldSendErrorDebugDetails")
+        ((ObjectNode) otherConfigs).put("ShouldSendErrorDebugDetails", false);
+        when(fileUtil.getAppConfigJSON()).thenReturn(jsonNode);
+
+        String errorMessage = "unexpected error";
+        Exception exception = new Exception(errorMessage);
+
+        adviceController.init();
+        ResponseEntity<Object> objectResponseEntity = adviceController.handleException(exception);
+        assertNotNull(objectResponseEntity);
+        assertNotNull(objectResponseEntity.getHeaders().get("Exception"));
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, objectResponseEntity.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, objectResponseEntity.getHeaders().getContentType());
+
+        Object body = objectResponseEntity.getBody();
+        ObjectMapper mapper = new ObjectMapper();
+
+        String errorBody = mapper.convertValue(body, String.class);
+        assertNotNull(errorBody);
+
+        assertTrue(errorBody.contains("status"));
+        assertTrue(errorBody.contains("statusCode"));
+        assertTrue(errorBody.contains("timestamp"));
+        assertTrue(errorBody.contains("message"));
+        assertTrue(errorBody.contains(errorMessage));
+
+        assertFalse(errorBody.contains("debugMessage"));
+        assertFalse(errorBody.contains("stackTrace"));
+        assertFalse(errorBody.contains("exceptionClassName"));
     }
 }

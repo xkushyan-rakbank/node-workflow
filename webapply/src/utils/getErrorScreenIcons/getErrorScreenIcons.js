@@ -1,6 +1,6 @@
 import { accountNames } from "../../constants";
-import { ERRORS_TYPE } from "./constants";
 import {
+  ERRORS_TYPE,
   regularErrorScreenGifIcon,
   islamicErrorScreenGifIcon,
   eliteErrorScreenGifIcon
