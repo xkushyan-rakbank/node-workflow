@@ -4,136 +4,147 @@ import applicantInfoSaga, {
   applicantInfoFormSaga
 } from "../../../src/store/sagas/applicantInfoForm";
 import {
-  APPLICANT_INFO_FORM_SUCCESS,
   APPLICANT_INFO_FORM,
-  APPLICANT_INFO_FORM_FAIL
+  applicantInfoFormSuccess,
+  applicantInfoFormFail
 } from "../../../src/store/actions/applicantInfoForm";
-import { UPDATE_PROSPECT, UPDATE_PROSPECT_ID } from "../../../src/store/actions/appConfig";
-import {
-  RESET_INPUTS_ERRORS,
-  SET_INPUTS_ERRORS
-} from "../../../src/store/actions/serverValidation";
-import { GENERATE_CODE_SUCCESS } from "../../../src/store/actions/otp";
-import { log } from "../../../src/utils/loggger";
-import { prospect } from "../../../src/api/apiClient";
+import { updateProspect, updateProspectId } from "../../../src/store/actions/appConfig";
+import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
+import { generateCodeSuccess } from "../../../src/store/actions/otp";
+import { prospect as prospectApi } from "../../../src/api/apiClient";
 import { FieldsValidationError } from "../../../src/api/serverErrors";
+import {
+  getApplicationInfo,
+  getAuthorizationHeader,
+  getIsRecaptchaEnable,
+  getProspect
+} from "../../../src/store/selectors/appConfig";
+import { getReCaptchaToken } from "../../../src/store/selectors/reCaptcha";
 
-jest.mock("../../../src/utils/loggger");
+import { NEXT, SAVE } from "../../../src/constants";
+
+jest.mock("../../../src/store/selectors/appConfig");
+jest.mock("../../../src/store/selectors/reCaptcha");
 
 describe("applicantInfoForm saga test", () => {
   let dispatched = [];
-  const stateWithToken = {
-    appConfig: { prospect: { applicationInfo: {} }, recaptchaEnable: true },
-    reCaptcha: { token: "token" }
-  };
-  const state = {
-    appConfig: { prospect: { applicationInfo: {} } }
-  };
-  const payload = {};
-  const error = "some error";
-  const stateHeaders = { headers: {} };
-  const data = "some data";
-  const prospectUpdated = {
-    prospect: { applicationInfo: { actionType: "save", saveType: "next" }, applicantInfo: {} }
-  };
-  const prospectUpdatedWithToken = {
-    prospect: {
-      applicationInfo: { actionType: "save", saveType: "next" },
-      applicantInfo: {},
-      recaptchaToken: stateWithToken.reCaptcha.token
-    }
-  };
+  const state = "some state";
+  const payload = "some payload";
+  const headers = "some headers";
+  const someField = "some field value";
+  const applicationInfo = { someField };
+  const prospect = { someField };
+  const reCaptchaToken = "some reCaptcha token";
+  const prospectId = "some prospectId";
+  const data = { prospectId };
   const store = {
     dispatch: action => dispatched.push(action),
     getState: () => state
   };
-  const storeWithToken = {
-    dispatch: action => dispatched.push(action),
-    getState: () => stateWithToken
+
+  getProspect.mockReturnValue(prospect);
+  getAuthorizationHeader.mockReturnValue(headers);
+  getApplicationInfo.mockReturnValue(applicationInfo);
+  getReCaptchaToken.mockReturnValue(reCaptchaToken);
+
+  const prospectUpdated = {
+    someField,
+    applicantInfo: payload,
+    applicationInfo: { someField, actionType: SAVE, saveType: NEXT }
   };
 
   beforeEach(() => {
     dispatched = [];
+    getIsRecaptchaEnable.mockReturnValue(false);
     jest.clearAllMocks();
   });
 
-  it("should handle aplicant info saga", () => {
+  it("should handle applicantInfoSaga", () => {
     const gen = applicantInfoSaga().next().value;
     expect(gen.type).toEqual("ALL");
     expect(gen.payload[0].payload.args[0]).toEqual(APPLICANT_INFO_FORM);
+    expect(gen.payload[0].payload.args[1]).toEqual(applicantInfoFormSaga);
   });
 
-  it("should run applicant info form saga with token", async () => {
-    const spy = jest.spyOn(prospect, "create").mockReturnValue({ data });
+  it("should run applicantInfoFormSaga with token", async () => {
+    const prospectUpdated = {
+      someField,
+      applicantInfo: payload,
+      applicationInfo: { someField, actionType: SAVE, saveType: NEXT },
+      recaptchaToken: reCaptchaToken
+    };
 
-    await runSaga(storeWithToken, applicantInfoFormSaga, { payload }).toPromise();
-
-    expect(spy.mock.calls[0]).toEqual([{ ...prospectUpdatedWithToken.prospect }, stateHeaders]);
-    expect(dispatched).toEqual([
-      { type: UPDATE_PROSPECT, payload: prospectUpdated },
-      { type: GENERATE_CODE_SUCCESS },
-      { type: UPDATE_PROSPECT_ID, payload: undefined },
-      { type: RESET_INPUTS_ERRORS },
-      { type: APPLICANT_INFO_FORM_SUCCESS }
-    ]);
-
-    spy.mockRestore();
-  });
-
-  it("should run applicant info form saga", async () => {
-    const spy = jest.spyOn(prospect, "create").mockReturnValue({ data });
+    const spy = jest.spyOn(prospectApi, "create").mockReturnValue({ data });
+    getIsRecaptchaEnable.mockReturnValue(true);
 
     await runSaga(store, applicantInfoFormSaga, { payload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([{ ...prospectUpdated.prospect }, stateHeaders]);
+    expect(spy.mock.calls[0]).toEqual([prospectUpdated, headers]);
     expect(dispatched).toEqual([
-      { type: UPDATE_PROSPECT, payload: prospectUpdated },
-      { type: GENERATE_CODE_SUCCESS },
-      { type: UPDATE_PROSPECT_ID, payload: undefined },
-      { type: RESET_INPUTS_ERRORS },
-      { type: APPLICANT_INFO_FORM_SUCCESS }
+      updateProspect({ prospect: prospectUpdated }),
+      generateCodeSuccess(),
+      updateProspectId(prospectId),
+      resetInputsErrors(),
+      applicantInfoFormSuccess()
     ]);
 
     spy.mockRestore();
   });
 
-  it("should log error when creating prospect is failing", async () => {
-    log.mockReturnValue(null);
-    const spy = jest.spyOn(prospect, "create").mockImplementation(() => {
+  it("should run applicantInfoFormSaga without token", async () => {
+    const spy = jest.spyOn(prospectApi, "create").mockReturnValue({ data });
+
+    await runSaga(store, applicantInfoFormSaga, { payload }).toPromise();
+
+    expect(spy.mock.calls[0]).toEqual([prospectUpdated, headers]);
+    expect(dispatched).toEqual([
+      updateProspect({ prospect: prospectUpdated }),
+      generateCodeSuccess(),
+      updateProspectId(prospectId),
+      resetInputsErrors(),
+      applicantInfoFormSuccess()
+    ]);
+
+    spy.mockRestore();
+  });
+
+  it("should throw error", async () => {
+    const error = "some error";
+    const spy = jest.spyOn(prospectApi, "create").mockImplementation(() => {
       throw error;
     });
 
     await runSaga(store, applicantInfoFormSaga, { payload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([{ ...prospectUpdated.prospect }, stateHeaders]);
-    expect(log.mock.calls[0]).toEqual([error]);
+    expect(spy.mock.calls[0]).toEqual([prospectUpdated, headers]);
     expect(dispatched).toEqual([
-      { type: UPDATE_PROSPECT, payload: prospectUpdated },
-      { type: APPLICANT_INFO_FORM_FAIL, payload: error }
+      updateProspect({ prospect: prospectUpdated }),
+      applicantInfoFormFail(error)
     ]);
 
     spy.mockRestore();
   });
 
-  it("should log fileds validation error", async () => {
+  it("should throw fields validation error", async () => {
+    const errors = "some errors";
     const validationError = new FieldsValidationError({
       name: "name",
       message: "message",
       errorType: "errorType",
-      errors: "errors"
+      errors
     });
 
-    log.mockReturnValue(null);
-    const spy = jest.spyOn(prospect, "create").mockImplementation(() => {
+    const spy = jest.spyOn(prospectApi, "create").mockImplementation(() => {
       throw validationError;
     });
 
     await runSaga(store, applicantInfoFormSaga, { payload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([{ ...prospectUpdated.prospect }, stateHeaders]);
+    expect(spy.mock.calls[0]).toEqual([prospectUpdated, headers]);
     expect(dispatched).toEqual([
-      { type: UPDATE_PROSPECT, payload: prospectUpdated },
-      { type: SET_INPUTS_ERRORS, payload: validationError.errors }
+      updateProspect({ prospect: prospectUpdated }),
+      setInputsErrors(errors),
+      applicantInfoFormFail(validationError)
     ]);
 
     spy.mockRestore();
