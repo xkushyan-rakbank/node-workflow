@@ -416,7 +416,8 @@ describe("sendProspectToAPI sagas tests", () => {
 
       expect(spy.mock.calls[0]).toEqual([prospectId, expectedProspect, headers]);
       expect(dispatched).toEqual([
-        setErrorOccurredWhilePerforming({ errorCode: error.getErrorCode() })
+        setErrorOccurredWhilePerforming({ errorCode: error.getErrorCode() }),
+        sendProspectToAPIFail()
       ]);
     });
 
@@ -433,7 +434,10 @@ describe("sendProspectToAPI sagas tests", () => {
       await runSaga(store, sendProspectToAPI, action);
 
       expect(spy.mock.calls[0]).toEqual([prospectId, expectedProspect, headers]);
-      expect(dispatched).toEqual([setInputsErrors(error.getInputsErrors())]);
+      expect(dispatched).toEqual([
+        setInputsErrors(error.getInputsErrors()),
+        sendProspectToAPIFail()
+      ]);
     });
 
     it("throws not binded error", async () => {
