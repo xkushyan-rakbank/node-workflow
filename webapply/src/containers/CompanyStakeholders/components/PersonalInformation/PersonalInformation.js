@@ -89,7 +89,9 @@ const personalInformationSchema = Yup.object().shape({
   isPEP: Yup.boolean().when("isShareholderACompany", {
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.boolean().required(
-      "Field Is Person has held a position in the government or in a government-owned company/organizatio not filled"
+      getRequiredMessage(
+        "Is Person has held a position in the government or in a government-owned company/organization"
+      )
     )
   })
 });
