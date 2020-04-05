@@ -86,9 +86,12 @@ const personalInformationSchema = Yup.object().shape({
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
-  isPEP: Yup.boolean().required(
-    "Field Is Person has held a position in the government or in a government-owned company/organizatio not filled"
-  )
+  isPEP: Yup.boolean().when("isShareholderACompany", {
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.boolean().required(
+      "Field Is Person has held a position in the government or in a government-owned company/organizatio not filled"
+    )
+  })
 });
 
 export const PersonalInformation = ({ index, handleContinue, id, createFormChangeHandler }) => {
