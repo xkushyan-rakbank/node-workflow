@@ -21,8 +21,12 @@ import {
   uploadProspectDocument,
   downloadProspectDocument
 } from "../../api/apiClient";
-import { getProspectId, getAuthorizationHeader, getAppConfig } from "../selectors/appConfig";
-import { getProspectDocuments as getDocuments } from "../selectors/getProspectDocuments";
+import {
+  getProspectId,
+  getAuthorizationHeader,
+  getAppConfig,
+  getDocuments
+} from "../selectors/appConfig";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
   RETRIEVE_DOC_UPLOADER,
@@ -36,7 +40,7 @@ import {
   ADD_OTHER_DOCUMENT,
   DELETE_OTHER_DOCUMENT,
   SAVE_AND_RETRIEVE_DOC_UPLOADER
-} from "../actions/getProspectDocuments";
+} from "../actions/uploadDocuments";
 import {
   SEND_PROSPECT_TO_API_FAIL,
   SEND_PROSPECT_TO_API_SUCCESS,
