@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useRef, useLayoutEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import { transitionDuration } from "./styled";
 
@@ -9,20 +9,14 @@ export const VerticalPaginationProvider = ({ children }) => {
   // reset scroll params when location changes.
   const location = useLocation();
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [hasVideo, setHasVideo] = useState(false);
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
 
   useLayoutEffect(() => {
     setCurrentSectionIndex(0);
-    setHasVideo(false);
   }, [location]);
 
-  const isCurrentSectionVideo = useMemo(() => {
-    return hasVideo && currentSectionIndex === 0;
-  }, [hasVideo, currentSectionIndex]);
-
-  const scrollToSection = useCallback(
+  const setCurrentSection = useCallback(
     sectionIndex => {
       isCanScroll.current = false;
 
@@ -40,11 +34,9 @@ export const VerticalPaginationProvider = ({ children }) => {
     () => ({
       currentSectionIndex,
       isCanScroll,
-      scrollToSection,
-      isCurrentSectionVideo,
-      setHasVideo
+      setCurrentSection
     }),
-    [currentSectionIndex, isCanScroll, scrollToSection, isCurrentSectionVideo, setHasVideo]
+    [currentSectionIndex, isCanScroll, setCurrentSection]
   );
 
   return (

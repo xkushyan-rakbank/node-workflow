@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import trimEnd from "lodash/trimEnd";
 
 import { getAccountType, getIsIslamicBanking } from "../../../store/selectors/appConfig";
 import { getIsEditableStatusSearchInfo } from "../../../store/selectors/searchProspect";
@@ -26,7 +27,8 @@ export const AccountInfo = props => {
   const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
 
   const pushHistory = useTrackingHistory();
-  const { pathname } = useLocation();
+  const { pathname: locationPath } = useLocation();
+  const pathname = trimEnd(locationPath, "/");
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());

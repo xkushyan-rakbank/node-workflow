@@ -6,13 +6,11 @@ import {
   DELETE_STAKEHOLDER,
   CHANGE_EDITABLE_STAKEHOLDER,
   UPDATE_STAKEHOLDERS_IDS,
-  SET_FILL_STAKEHOLDER,
   SET_EDIT_STAKEHOLDER,
   createNewStakeholder,
   deleteStakeholder,
   changeEditableStakeholder,
   updateStakeholdersIds,
-  setFillStakeholder,
   setEditStakeholder
 } from "../../../src/store/actions/stakeholders";
 
@@ -27,48 +25,38 @@ describe("stakeholders actions", () => {
 
   it("should create an action to delete stakeholder", () => {
     const stakeholderId = {};
-    const expectedAction = {
+
+    expect(deleteStakeholder(stakeholderId)).toStrictEqual({
       type: DELETE_STAKEHOLDER,
-      stakeholderId
-    };
-    expect(deleteStakeholder(stakeholderId)).toEqual(expectedAction);
+      payload: stakeholderId
+    });
   });
 
   it("should create an action to change editable stakeholder", () => {
     const editableStakeholder = {};
-    const expectedAction = {
+
+    expect(changeEditableStakeholder(editableStakeholder)).toStrictEqual({
       type: CHANGE_EDITABLE_STAKEHOLDER,
-      editableStakeholder
-    };
-    expect(changeEditableStakeholder(editableStakeholder)).toEqual(expectedAction);
+      payload: editableStakeholder
+    });
   });
 
   it("should create an action to update stakeholder", () => {
-    const stakeholdersIds = {};
-    const expectedAction = {
-      type: UPDATE_STAKEHOLDERS_IDS,
-      stakeholdersIds
-    };
-    expect(updateStakeholdersIds(stakeholdersIds)).toEqual(expectedAction);
-  });
+    const stakeholdersIds = [];
 
-  it("should create an action to set fill stakeholder", () => {
-    const index = {};
-    const done = {};
-    const expectedAction = {
-      type: SET_FILL_STAKEHOLDER,
-      payload: { index, done }
-    };
-    expect(setFillStakeholder(index, done)).toEqual(expectedAction);
+    expect(updateStakeholdersIds(stakeholdersIds)).toStrictEqual({
+      type: UPDATE_STAKEHOLDERS_IDS,
+      payload: stakeholdersIds
+    });
   });
 
   it("should create an action to set edit stakeholder", () => {
     const index = {};
     const isEditting = {};
-    const expectedAction = {
+
+    expect(setEditStakeholder(index, isEditting)).toStrictEqual({
       type: SET_EDIT_STAKEHOLDER,
       payload: { index, isEditting }
-    };
-    expect(setEditStakeholder(index, isEditting)).toEqual(expectedAction);
+    });
   });
 });

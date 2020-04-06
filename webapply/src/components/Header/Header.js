@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import { Link, useHistory } from "react-router-dom";
 import cx from "classnames";
 
@@ -66,4 +65,4 @@ const mapStateToProps = state => ({
   isOtpVerified: isOtpVerified(state)
 });
 
-export const Header = compose(connect(mapStateToProps))(HeaderComponent);
+export const Header = connect(mapStateToProps)(HeaderComponent);

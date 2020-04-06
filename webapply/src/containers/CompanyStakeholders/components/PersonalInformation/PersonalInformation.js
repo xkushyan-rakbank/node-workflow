@@ -86,9 +86,14 @@ const personalInformationSchema = Yup.object().shape({
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))
   }),
-  isPEP: Yup.boolean().required(
-    "Field Is Person has held a position in the government or in a government-owned company/organizatio not filled"
-  )
+  isPEP: Yup.boolean().when("isShareholderACompany", {
+    is: isShareholderACompany => !isShareholderACompany,
+    then: Yup.boolean().required(
+      getRequiredMessage(
+        "Is Person has held a position in the government or in a government-owned company/organization"
+      )
+    )
+  })
 });
 
 export const PersonalInformation = ({ index, handleContinue, id, createFormChangeHandler }) => {
@@ -251,7 +256,6 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
             path={`prospect.signatoryInfo[${index}].kycDetails.isPEP`}
             component={InlineRadioGroup}
             options={yesNoOptions}
-            disabled={!!values.isShareholderACompany}
             label="This Person, or a relative of this person by blood or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
             InputProps={{
               inputProps: { tabIndex: 0 }

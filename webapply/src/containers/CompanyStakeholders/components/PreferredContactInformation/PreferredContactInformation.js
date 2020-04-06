@@ -10,30 +10,32 @@ import {
   AutoSaveField as Field,
   CustomSelect,
   Input,
-  InputGroup
+  InputGroup,
+  LinkedField
 } from "../../../../components/Form";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
-const preferredContactInformationSchema = Yup.object().shape({
-  primaryEmail: Yup.string()
-    .required(getRequiredMessage("E-mail address"))
-    .email(getInvalidMessage("E-mail address"))
-    .max(50, getInvalidMessage("E-mail address")),
-  primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
-  primaryMobileNo: Yup.string()
-    .required(getRequiredMessage("Mobile number"))
-    .phoneNo({
-      codeFieldName: "primaryMobCountryCode",
-      fieldName: "Mobile number"
-    }),
-  primaryPhoneNo: Yup.string().phoneNo({
-    codeFieldName: "primaryPhoneCountryCode",
-    fieldName: "Landline number",
-    isLandline: true
-  })
-});
+const getPreferredContactInformationSchema = () =>
+  Yup.object().shape({
+    primaryEmail: Yup.string()
+      .required(getRequiredMessage("E-mail address"))
+      .email(getInvalidMessage("E-mail address"))
+      .max(50, getInvalidMessage("E-mail address")),
+    primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
+    primaryMobileNo: Yup.string()
+      .required(getRequiredMessage("Mobile number"))
+      .phoneNo({
+        codeFieldName: "primaryMobCountryCode",
+        fieldName: "Mobile number"
+      }),
+    primaryPhoneNo: Yup.string().phoneNo({
+      codeFieldName: "primaryPhoneCountryCode",
+      fieldName: "Landline number",
+      isLandline: true
+    })
+  });
 
 const PreferredContactInformationStep = ({
   isSignatory,
@@ -50,7 +52,7 @@ const PreferredContactInformationStep = ({
       primaryPhoneNo: ""
     }}
     onSubmit={handleContinue}
-    validationSchema={isSignatory && preferredContactInformationSchema}
+    validationSchema={isSignatory && getPreferredContactInformationSchema}
     validateOnChange={false}
   >
     {createFormChangeHandler(() => (
@@ -73,9 +75,11 @@ const PreferredContactInformationStep = ({
         <Grid item container spacing={3}>
           <Grid item md={6} sm={12}>
             <InputGroup>
-              <Field
+              <LinkedField
                 name="primaryMobCountryCode"
+                linkedFieldName="primaryMobileNo"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
                 component={CustomSelect}
                 shrink={false}
                 disabled={!isSignatory}
@@ -83,9 +87,11 @@ const PreferredContactInformationStep = ({
                 inputProps={{ tabIndex: 0 }}
               />
 
-              <Field
+              <LinkedField
                 name="primaryMobileNo"
+                linkedFieldName="primaryMobCountryCode"
                 path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
                 label="Mobile Number"
                 placeholder="55xxxxxxx"
                 component={Input}

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
@@ -33,73 +33,71 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
   })
 });
 
-export const SignatoryPersonalInformation = ({ index, handleContinue }) => {
+export const SignatoryPersonalInformation = ({
+  index,
+  handleContinue,
+  createFormChangeHandler
+}) => {
   const classes = useStyles();
 
-  const handleSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
-
   return (
-    <div className={classes.formWrapper}>
-      <Formik
-        initialValues={{
-          maritalStatus: "",
-          mothersMaidenName: "",
-          maritalStatusOthers: ""
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={signatoryPersonalInformationSchema}
-        validateOnChange={false}
-      >
-        {({ values }) => (
-          <Form>
-            <Grid spacing={3} container className={classes.flexContainer}>
-              <Grid item md={6} xs={12}>
+    <Formik
+      initialValues={{
+        maritalStatus: "",
+        mothersMaidenName: "",
+        maritalStatusOthers: ""
+      }}
+      onSubmit={handleContinue}
+      validationSchema={signatoryPersonalInformationSchema}
+      validateOnChange={false}
+    >
+      {createFormChangeHandler(({ values }) => (
+        <Form>
+          <Grid spacing={3} container className={classes.flexContainer}>
+            <Grid item md={6} xs={12}>
+              <Field
+                name="maritalStatus"
+                path={`prospect.signatoryInfo[${index}].maritalStatus`}
+                datalistId="maritalStatus"
+                label="Marital Status"
+                isSearchable
+                component={SelectAutocomplete}
+                tabIndex="0"
+              />
+            </Grid>
+            <Grid item md={6} sm={12}>
+              <Field
+                name="mothersMaidenName"
+                path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
+                label="Mother's maiden name"
+                placeholder="Mother's maiden name"
+                component={Input}
+                contextualHelpText="Provide mother's surname before marriage"
+                InputProps={{
+                  inputProps: { maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH, tabIndex: 0 }
+                }}
+              />
+            </Grid>
+            {values.maritalStatus === OTHER_OPTION_CODE && (
+              <Grid item md={12} sm={12}>
                 <Field
-                  name="maritalStatus"
-                  path={`prospect.signatoryInfo[${index}].maritalStatus`}
-                  datalistId="maritalStatus"
-                  label="Marital Status"
-                  isSearchable
-                  component={SelectAutocomplete}
-                  tabIndex="0"
-                />
-              </Grid>
-              <Grid item md={6} sm={12}>
-                <Field
-                  name="mothersMaidenName"
-                  path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
-                  label="Mother's maiden name"
-                  placeholder="Mother's maiden name"
+                  name="maritalStatusOthers"
+                  path={`prospect.signatoryInfo[${index}].maritalStatusOthers`}
+                  label="Other(Specify)"
+                  placeholder="Other(Specify)"
                   component={Input}
-                  contextualHelpText="Provide mother's surname before marriage"
                   InputProps={{
-                    inputProps: { maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_LENGTH_MARITAL_OTHERS_STATUS, tabIndex: 0 }
                   }}
                 />
               </Grid>
-              {values.maritalStatus === OTHER_OPTION_CODE && (
-                <Grid item md={12} sm={12}>
-                  <Field
-                    name="maritalStatusOthers"
-                    path={`prospect.signatoryInfo[${index}].maritalStatusOthers`}
-                    label="Other(Specify)"
-                    placeholder="Other(Specify)"
-                    component={Input}
-                    InputProps={{
-                      inputProps: { maxLength: MAX_LENGTH_MARITAL_OTHERS_STATUS, tabIndex: 0 }
-                    }}
-                  />
-                </Grid>
-              )}
-            </Grid>
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            )}
+          </Grid>
+          <div className={classes.buttonWrapper}>
+            <ContinueButton type="submit" />
+          </div>
+        </Form>
+      ))}
+    </Formik>
   );
 };

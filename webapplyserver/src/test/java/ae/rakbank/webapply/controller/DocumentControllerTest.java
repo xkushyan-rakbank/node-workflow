@@ -3,10 +3,10 @@ package ae.rakbank.webapply.controller;
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
-import ae.rakbank.webapply.util.EnvUtil;
+import ae.rakbank.webapply.stub.ConfigFactory;
+import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -18,13 +18,12 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DocumentControllerTest {
 
     private DocumentController documentController;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Mock
     private DehClient dehClient;
@@ -42,16 +41,7 @@ public class DocumentControllerTest {
 
         documentController = new DocumentController(fileUtil, dehClient, authorizationService);
 
-        ObjectNode config = objectMapper.createObjectNode();
-        ObjectNode dehURIs = objectMapper.createObjectNode();
-
-        dehURIs.put("getProspectDocumentsUri", "/deh-uri");
-        dehURIs.put("getProspectDocumentByIdUri", "/deh-uri-by-id");
-
-        config.set("DehURIs", dehURIs);
-        config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
-
-        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(config);
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newDocumentControllerConfig());
         documentController.init();
     }
 
@@ -61,8 +51,7 @@ public class DocumentControllerTest {
         String prospectId = "1235";
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        objectNode.put("testField", "testValue");
+        JsonNode objectNode = ResponseFactory.newDocumentValidResponse();
 
         ResponseEntity<Object> okResponse = ResponseEntity.ok(objectNode);
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.GET, null,
@@ -84,14 +73,13 @@ public class DocumentControllerTest {
         String prospectId = "1235";
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
 
-        ObjectNode objectNode = objectMapper.createObjectNode();
-        objectNode.put("testField", "testValue");
+        JsonNode objectNode = ResponseFactory.newDocumentValidResponse();
 
         ResponseEntity<Object> okResponse = ResponseEntity.ok(objectNode);
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri-by-id", HttpMethod.GET, null,
                 "getProspectDocumentById()", MediaType.APPLICATION_OCTET_STREAM, jwtPayload.getOauthAccessToken())).thenReturn(okResponse);
 
-        String documentId = "document-id";
+        String documentId = "1235";
         ResponseEntity<Object> prospectDocuments = documentController.getProspectDocumentById(request, jwtPayload, prospectId, documentId);
 
         assertNotNull(prospectDocuments);

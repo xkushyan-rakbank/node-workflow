@@ -69,11 +69,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.accountsComparison}
                 component={AccountsComparison}
               />
-              <AccountTypeProtectedRoute
-                exact
-                path={routes.applicantInfo}
-                component={ApplicantInfo}
-              />
+              <ProtectedRoute exact path={routes.applicantInfo} component={ApplicantInfo} />
               <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
               <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
               <ProspectProtectedRoute

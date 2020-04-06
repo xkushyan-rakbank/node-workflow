@@ -6,7 +6,7 @@ import { ServicesSteps } from "./components/ServicesSteps/index";
 import { BackLink } from "../../components/Buttons/BackLink";
 import { FormTitle } from "./components/FormTitle";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper } from "../../constants";
+import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper, SAVE } from "../../constants";
 import { useStep } from "../../hooks/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
@@ -19,10 +19,13 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
   const [isSubmit, setIsSubmit] = useState(false);
   const pushHistory = useTrackingHistory();
 
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(
-    SELECT_SERVICES_PAGE_ID,
-    servicesSteps
-  );
+  const [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler
+  ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps);
   const isAllStepsCompleted = !availableSteps.some(
     step => step.step < STEP_3 && step.status !== STEP_STATUS.COMPLETED
   );
@@ -40,7 +43,10 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
 
   const setNextStep = useCallback(
     event => {
-      sendProspectToAPI(CONTINUE, event).then(() => handleSetNextStep(activeStep), () => {});
+      sendProspectToAPI(CONTINUE, event, SAVE, {
+        activeStep,
+        flowId: SELECT_SERVICES_PAGE_ID
+      }).then(() => handleSetNextStep(activeStep), () => {});
     },
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
@@ -64,6 +70,7 @@ export const SelectServicesComponent = ({ accountType, rakValuePackage, sendPros
         isSubmit={isSubmit}
         clickHandler={createSetStepHandler}
         handleContinue={setNextStep}
+        createFormChangeHandler={createFormChangeHandler}
       />
 
       <div className={classes.linkContainer}>

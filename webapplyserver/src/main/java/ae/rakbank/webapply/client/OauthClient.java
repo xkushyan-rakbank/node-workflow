@@ -59,21 +59,28 @@ public class OauthClient {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
         String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
-        log.info(String.format("Invoke API: Endpoint=[%s], request=[%s] ", url, request.getBody().toString()));
+        log.info(String.format("[Oauth Request] Invoke API: Endpoint=[%s], request=[%s] ", url, request.getBody().toString()));
 
         try {
 
-            return restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+            if (requestMap.containsKey("refresh_token")) {
+                log.warn("[getExpireTime] >>  [REFRESH flow]  >>   map for request is contain refresh_token, invoke call with REFRESH token");
+            }
+
+            log.info("[getExpireTime] >>  invoke call to OAuth service..");
+            ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(url, HttpMethod.POST, request, JsonNode.class);
+            log.info("[getExpireTime] >>  get success response, {}", responseEntity.getBody());
+            return responseEntity;
 
         } catch (HttpClientErrorException e) {
-            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("[Oauth Request] Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
-            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("[Oauth Request] Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
             ApiError apiError = dehUtil.initApiError(e, status);

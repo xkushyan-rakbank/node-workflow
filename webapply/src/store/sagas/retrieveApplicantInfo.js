@@ -1,14 +1,21 @@
 import { all, call, put, takeLatest, select } from "redux-saga/effects";
-import uniqueId from "lodash/uniqueId";
-import * as actions from "../actions/retrieveApplicantInfo";
+import {
+  retrieveApplicantInfoSuccess,
+  getProspectInfoSuccess,
+  getProspectInfoFail,
+  RETRIEVE_APPLICANT_INFO,
+  GET_PROSPECT_INFO_REQUEST
+} from "../actions/retrieveApplicantInfo";
 import { setConfig, loadMetaData } from "../actions/appConfig";
-import { retrieveApplicantInfos, prospect as prospectApi } from "../../api/apiClient";
+import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader } from "../selectors/appConfig";
+import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
+import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 
-function* retrieveApplicantInfoSaga({ payload }) {
+export function* retrieveApplicantInfoSaga({ payload }) {
   try {
+    const headers = yield select(getAuthorizationHeader);
     const inputParam = {
       applicantName: payload.fullName || "",
       countryCode: payload.countryCode || "",
@@ -19,41 +26,58 @@ function* retrieveApplicantInfoSaga({ payload }) {
       eidNumber: ""
     };
 
-    const response = yield call(retrieveApplicantInfos.applicant, inputParam);
-    yield put(actions.retrieveApplicantInfoSuccess(response.data));
+    const response = yield call(searchApi.searchApplication, inputParam, headers);
+    yield put(retrieveApplicantInfoSuccess(response.data));
   } catch (error) {
     log(error);
   }
 }
 
-function* getProspectIdInfo({ payload }) {
+export function* getProspectIdInfo({ payload }) {
   try {
-    const state = yield select();
-    const headers = getAuthorizationHeader(state);
+    const headers = yield select(getAuthorizationHeader);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
+    const newStakeholder = yield select(getSignatoryModel);
 
-    yield put(setConfig(config));
-    if (freeFieldsInfo) {
-      yield put(loadMetaData(freeFieldsInfo));
+    if (!config.prospect.signatoryInfo.length) {
+      config.prospect.signatoryInfo = [newStakeholder];
     }
 
-    const stakeholdersIds = config.prospect.signatoryInfo.map(() => ({
-      id: uniqueId(),
-      done: false,
-      isEditting: false
-    }));
+    yield put(setConfig(config));
 
-    yield put(updateStakeholdersIds(stakeholdersIds));
-    yield put(actions.getProspectInfoSuccess(config.prospect));
+    if (freeFieldsInfo) {
+      yield put(loadMetaData(freeFieldsInfo));
+      if (freeFieldsInfo.freeField5) {
+        try {
+          const { completedSteps = [] } = JSON.parse(freeFieldsInfo.freeField5);
+          const stakeholdersIds = completedSteps
+            .filter(({ flowId }) => flowId.startsWith(COMPANY_STAKEHOLDER_ID))
+            .reduce((acc, { flowId }) => {
+              const id = flowId.split("_")[1];
+              return {
+                ...acc,
+                [id]: { id, isEditting: false }
+              };
+            }, {});
+          yield put(updateStakeholdersIds(Object.values(stakeholdersIds)));
+        } catch (error) {
+          log(error);
+        }
+      }
+    }
+
+    yield put(getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);
-    yield put(actions.getProspectInfoFail());
+    yield put(getProspectInfoFail());
   }
 }
 
 export default function* retrieveApplicantSaga() {
-  yield all([takeLatest(actions.RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga)]);
-  yield all([takeLatest(actions.GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)]);
+  yield all([
+    takeLatest(RETRIEVE_APPLICANT_INFO, retrieveApplicantInfoSaga),
+    takeLatest(GET_PROSPECT_INFO_REQUEST, getProspectIdInfo)
+  ]);
 }

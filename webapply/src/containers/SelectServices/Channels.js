@@ -3,8 +3,8 @@ import get from "lodash/get";
 
 import { getSignatories } from "../../store/selectors/appConfig";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
-import { getSelectedTypeCurrency } from "../../store/selectors/SelectServices";
-import { stakeholdersSelector, checkIsHasSignatories } from "../../store/selectors/stakeholder";
+import { getSelectedTypeCurrency } from "../../store/selectors/selectServices";
+import { getStakeholders, checkIsHasSignatories } from "../../store/selectors/stakeholders";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getAccountInfo } from "../../store/selectors/appConfig";
 
@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
   accountCurrencies: getSelectedTypeCurrency(
     get(getAccountInfo(state)[0], "accountCurrencies", "")
   ),
-  stakeholders: stakeholdersSelector(state),
+  stakeholders: getStakeholders(state),
   isHasSignatories: checkIsHasSignatories(state),
   primaryMobCountryCode: get(
     getOrganizationInfo(state),

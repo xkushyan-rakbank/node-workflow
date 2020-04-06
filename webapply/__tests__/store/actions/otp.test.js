@@ -33,12 +33,12 @@ describe("applicantInfoForm actions", () => {
   });
 
   it("should create an action to set otp verify otp", () => {
-    const payload = {};
+    const code = "xxx";
     const expectedAction = {
       type: VERIFY_OTP,
-      payload
+      payload: { code }
     };
-    expect(verifyOtp(payload)).toEqual(expectedAction);
+    expect(verifyOtp(code)).toEqual(expectedAction);
   });
 
   it("should create an action to set generating code", () => {

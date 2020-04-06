@@ -10,18 +10,20 @@ const useStyles = makeStyles(theme => ({
     margin: 0
   },
   info: {
-    fontSize: "20px",
+    fontSize: 20,
+    lineHeight: "26px",
     color: "#373737",
     display: "block",
-    marginTop: "10px",
+    marginTop: 10,
     [theme.breakpoints.only("xs")]: {
-      fontSize: "14px"
+      fontSize: ({ smallInfo }) => (smallInfo ? 14 : 20),
+      marginTop: ({ smallInfo }) => (smallInfo ? 5 : 10)
     }
   }
 }));
 
-export const SectionTitleWithInfo = ({ className, title, info, classes: extendedClasses }) => {
-  const classes = useStyles({ classes: extendedClasses });
+export const SectionTitleWithInfo = ({ className, title, info, smallInfo = false }) => {
+  const classes = useStyles({ smallInfo });
   return (
     <div className={className}>
       <h3 className={classes.title}>{title}</h3>

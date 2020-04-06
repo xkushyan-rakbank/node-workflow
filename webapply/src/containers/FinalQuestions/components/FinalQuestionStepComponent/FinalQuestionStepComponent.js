@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
 import { useStep } from "../../../../hooks/useStep";
-import { CONTINUE, STEP_STATUS } from "../../../../constants";
+import { CONTINUE, STEP_STATUS, SAVE } from "../../../../constants";
 
 export const FinalQuestionStepComponent = ({
   index = null,
@@ -11,11 +11,17 @@ export const FinalQuestionStepComponent = ({
   stepsArray,
   page
 }) => {
-  const [activeStep, availableSteps, handleSetStep, handleSetNextStep] = useStep(page, stepsArray);
+  const [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler
+  ] = useStep(page, stepsArray);
 
   const handleContinue = useCallback(
     eventName => () => {
-      sendProspectToAPI(CONTINUE, eventName).then(
+      sendProspectToAPI(CONTINUE, eventName, SAVE, { activeStep, flowId: page }).then(
         () => {
           handleSetNextStep(activeStep);
           if (activeStep === stepsArray.length) {
@@ -26,7 +32,15 @@ export const FinalQuestionStepComponent = ({
         () => {}
       );
     },
-    [sendProspectToAPI, handleSetNextStep, index, stepsArray, handleFinalStepContinue, activeStep]
+    [
+      sendProspectToAPI,
+      handleSetNextStep,
+      index,
+      stepsArray,
+      handleFinalStepContinue,
+      activeStep,
+      page
+    ]
   );
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
@@ -46,6 +60,7 @@ export const FinalQuestionStepComponent = ({
       )}
       handleClick={createSetStepHandler(item.step)}
       handleContinue={handleContinue(item.eventName)}
+      createFormChangeHandler={createFormChangeHandler}
       stepForm={item.component}
     />
   ));

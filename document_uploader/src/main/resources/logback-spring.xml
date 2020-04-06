@@ -115,7 +115,7 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="ae.rakbank.documentuploader" additivity="false" level="ALL">
+    <logger name="ae.rakbank.documentuploader" additivity="false" level="INFO">
         <appender-ref ref="Console" />
         <appender-ref ref="RollingFile" />
         <appender-ref ref="RollingFileInfo"/>

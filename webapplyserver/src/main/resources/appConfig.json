@@ -81,18 +81,19 @@
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
       "OAuthBankId": "RAK",
       "OAuthChannelId": "I",
-      "OAuthUsername": "RAK.VTUSER",
-      "OAuthPassword": "p@king1",
       "OAuthLangId": "001",
       "OAuthLoginFlag": "2",
       "OAuthLoginType": "1",
       "OAuthStateMode": "N",
+      "OAuthUsername": "RAK.VTUSER",
+      "OAuthPassword": "p@king1",
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "6LcypLgUAAAAAMQvT4SqSDCbJ7JFYY7x0OGJTpTm",
       "ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
       "RSAPublicKeyFilename": "RSAPublicKey.txt",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
-      "OtpEnabled": "N"
+      "OtpEnabled": "N",
+      "ShouldSendErrorDebugDetails": true
     },
     "dev": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -101,18 +102,19 @@
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
       "OAuthBankId": "RAK",
       "OAuthChannelId": "I",
-      "OAuthUsername": "RAK.VTUSER",
-      "OAuthPassword": "p@king1",
       "OAuthLangId": "001",
       "OAuthLoginFlag": "2",
       "OAuthLoginType": "1",
       "OAuthStateMode": "N",
+      "OAuthUsername": "RAK.VTUSER",
+      "OAuthPassword": "p@king1",
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
       "RSAPublicKeyFilename": "",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
-      "OtpEnabled": "N"
+      "OtpEnabled": "N",
+      "ShouldSendErrorDebugDetails": true
     },
     "uat": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -121,18 +123,19 @@
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
       "OAuthBankId": "RAK",
       "OAuthChannelId": "I",
-      "OAuthUsername": "RAK.VTUSER",
-      "OAuthPassword": "p@king1",
       "OAuthLangId": "001",
       "OAuthLoginFlag": "2",
       "OAuthLoginType": "1",
       "OAuthStateMode": "N",
+      "OAuthUsername": "RAK.VTUSER",
+      "OAuthPassword": "p@king1",
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
       "RSAPublicKeyFilename": "",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
-      "OtpEnabled": "Y"
+      "OtpEnabled": "Y",
+      "ShouldSendErrorDebugDetails": false
     },
     "prod": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -141,18 +144,19 @@
       "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
       "OAuthBankId": "RAK",
       "OAuthChannelId": "I",
-      "OAuthUsername": "RAK.VTUSER",
-      "OAuthPassword": "p@king1",
       "OAuthLangId": "001",
       "OAuthLoginFlag": "2",
       "OAuthLoginType": "1",
       "OAuthStateMode": "N",
+      "OAuthUsername": "RAK.VTUSER",
+      "OAuthPassword": "p@king1",
       "ReCaptchaEnable": "Y",
       "ReCaptchaSiteKey": "",
       "ReCaptchaSecret": "",
       "RSAPublicKeyFilename": "",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
-      "OtpEnabled": "Y"
+      "OtpEnabled": "Y",
+      "ShouldSendErrorDebugDetails": false
     }
   }
 }

@@ -8,7 +8,6 @@ export const useStyles = makeStyles(theme => ({
     width: "100%",
     [theme.breakpoints.only("xs")]: {
       marginTop: "50px",
-      padding: "0 16px",
       boxSizing: "border-box"
     }
   },
@@ -35,8 +34,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    marginTop: "42px",
-    marginBottom: "80px"
+    marginTop: "42px"
   },
   nextButton: {
     width: "auto",

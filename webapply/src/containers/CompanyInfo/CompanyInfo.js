@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { connect } from "react-redux";
 import cx from "classnames";
 
@@ -12,12 +12,9 @@ import StatusLoader from "../../components/StatusLoader";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { getIsEditableStatusSearchInfo } from "../../store/selectors/searchProspect";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
-import {
-  getApplicantInfo,
-  getOrganizationInfo,
-  getIsSendingProspect
-} from "../../store/selectors/appConfig";
-import { CONTINUE, NEXT, formStepper, STEP_STATUS } from "../../constants";
+import { getApplicantInfo, getCompanyName } from "../../store/selectors/appConfig";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
+import { CONTINUE, NEXT, formStepper, STEP_STATUS, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import routes from "./../../routes";
 
@@ -28,9 +25,9 @@ import companyInfoIcon from "./../../assets/icons/companyInfo.svg";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
-  loading,
+  isSendingProspect,
   fullName,
-  organizationInfo: { companyName },
+  companyName,
   isComeFromROScreens
 }) => {
   useFormNavigation([false, true, formStepper]);
@@ -44,23 +41,26 @@ export const CompanyInfoPage = ({
     handleSetNextStep,
     createFormChangeHandler
   ] = useStep(COMPANY_INFO_PAGE_ID, companyInfoSteps);
+  const [isLoading, setIsLoading] = useState(false);
   const isAllStepsCompleted = checkAllStepsCompleted(availableSteps);
 
   const handleContinue = event => () => {
-    sendProspectToAPI(CONTINUE, event).then(
-      () => {
-        handleSetNextStep(activeStep);
-      },
-      () => {}
-    );
+    sendProspectToAPI(CONTINUE, event, SAVE, {
+      activeStep,
+      flowId: COMPANY_INFO_PAGE_ID
+    }).then(() => handleSetNextStep(activeStep), () => {});
   };
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const handleClickNextStep = useCallback(() => {
-    sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
-    });
+    setIsLoading(true);
+    sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
+      },
+      () => setIsLoading(false)
+    );
   }, [pushHistory, sendProspectToAPI]);
 
   return (
@@ -77,7 +77,7 @@ export const CompanyInfoPage = ({
             <div className={classes.title}>
               {activeStep !== STEP_1 ? companyName : "Company Name"}
             </div>
-            {loading && <StatusLoader />}
+            {isSendingProspect && <StatusLoader />}
           </>
         }
         defaultAvatarIcon={companyInfoIcon}
@@ -105,8 +105,8 @@ export const CompanyInfoPage = ({
           justify="flex-end"
           label="Next Step"
           disabled={!isAllStepsCompleted}
+          isDisplayLoader={isLoading}
           handleClick={handleClickNextStep}
-          withRightArrow
         />
       </div>
     </>
@@ -114,9 +114,9 @@ export const CompanyInfoPage = ({
 };
 
 const mapStateToProps = state => ({
-  loading: getIsSendingProspect(state),
+  isSendingProspect: getIsSendingProspect(state),
   fullName: getApplicantInfo(state).fullName,
-  organizationInfo: getOrganizationInfo(state),
+  companyName: getCompanyName(state),
   isComeFromROScreens: getIsEditableStatusSearchInfo(state)
 });
 

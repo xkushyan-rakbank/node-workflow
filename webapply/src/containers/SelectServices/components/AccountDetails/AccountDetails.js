@@ -31,7 +31,7 @@ const accountDetailsSchema = Yup.object({
   receiveInterest: Yup.bool()
 });
 
-export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspect }) => {
+export const AccountDetailsComponent = ({ goToNext, createFormChangeHandler, islamicBanking }) => {
   const classes = useStyles();
 
   return (
@@ -46,7 +46,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
       validateOnChange={false}
       onSubmit={goToNext}
     >
-      {({ values, setFieldValue }) => (
+      {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Subtitle title="Select currencies" />
           <Field
@@ -92,11 +92,11 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
                     .filter(city => city.code === values.branchCity)
                     .reduce((acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc), [])
                 }
-                onChange={id => {
-                  setFieldValue("branchID", id);
-                  updateProspect({ [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id });
-                  updateProspect({ "prospect.organizationInfo.branchID": id });
-                }}
+                changeProspect={(prospect, id) => ({
+                  ...prospect,
+                  [`prospect.accountInfo[${INITIAL_INDEX}].branchId`]: id,
+                  "prospect.organizationInfo.branchID": id
+                })}
                 label="Branch"
                 placeholder="Branch"
                 disabled={!values.branchCity}
@@ -124,7 +124,7 @@ export const AccountDetailsComponent = ({ goToNext, islamicBanking, updateProspe
             <ContinueButton type="submit" />
           </div>
         </Form>
-      )}
+      ))}
     </Formik>
   );
 };

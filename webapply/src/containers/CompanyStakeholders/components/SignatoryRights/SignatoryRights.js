@@ -5,8 +5,7 @@ import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
-import { updateProspect } from "../../../../store/actions/appConfig";
-import { stakeholdersSelector } from "../../../../store/selectors/stakeholder";
+import { getStakeholders } from "../../../../store/selectors/stakeholders";
 import {
   InlineRadioGroup,
   SelectAutocomplete,
@@ -29,14 +28,13 @@ const SignatoryRightsComponent = ({
   handleContinue,
   index,
   stakeholders,
-  updateProspect,
   createFormChangeHandler
 }) => {
   return (
     <Formik
       initialValues={{
         authorityType: get(stakeholders, `[${index}].accountSigningInfo.authorityType`),
-        isSignatory: ""
+        isSignatory: false
       }}
       onSubmit={handleContinue}
       validationSchema={signatoryRightsSchema}
@@ -54,9 +52,6 @@ const SignatoryRightsComponent = ({
               onSelect={() => {
                 if (values.isSignatory) {
                   setFieldValue("authorityType", "");
-                  updateProspect({
-                    [`prospect.signatoryInfo[${index}].accountSigningInfo.authorityType`]: ""
-                  });
                   setFieldTouched("authorityType", false);
                 }
               }}
@@ -75,16 +70,13 @@ const SignatoryRightsComponent = ({
               contextualHelpProps={{ isDisableHoverListener: false }}
               contextualHelpText="Select the authority / document through which the stakeholder is nominated as Signatory"
               tabIndex="0"
-              changeProspect={(prospect, value) => {
-                if (value === SOLE_PROPRIETOR) {
-                  return {
-                    ...prospect,
-                    [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: true,
-                    [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: 100
-                  };
-                }
-                return prospect;
-              }}
+              changeProspect={(prospect, value) => ({
+                ...prospect,
+                [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]:
+                  value === SOLE_PROPRIETOR ? true : "",
+                [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]:
+                  value === SOLE_PROPRIETOR ? 100 : ""
+              })}
             />
           </Grid>
 
@@ -96,14 +88,7 @@ const SignatoryRightsComponent = ({
 };
 
 const mapStateToProps = state => ({
-  stakeholders: stakeholdersSelector(state)
+  stakeholders: getStakeholders(state)
 });
 
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export const SignatoryRights = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignatoryRightsComponent);
+export const SignatoryRights = connect(mapStateToProps)(SignatoryRightsComponent);

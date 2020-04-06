@@ -2,9 +2,8 @@ import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { checkLoginStatus } from "../../store/selectors/loginSelector";
-import { getAgentName } from "../../store/selectors/appConfig";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
+import { checkLoginStatus, getAgentName } from "../../store/selectors/loginSelector";
+import { getCompanyName } from "../../store/selectors/appConfig";
 import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
 import { getIsIslamicBanking } from "../../store/selectors/appConfig";
@@ -17,11 +16,11 @@ import { accountTypes } from "../../containers/AccountsComparison/components/Tab
 const HeaderTitleComponent = ({
   islamicBanking,
   accountType,
-  organizationInfo: { companyName },
+  companyName,
   isAgent,
-  getAgentName,
   withoutMarginBottom,
-  logout
+  logout,
+  agentName
 }) => {
   const classes = useStyles({ withoutMarginBottom });
   const { pathname } = useLocation();
@@ -52,7 +51,7 @@ const HeaderTitleComponent = ({
         <span>
           {isAgent && (
             <>
-              <div>{getAgentName}</div>
+              <div>{agentName}</div>
               <div className={classes.logout} onClick={() => agentLogout()}>
                 Logout
               </div>
@@ -75,11 +74,11 @@ const HeaderTitleComponent = ({
 };
 
 const mapStateToProps = state => ({
+  agentName: getAgentName(state),
   isAgent: checkLoginStatus(state),
-  getAgentName: getAgentName(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),
-  organizationInfo: getOrganizationInfo(state)
+  companyName: getCompanyName(state)
 });
 
 const mapDispatchToProps = {

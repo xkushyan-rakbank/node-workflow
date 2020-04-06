@@ -55,9 +55,6 @@ export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";
 export const MAX_EMAIL_LENGTH = 50;
-export const MAX_STAKEHOLDERS_LENGTH = 12;
-export const MAX_SHAREHOLDERS_LENGTH = 4;
-export const MAX_SIGNATORIES_LENGTH = 8;
 
 export const REQUEST_LOADING = "loading";
 export const REQUEST_SUCCESS = "success";
@@ -74,9 +71,6 @@ const HAPPENED_WHILE_PERFORMING_AUDIT_WHILE_UPDATE_PROSPECT = "10004";
 const NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD = "I001F/12000";
 const ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS = "EXP101";
 const COMMON_SERVER_ERROR = "INV0001";
-
-export const RO_LOCKED_ERROR_CODE = "12013";
-export const APPS_NOT_FOUND_ERROR_CODE = "12009";
 
 const RO_STOP =
   "We noticed that your application is incomplete. Not to worry, our team is already working on it.";
@@ -218,57 +212,43 @@ export const STEP_STATUS = {
 // Company Check list
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
-  screeningStatus: "Completed",
-  screeningLabel: "Negative List",
-  screeningReason: "No Match"
+  screeningStatus: "Not completed",
+  screeningLabel: "Negative List"
 };
 export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Virtual Currency",
-  screeningReason: "Proceed"
+  screeningLabel: "Virtual Currency"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Country of Incorporation",
-  screeningReason: "Proceed"
+  screeningLabel: "Country of Incorporation"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAK-Starter Account Validation",
   screeningStatus: "Not completed",
-  screeningLabel: "RAK-Starter Account Validation",
-  screeningReason: "Proceed"
+  screeningLabel: "RAK-Starter Account Validation"
 };
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Dedupe",
-  screeningReason: "No Match"
+  screeningLabel: "Dedupe"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Company is a Stakeholder",
-  screeningReason: "Proceed"
+  screeningLabel: "Company is a Stakeholder"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Blacklist",
-  screeningReason: "No Match"
+  screeningLabel: "Blacklist"
 };
 export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Too many Stakeholders",
-  screeningReason: "Proceed"
-};
-export const RISK_RATING = {
-  screeningType: "Risk Rating",
-  screeningStatus: "Completed",
-  screeningLabel: "Risk Rating",
-  screeningReason: "Proceed"
+  screeningLabel: "Too many Stakeholders"
 };
 
 export const COMPANY_CHECK_NAMES = [
@@ -288,6 +268,10 @@ export const ELITE_ROUTE_PARAM = "business-elite";
 export const RAKSTARTER_ISLAMIC_ROUTE_PARAM = "rakstarter-islamic";
 export const CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM = "current-account-islamic";
 export const ELITE_ISLAMIC_ROUTE_PARAM = "business-elite-islamic";
+
+export const AUTO_SAVE_INTERVAL = 40000;
+
+export const UPLOADED = "Uploaded";
 
 export const accountTypeURIs = {
   [RAKSTARTER_ROUTE_PARAM]: {

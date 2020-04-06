@@ -40,7 +40,7 @@ public class ECSS3Factory {
         log.info("WEBAPPLY_DIR = {}", webApplyDir);
         log.info("WEBAPPLY_ENV = {}", webApplyEnv);
 
-        JsonNode docUploadConfig = fileUtil.getDocUploadConfigJson();
+        JsonNode docUploadConfig = fileUtil.getAppConfigJSON();
         JsonNode otherConfigs = docUploadConfig.get("OtherConfigs").get(webApplyEnv);
         s3AccessKeyId = otherConfigs.get("s3AccessKeyId").asText();
         s3SecretKey = otherConfigs.get("s3SecretKey").asText();

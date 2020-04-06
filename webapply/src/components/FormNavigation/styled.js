@@ -4,20 +4,18 @@ import {
   sideNavWidthMD,
   sideNavWidthLG,
   sideNavWidthCollapsed,
-  sideNavWidthSM
+  sideNavWidthSM,
+  sideNavWidthXL
 } from "../../constants/styles";
 import { ELITE, ISLAMIC, STANDART } from "../../utils/useBlobColor/constants";
 
 const blobImages = {
-  [STANDART]: require("../../assets/images/bg-blobs/bg-blob-red.svg"),
-  [`${STANDART}S`]: require("../../assets/images/bg-blobs/bg-blob-s-red.svg"),
-  [`${STANDART}M`]: require("../../assets/images/bg-blobs/bg-blob-m-red.svg"),
-  [ELITE]: require("../../assets/images/bg-blobs/elite-web-blob.svg"),
-  [`${ELITE}S`]: require("../../assets/images/bg-blobs/elite-mobile-blob_small.svg"),
-  [`${ELITE}M`]: require("../../assets/images/bg-blobs/elite-mobile-blob_medium.svg"),
-  [ISLAMIC]: require("../../assets/images/bg-blobs/bg-blob-green.svg"),
-  [`${ISLAMIC}S`]: require("../../assets/images/bg-blobs/bg-blob-s-green.svg"),
-  [`${ISLAMIC}M`]: require("../../assets/images/bg-blobs/bg-blob-m-green.svg")
+  [`${STANDART}S`]: require("../../assets/images/bg-blobs/red-mobile-small-blob.svg"),
+  [`${STANDART}M`]: require("../../assets/images/bg-blobs/red-mobile-small-blob.svg"),
+  [`${ELITE}S`]: require("../../assets/images/bg-blobs/elite-mobile-small-blob.svg"),
+  [`${ELITE}M`]: require("../../assets/images/bg-blobs/elite-mobile-medium-blob.svg"),
+  [`${ISLAMIC}S`]: require("../../assets/images/bg-blobs/green-mobile-small-blob.svg"),
+  [`${ISLAMIC}M`]: require("../../assets/images/bg-blobs/green-mobile-medium-blob.svg")
 };
 
 const blobGradient = {
@@ -30,19 +28,25 @@ export const useStyles = makeStyles(theme => ({
   blob: {
     position: "absolute",
     top: "50%",
-    width: "calc(380/768*100vh)",
+    width: sideNavWidthMD,
     zIndex: -1,
     right: 0,
     minHeight: "100vh",
     pointerEvents: "none",
     [theme.breakpoints.only("xs")]: {
       display: "none"
+    },
+    [theme.breakpoints.up("lg")]: {
+      width: sideNavWidthLG
+    },
+    [theme.breakpoints.up("xl")]: {
+      width: sideNavWidthXL
     }
   },
   formNav: {
     position: "relative",
     zIndex: 11,
-    transition: theme.transitions.default,
+    transition: theme.transitions.create("width"),
     "& .small-menu-show": {
       display: "none"
     },
@@ -53,7 +57,7 @@ export const useStyles = makeStyles(theme => ({
       paddingTop: 71,
       height: ({ isOpen, isSmallBg }) => {
         if (isOpen) return "calc(100vh - 50px)";
-        if (isSmallBg) return 220;
+        if (isSmallBg) return 190;
         return 340;
       },
       transition: theme.transitions.create("height", {
@@ -67,10 +71,10 @@ export const useStyles = makeStyles(theme => ({
       position: "fixed",
       top: 0,
       "& > svg:first-child": {
-        transition: theme.transitions.default,
+        transition: theme.transitions.create("transform"),
         transform: "translate(0, -50%)",
         "& path": {
-          transition: theme.transitions.default,
+          transition: theme.transitions.create("all"),
           "&:nth-child(1)": {
             fill: ({ color }) => `url(#${blobGradient[color]}-3)`
           },
@@ -84,45 +88,9 @@ export const useStyles = makeStyles(theme => ({
             fill: ({ color }) => `url(#${blobGradient[color]}-3)`
           }
         }
-      },
-      "&:before": {
-        transition: theme.transitions.default,
-        content: "''",
-        position: "absolute",
-        zIndex: -1,
-        left: 0,
-        top: 0,
-        bottom: 0,
-        minWidth: 50,
-        width: `calc(${sideNavWidthMD}px - 380/768*100vh + 50px)`,
-        pointerEvents: "none",
-        background: ({ color }) => {
-          switch (color) {
-            case ELITE:
-              return "linear-gradient(to bottom, #831334, #b1536f 90%, #b25470 100%)";
-            case ISLAMIC:
-              return "#417C35";
-            case STANDART:
-              return "linear-gradient(to bottom, #E9320F, #EA1C44)";
-            default:
-              return "transparent";
-          }
-        }
       }
     },
     [theme.breakpoints.only("sm")]: {
-      "& .small-menu-hide": {
-        opacity: 1,
-        transition: theme.transitions.default
-      },
-      "& .small-menu-show": {
-        display: ({ smallMenu }) => (smallMenu ? "block" : "none"),
-        opacity: 0,
-        transition: theme.transitions.default
-      },
-      "& $formNavContent": {
-        pointerEvents: "auto"
-      },
       width: ({ smallMenu }) => (smallMenu ? sideNavWidthMD : sideNavWidthSM),
       "&:not(:hover):not(.active), &:not(.active):not(:hover)": {
         width: ({ smallMenu }) => (smallMenu ? sideNavWidthCollapsed : sideNavWidthSM),
@@ -135,12 +103,6 @@ export const useStyles = makeStyles(theme => ({
         "& $formNavContent": {
           pointerEvents: ({ smallMenu }) => (smallMenu ? "none" : "auto")
         },
-        "&:before": {
-          width: ({ smallMenu }) =>
-            smallMenu
-              ? `calc(${sideNavWidthCollapsed}px - 380/768*100vh*0.4 + 50px)`
-              : `calc(${sideNavWidthSM}px - 380/768*100vh*0.4 + 50px)`
-        },
         "& > svg:first-child": {
           transform: ({ smallMenu }) =>
             smallMenu ? "translate(30%, -50%) scaleX(0.4)" : "translate(0, -50%) scaleX(1)",
@@ -150,12 +112,47 @@ export const useStyles = makeStyles(theme => ({
             }
           }
         }
+      },
+      "& .small-menu-hide": {
+        opacity: 1,
+        transition: theme.transitions.create("opacity")
+      },
+      "& .small-menu-show": {
+        display: ({ smallMenu }) => (smallMenu ? "block" : "none"),
+        opacity: 0,
+        transition: theme.transitions.create("opacity")
+      },
+      "& $formNavContent": {
+        pointerEvents: "auto"
       }
     },
     [theme.breakpoints.up("lg")]: {
-      width: sideNavWidthLG,
+      width: sideNavWidthLG
+    },
+    [theme.breakpoints.up("xl")]: {
+      width: sideNavWidthXL,
       "&:before": {
-        width: `calc(${sideNavWidthLG}px - 380/768*100vh + 50px)`
+        content: "''",
+        position: "absolute",
+        zIndex: -1,
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: "calc((100vw - 1920px) / 2)",
+        pointerEvents: "none",
+        transition: theme.transitions.create("background"),
+        background: ({ color }) => {
+          switch (color) {
+            case ELITE:
+              return "linear-gradient(to bottom, #831334, #b1536f 90%, #b25470 100%)";
+            case ISLAMIC:
+              return "#417C35";
+            case STANDART:
+              return "linear-gradient(to bottom, #E9320F, #EA1C44)";
+            default:
+              return "transparent";
+          }
+        }
       }
     },
     "& ul": {

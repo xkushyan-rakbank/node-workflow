@@ -11,15 +11,15 @@ import {
   setConfig,
   updateProspect,
   UPDATE_VIEW_ID,
-  saveProspectModel
+  saveSignatoryModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
-import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../constants";
+import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, AUTO } from "../../constants";
 import { getIsIslamicBanking, getAccountType, getProspect } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
-function* receiveAppConfigSaga() {
+export function* receiveAppConfigSaga() {
   try {
     const accountType = yield select(getAccountType);
     let response = null;
@@ -27,6 +27,7 @@ function* receiveAppConfigSaga() {
     if (accountType) {
       response = yield call(config.load, accountType);
     } else {
+      /* istanbul ignore if  */
       if (process.env.NODE_ENV === "development") {
         response = yield call(config.load, accountNames.starter);
       } else {
@@ -35,10 +36,11 @@ function* receiveAppConfigSaga() {
     }
 
     const newConfig = response.data;
-    let prospectModel;
+    const signatoryModel = newConfig.prospect
+      ? cloneDeep(newConfig.prospect.signatoryInfo[0])
+      : null;
 
     if (newConfig.prospect) {
-      prospectModel = cloneDeep(newConfig.prospect);
       newConfig.prospect.signatoryInfo = [];
       newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
@@ -50,8 +52,8 @@ function* receiveAppConfigSaga() {
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
-    if (prospectModel) {
-      yield put(saveProspectModel(prospectModel));
+    if (signatoryModel) {
+      yield put(saveSignatoryModel(signatoryModel));
     }
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());
@@ -61,7 +63,7 @@ function* receiveAppConfigSaga() {
   }
 }
 
-function* updateProspectSaga(action) {
+export function* updateProspectSaga(action) {
   const state = yield select();
   const prospect = cloneDeep(getProspect(state));
   const newConfig = {
@@ -76,10 +78,10 @@ function* updateProspectSaga(action) {
   yield put(setConfig(newConfig));
 }
 
-function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
+export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
-    yield put(sendProspectToAPI(CONTINUE));
+    yield put(sendProspectToAPI(AUTO));
   }
 }
 

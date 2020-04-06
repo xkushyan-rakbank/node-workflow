@@ -4,7 +4,7 @@ import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.dto.JwtPayload;
 import ae.rakbank.documentuploader.dto.UserRole;
 import ae.rakbank.documentuploader.exception.ApiException;
-import ae.rakbank.documentuploader.util.EnvironmentUtil;
+import ae.rakbank.documentuploader.util.EnvUtil;
 import ae.rakbank.documentuploader.util.FileUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -26,14 +26,13 @@ import java.time.LocalDateTime;
 class JwtService {
 
     private final FileUtil fileUtil;
-    private final EnvironmentUtil environmentUtil;
 
     private String secret;
 
     @PostConstruct
     public void init() {
-        JsonNode appConfigJSON = fileUtil.getDocUploadConfigJson();
-        secret = appConfigJSON.get("OtherConfigs").get(environmentUtil.getWebApplyEnv()).get("JwtSecret").asText();
+        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
+        secret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("JwtSecret").asText();
     }
 
     @SuppressWarnings("Duplicates")

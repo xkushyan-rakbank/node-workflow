@@ -1,12 +1,19 @@
 package ae.rakbank.documentuploader.controller;
 
 import ae.rakbank.documentuploader.dto.ApiError;
+import ae.rakbank.documentuploader.dto.ApiErrorInterface;
+import ae.rakbank.documentuploader.dto.ApiErrorReduced;
 import ae.rakbank.documentuploader.exception.ApiException;
 import ae.rakbank.documentuploader.exception.S3ReadFileException;
 import ae.rakbank.documentuploader.exception.AmazonS3FileNotFoundException;
+import ae.rakbank.documentuploader.util.EnvUtil;
+import ae.rakbank.documentuploader.util.FileUtil;
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -15,16 +22,33 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import io.undertow.server.RequestTooBigException;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class AdviceController {
 
     private static final String REDIRECT = "redirect:/";
     private static final String MESSAGE_KEY = "message";
 
-    // CommonsMultipartResolver, RequestTooBigException, StandardServletMultipartResolver
+    private final FileUtil fileUtil;
+
+    private Boolean shouldSendErrorDebugDetails;
+
+    @PostConstruct
+    public void init() {
+        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
+        String errorDebugDetails = appConfigJSON.get("OtherConfigs")
+                .get(EnvUtil.getEnv()).get("ShouldSendErrorDebugDetails").asText();
+        if (StringUtils.isEmpty(errorDebugDetails)) {
+            shouldSendErrorDebugDetails = false;
+        } else {
+            shouldSendErrorDebugDetails = Boolean.valueOf(errorDebugDetails);
+        }
+    }
+
     @ExceptionHandler({MaxUploadSizeExceededException.class, RequestTooBigException.class, MultipartException.class})
     public String handleError2(Exception e, RedirectAttributes redirectAttributes) {
 
@@ -33,15 +57,25 @@ public class AdviceController {
     }
 
     @ExceptionHandler(S3ReadFileException.class)
-    public ApiError handleAmazonS3ReadFileException(S3ReadFileException e) {
-        return new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Could not read file from the storage",
+    public ApiErrorInterface handleAmazonS3ReadFileException(S3ReadFileException e) {
+        ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Could not read file from the storage",
                 e.getMessage(), e);
+        if (shouldSendErrorDebugDetails) {
+            return apiError;
+        } else {
+            return new ApiErrorReduced(apiError);
+        }
     }
 
     @ExceptionHandler(AmazonS3FileNotFoundException.class)
-    public ApiError handleAmazonS3FileNotFoundException(AmazonS3FileNotFoundException e) {
-        return new ApiError(HttpStatus.NOT_FOUND, "File not found in the storage",
+    public ApiErrorInterface handleAmazonS3FileNotFoundException(AmazonS3FileNotFoundException e) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, "File not found in the storage",
                 e.getMessage(), e);
+        if (shouldSendErrorDebugDetails) {
+            return apiError;
+        } else {
+            return new ApiErrorReduced(apiError);
+        }
     }
 
     @SuppressWarnings("Duplicates")
@@ -73,7 +107,12 @@ public class AdviceController {
             apiError.setExceptionClassName(apiException.getClass().getSimpleName());
         }
 
-        return new ResponseEntity<>(apiError.toJsonString(), headers, status);
+        if (shouldSendErrorDebugDetails) {
+            return new ResponseEntity<>(apiError.toJsonString(), headers, status);
+        } else {
+            return new ResponseEntity<>(new ApiErrorReduced(apiError).toJsonString(), headers, status);
+        }
+
     }
 
     @SuppressWarnings("Duplicates")
@@ -87,7 +126,11 @@ public class AdviceController {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         ApiError apiError = getDefaultApiError(exception, status, null);
 
-        return new ResponseEntity<>(apiError.toJsonString(), headers, status);
+        if (shouldSendErrorDebugDetails) {
+            return new ResponseEntity<>(apiError.toJsonString(), headers, status);
+        } else {
+            return new ResponseEntity<>(new ApiErrorReduced(apiError).toJsonString(), headers, status);
+        }
     }
 
     private ApiError getDefaultApiError(Exception ex, HttpStatus status, String timestamp) {

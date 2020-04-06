@@ -9,7 +9,8 @@ import {
   CustomSelect,
   InputGroup,
   AutoSaveField as Field,
-  SkeletonLoader
+  SkeletonLoader,
+  LinkedField
 } from "./../../components/Form";
 import { SubmitButton } from "./../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../components/ErrorBoundary";
@@ -86,15 +87,12 @@ const ApplicantInfoPage = ({
     values => {
       setIsLoading(true);
       submit(values).then(
-        () => {
+        () =>
           pushHistory(
             process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
             true
-          );
-        },
-        () => {
-          setIsLoading(false);
-        }
+          ),
+        () => setIsLoading(false)
       );
     },
     [submit, pushHistory]
@@ -159,22 +157,22 @@ const ApplicantInfoPage = ({
               <SkeletonLoader />
             ) : (
               <InputGroup>
-                <Field
+                <LinkedField
                   name="countryCode"
+                  linkedFieldName="mobileNo"
                   path="prospect.applicantInfo.countryCode"
+                  linkedPath="prospect.applicantInfo.mobileNo"
                   required
                   datalistId="countryCode"
                   component={CustomSelect}
-                  changeProspect={prospect => ({
-                    ...prospect,
-                    "prospect.applicantInfo.mobileNo": values.mobileNo
-                  })}
                   shrink={false}
                   inputProps={{ tabIndex: 0 }}
                 />
-                <Field
+                <LinkedField
                   name="mobileNo"
+                  linkedFieldName="countryCode"
                   path="prospect.applicantInfo.mobileNo"
+                  linkedPath="prospect.applicantInfo.countryCode"
                   label="Your Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
@@ -209,9 +207,9 @@ const ApplicantInfoPage = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    isLoading ||
                     (!reCaptchaToken && isRecaptchaEnable)
                   }
+                  isDisplayLoader={isLoading}
                   justify="flex-end"
                   label="Next Step"
                 />

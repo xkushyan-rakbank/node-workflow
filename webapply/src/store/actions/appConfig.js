@@ -10,7 +10,7 @@ export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const REMOVE_PROSPECT_ID = "REMOVE_PROSPECT_ID";
-export const SAVE_PROSPECT_MODEL = "SAVE_PROSPECT_MODEL";
+export const SAVE_SIGNATORY_MODEL = "SAVE_SIGNATORY_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
 export const LOAD_META_DATA = "LOAD_META_DATA";
@@ -62,8 +62,8 @@ export const updateViewId = (viewId, isSendToApi) => {
   return { type: UPDATE_VIEW_ID, payload: { viewId, isSendToApi } };
 };
 
-export const saveProspectModel = payload => {
-  return { type: SAVE_PROSPECT_MODEL, payload };
+export const saveSignatoryModel = payload => {
+  return { type: SAVE_SIGNATORY_MODEL, payload };
 };
 
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });

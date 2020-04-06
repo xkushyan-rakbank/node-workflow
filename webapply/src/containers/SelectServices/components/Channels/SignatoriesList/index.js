@@ -20,7 +20,7 @@ export const SignatoriesList = ({ stakeholders }) => {
       />
 
       <div className={classes.signatoryNamesContainer}>
-        {stakeholders.map(({ firstName, lastName, kycDetails = {} }, index) => {
+        {stakeholders.map(({ firstName, lastName, kycDetails = {}, debitCardInfo }, index) => {
           const prefix = `prospect.signatoryInfo.${index}`;
 
           return (
@@ -34,6 +34,9 @@ export const SignatoriesList = ({ stakeholders }) => {
                     <Field
                       name={`signatory.${index}.nameOnDebitCard`}
                       path={`${prefix}.debitCardInfo.authSignatoryDetails.nameOnDebitCard`}
+                      isLoadDefaultValueFromStore={
+                        !!debitCardInfo.authSignatoryDetails.nameOnDebitCard
+                      }
                       label="Name on business debit card"
                       placeholder="Name on business debit card"
                       classes={{ formControlRoot: classes.rootInput }}

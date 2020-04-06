@@ -29,9 +29,10 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking,
-  getScreeningError
+  getIsIslamicBanking
 } from "../selectors/appConfig";
+import { getCompletedSteps } from "../selectors/completedSteps";
+import { getScreeningError } from "../selectors/sendProspectToAPI";
 import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
@@ -42,13 +43,15 @@ import {
   screeningStatusDefault,
   CONTINUE,
   AUTO,
-  VIEW_IDS
+  VIEW_IDS,
+  STEP_STATUS,
+  AUTO_SAVE_INTERVAL
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 
-function* watchRequest() {
+export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
   while (true) {
     const actions = yield flush(chan);
@@ -60,7 +63,7 @@ function* watchRequest() {
   }
 }
 
-function* setScreeningResults({ preScreening }) {
+export function* setScreeningResults({ preScreening }) {
   const currScreeningType = preScreening.screeningResults.find(screeningResult =>
     SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
   );
@@ -70,9 +73,8 @@ function* setScreeningResults({ preScreening }) {
   );
 
   if (screenError) {
-    const state = yield select();
-    const accountType = getAccountType(state);
-    const isIslamicBanking = getIsIslamicBanking(state);
+    const accountType = yield select(getAccountType);
+    const isIslamicBanking = yield select(getIsIslamicBanking);
     const { screeningType } = screenError;
 
     yield put(
@@ -87,30 +89,23 @@ function* setScreeningResults({ preScreening }) {
   }
 }
 
-function* sendProspectToAPISaga({ payload: { saveType, actionType } }) {
+export function* sendProspectToAPISaga({ payload: { saveType, actionType, step } }) {
   try {
     yield put(resetInputsErrors());
-    yield put(resetFormStep({ resetStep: true }));
+    yield put(resetFormStep(true));
 
-    const state = yield select();
-    const prospect = getProspect(state);
+    const prospect = yield select(getProspect);
 
-    const newProspect = { ...prospect };
-    newProspect.freeFieldsInfo = {
-      ...(newProspect.freeFieldsInfo || {}),
-      freeField5: JSON.stringify({ completedSteps: state.completedSteps })
-    };
-
-    yield put(sendProspectRequest(newProspect, saveType, actionType));
+    yield put(sendProspectRequest(prospect, saveType, actionType, step));
   } finally {
-    yield put(resetFormStep({ resetStep: false }));
+    yield put(resetFormStep(false));
   }
 }
 
-function* prospectAutoSave() {
+export function* prospectAutoSave() {
   try {
     while (true) {
-      yield delay(40000);
+      yield delay(AUTO_SAVE_INTERVAL);
 
       const newProspect = yield select(getProspect);
       const screeningError = yield select(getScreeningError);
@@ -136,14 +131,28 @@ function* prospectAutoSave() {
   }
 }
 
-function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) {
+export function* sendProspectToAPI({ payload: { newProspect, saveType, actionType, step } }) {
   try {
-    const state = yield select();
-    const prospectId = getProspectId(state);
-    const headers = getAuthorizationHeader(state);
+    const prospectId = yield select(getProspectId);
+    const headers = yield select(getAuthorizationHeader);
+    const completedSteps = yield select(getCompletedSteps);
+
+    const newCompletedSteps = step
+      ? completedSteps.map(completedStep => {
+          if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
+            return { ...completedStep, status: STEP_STATUS.COMPLETED };
+          }
+          return completedStep;
+        })
+      : completedSteps;
 
     newProspect.applicationInfo.saveType = saveType;
     newProspect.applicationInfo.actionType = actionType;
+    newProspect.freeFieldsInfo = {
+      ...(newProspect.freeFieldsInfo || {}),
+      freeField5: JSON.stringify({ completedSteps: newCompletedSteps })
+    };
+
     const { data } = yield call(prospect.update, prospectId, newProspect, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {
@@ -163,12 +172,11 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
 
     if (isScreeningError) {
       yield fork(setScreeningResults, data);
-    } else {
-      if (preScreening) {
-        yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
-      }
+    } else if (preScreening) {
+      yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
     }
-    yield put(sendProspectToAPISuccess(isScreeningError));
+
+    yield put(sendProspectToAPISuccess(!!isScreeningError));
   } catch (error) {
     if (error instanceof ErrorOccurredWhilePerforming) {
       yield put(
@@ -179,13 +187,13 @@ function* sendProspectToAPI({ payload: { newProspect, saveType, actionType } }) 
     } else if (error instanceof FieldsValidationError) {
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {
-      log({ error });
-      yield put(sendProspectToAPIFail(error));
+      log(error);
     }
+    yield put(sendProspectToAPIFail());
   }
 }
 
-function* prospectAutoSaveFlowSaga() {
+export function* prospectAutoSaveFlowSaga() {
   while (true) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
 

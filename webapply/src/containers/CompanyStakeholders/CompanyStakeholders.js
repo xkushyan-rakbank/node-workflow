@@ -16,14 +16,19 @@ import {
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
-  stakeholdersSelector,
-  stakeholdersState,
+  getStakeholders,
   checkIsHasSignatories,
-  percentageSelector
-} from "../../store/selectors/stakeholder";
+  getPercentage,
+  getStakeholdersIds
+} from "../../store/selectors/stakeholders";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
+import {
+  getIsAnyStakeholderStepsCompleted,
+  getIsStakeholderStepsCompleted
+} from "../../store/selectors/completedSteps";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
+import { formStepper, NEXT } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -36,14 +41,15 @@ const CompanyStakeholdersComponent = ({
   stakeholdersIds,
   hasSignatories,
   sendProspectToAPI,
-  isLoading
+  isStakeholderStepsCompleted,
+  isAnyStakeholderStepsCompleted,
+  isSendingProspect
 }) => {
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
 
-  const [isShowingAddButton, setIsShowingAddButton] = useState(
-    stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [isShowingAddButton, setIsShowingAddButton] = useState(stakeholders.length > 0);
 
   useFormNavigation([false, true, formStepper]);
 
@@ -60,15 +66,16 @@ const CompanyStakeholdersComponent = ({
 
   const isLowPercentage = percentage < 100;
   const isDisableNextStep =
-    stakeholders.length < 1 ||
-    !stakeholdersIds.every(stakeholder => stakeholder.done) ||
-    isLowPercentage ||
-    !hasSignatories;
+    stakeholders.length < 1 || !isStakeholderStepsCompleted || isLowPercentage || !hasSignatories;
 
   const goToFinalQuestions = useCallback(() => {
-    sendProspectToAPI(NEXT).then(isScreeningError => {
-      if (!isScreeningError) pushHistory(routes.finalQuestions, true);
-    });
+    setIsLoading(true);
+    sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.finalQuestions, true);
+      },
+      () => setIsLoading(false)
+    );
   }, [pushHistory, sendProspectToAPI]);
 
   const handleDeleteStakeholder = useCallback(
@@ -137,15 +144,15 @@ const CompanyStakeholdersComponent = ({
           );
         })}
       </div>
-      {isShowingAddButton && !isLoading && (
+      {isShowingAddButton && (
         <div className={classes.buttonsWrapper}>
-          <AddStakeholderButton handleClick={addNewStakeholder} />
+          <AddStakeholderButton disabled={isSendingProspect} handleClick={addNewStakeholder} />
         </div>
       )}
-      {stakeholders.length > 0 && (stakeholdersIds[0].done && !hasSignatories) && (
+      {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && !hasSignatories) && (
         <ErrorMessage error="At least one signatory is required. Edit Signatory rights or Add new stakeholder." />
       )}
-      {stakeholders.length > 0 && (stakeholdersIds[0].done && isLowPercentage) && (
+      {stakeholders.length > 0 && (isAnyStakeholderStepsCompleted && isLowPercentage) && (
         <ErrorMessage
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
           or edit the shareholding % for the added stakeholders.`}
@@ -156,26 +163,25 @@ const CompanyStakeholdersComponent = ({
 
         <NextStepButton
           handleClick={goToFinalQuestions}
+          isDisplayLoader={isLoading}
+          disabled={isDisableNextStep}
           label="Next Step"
           justify="flex-end"
-          disabled={isDisableNextStep}
         />
       </div>
     </>
   );
 };
 
-const mapStateToProps = state => {
-  const { stakeholdersIds } = stakeholdersState(state);
-
-  return {
-    isLoading: state.sendProspectToAPI.loading,
-    stakeholdersIds,
-    stakeholders: stakeholdersSelector(state),
-    percentage: percentageSelector(state),
-    hasSignatories: checkIsHasSignatories(state)
-  };
-};
+const mapStateToProps = state => ({
+  isSendingProspect: getIsSendingProspect(state),
+  stakeholdersIds: getStakeholdersIds(state),
+  stakeholders: getStakeholders(state),
+  percentage: getPercentage(state),
+  isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
+  isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
+  hasSignatories: checkIsHasSignatories(state)
+});
 
 const mapDispatchToProps = {
   deleteStakeholder,
