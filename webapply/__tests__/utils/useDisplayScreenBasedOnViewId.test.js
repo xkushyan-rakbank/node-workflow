@@ -1,9 +1,13 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import { useSelector } from "react-redux";
 
 import { useDisplayScreenBasedOnViewId } from "../../src/utils/useDisplayScreenBasedOnViewId";
 import routes from "../../src/routes";
 import { VIEW_IDS, ACTION_TYPES, PROSPECT_STATUSES } from "../../src/constants";
+import { getApplicationInfo, getProspectId } from "../../src/store/selectors/appConfig";
+import {
+  getIsEditableStatusSearchInfo,
+  getSearchResultsStatuses
+} from "../../src/store/selectors/searchProspect";
 
 const mockDefaultApplicationInfo = {
   viewId: VIEW_IDS.ApplicationSubmitted,
@@ -31,14 +35,18 @@ const prospect = {
 
 const mockPush = jest.fn();
 
+jest.mock("../../src/store/selectors/appConfig");
+jest.mock("../../src/store/selectors/searchProspect");
+
 jest.mock("react-router-dom", () => ({
   __esModule: true,
   useHistory: () => ({ push: mockPush }),
   useLocation: () => ({ pathname: "/SearchedAppInfo" })
 }));
+
 jest.mock("react-redux", () => ({
   __esModule: true,
-  useSelector: jest.fn()
+  useSelector: jest.fn(fn => fn())
 }));
 
 describe("useDisplayScreenBasedOnViewId ", () => {
@@ -47,11 +55,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should take prospect from store if prospect was not provided", () => {
-    useSelector
-      .mockReturnValueOnce(mockSubmitApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensTrue)
-      .mockReturnValueOnce(mockDefaultStatuses);
+    getApplicationInfo.mockReturnValue(mockSubmitApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensTrue);
+    getSearchResultsStatuses.mockReturnValue(mockDefaultStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory();
@@ -60,11 +67,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should redirect to company info page when app was sumbitted and RO mode", () => {
-    useSelector
-      .mockReturnValueOnce(mockSubmitApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensTrue)
-      .mockReturnValueOnce(mockDefaultStatuses);
+    getApplicationInfo.mockReturnValue(mockSubmitApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensTrue);
+    getSearchResultsStatuses.mockReturnValue(mockDefaultStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory();
@@ -73,11 +79,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should redirect to company info page when viewId is ApplicationSubmitted/ReUploadDocuments and RO mode", () => {
-    useSelector
-      .mockReturnValueOnce(mockDefaultApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensTrue)
-      .mockReturnValueOnce(mockDefaultStatuses);
+    getApplicationInfo.mockReturnValue(mockDefaultApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensTrue);
+    getSearchResultsStatuses.mockReturnValue(mockDefaultStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory();
@@ -86,11 +91,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should redirect to reupload documents page when status is Document Needed and RO mode", () => {
-    useSelector
-      .mockReturnValueOnce(mockDefaultApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensFalse)
-      .mockReturnValueOnce(mockDocumentNeededStatuses);
+    getApplicationInfo.mockReturnValue(mockDefaultApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensFalse);
+    getSearchResultsStatuses.mockReturnValue(mockDocumentNeededStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory(prospect);
@@ -99,11 +103,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should redirect to reupload documents page when app is submitted, Customer mode and retrive mode enable", () => {
-    useSelector
-      .mockReturnValueOnce(mockSubmitApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensFalse)
-      .mockReturnValueOnce(mockDefaultStatuses);
+    getApplicationInfo.mockReturnValue(mockSubmitApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensFalse);
+    getSearchResultsStatuses.mockReturnValue(mockDefaultStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory(prospect);
@@ -112,11 +115,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should redirect to application submitted page when app is submitted, Customer mode and no additional docs needed", () => {
-    useSelector
-      .mockReturnValueOnce(mockSubmitApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensFalse)
-      .mockReturnValueOnce(mockDefaultStatuses);
+    getApplicationInfo.mockReturnValue(mockSubmitApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensFalse);
+    getSearchResultsStatuses.mockReturnValue(mockDefaultStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory();
@@ -125,11 +127,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should take companyInfo path when no viewId provided", () => {
-    useSelector
-      .mockReturnValueOnce({ ...mockDefaultApplicationInfo, viewId: "" })
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensFalse)
-      .mockReturnValueOnce(mockDefaultStatuses);
+    getApplicationInfo.mockReturnValue({ ...mockDefaultApplicationInfo, viewId: "" });
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensFalse);
+    getSearchResultsStatuses.mockReturnValue(mockDefaultStatuses);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory();
@@ -138,11 +139,10 @@ describe("useDisplayScreenBasedOnViewId ", () => {
   });
 
   it("should take undefined prospectStatus when it did not find matches with the prospectId", () => {
-    useSelector
-      .mockReturnValueOnce(mockDefaultApplicationInfo)
-      .mockReturnValueOnce(mockProspectId)
-      .mockReturnValueOnce(mockIsROScreensFalse)
-      .mockReturnValueOnce([{ prospectId: 0 }]);
+    getApplicationInfo.mockReturnValue(mockDefaultApplicationInfo);
+    getProspectId.mockReturnValue(mockProspectId);
+    getIsEditableStatusSearchInfo.mockReturnValue(mockIsROScreensFalse);
+    getSearchResultsStatuses.mockReturnValue([{ prospectId: 0 }]);
     const { result } = renderHook(() => useDisplayScreenBasedOnViewId());
     act(() => {
       result.current.pushDisplayScreenToHistory();
