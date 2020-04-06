@@ -8,7 +8,7 @@ export const getEditableStakeholder = state => getStakeholdersState(state).edita
 
 export const getStakeholdersIds = state => getStakeholdersState(state).stakeholdersIds;
 
-export const stakeholdersSelector = createSelector(
+export const getStakeholders = createSelector(
   getSignatories,
   getStakeholdersIds,
   (stakeholders, stakeholdersIds) =>
@@ -18,16 +18,16 @@ export const stakeholdersSelector = createSelector(
     }))
 );
 
-export const percentageSelector = state => {
+export const getPercentage = state => {
   const stakeholdersList = getSignatories(state);
   return stakeholdersList.reduce(
     (previousValue, currentValue) =>
-      previousValue + +currentValue.kycDetails.shareHoldingPercentage,
+      previousValue + Number(get(currentValue, "kycDetails.shareHoldingPercentage", 0)),
     0
   );
 };
 
-export const percentageSelectorWithoutCurrentStakeholder = (state, index) => {
+export const getPercentageWithoutCurrentStakeholder = (state, index) => {
   const signatories = [...getSignatories(state)];
   signatories.splice(index, 1);
 
@@ -38,4 +38,4 @@ export const percentageSelectorWithoutCurrentStakeholder = (state, index) => {
 };
 
 export const checkIsHasSignatories = state =>
-  stakeholdersSelector(state).some(stakeholder => get(stakeholder, "kycDetails.isSignatory"));
+  getStakeholders(state).some(stakeholder => get(stakeholder, "kycDetails.isSignatory"));
