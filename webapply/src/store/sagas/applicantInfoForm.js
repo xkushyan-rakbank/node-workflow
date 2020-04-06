@@ -7,35 +7,44 @@ import {
 import { updateProspectId, updateProspect } from "../actions/appConfig";
 import { resetInputsErrors, setInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
-import { prospect } from "../../api/apiClient";
+import { prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader, getIsRecaptchaEnable } from "./../selectors/appConfig";
+import {
+  getApplicationInfo,
+  getAuthorizationHeader,
+  getIsRecaptchaEnable
+} from "./../selectors/appConfig";
 import { FieldsValidationError } from "../../api/serverErrors";
 import { NEXT, SAVE } from "../../constants";
+import { getProspect } from "../selectors/appConfig";
+import { getReCaptchaToken } from "../selectors/reCaptcha";
 
-function* applicantInfoFormSaga({ payload }) {
+export function* applicantInfoFormSaga({ payload }) {
   try {
-    const state = yield select();
+    const isRecaptchaEnable = yield select(getIsRecaptchaEnable);
+    const prospect = yield select(getProspect);
+    const applicationInfo = yield select(getApplicationInfo);
+    const headers = yield select(getAuthorizationHeader);
 
     let prospectUpdated = {
-      ...state.appConfig.prospect,
-      applicantInfo: payload
+      ...prospect,
+      applicantInfo: payload,
+      applicationInfo: {
+        ...applicationInfo,
+        saveType: NEXT,
+        actionType: SAVE
+      }
     };
-    prospectUpdated.applicationInfo.saveType = NEXT;
-    prospectUpdated.applicationInfo.actionType = SAVE;
-    yield put(updateProspect({ prospect: prospectUpdated }));
-    if (getIsRecaptchaEnable(state)) {
-      prospectUpdated = {
-        ...prospectUpdated,
-        recaptchaToken: state.reCaptcha.token
-      };
-    }
 
-    const headers = getAuthorizationHeader(state);
+    yield put(updateProspect({ prospect: prospectUpdated }));
+
+    if (isRecaptchaEnable) {
+      prospectUpdated.recaptchaToken = yield select(getReCaptchaToken);
+    }
 
     const {
       data: { prospectId }
-    } = yield call(prospect.create, prospectUpdated, headers);
+    } = yield call(prospectApi.create, prospectUpdated, headers);
 
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
@@ -45,9 +54,9 @@ function* applicantInfoFormSaga({ payload }) {
     if (error instanceof FieldsValidationError) {
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {
-      yield put(applicantInfoFormFail(error));
       log(error);
     }
+    yield put(applicantInfoFormFail(error));
   }
 }
 
