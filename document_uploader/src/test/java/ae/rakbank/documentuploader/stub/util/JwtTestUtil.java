@@ -26,7 +26,7 @@ public class JwtTestUtil {
                     .withClaim("role", role)
                     .withClaim("phoneNumber", data.getPhoneNumber())
                     .withClaim("prospectId", data.getProspectId())
-                    .withClaim("oauthTokenExpiryTime", data.getOauthTokenExpiryTime().toString())
+//                    .withClaim("oauthTokenExpiryTime", data.getOauthTokenExpiryTime().toString())
                     .sign(algorithm);
         } catch (JWTCreationException e) {
             throw new RuntimeException();

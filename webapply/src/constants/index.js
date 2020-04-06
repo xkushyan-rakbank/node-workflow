@@ -238,8 +238,7 @@ export const DEDUPE_CHECK = {
 export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Company is a Stakeholder",
-  screeningReason: "Proceed"
+  screeningLabel: "Company is a Stakeholder"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
