@@ -7,7 +7,7 @@ import {
   GET_PROSPECT_DOCUMENTS_FAIL,
   SAVE_AND_RETRIEVE_DOC_UPLOADER
 } from "../actions/uploadDocuments";
-import { handleActions } from "../../utils/redux-utils";
+import { handleActions, composeActions } from "../../utils/redux-utils";
 
 export const initialState = {
   progress: {},
@@ -29,11 +29,7 @@ export default handleActions(
       ...state,
       uploadErrors: { ...state.uploadErrors, ...error }
     }),
-    [SAVE_AND_RETRIEVE_DOC_UPLOADER]: state => ({
-      ...state,
-      isLoading: true
-    }),
-    [RETRIEVE_DOC_UPLOADER]: state => ({
+    [composeActions(SAVE_AND_RETRIEVE_DOC_UPLOADER, RETRIEVE_DOC_UPLOADER)]: state => ({
       ...state,
       isLoading: true
     }),
