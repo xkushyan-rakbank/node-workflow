@@ -11,11 +11,11 @@ export const PickerToolbar = ({ date, onChange, disableFuture }) => {
 
   const onMonthChange = month => {
     const newDate = setMonth(date, month);
-    onChange(disableFuture && isFuture(newDate) ? new Date() : newDate);
+    onChange(disableFuture && isFuture(newDate) ? new Date() : newDate, false);
   };
   const onYearChange = year => {
     const newDate = setYear(date, year);
-    onChange(disableFuture && isFuture(newDate) ? new Date() : newDate);
+    onChange(disableFuture && isFuture(newDate) ? new Date() : newDate, false);
   };
 
   return (
