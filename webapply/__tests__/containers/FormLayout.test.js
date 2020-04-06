@@ -21,6 +21,7 @@ describe("FormLayout tests", () => {
   const accountType = "some account type";
   const isIslamicBanking = true;
   const errorCode = "some error code";
+  let windowSpy;
 
   const props = {
     children,
@@ -34,6 +35,7 @@ describe("FormLayout tests", () => {
   beforeEach(() => {
     FormLayoutComponent.mockImplementation(({ children }) => <div>{children}</div>);
     useLocation.mockReturnValue({ pathname });
+    windowSpy = jest.spyOn(window, "scrollTo").mockImplementation(() => {});
     jest.clearAllMocks();
   });
 
@@ -85,5 +87,11 @@ describe("FormLayout tests", () => {
     render(<FormLayoutContainer {...props} />);
 
     expect(updateViewId.mock.calls[0]).toEqual([VIEW_IDS.CompanyInfo, true]);
+  });
+
+  it("should scroll To 0, 0 on mount", () => {
+    render(<FormLayoutContainer {...props} />);
+
+    expect(windowSpy.mock.calls[0]).toEqual([0, 0]);
   });
 });

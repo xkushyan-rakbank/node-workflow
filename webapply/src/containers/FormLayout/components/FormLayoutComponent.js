@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 
 import { FormNavigation } from "../../../components/FormNavigation";
 import { HeaderTitle } from "../../../components/HeaderTitle";
@@ -7,10 +6,9 @@ import { Notifications } from "../../../components/Notification";
 import { ApplicationStatus } from "../../../components/ApplicationStatus/ApplicationStatus";
 
 import { ERROR_MESSAGES } from "../../../constants";
-import { checkIsShowSmallMenu } from "../../../components/FormNavigation/utils";
+import { useBlobColor } from "../../../utils/useBlobColor/useBlobColor";
 
 import { useStyles } from "./styled";
-import { useBlobColor } from "../../../utils/useBlobColor/useBlobColor";
 
 export const FormLayoutComponent = ({
   isDisplayHeader,
@@ -18,19 +16,15 @@ export const FormLayoutComponent = ({
   screeningError,
   errorCode,
   errorIcon,
+  isFullContentWidth,
   children
 }) => {
   const blobColor = useBlobColor();
-  const { pathname } = useLocation();
   const classes = useStyles({
     isDisplayHeader,
     color: blobColor,
-    isFullContentWidth: checkIsShowSmallMenu(pathname)
+    isFullContentWidth
   });
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
 
   return (
     <div className={classes.formLayout}>

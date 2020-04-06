@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { Providers } from "./components/Providers";
 import { MobileNotification } from "../../components/Notifications";
 import { FormLayoutComponent } from "./components/FormLayoutComponent";
+import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
@@ -33,6 +34,10 @@ export const FormLayoutContainer = ({
     updateViewId(viewId, isSendToApi);
   }, [pathname, updateViewId]);
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
   const isDisplayHeader = [
     routes.verifyOtp,
     routes.applicantInfo,
@@ -59,8 +64,6 @@ export const FormLayoutContainer = ({
       routes.SubmitApplication
     ].includes(pathname);
 
-  const errorIcon = getErrorScreensIcons(accountType, isIslamicBanking, ERRORS_TYPE.BLOCK_EDITING);
-
   return (
     <Providers>
       <MobileNotification>
@@ -68,7 +71,8 @@ export const FormLayoutContainer = ({
           errorCode={errorCode}
           isDisplayHeader={isDisplayHeader}
           isDisplayScreeningError={isDisplayScreeningError}
-          errorIcon={errorIcon}
+          errorIcon={getErrorScreensIcons(accountType, isIslamicBanking, ERRORS_TYPE.BLOCK_EDITING)}
+          isFullContentWidth={checkIsShowSmallMenu(pathname)}
         >
           {children}
         </FormLayoutComponent>
