@@ -1,12 +1,14 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { shallow } from "enzyme";
+import { render } from "@testing-library/react";
 
 import { FormLayoutContainer } from "../../src/containers/FormLayout/FormLayout";
-import routes from "../../src/routes";
+import { FormLayoutComponent } from "../../src/containers/FormLayout/components/FormLayoutComponent";
 import { VIEW_IDS } from "../../src/constants";
+import routes from "../../src/routes";
 
 jest.mock("../../src/store/actions/appConfig");
+jest.mock("../../src/containers/FormLayout/components/FormLayoutComponent");
 jest.mock("react-router-dom", () => ({
   useLocation: jest.fn()
 }));
@@ -29,54 +31,47 @@ describe("FormLayout tests", () => {
     errorCode
   };
 
-  const mountContainerAndCheckProps = () => {
-    const container = shallow(<FormLayoutContainer {...props} />);
-    const component = container.find("FormLayoutComponent");
-    return component.props();
-  };
-
   beforeEach(() => {
+    FormLayoutComponent.mockImplementation(({ children }) => <div>{children}</div>);
     useLocation.mockReturnValue({ pathname });
-
     jest.clearAllMocks();
   });
 
   it("should pass children", () => {
-    const componentProps = mountContainerAndCheckProps();
+    render(<FormLayoutContainer {...props} />);
 
-    expect(componentProps.children).toEqual(children);
+    expect(FormLayoutComponent.mock.calls[0][0].children).toEqual(children);
   });
 
   it("should display screening error", () => {
     const pathname = routes.companyInfo;
     useLocation.mockReturnValue({ pathname });
 
-    const componentProps = mountContainerAndCheckProps();
+    render(<FormLayoutContainer {...props} />);
 
-    expect(componentProps.isDisplayScreeningError).toEqual(true);
+    expect(FormLayoutComponent.mock.calls[0][0].isDisplayScreeningError).toEqual(true);
   });
 
   it("should not display header", () => {
-    const componentProps = mountContainerAndCheckProps();
+    render(<FormLayoutContainer {...props} />);
 
-    expect(componentProps.isDisplayHeader).toEqual(false);
+    expect(FormLayoutComponent.mock.calls[0][0].isDisplayHeader).toEqual(false);
   });
 
   it("should display header", () => {
     const pathname = routes.companyInfo;
     useLocation.mockReturnValue({ pathname });
 
-    const componentProps = mountContainerAndCheckProps();
+    render(<FormLayoutContainer {...props} />);
 
-    expect(componentProps.isDisplayHeader).toEqual(true);
+    expect(FormLayoutComponent.mock.calls[0][0].isDisplayHeader).toEqual(true);
   });
 
   it("should updateViewId on mount", () => {
     updateViewId.mockReturnValue(null);
-
     jest.spyOn(React, "useEffect").mockImplementation(f => f());
 
-    mountContainerAndCheckProps();
+    render(<FormLayoutContainer {...props} />);
 
     expect(updateViewId.mock.calls[0]).toEqual([pathname, false]);
   });
@@ -87,7 +82,7 @@ describe("FormLayout tests", () => {
     updateViewId.mockReturnValue(null);
     jest.spyOn(React, "useEffect").mockImplementation(f => f());
 
-    mountContainerAndCheckProps();
+    render(<FormLayoutContainer {...props} />);
 
     expect(updateViewId.mock.calls[0]).toEqual([VIEW_IDS.CompanyInfo, true]);
   });
