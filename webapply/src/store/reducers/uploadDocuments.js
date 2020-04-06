@@ -6,7 +6,7 @@ import {
   RETRIEVE_DOC_UPLOADER,
   GET_PROSPECT_DOCUMENTS_FAIL,
   SAVE_AND_RETRIEVE_DOC_UPLOADER
-} from "../actions/getProspectDocuments";
+} from "../actions/uploadDocuments";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {

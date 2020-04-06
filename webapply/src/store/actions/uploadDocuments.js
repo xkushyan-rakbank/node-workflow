@@ -14,9 +14,7 @@ export const saveAndRetrieveDocDetails = () => ({
   type: SAVE_AND_RETRIEVE_DOC_UPLOADER
 });
 
-export const retrieveDocDetails = () => {
-  return { type: RETRIEVE_DOC_UPLOADER };
-};
+export const retrieveDocDetails = () => ({ type: RETRIEVE_DOC_UPLOADER });
 
 export const docUpload = payload => ({ type: DOC_UPLOADER, payload });
 
