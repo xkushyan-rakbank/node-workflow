@@ -9,10 +9,10 @@ import {
 import { getIsLoadingDocuments } from "../../store/selectors/uploadDocuments";
 import { UploadDocument } from "./UploadDocument";
 import {
-  retrieveDocDetails,
   docUpload,
-  cancelDocUpload
-} from "../../store/actions/uploadDocuments";
+  cancelDocUpload,
+  saveAndRetrieveDocDetails
+} from "../../store/actions/getProspectDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  retrieveDocDetails,
+  retrieveDocDetails: saveAndRetrieveDocDetails,
   docUpload,
   cancelDocUpload,
   sendProspectToAPI: sendProspectToAPIPromisify,

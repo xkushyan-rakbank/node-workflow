@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.http.HttpStatus;
 
 import ae.rakbank.webapply.dto.ApiError;
@@ -21,11 +20,12 @@ import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.util.FileUtil;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 class JwtService {
 

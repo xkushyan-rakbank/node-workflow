@@ -188,8 +188,8 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {
       log({ error });
-      yield put(sendProspectToAPIFail());
     }
+    yield put(sendProspectToAPIFail(error));
   }
 }
 

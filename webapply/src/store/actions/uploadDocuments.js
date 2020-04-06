@@ -1,3 +1,4 @@
+export const SAVE_AND_RETRIEVE_DOC_UPLOADER = "SAVE_AND_RETRIEVE_DOC_UPLOADER";
 export const RETRIEVE_DOC_UPLOADER = "RETRIEVE_DOC_UPLOADER";
 export const DOC_UPLOADER = "DOC_UPLOADER";
 export const ADD_OTHER_DOCUMENT = "ADD_OTHER_DOCUMENT";
@@ -9,7 +10,13 @@ export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
 export const GET_PROSPECT_DOCUMENTS_FAIL = "GET_PROSPECT_DOCUMENTS_FAIL";
 export const DOWNLOAD_DOCUMENT_FILE = "DOWNLOAD_DOCUMENT_FILE";
 
-export const retrieveDocDetails = () => ({ type: RETRIEVE_DOC_UPLOADER });
+export const saveAndRetrieveDocDetails = () => ({
+  type: SAVE_AND_RETRIEVE_DOC_UPLOADER
+});
+
+export const retrieveDocDetails = () => {
+  return { type: RETRIEVE_DOC_UPLOADER };
+};
 
 export const docUpload = payload => ({ type: DOC_UPLOADER, payload });
 

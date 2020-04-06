@@ -50,8 +50,7 @@ const StakeholderStepperComponent = ({
   editableStakeholder,
   accountSigningInfo,
   datalist,
-  setIsShowingAddButton,
-  stakeholders
+  setIsShowingAddButton
 }) => {
   const classes = useStyles();
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
