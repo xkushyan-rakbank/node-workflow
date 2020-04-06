@@ -16,9 +16,9 @@ import {
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import {
-  stakeholdersSelector,
+  getStakeholders,
   checkIsHasSignatories,
-  percentageSelector,
+  getPercentage,
   getStakeholdersIds
 } from "../../store/selectors/stakeholders";
 import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
@@ -176,8 +176,8 @@ const CompanyStakeholdersComponent = ({
 const mapStateToProps = state => ({
   isSendingProspect: getIsSendingProspect(state),
   stakeholdersIds: getStakeholdersIds(state),
-  stakeholders: stakeholdersSelector(state),
-  percentage: percentageSelector(state),
+  stakeholders: getStakeholders(state),
+  percentage: getPercentage(state),
   isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
   isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
   hasSignatories: checkIsHasSignatories(state)
