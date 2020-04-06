@@ -4,7 +4,6 @@ import ae.rakbank.webapply.client.OauthClient;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.dto.UserRole;
 import ae.rakbank.webapply.exception.ApiException;
-import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_ACCESS_TOKEN_KEY;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REFRESH_TOKEN_KEY;
 
 @Slf4j
 @Service
@@ -26,14 +26,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final JwtService jwtService;
     private final OAuthService oAuthService;
     private final OauthClient oauthClient;
-
-    private JsonNode oAuthConfigs;
-
-    @PostConstruct
-    public void init() {
-        JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
-        oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
-    }
 
     @Override
     public String validateAndUpdateJwtToken(String jwtToken) {
@@ -52,8 +44,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private void validateAndUpdateCustomerJwtPayload(JwtPayload jwtPayload) {
         if (StringUtils.isEmpty(jwtPayload.getPhoneNumber())) {
-            log.error("JwtToken is not valid, field phoneNumber is required for the Customer");
-            throw new ApiException("JwtToken is not valid, field phoneNumber is required for the Customer", HttpStatus.UNAUTHORIZED);
+            log.error("JwtToken is not valid, the fields phoneNumber and prospectId are required for the Customer");
+            throw new ApiException("JwtToken is not valid, the fields phoneNumber and prospectId are required for the Customer",
+                    HttpStatus.UNAUTHORIZED);
         }
         oAuthService.validateAndUpdateOauthToken(jwtPayload);
     }
@@ -68,23 +61,25 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
         return jwtService.encrypt(JwtPayload.builder()
                 .role(UserRole.AGENT)
-                .oauthAccessToken(oAuthObjectResponse.getBody().get("access_token").asText())
-                .oauthRefreshToken(oAuthObjectResponse.getBody().get("refresh_token").asText())
+                .oauthAccessToken(oAuthObjectResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText())
+                .oauthRefreshToken(oAuthObjectResponse.getBody().get(OAUTH_REFRESH_TOKEN_KEY).asText())
                 .oauthTokenExpiryTime(oAuthService.getExpireTime(oAuthObjectResponse))
                 .build());
     }
 
     @Override
     public String createCustomerJwtToken(String phoneNumber, String prospectId) {
+        log.info("Get new Oauth token for Customer with VirtualUser: {}, prospectId: {}",
+                fileUtil.getOauthUser(), prospectId);
         ResponseEntity<JsonNode> oAuthObjectResponse =
-                oauthClient.authorize(oAuthConfigs.get("OAuthUsername").asText(), oAuthConfigs.get("OAuthPassword").asText());
+                oauthClient.authorize(fileUtil.getOauthUser(), fileUtil.getOauthPassword());
 
         return jwtService.encrypt(JwtPayload.builder()
                 .role(UserRole.CUSTOMER)
                 .phoneNumber(phoneNumber)
                 .prospectId(prospectId)
-                .oauthAccessToken(oAuthObjectResponse.getBody().get("access_token").asText())
-                .oauthRefreshToken(oAuthObjectResponse.getBody().get("refresh_token").asText())
+                .oauthAccessToken(oAuthObjectResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText())
+                .oauthRefreshToken(oAuthObjectResponse.getBody().get(OAUTH_REFRESH_TOKEN_KEY).asText())
                 .oauthTokenExpiryTime(oAuthService.getExpireTime(oAuthObjectResponse))
                 .build());
     }

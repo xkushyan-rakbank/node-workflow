@@ -9,9 +9,9 @@ import {
 import { getIsLoadingDocuments } from "../../store/selectors/uploadDocuments";
 import { UploadDocument } from "./UploadDocument";
 import {
-  retrieveDocDetails,
   docUpload,
-  cancelDocUpload
+  cancelDocUpload,
+  saveAndRetrieveDocDetails
 } from "../../store/actions/uploadDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  retrieveDocDetails,
+  retrieveDocDetails: saveAndRetrieveDocDetails,
   docUpload,
   cancelDocUpload,
   sendProspectToAPI: sendProspectToAPIPromisify,

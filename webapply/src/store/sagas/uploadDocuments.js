@@ -21,7 +21,12 @@ import {
   uploadProspectDocument,
   downloadProspectDocument
 } from "../../api/apiClient";
-import { getProspectId, getAuthorizationHeader, getDocuments } from "../selectors/appConfig";
+import {
+  getProspectId,
+  getAuthorizationHeader,
+  getAppConfig,
+  getDocuments
+} from "../selectors/appConfig";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
   RETRIEVE_DOC_UPLOADER,
@@ -33,9 +38,14 @@ import {
   getProspectDocumentsSuccess,
   getProspectDocumentsFail,
   ADD_OTHER_DOCUMENT,
-  DELETE_OTHER_DOCUMENT
+  DELETE_OTHER_DOCUMENT,
+  SAVE_AND_RETRIEVE_DOC_UPLOADER
 } from "../actions/uploadDocuments";
-import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import {
+  SEND_PROSPECT_TO_API_FAIL,
+  SEND_PROSPECT_TO_API_SUCCESS,
+  sendProspectToAPI
+} from "../../store/actions/sendProspectToAPI";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 import {
@@ -44,8 +54,10 @@ import {
   createDocumentMapper,
   appendDocumentKey
 } from "../../utils/documents";
+import { cloneDeep } from "../../utils/cloneDeep";
 import { COMPANY_DOCUMENTS, OTHER_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 import { PROSPECT_STATUSES } from "../../constants/index";
+import { AUTO } from "../../constants";
 
 function createUploader(prospectId, data, source, headers) {
   let emit;
@@ -76,12 +88,16 @@ function* uploadProgressWatcher(chan, documentKey) {
   }
 }
 
+function* saveProspectAndGetProspectDocumentsSaga() {
+  yield put(sendProspectToAPI(AUTO));
+  yield race([take(SEND_PROSPECT_TO_API_SUCCESS), take(SEND_PROSPECT_TO_API_FAIL)]);
+  yield call(getProspectDocumentsSaga);
+}
+
 function* getProspectDocumentsSaga() {
-  const state = yield select();
-  const headers = getAuthorizationHeader(state);
-  const prospectID = getProspectId(state);
-  const existDocuments = getDocuments(state);
-  const config = { ...state.appConfig };
+  const headers = yield select(getAuthorizationHeader);
+  const prospectID = yield select(getProspectId);
+  const existDocuments = yield select(getDocuments);
   const isDocsUploaded =
     existDocuments &&
     existDocuments.companyDocuments.length > 0 &&
@@ -89,6 +105,7 @@ function* getProspectDocumentsSaga() {
 
   try {
     const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, headers);
+    const appConfig = cloneDeep(yield select(getAppConfig));
     const companyDocs = appendDocumentKey(data.companyDocuments);
     const stakeHoldersDocs = mapValues(data.stakeholdersDocuments, stakeHolder => ({
       ...stakeHolder,
@@ -105,8 +122,8 @@ function* getProspectDocumentsSaga() {
     );
     const otherDocuments = existDocuments.otherDocuments || [];
 
-    config.prospect.documents = { companyDocuments, stakeholdersDocuments, otherDocuments };
-    yield put(updateProspect(config));
+    appConfig.prospect.documents = { companyDocuments, stakeholdersDocuments, otherDocuments };
+    yield put(updateProspect(appConfig));
     yield put(getProspectDocumentsSuccess());
   } catch (error) {
     yield put(getProspectDocumentsFail());
@@ -159,7 +176,7 @@ function* uploadDocumentsBgSync({
         prospectStatus
       )
     ) {
-      yield put(sendProspectToAPIPromisify());
+      yield put(sendProspectToAPI());
     }
   } catch (error) {
     yield put(uploadFilesFail({ [documentKey]: error }));
@@ -211,6 +228,7 @@ function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileNam
 
 export default function* appConfigSaga() {
   yield all([
+    takeLatest(SAVE_AND_RETRIEVE_DOC_UPLOADER, saveProspectAndGetProspectDocumentsSaga),
     takeLatest(RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
     takeEvery(DOC_UPLOADER, uploadDocumentsFlowSaga),
     takeEvery(ADD_OTHER_DOCUMENT, addOtherDocument),

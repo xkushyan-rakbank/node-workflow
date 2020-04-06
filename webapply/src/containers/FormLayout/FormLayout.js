@@ -26,7 +26,6 @@ export const FormLayoutContainer = ({
       routes.companyInfo,
       routes.stakeholdersInfo,
       routes.finalQuestions,
-      routes.uploadDocuments,
       routes.selectServices,
       routes.SubmitApplication
     ].includes(pathname);

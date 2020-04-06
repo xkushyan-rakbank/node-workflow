@@ -25,7 +25,7 @@ import {
 } from "../../../../store/selectors/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../hooks/useStep";
-import { STEP_STATUS, MAX_STAKEHOLDERS_LENGTH } from "../../../../constants";
+import { STEP_STATUS } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
 
@@ -50,8 +50,7 @@ const StakeholderStepperComponent = ({
   editableStakeholder,
   accountSigningInfo,
   datalist,
-  setIsShowingAddButton,
-  stakeholders
+  setIsShowingAddButton
 }) => {
   const classes = useStyles();
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
@@ -65,10 +64,6 @@ const StakeholderStepperComponent = ({
     createFormChangeHandler
   ] = useStep(`${COMPANY_STAKEHOLDER_ID}${stakeholderId}`, stakeHoldersSteps);
 
-  const setIsDisplayAddButton = useCallback(() => {
-    setIsShowingAddButton(stakeholders.length < MAX_STAKEHOLDERS_LENGTH);
-  }, [setIsShowingAddButton, stakeholders.length]);
-
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event, SAVE, {
       activeStep,
@@ -81,7 +76,7 @@ const StakeholderStepperComponent = ({
           setIsShowingAddButton(false);
           setTimeout(() => {
             setIsShowSuccessFilled(false);
-            setIsDisplayAddButton();
+            setIsShowingAddButton(true);
           }, timeInterval);
         }
         handleSetNextStep(activeStep);
@@ -103,10 +98,10 @@ const StakeholderStepperComponent = ({
   );
 
   const editHandler = useCallback(() => {
-    setIsDisplayAddButton();
+    setIsShowingAddButton(true);
     changeEditableStakeholder("");
     setEditStakeholder(index, false);
-  }, [setIsDisplayAddButton, changeEditableStakeholder, setEditStakeholder, index]);
+  }, [setIsShowingAddButton, changeEditableStakeholder, setEditStakeholder, index]);
 
   const handleEditCompleted = useCallback(
     index => {

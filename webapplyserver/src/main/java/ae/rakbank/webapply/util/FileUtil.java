@@ -14,6 +14,8 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.annotation.PostConstruct;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -23,6 +25,26 @@ public class FileUtil {
     static final String APP_CONFIG_JSON = "appConfig.json";
 
     private final ResourceLoader resourceLoader;
+
+    private String oauthUser;
+    private String oauthPassword;
+
+    @PostConstruct
+    public void init() {
+        JsonNode appConfigJSON = getAppConfigJSON();
+        JsonNode oAuthConfigs = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv());
+        oauthUser = oAuthConfigs.get("OAuthUsername").asText();
+        oauthPassword = oAuthConfigs.get("OAuthPassword").asText();
+        log.info("Virtual user name: {}", oauthUser);
+    }
+
+    public String getOauthUser() {
+        return oauthUser;
+    }
+
+    public String getOauthPassword() {
+        return oauthPassword;
+    }
 
     public JsonNode getAppConfigJSON() {
         return loadJSONFile(APP_CONFIG_JSON, !EnvUtil.getEnv().equals(LOCAL));
