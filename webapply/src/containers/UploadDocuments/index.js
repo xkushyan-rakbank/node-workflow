@@ -12,7 +12,7 @@ import {
   docUpload,
   cancelDocUpload,
   saveAndRetrieveDocDetails
-} from "../../store/actions/getProspectDocuments";
+} from "../../store/actions/uploadDocuments";
 import { updateProspect } from "../../store/actions/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
