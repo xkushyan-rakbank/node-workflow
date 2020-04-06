@@ -1,32 +1,12 @@
 import { GA } from "../../src/utils/ga";
 
-jest.mock("../../src/utils/ga", () => ({
-  GA: {
-    triggerEvent: jest.fn()
-  }
-}));
-
 describe("google analytics test", () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  const event = "some event";
+  const accountType = "some account type";
 
   it("should trigger event and function must be called with args", () => {
-    const windowSpy = jest.spyOn(global, "window", "get");
-    const args = {
-      event: "ProductPage",
-      accountType: "RakStarter"
-    };
+    GA.triggerEvent({ event, accountType });
 
-    windowSpy.mockImplementation(() => ({
-      dataLayer: []
-    }));
-
-    GA.triggerEvent(args);
-
-    expect(GA.triggerEvent).toBeCalled();
-    expect(GA.triggerEvent).toBeCalledWith(args);
-
-    windowSpy.mockRestore();
+    expect(window.dataLayer).toEqual([{ event, ProductName: accountType }]);
   });
 });
