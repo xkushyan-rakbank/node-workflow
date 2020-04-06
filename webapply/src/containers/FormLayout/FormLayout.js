@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { Providers } from "./components/Providers";
@@ -20,7 +20,7 @@ export const FormLayoutContainer = ({
 }) => {
   const { pathname } = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
     const isSendToApi = [
       routes.companyInfo,
@@ -33,7 +33,7 @@ export const FormLayoutContainer = ({
     updateViewId(viewId, isSendToApi);
   }, [pathname, updateViewId]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 

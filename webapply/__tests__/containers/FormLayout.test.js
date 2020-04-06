@@ -33,7 +33,7 @@ describe("FormLayout tests", () => {
   };
 
   beforeEach(() => {
-    FormLayoutComponent.mockImplementation(({ children }) => <div>{children}</div>);
+    FormLayoutComponent.mockImplementation(() => null);
     useLocation.mockReturnValue({ pathname });
     windowSpy = jest.spyOn(window, "scrollTo").mockImplementation(() => {});
     jest.clearAllMocks();
@@ -71,7 +71,6 @@ describe("FormLayout tests", () => {
 
   it("should updateViewId on mount", () => {
     updateViewId.mockReturnValue(null);
-    jest.spyOn(React, "useEffect").mockImplementation(f => f());
 
     render(<FormLayoutContainer {...props} />);
 
@@ -82,7 +81,6 @@ describe("FormLayout tests", () => {
     const pathname = routes.companyInfo;
     useLocation.mockReturnValue({ pathname });
     updateViewId.mockReturnValue(null);
-    jest.spyOn(React, "useEffect").mockImplementation(f => f());
 
     render(<FormLayoutContainer {...props} />);
 
