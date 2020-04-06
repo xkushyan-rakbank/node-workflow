@@ -1,4 +1,4 @@
-import reducer, { initialState } from "../../../src/store/reducers/getProspectDocuments";
+import reducer, { initialState } from "../../../src/store/reducers/uploadDocuments";
 import {
   retrieveDocDetails,
   docUpload,
@@ -6,7 +6,7 @@ import {
   uploadFilesFail,
   getProspectDocumentsSuccess,
   getProspectDocumentsFail
-} from "../../../src/store/actions/getProspectDocuments";
+} from "../../../src/store/actions/uploadDocuments";
 
 describe("applicant info form reducer test", () => {
   it("should create reducer to doc uploader", () => {

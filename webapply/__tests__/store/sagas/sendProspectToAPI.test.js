@@ -38,8 +38,7 @@ import {
   getAuthorizationHeader,
   getIsIslamicBanking,
   getProspect,
-  getProspectId,
-  getScreeningError
+  getProspectId
 } from "../../../src/store/selectors/appConfig";
 import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
 import { updateAccountNumbers } from "../../../src/store/actions/accountNumbers";
@@ -60,6 +59,7 @@ import {
 import { getErrorScreensIcons } from "../../../src/utils/getErrorScreenIcons/getErrorScreenIcons";
 import { ErrorOccurredWhilePerforming, FieldsValidationError } from "../../../src/api/serverErrors";
 import { prospect } from "../../../src/api/apiClient";
+import { getScreeningError } from "../../../src/store/selectors/sendProspectToAPI";
 
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/store/selectors/completedSteps");
@@ -416,7 +416,8 @@ describe("sendProspectToAPI sagas tests", () => {
 
       expect(spy.mock.calls[0]).toEqual([prospectId, expectedProspect, headers]);
       expect(dispatched).toEqual([
-        setErrorOccurredWhilePerforming({ errorCode: error.getErrorCode() })
+        setErrorOccurredWhilePerforming({ errorCode: error.getErrorCode() }),
+        sendProspectToAPIFail()
       ]);
     });
 
@@ -433,7 +434,10 @@ describe("sendProspectToAPI sagas tests", () => {
       await runSaga(store, sendProspectToAPI, action);
 
       expect(spy.mock.calls[0]).toEqual([prospectId, expectedProspect, headers]);
-      expect(dispatched).toEqual([setInputsErrors(error.getInputsErrors())]);
+      expect(dispatched).toEqual([
+        setInputsErrors(error.getInputsErrors()),
+        sendProspectToAPIFail()
+      ]);
     });
 
     it("throws not binded error", async () => {

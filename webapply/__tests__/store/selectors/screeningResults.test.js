@@ -57,7 +57,7 @@ describe("screeningResults test", () => {
       getCompanyChecks({
         searchProspect: {
           prospectOverview: {
-            applicationInfo: {riskScore: 0},
+            applicationInfo: { riskScore: 0 },
             organizationInfo: { screeningInfo: {} }
           }
         }
@@ -69,7 +69,7 @@ describe("screeningResults test", () => {
         screeningReason: 0,
         screeningStatus: "Not completed",
         screeningType: "Risk Rating"
-  }
+      }
     ]);
   });
 
@@ -85,7 +85,7 @@ describe("screeningResults test", () => {
         screeningLabel: "Risk Rating",
         screeningReason: 1,
         screeningStatus: "Completed",
-        screeningType: "Risk Rating",
+        screeningType: "Risk Rating"
       }
     ]);
   });

@@ -13,11 +13,11 @@ import {
 import { removeSignatory } from "../actions/completedSteps";
 import { updateProspect } from "../actions/appConfig";
 import { UAE } from "../../constants";
-import { getSignatoryModel } from "../selectors/appConfig";
-import { getStakeholders, getStakeholdersIds } from "../selectors/stakeholder";
+import { getSignatories, getSignatoryModel } from "../selectors/appConfig";
+import { getStakeholdersIds } from "../selectors/stakeholders";
 
 export function* createNewStakeholderSaga() {
-  const stakeholders = yield select(getStakeholders);
+  const stakeholders = yield select(getSignatories);
   const stakeholdersIds = yield select(getStakeholdersIds);
   const newStakeholder = cloneDeep(yield select(getSignatoryModel));
 
@@ -39,7 +39,7 @@ export function* createNewStakeholderSaga() {
 
 export function* deleteStakeholderSaga({ payload: stakeholderId }) {
   const stakeholdersIds = yield select(getStakeholdersIds);
-  const stakeholders = yield select(getStakeholders);
+  const stakeholders = yield select(getSignatories);
 
   const indexToRemove = stakeholdersIds.indexOf(
     stakeholdersIds.find(item => item.id === stakeholderId)

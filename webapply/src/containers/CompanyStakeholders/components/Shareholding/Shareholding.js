@@ -16,7 +16,7 @@ import {
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { yesNoOptions } from "../../../../constants/options";
-import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholder";
+import { percentageSelectorWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholders";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { SOLE_PROPRIETOR } from "../../../../constants";
 

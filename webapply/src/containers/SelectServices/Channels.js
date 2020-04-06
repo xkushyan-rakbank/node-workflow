@@ -4,7 +4,7 @@ import get from "lodash/get";
 import { getSignatories } from "../../store/selectors/appConfig";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { getSelectedTypeCurrency } from "../../store/selectors/selectServices";
-import { stakeholdersSelector, checkIsHasSignatories } from "../../store/selectors/stakeholder";
+import { stakeholdersSelector, checkIsHasSignatories } from "../../store/selectors/stakeholders";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getAccountInfo } from "../../store/selectors/appConfig";
 

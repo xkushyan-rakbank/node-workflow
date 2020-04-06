@@ -7,7 +7,8 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { InfoNote } from "../../components/InfoNote";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
-import { getOrganizationInfo, getAccountNumbers } from "../../store/selectors/appConfig";
+import { getOrganizationInfo } from "../../store/selectors/appConfig";
+import { getAccountNumbers } from "../../store/selectors/accountNumbers";
 import { formStepper } from "../../constants";
 
 import { useStyles } from "./styled";

@@ -6,7 +6,12 @@ import { documentValidationSchema } from "./../../../utils/validation";
 import { ReactComponent as FileIcon } from "../../../assets/icons/file.svg";
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../../../components/Icons/Icon";
-import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, BYTES_IN_MEGABYTE } from "./../../../constants";
+import {
+  COMPANY_DOCUMENTS,
+  STAKEHOLDER_DOCUMENTS,
+  BYTES_IN_MEGABYTE,
+  UPLOADED
+} from "./../../../constants";
 import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../constants";
 import { DocumentUploadError } from "../../../components/DocumentUploadError/DocumentUploadError";
 
@@ -31,7 +36,7 @@ export const UploadDocuments = ({
   const isDisabledUploadForRO =
     isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
   const { documentKey, documentType = "" } = document;
-  const isUploaded = document.uploadStatus === "Uploaded";
+  const isUploaded = document.uploadStatus === UPLOADED;
   const isUploading = selectedFile && !isUploaded;
   const isUploadError = uploadErrorMessage[documentKey];
   const percentComplete = isUploaded ? 100 : progress[documentKey] || 0;
@@ -47,7 +52,7 @@ export const UploadDocuments = ({
 
     const fileInfo = JSON.stringify({ documentKey, documentType });
     const docProps = {
-      uploadStatus: "Uploaded",
+      uploadStatus: UPLOADED,
       fileSize: file.size,
       submittedDt: file.lastModifiedDate,
       fileFormat: file.type
