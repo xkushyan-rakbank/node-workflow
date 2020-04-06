@@ -59,7 +59,7 @@ public class OauthClient {
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(requestMap, headers);
         String url = oAuthBaseUrl + oAuthUri.get("generateTokenUri").asText();
-        log.info(String.format("Invoke API: Endpoint=[%s], request=[%s] ", url, request.getBody().toString()));
+        log.info(String.format("[Oauth Request] Invoke API: Endpoint=[%s], request=[%s] ", url, request.getBody().toString()));
 
         try {
 
@@ -73,14 +73,14 @@ public class OauthClient {
             return responseEntity;
 
         } catch (HttpClientErrorException e) {
-            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("[Oauth Request] Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.BAD_REQUEST;
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(e, apiError, e.getResponseHeaders(), status);
         } catch (HttpServerErrorException e) {
-            log.error(String.format("Endpoint=[%s], HttpStatus=[%s], response=%s", url,
+            log.error(String.format("[Oauth Request] Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
             HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
             ApiError apiError = dehUtil.initApiError(e, status);

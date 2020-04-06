@@ -187,7 +187,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     } else if (error instanceof FieldsValidationError) {
       yield put(setInputsErrors(error.getInputsErrors()));
     } else {
-      log({ error });
+      log(error);
     }
     yield put(sendProspectToAPIFail());
   }

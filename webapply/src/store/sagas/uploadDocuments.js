@@ -21,12 +21,8 @@ import {
   uploadProspectDocument,
   downloadProspectDocument
 } from "../../api/apiClient";
-import {
-  getProspectId,
-  getAuthorizationHeader,
-  getDocuments,
-  getAppConfig
-} from "../selectors/appConfig";
+import { getProspectId, getAuthorizationHeader, getAppConfig } from "../selectors/appConfig";
+import { getProspectDocuments as getDocuments } from "../selectors/getProspectDocuments";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
   RETRIEVE_DOC_UPLOADER,
@@ -40,7 +36,12 @@ import {
   ADD_OTHER_DOCUMENT,
   DELETE_OTHER_DOCUMENT,
   SAVE_AND_RETRIEVE_DOC_UPLOADER
-} from "../actions/uploadDocuments";
+} from "../actions/getProspectDocuments";
+import {
+  SEND_PROSPECT_TO_API_FAIL,
+  SEND_PROSPECT_TO_API_SUCCESS,
+  sendProspectToAPI
+} from "../../store/actions/sendProspectToAPI";
 import { updateProspect, setConfig } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
 import {
@@ -52,11 +53,6 @@ import {
 import { cloneDeep } from "../../utils/cloneDeep";
 import { COMPANY_DOCUMENTS, OTHER_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
 import { PROSPECT_STATUSES } from "../../constants/index";
-import {
-  SEND_PROSPECT_TO_API_FAIL,
-  SEND_PROSPECT_TO_API_SUCCESS,
-  sendProspectToAPI
-} from "../actions/sendProspectToAPI";
 import { AUTO } from "../../constants";
 
 function createUploader(prospectId, data, source, headers) {

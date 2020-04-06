@@ -28,7 +28,7 @@ import {
 } from "../../store/selectors/completedSteps";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper, NEXT, MAX_STAKEHOLDERS_LENGTH } from "../../constants";
+import { formStepper, NEXT } from "../../constants";
 
 import { useStyles } from "./styled";
 
@@ -49,9 +49,7 @@ const CompanyStakeholdersComponent = ({
   const classes = useStyles();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isShowingAddButton, setIsShowingAddButton] = useState(
-    stakeholders.length > 0 && stakeholders.length < MAX_STAKEHOLDERS_LENGTH
-  );
+  const [isShowingAddButton, setIsShowingAddButton] = useState(stakeholders.length > 0);
 
   useFormNavigation([false, true, formStepper]);
 
