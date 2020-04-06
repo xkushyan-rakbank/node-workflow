@@ -9,12 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final JwtService jwtService;
+
+    private static final Integer TIME_WINDOW_FOR_UPLOAD_SEC = 3600 * 3;
 
     @Override
     public void validateJwtToken(String jwtToken) {
@@ -27,6 +31,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             log.error("JwtToken is not valid, field role is required");
             throw new ApiException("JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
         }
+        validateExpirationTime(jwtPayload);
     }
 
     @Override
@@ -51,6 +56,14 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 || StringUtils.isEmpty(jwtPayload.getOauthTokenExpiryTime())) {
             log.error("JwtToken is not valid, Oauth details is required for the Agent");
             throw new ApiException("JwtToken is not valid, Oauth details is required for the Agent",
+                    HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    private void validateExpirationTime(JwtPayload jwtPayload) {
+        if (jwtPayload.getOauthTokenExpiryTime().isBefore(LocalDateTime.now().plusSeconds(TIME_WINDOW_FOR_UPLOAD_SEC))) {
+            log.error("JwtToken is expired for document uploading");
+            throw new ApiException("JwtToken is expired for document uploading",
                     HttpStatus.UNAUTHORIZED);
         }
     }

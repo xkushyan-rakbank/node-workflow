@@ -2,9 +2,12 @@ import { composeInputKeyFromValidationData } from "../../src/utils/composeInputK
 
 describe("composeInputKeyFromValidationData tests", () => {
   it("should compose input keys from validation data", () => {
+    const customPath = { fieldPath: "customPath" };
     const data = { fieldPath: "applicantInfo.email" };
     const dataProspect = { fieldPath: "prospect.applicantInfo.email" };
     const windowSpy = jest.spyOn(global, "window", "get");
+
+    expect(composeInputKeyFromValidationData(customPath)).toStrictEqual("prospect.customPath");
 
     expect(composeInputKeyFromValidationData(dataProspect)).toStrictEqual(
       "prospect.applicantInfo.email"

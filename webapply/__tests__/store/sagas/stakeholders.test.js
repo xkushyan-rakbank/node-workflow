@@ -13,14 +13,14 @@ import {
   CHANGE_EDITABLE_STAKEHOLDER,
   UPDATE_STAKEHOLDERS_IDS
 } from "../../../src/store/actions/stakeholders";
-import { getStakeholders, getStakeholdersIds } from "../../../src/store/selectors/stakeholder";
-import { getSignatoryModel } from "../../../src/store/selectors/appConfig";
+import { getStakeholdersIds } from "../../../src/store/selectors/stakeholders";
+import { getSignatories, getSignatoryModel } from "../../../src/store/selectors/appConfig";
 import { cloneDeep } from "../../../src/utils/cloneDeep";
 import { UPDATE_PROSPECT } from "../../../src/store/actions/appConfig";
 import { REMOVE_SIGNATORY } from "../../../src/store/actions/completedSteps";
 
 jest.mock("../../../src/utils/cloneDeep");
-jest.mock("../../../src/store/selectors/stakeholder");
+jest.mock("../../../src/store/selectors/stakeholders");
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("lodash/uniqueId");
 
@@ -37,7 +37,7 @@ describe("stakeholders saga tests", () => {
   beforeEach(() => {
     dispatched = [];
     jest.clearAllMocks();
-    getStakeholders.mockReturnValue([stakeholder]);
+    getSignatories.mockReturnValue([stakeholder]);
     getStakeholdersIds.mockReturnValue([stakeholderId]);
   });
 
@@ -57,7 +57,7 @@ describe("stakeholders saga tests", () => {
 
     await runSaga(store, createNewStakeholderSaga).toPromise();
 
-    expect(getStakeholders.mock.calls[0]).toEqual([state]);
+    expect(getSignatories.mock.calls[0]).toEqual([state]);
     expect(getStakeholdersIds.mock.calls[0]).toEqual([state]);
     expect(getSignatoryModel.mock.calls[0]).toEqual([state]);
     expect(cloneDeep.mock.calls[0]).toEqual([signatoryModel]);
@@ -88,7 +88,7 @@ describe("stakeholders saga tests", () => {
   it("should delete stakeholder", async () => {
     await runSaga(store, deleteStakeholderSaga, { payload: stakeholderId.id }).toPromise();
 
-    expect(getStakeholders.mock.calls[0]).toEqual([state]);
+    expect(getSignatories.mock.calls[0]).toEqual([state]);
     expect(getStakeholdersIds.mock.calls[0]).toEqual([state]);
     expect(dispatched).toEqual([
       {

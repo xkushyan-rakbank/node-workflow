@@ -20,7 +20,10 @@ export const useStyles = makeStyles({
     marginBottom: "0"
   },
   radioButtonRoot: {
-    width: "calc(50% - 20px)"
+    width: "calc(50% - 20px)",
+    "&:nth-child(2), &:nth-child(3)": {
+      order: -1
+    }
   },
   confirmingTransaction: {
     position: "relative",

@@ -15,7 +15,7 @@ import {
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
-import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, CONTINUE } from "../../constants";
+import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, AUTO } from "../../constants";
 import { getIsIslamicBanking, getAccountType, getProspect } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -81,7 +81,7 @@ export function* updateProspectSaga(action) {
 export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   yield put(updateProspect({ "prospect.applicationInfo.viewId": viewId }));
   if (isSendToApi) {
-    yield put(sendProspectToAPI(CONTINUE));
+    yield put(sendProspectToAPI(AUTO));
   }
 }
 

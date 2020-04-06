@@ -1,11 +1,7 @@
-/**
- * @param {Store} state
- * @return {Otp}
- */
 export const getOtp = state => state.otp;
 
-export const isOtpGenerated = state => state.otp.isGenerated;
+export const isOtpGenerated = state => getOtp(state).isGenerated;
 
-export const isOtpVerified = state => state.otp.isVerified;
+export const isOtpVerified = state => getOtp(state).isVerified;
 
-export const getIsGenerating = state => state.otp.isGenerating;
+export const getIsGenerating = state => getOtp(state).isGenerating;

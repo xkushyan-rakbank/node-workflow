@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import axios from "axios";
 import get from "lodash/get";
 import nanoid from "nanoid";

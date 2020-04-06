@@ -9,7 +9,7 @@ import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps } from "./steps";
 import { checkIsAccountInfoTypeNumber } from "./utils";
-import { getStakeholdersIds } from "../../../../store/selectors/stakeholder";
+import { getStakeholdersIds } from "../../../../store/selectors/stakeholders";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 import { COMPANY_SIGNATORY_ID } from "../../../../constants";
 
