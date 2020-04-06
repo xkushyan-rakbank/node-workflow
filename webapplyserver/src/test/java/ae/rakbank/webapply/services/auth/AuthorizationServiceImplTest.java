@@ -43,7 +43,6 @@ public class AuthorizationServiceImplTest {
         MockitoAnnotations.initMocks(this);
         authorizationService = new AuthorizationServiceImpl(fileUtil, jwtService, oAuthService, oauthClient);
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newOtherConfig());
-//        authorizationService.init();
     }
 
     @Test
