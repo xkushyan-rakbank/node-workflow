@@ -20,9 +20,11 @@ import {
   getProspect
 } from "../../../src/store/selectors/appConfig";
 import { getReCaptchaToken } from "../../../src/store/selectors/reCaptcha";
+import { log } from "../../../src/utils/loggger";
 
 import { NEXT, SAVE } from "../../../src/constants";
 
+jest.mock("../../../src/utils/loggger");
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/store/selectors/reCaptcha");
 
@@ -42,11 +44,6 @@ describe("applicantInfoForm saga test", () => {
     getState: () => state
   };
 
-  getProspect.mockReturnValue(prospect);
-  getAuthorizationHeader.mockReturnValue(headers);
-  getApplicationInfo.mockReturnValue(applicationInfo);
-  getReCaptchaToken.mockReturnValue(reCaptchaToken);
-
   const prospectUpdated = {
     someField,
     applicantInfo: payload,
@@ -55,6 +52,11 @@ describe("applicantInfoForm saga test", () => {
 
   beforeEach(() => {
     dispatched = [];
+    log.mockReturnValue(null);
+    getProspect.mockReturnValue(prospect);
+    getAuthorizationHeader.mockReturnValue(headers);
+    getApplicationInfo.mockReturnValue(applicationInfo);
+    getReCaptchaToken.mockReturnValue(reCaptchaToken);
     getIsRecaptchaEnable.mockReturnValue(false);
     jest.clearAllMocks();
   });
@@ -116,6 +118,7 @@ describe("applicantInfoForm saga test", () => {
 
     await runSaga(store, applicantInfoFormSaga, { payload }).toPromise();
 
+    expect(log.mock.calls[0]).toEqual([error]);
     expect(spy.mock.calls[0]).toEqual([prospectUpdated, headers]);
     expect(dispatched).toEqual([
       updateProspect({ prospect: prospectUpdated }),
