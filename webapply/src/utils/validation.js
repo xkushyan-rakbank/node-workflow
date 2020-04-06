@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import * as Yup from "yup";
 import { getInvalidMessage } from "./getValidationMessage";
 import { UAE_CODE } from "../constants";
