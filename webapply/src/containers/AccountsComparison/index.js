@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { getServicePricingGuideUrl } from "../../store/selectors/appConfig";
-import { AccountsComparisonComponent } from "./AccountsComparison";
+import { AccountsComparisonContainer } from "./AccountsComparison";
 
 const mapStateToProps = state => ({
   servicePricingGuideUrl: getServicePricingGuideUrl(state)
 });
 
-export default connect(mapStateToProps)(AccountsComparisonComponent);
+export default connect(mapStateToProps)(AccountsComparisonContainer);
