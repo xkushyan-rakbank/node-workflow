@@ -156,4 +156,69 @@ public class ConfigFactory {
                                 .put("ShouldSendErrorDebugDetails", "")));
     }
 
+    public static JsonNode newStartUpValidatioConfig() {
+        final ObjectNode config = objectMapper.createObjectNode();
+        config.set("OtherConfigs", objectMapper.createObjectNode()
+                .set("local", objectMapper.createObjectNode()
+                        .put("OAuthRefreshGrantType", "OAuthRefreshGrantType")
+                        .put("OAuthGrantType", "OAuthGrantType")
+                        .put("OAuthClientId", "OAuthClientId")
+                        .put("OAuthClientSecret", "OAuthClientSecret")
+                        .put("OAuthBankId", "OAuthBankId")
+                        .put("OAuthChannelId", "OAuthChannelId")
+                        .put("OAuthLangId", "OAuthLangId")
+                        .put("OAuthLoginFlag", "OAuthLoginFlag")
+                        .put("OAuthLoginType", "OAuthLoginType")
+                        .put("OAuthStateMode", "OAuthStateMode")
+                        .put("OAuthUsername", "OAuthUsername")
+                        .put("OAuthPassword", "OAuthPassword")
+                        .put("ReCaptchaEnable", "ReCaptchaEnable")
+                        .put("ReCaptchaSiteKey", "ReCaptchaSiteKey")
+                        .put("ReCaptchaSecret", "ReCaptchaSecret")
+                        .put("RSAPublicKeyFilename", "RSAPublicKeyFilename")
+                        .put("JwtSecret", "JwtSecret")
+                        .put("OtpEnabled", "OtpEnabled")
+                ));
+
+        config.set("DehURIs", objectMapper.createObjectNode()
+                .put("generateTokenUri", "generateTokenUri")
+        );
+
+        config.set("ReCaptchaURIs", objectMapper.createObjectNode()
+                .put("rsaPublicKeyUri", "generateTokenUri")
+        )
+
+        ;
+        config.set("RSAPublicKeyURIs", objectMapper.createObjectNode()
+                .put("ReCaptchaURIs", "generateTokenUri")
+        );
+
+        config.set("OAuthURIs", objectMapper.createObjectNode()
+                .put("datalistUri", "datalistUri")
+                .put("createProspectUri", "createProspectUri")
+                .put("searchProspectUri", "searchProspectUri")
+                .put("getProspectUri", "getProspectUri")
+                .put("updateProspectUri", "updateProspectUri")
+                .put("reuploadDocumentUri", "reuploadDocumentUri")
+                .put("getProspectDocumentByIdUri", "getProspectDocumentByIdUri")
+                .put("prescreeningUri", "prescreeningUri")
+                .put("authenticateUserUri", "authenticateUserUri")
+                .put("getDocumentByTitleUri", "getDocumentByTitleUri")
+                .put("otpUri", "otpUri")
+        );
+
+        return config.set("BaseURLs", objectMapper.createObjectNode()
+                .set("local", objectMapper.createObjectNode()
+                        .put("WebApplyBaseUrl", "WebApplyBaseUrl")
+                        .put("DehBaseUrl", "DehBaseUrl")
+                        .put("OAuthBaseUrl", "OAuthBaseUrl")
+                        .put("ReCaptchaUrl", "ReCaptchaUrl")
+                        .put("RAKvaluePlusReadMoreUrl", "RAKvaluePlusReadMoreUrl")
+                        .put("RAKvalueMaxReadMoreUrl", "RAKvalueMaxReadMoreUrl")
+                        .put("RAKvaluePlusIslamicReadMoreUrl", "RAKvaluePlusIslamicReadMoreUrl")
+                        .put("RAKvalueMaxIslamicReadMoreUrl", "RAKvalueMaxIslamicReadMoreUrl")
+                        .put("TermsConditionsUrl", "TermsConditionsUrl")
+                        .put("ServicePricingGuideUrl", "ServicePricingGuideUrl")
+                ));
+    }
 }
