@@ -96,7 +96,8 @@ export const useStyles = makeStyles(theme => {
         transform: "translate(16px, 20px) scale(1)"
       },
       "& label.MuiInputLabel-outlined.MuiInputLabel-shrink": {
-        transform: "translate(16px, -6px) scale(0.75)"
+        transform: "translate(16px, -6px) scale(0.75)",
+        backgroundColor: "#fff"
       }
     },
     input: {
