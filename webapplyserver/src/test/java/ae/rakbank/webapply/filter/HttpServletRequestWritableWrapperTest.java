@@ -6,8 +6,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -15,13 +20,15 @@ public class HttpServletRequestWritableWrapperTest {
 
     private HttpServletRequestWrapper servletRequestWrapper;
 
+    private final static String DATA = "decrypted-data";
+
     @Mock
     private HttpServletRequest request;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        servletRequestWrapper = new HttpServletRequestWritableWrapper(request, "decripted-data".getBytes());
+        servletRequestWrapper = new HttpServletRequestWritableWrapper(request, DATA.getBytes());
     }
 
     @Test
@@ -46,14 +53,34 @@ public class HttpServletRequestWritableWrapperTest {
     }
 
     @Test
-    public void getContentType() {
+    public void getContentTypeJson() {
+        Mockito.when(request.getContentType()).thenReturn("application/json");
+        final String contentType = servletRequestWrapper.getContentType();
+        assertEquals("application/json", contentType);
     }
 
     @Test
-    public void getReader() {
+    public void getContentTypePlainText() {
+        Mockito.when(request.getContentType()).thenReturn("text/plain");
+        final String contentType = servletRequestWrapper.getContentType();
+        assertEquals("application/json", contentType);
     }
 
     @Test
-    public void getInputStream() {
+    public void getReader() throws IOException {
+        final BufferedReader reader = servletRequestWrapper.getReader();
+        assertNotNull(reader);
+        assertEquals(DATA, reader.lines().collect(Collectors.joining()));
+    }
+
+    @Test
+    public void getInputStream() throws IOException {
+        final ServletInputStream inputStream = servletRequestWrapper.getInputStream();
+        assertNotNull(inputStream);
+        assertFalse(inputStream.isFinished());
+        assertFalse(inputStream.isReady());
+        byte data[] = new byte[DATA.length()];
+        inputStream.readLine(data,  0, DATA.length());
+        assertEquals(DATA, new String(data));
     }
 }
