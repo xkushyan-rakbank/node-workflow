@@ -1,35 +1,14 @@
-import React, { useState, useRef, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext } from "react";
 
-import {
-  VerticalPagination,
-  scrollToDOMNode,
-  VerticalPaginationContext
-} from "../../components/VerticalPagination";
-import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
-import { AccountCard } from "./components/AccountCard";
-import { InfoNote } from "../../components/InfoNote";
-import { TableCompare } from "./components/TableCompare";
+import { VerticalPaginationContext } from "../../components/VerticalPagination";
 import { accountTypes } from "./components/TableCompare/constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { getVideoByAccountType } from "../../utils/getVideoByAccountType";
+import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
 
-import { useStyles } from "./styled";
-import { BackgroundVideoPlayer } from "../../components/BackgroundVideoPlayer";
-
-export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
-  const classes = useStyles();
+export const AccountsComparisonContainer = ({ servicePricingGuideUrl }) => {
   const { setCurrentSection, currentSectionIndex } = useContext(VerticalPaginationContext);
   useFormNavigation([true, false, [], !!currentSectionIndex]);
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
-
-  const firstSection = useRef(null);
-  const secondSection = useRef(null);
-  const tableRef = useRef(null);
-
-  const scrollToSection = useCallback(
-    i => scrollToDOMNode([firstSection, secondSection, tableRef][i]),
-    []
-  );
 
   const handleSetAccountType = useCallback(
     accountType => {
@@ -40,49 +19,11 @@ export const AccountsComparisonComponent = ({ servicePricingGuideUrl }) => {
   );
 
   return (
-    <div className={classes.container}>
-      <VerticalPagination scrollToSection={scrollToSection}>
-        <div ref={firstSection}>
-          <BackgroundVideoPlayer
-            video={getVideoByAccountType()}
-            handleClick={() => setCurrentSection(1)}
-          />
-        </div>
-        <div ref={secondSection}>
-          <SectionTitleWithInfo
-            title="Business accounts for every business stage"
-            info="Available in both conventional and islamic variants"
-            smallInfo
-          />
-          <AccountCard handleSetAccountType={handleSetAccountType} />
-          <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
-        </div>
-
-        <div ref={tableRef}>
-          <SectionTitleWithInfo
-            title="Compare the accounts"
-            info="Our three business accounts, side by side"
-            smallInfo
-          />
-          <TableCompare selectedAccount={selectedAccount} />
-          <InfoNote
-            text={
-              <>
-                Note: 5% VAT will be levied on all charges applicable to business customers. To see
-                our detailed Service & Price Guide click{" "}
-                <a
-                  className={classes.externalLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={servicePricingGuideUrl}
-                >
-                  here
-                </a>
-              </>
-            }
-          />
-        </div>
-      </VerticalPagination>
-    </div>
+    <AccountsComparisonComponent
+      setCurrentSection={setCurrentSection}
+      handleSetAccountType={handleSetAccountType}
+      selectedAccount={selectedAccount}
+      servicePricingGuideUrl={servicePricingGuideUrl}
+    />
   );
 };
