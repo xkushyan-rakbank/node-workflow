@@ -61,7 +61,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     private void validateExpirationTime(JwtPayload jwtPayload) {
-        if (jwtPayload.getOauthTokenExpiryTime().isBefore(LocalDateTime.now().plusSeconds(TIME_WINDOW_FOR_UPLOAD_SEC))) {
+        if (jwtPayload.getOauthTokenExpiryTime().plusSeconds(TIME_WINDOW_FOR_UPLOAD_SEC)
+                .isBefore(LocalDateTime.now())) {
             log.error("JwtToken is expired for document uploading");
             throw new ApiException("JwtToken is expired for document uploading",
                     HttpStatus.UNAUTHORIZED);
