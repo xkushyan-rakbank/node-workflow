@@ -141,4 +141,19 @@ public class ConfigFactory {
                         .set("local", objectMapper.createObjectNode()
                                 .put("ReCaptchaSecret", "recaptcha-secret")));
     }
+
+    public static JsonNode newAdviceControllerConfigWithStackTraceEnabled() {
+        return objectMapper.createObjectNode()
+                .set("OtherConfigs", objectMapper.createObjectNode()
+                        .set("local", objectMapper.createObjectNode()
+                                .put("ShouldSendErrorDebugDetails", "true")));
+    }
+
+    public static JsonNode newAdviceControllerConfigWithStackTraceDisabled() {
+        return objectMapper.createObjectNode()
+                .set("OtherConfigs", objectMapper.createObjectNode()
+                        .set("local", objectMapper.createObjectNode()
+                                .put("ShouldSendErrorDebugDetails", "")));
+    }
+
 }
