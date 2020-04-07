@@ -138,31 +138,6 @@ public class AuthorizationFilterTest {
         Mockito.verify(jwtPayload).setProspectId("testPropsectId");
     }
 
-    //TODO: should be fixed in future, the servlet path must be not affected by set prospect id into jwt payload.
-    @Ignore
-    @Test
-    public void doFilterForGetMethodWhereTokenValid() throws IOException, ServletException {
-        Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_TOKEN_PREFIX + BEARER_VALID_TOKEN);
-        Mockito.when(request.getServletPath()).thenReturn("/api/v1/usertypes/sme/prospects/another_url/testPropsectId");
-        Mockito.when(request.getMethod()).thenReturn("GET");
-
-        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN)).thenReturn(JWT_UPDATED_TOKEN);
-
-        JwtPayload jwtPayload = Mockito.mock(JwtPayload.class);
-        Mockito.when(jwtPayload.getRole()).thenReturn(UserRole.CUSTOMER);
-
-        Mockito.when(authorizationService.getPrincipal(JWT_UPDATED_TOKEN)).thenReturn(jwtPayload);
-        Mockito.when(authorizationService.getTokenFromPrincipal(jwtPayload)).thenReturn("jwt_response_token");
-
-        filter.doFilter(request, response, filterChain);
-
-        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN);
-        Mockito.verify(authorizationService).getPrincipal(JWT_UPDATED_TOKEN);
-        Mockito.verify(response).setHeader(AuthConstants.JWT_TOKEN_KEY, "jwt_response_token");
-        Mockito.verify(filterChain).doFilter(request, response);
-        Mockito.verify(jwtPayload, new Times(0)).setProspectId(Matchers.any());
-    }
-
     @Test
     public void doFilterForPostMethodWithGetPropsectByIdWhereTokenValid() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_TOKEN_PREFIX + BEARER_VALID_TOKEN);
