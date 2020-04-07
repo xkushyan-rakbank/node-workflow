@@ -35,8 +35,8 @@ import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUES
 @RunWith(PowerMockRunner.class)
 public class RecaptchaServiceTest {
 
-    public static final String VERIFY_URL = "http://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}";
-    
+    public static final String VERIFY_URL = "http://ReCaptchaUrl/siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}";
+
     public static final String IP_ADDRESS = "10.10.10.10";
 
     private RecaptchaService recaptchaService;

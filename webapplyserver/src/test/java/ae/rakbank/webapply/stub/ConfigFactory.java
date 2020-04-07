@@ -129,7 +129,7 @@ public class ConfigFactory {
     public static JsonNode newRecaptchaServiceConfig() {
         ObjectNode objectNode = objectMapper.createObjectNode();
 
-        objectNode.set("ReCaptchaURIs", objectMapper.createObjectNode().put("siteVerifyUri", "http://siteVerifyUri"));
+        objectNode.set("ReCaptchaURIs", objectMapper.createObjectNode().put("siteVerifyUri", "/siteVerifyUri"));
 
         objectNode.set("BaseURLs", objectMapper.createObjectNode().set("local",
                 objectMapper.createObjectNode()
