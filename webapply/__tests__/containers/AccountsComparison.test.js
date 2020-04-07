@@ -46,10 +46,10 @@ describe("AccountsComparison container tests", () => {
     expect(useFormNavigation.mock.calls[0][0]).toEqual([true, false, [], true]);
   });
 
-  it("should change selectedAccount", async () => {
+  it("should change selectedAccount", () => {
     render(<ContainerWithContext {...props} />);
 
-    await act(async () => {
+    act(() => {
       AccountsComparisonComponent.mock.calls[0][0].handleSetAccountType(accountType);
     });
 
