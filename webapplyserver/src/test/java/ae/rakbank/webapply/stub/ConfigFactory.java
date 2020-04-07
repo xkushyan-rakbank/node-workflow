@@ -102,4 +102,27 @@ public class ConfigFactory {
                                 .put("OtpEnabled", "Y")));
     }
 
+    public static JsonNode newRecaptchaConfig() {
+        ObjectNode config = objectMapper.createObjectNode();
+        config.set("OtherConfigs", objectMapper.createObjectNode()
+                .set("local", objectMapper.createObjectNode()
+                        .put("ReCaptchaEnable", "Y")
+                        .put("ReCaptchaSiteKey", "re-captcha-site-key")));
+        config.set("BaseURLs", objectMapper.createObjectNode().set("local",
+                objectMapper.createObjectNode()
+                        .put("DehBaseUrl", "http://deh-test-url")
+                        .put("TermsConditionsUrl", "http://TermsConditionsUrl")
+                        .put("ServicePricingGuideUrl", "http://ServicePricingGuideUrl")
+                        .put("RAKvaluePlusReadMoreUrl", "http://RAKvaluePlusReadMoreUrl")
+                        .put("RAKvalueMaxReadMoreUrl", "http://RAKvalueMaxReadMoreUrl")
+                        .put("RAKvaluePlusIslamicReadMoreUrl", "http://RAKvaluePlusIslamicReadMoreUrl")
+                        .put("RAKvalueMaxIslamicReadMoreUrl", "http://RAKvalueMaxIslamicReadMoreUrl")
+        ));
+        return config;
+    }
+
+    public static JsonNode newRecaptchaSMEConfig() {
+        return objectMapper.createObjectNode()
+                .put("smeTest", true);
+    }
 }
