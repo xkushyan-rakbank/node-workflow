@@ -2,6 +2,7 @@ package ae.rakbank.webapply.stub;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.NullNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 
@@ -23,6 +24,11 @@ public class ProspectsResponseStub {
             return ResponseEntity.status(200).body(jsonNode);
         }
         return null;
+    }
+
+    public static ResponseEntity<Object> getProspectsEmptyResponse() {
+        JsonNode jsonNode = new ObjectMapper().createObjectNode().set("searchResult", null);
+        return ResponseEntity.status(200).body(jsonNode);
     }
 
     public static ResponseEntity<Object> getOneProspectResponse() {
