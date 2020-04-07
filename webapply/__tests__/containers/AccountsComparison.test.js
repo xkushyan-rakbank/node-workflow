@@ -15,7 +15,7 @@ describe("AccountsComparison container tests", () => {
   const accountType = "some account type";
   const servicePricingGuideUrl = "some url";
   const props = { servicePricingGuideUrl };
-  const currentSectionIndex = "some index";
+  const currentSectionIndex = 1;
   const setCurrentSection = jest.fn();
 
   const ContainerWithContext = props => (
@@ -40,7 +40,13 @@ describe("AccountsComparison container tests", () => {
     });
   });
 
-  it("handleSetAccountType test", async () => {
+  it("should use useFormNavigation", () => {
+    render(<ContainerWithContext {...props} />);
+
+    expect(useFormNavigation.mock.calls[0][0]).toEqual([true, false, [], true]);
+  });
+
+  it("should change selectedAccount", async () => {
     render(<ContainerWithContext {...props} />);
 
     await act(async () => {
