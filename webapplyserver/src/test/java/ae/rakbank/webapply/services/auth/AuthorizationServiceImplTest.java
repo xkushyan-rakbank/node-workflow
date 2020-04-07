@@ -122,20 +122,22 @@ public class AuthorizationServiceImplTest {
         assertNotNull(agentJwtToken);
     }
 
-    @Ignore
     @Test
     public void createCustomerJwtToken() {
         JsonNode dehResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> dehResponseEntity = ResponseEntity.ok(dehResponse);
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenReturn(dehResponseEntity);
         Mockito.when(jwtService.encrypt(Matchers.any(JwtPayload.class))).thenReturn("result-token");
         String token = authorizationService.createCustomerJwtToken("+37847563456", "123456789");
         assertNotNull(token);
     }
 
-    @Ignore
     @Test(expected = ApiException.class)
     public void createCustomerTokenWhenCredentialsAreWrong() {
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenThrow(new ApiException("Wrong credentials"));
         authorizationService.createCustomerJwtToken("+37847563456", "123456789");
     }
