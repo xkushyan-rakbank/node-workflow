@@ -35,6 +35,10 @@ import static ae.rakbank.webapply.constants.AuthConstants.RECAPTCHA_TOKEN_REQUES
 @RunWith(PowerMockRunner.class)
 public class RecaptchaServiceTest {
 
+    public static final String VERIFY_URL = "http://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}";
+    
+    public static final String IP_ADDRESS = "10.10.10.10";
+
     private RecaptchaService recaptchaService;
 
     @Mock
@@ -65,13 +69,13 @@ public class RecaptchaServiceTest {
 
 
         Mockito.when(EnvUtil.isRecaptchaEnable()).thenReturn(true);
-        Mockito.when(servletRequest.getRemoteAddr()).thenReturn("10.10.10.10");
+        Mockito.when(servletRequest.getRemoteAddr()).thenReturn(IP_ADDRESS);
         Mockito.when(restTemplateBuilder.build()).thenReturn(restTemplate);
 
         Map<String, Object> verificationResponse = new HashMap<>();
         verificationResponse.put("success", true);
 
-        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class))).thenReturn(ResponseEntity.ok(verificationResponse));
@@ -79,7 +83,7 @@ public class RecaptchaServiceTest {
         recaptchaService.validateReCaptcha(node, servletRequest);
 
         Mockito.verify(servletRequest).getRemoteAddr();
-        Mockito.verify(restTemplate).postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.verify(restTemplate).postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class));
@@ -96,13 +100,13 @@ public class RecaptchaServiceTest {
 
 
         Mockito.when(EnvUtil.isRecaptchaEnable()).thenReturn(false);
-        Mockito.when(servletRequest.getRemoteAddr()).thenReturn("10.10.10.10");
+        Mockito.when(servletRequest.getRemoteAddr()).thenReturn(IP_ADDRESS);
         Mockito.when(restTemplateBuilder.build()).thenReturn(restTemplate);
 
         Map<String, Object> verificationResponse = new HashMap<>();
         verificationResponse.put("success", true);
 
-        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class))).thenReturn(ResponseEntity.ok(verificationResponse));
@@ -123,13 +127,13 @@ public class RecaptchaServiceTest {
 
 
         Mockito.when(EnvUtil.isRecaptchaEnable()).thenReturn(true);
-        Mockito.when(servletRequest.getRemoteAddr()).thenReturn("10.10.10.10");
+        Mockito.when(servletRequest.getRemoteAddr()).thenReturn(IP_ADDRESS);
         Mockito.when(restTemplateBuilder.build()).thenReturn(restTemplate);
 
         Map<String, Object> verificationResponse = new HashMap<>();
         verificationResponse.put("success", true);
 
-        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class))).thenReturn(ResponseEntity.ok(verificationResponse));
@@ -151,14 +155,14 @@ public class RecaptchaServiceTest {
 
 
         Mockito.when(EnvUtil.isRecaptchaEnable()).thenReturn(true);
-        Mockito.when(servletRequest.getRemoteAddr()).thenReturn("10.10.10.10");
+        Mockito.when(servletRequest.getRemoteAddr()).thenReturn(IP_ADDRESS);
         Mockito.when(restTemplateBuilder.build()).thenReturn(restTemplate);
 
         Map<String, Object> verificationResponse = new HashMap<>();
         verificationResponse.put("success", false);
         verificationResponse.put("error-codes", new ArrayList<>());
 
-        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class))).thenReturn(ResponseEntity.ok(verificationResponse));
@@ -177,10 +181,10 @@ public class RecaptchaServiceTest {
 
 
         Mockito.when(EnvUtil.isRecaptchaEnable()).thenReturn(true);
-        Mockito.when(servletRequest.getRemoteAddr()).thenReturn("10.10.10.10");
+        Mockito.when(servletRequest.getRemoteAddr()).thenReturn(IP_ADDRESS);
         Mockito.when(restTemplateBuilder.build()).thenReturn(restTemplate);
 
-        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class))).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
@@ -199,10 +203,10 @@ public class RecaptchaServiceTest {
 
 
         Mockito.when(EnvUtil.isRecaptchaEnable()).thenReturn(true);
-        Mockito.when(servletRequest.getRemoteAddr()).thenReturn("10.10.10.10");
+        Mockito.when(servletRequest.getRemoteAddr()).thenReturn(IP_ADDRESS);
         Mockito.when(restTemplateBuilder.build()).thenReturn(restTemplate);
 
-        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq("http://ReCaptchaUrlhttp://siteVerifyUri?secret={secret}&response={response}&remoteip={remoteip}"),
+        Mockito.when(restTemplate.postForEntity(ArgumentMatchers.eq(VERIFY_URL),
                 ArgumentMatchers.any(Map.class),
                 ArgumentMatchers.eq(Map.class),
                 ArgumentMatchers.any(Map.class))).thenThrow(new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
