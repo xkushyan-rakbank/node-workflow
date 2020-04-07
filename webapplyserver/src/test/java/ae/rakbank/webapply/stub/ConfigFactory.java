@@ -125,4 +125,20 @@ public class ConfigFactory {
         return objectMapper.createObjectNode()
                 .put("smeTest", true);
     }
+
+    public static JsonNode newRecaptchaServiceConfig() {
+        ObjectNode objectNode = objectMapper.createObjectNode();
+
+        objectNode.set("ReCaptchaURIs", objectMapper.createObjectNode().put("siteVerifyUri", "http://siteVerifyUri"));
+
+        objectNode.set("BaseURLs", objectMapper.createObjectNode().set("local",
+                objectMapper.createObjectNode()
+                        .put("ReCaptchaUrl", "http://ReCaptchaUrl")
+        ));
+
+        return objectNode
+                .set("OtherConfigs", objectMapper.createObjectNode()
+                        .set("local", objectMapper.createObjectNode()
+                                .put("ReCaptchaSecret", "recaptcha-secret")));
+    }
 }
