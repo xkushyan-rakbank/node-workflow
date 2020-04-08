@@ -34,6 +34,7 @@ export const ApplicantInfoContainer = ({
       submit(values).then(
         () =>
           pushHistory(
+            /* istanbul ignore next */
             process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
             true
           ),
