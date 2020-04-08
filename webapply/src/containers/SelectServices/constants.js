@@ -1,8 +1,8 @@
 import { ICONS } from "../../components/Icons";
-import { AccountDetails } from "./AccountDetails";
-import { SigningPreferences } from "./SigningPreferences";
-import { Channels } from "./Channels";
-import { ValueAddedServices } from "./ValueAddedServices";
+import { AccountDetails } from "./components/AccountDetails";
+import { SigningPreferences } from "./components/SigningPreferences";
+import { Channels } from "./components/Channels";
+import { ValueAddedServices } from "./components/ValueAddedServices";
 import { GA_EVENTS } from "../../utils/ga";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../constants";
 
