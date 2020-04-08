@@ -31,7 +31,6 @@ describe("MyApplications tests", () => {
     useDisplayScreenBasedOnViewId.mockReturnValue({
       pushDisplayScreenToHistory: mockPushDisplayScreenToHistory
     });
-    getProspectInfoPromisify.mockReturnValue(321);
     MyApplicationsComponent.mockImplementation(() => null);
   });
 
