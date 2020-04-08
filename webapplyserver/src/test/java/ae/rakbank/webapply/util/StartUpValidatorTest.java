@@ -1,5 +1,6 @@
 package ae.rakbank.webapply.util;
 
+import ae.rakbank.webapply.exception.StartUpException;
 import ae.rakbank.webapply.stub.ConfigFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,6 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(EnvUtil.class)
@@ -27,12 +26,42 @@ public class StartUpValidatorTest {
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(EnvUtil.class);
         Mockito.when(EnvUtil.getEnv()).thenReturn("local");
-        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpValidatioConfig());
-        startUpValidator = new StartUpValidator(fileUtil);
     }
 
     @Test
-    public void init() {
+    public void initValidConfig() {
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpValidValidatioConfig());
+        startUpValidator = new StartUpValidator(fileUtil);
         startUpValidator.init();
     }
+
+    @Test(expected = StartUpException.class)
+    public void initInValidConfig() {
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpInValidValidatioConfig());
+        startUpValidator = new StartUpValidator(fileUtil);
+        startUpValidator.init();
+    }
+
+    @Test(expected = StartUpException.class)
+    public void initValidConfigWithEmptyProfile() {
+        Mockito.when(EnvUtil.getEnv()).thenReturn(null);
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpValidValidatioConfig());
+        startUpValidator = new StartUpValidator(fileUtil);
+        startUpValidator.init();
+    }
+
+    @Test(expected = StartUpException.class)
+    public void initValidConfigWithEmptyValue() {
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpValidValidatioConfigOnOfValueIsEMpty());
+        startUpValidator = new StartUpValidator(fileUtil);
+        startUpValidator.init();
+    }
+
+    @Test(expected = StartUpException.class)
+    public void initValidConfigWithNullConfig() {
+        Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(null);
+        startUpValidator = new StartUpValidator(fileUtil);
+        startUpValidator.init();
+    }
+
 }
