@@ -52,6 +52,7 @@ export const ComeBackLoginContainer = ({
   useEffect(() => {
     if (isOtpGenerated) {
       pushHistory(
+        /* istanbul ignore next */
         process.env.REACT_APP_OTP_ENABLE === "N"
           ? routes.MyApplications
           : routes.comeBackLoginVerification,

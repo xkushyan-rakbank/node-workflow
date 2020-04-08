@@ -15,18 +15,19 @@ describe("ComeBackLogin test", () => {
   const generateOtpCode = jest.fn();
   const isOtpGenerated = true;
   const setToken = jest.fn();
-  const path = routes.MyApplications;
+  const path = routes.comeBackLoginVerification;
   const resetProspect = jest.fn();
   const recaptchaToken = "some token";
   const isRecaptchaEnable = true;
   const isGenerating = false;
   const isConfigLoading = false;
   const contextValue = [true, false];
+  const pushHistory = jest.fn();
 
   const values = {
-    value: 1,
-    recaptchaToken
+    value: 1
   };
+
   const props = {
     generateOtpCode,
     setToken,
@@ -44,14 +45,19 @@ describe("ComeBackLogin test", () => {
 
   beforeEach(() => {
     useFormNavigation.mockImplementation(() => {});
-    useTrackingHistory.mockImplementation(() => {});
+    useTrackingHistory.mockReturnValue(pushHistory);
     ComeBackLoginComponent.mockImplementation(() => null);
 
     jest.clearAllMocks();
   });
 
 
-  it("should use useFormNavigation", () => {
+  it("should resetProspect", () => {
+    render(<ContainerWithContext {...props} />);
+    expect(resetProspect).toHaveBeenCalled();
+  });
+
+  it("should useFormNavigation", () => {
     useFormNavigation.mockReturnValue(null);
     render(<ContainerWithContext {...props} />);
 
@@ -69,38 +75,48 @@ describe("ComeBackLogin test", () => {
     })
   });
 
-  it("should submitForm", () => {
+  it("should submitForm ", () => {
     render(<ContainerWithContext {...props} />);
 
-    act(() => {ComeBackLoginComponent.mock.calls[0][0].submitForm(values)});
-    expect(generateOtpCode.mock.calls[0][0]).toEqual({...values})
+    act(() => {ComeBackLoginComponent.mock.calls[0][0].submitForm({...values, recaptchaToken})});
+    expect(generateOtpCode.mock.calls[0][0]).toEqual({...values, recaptchaToken});
+    expect(ComeBackLoginComponent.mock.calls[0][0].recaptchaToken).toBe(recaptchaToken);
   });
+
+  it("should submit data without recaptchaToken", () => {
+    render(<ContainerWithContext {...props} isRecaptchaEnable={false}/>);
+
+    act(() => {ComeBackLoginComponent.mock.calls[0][0].submitForm({value: 1})});
+    expect(generateOtpCode.mock.calls[0][0]).toEqual(values);
+  });
+
 
   it("should handleReCaptchaVerify", () => {
     render(<ContainerWithContext {...props} />);
 
     act(() => {ComeBackLoginComponent.mock.calls[0][0].handleReCaptchaVerify(recaptchaToken)});
     expect(setToken.mock.calls[0][0]).toEqual(recaptchaToken)
+    expect(ComeBackLoginComponent).toHaveBeenCalledTimes(1);
   });
 
   it("should handleVerifiedFailed", () => {
     render(<ContainerWithContext {...props} />);
 
-    act(() => {ComeBackLoginComponent.mock.calls[0][0].handleVerifiedFailed(null)});
+    act(() => {ComeBackLoginComponent.mock.calls[0][0].handleVerifiedFailed()});
+    expect(ComeBackLoginComponent).toHaveBeenCalledTimes(1);
     expect(setToken.mock.calls[0][0]).toEqual(null)
   });
 
   it("should run pushHistory", () => {
-    useTrackingHistory.mockReturnValue({path});
-    // const pushHistory = useTrackingHistory();
-    // console.log(pushHistory);
-    // pushHistory.mockReturnValue(null);
-    // useTrackingHistory.mockReturnValue(path);
     render(<ContainerWithContext {...props} />);
-    // act(() => {ComeBackLoginComponent.mock.calls[0][0].});
 
+    expect(pushHistory.mock.calls[0]).toEqual([path, true]);
+  });
 
-    expect(pushHistory.mock.calls[0]).toEqual([]);
+  it("should not run pushHistory", () => {
+    render(<ContainerWithContext {...props} isOtpGenerated = {false} />);
+
+    expect(pushHistory.mock.calls[0]).toBe(undefined);
   });
 
 
