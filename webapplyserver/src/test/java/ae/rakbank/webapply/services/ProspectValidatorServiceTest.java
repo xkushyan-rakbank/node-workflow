@@ -6,6 +6,7 @@ import ae.rakbank.webapply.stub.JwtPayloadStub;
 import ae.rakbank.webapply.stub.ProspectsResponseStub;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,32 @@ public class ProspectValidatorServiceTest {
         Assert.assertEquals(12, rootNode.size());
     }
 
+    @Test
+    public void testFilterAllowedProspectsForAgent() {
+
+        ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getProspectsResponse();
+
+        prospectValidatorService.validateAndFilterAllowedProspects(prospectsResponse, JwtPayloadStub.newAgentJwt());
+
+        Assert.assertNotNull(prospectsResponse);
+        JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        ArrayNode rootNode = (ArrayNode) responseBody.get(ROOT_KEY);
+        Assert.assertEquals(16, rootNode.size());
+    }
+
+    @Test
+    public void testFilterAllowedProspectsForAgentWithNullNode() {
+
+        ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getProspectsEmptyResponse();
+
+        prospectValidatorService.validateAndFilterAllowedProspects(prospectsResponse, JwtPayloadStub.newCustomerJwt("1"));
+
+        Assert.assertNotNull(prospectsResponse);
+        JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        NullNode rootNode = (NullNode) responseBody.get(ROOT_KEY);
+        Assert.assertNotNull(rootNode);
+    }
+
     @Test(expected = ApiException.class)
     public void testCheckNotOwnerOneProspect() throws IllegalAccessException {
 
@@ -57,4 +84,40 @@ public class ProspectValidatorServiceTest {
         JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
         Assert.assertEquals(12, responseBody.size());
     }
+
+    @Test
+    public void testCheckOwnerOneProspectWhenRoleAgent() throws IllegalAccessException {
+
+        ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
+
+        JwtPayload jwtPayload = JwtPayloadStub.newAgentJwt();
+        prospectValidatorService.checkOwnerProspectId(null, jwtPayload);
+
+        Assert.assertNotNull(prospectsResponse);
+        JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        Assert.assertEquals(12, responseBody.size());
+    }
+
+    @Test
+    public void testCheckOwnerOneProspectWhenRoleCustomer() throws IllegalAccessException {
+
+        ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
+
+        JwtPayload jwtPayload = JwtPayloadStub.newCustomerJwt("1");
+        prospectValidatorService.checkOwnerProspectId("1", jwtPayload);
+
+        Assert.assertNotNull(prospectsResponse);
+        JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        Assert.assertEquals(12, responseBody.size());
+    }
+
+    @Test(expected = ApiException.class)
+    public void testCheckOwnerOneProspectWhenCustomerIsNotOwnerOfProspect() throws IllegalAccessException {
+
+        ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
+
+        JwtPayload jwtPayload = JwtPayloadStub.newCustomerJwt("2");
+        prospectValidatorService.checkOwnerProspectId("1", jwtPayload);
+    }
+
 }
