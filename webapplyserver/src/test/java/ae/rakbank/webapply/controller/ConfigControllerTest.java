@@ -47,12 +47,14 @@ public class ConfigControllerTest {
         ResponseEntity<JsonNode> responseEntity = ResponseEntity.badRequest().body(config);
         Mockito.when(dehClient.getDatalistJSON("sme")).thenReturn(responseEntity);
         configController.init();
+        Mockito.verify(dehClient).getDatalistJSON("sme");
     }
 
     @Test
     public void testInitWhenSegmentNotExists() {
         Mockito.when(dehClient.getDatalistJSON("sme")).thenReturn(null);
         configController.init();
+        Mockito.verify(dehClient).getDatalistJSON("sme");
     }
 
     @Test

@@ -33,6 +33,7 @@ public class StartUpValidatorTest {
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpValidValidatioConfig());
         startUpValidator = new StartUpValidator(fileUtil);
         startUpValidator.init();
+        Mockito.verify(fileUtil).getAppConfigJSON();
     }
 
     @Test(expected = StartUpException.class)
