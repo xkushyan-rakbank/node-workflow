@@ -15,12 +15,7 @@ jest.mock("../../src/containers/ApplicantInfo/components/ApplicantInfo", () => {
 jest.mock("../../src/utils/useTrackingHistory");
 
 describe("ApplicantInfo container tests", () => {
-  const submit = jest.fn().mockImplementation(
-    () =>
-      new Promise(resolve => {
-        resolve();
-      })
-  );
+  const submit = jest.fn().mockImplementation(() => Promise.resolve());
   const receiveAppConfig = jest.fn();
   const setToken = jest.fn();
   const resetScreeningError = jest.fn();
@@ -91,15 +86,11 @@ describe("ApplicantInfo container tests", () => {
     expect(submit).toHaveBeenCalled();
     expect(pushHistory).toHaveBeenCalled();
     expect(ApplicantInfoComponent.mock.calls[1][0].isLoading).toBe(true);
+    expect(pushHistory.mock.calls[0]).toEqual([routes.verifyOtp, true]);
   });
 
   it("should use onSubmit when submit is called (rejected)", async () => {
-    const submit = jest.fn().mockImplementation(
-      () =>
-        new Promise((_, reject) => {
-          reject();
-        })
-    );
+    const submit = jest.fn().mockImplementation(() => Promise.reject());
     render(<ApplicantInfoContainer {...props} submit={submit} />);
 
     await act(async () => {
@@ -134,30 +125,5 @@ describe("ApplicantInfo container tests", () => {
 
     expect(ApplicantInfoComponent).toHaveBeenCalledTimes(1);
     expect(setToken.mock.calls[0]).toEqual([null]);
-  });
-
-  it("should push history to Company Info page when otp is disabled", async () => {
-    const currentEnv = process.env;
-    process.env = { REACT_APP_OTP_ENABLE: "N" };
-
-    render(<ApplicantInfoContainer {...props} />);
-
-    await act(async () => {
-      await ApplicantInfoComponent.mock.calls[0][0].onSubmit(values);
-    });
-
-    expect(pushHistory.mock.calls[0]).toEqual([routes.companyInfo, true]);
-
-    process.env = currentEnv;
-  });
-
-  it("should push history to Verify OTP page when otp is enabled", async () => {
-    render(<ApplicantInfoContainer {...props} />);
-
-    await act(async () => {
-      await ApplicantInfoComponent.mock.calls[0][0].onSubmit(values);
-    });
-
-    expect(pushHistory.mock.calls[0]).toEqual([routes.verifyOtp, true]);
   });
 });
