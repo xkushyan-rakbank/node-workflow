@@ -14,7 +14,7 @@ import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { NUMBER_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
-import { useStyles } from "../../styled";
+import { useStyles } from "../CompanyInfo/styled";
 
 const initialValues = {
   companyName: "",
