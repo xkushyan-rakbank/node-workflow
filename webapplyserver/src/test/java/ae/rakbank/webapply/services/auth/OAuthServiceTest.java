@@ -15,17 +15,21 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletContext;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 
 public class OAuthServiceTest {
 
+    public static final String CHANNEL_CONTEXT = "{\"authorizationDetails\":{\"primaryAccessCode\":\"oauthPassword\",\"secondaryAccessCode\":\"\",\"userId\":\"oauthUser\"}}";
     private OAuthService oAuthService;
 
     @Mock
@@ -147,6 +151,27 @@ public class OAuthServiceTest {
 
         assertEquals("access-token", jwtPayload.getOauthAccessToken());
         assertEquals("refresh-token", jwtPayload.getOauthRefreshToken());
+    }
+
+    @Test
+    public void oauthHeadersTest() {
+
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("oauthUser");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("oauthPassword");
+
+        HttpHeaders oAuthHeaders = oAuthService.getOAuthHeaders("test-access-token");
+        assertNotNull(oAuthHeaders);
+
+        assertNotNull(oAuthHeaders.get(HttpHeaders.AUTHORIZATION).get(0));
+        assertNotNull(oAuthHeaders.get(HttpHeaders.CONTENT_TYPE).get(0));
+        assertNotNull(oAuthHeaders.get(HttpHeaders.ACCEPT).get(0));
+        assertNotNull(oAuthHeaders.get("ChannelContext").get(0));
+
+        assertEquals(MediaType.APPLICATION_JSON.toString(), oAuthHeaders.get(HttpHeaders.ACCEPT).get(0));
+        assertEquals(MediaType.APPLICATION_JSON.toString(), oAuthHeaders.get(HttpHeaders.CONTENT_TYPE).get(0));
+        assertEquals("test-access-token", oAuthHeaders.get(HttpHeaders.AUTHORIZATION).get(0));
+        assertEquals(CHANNEL_CONTEXT, oAuthHeaders.get("ChannelContext").get(0));
+
     }
 
 }
