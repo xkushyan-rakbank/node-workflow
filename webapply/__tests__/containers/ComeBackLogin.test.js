@@ -4,6 +4,7 @@ import {ComeBackLoginComponent} from "../../src/containers/ComeBackLogin/compone
 import {ComeBackLoginContainer} from "../../src/containers/ComeBackLogin/ComeBackLogin";
 import {useTrackingHistory} from "../../src/utils/useTrackingHistory";
 import {FormNavigationContext, useFormNavigation} from "../../src/components/FormNavigation/FormNavigationProvider";
+import routes from "../../src/routes";
 
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/containers/ComeBackLogin/components/ComeBackLogin");
@@ -12,20 +13,20 @@ jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 
 describe("ComeBackLogin test", () => {
   const generateOtpCode = jest.fn();
-  const isOtpGenerated = false;
+  const isOtpGenerated = true;
   const setToken = jest.fn();
+  const path = routes.MyApplications;
   const resetProspect = jest.fn();
   const recaptchaToken = "some token";
-  const submitForm = jest.fn().mockImplementation(() => {
-    return {};
-  });
-  const handleReCaptchaVerify = jest.fn();
-  const handleVerifiedFailed = jest.fn();
-  const isRecaptchaEnable = false;
+  const isRecaptchaEnable = true;
   const isGenerating = false;
   const isConfigLoading = false;
   const contextValue = [true, false];
 
+  const values = {
+    value: 1,
+    recaptchaToken
+  };
   const props = {
     generateOtpCode,
     setToken,
@@ -35,9 +36,7 @@ describe("ComeBackLogin test", () => {
     isRecaptchaEnable,
     isGenerating,
     isConfigLoading,
-    submitForm
   };
-
   const ContainerWithContext = props =>
     <FormNavigationContext.Provider value={contextValue}>
       <ComeBackLoginContainer {...props} />
@@ -45,7 +44,7 @@ describe("ComeBackLogin test", () => {
 
   beforeEach(() => {
     useFormNavigation.mockImplementation(() => {});
-    useTrackingHistory.mockImplementation(()=>({}));
+    useTrackingHistory.mockImplementation(() => {});
     ComeBackLoginComponent.mockImplementation(() => null);
 
     jest.clearAllMocks();
@@ -69,6 +68,41 @@ describe("ComeBackLogin test", () => {
       isConfigLoading,
     })
   });
+
+  it("should submitForm", () => {
+    render(<ContainerWithContext {...props} />);
+
+    act(() => {ComeBackLoginComponent.mock.calls[0][0].submitForm(values)});
+    expect(generateOtpCode.mock.calls[0][0]).toEqual({...values})
+  });
+
+  it("should handleReCaptchaVerify", () => {
+    render(<ContainerWithContext {...props} />);
+
+    act(() => {ComeBackLoginComponent.mock.calls[0][0].handleReCaptchaVerify(recaptchaToken)});
+    expect(setToken.mock.calls[0][0]).toEqual(recaptchaToken)
+  });
+
+  it("should handleVerifiedFailed", () => {
+    render(<ContainerWithContext {...props} />);
+
+    act(() => {ComeBackLoginComponent.mock.calls[0][0].handleVerifiedFailed(null)});
+    expect(setToken.mock.calls[0][0]).toEqual(null)
+  });
+
+  it("should run pushHistory", () => {
+    useTrackingHistory.mockReturnValue({path});
+    // const pushHistory = useTrackingHistory();
+    // console.log(pushHistory);
+    // pushHistory.mockReturnValue(null);
+    // useTrackingHistory.mockReturnValue(path);
+    render(<ContainerWithContext {...props} />);
+    // act(() => {ComeBackLoginComponent.mock.calls[0][0].});
+
+
+    expect(pushHistory.mock.calls[0]).toEqual([]);
+  });
+
 
 });
 
