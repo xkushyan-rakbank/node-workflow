@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletContext;
-
 import java.time.LocalDateTime;
 
 import static ae.rakbank.webapply.constants.AuthConstants.EXPIRES_IN;
@@ -41,7 +40,7 @@ public class ContextOAuthServiceTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         contextOAuthService = new ContextOAuthService(oauthClient, servletContext, fileUtil);
     }
@@ -95,10 +94,6 @@ public class ContextOAuthServiceTest {
     public void refreshAndGetForAgentIfError() {
         JsonNode node = objectMapper.createObjectNode()
                 .put(OAUTH_REFRESH_TOKEN_KEY, "oauth-test-key");
-
-        JsonNode oauthClientResponse = objectMapper.createObjectNode()
-                .put(EXPIRES_IN, 100);
-        ResponseEntity<JsonNode> oauthResponse = ResponseEntity.ok(oauthClientResponse);
 
         Mockito.when(servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY)).thenReturn(ResponseEntity.ok().body(node));
         Mockito.when(oauthClient.refreshAccessToken("oauth-test-key")).thenThrow(new ApiException(ApiError.builder().status(HttpStatus.INTERNAL_SERVER_ERROR).build(),

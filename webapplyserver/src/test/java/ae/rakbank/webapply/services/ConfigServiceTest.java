@@ -33,7 +33,7 @@ public class ConfigServiceTest {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newRecaptchaConfig());
