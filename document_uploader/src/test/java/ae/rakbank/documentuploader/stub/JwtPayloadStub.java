@@ -19,4 +19,25 @@ public class JwtPayloadStub {
                 .oauthTokenExpiryTime(LocalDateTime.of(2020, 01, 01, 00, 00))
                 .build();
     }
+
+    public static JwtPayload getNotExpiredJwtPayload() {
+        return JwtPayload.builder()
+                .role(UserRole.CUSTOMER)
+                .phoneNumber("123412341")
+                .oauthAccessToken("access-token")
+                .oauthRefreshToken("refresh-token")
+                .oauthTokenExpiryTime(LocalDateTime.now().plusMinutes(15))
+                .build();
+    }
+
+    public static JwtPayload getJwtPayloadForProspect(String prospectId) {
+        return JwtPayload.builder()
+                .role(UserRole.CUSTOMER)
+                .prospectId(prospectId)
+                .phoneNumber("123412341")
+                .oauthAccessToken("access-token")
+                .oauthRefreshToken("refresh-token")
+                .oauthTokenExpiryTime(LocalDateTime.now().plusMinutes(15))
+                .build();
+    }
 }

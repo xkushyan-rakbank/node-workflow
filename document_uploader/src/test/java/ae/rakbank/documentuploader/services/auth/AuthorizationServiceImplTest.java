@@ -69,4 +69,9 @@ public class AuthorizationServiceImplTest {
     public void testValidateAgentNoAccessToken() {
         authorizationService.validateJwtToken(getAgentNoAccessJwtTokenStub());
     }
+
+    @Test(expected = ApiException.class)
+    public void testExpiredValidateToken() {
+        authorizationService.validateJwtToken(getExpiredJwtTokenStub());
+    }
 }
