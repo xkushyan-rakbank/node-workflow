@@ -1,18 +1,18 @@
 import React from "react";
 import cx from "classnames";
 
-import { BackLink } from "../../../../components/Buttons/BackLink";
-import { FormCard } from "../../../../components/FormCard/FormCard";
-import { StepComponent } from "../../../../components/StepComponent/StepComponent";
-import StatusLoader from "../../../../components/StatusLoader";
-import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
-import { STEP_STATUS } from "../../../../constants";
-import routes from "../../../../routes";
+import { BackLink } from "../../../components/Buttons/BackLink";
+import { FormCard } from "../../../components/FormCard/FormCard";
+import { StepComponent } from "../../../components/StepComponent/StepComponent";
+import StatusLoader from "../../../components/StatusLoader";
+import { NextStepButton } from "../../../components/Buttons/NextStepButton";
+import { STEP_STATUS } from "../../../constants";
+import routes from "../../../routes";
 
-import { companyInfoSteps, STEP_1 } from "../../constants";
+import { companyInfoSteps, STEP_1 } from "../constants";
 import { useStyles } from "./styled";
 
-import companyInfoIcon from "../../../../assets/icons/companyInfo.svg";
+import companyInfoIcon from "../../../assets/icons/companyInfo.svg";
 
 export const CompanyInfo = ({
   fullName,

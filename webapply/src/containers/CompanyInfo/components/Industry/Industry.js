@@ -16,7 +16,7 @@ import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../../components/Notifications";
-import { useStyles } from "../CompanyInfo/styled";
+import { useStyles } from "../styled";
 
 const initialIndustry = {
   industry: "",
