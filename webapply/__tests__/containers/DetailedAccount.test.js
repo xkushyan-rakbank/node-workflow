@@ -15,7 +15,7 @@ describe("DetailedAccount test", () => {
   const accountType = "some accountType";
   const isIslamicBanking = "some bool";
   const setCurrentSection = jest.fn();
-  const contextvalue = { setCurrentSection };
+  const contextValue = { setCurrentSection };
 
   beforeAll(() => {
     useFormNavigation.mockReturnValue(null);
@@ -23,7 +23,7 @@ describe("DetailedAccount test", () => {
     DetailedAccountComponent.mockReturnValue(null);
 
     render(
-      <VerticalPaginationContext.Provider value={contextvalue}>
+      <VerticalPaginationContext.Provider value={contextValue}>
         <DetailedAccountContainer />
       </VerticalPaginationContext.Provider>
     );
