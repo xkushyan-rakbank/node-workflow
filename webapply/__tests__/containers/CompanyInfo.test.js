@@ -1,6 +1,5 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
-import { MuiThemeProvider } from "@material-ui/core";
 
 import { CompanyInfo } from "../../src/containers/CompanyInfo/components/CompanyInfo";
 import { CompanyInfoPage } from "../../src/containers/CompanyInfo/CompanyInfoPage";
@@ -8,7 +7,6 @@ import { useFormNavigation } from "../../src/components/FormNavigation/FormNavig
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
 import { useStep } from "../../src/hooks/useStep";
 import { checkAllStepsCompleted } from "../../src/utils/checkAllStepsCompleted";
-import { theme } from "../../src/theme";
 import { formStepper, CONTINUE, SAVE, NEXT } from "../../src/constants";
 import { companyInfoSteps, COMPANY_INFO_PAGE_ID } from "../../src/containers/CompanyInfo/constants";
 import routes from "../../src/routes";
@@ -60,11 +58,7 @@ describe("CompanyInfo test", () => {
 
     beforeAll(() => {
       jest.clearAllMocks();
-      render(
-        <MuiThemeProvider theme={theme}>
-          <CompanyInfoPage {...props} />
-        </MuiThemeProvider>
-      );
+      render(<CompanyInfoPage {...props} />);
     });
 
     it("should call `useFormNavigation`", () => {
@@ -124,11 +118,7 @@ describe("CompanyInfo test", () => {
     });
 
     it("should push history", async () => {
-      render(
-        <MuiThemeProvider theme={theme}>
-          <CompanyInfoPage {...props} />
-        </MuiThemeProvider>
-      );
+      render(<CompanyInfoPage {...props} />);
 
       await act(async () => {
         await CompanyInfo.mock.calls[0][0].handleClickNextStep();
@@ -148,18 +138,11 @@ describe("CompanyInfo test", () => {
 
     beforeAll(() => {
       jest.clearAllMocks();
-      render(
-        <MuiThemeProvider theme={theme}>
-          <CompanyInfoPage {...props} />
-        </MuiThemeProvider>
-      );
+      render(<CompanyInfoPage {...props} />);
     });
 
     it("should not set next step", async () => {
-      try {
-        await CompanyInfo.mock.calls[0][0].handleContinue(event)();
-        // eslint-disable-next-line no-empty
-      } catch (e) {}
+      await CompanyInfo.mock.calls[0][0].handleContinue(event)();
 
       expect(sendProspectToAPI).toHaveBeenCalledWith(CONTINUE, event, SAVE, {
         activeStep,
@@ -181,11 +164,7 @@ describe("CompanyInfo test", () => {
     });
 
     it("should not push history", async () => {
-      render(
-        <MuiThemeProvider theme={theme}>
-          <CompanyInfoPage {...props} />
-        </MuiThemeProvider>
-      );
+      render(<CompanyInfoPage {...props} />);
 
       await act(async () => {
         await CompanyInfo.mock.calls[0][0].handleClickNextStep();
