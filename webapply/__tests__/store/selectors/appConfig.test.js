@@ -9,6 +9,7 @@ import {
   getOrgKYCDetails,
   getGeneralInfo,
   getApplicantInfo,
+  getApplicantFullName,
   getApplicationInfo,
   getIsIslamicBanking,
   getAccountType,
@@ -32,7 +33,8 @@ describe("appConfig selector test", () => {
   const orgKYCDetails = "some org kyc details";
   const prospectId = "some prospect id";
   const generalInfo = { prospectId };
-  const applicantInfo = "some applicantInfo value";
+  const fullName = "some name";
+  const applicantInfo = { fullName };
   const islamicBanking = false;
   const accountType = "some account type";
   const applicationInfo = { islamicBanking, accountType };
@@ -162,6 +164,10 @@ describe("appConfig selector test", () => {
 
   it("should return empty object when applicationInfo is not set", () => {
     expect(getApplicationInfo({ appConfig: {} })).toEqual({});
+  });
+
+  it("should return full name", () => {
+    expect(getApplicantFullName(state)).toBe(fullName);
   });
 
   it("should return value of islamicBanking", () => {
