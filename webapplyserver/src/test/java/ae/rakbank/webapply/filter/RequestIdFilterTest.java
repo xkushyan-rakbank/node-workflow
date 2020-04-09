@@ -10,17 +10,17 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RequestIdFilterTest {
 
     private Filter requestIdFilter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         requestIdFilter = new RequestIdFilter();
     }
 

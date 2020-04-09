@@ -9,9 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.NoSuchAlgorithmException;
 
 public class SecurityUtilTest {
 
@@ -37,7 +35,7 @@ public class SecurityUtilTest {
     private FileUtil fileUtil;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         securityUtil = new SecurityUtil(fileUtil);
     }

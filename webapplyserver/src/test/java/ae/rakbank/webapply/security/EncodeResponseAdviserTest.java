@@ -24,7 +24,7 @@ public class EncodeResponseAdviserTest {
     private ResponseBodyAdvice<Object> bodyAdvice;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         bodyAdvice = new EncodeResponseAdviser(securityUtil);
     }

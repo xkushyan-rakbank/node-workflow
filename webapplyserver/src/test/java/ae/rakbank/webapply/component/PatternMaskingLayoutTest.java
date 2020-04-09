@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -21,7 +20,7 @@ public class PatternMaskingLayoutTest {
     private final static Logger logger = (Logger) LoggerFactory.getLogger(PatternMaskingLayoutTest.class);
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         patternMaskingLayoutEnabled = new PatternMaskingLayout(true);
         patternMaskingLayoutDisabled = new PatternMaskingLayout();

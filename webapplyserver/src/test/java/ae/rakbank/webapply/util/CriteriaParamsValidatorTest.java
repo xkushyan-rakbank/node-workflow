@@ -4,8 +4,6 @@ import ae.rakbank.webapply.exception.ApiException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class CriteriaParamsValidatorTest {
 
     private String[] roles = {"customer", "agent"};
@@ -16,34 +14,34 @@ public class CriteriaParamsValidatorTest {
     private CriteriaParamsValidator criteriaParamsValidator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         criteriaParamsValidator = new CriteriaParamsValidator();
     }
 
     @Test
     public void validateCriteriaParamsWithValidSegments() {
-        for (String segment: segments) {
+        for (String segment : segments) {
             criteriaParamsValidator.validateCriteriaParams(segment, products[0], roles[0], devices[0]);
         }
     }
 
     @Test
     public void validateCriteriaParamsWithValidRoles() {
-        for (String role: roles) {
+        for (String role : roles) {
             criteriaParamsValidator.validateCriteriaParams(segments[0], products[0], role, devices[0]);
         }
     }
 
     @Test
     public void validateCriteriaParamsWithValidDevice() {
-        for (String device: devices) {
+        for (String device : devices) {
             criteriaParamsValidator.validateCriteriaParams(segments[0], products[0], roles[0], device);
         }
     }
 
     @Test
     public void validateCriteriaParamsWithValidProduct() {
-        for (String product: products) {
+        for (String product : products) {
             criteriaParamsValidator.validateCriteriaParams(segments[0], product, roles[0], devices[0]);
         }
     }
