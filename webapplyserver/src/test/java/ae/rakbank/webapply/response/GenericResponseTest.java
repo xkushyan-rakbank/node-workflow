@@ -35,16 +35,4 @@ public class GenericResponseTest {
         assertEquals(ERROR_BODY, failedResponse.getBody());
         assertEquals(ERROR_CODE, failedResponse.getStatus().getErrorCode());
     }
-
-    @Test
-    public void testGetFailedResponse() {
-    }
-
-    @Test
-    public void testGetFailedResponse1() {
-    }
-
-    @Test
-    public void getSuccessResponse() {
-    }
 }

@@ -32,7 +32,7 @@ public class OtpServiceEnabledImplTest {
     private OtpServiceImpl otpService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         otpService = new OtpServiceImpl(dehClient, authorizationService, fileUtil);
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newOtpConfigEnabled());
@@ -51,7 +51,7 @@ public class OtpServiceEnabledImplTest {
         Assert.assertTrue(result[0]);
         Assert.assertNotNull(httpResult[0]);
         Assert.assertNotNull(httpResult[0].getBody());
-        Assert.assertTrue(((JsonNode)httpResult[0].getBody()).get("verified").asBoolean());
+        Assert.assertTrue(((JsonNode) httpResult[0].getBody()).get("verified").asBoolean());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class OtpServiceEnabledImplTest {
         Assert.assertFalse(result[0]);
         Assert.assertNotNull(httpResult[0]);
         Assert.assertNotNull(httpResult[0].getBody());
-        Assert.assertFalse(((JsonNode)httpResult[0].getBody()).get("verified").asBoolean());
+        Assert.assertFalse(((JsonNode) httpResult[0].getBody()).get("verified").asBoolean());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class OtpServiceEnabledImplTest {
         Assert.assertFalse(result[0]);
         Assert.assertNotNull(httpResult[0]);
         Assert.assertNotNull(httpResult[0].getBody());
-        Assert.assertFalse(((JsonNode)httpResult[0].getBody()).get("result").asBoolean());
+        Assert.assertFalse(((JsonNode) httpResult[0].getBody()).get("result").asBoolean());
     }
 
     @Test
@@ -109,7 +109,7 @@ public class OtpServiceEnabledImplTest {
         response.execute(httpEntity -> httpResult[0] = httpEntity);
         Assert.assertNotNull(httpResult[0]);
         Assert.assertNotNull(httpResult[0].getBody());
-        Assert.assertTrue(((JsonNode)httpResult[0].getBody()).get("generated").asBoolean());
+        Assert.assertTrue(((JsonNode) httpResult[0].getBody()).get("generated").asBoolean());
     }
 
 }

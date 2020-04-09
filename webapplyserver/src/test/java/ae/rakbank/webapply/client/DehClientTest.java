@@ -29,8 +29,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 @RunWith(JUnit4.class)
 public class DehClientTest {
@@ -57,13 +57,13 @@ public class DehClientTest {
     final ObjectNode jsonNodeDefaultDetails = mapper.createObjectNode();
     final ObjectNode jsonNodeAppDetails = mapper.createObjectNode();
 
-    public DehClientTest() throws IOException {
+    public DehClientTest() {
         // default constructor.
     }
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         setUpAppDetails();
         MockitoAnnotations.initMocks(this);
         Mockito.when(fileUtil.getDatalistJSON()).thenReturn(jsonNodeDefaultDetails);
@@ -211,7 +211,7 @@ public class DehClientTest {
     }
 
     @Test
-    public void getDataListJSONFromRemoteResponseOk() throws IOException {
+    public void getDataListJSONFromRemoteResponseOk() {
 
         JsonNode dehResponse = mapper.createObjectNode();
 
@@ -230,7 +230,7 @@ public class DehClientTest {
     }
 
     @Test(expected = ApiException.class)
-    public void getDataListJSONFromRemoteResponseBadRequest() throws IOException {
+    public void getDataListJSONFromRemoteResponseBadRequest() {
 
         final HttpClientErrorException httpClientErrorException = new HttpClientErrorException(HttpStatus.NOT_FOUND);
 
@@ -244,7 +244,7 @@ public class DehClientTest {
     }
 
     @Test(expected = ApiException.class)
-    public void getDataListJSONFromRemoteResponseInternalServerError() throws IOException {
+    public void getDataListJSONFromRemoteResponseInternalServerError() {
 
         final HttpServerErrorException httpClientErrorException = new HttpServerErrorException(HttpStatus.BAD_GATEWAY);
 

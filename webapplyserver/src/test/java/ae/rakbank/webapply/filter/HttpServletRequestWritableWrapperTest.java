@@ -9,12 +9,13 @@ import org.mockito.MockitoAnnotations;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 public class HttpServletRequestWritableWrapperTest {
 
@@ -26,7 +27,7 @@ public class HttpServletRequestWritableWrapperTest {
     private HttpServletRequest request;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         servletRequestWrapper = new HttpServletRequestWritableWrapper(request, DATA.getBytes());
     }
@@ -79,8 +80,8 @@ public class HttpServletRequestWritableWrapperTest {
         assertNotNull(inputStream);
         assertFalse(inputStream.isFinished());
         assertFalse(inputStream.isReady());
-        byte data[] = new byte[DATA.length()];
-        inputStream.readLine(data,  0, DATA.length());
+        byte[] data = new byte[DATA.length()];
+        inputStream.readLine(data, 0, DATA.length());
         assertEquals(DATA, new String(data));
     }
 }

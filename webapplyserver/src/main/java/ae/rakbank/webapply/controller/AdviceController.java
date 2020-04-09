@@ -28,7 +28,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
 
     private final FileUtil fileUtil;
 
-    private Boolean shouldSendErrorDebugDetails;
+    private boolean shouldSendErrorDebugDetails;
 
     @PostConstruct
     public void init() {
@@ -38,7 +38,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
         if (StringUtils.isEmpty(errorDebugDetails)) {
             shouldSendErrorDebugDetails = false;
         } else {
-            shouldSendErrorDebugDetails = Boolean.valueOf(errorDebugDetails);
+            shouldSendErrorDebugDetails = Boolean.parseBoolean(errorDebugDetails);
         }
     }
 
