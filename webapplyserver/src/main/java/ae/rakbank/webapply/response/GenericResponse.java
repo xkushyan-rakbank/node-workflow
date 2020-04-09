@@ -11,6 +11,7 @@ public class GenericResponse implements Serializable {
 
     private static final long serialVersionUID = -2263926489641534208L;
 
+    @SuppressWarnings("java:S1948")
     Object body;
     Status status;
 

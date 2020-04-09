@@ -16,7 +16,7 @@ public class DehUtilTest {
     private DehUtil dehUtil;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         dehUtil = new DehUtil();
     }
 

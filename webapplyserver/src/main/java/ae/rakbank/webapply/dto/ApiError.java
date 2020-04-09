@@ -31,6 +31,8 @@ public class ApiError implements Serializable {
     private String message;
     private String debugMessage;
     private String errorType;
+
+    @SuppressWarnings("java:S1948")
     private JsonNode errors;
     private String exceptionClassName;
     private StackTraceElement[] stackTrace;
