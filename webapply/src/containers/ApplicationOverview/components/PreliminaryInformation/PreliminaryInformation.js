@@ -2,8 +2,8 @@ import React from "react";
 
 import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
-import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
-import IconCardItem from "../../../../components/IconCards/IconCardItem";
+import { IconCardsContainer } from "../../../../components/IconCards/IconCardsContainer";
+import { IconCardItem } from "../../../../components/IconCards/IconCardItem";
 import { CommonQuestions } from "../CommonQuestions";
 
 import { questions } from "./constants";
