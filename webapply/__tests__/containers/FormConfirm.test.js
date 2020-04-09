@@ -1,37 +1,27 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import { OTPform } from "../../src/components/OTPform";
-import {
-  useFormNavigation,
-  FormNavigationContext
-} from "../../src/components/FormNavigation/FormNavigationProvider";
-import { FormConfirm } from "../../src/containers/FormConfirm/FormConfirm";
+import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+import { FormConfirm } from "../../src/containers/FormConfirm/components/FormConfirm";
+import { FormConfirmPage } from "../../src/containers/FormConfirm/FormConfirmPage";
 import { formStepper } from "../../src/constants";
 
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
-jest.mock("../../src/components/OTPform");
+jest.mock("../../src/containers/FormConfirm/components/FormConfirm");
 
-describe("FormConfirm tests", () => {
-  const contextValue = [false, false, formStepper];
-  const props = "some props";
-
-  const ContainerWithContext = props => (
-    <FormNavigationContext.Provider value={contextValue}>
-      <FormConfirm>
-        <OTPform {...props} />
-      </FormConfirm>
-    </FormNavigationContext.Provider>
-  );
-
-  beforeEach(() => {
+describe("FormConfirm test", () => {
+  beforeAll(() => {
     useFormNavigation.mockReturnValue(null);
-    jest.clearAllMocks();
+    FormConfirm.mockReturnValue(null);
+
+    render(<FormConfirmPage />);
   });
 
-  it("should useFormNavigation", () => {
-    render(<ContainerWithContext {...props} />);
+  it("should call useFormNavigation hook", () => {
+    expect(useFormNavigation).toBeCalledWith([false, false, formStepper]);
+  });
 
-    expect(useFormNavigation.mock.calls[0][0]).toEqual(contextValue);
+  it("should render FormConfirm component", () => {
+    expect(FormConfirm.mock.calls[0][0]).toEqual({});
   });
 });

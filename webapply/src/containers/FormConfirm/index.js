@@ -1,3 +1,3 @@
-import { FormConfirm } from "./FormConfirm";
+import { FormConfirmPage } from "./FormConfirmPage";
 
-export default FormConfirm;
+export default FormConfirmPage;
