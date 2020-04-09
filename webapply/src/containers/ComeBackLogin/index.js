@@ -20,8 +20,7 @@ const mapDispatchToProps = {
   resetProspect
 };
 
-export const ComeBackLogin = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(ComeBackLoginContainer);
-export default ComeBackLogin;

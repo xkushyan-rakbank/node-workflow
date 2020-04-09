@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { DetailedAccount as DetailedAccountContainer } from "../../src/containers/DetailedAccount/DetailedAccount";
 import { DetailedAccountComponent } from "../../src/containers/DetailedAccount/components/DetailedAccount";
 import { useAccountTypeByPathname } from "../../src/utils/useAccountTypeByPathname";
