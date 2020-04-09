@@ -83,7 +83,7 @@ export const ReUploadDocuments = () => {
       dispatch(cancelDocUpload(documentKey));
       dispatch(deleteOtherDocument(documentKey));
     },
-    [cancelDocUpload, deleteOtherDocument]
+    [dispatch]
   );
 
   const submitForm = useCallback(() => {
