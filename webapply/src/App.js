@@ -25,7 +25,7 @@ const AccountsComparison = lazy(() => import("./containers/AccountsComparison"))
 const FormConfirm = lazy(() => import("./containers/FormConfirm"));
 const UploadDocuments = lazy(() => import("./containers/UploadDocuments"));
 const ReUploadDocuments = lazy(() => import("./containers/ReUploadDocuments"));
-const ApplicantInfo = lazy(() => import("./containers/AplicantInfo"));
+const ApplicantInfo = lazy(() => import("./containers/ApplicantInfo"));
 const DetailedAccount = lazy(() => import("./containers/DetailedAccount"));
 const CompanyInfo = lazy(() => import("./containers/CompanyInfo"));
 const CompanyStakeholders = lazy(() => import("./containers/CompanyStakeholders"));

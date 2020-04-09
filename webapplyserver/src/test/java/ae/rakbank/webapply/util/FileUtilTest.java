@@ -15,7 +15,7 @@ public class FileUtilTest {
     private ResourceLoader resourceLoader = new DefaultResourceLoader();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         fileUtil = new FileUtil(resourceLoader);
         fileUtil.init();
     }

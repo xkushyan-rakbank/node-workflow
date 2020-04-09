@@ -32,6 +32,8 @@ export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
+export const getApplicantFullName = state => getApplicantInfo(state).fullName;
+
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;

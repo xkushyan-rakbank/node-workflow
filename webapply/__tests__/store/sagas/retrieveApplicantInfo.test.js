@@ -16,6 +16,7 @@ import {
 import { getAuthorizationHeader, getSignatoryModel } from "../../../src/store/selectors/appConfig";
 import { search, prospect } from "../../../src/api/apiClient";
 import { log } from "../../../src/utils/loggger";
+import { VIEW_IDS } from "../../../src/constants";
 
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/utils/loggger");
@@ -52,7 +53,8 @@ describe("searchProspect saga test", () => {
         completedSteps: [{ flowId: "companyStakeholder_1" }, { flowId: "companyStakeholder_2" }]
       })
     },
-    signatoryInfo: []
+    signatoryInfo: [],
+    applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
   };
   const error = "some error";
   const store = {
@@ -139,7 +141,8 @@ describe("searchProspect saga test", () => {
           info: "some info"
         })
       },
-      signatoryInfo: []
+      signatoryInfo: [],
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
     };
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
 
@@ -164,7 +167,8 @@ describe("searchProspect saga test", () => {
   it("should log info saga errors with JSON", async () => {
     const failedData = {
       freeFieldsInfo: { freeField5: {} },
-      signatoryInfo: []
+      signatoryInfo: [],
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
     };
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
     log.mockReturnValue(error);
@@ -185,7 +189,11 @@ describe("searchProspect saga test", () => {
   });
 
   it("should log error when freeFieldsInfo is undefined and signatory info length is true", async () => {
-    const failedData = { freeFieldsInfo: "", signatoryInfo: [{}] };
+    const failedData = {
+      freeFieldsInfo: "",
+      signatoryInfo: [{}],
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+    };
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();

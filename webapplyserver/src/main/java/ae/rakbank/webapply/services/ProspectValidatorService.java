@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -35,12 +37,15 @@ public class ProspectValidatorService {
         }
 
         ArrayNode rootNode = (ArrayNode) responseBody.get(ROOT_KEY);
+        List<Integer> indexesToRemove = new ArrayList<>(rootNode.size());
+
         for (int i = 0; i < rootNode.size(); i++) {
             if (!phoneNumber.equals(rootNode.get(i).get(APPLICANT_INFO).get(MOBILE_NO).asText())) {
-                rootNode.remove(i);
-                i--;
+                indexesToRemove.add(i);
             }
         }
+        indexesToRemove.forEach(rootNode::remove);
+
     }
 
     public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {
