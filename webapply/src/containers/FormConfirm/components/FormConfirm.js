@@ -1,16 +1,12 @@
 import React from "react";
 
-import { OTPform } from "../../components/OTPform";
-import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { formStepper } from "../../constants";
-import routes from "../../routes";
+import { OTPform } from "../../../components/OTPform";
+import routes from "../../../routes";
 
 import { useStyles } from "./styled";
 
 export const FormConfirm = () => {
   const classes = useStyles();
-
-  useFormNavigation([false, false, formStepper]);
 
   return (
     <div className={classes.container}>
@@ -24,4 +20,4 @@ export const FormConfirm = () => {
       />
     </div>
   );
-};
+}
