@@ -22,7 +22,7 @@ public class StartUpValidatorTest {
     private FileUtil fileUtil;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         PowerMockito.mockStatic(EnvUtil.class);
         Mockito.when(EnvUtil.getEnv()).thenReturn("local");
@@ -33,6 +33,7 @@ public class StartUpValidatorTest {
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newStartUpValidValidatioConfig());
         startUpValidator = new StartUpValidator(fileUtil);
         startUpValidator.init();
+        Mockito.verify(fileUtil).getAppConfigJSON();
     }
 
     @Test(expected = StartUpException.class)

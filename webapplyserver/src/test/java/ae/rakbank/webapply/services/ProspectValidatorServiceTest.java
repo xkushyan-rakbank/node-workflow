@@ -63,7 +63,7 @@ public class ProspectValidatorServiceTest {
     }
 
     @Test(expected = ApiException.class)
-    public void testCheckNotOwnerOneProspect() throws IllegalAccessException {
+    public void testCheckNotOwnerOneProspect() {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
@@ -73,7 +73,7 @@ public class ProspectValidatorServiceTest {
     }
 
     @Test
-    public void testCheckOwnerOneProspect() throws IllegalAccessException {
+    public void testCheckOwnerOneProspect() {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
@@ -82,11 +82,12 @@ public class ProspectValidatorServiceTest {
 
         Assert.assertNotNull(prospectsResponse);
         JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        Assert.assertNotNull(responseBody);
         Assert.assertEquals(12, responseBody.size());
     }
 
     @Test
-    public void testCheckOwnerOneProspectWhenRoleAgent() throws IllegalAccessException {
+    public void testCheckOwnerOneProspectWhenRoleAgent() {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
@@ -95,11 +96,12 @@ public class ProspectValidatorServiceTest {
 
         Assert.assertNotNull(prospectsResponse);
         JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        Assert.assertNotNull(responseBody);
         Assert.assertEquals(12, responseBody.size());
     }
 
     @Test
-    public void testCheckOwnerOneProspectWhenRoleCustomer() throws IllegalAccessException {
+    public void testCheckOwnerOneProspectWhenRoleCustomer() {
 
         ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
 
@@ -108,14 +110,12 @@ public class ProspectValidatorServiceTest {
 
         Assert.assertNotNull(prospectsResponse);
         JsonNode responseBody = (JsonNode) prospectsResponse.getBody();
+        Assert.assertNotNull(responseBody);
         Assert.assertEquals(12, responseBody.size());
     }
 
     @Test(expected = ApiException.class)
-    public void testCheckOwnerOneProspectWhenCustomerIsNotOwnerOfProspect() throws IllegalAccessException {
-
-        ResponseEntity<Object> prospectsResponse = ProspectsResponseStub.getOneProspectResponse();
-
+    public void testCheckOwnerOneProspectWhenCustomerIsNotOwnerOfProspect() {
         JwtPayload jwtPayload = JwtPayloadStub.newCustomerJwt("2");
         prospectValidatorService.checkOwnerProspectId("1", jwtPayload);
     }

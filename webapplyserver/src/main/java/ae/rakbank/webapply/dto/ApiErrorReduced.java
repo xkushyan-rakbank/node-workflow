@@ -22,6 +22,8 @@ public class ApiErrorReduced implements Serializable {
     private String timestamp;
     private String message;
     private String errorType;
+
+    @SuppressWarnings("java:S1948")
     private JsonNode errors;
 
     public ApiErrorReduced(ApiError apiError) {
