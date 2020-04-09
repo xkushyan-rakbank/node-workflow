@@ -1,12 +1,6 @@
 import React, { useEffect, useCallback } from "react";
-import { connect } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { ComeBackLoginComponent } from "./components/ComeBackLogin";
-import { setToken } from "../../store/actions/reCaptcha";
-import { resetProspect } from "../../store/actions/appConfig";
-import { generateOtpCode } from "../../store/actions/otp";
-import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "./../../routes";
 
@@ -73,22 +67,3 @@ export const ComeBackLoginContainer = ({
     />
   );
 };
-
-const mapStateToProps = state => ({
-  recaptchaToken: state.reCaptcha.token,
-  isOtpGenerated: isOtpGenerated(state),
-  isRecaptchaEnable: getIsRecaptchaEnable(state),
-  isGenerating: getIsGenerating(state),
-  isConfigLoading: state.appConfig.loading
-});
-
-const mapDispatchToProps = {
-  generateOtpCode,
-  setToken,
-  resetProspect
-};
-
-export const ComeBackLogin = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ComeBackLoginContainer);

@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
-import IconCardsContainer from "../../../components/IconCards/IconCardsContainer";
-import IconCardItem from "../../../components/IconCards/IconCardItem";
-import { useIconsByAccount } from "../../../utils/useIconsByAccount";
-import { InfoNote } from "../../../components/InfoNote";
-import { accountNames } from "../../../constants";
+import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
+import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
+import IconCardItem from "../../../../components/IconCards/IconCardItem";
+import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
+import { InfoNote } from "../../../../components/InfoNote";
+import { accountNames } from "../../../../constants";
 import { accountTypesInfo, accountText } from "./constants";
-import { getAccountType } from "../../../store/selectors/appConfig";
+import { getAccountType } from "../../../../store/selectors/appConfig";
 
 import { useStyles } from "./styled";
 
