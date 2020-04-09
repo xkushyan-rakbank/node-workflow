@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
-import IconCardsContainer from "../../../../components/IconCards/IconCardsContainer";
-import IconCardItem from "../../../../components/IconCards/IconCardItem";
+import { IconCardsContainer } from "../../../../components/IconCards/IconCardsContainer";
+import { IconCardItem } from "../../../../components/IconCards/IconCardItem";
 import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 import { InfoNote } from "../../../../components/InfoNote";
 import { accountNames } from "../../../../constants";
