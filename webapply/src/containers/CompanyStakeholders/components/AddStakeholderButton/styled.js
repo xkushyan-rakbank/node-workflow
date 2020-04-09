@@ -21,6 +21,7 @@ export const useStyles = makeStyles({
   icon: {
     width: "40px",
     height: "40px",
-    marginRight: "10px"
+    marginRight: "10px",
+    opacity: disabled => (disabled ? 0.3 : 1)
   }
 });
