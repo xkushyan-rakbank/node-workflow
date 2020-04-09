@@ -139,6 +139,21 @@ public class JwtTokenStub {
         return JwtTestUtil.encrypt(jwtPayload);
     }
 
+    public static String getExpiredJwtTokenStub() {
+
+        JwtPayload jwtPayload = JwtPayload.builder()
+                .role(UserRole.CUSTOMER)
+
+                .oauthAccessToken(TEST_ACCESS_TOKEN)
+                .oauthRefreshToken(TEST_REFRESH_TOKEN)
+                .phoneNumber("12345")
+                .prospectId(TEST_PROSPECT_ID)
+                .oauthTokenExpiryTime(TEST_EXPIRATION_TIME.minusHours(5))
+                .build();
+
+        return JwtTestUtil.encrypt(jwtPayload);
+    }
+
     public static String getInvalidTokenStub() {
         return INVALID_TOKEN;
     }
