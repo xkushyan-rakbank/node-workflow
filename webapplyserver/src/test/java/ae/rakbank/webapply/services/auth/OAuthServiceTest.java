@@ -10,7 +10,6 @@ import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,7 +22,6 @@ import javax.servlet.ServletContext;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 
@@ -45,7 +43,7 @@ public class OAuthServiceTest {
     private ContextOAuthService contextOAuthService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         oAuthService = new OAuthService(fileUtil, servletContext, oauthClient, contextOAuthService);
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newOtherConfig());
@@ -88,9 +86,6 @@ public class OAuthServiceTest {
 
         JsonNode newLoginResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> jsonNodeResponseEntity = ResponseEntity.badRequest().body(newLoginResponse);
-
-        JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
-        ResponseEntity<JwtPayload> ok = ResponseEntity.ok(jwtPayload);
 
         Mockito.when(contextOAuthService.refreshAndGet()).thenReturn(jsonNodeResponseEntity);
         Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");

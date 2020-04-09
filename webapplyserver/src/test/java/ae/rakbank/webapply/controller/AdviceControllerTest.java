@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -28,7 +29,7 @@ public class AdviceControllerTest {
     private FileUtil fileUtil;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         adviceController = new AdviceController(fileUtil);
     }
@@ -141,7 +142,7 @@ public class AdviceControllerTest {
         assertNotNull(exception.getHeaders().get("Custom-error-header"));
         assertEquals(MediaType.APPLICATION_JSON, exception.getHeaders().getContentType());
         assertEquals(Collections.singletonList("ApiException"), exception.getHeaders().get("Exception"));
-        assertEquals("value", exception.getHeaders().get("Custom-error-header").get(0));
+        assertEquals("value", Objects.requireNonNull(exception.getHeaders().get("Custom-error-header")).get(0));
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
     }
 
