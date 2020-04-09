@@ -22,6 +22,6 @@ export const useStyles = makeStyles({
     width: "40px",
     height: "40px",
     marginRight: "10px",
-    opacity: disabled => (disabled ? 0.3 : 1)
+    opacity: ({ disabled }) => (disabled ? 0.3 : 1)
   }
 });

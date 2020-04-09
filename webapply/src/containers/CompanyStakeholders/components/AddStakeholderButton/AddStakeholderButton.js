@@ -9,7 +9,7 @@ export const AddStakeholderButton = ({
   handleClick,
   ...rest
 }) => {
-  const classes = useStyles({ disabled: rest.disabled });
+  const classes = useStyles(rest);
 
   return (
     <Button
