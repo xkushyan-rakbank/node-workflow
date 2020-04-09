@@ -3,7 +3,7 @@ import cx from "classnames";
 
 import { servicesSteps } from "../../constants";
 import { STEP_STATUS } from "../../../../constants";
-import { ServicesStepTitle } from "../ServicesStepTitle";
+import { ServicesStepTitle } from "./ServicesStepTitle";
 
 import { useStyles } from "./styled";
 

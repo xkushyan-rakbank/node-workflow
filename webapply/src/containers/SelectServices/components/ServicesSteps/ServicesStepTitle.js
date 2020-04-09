@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Icon } from "../../../components/Icons";
-import { LinkButton } from "../../../components/Buttons/LinkButton";
+import { Icon } from "../../../../components/Icons";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
