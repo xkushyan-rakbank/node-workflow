@@ -72,6 +72,7 @@ export const FormLayoutContainer = ({
           isDisplayScreeningError={isDisplayScreeningError}
           errorIcon={getErrorScreensIcons(accountType, isIslamicBanking, ERRORS_TYPE.BLOCK_EDITING)}
           isFullContentWidth={checkIsShowSmallMenu(pathname)}
+          screeningError={screeningError}
         >
           {children}
         </FormLayoutComponent>

@@ -1,12 +1,6 @@
 import React, { useEffect, useCallback } from "react";
-import { connect } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { ComeBackLoginComponent } from "./components/ComeBackLogin";
-import { setToken } from "../../store/actions/reCaptcha";
-import { resetProspect } from "../../store/actions/appConfig";
-import { generateOtpCode } from "../../store/actions/otp";
-import { getIsGenerating, isOtpGenerated } from "../../store/selectors/otp";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "./../../routes";
 
@@ -15,7 +9,6 @@ export const ComeBackLoginContainer = ({
   setToken,
   resetProspect,
   recaptchaToken,
-  isOtpGenerated,
   isRecaptchaEnable,
   isGenerating,
   isConfigLoading
@@ -34,10 +27,19 @@ export const ComeBackLoginContainer = ({
       if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
-
-      generateOtpCode(loginData);
+      return generateOtpCode(loginData).then(
+        () =>
+          pushHistory(
+            /* istanbul ignore next */
+            process.env.REACT_APP_OTP_ENABLE === "N"
+              ? routes.MyApplications
+              : routes.comeBackLoginVerification,
+            true
+          ),
+        () => {}
+      );
     },
-    [generateOtpCode, recaptchaToken, isRecaptchaEnable]
+    [generateOtpCode, recaptchaToken, isRecaptchaEnable, pushHistory]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -48,18 +50,6 @@ export const ComeBackLoginContainer = ({
   const handleVerifiedFailed = useCallback(() => {
     setToken(null);
   }, [setToken]);
-
-  useEffect(() => {
-    if (isOtpGenerated) {
-      pushHistory(
-        /* istanbul ignore next */
-        process.env.REACT_APP_OTP_ENABLE === "N"
-          ? routes.MyApplications
-          : routes.comeBackLoginVerification,
-        true
-      );
-    }
-  }, [pushHistory, isOtpGenerated]);
 
   return (
     <ComeBackLoginComponent
@@ -73,22 +63,3 @@ export const ComeBackLoginContainer = ({
     />
   );
 };
-
-const mapStateToProps = state => ({
-  recaptchaToken: state.reCaptcha.token,
-  isOtpGenerated: isOtpGenerated(state),
-  isRecaptchaEnable: getIsRecaptchaEnable(state),
-  isGenerating: getIsGenerating(state),
-  isConfigLoading: state.appConfig.loading
-});
-
-const mapDispatchToProps = {
-  generateOtpCode,
-  setToken,
-  resetProspect
-};
-
-export const ComeBackLogin = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ComeBackLoginContainer);

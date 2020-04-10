@@ -91,16 +91,7 @@ public class EnvUtil {
         return "";
     }
 
-    public static String getWebApplyDir() {
-        return webApplyDir;
-    }
-
     public static boolean isProd() {
         return "prod".equalsIgnoreCase(env);
-    }
-
-    public static boolean isRecaptchaEnable() {
-        String env = System.getenv("RECAPTCHA_ENABLE");
-        return !StringUtils.isEmpty(env) && env.equals("Y");
     }
 }

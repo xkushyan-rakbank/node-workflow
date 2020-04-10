@@ -17,11 +17,5 @@ export const useStyles = makeStyles({
   },
   appStatusText: {
     marginBottom: "10px"
-  },
-  buttonText: {
-    "& svg": {
-      width: "24px",
-      height: "24px"
-    }
   }
 });

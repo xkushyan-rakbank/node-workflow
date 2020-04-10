@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-class JwtService {
+public class JwtService {
 
     private final FileUtil fileUtil;
 
@@ -36,7 +36,7 @@ class JwtService {
     }
 
     @SuppressWarnings("Duplicates")
-    JwtPayload decrypt(String token) {
+    public JwtPayload decrypt(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
