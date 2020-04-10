@@ -59,6 +59,7 @@ export const SearchedAppInfoComponent = ({
 
   const confirmHandler = useCallback(() => {
     updateProspectId(match.params.id);
+
     return getProspectInfo(match.params.id).then(
       () => pushDisplayScreenToHistory(prospectOverview),
       () => {}

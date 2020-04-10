@@ -11,6 +11,7 @@ export const LoginContainer = ({ login, setIsApplyEditApplication, history }) =>
     values => {
       let loginData = { ...values };
       setIsLoading(true);
+
       return login(loginData).then(
         () => {
           setIsApplyEditApplication(true);
