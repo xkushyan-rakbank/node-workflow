@@ -7,7 +7,7 @@ import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
-import { useStyles } from "./../styled";
+import { useStyles } from "./styled";
 
 const loginSchema = Yup.object({
   username: Yup.string()
