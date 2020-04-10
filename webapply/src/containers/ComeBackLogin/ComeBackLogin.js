@@ -9,7 +9,6 @@ export const ComeBackLoginContainer = ({
   setToken,
   resetProspect,
   recaptchaToken,
-  isOtpGenerated,
   isRecaptchaEnable,
   isGenerating,
   isConfigLoading
@@ -28,10 +27,19 @@ export const ComeBackLoginContainer = ({
       if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
-
-      generateOtpCode(loginData);
+      return generateOtpCode(loginData).then(
+        () =>
+          pushHistory(
+            /* istanbul ignore next */
+            process.env.REACT_APP_OTP_ENABLE === "N"
+              ? routes.MyApplications
+              : routes.comeBackLoginVerification,
+            true
+          ),
+        () => {}
+      );
     },
-    [generateOtpCode, recaptchaToken, isRecaptchaEnable]
+    [generateOtpCode, recaptchaToken, isRecaptchaEnable, pushHistory]
   );
   const handleReCaptchaVerify = useCallback(
     token => {
@@ -42,18 +50,6 @@ export const ComeBackLoginContainer = ({
   const handleVerifiedFailed = useCallback(() => {
     setToken(null);
   }, [setToken]);
-
-  useEffect(() => {
-    if (isOtpGenerated) {
-      pushHistory(
-        /* istanbul ignore next */
-        process.env.REACT_APP_OTP_ENABLE === "N"
-          ? routes.MyApplications
-          : routes.comeBackLoginVerification,
-        true
-      );
-    }
-  }, [pushHistory, isOtpGenerated]);
 
   return (
     <ComeBackLoginComponent
