@@ -11,7 +11,6 @@ import {
   SELECT_SERVICES_PAGE_ID,
   servicesSteps
 } from "../../src/containers/SelectServices/constants";
-import { addPhoneNoValidationToYup } from "../../src/utils/validation";
 import routes from "../../src/routes";
 
 jest.mock("../../src/containers/SelectServices/components/SelectServices");
@@ -58,7 +57,6 @@ describe("SelectServices tests", () => {
         handleSetNextStep,
         createFormChangeHandler
       ]);
-      addPhoneNoValidationToYup();
       render(<SelectServicesPage {...props} />);
     });
 
