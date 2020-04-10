@@ -106,11 +106,24 @@ describe("ComeBackLogin test", () => {
     expect(setToken.mock.calls[0][0]).toEqual(null);
   });
 
-  it("should replace path to history after sudmit form", async () => {
+  it("should replace path to history when submit form was resolved", async () => {
     render(<ComeBackLoginContainer {...props} />);
 
-    await act(() => ComeBackLoginComponent.mock.calls[0][0].submitForm({ value: 1 }));
+    await act(async () => {
+      await ComeBackLoginComponent.mock.calls[0][0].submitForm({ value: 1 });
+    });
 
-    expect(pushHistory.mock.calls[0]).toEqual([path, true]);
+    expect(pushHistory).toBeCalledWith(path, true);
+  });
+
+  it("should do nothing when submit form was failed", async () => {
+    generateOtpCode.mockReturnValue(Promise.reject());
+    render(<ComeBackLoginContainer {...props} />);
+
+    await act(async () => {
+      await ComeBackLoginComponent.mock.calls[0][0].submitForm({ value: 1 });
+    });
+
+    expect(pushHistory).not.toBeCalled();
   });
 });
