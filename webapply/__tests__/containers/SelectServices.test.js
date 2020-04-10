@@ -18,11 +18,6 @@ jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/hooks/useStep");
 
-// fix Yup.phoneNo() fatal error
-jest.mock(
-  "../../src/containers/SelectServices/components/SigningPreferences/SigningPreferences",
-  () => ({ SigningPreferencesComponent: jest.fn().mockImplementation(() => null) })
-);
 
 describe("SelectServices tests", () => {
   const pushHistory = jest.fn();
