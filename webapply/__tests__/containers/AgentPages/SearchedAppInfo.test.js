@@ -16,6 +16,9 @@ describe("SearchedAppInfoContainer test", () => {
   const pushDisplayScreenToHistory = jest.fn();
   const params = { id: "some id" }
   const match = { params };
+  const searchResult = jest.fn();
+  const handleSetStep = jest.fn();
+  const createSetStepHandler = jest.fn();
   const searchResults = [];
   const isDisplayConfirmDialog = "some boolean";
   const getProspectOverview = jest.fn();
@@ -34,7 +37,8 @@ describe("SearchedAppInfoContainer test", () => {
     prospectOverview,
     getProspectInfo,
     updateProspectId,
-    resetProspect
+    resetProspect,
+    createSetStepHandler
   };
 
   beforeEach(() => {
@@ -42,7 +46,14 @@ describe("SearchedAppInfoContainer test", () => {
     useDisplayScreenBasedOnViewId.mockReturnValue({ pushDisplayScreenToHistory });
 
     jest.clearAllMocks();
+  });
 
+  it("should dispatch resetProspect on mount", () => {
+    render(<SearchedAppInfoContainer {...props} />);
+
+    expect(SearchedAppInfoComponent).toHaveBeenCalledTimes(1);
+    expect(resetProspect).toHaveBeenCalled();
+    expect(getProspectOverview).toHaveBeenCalledWith(match.params.id);
   });
 
   it("should call useFormNavigation", () => {
@@ -58,7 +69,7 @@ describe("SearchedAppInfoContainer test", () => {
       SearchedAppInfoComponent.mock.calls[0][0].redirectUserPage();
     });
 
-    expect(SearchedAppInfoComponent.mock.calls[0][0].isDisplayConfirmDialog).toBe(true);
+    expect(SearchedAppInfoComponent.mock.calls[1][0].isDisplayConfirmDialog).toBe(true);
   });
 
   it("should pass all props", () => {
@@ -81,34 +92,57 @@ describe("SearchedAppInfoContainer test", () => {
 
     expect(SearchedAppInfoComponent.mock.calls[0][0].isDisplayConfirmDialog).toBe(false);
   });
-  //
-  // it("should run confirmHandler when getProspectInfo is called (resolved)", async () => {
-  //   render(<SearchedAppInfoContainer {...props} />);
-  //
-  //   await act(async () => {
-  //     await SearchedAppInfoComponent.mock.calls[0][0].confirmHandler();
-  //   });
-  //   expect(updateProspectId).toHaveBeenCalledWith(match.params.id);
-  //   expect(getProspectInfo).toHaveBeenCalled();
-  //   expect(pushDisplayScreenToHistory).toHaveBeenCalledWith(prospectOverview);
-  // });
-  //
-  // it("should run confirmHandler when getProspectInfo is called (reject)", async () => {
-  //   render(<SearchedAppInfoContainer {...props} />);
-  //
-  //   const getProspectInfo = jest.fn().mockImplementation(() => Promise.reject());
-  //   render(<SearchedAppInfoContainer {...props} getProspectInfo={getProspectInfo} />);
-  //
-  //   await act(async () => {
-  //     await SearchedAppInfoComponent.mock.calls[0][0].confirmHandler();
-  //   });
-  //   expect(updateProspectId).toHaveBeenCalledWith(match.params.id);
-  // });
-  //
-  // it("should resetProspect", () => {
-  //   render(<SearchedAppInfoContainer {...props} />);
-  //
-  //   expect(resetProspect).toHaveBeenCalled();
-  //   expect(getProspectOverview).toHaveBeenCalledWith(match.params.id);
-  // });
+
+  it("should run confirmHandler when getProspectInfo is called (resolved)", async () => {
+    render(<SearchedAppInfoContainer {...props} />);
+
+    await act(async () => {
+      await SearchedAppInfoComponent.mock.calls[0][0].confirmHandler();
+    });
+    expect(SearchedAppInfoComponent).toHaveBeenCalledTimes(1);
+    expect(updateProspectId).toHaveBeenCalledWith(match.params.id);
+    expect(getProspectInfo).toHaveBeenCalled();
+    expect(pushDisplayScreenToHistory).toHaveBeenCalledWith(prospectOverview);
+  });
+
+  it("should run confirmHandler when getProspectInfo is called (reject)", async () => {
+    const getProspectInfo = jest.fn().mockImplementation(() => Promise.reject());
+
+    render(<SearchedAppInfoContainer {...props} getProspectInfo={getProspectInfo} />);
+
+    await act(async () => {
+      await SearchedAppInfoComponent.mock.calls[0][0].confirmHandler();
+    });
+
+    expect(SearchedAppInfoComponent).toHaveBeenCalledTimes(1);
+    expect(updateProspectId).toHaveBeenCalledWith(match.params.id);
+    expect(pushDisplayScreenToHistory).not.toBeCalled();
+  });
+
+  it("should set step",  async () => {
+    render(<SearchedAppInfoContainer {...props} />);
+
+
+     act( () => {
+       SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(1)();
+    });
+
+    expect(SearchedAppInfoComponent.mock.calls[0][0].step).toBe(1);
+    expect(handleSetStep).toHaveBeenCalledTimes(0);
+  });
+
+  it("should set null",  async () => {
+    const nextStep = false;
+    render(<SearchedAppInfoContainer {...props} />);
+
+
+     act( () => {
+       SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(null)();
+    });
+
+    expect(SearchedAppInfoComponent.mock.calls[1][0].step).toBe(null);
+    expect(handleSetStep).toHaveBeenCalledTimes(0);
+  });
+
+
 });
