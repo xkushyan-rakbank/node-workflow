@@ -1,10 +1,10 @@
 import React from "react";
 
 import { Avatar } from "./../../../components/Avatar/Avatar";
-import { UploadDocuments } from "./UploadDocument";
+import { DocumentRow } from "../DocumentRow";
 import { useStyles } from "./styled";
 
-export const SignatoriesDocuments = ({ documents, signatories, ...rest }) => {
+export const SignatoriesDocuments = ({ documents, signatories }) => {
   const classes = useStyles();
 
   return signatories.map((signatorie, index) => {
@@ -27,13 +27,12 @@ export const SignatoriesDocuments = ({ documents, signatories, ...rest }) => {
             </div>
           </div>
           {(docUploadDetails.documents || []).map((document, index) => (
-            <UploadDocuments
+            <DocumentRow
               key={document.documentKey || document.documentTitle}
               document={document}
               index={index}
               stakeholderIndex={stakeholderIndex}
               type="stakeholdersDocuments"
-              {...rest}
             />
           ))}
         </div>
