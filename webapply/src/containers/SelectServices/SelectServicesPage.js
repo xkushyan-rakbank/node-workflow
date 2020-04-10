@@ -26,20 +26,22 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
     step => step.step < STEP_3 && step.status !== STEP_STATUS.COMPLETED
   );
 
-  const handleClickNextStep = useCallback(() => {
-    if (isSubmit) {
-      sendProspectToAPI(NEXT).then(
-        isScreeningError => {
-          /* istanbul ignore else */
-          if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
-        },
-        () => {}
-      );
-    } else {
-      handleSetNextStep(activeStep);
-      setIsSubmit(true);
-    }
-  }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, sendProspectToAPI]);
+  const handleClickNextStep = useCallback(
+    (isSavingProspect = isSubmit) => {
+      if (isSavingProspect) {
+        sendProspectToAPI(NEXT).then(
+          isScreeningError => {
+            if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
+          },
+          () => {}
+        );
+      } else {
+        handleSetNextStep(activeStep);
+        setIsSubmit(true);
+      }
+    },
+    [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, sendProspectToAPI]
+  );
 
   const handleContinue = useCallback(
     event =>

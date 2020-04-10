@@ -40,7 +40,7 @@ export const SelectServices = ({
       <div className={classes.linkContainer}>
         <BackLink path={routes.uploadDocuments} />
         <NextStepButton
-          handleClick={handleClickNextStep}
+          handleClick={() => handleClickNextStep(isSubmit)}
           label={isSubmit ? "Go to submit" : "Next Step"}
           className={cx({ [classes.submitButton]: isSubmit })}
           justify="flex-end"

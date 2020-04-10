@@ -18,8 +18,7 @@ jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/hooks/useStep");
 
-
-describe("SelectServices tests", () => {
+describe("SelectServices test", () => {
   const pushHistory = jest.fn();
   const activeStep = "some active step";
   const availableSteps = [];
@@ -96,7 +95,7 @@ describe("SelectServices tests", () => {
     });
   });
 
-  describe("When sendProspectToAPI resolved and click on next step button", () => {
+  describe("When sendProspectToAPI resolved and click on next step button and isScreeningError is false", () => {
     const sendProspectToAPI = jest.fn(() => Promise.resolve(false));
     const props = {
       ...baseProps,
@@ -112,30 +111,53 @@ describe("SelectServices tests", () => {
         handleSetNextStep,
         createFormChangeHandler
       ]);
+      render(<SelectServicesPage {...props} />);
     });
 
     it("should set next step", async () => {
-      const { rerender } = render(<SelectServicesPage {...props} />);
-
       await act(async () => {
         await SelectServices.mock.calls[0][0].handleClickNextStep();
       });
 
       expect(handleSetNextStep).toHaveBeenCalledWith(activeStep);
-
-      rerender(<SelectServicesPage {...props} />);
     });
 
-    it("should redirect to SubmitApplication when submit is true", async () => {
-      render(<SelectServicesPage {...props} />);
-
+    it("should redirect to SubmitApplication", async () => {
       await act(async () => {
-        await SelectServices.mock.calls[0][0].handleClickNextStep();
-        await SelectServices.mock.calls[1][0].handleClickNextStep();
+        await SelectServices.mock.calls[0][0].handleClickNextStep(true);
       });
 
       expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
       expect(pushHistory).toHaveBeenCalledWith(routes.SubmitApplication, true);
+    });
+  });
+
+  describe("When sendProspectToAPI resolved and click on next step button and isScreeningError is true", () => {
+    const sendProspectToAPI = jest.fn(() => Promise.resolve(true));
+    const props = {
+      ...baseProps,
+      sendProspectToAPI
+    };
+
+    beforeAll(() => {
+      jest.clearAllMocks();
+      useStep.mockReturnValue([
+        activeStep,
+        availableSteps,
+        handleSetStep,
+        handleSetNextStep,
+        createFormChangeHandler
+      ]);
+      render(<SelectServicesPage {...props} />);
+    });
+
+    it("should do nothing", async () => {
+      await act(async () => {
+        await SelectServices.mock.calls[0][0].handleClickNextStep(true);
+      });
+
+      expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
+      expect(pushHistory).not.toHaveBeenCalled();
     });
   });
 
@@ -185,14 +207,12 @@ describe("SelectServices tests", () => {
         handleSetNextStep,
         createFormChangeHandler
       ]);
+      render(<SelectServicesPage {...props} />);
     });
 
     it("should not push history", async () => {
-      render(<SelectServicesPage {...props} />);
-
       await act(async () => {
-        await SelectServices.mock.calls[0][0].handleClickNextStep();
-        await SelectServices.mock.calls[1][0].handleClickNextStep();
+        await SelectServices.mock.calls[0][0].handleClickNextStep(true);
       });
 
       expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
