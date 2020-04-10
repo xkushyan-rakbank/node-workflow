@@ -1,17 +1,17 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
-import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
-import { UploadDocuments } from "../../src/containers/UploadDocuments/UploadDocuments";
-import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
-import { formStepper, NEXT } from "../../src/constants";
-import { UploadDocumentsComponent } from "../../src/containers/UploadDocuments/components/UploadDocuments/UploadDocuments";
-import routes from "../../src/routes";
+import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
+import { UploadDocuments } from "../../../src/containers/UploadDocuments/UploadDocuments";
+import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
+import { formStepper, NEXT } from "../../../src/constants";
+import { UploadDocumentsComponent } from "../../../src/containers/UploadDocuments/components/UploadDocuments/UploadDocuments";
+import routes from "../../../src/routes";
 
-jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
-jest.mock("../../src/store/actions/uploadDocuments");
-jest.mock("../../src/utils/useTrackingHistory");
+jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../../src/store/actions/uploadDocuments");
+jest.mock("../../../src/utils/useTrackingHistory");
 jest.mock(
-  "../../src/containers/UploadDocuments/components/UploadDocuments/UploadDocuments",
+  "../../../src/containers/UploadDocuments/components/UploadDocuments/UploadDocuments",
   () => ({
     UploadDocumentsComponent: jest.fn().mockImplementation(() => null)
   })

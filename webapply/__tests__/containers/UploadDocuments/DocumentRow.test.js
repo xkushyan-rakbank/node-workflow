@@ -3,14 +3,14 @@ import { render, act } from "@testing-library/react";
 import {
   getIsEditableStatusSearchInfo,
   getProspectStatus
-} from "../../src/store/selectors/searchProspect";
-import { getProgress, getUploadErrors } from "../../src/store/selectors/uploadDocuments";
-import { DocumentRow } from "../../src/containers/UploadDocuments/DocumentRow";
-import { DocumentRowComponent } from "../../src/containers/UploadDocuments/components/DocumentRow/DocumentRow";
-import { cancelDocUpload, docUpload } from "../../src/store/actions/uploadDocuments";
-import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, UPLOADED } from "../../src/constants";
-import { updateProspect } from "../../src/store/actions/appConfig";
-import { sendProspectToAPI } from "../../src/store/actions/sendProspectToAPI";
+} from "../../../src/store/selectors/searchProspect";
+import { getProgress, getUploadErrors } from "../../../src/store/selectors/uploadDocuments";
+import { DocumentRow } from "../../../src/containers/UploadDocuments/DocumentRow";
+import { DocumentRowComponent } from "../../../src/containers/UploadDocuments/components/DocumentRow/DocumentRow";
+import { cancelDocUpload, docUpload } from "../../../src/store/actions/uploadDocuments";
+import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, UPLOADED } from "../../../src/constants";
+import { updateProspect } from "../../../src/store/actions/appConfig";
+import { sendProspectToAPI } from "../../../src/store/actions/sendProspectToAPI";
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn().mockImplementation(fn => fn()),
@@ -19,12 +19,12 @@ jest.mock("react-redux", () => ({
     .mockImplementation(() => jest.fn())
     .mockReturnValue(fn => fn)
 }));
-jest.mock("../../src/store/selectors/searchProspect");
-jest.mock("../../src/store/selectors/uploadDocuments");
-jest.mock("../../src/store/actions/uploadDocuments");
-jest.mock("../../src/store/actions/appConfig");
-jest.mock("../../src/store/actions/sendProspectToAPI");
-jest.mock("../../src/containers/UploadDocuments/components/DocumentRow/DocumentRow", () => ({
+jest.mock("../../../src/store/selectors/searchProspect");
+jest.mock("../../../src/store/selectors/uploadDocuments");
+jest.mock("../../../src/store/actions/uploadDocuments");
+jest.mock("../../../src/store/actions/appConfig");
+jest.mock("../../../src/store/actions/sendProspectToAPI");
+jest.mock("../../../src/containers/UploadDocuments/components/DocumentRow/DocumentRow", () => ({
   DocumentRowComponent: jest.fn().mockImplementation(() => null)
 }));
 
