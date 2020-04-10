@@ -82,7 +82,7 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
           </div>
         ))}
       </div>
-      {currentSectionIndex && (
+      {!!currentSectionIndex && (
         <div className={classes.paginationDots}>
           {new Array(childrenCount).fill(null).map((_, i) => (
             <button
