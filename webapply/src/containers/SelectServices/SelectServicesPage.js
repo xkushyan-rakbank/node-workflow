@@ -28,23 +28,25 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
 
   const handleClickNextStep = useCallback(() => {
     if (isSubmit) {
-      sendProspectToAPI(NEXT).then(isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
-      });
-      return;
+      sendProspectToAPI(NEXT).then(
+        isScreeningError => {
+          /* istanbul ignore else */
+          if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
+        },
+        () => {}
+      );
+    } else {
+      handleSetNextStep(activeStep);
+      setIsSubmit(true);
     }
-
-    handleSetNextStep(activeStep);
-    setIsSubmit(true);
   }, [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, sendProspectToAPI]);
 
   const handleContinue = useCallback(
-    event => {
+    event =>
       sendProspectToAPI(CONTINUE, event, SAVE, {
         activeStep,
         flowId: SELECT_SERVICES_PAGE_ID
-      }).then(() => handleSetNextStep(activeStep), () => {});
-    },
+      }).then(() => handleSetNextStep(activeStep), () => {}),
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
 
