@@ -36,8 +36,11 @@ export const useDisplayScreenBasedOnViewId = () => {
       if (isSubmit) {
         if (!isROScreens) {
           url = isRetrieveMode ? routes.ApplicationSubmitted : routes.reUploadDocuments;
-        } else if (isEditRedirect) {
-          url = routes.companyInfo;
+        } else {
+          /* istanbul ignore else */
+          if (isEditRedirect) {
+            url = routes.companyInfo;
+          }
         }
       }
       if (
