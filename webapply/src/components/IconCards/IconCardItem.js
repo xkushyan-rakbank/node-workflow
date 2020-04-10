@@ -1,8 +1,8 @@
 import React from "react";
 import cx from "classnames";
-import { withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const style = theme => ({
+const useStyles = makeStyles(theme => ({
   iconCardWrapper: {
     display: "flex",
     flexDirection: "column",
@@ -63,14 +63,16 @@ const style = theme => ({
       height: 64
     }
   }
-});
+}));
 
-const IconCardItem = ({ classes, children, title, text, horizontal }) => (
-  <div className={cx(classes.iconCardWrapper, { [classes.horizontal]: horizontal })}>
-    {title && <div className={classes.iconCardTitle}>{title}</div>}
-    <div className={classes.iconCardImg}>{children}</div>
-    <div className={classes.iconCardText}>{text}</div>
-  </div>
-);
+export const IconCardItem = ({ children, title, text, horizontal }) => {
+  const classes = useStyles();
 
-export default withStyles(style)(IconCardItem);
+  return (
+    <div className={cx(classes.iconCardWrapper, { [classes.horizontal]: horizontal })}>
+      {title && <div className={classes.iconCardTitle}>{title}</div>}
+      <div className={classes.iconCardImg}>{children}</div>
+      <div className={classes.iconCardText}>{text}</div>
+    </div>
+  );
+};

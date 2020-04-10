@@ -8,9 +8,7 @@ import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.stub.JwtPayloadStub;
 import org.apache.logging.log4j.util.Strings;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -51,7 +49,7 @@ public class AuthorizationFilterTest {
     private Filter filter;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         List<String> urls = Arrays.asList("/exclude1", "/exclude2");
         filter = new AuthorizationFilter(authorizationService, urls);
@@ -71,8 +69,8 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verifyZeroInteractions(authorizationService);
-        Mockito.verifyZeroInteractions(response);
+        Mockito.verifyNoInteractions(authorizationService);
+        Mockito.verifyNoInteractions(response);
         Mockito.verify(filterChain).doFilter(request, response);
     }
 
@@ -82,8 +80,8 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verifyZeroInteractions(authorizationService);
-        Mockito.verifyZeroInteractions(response);
+        Mockito.verifyNoInteractions(authorizationService);
+        Mockito.verifyNoInteractions(response);
         Mockito.verify(filterChain).doFilter(request, response);
     }
 
@@ -110,8 +108,8 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verifyZeroInteractions(authorizationService);
-        Mockito.verifyZeroInteractions(response);
+        Mockito.verifyNoInteractions(authorizationService);
+        Mockito.verifyNoInteractions(response);
         Mockito.verify(filterChain).doFilter(request, response);
     }
 

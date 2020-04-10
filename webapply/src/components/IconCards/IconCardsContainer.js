@@ -1,16 +1,15 @@
 import React from "react";
-import { withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const style = {
+const useStyles = makeStyles(() => ({
   iconsWrapper: {
     display: "flex",
     flexWrap: "wrap",
     margin: "20px -10px"
   }
+}));
+
+export const IconCardsContainer = ({ children }) => {
+  const classes = useStyles();
+  return <div className={classes.iconsWrapper}>{children}</div>;
 };
-
-const IconCardsContainer = ({ classes, children }) => (
-  <div className={classes.iconsWrapper}>{children}</div>
-);
-
-export default withStyles(style)(IconCardsContainer);

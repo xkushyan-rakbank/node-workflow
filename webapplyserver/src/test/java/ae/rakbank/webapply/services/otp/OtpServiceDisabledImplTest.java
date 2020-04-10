@@ -15,7 +15,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -33,7 +32,7 @@ public class OtpServiceDisabledImplTest {
     private OtpServiceImpl otpService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         otpService = new OtpServiceImpl(dehClient, authorizationService, fileUtil);
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newOtpConfigDisabled());

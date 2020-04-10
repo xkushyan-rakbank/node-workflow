@@ -6,7 +6,6 @@ import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +49,7 @@ public class RecaptchaServiceTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         recaptchaService = new RecaptchaService(fileUtil, restTemplateBuilder);
 

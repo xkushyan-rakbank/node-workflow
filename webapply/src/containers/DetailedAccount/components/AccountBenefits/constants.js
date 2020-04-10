@@ -1,4 +1,4 @@
-import { accountNames } from "../../../constants";
+import { accountNames } from "../../../../constants";
 
 export const accountTypesInfo = {
   [accountNames.starter]: [
