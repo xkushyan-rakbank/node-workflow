@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { UploadDocumentComponent } from "./components/DocumentRow/DocumentRow";
+import { DocumentRowComponent } from "./components/DocumentRow/DocumentRow";
 import {
   getIsEditableStatusSearchInfo,
   getProspectStatus
@@ -80,10 +80,10 @@ export const DocumentRow = ({ document, type: docOwner, index, stakeholderIndex 
   }, []);
 
   return (
-    <UploadDocumentComponent
+    <DocumentRowComponent
       isUploadError={uploadErrors[documentKey]}
       isUploaded={isUploaded}
-      isUploading={selectedFile && !isUploaded}
+      isUploading={!!selectedFile && !isUploaded}
       percentComplete={isUploaded ? 100 : progress[documentKey] || 0}
       selectedFile={selectedFile}
       uploadDocument={uploadDocument}

@@ -5,10 +5,11 @@ import { DocumentUploadError } from "../../../../components/DocumentUploadError/
 import { documentValidationSchema } from "../../../../utils/validation";
 import { Icon, ICONS } from "../../../../components/Icons";
 
-import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
 import { useStyles } from "../styled";
 
-export const UploadDocumentComponent = ({
+import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
+
+export const DocumentRowComponent = ({
   isDisabledUploadForRO,
   isUploaded,
   selectedFile,
