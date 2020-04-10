@@ -42,6 +42,10 @@ export const getAccountType = state => getApplicationInfo(state).accountType;
 
 export const getDocuments = state => getProspect(state).documents || {};
 
+export const getCompanyDocuments = state => getDocuments(state).companyDocuments || [];
+
+export const getStakeholdersDocuments = state => getDocuments(state).stakeholdersDocuments || [];
+
 export const getOtherDocuments = state => getDocuments(state).otherDocuments || [];
 
 export const checkIfRequiredDocsUploaded = docs =>

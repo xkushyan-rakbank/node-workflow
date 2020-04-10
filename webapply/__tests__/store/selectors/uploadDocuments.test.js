@@ -8,7 +8,9 @@ import {
   checkIfRequiredDocsUploaded,
   getIsRequiredDocsUploaded,
   getOtherDocuments,
-  getDocuments
+  getDocuments,
+  getCompanyDocuments,
+  getStakeholdersDocuments
 } from "../../../src/store/selectors/appConfig";
 
 describe("getProspectDocuments selector test", () => {
@@ -76,5 +78,25 @@ describe("getProspectDocuments selector test", () => {
 
   it("should return 0 when companyDocuments and stakeholdersDocuments is not exists", () => {
     expect(getIsRequiredDocsUploaded({ appConfig: { prospect: { documents: {} } } })).toBe(0);
+  });
+
+  it("should return company documents", () => {
+    expect(getCompanyDocuments(state)).toBe(companyDocuments);
+  });
+
+  it("should return empty array when company documents is not set", () => {
+    const mockState = { uploadDocuments, appConfig: { prospect: { documents: {} } } };
+
+    expect(getCompanyDocuments(mockState)).toEqual([]);
+  });
+
+  it("should return stakeholders documents", () => {
+    expect(getStakeholdersDocuments(state)).toBe(stakeholdersDocuments);
+  });
+
+  it("should return empty array when stakeholders documents is not set", () => {
+    const mockState = { uploadDocuments, appConfig: { prospect: { documents: {} } } };
+
+    expect(getStakeholdersDocuments(mockState)).toEqual([]);
   });
 });
