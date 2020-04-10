@@ -1,1 +1,1 @@
-export { AuditTrail } from "./AuditTrail";
+export { AuditTrailPage as AuditTrail } from "./AuditTrailPage";
