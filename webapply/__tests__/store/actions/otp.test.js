@@ -1,4 +1,4 @@
-import { WAIT_FOR_ACTION } from "redux-wait-for-action";
+import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
 
 import {
   GENERATE_OTP_CODE,
@@ -87,6 +87,7 @@ describe("applicantInfoForm actions", () => {
     const expectedAction = {
       type: GENERATE_OTP_CODE,
       [WAIT_FOR_ACTION]: GENERATE_CODE_SUCCESS,
+      [ERROR_ACTION]: VERIFY_CODE_FAILED,
       payload
     };
     expect(generateOtpCodePromisify(payload)).toEqual(expectedAction);

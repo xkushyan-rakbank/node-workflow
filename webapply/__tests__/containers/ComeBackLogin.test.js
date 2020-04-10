@@ -106,7 +106,7 @@ describe("ComeBackLogin test", () => {
     expect(setToken.mock.calls[0][0]).toEqual(null);
   });
 
-  it("should run pushHistory", async () => {
+  it("should replace path to history after sudmit form", async () => {
     render(<ComeBackLoginContainer {...props} />);
 
     await act(() => ComeBackLoginComponent.mock.calls[0][0].submitForm({ value: 1 }));

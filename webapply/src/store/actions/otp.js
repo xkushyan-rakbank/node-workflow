@@ -1,4 +1,4 @@
-import { WAIT_FOR_ACTION } from "redux-wait-for-action";
+import { WAIT_FOR_ACTION, ERROR_ACTION } from "redux-wait-for-action";
 
 export const GENERATE_OTP_CODE = "OTP/GENERATE_OTP_CODE";
 export const VERIFY_OTP = "OTP/VERIFY_OTP";
@@ -52,6 +52,7 @@ export const verifyClearError = () => ({
 export const generateOtpCodePromisify = payload => ({
   type: GENERATE_OTP_CODE,
   [WAIT_FOR_ACTION]: GENERATE_CODE_SUCCESS,
+  [ERROR_ACTION]: VERIFY_CODE_FAILED,
   payload: {
     email: payload.email,
     countryCode: payload.countryCode,
