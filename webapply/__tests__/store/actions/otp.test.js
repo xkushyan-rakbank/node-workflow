@@ -1,3 +1,5 @@
+import { WAIT_FOR_ACTION } from "redux-wait-for-action";
+
 import {
   GENERATE_OTP_CODE,
   VERIFY_OTP,
@@ -14,7 +16,8 @@ import {
   generateCodeSuccess,
   verifyCodeSuccess,
   verifyCodeFailed,
-  verifyClearError
+  verifyClearError,
+  generateOtpCodePromisify
 } from "../../../src/store/actions/otp";
 
 describe("applicantInfoForm actions", () => {
@@ -77,5 +80,15 @@ describe("applicantInfoForm actions", () => {
   it("should create an action to generate code error", () => {
     const expectedAction = { type: VERIFY_CLEAR_ERROR };
     expect(verifyClearError()).toEqual(expectedAction);
+  });
+
+  it("should create an action to generateOtpCodePromisify", () => {
+    const payload = {};
+    const expectedAction = {
+      type: GENERATE_OTP_CODE,
+      [WAIT_FOR_ACTION]: GENERATE_CODE_SUCCESS,
+      payload
+    };
+    expect(generateOtpCodePromisify(payload)).toEqual(expectedAction);
   });
 });

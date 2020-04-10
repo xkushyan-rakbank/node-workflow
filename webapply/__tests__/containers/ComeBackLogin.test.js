@@ -12,8 +12,7 @@ jest.mock("../../src/store/actions/reCaptcha");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 
 describe("ComeBackLogin test", () => {
-  const generateOtpCode = jest.fn();
-  const isOtpGenerated = true;
+  const generateOtpCode = jest.fn(() => Promise.resolve());
   const setToken = jest.fn();
   const path = routes.comeBackLoginVerification;
   const resetProspect = jest.fn();
@@ -32,7 +31,6 @@ describe("ComeBackLogin test", () => {
     setToken,
     resetProspect,
     recaptchaToken,
-    isOtpGenerated,
     isRecaptchaEnable,
     isGenerating,
     isConfigLoading
@@ -108,15 +106,11 @@ describe("ComeBackLogin test", () => {
     expect(setToken.mock.calls[0][0]).toEqual(null);
   });
 
-  it("should run pushHistory", () => {
+  it("should run pushHistory", async () => {
     render(<ComeBackLoginContainer {...props} />);
 
+    await act(() => ComeBackLoginComponent.mock.calls[0][0].submitForm({ value: 1 }));
+
     expect(pushHistory.mock.calls[0]).toEqual([path, true]);
-  });
-
-  it("should not run pushHistory", () => {
-    render(<ComeBackLoginContainer {...props} isOtpGenerated={false} />);
-
-    expect(pushHistory).not.toBeCalled();
   });
 });
