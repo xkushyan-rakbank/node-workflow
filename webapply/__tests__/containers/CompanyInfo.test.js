@@ -14,7 +14,7 @@ import routes from "../../src/routes";
 jest.mock("../../src/containers/CompanyInfo/components/CompanyInfo");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/utils/useTrackingHistory");
-jest.mock("../../src/hooks/useStep");
+jest.mock("../../src/utils/useStep");
 jest.mock("../../src/utils/checkAllStepsCompleted");
 
 describe("CompanyInfo test", () => {
