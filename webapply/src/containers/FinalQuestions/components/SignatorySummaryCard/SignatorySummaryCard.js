@@ -8,7 +8,7 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps } from "./steps";
-import { checkIsAccountInfoTypeNumber } from "./utils";
+import { getAuthorityTypeDisplayText } from "./utils";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholders";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 import { COMPANY_SIGNATORY_ID } from "../../../../constants";
@@ -17,7 +17,7 @@ export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
   index,
   signatory,
-  datalist,
+  authorityTypeDatalist,
   signatory: { fullName } = {},
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
@@ -32,8 +32,10 @@ export const SignatorySummaryCardComponent = ({
   const classes = useStyles();
 
   const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
-  const authorityTypeValueFromProspect = get(signatory, "accountSigningInfo.authorityType");
-  const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
+  const authorityTypeValue = getAuthorityTypeDisplayText(
+    get(signatory, "accountSigningInfo.authorityType"),
+    authorityTypeDatalist
+  );
 
   return (
     <FormCard
