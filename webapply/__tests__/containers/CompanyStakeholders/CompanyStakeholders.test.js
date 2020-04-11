@@ -1,13 +1,13 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
 
-import { CompanyStakeholdersContainer } from "../../src/containers/CompanyStakeholders/CompanyStakeholders";
-import { CompanyStakeholdersComponent } from "../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders";
+import { CompanyStakeholdersContainer } from "../../../src/containers/CompanyStakeholders/CompanyStakeholders";
+import { CompanyStakeholdersComponent } from "../../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders";
 
-import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
-import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
-import { StakeholdersNameManager } from "../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
-import { NEXT } from "../../src/constants";
+import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
+import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
+import { StakeholdersNameManager } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
+import { NEXT } from "../../../src/constants";
 
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock(
