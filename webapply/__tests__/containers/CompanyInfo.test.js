@@ -5,7 +5,7 @@ import { CompanyInfo } from "../../src/containers/CompanyInfo/components/Company
 import { CompanyInfoPage } from "../../src/containers/CompanyInfo/CompanyInfoPage";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
-import { useStep } from "../../src/hooks/useStep";
+import { useStep } from "../../src/utils/useStep";
 import { checkAllStepsCompleted } from "../../src/utils/checkAllStepsCompleted";
 import { formStepper, CONTINUE, SAVE, NEXT } from "../../src/constants";
 import { companyInfoSteps, COMPANY_INFO_PAGE_ID } from "../../src/containers/CompanyInfo/constants";

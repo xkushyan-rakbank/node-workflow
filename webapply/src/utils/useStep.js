@@ -28,24 +28,30 @@ export const useStep = (flowId, steps) => {
     }
   }, [availableSteps, dispatch, steps, setActiveStep, flowId]);
 
-  const handleSetNextStep = step => {
-    const nextStep = step < steps.length ? step + 1 : null;
+  const handleSetNextStep = useCallback(
+    step => {
+      const nextStep = step < steps.length ? step + 1 : null;
 
-    setActiveStep(nextStep);
-    dispatch(setStepStatus(flowId, step, STEP_STATUS.COMPLETED));
-  };
-
-  const handleSetStep = nextStep => {
-    if (
-      availableSteps.some(
-        step =>
-          step.step === nextStep &&
-          (step.status === STEP_STATUS.COMPLETED || step.status === STEP_STATUS.AVAILABLE)
-      )
-    ) {
       setActiveStep(nextStep);
-    }
-  };
+      dispatch(setStepStatus(flowId, step, STEP_STATUS.COMPLETED));
+    },
+    [steps, dispatch, flowId]
+  );
+
+  const handleSetStep = useCallback(
+    nextStep => {
+      if (
+        availableSteps.some(
+          step =>
+            step.step === nextStep &&
+            (step.status === STEP_STATUS.COMPLETED || step.status === STEP_STATUS.AVAILABLE)
+        )
+      ) {
+        setActiveStep(nextStep);
+      }
+    },
+    [availableSteps]
+  );
 
   const handleFormChange = useCallback(
     (props, prevValues) => {
@@ -67,14 +73,12 @@ export const useStep = (flowId, steps) => {
   );
 
   // eslint-disable-next-line react/display-name
-  const createFormChangeHandler = cb => props => {
-    return (
-      <>
-        <FormikEffect onChange={handleFormChange} />
-        {cb(props)}
-      </>
-    );
-  };
+  const createFormChangeHandler = cb => props => (
+    <>
+      <FormikEffect onChange={handleFormChange} />
+      {cb(props)}
+    </>
+  );
 
   return [activeStep, availableSteps, handleSetStep, handleSetNextStep, createFormChangeHandler];
 };
