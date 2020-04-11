@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { useStep } from "../../hooks/useStep";
+import { useStep } from "../../utils/useStep";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { CONTINUE, NEXT, formStepper, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
