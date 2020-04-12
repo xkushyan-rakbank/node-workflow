@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
-import { updateProspect } from "../../store/actions/appConfig";
+import { getOrganizationInfo } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
-import { SigningPreferencesComponent } from "./components/SigningPreferences/SigningPreferences";
+import { SigningPreferencesComponent } from "./SigningPreferences";
 
 const mapStateToProps = state => ({
   organizationInfo: getOrganizationInfo(state)

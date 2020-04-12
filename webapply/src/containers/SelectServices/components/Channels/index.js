@@ -1,14 +1,16 @@
 import { connect } from "react-redux";
 import get from "lodash/get";
 
-import { getSignatories } from "../../store/selectors/appConfig";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
-import { getSelectedTypeCurrency } from "../../store/selectors/selectServices";
-import { getStakeholders, checkIsHasSignatories } from "../../store/selectors/stakeholders";
-import { updateProspect } from "../../store/actions/appConfig";
-import { getAccountInfo } from "../../store/selectors/appConfig";
+import {
+  getSignatories,
+  getAccountInfo,
+  getOrganizationInfo
+} from "../../../../store/selectors/appConfig";
+import { getSelectedTypeCurrency } from "../../../../store/selectors/selectServices";
+import { getStakeholders, checkIsHasSignatories } from "../../../../store/selectors/stakeholders";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
-import { ChannelsComponent } from "./components/Channels/Channels";
+import { ChannelsComponent } from "./Channels";
 
 const mapStateToProps = state => ({
   ...getSignatories(state)[0],
