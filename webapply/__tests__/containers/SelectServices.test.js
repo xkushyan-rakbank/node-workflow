@@ -9,7 +9,8 @@ import { useFormNavigation } from "../../src/components/FormNavigation/FormNavig
 import { formStepper, CONTINUE, SAVE, NEXT, STEP_STATUS, accountNames } from "../../src/constants";
 import {
   SELECT_SERVICES_PAGE_ID,
-  servicesSteps
+  servicesSteps,
+  STEP_4
 } from "../../src/containers/SelectServices/constants";
 import routes from "../../src/routes";
 
@@ -70,7 +71,7 @@ describe("SelectServices test", () => {
       expect(SelectServices.mock.calls[0][0]).toMatchObject({
         activeStep,
         availableSteps,
-        isSubmit: false,
+        isSubmit: true,
         isNextButtonDisabled: false,
         createFormChangeHandler
       });
@@ -95,8 +96,36 @@ describe("SelectServices test", () => {
     });
   });
 
-  describe("When sendProspectToAPI resolved and click on next step button and isScreeningError is false", () => {
+  describe("When number of activeStep is 4", () => {
     const sendProspectToAPI = jest.fn(() => Promise.resolve(false));
+    const props = {
+      ...baseProps,
+      sendProspectToAPI
+    };
+
+    beforeAll(() => {
+      jest.clearAllMocks();
+      useStep.mockReturnValue([
+        STEP_4,
+        availableSteps,
+        handleSetStep,
+        handleSetNextStep,
+        createFormChangeHandler
+      ]);
+      render(<SelectServicesPage {...props} />);
+    });
+
+    it("should set next step", async () => {
+      await act(async () => {
+        await SelectServices.mock.calls[0][0].handleClickNextStep();
+      });
+
+      expect(handleSetNextStep).toHaveBeenCalledWith(activeStep);
+    });
+  });
+
+  describe("When sendProspectToAPI resolved and click on next step button and isScreeningError is false", () => {
+    const sendProspectToAPI = jest.fn();
     const props = {
       ...baseProps,
       sendProspectToAPI
@@ -114,17 +143,9 @@ describe("SelectServices test", () => {
       render(<SelectServicesPage {...props} />);
     });
 
-    it("should set next step", async () => {
-      await act(async () => {
-        await SelectServices.mock.calls[0][0].handleClickNextStep();
-      });
-
-      expect(handleSetNextStep).toHaveBeenCalledWith(activeStep);
-    });
-
     it("should redirect to SubmitApplication", async () => {
       await act(async () => {
-        await SelectServices.mock.calls[0][0].handleClickNextStep(true);
+        await SelectServices.mock.calls[0][0].handleClickNextStep();
       });
 
       expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
@@ -153,7 +174,7 @@ describe("SelectServices test", () => {
 
     it("should do nothing", async () => {
       await act(async () => {
-        await SelectServices.mock.calls[0][0].handleClickNextStep(true);
+        await SelectServices.mock.calls[0][0].handleClickNextStep();
       });
 
       expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
@@ -212,7 +233,7 @@ describe("SelectServices test", () => {
 
     it("should not push history", async () => {
       await act(async () => {
-        await SelectServices.mock.calls[0][0].handleClickNextStep(true);
+        await SelectServices.mock.calls[0][0].handleClickNextStep();
       });
 
       expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);

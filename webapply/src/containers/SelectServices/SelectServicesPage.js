@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper, SAVE } from "../../constants";
@@ -6,11 +6,10 @@ import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 
-import { STEP_3, servicesSteps, SELECT_SERVICES_PAGE_ID } from "./constants";
+import { servicesSteps, SELECT_SERVICES_PAGE_ID, STEP_5, STEP_4 } from "./constants";
 import { SelectServices } from "./components/SelectServices";
 
 export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
-  const [isSubmit, setIsSubmit] = useState(false);
   const pushHistory = useTrackingHistory();
   useFormNavigation([false, true, formStepper]);
 
@@ -23,25 +22,23 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
   ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps);
 
   const isAllStepsCompleted = !availableSteps.some(
-    step => step.step < STEP_3 && step.status !== STEP_STATUS.COMPLETED
+    step => step.step !== STEP_5 && step.status !== STEP_STATUS.COMPLETED
   );
 
-  const handleClickNextStep = useCallback(
-    (isSavingProspect = isSubmit) => {
-      if (isSavingProspect) {
-        sendProspectToAPI(NEXT).then(
-          isScreeningError => {
-            if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
-          },
-          () => {}
-        );
-      } else {
-        handleSetNextStep(activeStep);
-        setIsSubmit(true);
-      }
-    },
-    [pushHistory, isSubmit, setIsSubmit, handleSetNextStep, activeStep, sendProspectToAPI]
-  );
+  const isSubmit = activeStep !== STEP_4;
+
+  const handleClickNextStep = useCallback(() => {
+    if (isSubmit) {
+      sendProspectToAPI(NEXT).then(
+        isScreeningError => {
+          if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
+        },
+        () => {}
+      );
+    } else {
+      handleSetNextStep(activeStep);
+    }
+  }, [pushHistory, isSubmit, handleSetNextStep, activeStep, sendProspectToAPI]);
 
   const handleContinue = useCallback(
     event =>
@@ -54,7 +51,6 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
 
   const createSetStepHandler = useCallback(
     nextStep => () => {
-      setIsSubmit(false);
       handleSetStep(nextStep);
     },
     [handleSetStep]
