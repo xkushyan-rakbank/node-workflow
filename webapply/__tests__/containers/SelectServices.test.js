@@ -97,10 +97,9 @@ describe("SelectServices test", () => {
   });
 
   describe("When number of activeStep is 4", () => {
-    const sendProspectToAPI = jest.fn(() => Promise.resolve(false));
     const props = {
       ...baseProps,
-      sendProspectToAPI
+      sendProspectToAPI: jest.fn()
     };
 
     beforeAll(() => {
@@ -120,12 +119,12 @@ describe("SelectServices test", () => {
         await SelectServices.mock.calls[0][0].handleClickNextStep();
       });
 
-      expect(handleSetNextStep).toHaveBeenCalledWith(activeStep);
+      expect(handleSetNextStep).toHaveBeenCalledWith(STEP_4);
     });
   });
 
   describe("When sendProspectToAPI resolved and click on next step button and isScreeningError is false", () => {
-    const sendProspectToAPI = jest.fn();
+    const sendProspectToAPI = jest.fn(() => Promise.resolve(false));
     const props = {
       ...baseProps,
       sendProspectToAPI
