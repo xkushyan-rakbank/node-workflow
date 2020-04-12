@@ -71,7 +71,7 @@ describe("SelectServices test", () => {
       expect(SelectServices.mock.calls[0][0]).toMatchObject({
         activeStep,
         availableSteps,
-        isSubmit: true,
+        isSubmitOnClickNextStepButton: true,
         isNextButtonDisabled: false,
         createFormChangeHandler
       });

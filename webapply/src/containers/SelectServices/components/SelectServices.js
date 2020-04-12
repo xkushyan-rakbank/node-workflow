@@ -12,7 +12,7 @@ import { useStyles } from "./styled";
 export const SelectServices = ({
   activeStep,
   availableSteps,
-  isSubmit,
+  isSubmitOnClickNextStepButton,
   isNextButtonDisabled,
   handleContinue,
   handleClickNextStep,
@@ -40,8 +40,8 @@ export const SelectServices = ({
         <BackLink path={routes.uploadDocuments} />
         <NextStepButton
           handleClick={handleClickNextStep}
-          label={isSubmit ? "Go to submit" : "Next Step"}
-          className={cx({ [classes.submitButton]: isSubmit })}
+          label={isSubmitOnClickNextStepButton ? "Go to submit" : "Next Step"}
+          className={cx({ [classes.submitButton]: isSubmitOnClickNextStepButton })}
           justify="flex-end"
           disabled={isNextButtonDisabled}
         />

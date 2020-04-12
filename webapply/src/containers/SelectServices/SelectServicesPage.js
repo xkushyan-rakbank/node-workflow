@@ -25,10 +25,10 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
     step => step.step !== STEP_5 && step.status !== STEP_STATUS.COMPLETED
   );
 
-  const isSubmit = activeStep !== STEP_4;
+  const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
 
   const handleClickNextStep = useCallback(() => {
-    if (isSubmit) {
+    if (isSubmitOnClickNextStepButton) {
       sendProspectToAPI(NEXT).then(
         isScreeningError => {
           if (!isScreeningError) pushHistory(routes.SubmitApplication, true);
@@ -38,7 +38,13 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
     } else {
       handleSetNextStep(activeStep);
     }
-  }, [pushHistory, isSubmit, handleSetNextStep, activeStep, sendProspectToAPI]);
+  }, [
+    pushHistory,
+    isSubmitOnClickNextStepButton,
+    handleSetNextStep,
+    activeStep,
+    sendProspectToAPI
+  ]);
 
   const handleContinue = useCallback(
     event =>
@@ -63,7 +69,7 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
     <SelectServices
       activeStep={activeStep}
       availableSteps={availableSteps}
-      isSubmit={isSubmit}
+      isSubmitOnClickNextStepButton={isSubmitOnClickNextStepButton}
       isNextButtonDisabled={isNextButtonDisabled}
       handleContinue={handleContinue}
       handleClickNextStep={handleClickNextStep}
