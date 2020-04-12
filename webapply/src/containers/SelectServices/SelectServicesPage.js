@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper, SAVE } from "../../constants";
-import { useStep } from "../../hooks/useStep";
+import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 

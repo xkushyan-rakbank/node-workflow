@@ -4,7 +4,7 @@ import { render, act } from "@testing-library/react";
 import { SelectServicesPage } from "../../src/containers/SelectServices/SelectServicesPage";
 import { SelectServices } from "../../src/containers/SelectServices/components/SelectServices";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
-import { useStep } from "../../src/hooks/useStep";
+import { useStep } from "../../src/utils/useStep";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
 import { formStepper, CONTINUE, SAVE, NEXT, STEP_STATUS, accountNames } from "../../src/constants";
 import {
@@ -16,7 +16,7 @@ import routes from "../../src/routes";
 jest.mock("../../src/containers/SelectServices/components/SelectServices");
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
-jest.mock("../../src/hooks/useStep");
+jest.mock("../../src/utils/useStep");
 
 describe("SelectServices test", () => {
   const pushHistory = jest.fn();
