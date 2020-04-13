@@ -4,9 +4,9 @@ import {
   getOverviewDocuments,
   getProspectOverviewId,
   getOverviewSignatories
-} from "../../../../store/selectors/searchProspect";
+} from "../../../../../store/selectors/searchProspect";
+import { downloadDocumentFile } from "../../../../../store/actions/uploadDocuments";
 import { DocumentsComponent } from "./Documents";
-import { downloadDocumentFile } from "../../../../store/actions/uploadDocuments";
 
 const mapStateToProps = state => ({
   docs: getOverviewDocuments(state),

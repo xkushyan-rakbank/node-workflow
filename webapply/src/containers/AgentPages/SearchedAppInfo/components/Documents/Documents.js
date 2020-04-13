@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
-import { Avatar } from "../../../../components/Avatar/Avatar";
-import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import { Avatar } from "../../../../../components/Avatar/Avatar";
+import { LinkButton } from "../../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
 
 import { useStyles } from "./styled";

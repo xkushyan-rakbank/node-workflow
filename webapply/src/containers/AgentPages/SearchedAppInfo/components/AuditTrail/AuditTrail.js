@@ -1,29 +1,28 @@
-import React from "react";
+import React, { useMemo } from "react";
+import sortBy from "lodash/sortBy";
 import cx from "classnames";
-import { sortBy } from "lodash";
 
 import { useStyles } from "./styled";
 
-const revertedAuditTrailInfo = auditTrailInfo => {
-  const newAuditTrailInfo = auditTrailInfo.map(trailInfo => {
-    let date = trailInfo.modifiedDateTime.split(" ");
-    date[0] = date[0]
-      .split("-")
-      .reverse()
-      .join("-");
-    return {
-      modifiedBy: trailInfo.modifiedBy,
-      modifiedDateTime: date.join(" ")
-    };
-  });
-  return newAuditTrailInfo;
+const formatAuditTrailInfo = ({ modifiedDateTime, ...rest }) => {
+  let [date, time] = modifiedDateTime.split(" ");
+  date = date
+    .split("-")
+    .reverse()
+    .join("-");
+
+  return {
+    ...rest,
+    modifiedDateTime: [date, time].join(" ")
+  };
 };
 
 export const AuditTrail = ({ prospectOverview = {} }) => {
   const classes = useStyles();
   const auditTrailInfo = prospectOverview.AuditTrailInfo || [];
-  const sortedAuditTrailInfo = revertedAuditTrailInfo(
-    sortBy(revertedAuditTrailInfo(auditTrailInfo), ["modifiedDateTime"]).reverse()
+  const sortedAuditTrailInfo = useMemo(
+    () => sortBy(auditTrailInfo.map(formatAuditTrailInfo), ["modifiedDateTime"]).reverse(),
+    [auditTrailInfo]
   );
 
   return sortedAuditTrailInfo && sortedAuditTrailInfo.length ? (

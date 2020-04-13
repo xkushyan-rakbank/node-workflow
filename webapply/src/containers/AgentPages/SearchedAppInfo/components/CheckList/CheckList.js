@@ -1,22 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import get from "lodash/get";
 import cx from "classnames";
 
-import { Avatar } from "../../../../components/Avatar/Avatar";
-import { getFilledOverviewSignatories } from "../../../../store/selectors/searchProspect";
-import {
-  getCompanyChecks,
-  getOrganizationScreeningResults
-} from "../../../../store/selectors/screeningResults";
+import { Avatar } from "../../../../../components/Avatar/Avatar";
 
 import { useStyles } from "./styled";
 import { titles } from "./constants";
 
-export const CheckList = () => {
-  const signatoryInfo = useSelector(getFilledOverviewSignatories);
-  const companyChecks = useSelector(getCompanyChecks);
-  const companyInfo = useSelector(getOrganizationScreeningResults);
+export const CheckListComponent = ({ signatoryInfo, companyChecks, companyInfo }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
