@@ -54,10 +54,31 @@ jobs:
         enabled: true
       - bash : |
           cd webapply
-          npm install redux-mock-store --save-dev
+          #npm install redux-mock-store --save-dev
           npm test
-        displayName: 'Jest Test cases'
-        enabled: false
+        displayName: 'Unit Test cases'
+        enabled: true
+
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@1
+        displayName: ReportGenerator
+        inputs:
+          reports: 'reports/all/coverage/cobertura-coverage.xml'
+          targetdir: CoverageReports
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results'
+        inputs:
+          testResultsFiles: reports/all/junit.xml
+          failTaskOnFailedTests: true
+        condition: succeededOrFailed()
+
+      - task: PublishCodeCoverageResults@1
+        displayName: Publish Code Coverage Results
+        inputs:
+          codeCoverageTool: cobertura
+          summaryFileLocation: $(Build.SourcesDirectory)/CoverageReports/Cobertura.xml
+          reportDirectory: $(Build.SourcesDirectory)/CoverageReports
+        condition: succeededOrFailed()
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
