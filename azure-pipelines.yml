@@ -29,10 +29,10 @@ jobs:
         displayName: 'Use Node 10.x'
         inputs:
           versionSpec: 10.x
-      
+
       - task: npmAuthenticate@0
         inputs:
-          workingFile: 'webapply/.npmrc'
+          workingFile: 'webapply/.npmrc'          
 
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(Dev_build) N
@@ -56,9 +56,26 @@ jobs:
         enabled: true
       - bash : |
           cd webapply
-          npm install redux-mock-store --save-dev
+          #npm install redux-mock-store --save-dev
           npm test
-        displayName: 'Jest Test cases'
+        displayName: 'Unit Test cases'
+        enabled: false
+
+      - task: PublishTestResults@2
+        displayName: 'Publish Test Results'
+        inputs:
+          testResultsFiles: coverage/index.html
+          failTaskOnFailedTests: true
+        condition: succeededOrFailed()
+        enabled: false
+
+      - task: PublishCodeCoverageResults@1
+        displayName: Publish Code Coverage Results
+        inputs:
+          codeCoverageTool: cobertura
+          summaryFileLocation: $(Build.SourcesDirectory)/CoverageReports/Cobertura.xml
+          reportDirectory: $(Build.SourcesDirectory)/CoverageReports
+        condition: succeededOrFailed()
         enabled: false
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
@@ -184,7 +201,7 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
       - bash: |
-          npm i slack-cli -g
+          npm i -g slack-cli
           echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt
