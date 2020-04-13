@@ -59,16 +59,15 @@ jobs:
         displayName: 'Unit Test cases'
         enabled: true
 
-      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@1
-        displayName: ReportGenerator
+      - task: reportgenerator@4
         inputs:
-          reports: 'reports/all/coverage/cobertura-coverage.xml'
-          targetdir: CoverageReports
-
+          reports: 'coverage/cobertura-coverage.xml'
+          targetdir: 'coveragereport'
+          title: 'ReportGenerator'
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
         inputs:
-          testResultsFiles: reports/all/junit.xml
+          testResultsFiles: coverage/index.html
           failTaskOnFailedTests: true
         condition: succeededOrFailed()
 
