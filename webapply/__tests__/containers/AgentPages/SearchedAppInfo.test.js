@@ -14,10 +14,8 @@ jest.mock("../../../src/utils/useDisplayScreenBasedOnViewId");
 
 describe("SearchedAppInfoContainer test", () => {
   const pushDisplayScreenToHistory = jest.fn();
-  const params = { id: "some id" }
+  const params = { id: "some id" };
   const match = { params };
-  const searchResult = jest.fn();
-  const handleSetStep = jest.fn();
   const createSetStepHandler = jest.fn();
   const searchResults = [];
   const isDisplayConfirmDialog = "some boolean";
@@ -119,30 +117,22 @@ describe("SearchedAppInfoContainer test", () => {
     expect(pushDisplayScreenToHistory).not.toBeCalled();
   });
 
-  it("should set step",  async () => {
+  it("should set step", () => {
     render(<SearchedAppInfoContainer {...props} />);
 
-
-     act( () => {
-       SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(1)();
+    act(() => {
+      SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(1)();
     });
 
     expect(SearchedAppInfoComponent.mock.calls[0][0].step).toBe(1);
-    expect(handleSetStep).toHaveBeenCalledTimes(0);
   });
 
-  it("should set null",  async () => {
-    const nextStep = false;
+  it("should set null", () => {
     render(<SearchedAppInfoContainer {...props} />);
-
-
-     act( () => {
-       SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(null)();
+    act(() => {
+      SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(false)();
     });
 
     expect(SearchedAppInfoComponent.mock.calls[1][0].step).toBe(null);
-    expect(handleSetStep).toHaveBeenCalledTimes(0);
   });
-
-
 });
