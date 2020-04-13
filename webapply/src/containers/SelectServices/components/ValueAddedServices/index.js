@@ -6,11 +6,11 @@ import {
   getAccountType,
   getUrlsReadMore,
   getApplicationInfo
-} from "../../store/selectors/appConfig";
-import { updateProspect } from "../../store/actions/appConfig";
-import { getSelectedTypeCurrency } from "../../store/selectors/selectServices";
+} from "../../../../store/selectors/appConfig";
+import { getSelectedTypeCurrency } from "../../../../store/selectors/selectServices";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
-import { ValueAddedServicesComponent } from "./components/ValueAddedServices/ValueAddedServices";
+import { ValueAddedServicesComponent } from "./ValueAddedServices";
 
 const mapStateToProps = state => ({
   readMoreUrls: getUrlsReadMore(state),

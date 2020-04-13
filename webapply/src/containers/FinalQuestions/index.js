@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getSignatories } from "../../store/selectors/appConfig";
-import { FinalQuestionsComponent } from "./FinalQuestions";
+import { FinalQuestionsPage } from "./FinalQuestionsPage";
 
 const mapStateToProps = state => ({
   signatories: getSignatories(state)
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FinalQuestionsComponent);
+)(FinalQuestionsPage);

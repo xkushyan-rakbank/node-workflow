@@ -33,46 +33,47 @@ const MAX_SIGNATORIES = 2;
 const MAX_ACCOUNT_SIGNING_INSTN_LENGTH = 50;
 const MAX_RECONFIRMING_FULL_NAME_LENGTH = 79;
 
-const signingPreferencesSchema = Yup.object({
-  accountSigningType: Yup.string()
-    .required(getRequiredNotTextInputMessage("Signing transactions"))
-    .min(2, "Field is required"),
-  accountSigningInstn: Yup.string().when("accountSigningType", {
-    is: selectedAccountType => selectedAccountType === SIGNING_TRANSACTIONS_TYPE.OTHER,
-    then: Yup.string()
-      .max(
-        MAX_ACCOUNT_SIGNING_INSTN_LENGTH,
-        `Max length is ${MAX_ACCOUNT_SIGNING_INSTN_LENGTH} symbols`
-      )
-      .required(getRequiredMessage("Others"))
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Others"))
-  }),
-  signatories: Yup.array().of(
-    Yup.object().shape({
-      TxnReconfirmingfullname: Yup.string()
-        .required(getRequiredMessage("Full name"))
-        // eslint-disable-next-line no-template-curly-in-string
-        .max(MAX_RECONFIRMING_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
-        .matches(NAME_REGEX, getInvalidMessage("Full name")),
-      primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
-      primaryMobileNo: Yup.string().when("TxnReconfirmingfullname", {
-        is: value => !!value,
-        then: Yup.string()
-          .required(getRequiredMessage("Primary mobile number"))
-          .phoneNo({
-            fieldName: "Primary mobile number",
-            codeFieldName: "primaryMobCountryCode"
-          })
-      }),
-      primaryPhoneCountryCode: Yup.string(),
-      primaryPhoneNo: Yup.string().phoneNo({
-        fieldName: "Landline number",
-        codeFieldName: "primaryPhoneCountryCode",
-        isLandline: true
+const getSigningPreferencesSchema = () =>
+  Yup.object({
+    accountSigningType: Yup.string()
+      .required(getRequiredNotTextInputMessage("Signing transactions"))
+      .min(2, "Field is required"),
+    accountSigningInstn: Yup.string().when("accountSigningType", {
+      is: selectedAccountType => selectedAccountType === SIGNING_TRANSACTIONS_TYPE.OTHER,
+      then: Yup.string()
+        .max(
+          MAX_ACCOUNT_SIGNING_INSTN_LENGTH,
+          `Max length is ${MAX_ACCOUNT_SIGNING_INSTN_LENGTH} symbols`
+        )
+        .required(getRequiredMessage("Others"))
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Others"))
+    }),
+    signatories: Yup.array().of(
+      Yup.object().shape({
+        TxnReconfirmingfullname: Yup.string()
+          .required(getRequiredMessage("Full name"))
+          // eslint-disable-next-line no-template-curly-in-string
+          .max(MAX_RECONFIRMING_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
+          .matches(NAME_REGEX, getInvalidMessage("Full name")),
+        primaryMobCountryCode: Yup.string().required(getRequiredMessage("County code")),
+        primaryMobileNo: Yup.string().when("TxnReconfirmingfullname", {
+          is: value => !!value,
+          then: Yup.string()
+            .required(getRequiredMessage("Primary mobile number"))
+            .phoneNo({
+              fieldName: "Primary mobile number",
+              codeFieldName: "primaryMobCountryCode"
+            })
+        }),
+        primaryPhoneCountryCode: Yup.string(),
+        primaryPhoneNo: Yup.string().phoneNo({
+          fieldName: "Landline number",
+          codeFieldName: "primaryPhoneCountryCode",
+          isLandline: true
+        })
       })
-    })
-  )
-});
+    )
+  });
 // eslint-disable-next-line max-len
 const pathSignatoryInfo = "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn";
 
@@ -90,7 +91,7 @@ export const SigningPreferencesComponent = ({
         accountSigningInstn: "",
         signatories: organizationInfo.contactDetailsForTxnReconfirming || []
       }}
-      validationSchema={signingPreferencesSchema}
+      validationSchema={getSigningPreferencesSchema}
       validateOnChange={false}
       onSubmit={goToNext}
     >

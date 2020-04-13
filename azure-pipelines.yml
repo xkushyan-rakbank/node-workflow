@@ -9,18 +9,18 @@ pr:
   branches:
     include:
       - develop
-      - deploy
+      - release
 #trigger: none
 trigger:
   - develop
-  - deploy
+  - release
 #  - releases/*
 
 jobs:
     - job: Webapply
       timeoutInMinutes: 120
       pool:
-        name: Hosted myself
+        name: Hosted macOS
 #      demands:
 #        - java
 #        - JDK
@@ -30,10 +30,24 @@ jobs:
         inputs:
           versionSpec: 10.x
 
+      - bash: |
+          sh set-endpoint-and-recaptcha.sh $(Dev_build) N
+          echo "##vso[task.setvariable variable=REACT_APP_RECAPTCHA_ENABLE;]N"
+          echo "##vso[task.setvariable variable=RECAPTCHA_ENABLE;]N"
+        displayName: 'Set Endpoint and Recaptcha status in .env.production file'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
+      - bash: |
+          sh set-endpoint-and-recaptcha.sh $(Dev_build) Y
+          echo "##vso[task.setvariable variable=REACT_APP_RECAPTCHA_ENABLE;]Y"
+          echo "##vso[task.setvariable variable=RECAPTCHA_ENABLE;]Y"
+        displayName: 'Set Endpoint and Recaptcha status in .env.production file'
+        condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
-          npm install
-          npm run build
+          yarn
+          yarn build
+          #npm install
+          #npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
@@ -57,7 +71,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -65,11 +80,28 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/webapply/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
           collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
+                    "target": "onboarding/release/$(Build.BuildNumber)/webapply/"
+                }
+              ]
+            }
+          collectBuildInfo: true          
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-publish-build-info.ArtifactoryPublishBuildInfo@1
         displayName: 'Publish Build Info to Artifactory'
         inputs:
@@ -82,7 +114,7 @@ jobs:
           ArtifactName: 'Webapply'
     - job: WebapplyServer
       pool:
-       name: Hosted myself
+       name: Hosted macOS
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -108,7 +140,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -116,7 +149,24 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
-                    "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/webapplyServer/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/webapplyServer/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/webapplyserver/*.war",
+                    "target": "onboarding/release/$(Build.BuildNumber)/webapplyServer/"
                 }
               ]
             }
@@ -131,10 +181,29 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
-          
+      - bash: |
+          yarn global add slack-cli
+          echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          echo -e "Changelog:" >> release-notes.txt
+          echo -e "\n" >> release-notes.txt
+          GITLOG=`git log --merges --since="1.days.ago" --pretty="Commit-id: %h - By : %an, %ar : %s\n" `
+          echo -e $GITLOG >> release-notes.txt
+          echo -e "The files are :\n" >> release-notes.txt
+          git diff --stat $(git describe --tags --abbrev=0)..HEAD >> release-notes.txt
+          slackcli -h "co-releasenotes" -e :checkered_flag: -t $(SLACK_TOKEN) -u "Slackbot" -m "`cat release-notes.txt`"
+          echo -e "================END===================\n" >> release-notes.txt
+        env:
+          BUILD_NUMBER: $(Build.BuildNumber)
+          BUILD_ID: $(Build.BuildId)
+        displayName: 'Create release-notes notification'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        
     - job: document_uploader
       pool:
-       name: Hosted myself
+       name: Hosted macOS
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -166,7 +235,8 @@ jobs:
 
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
-        displayName: 'Artifactory Generic Upload'
+        displayName: 'Artifactory Generic Upload to Dev'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -174,7 +244,24 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
-                    "target": "onboarding/$(Build.BuildNumber)/$(Build.SourceBranchName)/document_uploader/"
+                    "target": "onboarding/develop/$(Build.BuildNumber)/document_uploader/"
+                }
+              ]
+            }
+          collectBuildInfo: true
+
+# below is used for the publishing the artifacts to the jfrog artifactory 
+      - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
+        displayName: 'Artifactory Generic Upload to UAT'
+        condition: and(succeeded(),eq(variables.Dev_Build, 'false'))
+        inputs:
+          artifactoryService: 'Jfrog'
+          fileSpec: |
+            {
+              "files": [
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
+                    "target": "onboarding/releae/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
             }
@@ -195,25 +282,20 @@ jobs:
        - Webapply
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
-        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
       pool:
-       name: Hosted myself
+       name: Hosted macOS
       steps:
       #prepare the Sonarqube for executing the sonar 
-      - task: SonarQubePrepare@4
+      - task: SonarCloudPrepare@1
         inputs:
-          SonarQube: 'sonarqube'
+          SonarCloud: 'RAKBANKSonarCloud'
+          organization: 'rakrepoadmin-github'
           scannerMode: 'CLI'
           configMode: 'file'
+
       #execute the sonar qube analyze in order to run the analyzes of the source code
-      - task: SonarQubeAnalyze@4
-      # publish the sonar report
-      - task: SonarQubePublish@4
+      - task: SonarCloudAnalyze@1
+      - task: SonarCloudPublish@1
         inputs:
           pollingTimeoutSec: '300'
-      - task: PowerShell@2
-        displayName: 'SonarQube Quality Gate status'
-        inputs:
-          filePath: 'webapply/get-sonarqube-quality-gate-status.ps1'
-          arguments: '-SonarServerName "http://104.211.240.147:9000/" -SonarProjectKey "onboarding_webapply" -SonarToken "d8c342584b463b68af3864c244f404440bdbfaf1"'
-        enabled: false

@@ -59,7 +59,7 @@ import { COMPANY_DOCUMENTS, OTHER_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../
 import { PROSPECT_STATUSES } from "../../constants/index";
 import { AUTO } from "../../constants";
 
-function createUploader(prospectId, data, source, headers) {
+export function createUploader(prospectId, data, source, headers) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
@@ -81,19 +81,20 @@ function createUploader(prospectId, data, source, headers) {
   return [uploadPromise, chan];
 }
 
-function* uploadProgressWatcher(chan, documentKey) {
+export function* uploadProgressWatcher(chan, documentKey) {
   while (true) {
     const progress = yield take(chan);
     yield put(uploadFilesProgress({ [documentKey]: progress }));
   }
 }
 
-function* saveProspectAndGetProspectDocumentsSaga() {
+export function* saveProspectAndGetProspectDocumentsSaga() {
   yield put(sendProspectToAPI(AUTO));
   yield race([take(SEND_PROSPECT_TO_API_SUCCESS), take(SEND_PROSPECT_TO_API_FAIL)]);
   yield call(getProspectDocumentsSaga);
 }
 
+/* istanbul ignore next */
 function* getProspectDocumentsSaga() {
   const headers = yield select(getAuthorizationHeader);
   const prospectID = yield select(getProspectId);
@@ -131,6 +132,7 @@ function* getProspectDocumentsSaga() {
   }
 }
 
+/* istanbul ignore next */
 function* uploadDocumentsBgSync({
   data,
   docProps,
@@ -187,7 +189,7 @@ function* uploadDocumentsBgSync({
   }
 }
 
-function* uploadDocumentsFlowSaga({ payload }) {
+export function* uploadDocumentsFlowSaga({ payload }) {
   yield race({
     task: call(uploadDocumentsBgSync, payload),
     cancel: take(
@@ -197,17 +199,15 @@ function* uploadDocumentsFlowSaga({ payload }) {
   });
 }
 
-function* addOtherDocument({ payload }) {
-  const state = yield select();
-  const config = { ...state.appConfig };
+export function* addOtherDocumentSaga({ payload }) {
+  const config = cloneDeep(yield select(getAppConfig));
 
   config.prospect.documents.otherDocuments.push(payload);
   yield put(setConfig(config));
 }
 
-function* deleteOtherDocument({ payload }) {
-  const state = yield select();
-  const config = { ...state.appConfig };
+export function* deleteOtherDocumentSaga({ payload }) {
+  const config = cloneDeep(yield select(getAppConfig));
 
   config.prospect.documents.otherDocuments = config.prospect.documents.otherDocuments.filter(
     doc => doc.documentKey !== payload
@@ -215,7 +215,7 @@ function* deleteOtherDocument({ payload }) {
   yield put(setConfig(config));
 }
 
-function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileName } }) {
+export function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileName } }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     const { data } = yield call(downloadProspectDocument.get, prospectId, documentKey, headers);
@@ -226,13 +226,13 @@ function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileNam
   }
 }
 
-export default function* appConfigSaga() {
+export default function* uploadDocumentsSaga() {
   yield all([
     takeLatest(SAVE_AND_RETRIEVE_DOC_UPLOADER, saveProspectAndGetProspectDocumentsSaga),
     takeLatest(RETRIEVE_DOC_UPLOADER, getProspectDocumentsSaga),
     takeEvery(DOC_UPLOADER, uploadDocumentsFlowSaga),
-    takeEvery(ADD_OTHER_DOCUMENT, addOtherDocument),
-    takeEvery(DELETE_OTHER_DOCUMENT, deleteOtherDocument),
+    takeEvery(ADD_OTHER_DOCUMENT, addOtherDocumentSaga),
+    takeEvery(DELETE_OTHER_DOCUMENT, deleteOtherDocumentSaga),
     takeLatest(DOWNLOAD_DOCUMENT_FILE, downloadDocumentFileSaga)
   ]);
 }

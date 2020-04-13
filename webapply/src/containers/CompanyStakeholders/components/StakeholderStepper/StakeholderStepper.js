@@ -24,7 +24,7 @@ import {
   getStakeholders
 } from "../../../../store/selectors/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { useStep } from "../../../../hooks/useStep";
+import { useStep } from "../../../../utils/useStep";
 import { STEP_STATUS } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";

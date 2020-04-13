@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SIGNATORY_INITIAL_INDEX } from "../SignatorySummaryCard/constants";
-import { useStep } from "../../../../hooks/useStep";
+import { useStep } from "../../../../utils/useStep";
 import { CONTINUE, STEP_STATUS, SAVE } from "../../../../constants";
 
 export const FinalQuestionStepComponent = ({

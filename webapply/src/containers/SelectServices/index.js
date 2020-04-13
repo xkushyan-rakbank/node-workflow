@@ -4,7 +4,7 @@ import get from "lodash/get";
 import { getApplicationInfo } from "../../store/selectors/appConfig";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 
-import { SelectServicesComponent } from "./SelectServices";
+import { SelectServicesPage } from "./SelectServicesPage";
 import { getAccountType } from "../../store/selectors/appConfig";
 
 const mapStateToProps = state => ({
@@ -17,4 +17,4 @@ const mapDispatchToProps = { sendProspectToAPI: sendProspectToAPIPromisify };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SelectServicesComponent);
+)(SelectServicesPage);
