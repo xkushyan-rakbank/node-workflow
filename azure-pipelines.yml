@@ -59,11 +59,6 @@ jobs:
         displayName: 'Unit Test cases'
         enabled: true
 
-      - task: reportgenerator@4
-        inputs:
-          reports: 'coverage/cobertura-coverage.xml'
-          targetdir: 'coveragereport'
-          title: 'ReportGenerator'
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
         inputs:
