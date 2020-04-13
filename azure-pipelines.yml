@@ -44,10 +44,10 @@ jobs:
         condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
-          #yarn
-          #yarn build
-          npm install
-          npm run build
+          yarn
+          yarn build
+          #npm install
+          #npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
@@ -57,7 +57,7 @@ jobs:
           #npm install redux-mock-store --save-dev
           npm test
         displayName: 'Unit Test cases'
-        enabled: true
+        enabled: false
 
       - task: PublishTestResults@2
         displayName: 'Publish Test Results'
@@ -65,6 +65,7 @@ jobs:
           testResultsFiles: coverage/index.html
           failTaskOnFailedTests: true
         condition: succeededOrFailed()
+        enabled: false
 
       - task: PublishCodeCoverageResults@1
         displayName: Publish Code Coverage Results
@@ -73,6 +74,7 @@ jobs:
           summaryFileLocation: $(Build.SourcesDirectory)/CoverageReports/Cobertura.xml
           reportDirectory: $(Build.SourcesDirectory)/CoverageReports
         condition: succeededOrFailed()
+        enabled: false
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:
