@@ -5,7 +5,7 @@ import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
 import * as Yup from "yup";
 
-import { stakeholdersSelector } from "../../../../store/selectors/stakeholders";
+import { getStakeholders } from "../../../../store/selectors/stakeholders";
 import {
   InlineRadioGroup,
   SelectAutocomplete,
@@ -88,7 +88,7 @@ const SignatoryRightsComponent = ({
 };
 
 const mapStateToProps = state => ({
-  stakeholders: stakeholdersSelector(state)
+  stakeholders: getStakeholders(state)
 });
 
 export const SignatoryRights = connect(mapStateToProps)(SignatoryRightsComponent);

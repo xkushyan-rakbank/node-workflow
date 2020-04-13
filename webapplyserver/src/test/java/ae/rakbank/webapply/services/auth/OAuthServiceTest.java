@@ -10,11 +10,12 @@ import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletContext;
@@ -26,6 +27,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class OAuthServiceTest {
 
+    public static final String CHANNEL_CONTEXT = "{\"authorizationDetails\":{\"primaryAccessCode\":\"oauthPassword\",\"secondaryAccessCode\":\"\",\"userId\":\"oauthUser\"}}";
     private OAuthService oAuthService;
 
     @Mock
@@ -37,22 +39,24 @@ public class OAuthServiceTest {
     @Mock
     private ServletContext servletContext;
 
+    @Mock
     private ContextOAuthService contextOAuthService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         oAuthService = new OAuthService(fileUtil, servletContext, oauthClient, contextOAuthService);
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newOtherConfig());
     }
 
-    @Ignore
     @Test
     public void getNewContextOauthToken() {
 
         JsonNode newLoginResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> jsonNodeResponseEntity = ResponseEntity.ok(newLoginResponse);
 
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenReturn(jsonNodeResponseEntity);
 
         String token = oAuthService.getAndUpdateContextOauthToken();
@@ -60,17 +64,15 @@ public class OAuthServiceTest {
         assertEquals("access-token-value", token);
     }
 
-    @Ignore
     @Test
     public void getUpdateContextOauthToken() {
 
         JsonNode newLoginResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> jsonNodeResponseEntity = ResponseEntity.ok(newLoginResponse);
 
-        JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
-        ResponseEntity<JwtPayload> ok = ResponseEntity.ok(jwtPayload);
-
-        Mockito.when(servletContext.getAttribute(AuthConstants.OAUTH_CONTEXT_OBJECT_KEY)).thenReturn(ok);
+        Mockito.when(contextOAuthService.refreshAndGet()).thenReturn(jsonNodeResponseEntity);
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(servletContext.getAttribute(AuthConstants.OAUTH_CONTEXT_EXPIRED_TIME_KEY)).thenReturn(LocalDateTime.now().toString());
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenReturn(jsonNodeResponseEntity);
 
@@ -79,17 +81,15 @@ public class OAuthServiceTest {
         assertEquals("access-token-value", token);
     }
 
-    @Ignore
     @Test
     public void getUpdateContextOauthTokenIfResponseIsError() {
 
         JsonNode newLoginResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> jsonNodeResponseEntity = ResponseEntity.badRequest().body(newLoginResponse);
 
-        JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
-        ResponseEntity<JwtPayload> ok = ResponseEntity.ok(jwtPayload);
-
-        Mockito.when(servletContext.getAttribute(AuthConstants.OAUTH_CONTEXT_OBJECT_KEY)).thenReturn(ok);
+        Mockito.when(contextOAuthService.refreshAndGet()).thenReturn(jsonNodeResponseEntity);
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(servletContext.getAttribute(AuthConstants.OAUTH_CONTEXT_EXPIRED_TIME_KEY)).thenReturn(LocalDateTime.now().toString());
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenReturn(jsonNodeResponseEntity);
 
@@ -146,6 +146,27 @@ public class OAuthServiceTest {
 
         assertEquals("access-token", jwtPayload.getOauthAccessToken());
         assertEquals("refresh-token", jwtPayload.getOauthRefreshToken());
+    }
+
+    @Test
+    public void oauthHeadersTest() {
+
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("oauthUser");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("oauthPassword");
+
+        HttpHeaders oAuthHeaders = oAuthService.getOAuthHeaders("test-access-token");
+        assertNotNull(oAuthHeaders);
+
+        assertNotNull(oAuthHeaders.get(HttpHeaders.AUTHORIZATION).get(0));
+        assertNotNull(oAuthHeaders.get(HttpHeaders.CONTENT_TYPE).get(0));
+        assertNotNull(oAuthHeaders.get(HttpHeaders.ACCEPT).get(0));
+        assertNotNull(oAuthHeaders.get("ChannelContext").get(0));
+
+        assertEquals(MediaType.APPLICATION_JSON.toString(), oAuthHeaders.get(HttpHeaders.ACCEPT).get(0));
+        assertEquals(MediaType.APPLICATION_JSON.toString(), oAuthHeaders.get(HttpHeaders.CONTENT_TYPE).get(0));
+        assertEquals("test-access-token", oAuthHeaders.get(HttpHeaders.AUTHORIZATION).get(0));
+        assertEquals(CHANNEL_CONTEXT, oAuthHeaders.get("ChannelContext").get(0));
+
     }
 
 }

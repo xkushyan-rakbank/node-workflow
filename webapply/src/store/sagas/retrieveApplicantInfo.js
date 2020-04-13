@@ -12,6 +12,7 @@ import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
+import { VIEW_IDS } from "../../constants";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -41,7 +42,10 @@ export function* getProspectIdInfo({ payload }) {
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
     const newStakeholder = yield select(getSignatoryModel);
 
-    if (!config.prospect.signatoryInfo.length) {
+    if (
+      !config.prospect.signatoryInfo.length &&
+      config.prospect.applicationInfo.viewId.includes(VIEW_IDS.StakeholdersInfo)
+    ) {
       config.prospect.signatoryInfo = [newStakeholder];
     }
 

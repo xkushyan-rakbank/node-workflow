@@ -1,26 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
 
-import { FormCard } from "../../../components/FormCard/FormCard";
-import { StepComponent } from "../../../components/StepComponent/StepComponent";
-import { SubmitButton } from "../../../components/Buttons/SubmitButton";
-import { BackLink } from "../../../components/Buttons/BackLink";
-import { ConfirmDialog } from "../../../components/Modals";
+import { SearchedAppInfoComponent } from "./components/SearchedAppInfo";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
-import routes from "../../../routes";
 
-import {
-  searchedAppInfoSteps,
-  CONFIRM_MESSAGE,
-  STEP_1,
-  STATUS_LOCKED,
-  STATUS_FORCE_STOP
-} from "./constants";
-import { useStyles } from "./styled";
+import { searchedAppInfoSteps, STEP_1, STATUS_LOCKED, STATUS_FORCE_STOP } from "./constants";
 
-export const SearchedAppInfoComponent = ({
+export const SearchedAppInfoContainer = ({
   searchResults,
   match,
   getProspectOverview,
@@ -29,7 +17,6 @@ export const SearchedAppInfoComponent = ({
   updateProspectId,
   resetProspect
 }) => {
-  const classes = useStyles();
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
   useFormNavigation([false, false, searchProspectStepper]);
@@ -59,7 +46,8 @@ export const SearchedAppInfoComponent = ({
 
   const confirmHandler = useCallback(() => {
     updateProspectId(match.params.id);
-    getProspectInfo(match.params.id).then(
+
+    return getProspectInfo(match.params.id).then(
       () => pushDisplayScreenToHistory(prospectOverview),
       () => {}
     );
@@ -86,51 +74,16 @@ export const SearchedAppInfoComponent = ({
   const [firstName, lastName] = fullName.split(/\s/);
 
   return (
-    <>
-      <h2>Application Details</h2>
-      <p className="formDescription" />
-      <FormCard
-        fullName={fullName}
-        firstName={firstName}
-        lastName={lastName}
-        content={<div className={classes.title}>{fullName}</div>}
-      >
-        <div className={classes.formContent}>
-          {searchedAppInfoSteps.map(item => {
-            return (
-              <StepComponent
-                key={item.step}
-                title={item.title}
-                subTitle={item.infoTitle}
-                isActiveStep={step === item.step}
-                isFilled={true}
-                handleClick={createSetStepHandler(item.step)}
-                hideContinue={true}
-                prospectOverview={prospectOverview}
-                stepForm={item.component}
-                searchResult={searchResult}
-              />
-            );
-          })}
-        </div>
-      </FormCard>
-      <div className="linkContainer">
-        <BackLink path={routes.searchProspect} />
-        <SubmitButton
-          label="Edit"
-          justify="flex-end"
-          handleClick={redirectUserPage}
-          disabled={isDisabled}
-        />
-      </div>
-
-      <ConfirmDialog
-        isOpen={isDisplayConfirmDialog}
-        handleConfirm={confirmHandler}
-        handleReject={confirmDialogHandler}
-        handleClose={confirmDialogHandler}
-        message={CONFIRM_MESSAGE}
-      />
-    </>
+    <SearchedAppInfoComponent
+      firstName={firstName}
+      lastName={lastName}
+      isDisabled={isDisabled}
+      confirmDialogHandler={confirmDialogHandler}
+      confirmHandler={confirmHandler}
+      redirectUserPage={redirectUserPage}
+      isDisplayConfirmDialog={isDisplayConfirmDialog}
+      createSetStepHandler={createSetStepHandler}
+      step={step}
+    />
   );
 };

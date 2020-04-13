@@ -9,9 +9,8 @@ import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.Matchers;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -106,8 +105,8 @@ public class AuthorizationServiceImplTest {
         JsonNode newLoginResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> dehResponseEntity = ResponseEntity.ok(newLoginResponse);
         Mockito.when(oauthClient.authorize("theusername", "thepassword")).thenReturn(dehResponseEntity);
-        Mockito.when(oAuthService.getExpireTime(dehResponseEntity)).thenReturn(LocalDateTime.of(2020, 01, 01, 00, 00));
-        Mockito.when(jwtService.encrypt(Matchers.any(JwtPayload.class))).thenReturn("result-token");
+        Mockito.when(oAuthService.getExpireTime(dehResponseEntity)).thenReturn(LocalDateTime.of(2020, 1, 1, 0, 0));
+        Mockito.when(jwtService.encrypt(ArgumentMatchers.any(JwtPayload.class))).thenReturn("result-token");
 
         String agentJwtToken = authorizationService.createAgentJwtToken("theusername", "thepassword");
         assertNotNull(agentJwtToken);
@@ -122,20 +121,22 @@ public class AuthorizationServiceImplTest {
         assertNotNull(agentJwtToken);
     }
 
-    @Ignore
     @Test
     public void createCustomerJwtToken() {
         JsonNode dehResponse = ResponseFactory.newLoginResponse();
         ResponseEntity<JsonNode> dehResponseEntity = ResponseEntity.ok(dehResponse);
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenReturn(dehResponseEntity);
-        Mockito.when(jwtService.encrypt(Matchers.any(JwtPayload.class))).thenReturn("result-token");
+        Mockito.when(jwtService.encrypt(ArgumentMatchers.any(JwtPayload.class))).thenReturn("result-token");
         String token = authorizationService.createCustomerJwtToken("+37847563456", "123456789");
         assertNotNull(token);
     }
 
-    @Ignore
     @Test(expected = ApiException.class)
     public void createCustomerTokenWhenCredentialsAreWrong() {
+        Mockito.when(fileUtil.getOauthUser()).thenReturn("theoauthusername");
+        Mockito.when(fileUtil.getOauthPassword()).thenReturn("theoauthpassword");
         Mockito.when(oauthClient.authorize("theoauthusername", "theoauthpassword")).thenThrow(new ApiException("Wrong credentials"));
         authorizationService.createCustomerJwtToken("+37847563456", "123456789");
     }

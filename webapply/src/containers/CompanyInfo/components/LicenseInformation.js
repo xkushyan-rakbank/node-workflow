@@ -16,7 +16,7 @@ import { InfoTitle } from "../../../components/Notifications";
 import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
-import { useStyles } from "../styled";
+import { useStyles } from "./styled";
 import { LICENSE_NUMBER_REGEX } from "../../../utils/validation";
 
 const initialValues = {

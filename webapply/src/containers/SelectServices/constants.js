@@ -1,8 +1,8 @@
 import { ICONS } from "../../components/Icons";
-import { AccountDetails } from "./AccountDetails";
-import { SigningPreferences } from "./SigningPreferences";
-import { Channels } from "./Channels";
-import { ValueAddedServices } from "./ValueAddedServices";
+import { AccountDetails } from "./components/AccountDetails";
+import { SigningPreferences } from "./components/SigningPreferences";
+import { Channels } from "./components/Channels";
+import { ValueAddedServices } from "./components/ValueAddedServices";
 import { GA_EVENTS } from "../../utils/ga";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../constants";
 
@@ -10,6 +10,7 @@ export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;
 export const STEP_4 = 4;
+export const STEP_5 = 5;
 
 export const INITIAL_INDEX = 0;
 
@@ -48,6 +49,9 @@ export const servicesSteps = [
     component: ValueAddedServices,
     icon: ICONS.valueAddedServices,
     eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+  },
+  {
+    step: STEP_5
   }
 ];
 

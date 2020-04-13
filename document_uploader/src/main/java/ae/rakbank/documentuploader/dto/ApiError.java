@@ -1,8 +1,5 @@
 package ae.rakbank.documentuploader.dto;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -31,20 +28,6 @@ public class ApiError implements ApiErrorInterface{
     private String exceptionClassName;
     private StackTraceElement[] stackTrace;
 
-    public ApiError(HttpStatus status) {
-        this();
-        this.status = status;
-        this.statusCode = status.value();
-    }
-
-    public ApiError(HttpStatus status, Throwable ex) {
-        this();
-        this.status = status;
-        this.statusCode = status.value();
-        this.message = "Unexpected error";
-        setException(ex);
-    }
-
     public ApiError(HttpStatus status, String message, String debugMessage) {
         this();
         this.status = status;
@@ -60,11 +43,6 @@ public class ApiError implements ApiErrorInterface{
         this.message = message;
         this.debugMessage = debugMessage;
         setException(ex);
-    }
-
-    private void initTimestamp() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
-        timestamp = LocalDateTime.now().format(formatter);
     }
 
     private void setException(Throwable ex) {

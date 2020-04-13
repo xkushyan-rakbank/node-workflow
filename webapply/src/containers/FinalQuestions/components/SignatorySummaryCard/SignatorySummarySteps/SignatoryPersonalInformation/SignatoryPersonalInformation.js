@@ -2,9 +2,6 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
-
-import { NAME_REGEX } from "../../../../../../utils/validation";
-import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import {
   Input,
   AutoSaveField as Field,
@@ -12,10 +9,12 @@ import {
 } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { MAX_MOTHERS_MAIDEN_NAME_LENGTH, MAX_LENGTH_MARITAL_OTHERS_STATUS } from "../../constants";
+import { OTHER_OPTION_CODE } from "../SignatoryEmploymentDetails/constants";
 import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
+import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -30,7 +29,7 @@ export const signatoryPersonalInformationSchema = Yup.object().shape({
     is: value => value === OTHER_OPTION_CODE,
     then: Yup.string()
       .required(getRequiredMessage("Other"))
-      .matches(NAME_REGEX, getInvalidMessage("Other"))
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
   })
 });
 

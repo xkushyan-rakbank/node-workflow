@@ -21,10 +21,10 @@ import { CONTINUE, SAVE } from "../../../../constants";
 import {
   getEditableStakeholder,
   getStakeholdersIds,
-  stakeholdersSelector
+  getStakeholders
 } from "../../../../store/selectors/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { useStep } from "../../../../hooks/useStep";
+import { useStep } from "../../../../utils/useStep";
 import { STEP_STATUS } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
@@ -182,7 +182,7 @@ const StakeholderStepperComponent = ({
 
 const mapStateToProps = state => ({
   isStatusShown: state.stakeholders.isStatusShown,
-  stakeholders: stakeholdersSelector(state),
+  stakeholders: getStakeholders(state),
   loading: getIsSendingProspect(state),
   datalist: getDatalist(state),
   editableStakeholder: getEditableStakeholder(state)

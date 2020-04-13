@@ -73,7 +73,10 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "space-between",
     whiteSpace: "normal",
-    lineHeight: "normal"
+    lineHeight: "normal",
+    "& .MuiCheckbox-root": {
+      marginLeft: "auto"
+    }
   }
 }));
 

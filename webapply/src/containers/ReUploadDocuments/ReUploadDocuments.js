@@ -2,11 +2,8 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
 
-import { ContainedButton } from "../../components/Buttons/ContainedButton";
-import { BackLink } from "../../components/Buttons/BackLink";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { DocumentRow } from "./components/DocumentRow/DocumentRow";
-import { UploadButton } from "./components/UploadButton/UploadButton";
+import { ReUploadDocumentsComponent } from "./components/ReUploadDocuments/ReUploadDocuments";
 import {
   addOtherDocument,
   cancelDocUpload,
@@ -21,11 +18,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { NEXT, OTHER_DOCUMENTS, SUBMIT, UPLOADED } from "../../constants";
 import routes from "../../routes";
 
-import { MAX_OTHER_DOCUMENTS } from "./constants";
-import { useStyles } from "./styled";
-
 export const ReUploadDocuments = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const otherDocuments = useSelector(getOtherDocuments);
   const progress = useSelector(getProgress);
@@ -37,6 +30,9 @@ export const ReUploadDocuments = () => {
   useEffect(() => {
     dispatch(retrieveDocDetails());
   }, [dispatch]);
+
+  const isSubmitButtonActive =
+    !!otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === UPLOADED);
 
   const uploadDocument = useCallback(
     file => {
@@ -82,13 +78,13 @@ export const ReUploadDocuments = () => {
     [dispatch]
   );
 
-  const removeDocument = documentKey => {
-    dispatch(cancelDocUpload(documentKey));
-    dispatch(deleteOtherDocument(documentKey));
-  };
-
-  const isSubmitButtonActive =
-    otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === UPLOADED);
+  const removeDocument = useCallback(
+    documentKey => {
+      dispatch(cancelDocUpload(documentKey));
+      dispatch(deleteOtherDocument(documentKey));
+    },
+    [dispatch]
+  );
 
   const submitForm = useCallback(() => {
     dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(
@@ -98,33 +94,14 @@ export const ReUploadDocuments = () => {
   }, [dispatch, pushHistory]);
 
   return (
-    <div className={classes.root}>
-      <h3 className={classes.heading}>Almost done! We need a few extra documents</h3>
-      <p className={classes.subtitle}>
-        One of our agents asked you for some more documents? Please upload them here.
-      </p>
-      {otherDocuments.map(({ documentKey, ...rest }) => (
-        <DocumentRow
-          key={documentKey}
-          error={uploadErrors[documentKey]}
-          documentProgress={progress[documentKey]}
-          removeDocument={() => removeDocument(documentKey)}
-          {...rest}
-        />
-      ))}
-      {otherDocuments.length < MAX_OTHER_DOCUMENTS && (
-        <UploadButton uploadDocument={uploadDocument} isFirstDocument={!otherDocuments.length} />
-      )}
-      <div className={classes.footer}>
-        <BackLink text="Back To Applications" path={routes.MyApplications} />
-        <ContainedButton
-          onClick={submitForm}
-          type="submit"
-          disabled={!isSubmitButtonActive}
-          label="Submit documents"
-          className={classes.submitBtn}
-        />
-      </div>
-    </div>
+    <ReUploadDocumentsComponent
+      uploadDocument={uploadDocument}
+      isSubmitButtonActive={isSubmitButtonActive}
+      otherDocuments={otherDocuments}
+      progress={progress}
+      removeDocument={removeDocument}
+      submitForm={submitForm}
+      uploadErrors={uploadErrors}
+    />
   );
 };

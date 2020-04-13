@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 
 import { loginInfoFormPromisify } from "../../../store/actions/loginForm";
-import { LoginComponent } from "./Login";
+import { LoginContainer } from "./Login";
 import { setIsApplyEditApplication } from "../../../store/actions/searchProspect";
 
 const mapDispatchToProps = {
@@ -12,4 +12,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps
-)(LoginComponent);
+)(LoginContainer);

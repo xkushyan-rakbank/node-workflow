@@ -32,6 +32,8 @@ export const getProspectId = state => getGeneralInfo(state).prospectId;
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
+export const getApplicantFullName = state => getApplicantInfo(state).fullName;
+
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
@@ -39,6 +41,10 @@ export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBan
 export const getAccountType = state => getApplicationInfo(state).accountType;
 
 export const getDocuments = state => getProspect(state).documents || {};
+
+export const getCompanyDocuments = state => getDocuments(state).companyDocuments || [];
+
+export const getStakeholdersDocuments = state => getDocuments(state).stakeholdersDocuments || [];
 
 export const getOtherDocuments = state => getDocuments(state).otherDocuments || [];
 

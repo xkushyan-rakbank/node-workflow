@@ -29,7 +29,7 @@ jobs:
         displayName: 'Use Node 10.x'
         inputs:
           versionSpec: 10.x
-
+      
       - task: npmAuthenticate@0
         inputs:
           workingFile: 'webapply/.npmrc'
@@ -48,8 +48,6 @@ jobs:
         condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
-          #yarn
-          #yarn build
           npm install --verbose
           npm run build
         env:
@@ -186,7 +184,7 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
       - bash: |
-          yarn global add slack-cli
+          npm i slack-cli -g
           echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt

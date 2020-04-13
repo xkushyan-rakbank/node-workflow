@@ -1,5 +1,6 @@
 import reducer, { initialState } from "../../../src/store/reducers/uploadDocuments";
 import {
+  saveAndRetrieveDocDetails,
   retrieveDocDetails,
   docUpload,
   uploadFilesProgress,
@@ -37,11 +38,8 @@ describe("applicant info form reducer test", () => {
   });
 
   it("should create reducer to retrieve doc details", () => {
-    const expectedState = {
-      ...initialState,
-      isLoading: true
-    };
-    expect(reducer(initialState, retrieveDocDetails())).toStrictEqual(expectedState);
+    expect(reducer(undefined, retrieveDocDetails())).toMatchObject({ isLoading: true });
+    expect(reducer(undefined, saveAndRetrieveDocDetails())).toMatchObject({ isLoading: true });
   });
 
   it("should create reducer to get prospect document success", () => {

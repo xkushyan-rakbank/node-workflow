@@ -15,6 +15,7 @@ export const styles = {
   },
   icon: {
     margin: "1px 6.4px 0 0",
-    width: "16px"
+    width: "16px",
+    flexShrink: 0
   }
 };

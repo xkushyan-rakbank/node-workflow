@@ -25,7 +25,7 @@ public class JwtServiceTest {
     private JwtService jwtService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         jwtService = new JwtService(fileUtil);
         Mockito.when(fileUtil.getAppConfigJSON()).thenReturn(ConfigFactory.newOtherConfig());

@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
-import { Providers } from "./Providers";
-import { ApplicationStatus } from "../../components/ApplicationStatus/ApplicationStatus";
-import { FormNavigation } from "../../components/FormNavigation";
-import { HeaderTitle } from "../../components/HeaderTitle";
-import { Notifications } from "../../components/Notification";
-import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
-import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
-import { ERROR_MESSAGES } from "../../constants";
-import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
-import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
-import routes, { agentBaseName, smeBaseName } from "../../routes";
-import { MobileNotification } from "../../components/Notifications";
-import { useStyles } from "./styled";
+import { useLocation } from "react-router-dom";
 
-export const FormLayoutComponent = ({
-  location: { pathname } = {},
+import { Providers } from "./components/Providers";
+import { MobileNotification } from "../../components/Notifications";
+import { FormLayoutComponent } from "./components/FormLayoutComponent";
+import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
+
+import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
+import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
+import routes, { agentBaseName, smeBaseName } from "../../routes";
+
+export const FormLayoutContainer = ({
   children,
   screeningError,
   updateViewId,
@@ -22,7 +18,24 @@ export const FormLayoutComponent = ({
   isIslamicBanking,
   errorCode
 }) => {
-  const blobColor = useBlobColor();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
+    const isSendToApi = [
+      routes.companyInfo,
+      routes.stakeholdersInfo,
+      routes.finalQuestions,
+      routes.selectServices,
+      routes.SubmitApplication
+    ].includes(pathname);
+
+    updateViewId(viewId, isSendToApi);
+  }, [pathname, updateViewId]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   const isDisplayHeader = [
     routes.verifyOtp,
@@ -39,29 +52,6 @@ export const FormLayoutComponent = ({
     routes.SearchedAppInfo
   ].includes(pathname);
 
-  const classes = useStyles({
-    isDisplayHeader,
-    color: blobColor,
-    fullContentWidth: checkIsShowSmallMenu(pathname)
-  });
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  useEffect(() => {
-    const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
-    const isSendToApi = [
-      routes.companyInfo,
-      routes.stakeholdersInfo,
-      routes.finalQuestions,
-      routes.selectServices,
-      routes.SubmitApplication
-    ].includes(pathname);
-
-    updateViewId(viewId, isSendToApi);
-  }, [pathname, updateViewId]);
-
   const isDisplayScreeningError =
     screeningError.error &&
     [
@@ -76,33 +66,16 @@ export const FormLayoutComponent = ({
   return (
     <Providers>
       <MobileNotification>
-        <div className={classes.formLayout}>
-          <FormNavigation />
-          <div className={classes.formWrapper}>
-            <div className={classes.formInner}>
-              <div className={classes.mainContainer}>
-                {isDisplayHeader && <HeaderTitle />}
-
-                <Notifications />
-
-                {isDisplayScreeningError ? (
-                  <ApplicationStatus {...screeningError} />
-                ) : errorCode ? (
-                  <ApplicationStatus
-                    icon={getErrorScreensIcons(
-                      accountType,
-                      isIslamicBanking,
-                      ERRORS_TYPE.BLOCK_EDITING
-                    )}
-                    text={ERROR_MESSAGES[errorCode]}
-                  />
-                ) : (
-                  children
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <FormLayoutComponent
+          errorCode={errorCode}
+          isDisplayHeader={isDisplayHeader}
+          isDisplayScreeningError={isDisplayScreeningError}
+          errorIcon={getErrorScreensIcons(accountType, isIslamicBanking, ERRORS_TYPE.BLOCK_EDITING)}
+          isFullContentWidth={checkIsShowSmallMenu(pathname)}
+          screeningError={screeningError}
+        >
+          {children}
+        </FormLayoutComponent>
       </MobileNotification>
     </Providers>
   );
