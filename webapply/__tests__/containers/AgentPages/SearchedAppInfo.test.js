@@ -121,13 +121,21 @@ describe("SearchedAppInfoContainer test", () => {
     render(<SearchedAppInfoContainer {...props} />);
 
     act(() => {
-      SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(1)();
+      SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(2)();
     });
-
-    expect(SearchedAppInfoComponent.mock.calls[0][0].step).toBe(1);
+    expect(SearchedAppInfoComponent.mock.calls[1][0].step).toEqual(2);
   });
 
-  it("should set null", () => {
+  it("should not set step", () => {
+    render(<SearchedAppInfoContainer {...props} />);
+    act(() => {
+      SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler("some false step")();
+    });
+
+    expect(SearchedAppInfoComponent.mock.calls[1]).toBeFalsy();
+  });
+
+  it("should set null to step", () => {
     render(<SearchedAppInfoContainer {...props} />);
     act(() => {
       SearchedAppInfoComponent.mock.calls[0][0].createSetStepHandler(false)();
