@@ -280,7 +280,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/document_uploader/*.war",
-                    "target": "onboarding/releae/$(Build.BuildNumber)/document_uploader/"
+                    "target": "onboarding/release/$(Build.BuildNumber)/document_uploader/"
                 }
               ]
             }
