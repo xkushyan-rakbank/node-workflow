@@ -30,6 +30,10 @@ jobs:
         inputs:
           versionSpec: 10.x
 
+      - task: npmAuthenticate@0
+        inputs:
+          workingFile: 'webapply/.npmrc'          
+
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(Dev_build) N
           echo "##vso[task.setvariable variable=REACT_APP_RECAPTCHA_ENABLE;]N"
@@ -44,10 +48,8 @@ jobs:
         condition: and(succeeded(),ne(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
-          yarn
-          yarn build
-          #npm install
-          #npm run build
+          npm install --verbose
+          npm run build
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
@@ -199,7 +201,7 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapplyserver'
           ArtifactName: 'WebapplyServer'
       - bash: |
-          yarn global add slack-cli
+          npm i -g slack-cli
           echo "=====================The new Onboarding build is available for testing:=========== " > release-notes.txt
           echo -e "\n" >> release-notes.txt
           echo " Release (UAT) with the Build ID: $BUILD_ID " >> release-notes.txt

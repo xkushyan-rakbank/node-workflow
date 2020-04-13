@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-import Close from "../../assets/close.svg";
-import Minimize from "../../assets/minimize.svg";
+import { ReactComponent as Close } from "../../../assets/icons/chat-close.svg";
+import { ReactComponent as Minimize } from "../../../assets/icons/chat-minimize.svg";
 
 const HeaderStyled = styled.div`
   box-sizing: border-box;
@@ -22,7 +22,7 @@ const ActionButtons = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 55px;
-  > img {
+  > svg {
     cursor: pointer;
   }
 `;
@@ -32,8 +32,8 @@ const Header = ({ onClose, onMinimize }) => {
     <HeaderStyled>
       <div>Chat with us</div>
       <ActionButtons>
-        <img src={Minimize} alt="Minimize" onClick={onMinimize} />
-        <img src={Close} alt="Close" onClick={onClose} />
+        <Minimize alt="Minimize" onClick={onMinimize} />
+        <Close alt="Close" onClick={onClose} />
       </ActionButtons>
     </HeaderStyled>
   );
