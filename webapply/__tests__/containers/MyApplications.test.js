@@ -7,7 +7,10 @@ import thunk from "redux-thunk";
 import { MyApplications } from "../../src/containers/MyApplications/MyApplications";
 import { MyApplications as MyApplicationsComponent } from "../../src/containers/MyApplications/components/MyApplications";
 import { getApplicantInfo } from "../../src/store/selectors/appConfig";
-import { getIsLoadingSearchProspects, getSearchResults } from "../../src/store/selectors/searchProspect";
+import {
+  getIsLoadingSearchProspects,
+  getSearchResults
+} from "../../src/store/selectors/searchProspect";
 import { getLoadingProspectId } from "../../src/store/selectors/retrieveApplicantInfo";
 import { searchApplications } from "../../src/store/actions/searchProspect";
 import { getProspectInfoPromisify } from "../../src/store/actions/retrieveApplicantInfo";
@@ -33,8 +36,9 @@ describe("MyApplications test", () => {
   const getProspectInfoAction = { type: "get prospect info action" };
 
   const pushDisplayScreenToHistory = jest.fn();
+  const state = "some state";
   const mockStore = configureStore([thunk]);
-  const store = mockStore({});
+  const store = mockStore(state);
 
   beforeAll(() => {
     getApplicantInfo.mockReturnValue(inputParams);
@@ -70,6 +74,18 @@ describe("MyApplications test", () => {
     expect(store.getActions()).toEqual([searchAction]);
   });
 
+  it("should call `getIsLoadingSearchProspects` selector", () => {
+    expect(getIsLoadingSearchProspects).toBeCalledWith(state);
+  });
+
+  it("should call `getSearchResults` selector", () => {
+    expect(getSearchResults).toBeCalledWith(state);
+  });
+
+  it("should call `getLoadingProspectId` selector", () => {
+    expect(getLoadingProspectId).toBeCalledWith(state);
+  });
+
   it("should call pushDisplayScreenToHistory with prospectId", async () => {
     await act(async () => {
       await MyApplicationsComponent.mock.calls[0][0].getProspectInfo(prospectId);
@@ -101,6 +117,6 @@ describe("MyApplications test", () => {
       isLoading,
       loadingProspectId,
       searchResults
-    })
+    });
   });
 });
