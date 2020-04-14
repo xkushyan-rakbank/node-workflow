@@ -6,7 +6,7 @@ import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
-export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
+export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingProspectId }) => {
   const classes = useStyles();
 
   return applicantInfo.map(app => (
@@ -28,6 +28,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
                       handleClick={() => getProspectInfo(app.prospectId)}
+                      isDisplayLoader={loadingProspectId === app.prospectId}
                     />
                     <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}

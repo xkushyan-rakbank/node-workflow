@@ -9,7 +9,7 @@ import { useStyles } from "./styled";
 
 import { ReactComponent as WavesBG } from "../../../assets/images/waves_bg.svg";
 
-export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
+export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingProspectId }) => {
   const classes = useStyles();
 
   return applicantInfo.map(app => (
@@ -34,6 +34,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
                       handleClick={() => getProspectInfo(app.prospectId)}
+                      isDisplayLoader={loadingProspectId === app.prospectId}
                     />
                     <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}
