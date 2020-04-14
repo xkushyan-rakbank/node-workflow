@@ -12,19 +12,14 @@ export const initialState = {
 
 export default handleActions(
   {
-    [GET_PROSPECT_INFO_REQUEST]: (state, { payload }) => {
-      return {
-        ...state,
-        loadingProspectId: payload.prospectId
-      };
-    },
-    [GET_PROSPECT_INFO_SUCCESS]: (state, { payload }) => {
-      console.log(payload);
-      return {
-        ...state,
-        loadingProspectId: ""
-      };
-    },
+    [GET_PROSPECT_INFO_REQUEST]: (state, { payload }) => ({
+      ...state,
+      loadingProspectId: payload.prospectId
+    }),
+    [GET_PROSPECT_INFO_SUCCESS]: state => ({
+      ...state,
+      loadingProspectId: ""
+    }),
     [RETRIEVE_APPLICANT_INFO_SUCCESS]: (state, { payload }) => ({
       ...state,
       searchResults: payload

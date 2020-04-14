@@ -1,17 +1,13 @@
 import React from "react";
 import cx from "classnames";
-import { useSelector } from "react-redux";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
-import { getLoadingProspectId } from "../../../store/selectors/retrieveApplicantInfo";
-
 import { useStyles } from "./styled";
 
-export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
+export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingProspectId }) => {
   const classes = useStyles();
-  const loadingProspectId = useSelector(getLoadingProspectId);
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>

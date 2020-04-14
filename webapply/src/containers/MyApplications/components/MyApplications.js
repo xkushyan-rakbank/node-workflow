@@ -16,12 +16,14 @@ import {
   getIsLoadingSearchProspects,
   getSearchResults
 } from "../../../store/selectors/searchProspect";
+import { getLoadingProspectId } from "../../../store/selectors/retrieveApplicantInfo";
 
 import { useStyles } from "./styled";
 
 export const MyApplications = ({ getProspectInfo }) => {
   const isLoading = useSelector(getIsLoadingSearchProspects);
   const searchResults = useSelector(getSearchResults);
+  const loadingProspectId = useSelector(getLoadingProspectId);
 
   const classes = useStyles();
 
@@ -70,9 +72,17 @@ export const MyApplications = ({ getProspectInfo }) => {
         {isLoading ? (
           <ApplicationsSkeleton />
         ) : selectedView === LIST_VIEW ? (
-          <ApplicationList applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+          <ApplicationList
+            applicantInfo={searchResults}
+            getProspectInfo={getProspectInfo}
+            loadingProspectId={loadingProspectId}
+          />
         ) : (
-          <ApplicationGrid applicantInfo={searchResults} getProspectInfo={getProspectInfo} />
+          <ApplicationGrid
+            applicantInfo={searchResults}
+            getProspectInfo={getProspectInfo}
+            loadingProspectId={loadingProspectId}
+          />
         )}
       </div>
     </div>
