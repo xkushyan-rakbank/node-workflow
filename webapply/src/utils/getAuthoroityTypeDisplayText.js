@@ -1,5 +1,4 @@
-export const getAuthorityTypeDisplayText = (authorityTypeValue, datalist) => {
-  const authorityTypeDatalist = datalist.authorityType || [];
+export const getAuthorityTypeDisplayText = (authorityTypeValue, authorityTypeDatalist = []) => {
   const authorityTypeFromDatalist =
     authorityTypeDatalist.find(item => item.value === authorityTypeValue) || {};
 

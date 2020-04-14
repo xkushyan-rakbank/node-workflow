@@ -9,14 +9,14 @@ import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
 import { StakeholdersNameManager } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { NEXT } from "../../../src/constants";
 
-jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock(
-  "../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders",
+  "../../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders",
   () => ({ CompanyStakeholdersComponent: jest.fn().mockImplementation(() => null) })
 );
-jest.mock("../../src/utils/useTrackingHistory");
+jest.mock("../../../src/utils/useTrackingHistory");
 jest.mock(
-  "../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider",
+  "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider",
   () => ({
     StakeholdersNameProvider: ({ children }) => children,
     StakeholdersNameManager: {
@@ -25,7 +25,7 @@ jest.mock(
   })
 );
 
-describe("ApplicantInfo container tests", () => {
+describe("CompanyStakeholders container tests", () => {
   const pushHistory = jest.fn();
 
   const deleteStakeholder = jest.fn();

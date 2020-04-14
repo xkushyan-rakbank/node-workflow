@@ -11,16 +11,16 @@ export const FilledStakeholderCard = ({
   accountSigningInfo,
   changeEditableStep,
   index,
-  kycDetails: { shareHoldingPercentage } = {},
+  kycDetails: { shareHoldingPercentage },
   isEditDisabled,
   id
 }) => {
   const datalist = useSelector(getDatalist);
   const stakeholdersName = useContext(StakeholdersNamesContext);
   const { firstName, lastName, middleName } = stakeholdersName.find(item => item.id === id) || {};
-  const authorityTypeValue = getAuthorityTypeDisplayText(
+  const authorityTypeDisplayText = getAuthorityTypeDisplayText(
     get(accountSigningInfo, "authorityType"),
-    datalist
+    datalist.authorityType
   );
 
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
@@ -33,7 +33,7 @@ export const FilledStakeholderCard = ({
       editStakeholder={editStakeholder}
       isEditDisabled={isEditDisabled}
       shareHoldingPercentage={shareHoldingPercentage}
-      authorityTypeValue={authorityTypeValue}
+      authorityTypeDisplayText={authorityTypeDisplayText}
       index={index}
     />
   );

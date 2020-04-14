@@ -34,7 +34,7 @@ export const SignatorySummaryCardComponent = ({
   const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
   const authorityTypeValue = getAuthorityTypeDisplayText(
     get(signatory, "accountSigningInfo.authorityType"),
-    datalist
+    datalist.authorityType
   );
 
   return (

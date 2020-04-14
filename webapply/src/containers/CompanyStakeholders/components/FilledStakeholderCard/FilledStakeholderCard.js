@@ -9,7 +9,7 @@ export const FilledStakeholderCardComponent = ({
   middleName,
   lastName,
   index,
-  authorityTypeValue,
+  authorityTypeDisplayText,
   shareHoldingPercentage,
   editStakeholder,
   isEditDisabled
@@ -23,7 +23,9 @@ export const FilledStakeholderCardComponent = ({
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>{`${firstName} ${middleName} ${lastName}`}</div>
-          {authorityTypeValue && <div className={classes.signatoryField}>{authorityTypeValue}</div>}
+          {authorityTypeDisplayText && (
+            <div className={classes.signatoryField}>{authorityTypeDisplayText}</div>
+          )}
           <div
             className={classes.shareholdingField}
           >{`Shareholding ${shareHoldingPercentage}%`}</div>
