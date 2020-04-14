@@ -4,8 +4,6 @@ export const getAppConfig = state => state.appConfig || {};
 
 export const getDatalist = state => getAppConfig(state).datalist || {};
 
-export const getAuthorityTypeDatalist = state => getDatalist(state).authorityType || [];
-
 export const getSignatoryModel = state => getAppConfig(state).signatoryModel || {};
 
 export const getReCaptchaSiteKey = state => getAppConfig(state).reCaptchaSiteKey;

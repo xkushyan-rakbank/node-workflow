@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import get from "lodash/get";
 
 import { StakeholdersNamesContext } from "./components/StakeholdersNameProvider/StakeholdersNameProvider";
-import { getAuthorityTypeDisplayText } from "../FinalQuestions/components/SignatorySummaryCard/utils";
 import { FilledStakeholderCardComponent } from "./components/FilledStakeholderCard/FilledStakeholderCard";
-import { getAuthorityTypeDatalist } from "../../store/selectors/appConfig";
+import { getDatalist } from "../../store/selectors/appConfig";
+import { getAuthorityTypeDisplayText } from "../../utils/getAuthoroityTypeDisplayText";
 
 export const FilledStakeholderCard = ({
   accountSigningInfo,
@@ -15,12 +15,12 @@ export const FilledStakeholderCard = ({
   isEditDisabled,
   id
 }) => {
-  const authorityTypeDatalist = useSelector(getAuthorityTypeDatalist);
+  const datalist = useSelector(getDatalist);
   const stakeholdersName = useContext(StakeholdersNamesContext);
   const { firstName, lastName, middleName } = stakeholdersName.find(item => item.id === id) || {};
   const authorityTypeValue = getAuthorityTypeDisplayText(
     get(accountSigningInfo, "authorityType"),
-    authorityTypeDatalist
+    datalist
   );
 
   const editStakeholder = useCallback(() => changeEditableStep(index), [index, changeEditableStep]);
