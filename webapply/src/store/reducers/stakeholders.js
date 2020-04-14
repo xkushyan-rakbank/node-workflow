@@ -2,8 +2,7 @@ import { CHANGE_EDITABLE_STAKEHOLDER, UPDATE_STAKEHOLDERS_IDS } from "../actions
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
-  editableStakeholder: undefined,
-  isStatusShown: false,
+  editableStakeholder: null,
   stakeholdersIds: []
 };
 

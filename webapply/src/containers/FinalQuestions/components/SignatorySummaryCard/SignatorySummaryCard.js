@@ -26,7 +26,7 @@ export const SignatorySummaryCardComponent = ({
 }) => {
   const stakeholdersIds = useSelector(getStakeholdersIds);
   const completedSteps = allSignatoriesSteps.filter(
-    item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id
+    item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index]
   );
   const isAllStepsCompleted = checkAllStepsCompleted(completedSteps);
   const classes = useStyles();
@@ -70,7 +70,7 @@ export const SignatorySummaryCardComponent = ({
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          page={`${COMPANY_SIGNATORY_ID}${stakeholdersIds[index].id}`}
+          page={`${COMPANY_SIGNATORY_ID}${stakeholdersIds[index]}`}
         />
       </div>
     </FormCard>

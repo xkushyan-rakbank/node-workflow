@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 import {
   checkIsHasSignatories,
+  getEditableStakeholder,
   getPercentage,
   getStakeholders,
   getStakeholdersIds
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
   percentage: getPercentage(state),
   isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
   isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
+  editableStakeholder: getEditableStakeholder(state),
   hasSignatories: checkIsHasSignatories(state)
 });
 

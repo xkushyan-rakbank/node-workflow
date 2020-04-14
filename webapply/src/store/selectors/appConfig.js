@@ -20,6 +20,8 @@ export const getProspect = state => getAppConfig(state).prospect || {};
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
+export const getSignatoriesCount = state => getSignatories(state).length;
+
 export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
