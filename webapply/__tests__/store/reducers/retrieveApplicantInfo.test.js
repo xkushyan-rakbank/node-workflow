@@ -23,7 +23,6 @@ describe("retrieveApplicantInfo reducer test", () => {
   });
 
   it("should handle GET_PROSPECT_INFO_SUCCESS action type", () => {
-
     expect(reducer(undefined, getProspectInfoSuccess())).toMatchObject({
       loadingProspectId: null
     });

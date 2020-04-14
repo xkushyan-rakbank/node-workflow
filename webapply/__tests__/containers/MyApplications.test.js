@@ -7,7 +7,10 @@ import thunk from "redux-thunk";
 import { MyApplications } from "../../src/containers/MyApplications/MyApplications";
 import { MyApplications as MyApplicationsComponent } from "../../src/containers/MyApplications/components/MyApplications";
 import { getApplicantInfo } from "../../src/store/selectors/appConfig";
-import { getIsLoadingSearchProspects, getSearchResults } from "../../src/store/selectors/searchProspect";
+import {
+  getIsLoadingSearchProspects,
+  getSearchResults
+} from "../../src/store/selectors/searchProspect";
 import { getLoadingProspectId } from "../../src/store/selectors/retrieveApplicantInfo";
 import { searchApplications } from "../../src/store/actions/searchProspect";
 import { getProspectInfoPromisify } from "../../src/store/actions/retrieveApplicantInfo";
@@ -101,6 +104,6 @@ describe("MyApplications test", () => {
       isLoading,
       loadingProspectId,
       searchResults
-    })
+    });
   });
 });
