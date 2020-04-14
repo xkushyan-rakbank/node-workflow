@@ -1,8 +1,10 @@
 import React from "react";
-import SectionTitle from "../SectionTitle";
+
+import { SectionTitle } from "../SectionTitle";
 import { LinkButton } from "../Buttons/LinkButton";
-import { useStyles } from "./styled";
 import { Icon, ICONS } from "../Icons";
+
+import { useStyles } from "./styled";
 
 export const StepComponent = ({
   title,
@@ -18,7 +20,9 @@ export const StepComponent = ({
 
   const renderTitle = () => {
     if (isActiveStep) {
-      return <SectionTitle title={title} subTitle={subTitle} className={classes.title} />;
+      return (
+        <SectionTitle title={title} subTitle={subTitle} classes={{ wrapper: classes.title }} />
+      );
     }
     return isFilled ? (
       <div className={classes.filledTitle}>

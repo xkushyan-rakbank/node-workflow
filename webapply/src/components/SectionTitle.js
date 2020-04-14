@@ -1,9 +1,9 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
-import cx from "classnames";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { InfoTitle } from "./InfoTitle";
 
-const styles = {
+const useStyles = makeStyles({
   wrapper: {
     display: "flex",
     fontSize: "20px",
@@ -19,13 +19,14 @@ const styles = {
     backgroundColor: "#373737",
     marginRight: "11px"
   }
-};
+});
 
-const SectionTitle = props => {
-  const { classes, title, subTitle } = props;
+export const SectionTitle = ({ title, subTitle, ...props }) => {
+  const classes = useStyles(props);
+
   return (
     <>
-      <div className={cx(classes.wrapper, props.className)}>
+      <div className={classes.wrapper}>
         <div className={classes.divider} />
         {title}
       </div>
@@ -33,5 +34,3 @@ const SectionTitle = props => {
     </>
   );
 };
-
-export default withStyles(styles)(SectionTitle);
