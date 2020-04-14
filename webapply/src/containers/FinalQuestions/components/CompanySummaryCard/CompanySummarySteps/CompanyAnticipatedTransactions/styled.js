@@ -41,5 +41,10 @@ export const useStyles = makeStyles({
     display: "flex",
     justifyContent: "flex-end",
     margin: "40px 0"
+  },
+  formControl: {
+    "& > div:last-child": {
+      marginTop: "10px"
+    }
   }
 });

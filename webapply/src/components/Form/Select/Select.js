@@ -12,7 +12,8 @@ import {
 } from "@material-ui/core";
 import { getIn } from "formik";
 
-import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
+import { ErrorMessage, ContexualHelp } from "./../../Notifications";
+import { InfoTitle } from "../../InfoTitle";
 import { areEqualFieldProps } from "../utils";
 
 import { useStyles } from "./styled";

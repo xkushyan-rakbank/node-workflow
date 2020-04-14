@@ -6,7 +6,7 @@ import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../../../../components/Notifications";
+import { InfoTitle } from "../../../../../../components/InfoTitle";
 import {
   SelectAutocomplete,
   Input,
