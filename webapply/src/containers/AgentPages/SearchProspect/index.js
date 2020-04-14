@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { searchApplications } from "../../../store/actions/searchProspect";
 import { resetProspect } from "../../../store/actions/appConfig";
-import { SearchProspectComponent } from "./SearchProspect";
+import { SearchProspectPage } from "./SearchProspectPage";
 import {
   getSearchResults,
   getIsLoadingSearchProspects
@@ -20,4 +20,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchProspectComponent);
+)(SearchProspectPage);

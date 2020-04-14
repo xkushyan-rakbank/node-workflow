@@ -9,23 +9,24 @@ import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
 import { StakeholdersNameManager } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { NEXT } from "../../../src/constants";
 
-jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock(
-  "../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders",
+  "../../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders",
   () => ({ CompanyStakeholdersComponent: jest.fn().mockImplementation(() => null) })
 );
-jest.mock("../../src/utils/useTrackingHistory");
+jest.mock("../../../src/utils/useTrackingHistory");
 jest.mock(
-  "../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider",
+  "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider",
   () => ({
     StakeholdersNameProvider: ({ children }) => children,
     StakeholdersNameManager: {
-      setStakeholderFullNames: jest.fn()
+      setStakeholderFullNames: jest.fn(),
+      deleteStakeholderFullName: jest.fn()
     }
   })
 );
 
-describe("ApplicantInfo container tests", () => {
+describe("CompanyStakeholders container tests", () => {
   const pushHistory = jest.fn();
 
   const deleteStakeholder = jest.fn();
@@ -35,11 +36,11 @@ describe("ApplicantInfo container tests", () => {
   const stakeholder = "some stakeholder";
   const stakeholders = [stakeholder];
   const percentage = 100;
-  const stakeholdersIds = "some stakeholder ids";
   const hasSignatories = true;
   const isStakeholderStepsCompleted = true;
   const isAnyStakeholderStepsCompleted = true;
   const isSendingProspect = false;
+  const editableStakeholder = "some id";
 
   const props = {
     deleteStakeholder,
@@ -48,7 +49,7 @@ describe("ApplicantInfo container tests", () => {
     sendProspectToAPI,
     stakeholders,
     percentage,
-    stakeholdersIds,
+    editableStakeholder,
     hasSignatories,
     isStakeholderStepsCompleted,
     isAnyStakeholderStepsCompleted,
@@ -68,7 +69,6 @@ describe("ApplicantInfo container tests", () => {
     expect(CompanyStakeholdersComponent).toHaveBeenCalledTimes(1);
     expect(CompanyStakeholdersComponent.mock.calls[0][0]).toMatchObject({
       stakeholders,
-      stakeholdersIds,
       isSendingProspect,
       percentage,
       isLoading: false,
@@ -161,31 +161,18 @@ describe("ApplicantInfo container tests", () => {
     const id = "some id";
     render(<CompanyStakeholdersContainer {...props} />);
 
-    expect(CompanyStakeholdersComponent).toHaveBeenCalledTimes(1);
+    CompanyStakeholdersComponent.mock.calls[0][0].handleDeleteStakeholder(id);
 
-    act(() => {
-      CompanyStakeholdersComponent.mock.calls[0][0].handleDeleteStakeholder(id);
-    });
-
-    expect(CompanyStakeholdersComponent).toHaveBeenCalledTimes(2);
-    expect(CompanyStakeholdersComponent.mock.calls[1][0].isShowingAddButton).toBe(false);
-    expect(changeEditableStakeholder).toHaveBeenCalled();
-    expect(changeEditableStakeholder.mock.calls[0]).toEqual([""]);
-    expect(deleteStakeholder).toHaveBeenCalled();
-    expect(deleteStakeholder.mock.calls[0]).toEqual([id]);
+    expect(StakeholdersNameManager.deleteStakeholderFullName).toHaveBeenCalledWith(id);
+    expect(changeEditableStakeholder).toHaveBeenCalledWith(null);
+    expect(deleteStakeholder).toHaveBeenCalledWith(id);
   });
 
   it("should add new stakeholder", () => {
     render(<CompanyStakeholdersContainer {...props} />);
 
-    expect(CompanyStakeholdersComponent).toHaveBeenCalledTimes(1);
+    CompanyStakeholdersComponent.mock.calls[0][0].addNewStakeholder();
 
-    act(() => {
-      CompanyStakeholdersComponent.mock.calls[0][0].addNewStakeholder();
-    });
-
-    expect(CompanyStakeholdersComponent).toHaveBeenCalledTimes(2);
-    expect(CompanyStakeholdersComponent.mock.calls[1][0].isShowingAddButton).toBe(false);
     expect(createNewStakeholder).toHaveBeenCalled();
   });
 });

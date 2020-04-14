@@ -16,7 +16,6 @@ export const CompanyStakeholdersContainer = ({
   createNewStakeholder,
   stakeholders,
   percentage,
-  stakeholdersIds,
   hasSignatories,
   sendProspectToAPI,
   isStakeholderStepsCompleted,
@@ -75,7 +74,6 @@ export const CompanyStakeholdersContainer = ({
     <StakeholdersNameProvider>
       <CompanyStakeholdersComponent
         stakeholders={stakeholders}
-        stakeholdersIds={stakeholdersIds}
         handleDeleteStakeholder={handleDeleteStakeholder}
         isSendingProspect={isSendingProspect}
         addNewStakeholder={createNewStakeholder}

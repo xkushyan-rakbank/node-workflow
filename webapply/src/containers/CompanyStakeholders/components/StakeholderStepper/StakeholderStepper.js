@@ -10,7 +10,7 @@ import { changeEditableStakeholder } from "../../../../store/actions/stakeholder
 import { CONTINUE, SAVE } from "../../../../constants";
 import { getEditableStakeholder } from "../../../../store/selectors/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { useStep } from "../../../../hooks/useStep";
+import { useStep } from "../../../../utils/useStep";
 import { STEP_STATUS } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../../FilledStakeholderCard";

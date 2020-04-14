@@ -20,21 +20,22 @@ import {
 
 import { useStyles } from "./styled";
 
-const companyPreferredContactInformationSchema = Yup.object().shape({
-  primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
-  primaryMobileNo: Yup.string()
-    .required(getRequiredMessage("Mobile number"))
-    .phoneNo({ codeFieldName: "primaryMobCountryCode", fieldName: "Mobile number" }),
-  primaryEmail: Yup.string()
-    .required(getRequiredMessage("Primary e-mail address"))
-    .max(50, "Maximum 50 characters allowed")
-    .email(getInvalidMessage("Primary e-mail address")),
-  primaryPhoneNo: Yup.string().phoneNo({
-    codeFieldName: "primaryPhoneCountryCode",
-    fieldName: "Landline number",
-    isLandline: true
-  })
-});
+const getCompanyPreferredContactInformationSchema = () =>
+  Yup.object().shape({
+    primaryMobCountryCode: Yup.string().required(getRequiredMessage("Country code")),
+    primaryMobileNo: Yup.string()
+      .required(getRequiredMessage("Mobile number"))
+      .phoneNo({ codeFieldName: "primaryMobCountryCode", fieldName: "Mobile number" }),
+    primaryEmail: Yup.string()
+      .required(getRequiredMessage("Primary e-mail address"))
+      .max(50, "Maximum 50 characters allowed")
+      .email(getInvalidMessage("Primary e-mail address")),
+    primaryPhoneNo: Yup.string().phoneNo({
+      codeFieldName: "primaryPhoneCountryCode",
+      fieldName: "Landline number",
+      isLandline: true
+    })
+  });
 
 export const CompanyPreferredContactInformationComponent = ({
   chequeBookApplied,
@@ -53,7 +54,7 @@ export const CompanyPreferredContactInformationComponent = ({
         primaryPhoneCountryCode: UAE_CODE
       }}
       onSubmit={handleContinue}
-      validationSchema={companyPreferredContactInformationSchema}
+      validationSchema={getCompanyPreferredContactInformationSchema}
       validateOnChange={false}
     >
       {createFormChangeHandler(() => (

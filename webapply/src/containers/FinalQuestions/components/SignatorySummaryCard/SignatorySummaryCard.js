@@ -8,16 +8,16 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps } from "./steps";
-import { getAuthorityTypeDisplayText } from "./utils";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholders";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 import { COMPANY_SIGNATORY_ID } from "../../../../constants";
+import { getAuthorityTypeDisplayText } from "../../../../utils/getAuthoroityTypeDisplayText";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
   index,
   signatory,
-  authorityTypeDatalist,
+  datalist,
   signatory: { fullName } = {},
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
@@ -34,7 +34,7 @@ export const SignatorySummaryCardComponent = ({
   const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
   const authorityTypeValue = getAuthorityTypeDisplayText(
     get(signatory, "accountSigningInfo.authorityType"),
-    authorityTypeDatalist
+    datalist.authorityType
   );
 
   return (

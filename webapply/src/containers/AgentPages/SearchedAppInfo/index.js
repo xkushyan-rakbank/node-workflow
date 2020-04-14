@@ -4,7 +4,7 @@ import { updateProspectId, resetProspect } from "../../../store/actions/appConfi
 import { getProspectInfoPromisify } from "../../../store/actions/retrieveApplicantInfo";
 import { getSearchResults, getProspectOverview } from "../../../store/selectors/searchProspect";
 import { getProspectOverviewPromisify } from "../../../store/actions/searchProspect";
-import { SearchedAppInfoComponent } from "./SearchedAppInfo";
+import { SearchedAppInfoContainer } from "./SearchedAppInfo";
 
 const mapStateToProps = state => ({
   searchResults: getSearchResults(state),
@@ -21,4 +21,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SearchedAppInfoComponent);
+)(SearchedAppInfoContainer);

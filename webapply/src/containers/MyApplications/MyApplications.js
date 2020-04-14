@@ -6,11 +6,19 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { searchApplications } from "../../store/actions/searchProspect";
 import { getProspectInfoPromisify } from "./../../store/actions/retrieveApplicantInfo";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
+import {
+  getIsLoadingSearchProspects,
+  getSearchResults
+} from "../../store/selectors/searchProspect";
+import { getLoadingProspectId } from "../../store/selectors/retrieveApplicantInfo";
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
 import { searchProspectStepper } from "../../constants";
 
 export const MyApplications = () => {
   const inputParam = useSelector(getApplicantInfo);
+  const isLoading = useSelector(getIsLoadingSearchProspects);
+  const searchResults = useSelector(getSearchResults);
+  const loadingProspectId = useSelector(getLoadingProspectId);
   const dispatch = useDispatch();
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
   useFormNavigation([true, false, searchProspectStepper]);
@@ -29,5 +37,12 @@ export const MyApplications = () => {
     [pushDisplayScreenToHistory, dispatch]
   );
 
-  return <BaseComponent getProspectInfo={onGetProspectInfo} />;
+  return (
+    <BaseComponent
+      getProspectInfo={onGetProspectInfo}
+      isLoading={isLoading}
+      searchResults={searchResults}
+      loadingProspectId={loadingProspectId}
+    />
+  );
 };
