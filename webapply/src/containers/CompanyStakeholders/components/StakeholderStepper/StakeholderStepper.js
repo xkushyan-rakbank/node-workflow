@@ -6,12 +6,8 @@ import { CompanyStakeholderCard } from "./../CompanyStakeholderCard/CompanyStake
 import { StepComponent } from "./../StepComponent/StepComponent";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
-import { getDatalist } from "../../../../store/selectors/appConfig";
 import { getIsSendingProspect } from "../../../../store/selectors/sendProspectToAPI";
-import {
-  sendProspectToAPIPromisify,
-  setScreeningError
-} from "../../../../store/actions/sendProspectToAPI";
+import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import {
   changeEditableStakeholder,
   setEditStakeholder
@@ -20,14 +16,13 @@ import { useStyles } from "./styled";
 import { CONTINUE, SAVE } from "../../../../constants";
 import {
   getEditableStakeholder,
-  getStakeholdersIds,
-  getStakeholders
+  getStakeholdersIds
 } from "../../../../store/selectors/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { useStep } from "../../../../utils/useStep";
 import { STEP_STATUS } from "../../../../constants";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
-import { FilledStakeholderCard } from "../FilledStakeholderCard/FilledStakeholderCard";
+import { FilledStakeholderCard } from "../../FilledStakeholderCard";
 
 const timeInterval = 5000;
 
@@ -36,20 +31,16 @@ const StakeholderStepperComponent = ({
   key,
   index,
   fullName,
-  firstName,
-  middleName,
-  lastName,
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
-  loading: isStatusLoading,
+  isStatusLoading,
   changeEditableStakeholder,
   setEditStakeholder,
   isEditInProgress,
   kycDetails,
   editableStakeholder,
   accountSigningInfo,
-  datalist,
   setIsShowingAddButton
 }) => {
   const classes = useStyles();
@@ -119,16 +110,12 @@ const StakeholderStepperComponent = ({
     return (
       <FilledStakeholderCard
         key={key}
-        index={index}
-        id={id}
-        editDisabled={Number.isInteger(editableStakeholder)}
-        changeEditableStep={handleEditCompleted}
-        datalist={datalist}
-        firstName={firstName}
-        middleName={middleName}
-        lastName={lastName}
         accountSigningInfo={accountSigningInfo}
+        changeEditableStep={handleEditCompleted}
+        index={index}
         kycDetails={kycDetails}
+        isEditDisabled={Number.isInteger(editableStakeholder)}
+        id={id}
       />
     );
   }
@@ -136,9 +123,6 @@ const StakeholderStepperComponent = ({
   return (
     <CompanyStakeholderCard
       isStatusShown={!isEditInProgress ? activeStep !== STEP_1 : isStatusLoading}
-      firstName={firstName}
-      lastName={lastName}
-      middleName={middleName}
       isStatusLoading={isStatusLoading}
       index={orderIndex}
       isEditInProgress={isEditInProgress}
@@ -181,18 +165,14 @@ const StakeholderStepperComponent = ({
 };
 
 const mapStateToProps = state => ({
-  isStatusShown: state.stakeholders.isStatusShown,
-  stakeholders: getStakeholders(state),
-  loading: getIsSendingProspect(state),
-  datalist: getDatalist(state),
+  isStatusLoading: getIsSendingProspect(state),
   editableStakeholder: getEditableStakeholder(state)
 });
 
 const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify,
   changeEditableStakeholder,
-  setEditStakeholder,
-  setScreeningError
+  setEditStakeholder
 };
 
 export const StakeholderStepper = connect(
