@@ -61,7 +61,9 @@ describe("useDocuments test", () => {
     downloadDocumentFile.mockImplementation((...args) => ({ type: "some action", payload: args }));
     render(<TestComponentWithProvider />);
 
-    act(() => SomeComponent.mock.calls[0][0].downloadDocument(documentKey, fileName));
+    act(() => {
+      SomeComponent.mock.calls[0][0].downloadDocument(documentKey, fileName)
+    });
 
     expect(store.getActions()).toEqual([
       {
