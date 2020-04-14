@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { getIn } from "formik";
 import FormControl from "@material-ui/core/FormControl";
-import { RadioGroup } from "@material-ui/core";
+import { RadioGroup, makeStyles } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
@@ -16,6 +16,14 @@ export const CheckboxesWrapper = styled("div")({
   alignContent: "start"
 });
 
+const useStyles = makeStyles({
+  formControlRoot: {
+    "& > div:last-child": {
+      marginTop: 10
+    }
+  }
+});
+
 export const CheckboxGroup = ({
   typeRadio,
   options,
@@ -28,7 +36,7 @@ export const CheckboxGroup = ({
   form: { errors, touched },
   onSelect = () => {},
   textArea,
-  classes,
+  classes: extendedClasses,
   contextualHelpText,
   contextualHelpProps = {}
 }) => {
@@ -37,8 +45,10 @@ export const CheckboxGroup = ({
 
   const opts = useMemo(() => filterOptions(options), [options, filterOptions]);
 
+  const classes = useStyles();
+
   return (
-    <FormControl className="formControl">
+    <FormControl classes={{ root: classes.formControlRoot }} className="formControl">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         {typeRadio ? (
           <RadioGroup {...field}>
@@ -49,7 +59,7 @@ export const CheckboxGroup = ({
                   value={extractValue(item)}
                   label={extractLabel(item)}
                   onSelect={onSelect}
-                  classes={classes}
+                  classes={extendedClasses}
                 />
               ))}
               {textArea}
@@ -65,7 +75,7 @@ export const CheckboxGroup = ({
                 label={extractLabel(item)}
                 onSelect={onSelect}
                 checked={(field.value || []).includes(extractValue(item))}
-                classes={classes}
+                classes={extendedClasses}
               />
             ))}
           </CheckboxesWrapper>

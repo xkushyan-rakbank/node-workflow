@@ -204,7 +204,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
           <h4 className={classes.groupLabel}>Monthly transactions</h4>
           <Grid container spacing={3} className={classes.flexContainer}>
             <Grid item sm={12}>
-              <FormControl className="formControl">
+              <FormControl classes={{ root: classes.formControl }} className="formControl">
                 <TextField
                   className={classes.disabledInput}
                   variant="outlined"

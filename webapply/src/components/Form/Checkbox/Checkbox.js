@@ -12,7 +12,10 @@ const useStyles = makeStyles({
   formControlRoot: {
     margin: "12px 0 24px",
     width: "100%",
-    display: "flex"
+    display: "flex",
+    "& > div:last-child": {
+      marginTop: 10
+    }
   },
   checkbox: {},
   label: {},
