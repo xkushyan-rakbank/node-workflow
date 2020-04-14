@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import { useSelector } from "react-redux";
 
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ICONS } from "../../../components/Icons";
@@ -12,19 +11,15 @@ import { ButtonWithIcon } from "./ButtonWithIcon";
 import { GRID_VIEW, LIST_VIEW } from "../constants";
 import { ApplicationsSkeleton } from "./ApplicationsSkeleton";
 import declinedRegular from "../../../assets/gif/declined_regular.gif";
-import {
-  getIsLoadingSearchProspects,
-  getSearchResults
-} from "../../../store/selectors/searchProspect";
-import { getLoadingProspectId } from "../../../store/selectors/retrieveApplicantInfo";
 
 import { useStyles } from "./styled";
 
-export const MyApplications = ({ getProspectInfo }) => {
-  const isLoading = useSelector(getIsLoadingSearchProspects);
-  const searchResults = useSelector(getSearchResults);
-  const loadingProspectId = useSelector(getLoadingProspectId);
-
+export const MyApplications = ({
+  getProspectInfo,
+  isLoading,
+  searchResults,
+  loadingProspectId
+}) => {
   const classes = useStyles();
 
   const [selectedView, setSelectedView] = useState(LIST_VIEW);

@@ -6,8 +6,8 @@ import {
 
 describe("retrieveApplicantInfo test", () => {
   const searchResult = "some search result";
-  const loadingProspectId = "some loadingProspectId";
-  const prospectResults = "some prospectResults";
+  const loadingProspectId = "some prospect id";
+  const prospectResults = "some results";
   const state = {
     retrieveApplicantInfo: { searchResults: { searchResult }, prospectResults, loadingProspectId }
   };

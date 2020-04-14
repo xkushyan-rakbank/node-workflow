@@ -15,7 +15,7 @@ describe("retrieveApplicantInfo reducer test", () => {
   });
 
   it("should handle GET_PROSPECT_INFO_REQUEST action type", () => {
-    const loadingProspectId = "some loadingProspectId value";
+    const loadingProspectId = "some prospect id";
 
     expect(reducer(undefined, getProspectInfoPromisify(loadingProspectId))).toMatchObject({
       loadingProspectId
@@ -23,10 +23,9 @@ describe("retrieveApplicantInfo reducer test", () => {
   });
 
   it("should handle GET_PROSPECT_INFO_SUCCESS action type", () => {
-    const loadingProspectId = "";
 
     expect(reducer(undefined, getProspectInfoSuccess())).toMatchObject({
-      loadingProspectId
+      loadingProspectId: null
     });
   });
 });

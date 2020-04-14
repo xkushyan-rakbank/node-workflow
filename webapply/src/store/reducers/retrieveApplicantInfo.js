@@ -7,7 +7,7 @@ import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   searchResults: [],
-  loadingProspectId: ""
+  loadingProspectId: null
 };
 
 export default handleActions(
@@ -18,7 +18,7 @@ export default handleActions(
     }),
     [GET_PROSPECT_INFO_SUCCESS]: state => ({
       ...state,
-      loadingProspectId: ""
+      loadingProspectId: null
     }),
     [RETRIEVE_APPLICANT_INFO_SUCCESS]: (state, { payload }) => ({
       ...state,
