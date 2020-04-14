@@ -8,7 +8,9 @@ describe("retrieveApplicantInfo test", () => {
   const searchResult = "some search result";
   const loadingProspectId = "some loadingProspectId";
   const prospectResults = "some prospectResults";
-  const state = { retrieveApplicantInfo: { searchResults: { searchResult }, prospectResults, loadingProspectId } };
+  const state = {
+    retrieveApplicantInfo: { searchResults: { searchResult }, prospectResults, loadingProspectId }
+  };
 
   it("should return searchResult", () => {
     expect(getApplicantInfo(state)).toBe(searchResult);

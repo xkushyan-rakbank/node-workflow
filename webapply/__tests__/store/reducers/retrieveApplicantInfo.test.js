@@ -1,5 +1,9 @@
 import reducer from "../../../src/store/reducers/retrieveApplicantInfo";
-import { retrieveApplicantInfoSuccess, getProspectInfoPromisify, getProspectInfoSuccess } from "../../../src/store/actions/retrieveApplicantInfo";
+import {
+  retrieveApplicantInfoSuccess,
+  getProspectInfoPromisify,
+  getProspectInfoSuccess
+} from "../../../src/store/actions/retrieveApplicantInfo";
 
 describe("retrieveApplicantInfo reducer test", () => {
   it("should handle RETRIEVE_APPLICANT_INFO_SUCCESS action type", () => {
@@ -23,6 +27,6 @@ describe("retrieveApplicantInfo reducer test", () => {
 
     expect(reducer(undefined, getProspectInfoSuccess())).toMatchObject({
       loadingProspectId
-    })
-  })
+    });
+  });
 });
