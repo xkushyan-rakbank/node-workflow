@@ -1,37 +1,21 @@
-import React, { useMemo } from "react";
-import sortBy from "lodash/sortBy";
+import React from "react";
 import cx from "classnames";
+
+import { formatAuditTrailInfo } from "../../utils/formatAuditTrailInfo";
 
 import { useStyles } from "./styled";
 
-const formatAuditTrailInfo = ({ modifiedDateTime, ...rest }) => {
-  let [date, time] = modifiedDateTime.split(" ");
-  date = date
-    .split("-")
-    .reverse()
-    .join("-");
-
-  return {
-    ...rest,
-    modifiedDateTime: [date, time].join(" ")
-  };
-};
-
 export const AuditTrail = ({ prospectOverview = {} }) => {
   const classes = useStyles();
-  const auditTrailInfo = prospectOverview.AuditTrailInfo || [];
-  const sortedAuditTrailInfo = useMemo(
-    () => sortBy(auditTrailInfo.map(formatAuditTrailInfo), ["modifiedDateTime"]).reverse(),
-    [auditTrailInfo]
-  );
+  const auditTrailInfo = formatAuditTrailInfo(prospectOverview.AuditTrailInfo);
 
-  return sortedAuditTrailInfo && sortedAuditTrailInfo.length ? (
+  return auditTrailInfo.length ? (
     <div className={classes.wrapper}>
       <div className={classes.applicationRow}>
         <div className={cx(classes.checkListData, classes.heading)}>Modified By</div>
         <div className={cx(classes.checkListData, classes.heading)}>Modified On</div>
       </div>
-      {sortedAuditTrailInfo.map((item, index) => (
+      {auditTrailInfo.map((item, index) => (
         <div className={classes.applicationRow} key={index}>
           <div className={classes.checkListData}>{item.modifiedBy}</div>
           <div className={classes.checkListData}>{item.modifiedDateTime}</div>

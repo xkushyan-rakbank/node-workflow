@@ -2,13 +2,15 @@ import React from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
+import { useCheckList } from "../../utils/useCheckList";
 import { Avatar } from "../../../../../components/Avatar/Avatar";
 
 import { useStyles } from "./styled";
 import { titles } from "./constants";
 
-export const CheckListComponent = ({ signatoryInfo, companyChecks, companyInfo }) => {
+export const CheckList = () => {
   const classes = useStyles();
+  const { signatoryInfo, companyChecks, companyInfo } = useCheckList();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import get from "lodash/get";
 import cx from "classnames";
 
@@ -7,18 +7,11 @@ import { LinkButton } from "../../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
 
 import { useStyles } from "./styled";
+import { useDocuments } from "../../utils/useDocuments";
 
-export const DocumentsComponent = ({
-  docs = {},
-  downloadDocumentFile,
-  prospectId,
-  signatoryInfo
-}) => {
+export const Documents = () => {
   const classes = useStyles();
-  const downloadDocument = useCallback(
-    (documentKey, fileName) => downloadDocumentFile(prospectId, documentKey, fileName),
-    [prospectId, downloadDocumentFile]
-  );
+  const { downloadDocument, docs, signatoryInfo } = useDocuments();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (
