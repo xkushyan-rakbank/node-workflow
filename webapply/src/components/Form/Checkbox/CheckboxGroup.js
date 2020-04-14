@@ -6,7 +6,8 @@ import { styled } from "@material-ui/styles";
 
 import { CustomCheckbox } from "./CustomCheckbox";
 import { CustomRadioButton } from "../RadioButton/CustomRadioButton";
-import { InfoTitle, ErrorMessage, ContexualHelp } from "../../Notifications";
+import { ErrorMessage, ContexualHelp } from "../../Notifications";
+import { InfoTitle } from "../../InfoTitle";
 
 export const CheckboxesWrapper = styled("div")({
   display: "flex",

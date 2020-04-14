@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import cx from "classnames";
-import { InfoTitle } from "./Notifications";
+import { InfoTitle } from "./InfoTitle";
 
 const styles = {
   wrapper: {

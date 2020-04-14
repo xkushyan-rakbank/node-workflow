@@ -9,7 +9,7 @@ import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getVali
 
 import { Checkbox, AutoSaveField as Field } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../../components/Notifications";
+import { InfoTitle } from "../../../../components/InfoTitle";
 import { Subtitle } from "../../../../components/Subtitle";
 import { SignatoriesList } from "./SignatoriesList";
 import { ICONS, Icon } from "../../../../components/Icons/Icon";

@@ -4,7 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import { getIn } from "formik";
 import cx from "classnames";
 
-import { ErrorMessage, InfoTitle, ContexualHelp } from "./../../Notifications";
+import { ErrorMessage, ContexualHelp } from "./../../Notifications";
+import { InfoTitle } from "../../InfoTitle";
 import { checkBrowserIsIE } from "../../../utils/checkBrowserIsIE";
 import { areEqualFieldProps } from "../utils";
 

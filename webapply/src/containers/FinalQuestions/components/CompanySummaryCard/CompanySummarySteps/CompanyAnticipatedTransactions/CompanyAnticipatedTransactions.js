@@ -7,7 +7,7 @@ import { Formik, Form } from "formik";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { InfoTitle } from "../../../../../../components/Notifications";
+import { InfoTitle } from "../../../../../../components/InfoTitle";
 import { Input, AutoSaveField as Field, NumberFormat } from "../../../../../../components/Form";
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";

@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     fontWeight: "normal",
     lineHeight: 1.33,
     color: "#86868b",
-    marginTop: "10px",
+    marginTop: "10px !important",
     "& div": {
       display: "flex",
       alignItems: "center",
@@ -25,20 +25,25 @@ const IconStyled = styled(Icon)({
   margin: "1px 6.4px 0 0",
   width: "16px",
   height: "16px",
-  fill: "#86868b",
-  stroke: "#86868b"
+  fill: "#86868b"
 });
 
 IconStyled.defaultProps = {
   alt: "info icon"
 };
 
-const InfoTitleBase = ({ styles, iconName = ICONS.info, ...props }) => {
-  const classes = useStyles();
+const InfoTitleBase = ({
+  classes: extendedClasses,
+  styles,
+  iconName = ICONS.info,
+  className,
+  title
+}) => {
+  const classes = useStyles({ classes: extendedClasses });
   return (
-    <div className={cx(classes.wrapper, props.className)} style={{ ...styles }}>
+    <div className={cx(classes.wrapper, className)} style={{ ...styles }}>
       <IconStyled name={iconName} />
-      <div>{props.title}</div>
+      <div>{title}</div>
     </div>
   );
 };
