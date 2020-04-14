@@ -1,13 +1,17 @@
 import React from "react";
 import cx from "classnames";
+import { useSelector } from "react-redux";
 
 import { ctaStatuses, notCtaStatuses } from "../constants";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
+import { getLoadingProspectId } from "../../../store/selectors/retrieveApplicantInfo";
+
 import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
+  const loadingProspectId = useSelector(getLoadingProspectId);
 
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
@@ -28,6 +32,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [] }) => {
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
                       handleClick={() => getProspectInfo(app.prospectId)}
+                      isDisplayLoader={loadingProspectId === app.prospectId}
                     />
                     <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}

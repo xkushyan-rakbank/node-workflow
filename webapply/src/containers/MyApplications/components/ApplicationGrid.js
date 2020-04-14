@@ -1,16 +1,20 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { ctaStatuses, notCtaStatuses } from "../constants";
+
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
+
+import { getLoadingProspectId } from "../../../store/selectors/retrieveApplicantInfo";
+import { ReactComponent as WavesBG } from "../../../assets/images/waves_bg.svg";
 
 import { useStyles } from "./styled";
 
-import { ReactComponent as WavesBG } from "../../../assets/images/waves_bg.svg";
-
 export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
   const classes = useStyles();
+  const loadingProspectId = useSelector(getLoadingProspectId);
 
   return applicantInfo.map(app => (
     <div className={classes.gridContainer} key={app.prospectId}>
@@ -34,6 +38,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [] }) => {
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
                       handleClick={() => getProspectInfo(app.prospectId)}
+                      isDisplayLoader={loadingProspectId === app.prospectId}
                     />
                     <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}
