@@ -47,7 +47,7 @@ export const CheckboxBase = ({
         />
       </ContexualHelp>
       {hasError && <ErrorMessage error={errorMessage} />}
-      {infoTitle && <InfoTitle className={classes.infoTitle} title={infoTitle} />}
+      {infoTitle && <InfoTitle classes={{ wrapper: classes.infoTitle }} title={infoTitle} />}
     </FormControl>
   );
 };

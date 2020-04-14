@@ -1,6 +1,5 @@
 import React, { memo } from "react";
 import { makeStyles, styled } from "@material-ui/core/styles";
-import cx from "classnames";
 
 import { Icon, ICONS } from "./Icons";
 
@@ -25,23 +24,18 @@ const IconStyled = styled(Icon)({
   margin: "1px 6.4px 0 0",
   width: "16px",
   height: "16px",
-  fill: "#86868b"
+  fill: "#86868b",
+  flexShrink: 0
 });
 
 IconStyled.defaultProps = {
   alt: "info icon"
 };
 
-const InfoTitleBase = ({
-  classes: extendedClasses,
-  styles,
-  iconName = ICONS.info,
-  className,
-  title
-}) => {
-  const classes = useStyles({ classes: extendedClasses });
+const InfoTitleBase = ({ title, styles, iconName = ICONS.info, ...extendedClasses }) => {
+  const classes = useStyles(extendedClasses);
   return (
-    <div className={cx(classes.wrapper, className)} style={{ ...styles }}>
+    <div className={classes.wrapper} style={{ ...styles }}>
       <IconStyled name={iconName} />
       <div>{title}</div>
     </div>
