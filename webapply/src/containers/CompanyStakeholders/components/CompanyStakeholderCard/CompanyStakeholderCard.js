@@ -11,13 +11,12 @@ export const CompanyStakeholderCardComponent = ({
   lastName,
   middleName,
   isStatusLoading,
-  isStatusShown,
-  isEditInProgress,
   cancelEditHandler,
   children,
   stakeholdersCount,
   isDisplayConfirmation,
   deleteHandler,
+  isAllStepsCompleted,
   index
 }) => {
   const classes = useStyles();
@@ -36,8 +35,8 @@ export const CompanyStakeholderCardComponent = ({
           <div className={classes.nameField}>
             {[firstName, middleName, lastName].filter(item => item).join(" ") || "New Stakeholder"}
           </div>
-          {isStatusShown && <StatusLoader loading={isStatusLoading} />}
-          {isEditInProgress && (
+          {(!isAllStepsCompleted || isStatusLoading) && <StatusLoader loading={isStatusLoading} />}
+          {isAllStepsCompleted && (
             <EditButton onClick={cancelEditHandler}>
               <img src={expandMoreIcon} className={classes.arrow} alt="scroll up" />
             </EditButton>
@@ -45,7 +44,7 @@ export const CompanyStakeholderCardComponent = ({
         </div>
       </div>
       <div className={classes.formContent}>{children}</div>
-      {isEditInProgress && stakeholdersCount > 1 && (
+      {stakeholdersCount > 1 && (
         <div className={classes.footerPart}>
           <LinkButton
             title={

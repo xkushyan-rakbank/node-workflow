@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 
-import { getIsSendingProspect } from "../../../../store/selectors/sendProspectToAPI";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { changeEditableStakeholder } from "../../../../store/actions/stakeholders";
 import { getEditableStakeholder } from "../../../../store/selectors/stakeholders";
 import { CONTINUE, SAVE } from "../../../../constants";
-import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
+import { stakeHoldersSteps, STEP_6 } from "./../../constants";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
 import { STEP_STATUS } from "../../../../constants";
 import { useStep } from "../../../../utils/useStep";
@@ -22,7 +21,6 @@ const StakeholderStepperComponent = ({
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
-  isStatusLoading,
   changeEditableStakeholder,
   editableStakeholder
 }) => {
@@ -88,10 +86,7 @@ const StakeholderStepperComponent = ({
 
   return (
     <CompanyStakeholderCard
-      isStatusShown={!isEditInProgress ? activeStep !== STEP_1 : isStatusLoading}
-      isStatusLoading={isStatusLoading}
       index={orderIndex}
-      isEditInProgress={isEditInProgress}
       cancelEditHandler={cancelEditHandler}
       deleteHandler={deleteHandler}
       stakeholderId={stakeholderId}
@@ -119,7 +114,6 @@ const StakeholderStepperComponent = ({
 };
 
 const mapStateToProps = state => ({
-  isStatusLoading: getIsSendingProspect(state),
   editableStakeholder: getEditableStakeholder(state)
 });
 

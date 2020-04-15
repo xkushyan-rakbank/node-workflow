@@ -12,7 +12,13 @@ export const getSignatoriesSteps = state =>
 export const getStakeholderSteps = state =>
   getCompletedSteps(state).filter(({ flowId }) => flowId.startsWith(COMPANY_STAKEHOLDER_ID));
 
-export const getIsStakeholderStepsCompleted = state =>
+export const createGetIsStakeholderStepsCompleted = stakeholderId => state =>
+  !getStakeholderSteps(state).some(
+    ({ flowId, status }) =>
+      flowId === `${COMPANY_STAKEHOLDER_ID}${stakeholderId}` && status !== STEP_STATUS.COMPLETED
+  );
+
+export const getIsAllStakeholdersStepsCompleted = state =>
   getStakeholderSteps(state).every(({ status }) => status === STEP_STATUS.COMPLETED);
 
 export const getIsAnyStakeholderStepsCompleted = state =>

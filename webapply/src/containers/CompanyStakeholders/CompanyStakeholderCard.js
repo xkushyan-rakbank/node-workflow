@@ -4,18 +4,19 @@ import { useSelector } from "react-redux";
 import { StakeholdersNamesContext } from "./components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { CompanyStakeholderCardComponent } from "./components/CompanyStakeholderCard/CompanyStakeholderCard";
 import { getSignatoriesCount } from "../../store/selectors/appConfig";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
+import { createGetIsStakeholderStepsCompleted } from "../../store/selectors/completedSteps";
 
 export const CompanyStakeholderCard = ({
   stakeholderId,
-  isStatusShown,
-  isStatusLoading,
   index,
-  isEditInProgress,
   cancelEditHandler,
   deleteHandler,
   isDisplayConfirmation,
   children
 }) => {
+  const isAllStepsCompleted = useSelector(createGetIsStakeholderStepsCompleted(stakeholderId));
+  const isStatusLoading = useSelector(getIsSendingProspect);
   const signatoriesCount = useSelector(getSignatoriesCount);
   const stakeholdersName = useContext(StakeholdersNamesContext);
   const { firstName, lastName, middleName } =
@@ -29,10 +30,9 @@ export const CompanyStakeholderCard = ({
       deleteHandler={deleteHandler}
       cancelEditHandler={cancelEditHandler}
       isDisplayConfirmation={isDisplayConfirmation}
-      isEditInProgress={isEditInProgress}
       isStatusLoading={isStatusLoading}
-      isStatusShown={isStatusShown}
       stakeholdersCount={signatoriesCount}
+      isAllStepsCompleted={isAllStepsCompleted}
       index={index}
     >
       {children}

@@ -37,7 +37,7 @@ describe("CompanyStakeholders container tests", () => {
   const stakeholders = [stakeholder];
   const percentage = 100;
   const hasSignatories = true;
-  const isStakeholderStepsCompleted = true;
+  const isAllStakeholdersStepsCompleted = true;
   const isAnyStakeholderStepsCompleted = true;
   const isSendingProspect = false;
   const editableStakeholder = "some id";
@@ -51,7 +51,7 @@ describe("CompanyStakeholders container tests", () => {
     percentage,
     editableStakeholder,
     hasSignatories,
-    isStakeholderStepsCompleted,
+    isAllStakeholdersStepsCompleted,
     isAnyStakeholderStepsCompleted,
     isSendingProspect
   };

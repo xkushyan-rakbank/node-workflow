@@ -8,6 +8,8 @@ import { getSignatoriesCount } from "../../../src/store/selectors/appConfig";
 import { StakeholdersNamesContext } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { CompanyStakeholderCard } from "../../../src/containers/CompanyStakeholders/CompanyStakeholderCard";
 import { CompanyStakeholderCardComponent } from "../../../src/containers/CompanyStakeholders/components/CompanyStakeholderCard/CompanyStakeholderCard";
+import { getIsSendingProspect } from "../../../src/store/selectors/sendProspectToAPI";
+import { createGetIsStakeholderStepsCompleted } from "../../../src/store/selectors/completedSteps";
 
 jest.mock(
   "../../../src/containers/CompanyStakeholders/components/CompanyStakeholderCard/CompanyStakeholderCard",
@@ -16,23 +18,21 @@ jest.mock(
   })
 );
 jest.mock("../../../src/store/selectors/appConfig");
+jest.mock("../../../src/store/selectors/completedSteps");
+jest.mock("../../../src/store/selectors/sendProspectToAPI");
 
 describe("CompanyStakeholderCard container tests", () => {
   const stakeholderId = "some id";
-  const isStatusShown = true;
+  const isAllStepsCompleted = true;
   const isStatusLoading = false;
   const index = 2;
-  const isEditInProgress = true;
   const cancelEditHandler = jest.fn();
   const deleteHandler = jest.fn();
   const isDisplayConfirmation = true;
   const children = "some children";
   const props = {
     stakeholderId,
-    isStatusShown,
-    isStatusLoading,
     index,
-    isEditInProgress,
     cancelEditHandler,
     deleteHandler,
     isDisplayConfirmation,
@@ -49,6 +49,8 @@ describe("CompanyStakeholderCard container tests", () => {
 
   const signatoriesCount = "some number";
   getSignatoriesCount.mockReturnValue(signatoriesCount);
+  getIsSendingProspect.mockReturnValue(isStatusLoading);
+  createGetIsStakeholderStepsCompleted.mockReturnValue(() => isAllStepsCompleted);
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -71,10 +73,9 @@ describe("CompanyStakeholderCard container tests", () => {
       deleteHandler,
       cancelEditHandler,
       isDisplayConfirmation,
-      isEditInProgress,
       isStatusLoading,
-      isStatusShown,
       stakeholdersCount: signatoriesCount,
+      isAllStepsCompleted,
       index,
       children
     });
@@ -97,10 +98,9 @@ describe("CompanyStakeholderCard container tests", () => {
       deleteHandler,
       cancelEditHandler,
       isDisplayConfirmation,
-      isEditInProgress,
       isStatusLoading,
-      isStatusShown,
       stakeholdersCount: signatoriesCount,
+      isAllStepsCompleted,
       index,
       children
     });

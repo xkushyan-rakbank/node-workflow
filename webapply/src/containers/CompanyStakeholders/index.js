@@ -10,7 +10,7 @@ import {
 } from "../../store/selectors/stakeholders";
 import {
   getIsAnyStakeholderStepsCompleted,
-  getIsStakeholderStepsCompleted
+  getIsAllStakeholdersStepsCompleted
 } from "../../store/selectors/completedSteps";
 import {
   changeEditableStakeholder,
@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
   stakeholdersIds: getStakeholdersIds(state),
   stakeholders: getStakeholders(state),
   percentage: getPercentage(state),
-  isStakeholderStepsCompleted: getIsStakeholderStepsCompleted(state),
+  isAllStakeholdersStepsCompleted: getIsAllStakeholdersStepsCompleted(state),
   isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
   editableStakeholder: getEditableStakeholder(state),
   hasSignatories: checkIsHasSignatories(state)

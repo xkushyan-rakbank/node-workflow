@@ -18,7 +18,7 @@ export const CompanyStakeholdersContainer = ({
   percentage,
   hasSignatories,
   sendProspectToAPI,
-  isStakeholderStepsCompleted,
+  isAllStakeholdersStepsCompleted,
   isAnyStakeholderStepsCompleted,
   isSendingProspect,
   editableStakeholder
@@ -43,7 +43,10 @@ export const CompanyStakeholdersContainer = ({
   const isLowPercentage = percentage < 100;
 
   const isDisableNextStep =
-    stakeholders.length < 1 || !isStakeholderStepsCompleted || isLowPercentage || !hasSignatories;
+    stakeholders.length < 1 ||
+    !isAllStakeholdersStepsCompleted ||
+    isLowPercentage ||
+    !hasSignatories;
 
   const isLowPercentageErrorDisplayed =
     stakeholders.length > 0 && isAnyStakeholderStepsCompleted && isLowPercentage;
