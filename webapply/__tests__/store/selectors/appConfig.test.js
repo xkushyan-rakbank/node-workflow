@@ -20,13 +20,14 @@ import {
   getAuthToken,
   getIsRecaptchaEnable,
   getAuthorizationHeader,
-  getAppConfig
+  getAppConfig,
+  getSignatoriesCount
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
   const datalist = "some datalist";
   const signatoryModel = "some signatory model";
-  const signatoryInfo = "some signatory info";
+  const signatoryInfo = ["some signatory info"];
   const accountInfo = "some account info";
   const companyName = "some company name";
   const organizationInfo = { companyName };
@@ -104,6 +105,10 @@ describe("appConfig selector test", () => {
 
   it("should return signatoryInfo", () => {
     expect(getSignatories(state)).toBe(signatoryInfo);
+  });
+
+  it("should return signatories count", () => {
+    expect(getSignatoriesCount(state)).toBe(1);
   });
 
   it("should return empty array when signatoryInfo is not set", () => {

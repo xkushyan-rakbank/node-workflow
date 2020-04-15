@@ -1,23 +1,25 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { StakeholdersNamesContext } from "../StakeholdersNameProvider/StakeholdersNameProvider";
-import StatusLoader from "../../../../components/StatusLoader";
 import { Avatar } from "../../../../components/Avatar/Avatar";
-import { useStyles, EditButton } from "./styled";
+import StatusLoader from "../../../../components/StatusLoader";
+import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import { EditButton, useStyles } from "./styled";
 import expandMoreIcon from "../../../../assets/icons/arrowDown.svg";
 
-export const CompanyStakeholderCard = ({
-  index,
-  isStatusShown,
+export const CompanyStakeholderCardComponent = ({
+  firstName,
+  lastName,
+  middleName,
   isStatusLoading,
+  cancelEditHandler,
   children,
-  isEditInProgress,
-  editHandler,
-  id
+  stakeholdersCount,
+  isDisplayConfirmation,
+  deleteHandler,
+  isAllStepsCompleted,
+  index
 }) => {
   const classes = useStyles();
-  const stakeholdersName = useContext(StakeholdersNamesContext);
-  const { firstName, lastName, middleName } = stakeholdersName.find(item => item.id === id) || {};
 
   return (
     <div className={classes.wrapper}>
@@ -33,16 +35,26 @@ export const CompanyStakeholderCard = ({
           <div className={classes.nameField}>
             {[firstName, middleName, lastName].filter(item => item).join(" ") || "New Stakeholder"}
           </div>
-          {isStatusShown && <StatusLoader loading={isStatusLoading} />}
-          {isEditInProgress && (
-            <EditButton onClick={editHandler}>
+          {(!isAllStepsCompleted || isStatusLoading) && <StatusLoader loading={isStatusLoading} />}
+          {isAllStepsCompleted && (
+            <EditButton onClick={cancelEditHandler}>
               <img src={expandMoreIcon} className={classes.arrow} alt="scroll up" />
             </EditButton>
           )}
         </div>
       </div>
-
-      {children}
+      <div className={classes.formContent}>{children}</div>
+      {stakeholdersCount > 1 && (
+        <div className={classes.footerPart}>
+          <LinkButton
+            title={
+              isDisplayConfirmation ? "Are you sure? All Data will be lost" : "Delete Stakeholder"
+            }
+            className={classes.button}
+            clickHandler={deleteHandler}
+          />
+        </div>
+      )}
     </div>
   );
 };

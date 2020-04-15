@@ -1,10 +1,11 @@
 import {
   getCompletedSteps,
   getIsAnyStakeholderStepsCompleted,
-  getIsStakeholderStepsCompleted,
+  getIsAllStakeholdersStepsCompleted,
   getStakeholderSteps,
   getCompanySteps,
-  getSignatoriesSteps
+  getSignatoriesSteps,
+  createGetIsStakeholderStepsCompleted
 } from "../../../src/store/selectors/completedSteps";
 
 describe("completedSteps selector test", () => {
@@ -57,6 +58,14 @@ describe("completedSteps selector test", () => {
     expect(getIsAnyStakeholderStepsCompleted(state)).toBe(false);
   });
 
+  it("should create getIsStakeholderStepsCompleted selector", () => {
+    expect(createGetIsStakeholderStepsCompleted(1)(state)).toBeFalsy();
+  });
+
+  it("should create getIsStakeholderStepsCompleted selector", () => {
+    expect(createGetIsStakeholderStepsCompleted(2)(state)).toBeTruthy();
+  });
+
   it("should return true when any stakeholder steps have completed status", () => {
     expect(
       getIsAnyStakeholderStepsCompleted({ completedSteps: [completedCompanyStakeholderStep] })
@@ -64,12 +73,12 @@ describe("completedSteps selector test", () => {
   });
 
   it("should return false when not all stakeholder steps have completed status", () => {
-    expect(getIsStakeholderStepsCompleted(state)).toBe(false);
+    expect(getIsAllStakeholdersStepsCompleted(state)).toBe(false);
   });
 
   it("should return true when all stakeholder steps have completed status", () => {
     expect(
-      getIsStakeholderStepsCompleted({ completedSteps: [completedCompanyStakeholderStep] })
+      getIsAllStakeholdersStepsCompleted({ completedSteps: [completedCompanyStakeholderStep] })
     ).toBe(true);
   });
 

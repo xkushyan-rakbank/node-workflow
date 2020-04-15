@@ -9,8 +9,10 @@ import { FilledStakeholderCardComponent } from "../../../src/containers/CompanyS
 import { StakeholdersNamesContext } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { getAuthorityTypeDisplayText } from "../../../src/utils/getAuthoroityTypeDisplayText";
 import { FilledStakeholderCard } from "../../../src/containers/CompanyStakeholders/FilledStakeholderCard";
+import { changeEditableStakeholder } from "../../../src/store/actions/stakeholders";
 
 jest.mock("../../../src/store/selectors/appConfig");
+jest.mock("../../../src/store/actions/stakeholders");
 jest.mock("../../../src/utils/getAuthoroityTypeDisplayText");
 jest.mock(
   "../../../src/containers/CompanyStakeholders/components/FilledStakeholderCard/FilledStakeholderCard",
@@ -21,19 +23,17 @@ jest.mock(
 
 describe("FilledStakeholderCard container tests", () => {
   const accountSigningInfo = "some info";
-  const changeEditableStep = jest.fn();
   const index = 2;
   const shareHoldingPercentage = "some percentage";
   const kycDetails = { shareHoldingPercentage };
   const isEditDisabled = true;
-  const id = "some id";
+  const stakeholderId = "some id";
   const props = {
     accountSigningInfo,
-    changeEditableStep,
     index,
     kycDetails,
     isEditDisabled,
-    id
+    stakeholderId
   };
   const datalist = "some datalist";
   const mockStore = configureStore([thunk]);
@@ -41,9 +41,11 @@ describe("FilledStakeholderCard container tests", () => {
   const firstName = "some name";
   const middleName = "some name";
   const lastName = "some name";
-  const stakeholdersNamesContextValue = [{ id, firstName, middleName, lastName }];
+  const stakeholdersNamesContextValue = [{ id: stakeholderId, firstName, middleName, lastName }];
   const authorityTypeDisplayText = "some text";
 
+  const changeEditableStakeholderAction = { type: "some action" };
+  changeEditableStakeholder.mockReturnValue(changeEditableStakeholderAction);
   getAuthorityTypeDisplayText.mockReturnValue(authorityTypeDisplayText);
   getDatalist.mockReturnValue(datalist);
 
@@ -100,6 +102,6 @@ describe("FilledStakeholderCard container tests", () => {
 
     expect(FilledStakeholderCardComponent).toHaveBeenCalled();
     FilledStakeholderCardComponent.mock.calls[0][0].editStakeholder();
-    expect(changeEditableStep).toHaveBeenCalledWith(index);
+    expect(store.getActions()).toEqual([changeEditableStakeholderAction]);
   });
 });

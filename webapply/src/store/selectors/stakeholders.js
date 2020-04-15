@@ -14,7 +14,7 @@ export const getStakeholders = createSelector(
   (stakeholders, stakeholdersIds) =>
     stakeholders.map((item, index) => ({
       ...item,
-      id: (stakeholdersIds[index] || {}).id
+      id: stakeholdersIds[index]
     }))
 );
 
