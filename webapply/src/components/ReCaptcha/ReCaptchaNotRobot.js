@@ -1,52 +1,31 @@
-import React from "react";
-import { connect } from "react-redux";
-import * as appConfigSelector from "./../../store/selectors/appConfig";
+import React, { useEffect, useRef } from "react";
 
 const PUB_KEY = process.env.REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY || " ";
 
-class ReCaptchaNotRobot extends React.PureComponent {
-  static defaultProps = {
-    onVerify: () => {},
-    onExpired: () => {},
-    onError: () => {}
-  };
+export const ReCaptchaNotRobot = ({
+  grecaptcha,
+  reCaptchaSiteKey,
+  onVerify,
+  onExpired,
+  onError
+}) => {
+  const reCaptchaId = useRef(0);
+  const rootRef = useRef(null);
 
-  constructor(props) {
-    super(props);
-
-    this.rootRef = React.createRef();
-    this.reCaptchaId = 0;
-    this.options = {
-      sitekey: this.props.reCaptchaSiteKey || PUB_KEY,
+  useEffect(() => {
+    reCaptchaId.current = grecaptcha.render(rootRef.current, {
+      sitekey: reCaptchaSiteKey || PUB_KEY,
       size: "normal",
-      callback: props.onVerify,
-      "expired-callback": props.onExpired,
-      "error-callback": props.onError
+      callback: onVerify,
+      "expired-callback": onExpired,
+      "error-callback": onError
+    });
+
+    return () => {
+      grecaptcha.reset(reCaptchaId.current);
     };
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  componentDidMount() {
-    this.reCaptchaId = this.props.grecaptcha.render(this.rootRef.current, this.options);
-  }
-
-  componentWillUnmount() {
-    this.props.grecaptcha.reset(this.reCaptchaId);
-  }
-
-  render() {
-    const { onVerify, onExpired, onError, grecaptcha, reCaptchaSiteKey, ...rest } = this.props;
-
-    return <div {...rest} ref={this.rootRef} className="g-recaptcha" />;
-  }
-}
-
-const mapStateToProps = state => ({
-  reCaptchaSiteKey: appConfigSelector.getReCaptchaSiteKey(state)
-});
-
-const mapDispatchToProps = {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ReCaptchaNotRobot);
+  return <div ref={rootRef} className="g-recaptcha" />;
+};

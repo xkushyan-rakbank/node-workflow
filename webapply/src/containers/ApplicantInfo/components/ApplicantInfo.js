@@ -14,7 +14,7 @@ import {
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
-import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
+import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 
 import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
@@ -47,6 +47,7 @@ export const ApplicantInfoComponent = ({
   isConfigLoading,
   isRecaptchaEnable,
   reCaptchaToken,
+  reCaptchaSiteKey,
   handleReCaptchaVerify,
   handleVerifiedFailed,
   isIslamicBanking,
@@ -136,6 +137,7 @@ export const ApplicantInfoComponent = ({
                   onVerify={handleReCaptchaVerify}
                   onExpired={handleVerifiedFailed}
                   onError={handleVerifiedFailed}
+                  reCaptchaSiteKey={reCaptchaSiteKey}
                 />
               </ErrorBoundaryForReCaptcha>
             )}

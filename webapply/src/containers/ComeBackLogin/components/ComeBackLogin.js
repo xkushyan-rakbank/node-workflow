@@ -14,7 +14,7 @@ import {
 } from "./../../../components/Form";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
-import ReCaptcha from "../../../components/ReCaptcha/ReCaptcha";
+import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { UAE_CODE } from "../../../constants";
@@ -34,6 +34,7 @@ const comebackSchema = Yup.object({
 export const ComeBackLoginComponent = ({
   recaptchaToken,
   isRecaptchaEnable,
+  reCaptchaSiteKey,
   isGenerating,
   isConfigLoading,
   submitForm,
@@ -116,6 +117,7 @@ export const ComeBackLoginComponent = ({
                       onVerify={handleReCaptchaVerify}
                       onExpired={handleVerifiedFailed}
                       onError={handleVerifiedFailed}
+                      reCaptchaSiteKey={reCaptchaSiteKey}
                     />
                   </ErrorBoundaryForReCaptcha>
                 )}

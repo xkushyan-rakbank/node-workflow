@@ -22,6 +22,7 @@ describe("ApplicantInfo container tests", () => {
   const pushHistory = jest.fn();
 
   const reCaptchaToken = "some token";
+  const reCaptchaSiteKey = "some key";
   const isRecaptchaEnable = true;
   const isConfigLoading = true;
   const accountType = accountNames.starter;
@@ -32,6 +33,7 @@ describe("ApplicantInfo container tests", () => {
     receiveAppConfig,
     setToken,
     reCaptchaToken,
+    reCaptchaSiteKey,
     isRecaptchaEnable,
     resetScreeningError,
     isConfigLoading,
