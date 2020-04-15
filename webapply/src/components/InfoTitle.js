@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     fontWeight: "normal",
     lineHeight: 1.33,
     color: "#86868b",
+    marginTop: "10px",
     ".formControl &": {
       marginTop: "10px"
     },
