@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ReCaptchaNotRobot } from "./ReCaptchaNotRobot";
 
-/**
- * @see https://developers.google.com/recaptcha/docs/display
- */
 export const ReCaptcha = props => {
-  const [grecaptcha, setGrecaptcha] = useState(window.grecaptcha);
+  const [grecaptcha, setGrecaptcha] = useState(window !== "undefined" && window.grecaptcha);
 
   useEffect(() => {
-    if (!grecaptcha) {
+    if (!grecaptcha && window !== "undefined") {
       const script = document.createElement("script");
       script.setAttribute("async", "");
       script.setAttribute("defer", "");
@@ -22,14 +19,12 @@ export const ReCaptcha = props => {
       };
     }
     return () => {
-      window.recaptchaOnloadCallback = () => {};
+      if (typeof window !== "undefined") {
+        window.recaptchaOnloadCallback = () => {};
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!grecaptcha) {
-    return null;
-  }
-
-  return <ReCaptchaNotRobot {...props} grecaptcha={grecaptcha} />;
+  return grecaptcha ? <ReCaptchaNotRobot {...props} grecaptcha={grecaptcha} /> : null;
 };

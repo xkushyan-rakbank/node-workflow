@@ -71,6 +71,7 @@ describe("ApplicantInfo container tests", () => {
     expect(ApplicantInfoComponent.mock.calls[0][0]).toMatchObject({
       isConfigLoading,
       reCaptchaToken,
+      reCaptchaSiteKey,
       isIslamicBanking,
       accountType,
       isLoading: false

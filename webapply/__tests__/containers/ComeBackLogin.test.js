@@ -63,6 +63,7 @@ describe("ComeBackLogin test", () => {
 
     expect(ComeBackLoginComponent.mock.calls[0][0]).toMatchObject({
       recaptchaToken,
+      reCaptchaSiteKey,
       isRecaptchaEnable,
       isGenerating,
       isConfigLoading
