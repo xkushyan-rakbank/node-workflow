@@ -13,6 +13,7 @@ export const SearchedAppInfoContainer = ({
   match,
   getProspectOverview,
   prospectOverview,
+  signatoryInfo,
   getProspectInfo,
   updateProspectId,
   resetProspect
@@ -69,14 +70,11 @@ export const SearchedAppInfoContainer = ({
     get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
       APP_STOP_SCREEN_RESULT ||
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
-
   const fullName = get(searchResult, "applicantInfo.fullName", "");
-  const [firstName, lastName] = fullName.split(/\s/);
 
   return (
     <SearchedAppInfoComponent
-      firstName={firstName}
-      lastName={lastName}
+      fullName={fullName}
       isDisabled={isDisabled}
       confirmDialogHandler={confirmDialogHandler}
       confirmHandler={confirmHandler}
@@ -84,6 +82,9 @@ export const SearchedAppInfoContainer = ({
       isDisplayConfirmDialog={isDisplayConfirmDialog}
       createSetStepHandler={createSetStepHandler}
       step={step}
+      searchResult={searchResult}
+      prospectOverview={prospectOverview}
+      signatoryInfo={signatoryInfo}
     />
   );
 };

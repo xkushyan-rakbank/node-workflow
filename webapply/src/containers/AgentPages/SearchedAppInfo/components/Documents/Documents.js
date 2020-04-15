@@ -9,9 +9,9 @@ import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
 import { useStyles } from "./styled";
 import { useDocuments } from "../../utils/useDocuments";
 
-export const Documents = () => {
+export const Documents = ({ signatoryInfo }) => {
   const classes = useStyles();
-  const { downloadDocument, docs, signatoryInfo } = useDocuments();
+  const { downloadDocument, docs } = useDocuments();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (

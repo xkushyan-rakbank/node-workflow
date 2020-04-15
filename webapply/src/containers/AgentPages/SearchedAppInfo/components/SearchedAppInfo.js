@@ -12,10 +12,9 @@ import { useStyles } from "./../styled";
 
 export const SearchedAppInfoComponent = ({
   fullName,
-  firstName,
-  lastName,
   createSetStepHandler,
   prospectOverview,
+  signatoryInfo,
   searchResult,
   redirectUserPage,
   isDisplayConfirmDialog,
@@ -24,6 +23,7 @@ export const SearchedAppInfoComponent = ({
   confirmDialogHandler,
   step
 }) => {
+  const [firstName, lastName] = fullName.split(/\s/);
   const classes = useStyles();
 
   return (
@@ -31,7 +31,6 @@ export const SearchedAppInfoComponent = ({
       <h2>Application Details</h2>
       <p className="formDescription" />
       <FormCard
-        fullName={fullName}
         firstName={firstName}
         lastName={lastName}
         content={<div className={classes.title}>{fullName}</div>}
@@ -47,9 +46,10 @@ export const SearchedAppInfoComponent = ({
                 isFilled={true}
                 handleClick={createSetStepHandler(item.step)}
                 hideContinue={true}
-                prospectOverview={prospectOverview}
                 stepForm={item.component}
                 searchResult={searchResult}
+                prospectOverview={prospectOverview}
+                signatoryInfo={signatoryInfo}
               />
             );
           })}

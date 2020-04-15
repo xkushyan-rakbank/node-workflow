@@ -18,6 +18,7 @@ describe("SearchedAppInfoContainer test", () => {
   const match = { params };
   const createSetStepHandler = jest.fn();
   const searchResults = [{ id: "another id" }];
+  const signatoryInfo = "some signatory info";
   const isDisplayConfirmDialog = "some boolean";
   const getProspectOverview = jest.fn();
   const setIsDisplayConfirmDialog = jest.fn();
@@ -32,6 +33,7 @@ describe("SearchedAppInfoContainer test", () => {
     match,
     searchResults,
     getProspectOverview,
+    signatoryInfo,
     prospectOverview,
     getProspectInfo,
     updateProspectId,
