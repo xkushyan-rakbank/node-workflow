@@ -1,5 +1,6 @@
 package ae.rakbank.documentuploader.services;
 
+import ae.rakbank.documentuploader.constants.DocumentTypes;
 import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.exception.ApiException;
 import ae.rakbank.documentuploader.exception.DocumentUploadException;
@@ -26,6 +27,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+
+import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
 
 @Slf4j
 @Service
@@ -62,7 +65,16 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
             throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
+        validateFileInfo(fileInfoJSON);
+
         return saveUploadedFile(file, fileInfoJSON, prospectId);
+    }
+
+    private void validateFileInfo(JsonNode fileInfoJSON) {
+        if (!ALLOWED_DOCUMENT_TYPES.contains(fileInfoJSON.get("documentType").asText())) {
+            log.error("The document type is not allowed");
+            throw new ApiException("The document type is not allowed", HttpStatus.BAD_REQUEST);
+        }
     }
 
     private ResponseEntity<Object> saveUploadedFile(MultipartFile file, JsonNode fileInfo, String prospectId) {
@@ -106,7 +118,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
                     "Cannot store file with relative path outside current directory " + originalFilename);
         }
         try (InputStream inputStream = file.getInputStream()) {
-            log.info("Initialiaing uploads dir: " + EnvUtil.getUploadDir());
+            log.info("Initialising uploads dir: " + EnvUtil.getUploadDir());
             Path uploadsDir = Paths.get(EnvUtil.getUploadDir());
 
             Files.copy(inputStream, uploadsDir.resolve(documentKey), StandardCopyOption.REPLACE_EXISTING);

@@ -50,8 +50,9 @@ public class DocumentUploadController {
         return new ResponseEntity<>(response, headers, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/banks/RAK/prospects/{prospectId}/documents", consumes = {
-            MediaType.MULTIPART_FORM_DATA_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/banks/RAK/prospects/{prospectId}/documents",
+            consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> handleUploadDocument(@RequestHeader String authorization,
                                                        @RequestParam("file") MultipartFile file,
                                                        @RequestParam("fileInfo") String fileInfo,

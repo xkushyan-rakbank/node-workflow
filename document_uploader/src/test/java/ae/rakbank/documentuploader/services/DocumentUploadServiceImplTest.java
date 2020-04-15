@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
+import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -57,7 +58,7 @@ public class DocumentUploadServiceImplTest {
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
 
-        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"text/plain\"}", "myProspectId");
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspectId");
     }
 
     @Test(expected = ApiException.class)

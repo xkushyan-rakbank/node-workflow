@@ -23,7 +23,8 @@
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
-			"ShouldSendErrorDebugDetails": true
+			"ShouldSendErrorDebugDetails": true,
+			"ApplicationLoggingLevel": "DEBUG"
 		},
 		"dev": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -31,7 +32,8 @@
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
-			"ShouldSendErrorDebugDetails": true
+			"ShouldSendErrorDebugDetails": true,
+			"ApplicationLoggingLevel": "DEBUG"
 		},
 		"uat": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -39,7 +41,8 @@
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
-			"ShouldSendErrorDebugDetails": false
+			"ShouldSendErrorDebugDetails": false,
+			"ApplicationLoggingLevel": "DEBUG"
 		},
 		"prod": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -47,7 +50,8 @@
 			"s3Uri": "/",
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
-			"ShouldSendErrorDebugDetails": false
+			"ShouldSendErrorDebugDetails": false,
+			"ApplicationLoggingLevel": "DEBUG"
 		}
 	}
 }

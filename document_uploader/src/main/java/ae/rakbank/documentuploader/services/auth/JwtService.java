@@ -20,6 +20,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
+import static ae.rakbank.documentuploader.constants.ConfigurationKeys.OTHER_CONFIGS;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -32,7 +34,7 @@ public class JwtService {
     @PostConstruct
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
-        secret = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("JwtSecret").asText();
+        secret = appConfigJSON.get(OTHER_CONFIGS).get(EnvUtil.getEnv()).get("JwtSecret").asText();
     }
 
     @SuppressWarnings("Duplicates")

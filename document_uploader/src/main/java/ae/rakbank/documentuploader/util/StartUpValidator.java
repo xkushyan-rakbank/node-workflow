@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static ae.rakbank.documentuploader.constants.ConfigurationKeys.OTHER_CONFIGS;
 import static ae.rakbank.documentuploader.constants.MandatoryVariables.BASE_URLS_LIST;
 import static ae.rakbank.documentuploader.constants.MandatoryVariables.OTHER_CONFIGS_LIST;
 import static ae.rakbank.documentuploader.util.FileUtil.APP_CONFIG_JSON;
@@ -72,7 +73,7 @@ public class StartUpValidator {
     }
 
     private void validateOtherConfigs(JsonNode appConfigJSON) {
-        otherConfigs = mapper.convertValue(appConfigJSON.get("OtherConfigs").get(currentEnv), Map.class);
+        otherConfigs = mapper.convertValue(appConfigJSON.get(OTHER_CONFIGS).get(currentEnv), Map.class);
         validateMap(OTHER_CONFIGS_LIST, otherConfigs);
     }
 
