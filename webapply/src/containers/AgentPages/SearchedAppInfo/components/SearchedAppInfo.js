@@ -12,8 +12,6 @@ import { useStyles } from "./../styled";
 
 export const SearchedAppInfoComponent = ({
   fullName,
-  firstName,
-  lastName,
   createSetStepHandler,
   prospectOverview,
   signatoryInfo,
@@ -25,6 +23,7 @@ export const SearchedAppInfoComponent = ({
   confirmDialogHandler,
   step
 }) => {
+  const [firstName, lastName] = fullName.split(/\s/);
   const classes = useStyles();
 
   return (

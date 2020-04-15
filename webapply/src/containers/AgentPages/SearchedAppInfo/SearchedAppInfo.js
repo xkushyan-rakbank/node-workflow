@@ -72,13 +72,10 @@ export const SearchedAppInfoContainer = ({
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
 
   const fullName = get(searchResult, "applicantInfo.fullName", "");
-  const [firstName, lastName] = fullName.split(/\s/);
 
   return (
     <SearchedAppInfoComponent
       fullName={fullName}
-      firstName={firstName}
-      lastName={lastName}
       isDisabled={isDisabled}
       confirmDialogHandler={confirmDialogHandler}
       confirmHandler={confirmHandler}
