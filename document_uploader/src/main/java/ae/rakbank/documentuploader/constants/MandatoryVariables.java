@@ -16,5 +16,7 @@ public class MandatoryVariables {
             "s3SecretKey",
             "s3Uri",
             "s3Bucket",
-            "JwtSecret");
+            "JwtSecret",
+            "ShouldSendErrorDebugDetails",
+            "ApplicationLoggingLevel");
 }

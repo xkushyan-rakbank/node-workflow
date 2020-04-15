@@ -12,8 +12,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -25,6 +25,8 @@ import io.undertow.server.RequestTooBigException;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static ae.rakbank.documentuploader.constants.ConfigurationKeys.*;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -40,12 +42,12 @@ public class AdviceController {
     @PostConstruct
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
-        String errorDebugDetails = appConfigJSON.get("OtherConfigs")
-                .get(EnvUtil.getEnv()).get("ShouldSendErrorDebugDetails").asText();
-        if (StringUtils.isEmpty(errorDebugDetails)) {
+        JsonNode jsonNode = appConfigJSON.get(OTHER_CONFIGS)
+                .get(EnvUtil.getEnv()).get(SHOULD_SEND_ERROR_DEBUG_DETAILS);
+        if (jsonNode == null) {
             shouldSendErrorDebugDetails = false;
         } else {
-            shouldSendErrorDebugDetails = Boolean.valueOf(errorDebugDetails);
+            shouldSendErrorDebugDetails = Boolean.valueOf(jsonNode.asText());
         }
     }
 

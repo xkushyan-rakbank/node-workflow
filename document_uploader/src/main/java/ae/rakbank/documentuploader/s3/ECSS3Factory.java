@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import ae.rakbank.documentuploader.util.FileUtil;
 
+import static ae.rakbank.documentuploader.constants.ConfigurationKeys.OTHER_CONFIGS;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -41,7 +43,7 @@ public class ECSS3Factory {
         log.info("WEBAPPLY_ENV = {}", webApplyEnv);
 
         JsonNode docUploadConfig = fileUtil.getAppConfigJSON();
-        JsonNode otherConfigs = docUploadConfig.get("OtherConfigs").get(webApplyEnv);
+        JsonNode otherConfigs = docUploadConfig.get(OTHER_CONFIGS).get(webApplyEnv);
         s3AccessKeyId = otherConfigs.get("s3AccessKeyId").asText();
         s3SecretKey = otherConfigs.get("s3SecretKey").asText();
         s3Bucket = otherConfigs.get("s3Bucket").asText();

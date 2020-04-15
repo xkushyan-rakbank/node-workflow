@@ -18,7 +18,9 @@ public class RequestIdFilter extends GenericFilterBean {
     public static final String REQUEST_ID_HEADER_NAME = "x-request-id";
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         final String requestId = request.getHeader(REQUEST_ID_HEADER_NAME);
         if (StringUtils.isNotBlank(requestId)) {
