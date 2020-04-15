@@ -39,7 +39,7 @@ describe("applicantInfoForm actions", () => {
     const code = "xxx";
     const expectedAction = {
       type: VERIFY_OTP,
-      payload: { code }
+      payload: code
     };
     expect(verifyOtp(code)).toEqual(expectedAction);
   });
