@@ -72,8 +72,7 @@ describe("applicantInfoForm saga test", () => {
     const prospectUpdated = {
       someField,
       applicantInfo: payload,
-      applicationInfo: { someField, actionType: SAVE, saveType: NEXT },
-      recaptchaToken: reCaptchaToken
+      applicationInfo: { someField, actionType: SAVE, saveType: NEXT }
     };
 
     const spy = jest.spyOn(prospectApi, "create").mockReturnValue({ data });
@@ -81,7 +80,10 @@ describe("applicantInfoForm saga test", () => {
 
     await runSaga(store, applicantInfoFormSaga, { payload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([prospectUpdated, headers]);
+    expect(spy.mock.calls[0]).toEqual([
+      { ...prospectUpdated, recaptchaToken: reCaptchaToken },
+      headers
+    ]);
     expect(dispatched).toEqual([
       updateProspect({ prospect: prospectUpdated }),
       generateCodeSuccess(),
