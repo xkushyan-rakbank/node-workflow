@@ -1,5 +1,6 @@
 package ae.rakbank.documentuploader.integration;
 
+import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,7 +44,7 @@ public class DocumentUploaderTest {
 	public void shouldNotSaveNotOwnedProspect() throws Exception {
 		String uri = "/api/v1/banks/RAK/prospects/cosme0001/documents";
 		MockMultipartFile file =
-				new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
+				new MockMultipartFile("file", "filename.txt", ALLOWED_DOCUMENT_TYPES.get(0), "some xml".getBytes());
 
 		ObjectNode fileInfo = new ObjectMapper().createObjectNode();
 		fileInfo.put("incorrect key", "SampleDocFromTestCase");
@@ -64,7 +65,7 @@ public class DocumentUploaderTest {
 				new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
 
 		ObjectNode fileInfo = new ObjectMapper().createObjectNode();
-		fileInfo.put("documentType", "SampleDocFromTestCase");
+		fileInfo.put("documentType", ALLOWED_DOCUMENT_TYPES.get(0));
 
 		mockMvc.perform(MockMvcRequestBuilders.multipart(uri)
 				.file(file)
