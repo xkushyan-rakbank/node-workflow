@@ -70,7 +70,6 @@ export const SearchedAppInfoContainer = ({
     get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
       APP_STOP_SCREEN_RESULT ||
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
-
   const fullName = get(searchResult, "applicantInfo.fullName", "");
 
   return (
