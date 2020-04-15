@@ -2,8 +2,8 @@ import React from "react";
 
 import { Avatar } from "../../../../components/Avatar/Avatar";
 import StatusLoader from "../../../../components/StatusLoader";
-import { EditButton, useStyles } from "./styled";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
+import { EditButton, useStyles } from "./styled";
 import expandMoreIcon from "../../../../assets/icons/arrowDown.svg";
 
 export const CompanyStakeholderCardComponent = ({
