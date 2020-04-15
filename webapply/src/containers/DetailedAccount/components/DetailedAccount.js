@@ -6,7 +6,12 @@ import { AccountingSoftware } from "./../components/AccountingSoftware";
 import { getVideoByAccountType } from "../../../utils/getVideoByAccountType";
 import { BackgroundVideoPlayer } from "../../../components/BackgroundVideoPlayer";
 
-export const DetailedAccountComponent = ({ setCurrentSection, accountType, isIslamicBanking }) => {
+export const DetailedAccountComponent = ({
+  setCurrentSection,
+  accountType,
+  selectedAccountType,
+  isIslamicBanking
+}) => {
   const firstSection = useRef(null);
   const secondSection = useRef(null);
   const thirdSection = useRef(null);
@@ -26,7 +31,7 @@ export const DetailedAccountComponent = ({ setCurrentSection, accountType, isIsl
         />
       </div>
       <div ref={secondSection}>
-        <AccountBenefits />
+        <AccountBenefits accountType={selectedAccountType} />
       </div>
       <div ref={thirdSection}>
         <AccountingSoftware />
