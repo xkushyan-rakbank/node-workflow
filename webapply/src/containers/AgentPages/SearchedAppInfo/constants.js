@@ -1,7 +1,7 @@
-import { CompanyDetails } from "../SearchedAppInfoSteps/CompanyDetails";
-import { AuditTrail } from "../SearchedAppInfoSteps/AuditTrail";
-import { Documents } from "../SearchedAppInfoSteps/Documents";
-import { CheckList } from "../SearchedAppInfoSteps/CheckList";
+import { CompanyDetails } from "./components/CompanyDetails";
+import { AuditTrail } from "./components/AuditTrail";
+import { Documents } from "./components/Documents";
+import { CheckList } from "./components/CheckList";
 
 export const CONFIRM_MESSAGE =
   "Editing the application will result in re-performing the pre-screening checks and might change the results.";

@@ -11,8 +11,7 @@ import { useStyles } from "./styled";
 
 export const CompanyStakeholdersComponent = ({
   stakeholders,
-  setIsShowingAddButton,
-  stakeholdersIds,
+  editableStakeholder,
   handleDeleteStakeholder,
   isSendingProspect,
   addNewStakeholder,
@@ -20,7 +19,6 @@ export const CompanyStakeholdersComponent = ({
   goToFinalQuestions,
   isLoading,
   isDisableNextStep,
-  isShowingAddButton,
   isSignatoryErrorDisplayed,
   isLowPercentageErrorDisplayed
 }) => {
@@ -33,7 +31,6 @@ export const CompanyStakeholdersComponent = ({
         partners, signatories/Power of Attorney. Check our guide below to see which one applies to
         your company
       </p>
-
       <div className={classes.stakeholdersTitleWrapper}>
         <ContexualHelp
           title={
@@ -57,27 +54,17 @@ export const CompanyStakeholdersComponent = ({
         </ContexualHelp>
         <span className={classes.stakeholderTitle}>Who is a stakeholder?</span>
       </div>
-
       <div>
-        {stakeholders.map((item, index) => {
-          const isEditInProgress = stakeholdersIds.find(stakeholder => stakeholder.id === item.id)
-            .isEditting;
-          return (
-            <StakeholderStepper
-              setIsShowingAddButton={setIsShowingAddButton}
-              {...item}
-              key={item.id}
-              index={index}
-              deleteStakeholder={
-                stakeholders.length !== 1 || isEditInProgress ? handleDeleteStakeholder : null
-              }
-              orderIndex={index}
-              isEditInProgress={isEditInProgress}
-            />
-          );
-        })}
+        {stakeholders.map((stakeholder, index) => (
+          <StakeholderStepper
+            stakeholder={stakeholder}
+            key={stakeholder.id}
+            deleteStakeholder={handleDeleteStakeholder}
+            orderIndex={index}
+          />
+        ))}
       </div>
-      {isShowingAddButton && (
+      {stakeholders.length > 0 && editableStakeholder === null && (
         <div className={classes.buttonsWrapper}>
           <AddStakeholderButton disabled={isSendingProspect} handleClick={addNewStakeholder} />
         </div>

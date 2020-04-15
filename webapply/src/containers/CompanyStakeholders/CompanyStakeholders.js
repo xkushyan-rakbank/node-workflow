@@ -16,17 +16,16 @@ export const CompanyStakeholdersContainer = ({
   createNewStakeholder,
   stakeholders,
   percentage,
-  stakeholdersIds,
   hasSignatories,
   sendProspectToAPI,
-  isStakeholderStepsCompleted,
+  isAllStakeholdersStepsCompleted,
   isAnyStakeholderStepsCompleted,
-  isSendingProspect
+  isSendingProspect,
+  editableStakeholder
 }) => {
   const pushHistory = useTrackingHistory();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [isShowingAddButton, setIsShowingAddButton] = useState(stakeholders.length > 0);
 
   useFormNavigation([false, true, formStepper]);
 
@@ -44,7 +43,10 @@ export const CompanyStakeholdersContainer = ({
   const isLowPercentage = percentage < 100;
 
   const isDisableNextStep =
-    stakeholders.length < 1 || !isStakeholderStepsCompleted || isLowPercentage || !hasSignatories;
+    stakeholders.length < 1 ||
+    !isAllStakeholdersStepsCompleted ||
+    isLowPercentage ||
+    !hasSignatories;
 
   const isLowPercentageErrorDisplayed =
     stakeholders.length > 0 && isAnyStakeholderStepsCompleted && isLowPercentage;
@@ -64,34 +66,27 @@ export const CompanyStakeholdersContainer = ({
 
   const handleDeleteStakeholder = useCallback(
     id => {
-      setIsShowingAddButton(stakeholders.length !== 1);
-      changeEditableStakeholder("");
+      StakeholdersNameManager && StakeholdersNameManager.deleteStakeholderFullName(id);
+      changeEditableStakeholder(null);
       deleteHandler(id);
     },
-    [stakeholders.length, deleteHandler, setIsShowingAddButton, changeEditableStakeholder]
+    [deleteHandler, changeEditableStakeholder]
   );
-
-  const addNewStakeholder = useCallback(() => {
-    setIsShowingAddButton(false);
-    createNewStakeholder();
-  }, [setIsShowingAddButton, createNewStakeholder]);
 
   return (
     <StakeholdersNameProvider>
       <CompanyStakeholdersComponent
         stakeholders={stakeholders}
-        setIsShowingAddButton={setIsShowingAddButton}
-        stakeholdersIds={stakeholdersIds}
         handleDeleteStakeholder={handleDeleteStakeholder}
         isSendingProspect={isSendingProspect}
-        addNewStakeholder={addNewStakeholder}
+        addNewStakeholder={createNewStakeholder}
         percentage={percentage}
         goToFinalQuestions={goToFinalQuestions}
         isLoading={isLoading}
         isDisableNextStep={isDisableNextStep}
-        isShowingAddButton={isShowingAddButton}
         isSignatoryErrorDisplayed={isSignatoryErrorDisplayed}
         isLowPercentageErrorDisplayed={isLowPercentageErrorDisplayed}
+        editableStakeholder={editableStakeholder}
       />
     </StakeholdersNameProvider>
   );

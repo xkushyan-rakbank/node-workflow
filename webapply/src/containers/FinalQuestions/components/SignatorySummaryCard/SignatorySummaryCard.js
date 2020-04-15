@@ -8,10 +8,10 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { FinalQuestionStepComponent } from "../FinalQuestionStepComponent";
 import { useStyles } from "./styled";
 import { signatoriesSteps } from "./steps";
-import { checkIsAccountInfoTypeNumber } from "./utils";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholders";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 import { COMPANY_SIGNATORY_ID } from "../../../../constants";
+import { getAuthorityTypeDisplayText } from "../../../../utils/getAuthoroityTypeDisplayText";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
@@ -26,14 +26,16 @@ export const SignatorySummaryCardComponent = ({
 }) => {
   const stakeholdersIds = useSelector(getStakeholdersIds);
   const completedSteps = allSignatoriesSteps.filter(
-    item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index].id
+    item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index]
   );
   const isAllStepsCompleted = checkAllStepsCompleted(completedSteps);
   const classes = useStyles();
 
   const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
-  const authorityTypeValueFromProspect = get(signatory, "accountSigningInfo.authorityType");
-  const authorityTypeValue = checkIsAccountInfoTypeNumber(authorityTypeValueFromProspect, datalist);
+  const authorityTypeValue = getAuthorityTypeDisplayText(
+    get(signatory, "accountSigningInfo.authorityType"),
+    datalist.authorityType
+  );
 
   return (
     <FormCard
@@ -68,7 +70,7 @@ export const SignatorySummaryCardComponent = ({
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
-          page={`${COMPANY_SIGNATORY_ID}${stakeholdersIds[index].id}`}
+          page={`${COMPANY_SIGNATORY_ID}${stakeholdersIds[index]}`}
         />
       </div>
     </FormCard>

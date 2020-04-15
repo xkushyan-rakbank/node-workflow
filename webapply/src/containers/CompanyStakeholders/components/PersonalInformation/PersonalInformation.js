@@ -257,6 +257,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
             component={InlineRadioGroup}
             options={yesNoOptions}
             label="This Person, or a relative of this person by blood or by law, or a close associate, holds/has held a position in the government or in a government-owned company/organization in any country."
+            disabled={!!values.isShareholderACompany}
             InputProps={{
               inputProps: { tabIndex: 0 }
             }}

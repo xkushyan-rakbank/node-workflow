@@ -12,7 +12,7 @@ import {
   SelectAutocomplete
 } from "../../../components/Form";
 import { ContinueButton } from "../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../components/Notifications";
+import { InfoTitle } from "../../../components/InfoTitle";
 import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";

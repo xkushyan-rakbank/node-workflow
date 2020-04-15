@@ -236,7 +236,7 @@
 					""
 				],
 				"residenceCountry": "AE",
-				"isUAEResident": false,
+				"isUAEResident": true,
 				"passportDetails": [
 					{
 						"passportNumber": "",

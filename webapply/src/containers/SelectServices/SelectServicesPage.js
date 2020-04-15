@@ -6,7 +6,7 @@ import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 
-import { servicesSteps, SELECT_SERVICES_PAGE_ID, STEP_5, STEP_4 } from "./constants";
+import { servicesSteps, SELECT_SERVICES_PAGE_ID, STEP_4 } from "./constants";
 import { SelectServices } from "./components/SelectServices";
 
 export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
@@ -22,7 +22,7 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
   ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps);
 
   const isAllStepsCompleted = !availableSteps.some(
-    step => step.step !== STEP_5 && step.status !== STEP_STATUS.COMPLETED
+    step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED
   );
 
   const isSubmitOnClickNextStepButton = activeStep !== STEP_4;

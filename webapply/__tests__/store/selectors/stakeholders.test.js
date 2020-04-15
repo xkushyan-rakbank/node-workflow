@@ -13,7 +13,7 @@ jest.mock("../../../src/store/selectors/appConfig");
 
 describe("stakeholders selectors test", () => {
   const stakeholderId = "some stakeholder id";
-  const stakeholdersIds = [{ id: stakeholderId }];
+  const stakeholdersIds = [stakeholderId];
   const editableStakeholder = "some stakeholder";
   const stakeholders = {
     stakeholderId,

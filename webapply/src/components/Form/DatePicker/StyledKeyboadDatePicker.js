@@ -65,9 +65,10 @@ const keyboardDatePickerTheme = createMuiTheme({
     },
     MuiInputAdornment: {
       root: {
+        display: "block",
         boxSizing: "border-box",
         marginLeft: -8,
-        padding: "3px 8px 3px 3px",
+        padding: "5px 8px 3px 3px",
         height: "100%",
         maxHeight: "none",
         borderRight: "1px solid rgba(194, 194, 194, 0.56)"

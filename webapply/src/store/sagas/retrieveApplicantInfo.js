@@ -56,16 +56,15 @@ export function* getProspectIdInfo({ payload }) {
       if (freeFieldsInfo.freeField5) {
         try {
           const { completedSteps = [] } = JSON.parse(freeFieldsInfo.freeField5);
-          const stakeholdersIds = completedSteps
-            .filter(({ flowId }) => flowId.startsWith(COMPANY_STAKEHOLDER_ID))
-            .reduce((acc, { flowId }) => {
-              const id = flowId.split("_")[1];
-              return {
-                ...acc,
-                [id]: { id, isEditting: false }
-              };
-            }, {});
-          yield put(updateStakeholdersIds(Object.values(stakeholdersIds)));
+          const stakeholdersIds = [
+            ...completedSteps.reduce((acc, { flowId }) => {
+              if (flowId.startsWith(COMPANY_STAKEHOLDER_ID)) {
+                acc.add(flowId.split(COMPANY_STAKEHOLDER_ID)[1]);
+              }
+              return acc;
+            }, new Set())
+          ];
+          yield put(updateStakeholdersIds(stakeholdersIds));
         } catch (error) {
           log(error);
         }

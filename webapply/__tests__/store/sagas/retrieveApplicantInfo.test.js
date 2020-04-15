@@ -50,7 +50,11 @@ describe("searchProspect saga test", () => {
   const data = {
     freeFieldsInfo: {
       freeField5: JSON.stringify({
-        completedSteps: [{ flowId: "companyStakeholder_1" }, { flowId: "companyStakeholder_2" }]
+        completedSteps: [
+          { flowId: "companyStakeholder_1" },
+          { flowId: "companyStakeholder_2" },
+          { flowId: "someflowid_2" }
+        ]
       })
     },
     signatoryInfo: [],
@@ -124,7 +128,7 @@ describe("searchProspect saga test", () => {
       { type: LOAD_META_DATA, payload: data.freeFieldsInfo.freeField5 },
       {
         type: UPDATE_STAKEHOLDERS_IDS,
-        payload: [{ id: "1" }, { id: "2" }]
+        payload: ["1", "2"]
       },
       {
         type: GET_PROSPECT_INFO_SUCCESS,

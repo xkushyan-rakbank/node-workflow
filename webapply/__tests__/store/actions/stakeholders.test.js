@@ -6,12 +6,10 @@ import {
   DELETE_STAKEHOLDER,
   CHANGE_EDITABLE_STAKEHOLDER,
   UPDATE_STAKEHOLDERS_IDS,
-  SET_EDIT_STAKEHOLDER,
   createNewStakeholder,
   deleteStakeholder,
   changeEditableStakeholder,
-  updateStakeholdersIds,
-  setEditStakeholder
+  updateStakeholdersIds
 } from "../../../src/store/actions/stakeholders";
 
 describe("stakeholders actions", () => {
@@ -47,16 +45,6 @@ describe("stakeholders actions", () => {
     expect(updateStakeholdersIds(stakeholdersIds)).toStrictEqual({
       type: UPDATE_STAKEHOLDERS_IDS,
       payload: stakeholdersIds
-    });
-  });
-
-  it("should create an action to set edit stakeholder", () => {
-    const index = {};
-    const isEditting = {};
-
-    expect(setEditStakeholder(index, isEditting)).toStrictEqual({
-      type: SET_EDIT_STAKEHOLDER,
-      payload: { index, isEditting }
     });
   });
 });

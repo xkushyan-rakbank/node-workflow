@@ -15,7 +15,7 @@ import { AutoSaveField as Field, SelectAutocomplete } from "../../../../componen
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { InfoTitle } from "../../../../components/Notifications";
+import { InfoTitle } from "../../../../components/InfoTitle";
 import { useStyles } from "../styled";
 
 const initialIndustry = {

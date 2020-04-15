@@ -1,6 +1,7 @@
 import React from "react";
+
 import { DocumentsSkeleton } from "../DocumentsSkeleton";
-import SectionTitle from "../../../../components/SectionTitle";
+import { SectionTitle } from "../../../../components/SectionTitle";
 import { CompanyDocuments } from "../CompanyDocuments";
 import { SignatoriesDocuments } from "../SignatoriesDocuments";
 import { BackLink } from "../../../../components/Buttons/BackLink";
@@ -32,7 +33,7 @@ export const UploadDocumentsComponent = ({
       ) : (
         <>
           <div className={classes.sectionContainer}>
-            <SectionTitle title="Company documents" className={classes.title} />
+            <SectionTitle title="Company documents" classes={{ wrapper: classes.title }} />
             <CompanyDocuments documents={companyDocuments} companyName={companyName} />
           </div>
           {stakeholdersDocuments && (
