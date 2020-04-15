@@ -6,8 +6,8 @@ import { StakeholdersNamesContext } from "./components/StakeholdersNameProvider/
 import { FilledStakeholderCardComponent } from "./components/FilledStakeholderCard/FilledStakeholderCard";
 
 import { getDatalist } from "../../store/selectors/appConfig";
-import { getAuthorityTypeDisplayText } from "../../utils/getAuthoroityTypeDisplayText";
 import { changeEditableStakeholder } from "../../store/actions/stakeholders";
+import { getAuthorityTypeDisplayText } from "../../utils/getAuthoroityTypeDisplayText";
 
 export const FilledStakeholderCard = ({
   accountSigningInfo,

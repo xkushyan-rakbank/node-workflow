@@ -11,7 +11,7 @@ export const CompanyStakeholderCard = ({
   isStatusLoading,
   index,
   isEditInProgress,
-  editHandler,
+  cancelEditHandler,
   deleteHandler,
   isDisplayConfirmation,
   children
@@ -27,7 +27,7 @@ export const CompanyStakeholderCard = ({
       lastName={lastName}
       middleName={middleName}
       deleteHandler={deleteHandler}
-      editHandler={editHandler}
+      cancelEditHandler={cancelEditHandler}
       isDisplayConfirmation={isDisplayConfirmation}
       isEditInProgress={isEditInProgress}
       isStatusLoading={isStatusLoading}

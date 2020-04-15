@@ -23,7 +23,7 @@ describe("CompanyStakeholderCard container tests", () => {
   const isStatusLoading = false;
   const index = 2;
   const isEditInProgress = true;
-  const editHandler = jest.fn();
+  const cancelEditHandler = jest.fn();
   const deleteHandler = jest.fn();
   const isDisplayConfirmation = true;
   const children = "some children";
@@ -33,7 +33,7 @@ describe("CompanyStakeholderCard container tests", () => {
     isStatusLoading,
     index,
     isEditInProgress,
-    editHandler,
+    cancelEditHandler,
     deleteHandler,
     isDisplayConfirmation,
     children
@@ -69,7 +69,7 @@ describe("CompanyStakeholderCard container tests", () => {
       middleName,
       lastName,
       deleteHandler,
-      editHandler,
+      cancelEditHandler,
       isDisplayConfirmation,
       isEditInProgress,
       isStatusLoading,
@@ -95,7 +95,7 @@ describe("CompanyStakeholderCard container tests", () => {
       middleName: undefined,
       lastName: undefined,
       deleteHandler,
-      editHandler,
+      cancelEditHandler,
       isDisplayConfirmation,
       isEditInProgress,
       isStatusLoading,

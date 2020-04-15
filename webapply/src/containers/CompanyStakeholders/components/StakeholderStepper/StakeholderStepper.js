@@ -1,17 +1,17 @@
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 
-import { CompanyStakeholderCard } from "../../CompanyStakeholderCard";
-import { StepComponent } from "./../StepComponent/StepComponent";
-import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import { getIsSendingProspect } from "../../../../store/selectors/sendProspectToAPI";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { changeEditableStakeholder } from "../../../../store/actions/stakeholders";
-import { CONTINUE, SAVE } from "../../../../constants";
 import { getEditableStakeholder } from "../../../../store/selectors/stakeholders";
+import { CONTINUE, SAVE } from "../../../../constants";
+import { stakeHoldersSteps, STEP_1, STEP_6 } from "./../../constants";
 import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { useStep } from "../../../../utils/useStep";
 import { STEP_STATUS } from "../../../../constants";
+import { useStep } from "../../../../utils/useStep";
+import { StepComponent } from "./../StepComponent/StepComponent";
+import { CompanyStakeholderCard } from "../../CompanyStakeholderCard";
 import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
 import { FilledStakeholderCard } from "../../FilledStakeholderCard";
 
@@ -26,8 +26,6 @@ const StakeholderStepperComponent = ({
   changeEditableStakeholder,
   editableStakeholder
 }) => {
-  const isEditInProgress = editableStakeholder === stakeholderId;
-  console.log(editableStakeholder, stakeholderId);
   const [isShowSuccessFilled, setIsShowSuccessFilled] = useState(false);
   const [isDisplayConfirmation, setIsDisplayConfirmation] = useState(false);
   const [
@@ -37,6 +35,8 @@ const StakeholderStepperComponent = ({
     handleSetNextStep,
     createFormChangeHandler
   ] = useStep(`${COMPANY_STAKEHOLDER_ID}${stakeholderId}`, stakeHoldersSteps);
+
+  const isEditInProgress = editableStakeholder === stakeholderId;
 
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event, SAVE, {
@@ -56,6 +56,8 @@ const StakeholderStepperComponent = ({
       () => {}
     );
   };
+
+  const cancelEditHandler = () => changeEditableStakeholder(null);
 
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
@@ -90,7 +92,7 @@ const StakeholderStepperComponent = ({
       isStatusLoading={isStatusLoading}
       index={orderIndex}
       isEditInProgress={isEditInProgress}
-      editHandler={() => changeEditableStakeholder(null)}
+      cancelEditHandler={cancelEditHandler}
       deleteHandler={deleteHandler}
       stakeholderId={stakeholderId}
       isDisplayConfirmation={isDisplayConfirmation}

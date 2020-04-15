@@ -13,7 +13,7 @@ export const CompanyStakeholderCardComponent = ({
   isStatusLoading,
   isStatusShown,
   isEditInProgress,
-  editHandler,
+  cancelEditHandler,
   children,
   stakeholdersCount,
   isDisplayConfirmation,
@@ -38,7 +38,7 @@ export const CompanyStakeholderCardComponent = ({
           </div>
           {isStatusShown && <StatusLoader loading={isStatusLoading} />}
           {isEditInProgress && (
-            <EditButton onClick={editHandler}>
+            <EditButton onClick={cancelEditHandler}>
               <img src={expandMoreIcon} className={classes.arrow} alt="scroll up" />
             </EditButton>
           )}
