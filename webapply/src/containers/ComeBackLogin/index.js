@@ -1,13 +1,15 @@
 import { connect } from "react-redux";
 import { ComeBackLoginContainer } from "./ComeBackLogin";
 import { getIsGenerating } from "../../store/selectors/otp";
-import { getIsRecaptchaEnable } from "../../store/selectors/appConfig";
+import { getIsRecaptchaEnable, getReCaptchaSiteKey } from "../../store/selectors/appConfig";
 import { generateOtpCodePromisify } from "../../store/actions/otp";
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetProspect } from "../../store/actions/appConfig";
+import { getReCaptchaToken } from "../../store/selectors/reCaptcha";
 
 const mapStateToProps = state => ({
-  recaptchaToken: state.reCaptcha.token,
+  recaptchaToken: getReCaptchaToken(state),
+  reCaptchaSiteKey: getReCaptchaSiteKey(state),
   isRecaptchaEnable: getIsRecaptchaEnable(state),
   isGenerating: getIsGenerating(state),
   isConfigLoading: state.appConfig.loading

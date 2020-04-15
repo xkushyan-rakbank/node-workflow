@@ -10,6 +10,7 @@ export const ApplicantInfoContainer = ({
   receiveAppConfig,
   setToken,
   reCaptchaToken,
+  reCaptchaSiteKey,
   isRecaptchaEnable,
   resetScreeningError,
   isConfigLoading,
@@ -58,6 +59,7 @@ export const ApplicantInfoContainer = ({
       onSubmit={onSubmit}
       isConfigLoading={isConfigLoading}
       isRecaptchaEnable={isRecaptchaEnable}
+      reCaptchaSiteKey={reCaptchaSiteKey}
       reCaptchaToken={reCaptchaToken}
       handleReCaptchaVerify={handleReCaptchaVerify}
       handleVerifiedFailed={handleVerifiedFailed}

@@ -1,64 +1,30 @@
-import React from "react";
-import ReCaptchaNotRobot from "./ReCaptchaNotRobot";
+import React, { useEffect, useState } from "react";
+import { ReCaptchaNotRobot } from "./ReCaptchaNotRobot";
 
-export const COMPONENTS_BY_TYPE = {
-  NOT_ROBOT: ReCaptchaNotRobot
-};
+export const ReCaptcha = props => {
+  const [grecaptcha, setGrecaptcha] = useState(window !== "undefined" && window.grecaptcha);
 
-/**
- * @see https://developers.google.com/recaptcha/docs/display
- */
-class ReCaptcha extends React.PureComponent {
-  static types = {
-    NOT_ROBOT: "NOT_ROBOT"
-  };
-
-  static defaultProps = {
-    type: ReCaptcha.types.NOT_ROBOT
-  };
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      grecaptcha: window.grecaptcha
-    };
-  }
-
-  componentDidMount() {
-    if (!this.state.grecaptcha) {
-      this.addReCaptchaScriptToDOM();
+  useEffect(() => {
+    if (!grecaptcha && window !== "undefined") {
+      const script = document.createElement("script");
+      script.setAttribute("async", "");
+      script.setAttribute("defer", "");
+      script.setAttribute(
+        "src",
+        "https://www.google.com/recaptcha/api.js?onload=recaptchaOnloadCallback&render=explicit&hl=en"
+      );
+      document.body.appendChild(script);
       window.recaptchaOnloadCallback = () => {
-        this.setState({ grecaptcha: window.grecaptcha });
+        setGrecaptcha(window.grecaptcha);
       };
     }
-  }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.recaptchaOnloadCallback = () => {};
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  addReCaptchaScriptToDOM() {
-    const script = document.createElement("script");
-    script.setAttribute("async", "");
-    script.setAttribute("defer", "");
-    script.setAttribute(
-      "src",
-      "https://www.google.com/recaptcha/api.js?onload=recaptchaOnloadCallback&render=explicit&hl=en"
-    );
-    document.body.appendChild(script);
-  }
-
-  componentWillUnmount() {
-    window.recaptchaOnloadCallback = () => {};
-  }
-
-  render() {
-    const { type, ...rest } = this.props;
-
-    const Component = COMPONENTS_BY_TYPE[type];
-
-    if (!Component || !this.state.grecaptcha) {
-      return null;
-    }
-    return <Component {...rest} grecaptcha={this.state.grecaptcha} />;
-  }
-}
-
-export default ReCaptcha;
+  return grecaptcha ? <ReCaptchaNotRobot {...props} grecaptcha={grecaptcha} /> : null;
+};
