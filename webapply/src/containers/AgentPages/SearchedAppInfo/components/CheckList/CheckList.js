@@ -8,9 +8,9 @@ import { Avatar } from "../../../../../components/Avatar/Avatar";
 import { useStyles } from "./styled";
 import { titles } from "./constants";
 
-export const CheckList = () => {
+export const CheckList = ({ signatoryInfo }) => {
   const classes = useStyles();
-  const { signatoryInfo, companyChecks, companyInfo } = useCheckList();
+  const { companyChecks, companyInfo } = useCheckList();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (

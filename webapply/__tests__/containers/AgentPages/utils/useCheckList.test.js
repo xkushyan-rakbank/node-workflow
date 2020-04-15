@@ -4,13 +4,11 @@ import { render } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
 import { useCheckList } from "../../../../src/containers/AgentPages/SearchedAppInfo/utils/useCheckList";
-import { getFilledOverviewSignatories } from "../../../../src/store/selectors/searchProspect";
 import {
   getCompanyChecks,
   getOrganizationScreeningResults
 } from "../../../../src/store/selectors/screeningResults";
 
-jest.mock("../../../../src/store/selectors/searchProspect");
 jest.mock("../../../../src/store/selectors/screeningResults");
 
 describe("useCheckList test", () => {
@@ -22,7 +20,6 @@ describe("useCheckList test", () => {
   };
   const mockStore = configureStore([]);
   const state = "some state";
-  const signatoryInfo = "some signatoryInfo data";
   const companyChecks = "some companyChecks data";
   const companyInfo = "some companyInfo data";
   const store = mockStore(state);
@@ -35,7 +32,6 @@ describe("useCheckList test", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    getFilledOverviewSignatories.mockReturnValue(signatoryInfo);
     getCompanyChecks.mockReturnValue(companyChecks);
     getOrganizationScreeningResults.mockReturnValue(companyInfo);
   });
@@ -44,11 +40,9 @@ describe("useCheckList test", () => {
     render(<TestComponentWithProvider />);
 
     expect(SomeComponent.mock.calls[0][0]).toEqual({
-      signatoryInfo,
       companyChecks,
       companyInfo
     });
-    expect(getFilledOverviewSignatories).toBeCalledWith(state);
     expect(getCompanyChecks).toBeCalledWith(state);
     expect(getOrganizationScreeningResults).toBeCalledWith(state);
   });

@@ -13,6 +13,7 @@ export const SearchedAppInfoContainer = ({
   match,
   getProspectOverview,
   prospectOverview,
+  signatoryInfo,
   getProspectInfo,
   updateProspectId,
   resetProspect
@@ -75,6 +76,7 @@ export const SearchedAppInfoContainer = ({
 
   return (
     <SearchedAppInfoComponent
+      fullName={fullName}
       firstName={firstName}
       lastName={lastName}
       isDisabled={isDisabled}
@@ -84,6 +86,9 @@ export const SearchedAppInfoContainer = ({
       isDisplayConfirmDialog={isDisplayConfirmDialog}
       createSetStepHandler={createSetStepHandler}
       step={step}
+      searchResult={searchResult}
+      prospectOverview={prospectOverview}
+      signatoryInfo={signatoryInfo}
     />
   );
 };

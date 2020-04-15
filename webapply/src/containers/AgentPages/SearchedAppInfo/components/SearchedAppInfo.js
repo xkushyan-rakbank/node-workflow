@@ -16,6 +16,7 @@ export const SearchedAppInfoComponent = ({
   lastName,
   createSetStepHandler,
   prospectOverview,
+  signatoryInfo,
   searchResult,
   redirectUserPage,
   isDisplayConfirmDialog,
@@ -31,7 +32,6 @@ export const SearchedAppInfoComponent = ({
       <h2>Application Details</h2>
       <p className="formDescription" />
       <FormCard
-        fullName={fullName}
         firstName={firstName}
         lastName={lastName}
         content={<div className={classes.title}>{fullName}</div>}
@@ -47,9 +47,10 @@ export const SearchedAppInfoComponent = ({
                 isFilled={true}
                 handleClick={createSetStepHandler(item.step)}
                 hideContinue={true}
-                prospectOverview={prospectOverview}
                 stepForm={item.component}
                 searchResult={searchResult}
+                prospectOverview={prospectOverview}
+                signatoryInfo={signatoryInfo}
               />
             );
           })}
