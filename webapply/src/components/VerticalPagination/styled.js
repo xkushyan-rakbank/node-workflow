@@ -26,7 +26,9 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: 0
     },
     [theme.breakpoints.up("sm")]: {
-      minHeight: "100vh"
+      minHeight: "100vh",
+      // this is for IE11 height should be less than min-height to work
+      height: "1px"
     },
     [theme.breakpoints.between("xl", "lg")]: {
       padding: "18vh 20px"
@@ -35,7 +37,8 @@ export const useStyles = makeStyles(theme => ({
       height: "auto"
     },
     [`${theme.breakpoints.only("xs")}, (max-height: ${normalScrollHeight}px)`]: {
-      marginBottom: 40
+      marginBottom: 40,
+      height: "auto"
     }
   },
   childWrapperWithHeader: {
