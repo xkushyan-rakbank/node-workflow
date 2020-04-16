@@ -37,7 +37,7 @@ describe("OTPProtectedRoute test", () => {
     expect(isOtpGenerated).toHaveBeenCalledWith(state);
   });
 
-  it("should render route when OTP disabled and token was gener", () => {
+  it("should render route when OTP disabled and token was generated", () => {
     isOtpVerified.mockReturnValue(false);
     isOtpGenerated.mockReturnValue(true);
     process.env.REACT_APP_OTP_ENABLE = "N";
