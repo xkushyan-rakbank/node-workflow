@@ -1,17 +1,12 @@
 import React from "react";
-import { render } from "@testing-library/react";
-import { createMemoryHistory } from "history";
-import { Router } from "react-router";
 
+import { renderWithProviders } from "../../../src/testUtils";
 import { AccountTypeProtectedRoute } from "../../../src/containers/Routers/AccountTypeProtectedRoute";
 import { RAKSTARTER_ROUTE_PARAM } from "../../../src/constants";
 import routes from "../../../src/routes";
 
 describe("AccountTypeProtectedRoute test", () => {
-  const rootPath = "/some_path";
-  const history = createMemoryHistory({ initialEntries: [rootPath] });
-
-  const routeRender = jest.fn().mockImplementation(({ location: { pathname } }) => pathname);
+  const routeRender = jest.fn().mockImplementation(() => null);
 
   const baseProps = { render: routeRender };
 
@@ -23,28 +18,20 @@ describe("AccountTypeProtectedRoute test", () => {
       computedMatch: { params: { accountType: RAKSTARTER_ROUTE_PARAM } }
     };
 
-    render(
-      <Router history={history}>
-        <AccountTypeProtectedRoute {...props} />
-      </Router>
-    );
+    renderWithProviders(<AccountTypeProtectedRoute {...props} />);
 
     expect(Component).toHaveBeenCalledTimes(1);
   });
 
-  it("should render roote when render function passed instead component", () => {
+  it("should render route when render function passed instead component", () => {
     const props = {
       ...baseProps,
       computedMatch: { params: { accountType: RAKSTARTER_ROUTE_PARAM } }
     };
 
-    render(
-      <Router history={history}>
-        <AccountTypeProtectedRoute {...props} />
-      </Router>
-    );
+    const { history } = renderWithProviders(<AccountTypeProtectedRoute {...props} />);
 
-    expect(history.location.pathname).toMatch(rootPath);
+    expect(history.location.pathname).toMatch("/");
     expect(routeRender).toHaveBeenCalledWith(
       expect.objectContaining({
         history: expect.any(Object),
@@ -54,17 +41,13 @@ describe("AccountTypeProtectedRoute test", () => {
     );
   });
 
-  it("should redirect to accountsComparison when accountType param didn't match", () => {
+  it("should redirect to accountsComparison page when accountType param didn't match", () => {
     const props = {
       ...baseProps,
       computedMatch: { params: { accountType: "some invalid type" } }
     };
 
-    render(
-      <Router history={history}>
-        <AccountTypeProtectedRoute {...props} />
-      </Router>
-    );
+    const { history } = renderWithProviders(<AccountTypeProtectedRoute {...props} />);
 
     expect(history.location.pathname).toMatch(routes.accountsComparison);
   });

@@ -13,7 +13,7 @@ import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScr
 import { OTPProtectedRoute } from "./containers/Routers/OTPProtectedRoute";
 import { ProspectProtectedRoute } from "./containers/Routers";
 import { AccountTypeProtectedRoute } from "./containers/Routers/AccountTypeProtectedRoute";
-import { ProtectedRoute } from "./containers/Routers/ProtectedRoute";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";

@@ -1,52 +1,27 @@
-import React from "react";
-import { styled } from "@material-ui/styles";
+import React, { PureComponent } from "react";
 
-import { log } from "../utils/loggger";
-
-class ErrorBoundary extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static defaultProps = {
-    errorPlaceholder: null
-  };
+class ErrorBoundary extends PureComponent {
+  state = { hasError: false };
 
   static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    log({ error, errorInfo });
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true, error };
   }
 
   render() {
-    const { children, errorPlaceholder, className, ...rest } = this.props;
+    const { hasError, error } = this.state;
+    const { children } = this.props;
 
-    let content = children;
-
-    if (this.state.hasError) {
-      content = errorPlaceholder;
-    }
-
-    if (className) {
+    if (hasError) {
       return (
-        <div className={className} {...rest}>
-          {content}
-        </div>
+        <>
+          <h3>Error occured</h3>
+          <pre>{error.toString()}</pre>
+        </>
       );
     }
-
-    return content;
+    return children;
   }
 }
 
-export const ErrorBoundaryForReCaptcha = styled(ErrorBoundary)({
-  display: "flex",
-  paddingTop: "10px",
-  maxWidth: "100%",
-  justifyContent: "center"
-});
-
-export default ErrorBoundary;
+export { ErrorBoundary };

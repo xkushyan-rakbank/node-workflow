@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
 import routes from "../../routes";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { accountTypeURIs } from "../../constants";
 
 export const AccountTypeProtectedRoute = ({ component: Component, render, ...rest }) => {

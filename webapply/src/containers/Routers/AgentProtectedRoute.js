@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import routes from "../../routes";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { getAuthToken } from "../../store/selectors/appConfig";
 
 export const AgentProtectedRoute = ({ component: Component, render, ...rest }) => {

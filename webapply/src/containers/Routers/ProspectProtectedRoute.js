@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import routes from "../../routes";
 import { getProspectId } from "../../store/selectors/appConfig";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 
 export const ProspectProtectedRoute = ({ component: Component, render, ...rest }) => {
   const isAgent = useSelector(checkLoginStatus);

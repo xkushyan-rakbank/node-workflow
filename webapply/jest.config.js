@@ -3,7 +3,7 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-console.log('@@@ webapply'); // eslint-disable-line
+console.log("@@@ webapply"); // eslint-disable-line
 
 module.exports = {
   collectCoverage: true,
@@ -36,7 +36,8 @@ module.exports = {
     "/node_modules/",
     "./src/setupTests.js",
     "./src/constants",
-    "./src/assets"
+    "./src/assets",
+    "./src/testUtils.js"
   ],
   coverageThreshold: {
     global: {

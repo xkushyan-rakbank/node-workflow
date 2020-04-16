@@ -7,7 +7,7 @@ import {
   isOtpVerified as getIsOtpVerified,
   isOtpGenerated as getIsOtpGenerated
 } from "../../store/selectors/otp";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 
 export const OTPProtectedRoute = ({ component: Component, render, ...rest }) => {
   const isOtpVerified = useSelector(getIsOtpVerified);
@@ -17,6 +17,7 @@ export const OTPProtectedRoute = ({ component: Component, render, ...rest }) => 
       {...rest}
       render={props =>
         isOtpVerified ||
+        /* istanbul ignore next */
         (process.env.REACT_APP_OTP_ENABLE === "N" && isOtpGenerated) ||
         process.env.NODE_ENV === "development" ? (
           <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
