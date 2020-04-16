@@ -160,7 +160,7 @@ describe("StakeholderStepper container tests", () => {
     expect(handleSetNextStep).toHaveBeenCalledWith(activeStep);
   });
 
-  it("should handle continue with last step", async () => {
+  it("should send prospect to API when active step is last.", async () => {
     jest.useFakeTimers();
     const activeStep = STEP_6;
     useStep.mockReturnValue([
@@ -192,7 +192,7 @@ describe("StakeholderStepper container tests", () => {
     expect(changeEditableStakeholder).toHaveBeenCalledWith(null);
   });
 
-  it("should set next step", async () => {
+  it("should do nothing when sendProspectToAPI was rejected", async () => {
     sendProspectToAPI.mockImplementation(() => Promise.reject());
     render(<StakeholderStepperContainer {...props} />);
 
