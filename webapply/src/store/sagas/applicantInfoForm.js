@@ -26,7 +26,7 @@ export function* applicantInfoFormSaga({ payload }) {
     const applicationInfo = yield select(getApplicationInfo);
     const headers = yield select(getAuthorizationHeader);
 
-    let prospectUpdated = {
+    const prospectUpdated = {
       ...prospect,
       applicantInfo: payload,
       applicationInfo: {
@@ -38,13 +38,15 @@ export function* applicantInfoFormSaga({ payload }) {
 
     yield put(updateProspect({ prospect: prospectUpdated }));
 
+    const sendingData = { ...prospectUpdated };
+
     if (isRecaptchaEnable) {
-      prospectUpdated.recaptchaToken = yield select(getReCaptchaToken);
+      sendingData.recaptchaToken = yield select(getReCaptchaToken);
     }
 
     const {
       data: { prospectId }
-    } = yield call(prospectApi.create, prospectUpdated, headers);
+    } = yield call(prospectApi.create, sendingData, headers);
 
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));

@@ -16,6 +16,7 @@ describe("ComeBackLogin test", () => {
   const setToken = jest.fn();
   const path = routes.comeBackLoginVerification;
   const resetProspect = jest.fn();
+  const reCaptchaSiteKey = "some key";
   const recaptchaToken = "some token";
   const isRecaptchaEnable = true;
   const isGenerating = false;
@@ -31,6 +32,7 @@ describe("ComeBackLogin test", () => {
     setToken,
     resetProspect,
     recaptchaToken,
+    reCaptchaSiteKey,
     isRecaptchaEnable,
     isGenerating,
     isConfigLoading
@@ -61,6 +63,7 @@ describe("ComeBackLogin test", () => {
 
     expect(ComeBackLoginComponent.mock.calls[0][0]).toMatchObject({
       recaptchaToken,
+      reCaptchaSiteKey,
       isRecaptchaEnable,
       isGenerating,
       isConfigLoading

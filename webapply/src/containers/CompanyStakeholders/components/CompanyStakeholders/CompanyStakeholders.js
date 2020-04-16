@@ -1,7 +1,7 @@
 import React from "react";
 import { ContexualHelp, ErrorMessage } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
-import { StakeholderStepper } from "../StakeholderStepper/StakeholderStepper";
+import { StakeholderStepper } from "../../StakeholderStepper";
 import { AddStakeholderButton } from "../AddStakeholderButton/AddStakeholderButton";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";

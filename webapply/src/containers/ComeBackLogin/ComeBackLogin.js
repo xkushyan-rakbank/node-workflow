@@ -9,6 +9,7 @@ export const ComeBackLoginContainer = ({
   setToken,
   resetProspect,
   recaptchaToken,
+  reCaptchaSiteKey,
   isRecaptchaEnable,
   isGenerating,
   isConfigLoading
@@ -55,6 +56,7 @@ export const ComeBackLoginContainer = ({
     <ComeBackLoginComponent
       recaptchaToken={recaptchaToken}
       isRecaptchaEnable={isRecaptchaEnable}
+      reCaptchaSiteKey={reCaptchaSiteKey}
       isGenerating={isGenerating}
       isConfigLoading={isConfigLoading}
       submitForm={submitForm}

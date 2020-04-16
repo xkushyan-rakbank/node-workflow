@@ -1,22 +1,17 @@
 import React, { useState, useCallback } from "react";
-import { connect } from "react-redux";
-
-import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
-import { changeEditableStakeholder } from "../../../../store/actions/stakeholders";
-import { getEditableStakeholder } from "../../../../store/selectors/stakeholders";
-import { CONTINUE, SAVE } from "../../../../constants";
-import { stakeHoldersSteps, STEP_6 } from "./../../constants";
-import { COMPANY_STAKEHOLDER_ID } from "./../../constants";
-import { STEP_STATUS } from "../../../../constants";
-import { useStep } from "../../../../utils/useStep";
-import { StepComponent } from "./../StepComponent/StepComponent";
-import { CompanyStakeholderCard } from "../../CompanyStakeholderCard";
-import { SuccessFilledStakeholder } from "../SuccessFilledStakeholder/SuccessFilledStakeholder";
-import { FilledStakeholderCard } from "../../FilledStakeholderCard";
+import { CONTINUE, SAVE } from "../../../constants";
+import { stakeHoldersSteps, STEP_6 } from "../constants";
+import { COMPANY_STAKEHOLDER_ID } from "../constants";
+import { STEP_STATUS } from "../../../constants";
+import { useStep } from "../../../utils/useStep";
+import { StepComponent } from "../components/StepComponent/StepComponent";
+import { CompanyStakeholderCard } from "../CompanyStakeholderCard";
+import { SuccessFilledStakeholder } from "../components/SuccessFilledStakeholder/SuccessFilledStakeholder";
+import { FilledStakeholderCard } from "../FilledStakeholderCard";
 
 const timeInterval = 5000;
 
-const StakeholderStepperComponent = ({
+export const StakeholderStepperContainer = ({
   stakeholder: { id: stakeholderId, fullName, kycDetails, accountSigningInfo },
   orderIndex,
   deleteStakeholder,
@@ -112,17 +107,3 @@ const StakeholderStepperComponent = ({
     </CompanyStakeholderCard>
   );
 };
-
-const mapStateToProps = state => ({
-  editableStakeholder: getEditableStakeholder(state)
-});
-
-const mapDispatchToProps = {
-  sendProspectToAPI: sendProspectToAPIPromisify,
-  changeEditableStakeholder
-};
-
-export const StakeholderStepper = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StakeholderStepperComponent);
