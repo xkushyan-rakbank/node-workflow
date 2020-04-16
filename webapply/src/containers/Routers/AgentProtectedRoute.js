@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { RedirectRoute, ProtectedRoute } from "../../components/Routes";
+import { RedirectRoute } from "./components/RedirectRoute";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import routes from "../../routes";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { getAuthToken } from "../../store/selectors/appConfig";

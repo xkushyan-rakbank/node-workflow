@@ -13,9 +13,9 @@ import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScr
 import {
   ProspectProtectedRoute,
   OTPProtectedRoute,
-  AccountTypeProtectedRoute
+  AccountTypeProtectedRoute,
+  ProtectedRoute
 } from "./containers/Routers";
-import { ProtectedRoute } from "./components/Routes/ProtectedRoute";
 
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";

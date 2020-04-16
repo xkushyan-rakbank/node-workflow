@@ -1,6 +1,7 @@
 import React from "react";
 
-import { RedirectRoute, ProtectedRoute } from "../../components/Routes";
+import { RedirectRoute } from "./components/RedirectRoute";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import routes from "../../routes";
 import { accountTypeURIs } from "../../constants";
 

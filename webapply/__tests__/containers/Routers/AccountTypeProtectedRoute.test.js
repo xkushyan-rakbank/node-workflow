@@ -2,11 +2,13 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import { AccountTypeProtectedRoute } from "../../../src/containers/Routers/AccountTypeProtectedRoute";
-import { ProtectedRoute, RedirectRoute } from "../../../src/components/Routes";
+import { ProtectedRoute } from "../../../src/containers/Routers/components/ProtectedRoute";
+import { RedirectRoute } from "../../../src/containers/Routers/components/RedirectRoute";
 import { RAKSTARTER_ROUTE_PARAM } from "../../../src/constants";
 import routes from "../../../src/routes";
 
-jest.mock("../../../src/components/Routes");
+jest.mock("../../../src/containers/Routers/components/ProtectedRoute");
+jest.mock("../../../src/containers/Routers/components/RedirectRoute");
 
 describe("AccountTypeProtectedRoute test", () => {
   beforeEach(() => {

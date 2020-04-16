@@ -4,14 +4,16 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 
 import { AgentProtectedRoute } from "../../../src/containers/Routers/AgentProtectedRoute";
-import { ProtectedRoute, RedirectRoute } from "../../../src/components/Routes";
+import { ProtectedRoute } from "../../../src/containers/Routers/components/ProtectedRoute";
+import { RedirectRoute } from "../../../src/containers/Routers/components/RedirectRoute";
 import routes from "../../../src/routes";
 import { checkLoginStatus } from "../../../src/store/selectors/loginSelector";
 import { getAuthToken } from "../../../src/store/selectors/appConfig";
 
 jest.mock("../../../src/store/selectors/loginSelector");
 jest.mock("../../../src/store/selectors/appConfig");
-jest.mock("../../../src/components/Routes");
+jest.mock("../../../src/containers/Routers/components/ProtectedRoute");
+jest.mock("../../../src/containers/Routers/components/RedirectRoute");
 
 describe("AgentProtectedRoute test", () => {
   const state = "some state";
