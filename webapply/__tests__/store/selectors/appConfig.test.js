@@ -21,11 +21,15 @@ import {
   getIsRecaptchaEnable,
   getAuthorizationHeader,
   getAppConfig,
-  getSignatoriesCount
+  getSignatoriesCount,
+  createGetAuthorityTypeDisplayText
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
-  const datalist = "some datalist";
+  const displayText = "some text";
+  const authorityTypeValue = "some value";
+  const authorityTypeDatalist = [{ value: authorityTypeValue, displayText }];
+  const datalist = { authorityType: authorityTypeDatalist };
   const signatoryModel = "some signatory model";
   const signatoryInfo = ["some signatory info"];
   const accountInfo = "some account info";
@@ -219,5 +223,13 @@ describe("appConfig selector test", () => {
 
   it("should return is recaptcha enable", () => {
     expect(getIsRecaptchaEnable(state)).toBe(recaptchaEnable);
+  });
+
+  it("should return displayText if value exist", () => {
+    expect(createGetAuthorityTypeDisplayText(authorityTypeValue)(state)).toBe(displayText);
+  });
+
+  it("should return empty string if value does not exist", () => {
+    expect(createGetAuthorityTypeDisplayText("another val")(state)).toBe("");
   });
 });

@@ -11,13 +11,12 @@ import { signatoriesSteps } from "./steps";
 import { getStakeholdersIds } from "../../../../store/selectors/stakeholders";
 import { checkAllStepsCompleted } from "../../../../utils/checkAllStepsCompleted";
 import { COMPANY_SIGNATORY_ID } from "../../../../constants";
-import { getAuthorityTypeDisplayText } from "../../../../utils/getAuthoroityTypeDisplayText";
+import { createGetAuthorityTypeDisplayText } from "../../../../store/selectors/appConfig";
 
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
   index,
   signatory,
-  datalist,
   signatory: { fullName } = {},
   expandedSignatoryIndex,
   setExpandedSignatoryIndex,
@@ -25,6 +24,9 @@ export const SignatorySummaryCardComponent = ({
   allSignatoriesSteps
 }) => {
   const stakeholdersIds = useSelector(getStakeholdersIds);
+  const authorityTypeValue = useSelector(
+    createGetAuthorityTypeDisplayText(get(signatory, "accountSigningInfo.authorityType"))
+  );
   const completedSteps = allSignatoriesSteps.filter(
     item => item.flowId.slice(COMPANY_SIGNATORY_ID.length) === stakeholdersIds[index]
   );
@@ -32,10 +34,6 @@ export const SignatorySummaryCardComponent = ({
   const classes = useStyles();
 
   const percentage = Number(get(signatory, "kycDetails.shareHoldingPercentage", 0));
-  const authorityTypeValue = getAuthorityTypeDisplayText(
-    get(signatory, "accountSigningInfo.authorityType"),
-    datalist.authorityType
-  );
 
   return (
     <FormCard
