@@ -13,7 +13,7 @@ import {
 } from "../../../components/Form";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
-import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
+import { ErrorBoundaryForReCaptcha } from "../../../components/ReCaptcha/ErrorBoundaryForReCaptcha";
 import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 
 import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";

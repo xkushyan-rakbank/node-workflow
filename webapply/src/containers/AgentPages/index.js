@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 import routes from "../../routes";
-import { AgentProtectedRoute } from "../../components/Routers";
+import { AgentProtectedRoute } from "../../containers/Routers";
 
 import Login from "../../containers/AgentPages/Login";
 import Admin from "../../containers/AgentPages/SearchProspect";

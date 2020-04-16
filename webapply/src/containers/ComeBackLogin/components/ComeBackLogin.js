@@ -15,7 +15,7 @@ import {
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
-import { ErrorBoundaryForReCaptcha } from "../../../components/ErrorBoundary";
+import { ErrorBoundaryForReCaptcha } from "../../../components/ReCaptcha/ErrorBoundaryForReCaptcha";
 import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
 import { UAE_CODE } from "../../../constants";
 

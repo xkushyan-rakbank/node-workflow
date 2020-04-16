@@ -3,7 +3,7 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
-console.log('@@@ webapply'); // eslint-disable-line
+console.log("@@@ webapply"); // eslint-disable-line
 
 module.exports = {
   collectCoverage: true,
