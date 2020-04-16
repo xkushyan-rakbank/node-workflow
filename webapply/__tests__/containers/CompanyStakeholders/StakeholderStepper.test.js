@@ -29,7 +29,8 @@ describe("StakeholderStepper container tests", () => {
   const stakeholderId = "some id";
   const fullName = "some full name";
   const kycDetails = "some details";
-  const accountSigningInfo = "some info";
+  const authorityType = "some type";
+  const accountSigningInfo = { authorityType };
   const stakeholder = {
     id: stakeholderId,
     fullName,
@@ -137,7 +138,7 @@ describe("StakeholderStepper container tests", () => {
 
     expect(FilledStakeholderCard).toHaveBeenCalled();
     expect(FilledStakeholderCard.mock.calls[0][0]).toEqual({
-      accountSigningInfo,
+      authorityType,
       index: orderIndex,
       kycDetails,
       isEditDisabled: false,

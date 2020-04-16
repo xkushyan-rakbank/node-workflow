@@ -7,13 +7,13 @@ import { Provider } from "react-redux";
 import { getDatalist } from "../../../src/store/selectors/appConfig";
 import { FilledStakeholderCardComponent } from "../../../src/containers/CompanyStakeholders/components/FilledStakeholderCard/FilledStakeholderCard";
 import { StakeholdersNamesContext } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
-import { getAuthorityTypeDisplayText } from "../../../src/utils/getAuthoroityTypeDisplayText";
+import { createGetAuthorityTypeDisplayText } from "../../../src/store/selectors/appConfig";
 import { FilledStakeholderCard } from "../../../src/containers/CompanyStakeholders/FilledStakeholderCard";
 import { changeEditableStakeholder } from "../../../src/store/actions/stakeholders";
 
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/store/actions/stakeholders");
-jest.mock("../../../src/utils/getAuthoroityTypeDisplayText");
+jest.mock("../../../src/store/selectors/appConfig");
 jest.mock(
   "../../../src/containers/CompanyStakeholders/components/FilledStakeholderCard/FilledStakeholderCard",
   () => ({
@@ -46,7 +46,7 @@ describe("FilledStakeholderCard container tests", () => {
 
   const changeEditableStakeholderAction = { type: "some action" };
   changeEditableStakeholder.mockReturnValue(changeEditableStakeholderAction);
-  getAuthorityTypeDisplayText.mockReturnValue(authorityTypeDisplayText);
+  createGetAuthorityTypeDisplayText.mockReturnValue(() => authorityTypeDisplayText);
   getDatalist.mockReturnValue(datalist);
 
   const ContainerWithProviders = props => (

@@ -77,3 +77,10 @@ export const getAuthorizationHeader = state => {
     headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
   };
 };
+
+export const createGetAuthorityTypeDisplayText = authorityType => state => {
+  const authorityTypeFromDatalist =
+    getDatalist(state).authorityType.find(item => item.value === authorityType) || {};
+
+  return authorityTypeFromDatalist.displayText || "";
+};

@@ -12,7 +12,12 @@ import { FilledStakeholderCard } from "../FilledStakeholderCard";
 const timeInterval = 5000;
 
 export const StakeholderStepperContainer = ({
-  stakeholder: { id: stakeholderId, fullName, kycDetails, accountSigningInfo },
+  stakeholder: {
+    id: stakeholderId,
+    fullName,
+    kycDetails,
+    accountSigningInfo: { authorityType }
+  },
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
@@ -70,7 +75,7 @@ export const StakeholderStepperContainer = ({
   if (!isEditInProgress) {
     return (
       <FilledStakeholderCard
-        accountSigningInfo={accountSigningInfo}
+        authorityType={authorityType}
         index={orderIndex}
         kycDetails={kycDetails}
         isEditDisabled={editableStakeholder !== null}
