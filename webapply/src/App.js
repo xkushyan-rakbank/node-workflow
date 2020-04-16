@@ -9,10 +9,11 @@ import { history } from "./store";
 
 import { FormLayout } from "./containers/FormLayout";
 import { ServerRequestLoadingScreen } from "./components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
-import { OTPProtectedRoute } from "./components/Routers/OTPProtectedRoute";
-import { ProspectProtectedRoute } from "./components/Routers";
-import { AccountTypeProtectedRoute } from "./components/Routers/AccountTypeProtectedRoute";
-import { ProtectedRoute } from "./components/Routers/ProtectedRoute";
+
+import { OTPProtectedRoute } from "./containers/Routers/OTPProtectedRoute";
+import { ProspectProtectedRoute } from "./containers/Routers";
+import { AccountTypeProtectedRoute } from "./containers/Routers/AccountTypeProtectedRoute";
+import { ProtectedRoute } from "./containers/Routers/ProtectedRoute";
 
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
