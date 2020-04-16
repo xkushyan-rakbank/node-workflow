@@ -36,8 +36,7 @@ module.exports = {
     "/node_modules/",
     "./src/setupTests.js",
     "./src/constants",
-    "./src/assets",
-    "./src/testUtils.js"
+    "./src/assets"
   ],
   coverageThreshold: {
     global: {
