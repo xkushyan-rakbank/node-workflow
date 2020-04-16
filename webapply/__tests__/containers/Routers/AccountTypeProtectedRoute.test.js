@@ -32,13 +32,7 @@ describe("AccountTypeProtectedRoute test", () => {
     const { history } = renderWithProviders(<AccountTypeProtectedRoute {...props} />);
 
     expect(history.location.pathname).toMatch("/");
-    expect(routeRender).toHaveBeenCalledWith(
-      expect.objectContaining({
-        history: expect.any(Object),
-        match: expect.any(Object),
-        location: expect.any(Object)
-      })
-    );
+    expect(routeRender).toHaveBeenCalled();
   });
 
   it("should redirect to accountsComparison page when accountType param didn't match", () => {

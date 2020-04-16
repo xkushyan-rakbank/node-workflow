@@ -40,13 +40,7 @@ describe("ProspectProtectedRoute test", () => {
     const { history } = renderWithProviders(<ProspectProtectedRoute {...props} />);
 
     expect(history.location.pathname).toMatch("/");
-    expect(routeRender).toHaveBeenCalledWith(
-      expect.objectContaining({
-        history: expect.any(Object),
-        match: expect.any(Object),
-        location: expect.any(Object)
-      })
-    );
+    expect(routeRender).toHaveBeenCalled();
   });
 
   it("should redirect to comebackLogin page when user is customer", () => {

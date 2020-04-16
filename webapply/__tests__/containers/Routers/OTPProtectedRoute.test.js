@@ -38,13 +38,7 @@ describe("OTPProtectedRoute test", () => {
     const { history } = renderWithProviders(<OTPProtectedRoute {...props} />);
 
     expect(history.location.pathname).toMatch("/");
-    expect(routeRender).toHaveBeenCalledWith(
-      expect.objectContaining({
-        history: expect.any(Object),
-        match: expect.any(Object),
-        location: expect.any(Object)
-      })
-    );
+    expect(routeRender).toHaveBeenCalled();
   });
 
   it("should redirect to comeBackLogin page when OTP checks weren't passed", () => {
