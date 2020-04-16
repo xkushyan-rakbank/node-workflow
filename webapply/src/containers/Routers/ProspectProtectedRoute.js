@@ -1,28 +1,22 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+import { RedirectRoute, ProtectedRoute } from "../../components/Routes";
 import routes from "../../routes";
 import { getProspectId } from "../../store/selectors/appConfig";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
-import { ErrorBoundary } from "../../components/ErrorBoundary";
 
-export const ProspectProtectedRoute = ({ component: Component, render, ...rest }) => {
+export const ProspectProtectedRoute = props => {
   const isAgent = useSelector(checkLoginStatus);
   const prospectId = useSelector(getProspectId);
 
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        prospectId || process.env.NODE_ENV === "development" ? (
-          <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
-        ) : isAgent ? (
-          <Redirect to={routes.login} />
-        ) : (
-          <Redirect to={routes.comeBackLogin} />
-        )
-      }
-    />
-  );
+  if (prospectId) {
+    return <ProtectedRoute {...props} />;
+  }
+
+  if (isAgent) {
+    return <RedirectRoute to={routes.login} />;
+  }
+
+  return <RedirectRoute to={routes.comeBackLogin} />;
 };

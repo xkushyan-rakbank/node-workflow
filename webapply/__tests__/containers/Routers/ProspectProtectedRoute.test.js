@@ -1,65 +1,63 @@
 import React from "react";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import configureStore from "redux-mock-store";
 
 import { ProspectProtectedRoute } from "../../../src/containers/Routers";
+import { ProtectedRoute, RedirectRoute } from "../../../src/components/Routes";
 import routes from "../../../src/routes";
 import { getProspectId } from "../../../src/store/selectors/appConfig";
 import { checkLoginStatus } from "../../../src/store/selectors/loginSelector";
-import { renderWithProviders } from "../../../src/testUtils";
 
 jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/store/selectors/loginSelector");
+jest.mock("../../../src/components/Routes");
 
 describe("ProspectProtectedRoute test", () => {
-  const routeRender = jest.fn().mockImplementation(() => null);
+  const state = "some state";
+  const store = configureStore([])(state);
+  const TestComponent = props => (
+    <Provider store={store}>
+      <ProspectProtectedRoute {...props} />
+    </Provider>
+  );
 
-  const baseProps = { render: routeRender };
-
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    ProtectedRoute.mockReturnValue(null);
+    RedirectRoute.mockReturnValue(null);
   });
 
-  it("should render route when component passed and auth checks were passed", () => {
+  it("should render route when auth checks were passed", () => {
     getProspectId.mockReturnValue(true);
     checkLoginStatus.mockReturnValue(true);
-    const Component = jest.fn().mockImplementation(() => null);
-    const props = {
-      ...baseProps,
-      component: Component
-    };
 
-    renderWithProviders(<ProspectProtectedRoute {...props} />);
+    render(<TestComponent />);
 
-    expect(Component).toHaveBeenCalledTimes(1);
-  });
-
-  it("should render route when render function passed instead component", () => {
-    getProspectId.mockReturnValue(true);
-    checkLoginStatus.mockReturnValue(true);
-    const props = { ...baseProps };
-
-    const { history } = renderWithProviders(<ProspectProtectedRoute {...props} />);
-
-    expect(history.location.pathname).toMatch("/");
-    expect(routeRender).toHaveBeenCalled();
+    expect(ProtectedRoute).toHaveBeenCalled();
+    expect(getProspectId).toHaveBeenCalledWith(state);
+    expect(checkLoginStatus).toHaveBeenCalledWith(state);
   });
 
   it("should redirect to comebackLogin page when user is customer", () => {
-    getProspectId.mockReturnValue(false);
+    getProspectId.mockReturnValue(null);
     checkLoginStatus.mockReturnValue(false);
-    const props = { ...baseProps };
 
-    const { history } = renderWithProviders(<ProspectProtectedRoute {...props} />);
+    render(<TestComponent />);
 
-    expect(history.location.pathname).toMatch(routes.comeBackLogin);
+    expect(RedirectRoute.mock.calls[0][0]).toEqual({ to: routes.comeBackLogin });
+    expect(getProspectId).toHaveBeenCalledWith(state);
+    expect(checkLoginStatus).toHaveBeenCalledWith(state);
   });
 
   it("should redirect to login page when user is agent", () => {
-    getProspectId.mockReturnValue(false);
+    getProspectId.mockReturnValue(null);
     checkLoginStatus.mockReturnValue(true);
-    const props = { ...baseProps };
 
-    const { history } = renderWithProviders(<ProspectProtectedRoute {...props} />);
+    render(<TestComponent />);
 
-    expect(history.location.pathname).toMatch(routes.login);
+    expect(RedirectRoute.mock.calls[0][0]).toEqual({ to: routes.login });
+    expect(getProspectId).toHaveBeenCalledWith(state);
+    expect(checkLoginStatus).toHaveBeenCalledWith(state);
   });
 });

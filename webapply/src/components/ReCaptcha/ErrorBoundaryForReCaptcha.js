@@ -1,7 +1,7 @@
 import React from "react";
 import { styled } from "@material-ui/styles";
 
-import { log } from "../utils/loggger";
+import { log } from "../../utils/loggger";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class ErrorBoundary extends React.Component {
     errorPlaceholder: null
   };
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 

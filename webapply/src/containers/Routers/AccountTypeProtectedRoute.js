@@ -1,21 +1,13 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
 
+import { RedirectRoute, ProtectedRoute } from "../../components/Routes";
 import routes from "../../routes";
-import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { accountTypeURIs } from "../../constants";
 
-export const AccountTypeProtectedRoute = ({ component: Component, render, ...rest }) => {
-  if (!Object.keys(accountTypeURIs).includes(rest.computedMatch.params.accountType)) {
-    return <Redirect to={routes.accountsComparison} />;
+export const AccountTypeProtectedRoute = props => {
+  if (!Object.keys(accountTypeURIs).includes(props.computedMatch.params.accountType)) {
+    return <RedirectRoute to={routes.accountsComparison} />;
   }
 
-  return (
-    <Route
-      {...rest}
-      render={props => (
-        <ErrorBoundary>{Component ? <Component {...props} /> : render(props)}</ErrorBoundary>
-      )}
-    />
-  );
+  return <ProtectedRoute {...props} />;
 };

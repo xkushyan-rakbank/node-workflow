@@ -1,48 +1,36 @@
 import React from "react";
+import { render } from "@testing-library/react";
 
-import { renderWithProviders } from "../../../src/testUtils";
 import { AccountTypeProtectedRoute } from "../../../src/containers/Routers/AccountTypeProtectedRoute";
+import { ProtectedRoute, RedirectRoute } from "../../../src/components/Routes";
 import { RAKSTARTER_ROUTE_PARAM } from "../../../src/constants";
 import routes from "../../../src/routes";
 
+jest.mock("../../../src/components/Routes");
+
 describe("AccountTypeProtectedRoute test", () => {
-  const routeRender = jest.fn().mockImplementation(() => null);
-
-  const baseProps = { render: routeRender };
-
-  it("should render route when component passed", () => {
-    const Component = jest.fn().mockImplementation(() => null);
-    const props = {
-      ...baseProps,
-      component: Component,
-      computedMatch: { params: { accountType: RAKSTARTER_ROUTE_PARAM } }
-    };
-
-    renderWithProviders(<AccountTypeProtectedRoute {...props} />);
-
-    expect(Component).toHaveBeenCalledTimes(1);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    ProtectedRoute.mockReturnValue(null);
+    RedirectRoute.mockReturnValue(null);
   });
 
-  it("should render route when render function passed instead component", () => {
+  it("should render route", () => {
     const props = {
-      ...baseProps,
       computedMatch: { params: { accountType: RAKSTARTER_ROUTE_PARAM } }
     };
+    render(<AccountTypeProtectedRoute {...props} />);
 
-    const { history } = renderWithProviders(<AccountTypeProtectedRoute {...props} />);
-
-    expect(history.location.pathname).toMatch("/");
-    expect(routeRender).toHaveBeenCalled();
+    expect(ProtectedRoute).toBeCalled();
   });
 
   it("should redirect to accountsComparison page when accountType param didn't match", () => {
     const props = {
-      ...baseProps,
       computedMatch: { params: { accountType: "some invalid type" } }
     };
 
-    const { history } = renderWithProviders(<AccountTypeProtectedRoute {...props} />);
+    render(<AccountTypeProtectedRoute {...props} />);
 
-    expect(history.location.pathname).toMatch(routes.accountsComparison);
+    expect(RedirectRoute.mock.calls[0][0]).toEqual({ to: routes.accountsComparison });
   });
 });
