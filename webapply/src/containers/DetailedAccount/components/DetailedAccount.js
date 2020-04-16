@@ -23,11 +23,11 @@ export const DetailedAccountComponent = ({
 
   return (
     <VerticalPagination scrollToSection={scrollToSection}>
-      <div ref={firstSection} className={"hide-on-mobile"}>
+      <div ref={firstSection} className="hide-on-mobile">
         <BackgroundVideoPlayer
           video={getVideoByAccountType(accountType, isIslamicBanking)}
           videoWrapperClass="hide-on-mobile"
-          handleClick={() => setCurrentSection(2)}
+          handleClick={() => setCurrentSection(1)}
         />
       </div>
       <div ref={secondSection}>
