@@ -8,12 +8,12 @@ export const VerticalPaginationContext = React.createContext({});
 export const VerticalPaginationProvider = ({ children }) => {
   // reset scroll params when location changes.
   const location = useLocation();
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
+  const [currentSection, setCurrentSectionValue] = useState({ index: 0, counter: 0 });
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
 
   useLayoutEffect(() => {
-    setCurrentSectionIndex(0);
+    setCurrentSectionValue({ index: 0, counter: 0 });
   }, [location]);
 
   const setCurrentSection = useCallback(
@@ -25,18 +25,19 @@ export const VerticalPaginationProvider = ({ children }) => {
         isCanScroll.current = true;
       }, transitionDuration * 2);
 
-      setCurrentSectionIndex(sectionIndex);
+      setCurrentSectionValue({ index: sectionIndex, counter: currentSection.counter + 1 });
     },
-    [setCurrentSectionIndex, scrollTimeout]
+    [setCurrentSectionValue, scrollTimeout, currentSection]
   );
 
   const contextValue = useMemo(
     () => ({
-      currentSectionIndex,
+      currentSectionIndex: currentSection.index,
+      counter: currentSection.counter,
       isCanScroll,
       setCurrentSection
     }),
-    [currentSectionIndex, isCanScroll, setCurrentSection]
+    [currentSection, isCanScroll, setCurrentSection]
   );
 
   return (

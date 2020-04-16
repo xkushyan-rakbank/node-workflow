@@ -8,7 +8,7 @@ import { useStyles } from "./styled";
 
 export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
-  const { currentSectionIndex, setCurrentSection, isCanScroll } = useContext(
+  const { currentSectionIndex, setCurrentSection, isCanScroll, counter } = useContext(
     VerticalPaginationContext
   );
   const classes = useStyles({ isMobileNotificationActive });
@@ -29,7 +29,8 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
 
   useEffect(() => {
     scrollToSection(currentSectionIndex);
-  }, [scrollToSection, currentSectionIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scrollToSection, counter]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
