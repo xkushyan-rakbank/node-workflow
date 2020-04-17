@@ -1,0 +1,2 @@
+export const MAX_ATTEMPT_ALLOWED = 3;
+export const MAX_NUMBER_VALIDATION_ERRORS = 4;

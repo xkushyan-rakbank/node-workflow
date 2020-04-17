@@ -1,34 +1,29 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Form } from "./components/Form";
+import { generateOtpCode, verifyOtp, verifyClearError } from "../../store/actions/otp";
+import { getOtp } from "../../store/selectors/otp";
+import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { UAE_CODE, digitRegExp } from "../../constants";
 
-export const MAX_ATTEMPT_ALLOWED = 3;
-export const MAX_NUMBER_VALIDATION_ERRORS = 4;
-export const INITIAL_VALUES = Array(6).fill("");
+import { MAX_ATTEMPT_ALLOWED } from "./constants";
+import { Form } from "./components/Form";
 
-export const OtpContainer = ({
-  applicantInfo,
-  otp,
-  verifyOtp,
-  verifyClearError,
-  redirectRoute,
-  generateOtpCode,
-  classes
-}) => {
-  const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
+export const Otp = ({ redirectRoute }) => {
+  const dispatch = useDispatch();
+  const { attempts, verificationError, isVerified, isPending, isGenerating } = useSelector(getOtp);
+  const applicantInfo = useSelector(getApplicantInfo);
   const pushHistory = useTrackingHistory();
 
-  const [values, setValues] = useState(INITIAL_VALUES);
+  const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
 
-  const formRef = useRef(null);
+  const otpRef = useRef(null);
 
-  const resetFormValues = useCallback(() => {
-    setValues(INITIAL_VALUES);
-    formRef.current.resetFocus();
-  }, [setValues]);
+  const resetOtpForm = useCallback(() => {
+    setCode(Array(6).fill(""));
+    otpRef.current.resetFocus();
+  }, [setCode]);
 
   useEffect(() => {
     if (isVerified) {
@@ -38,47 +33,38 @@ export const OtpContainer = ({
 
   useEffect(() => {
     if (verificationError) {
-      resetFormValues();
+      resetOtpForm();
     }
-  }, [verificationError, resetFormValues]);
+  }, [verificationError, resetOtpForm]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => verifyClearError(), []);
+  useEffect(() => () => dispatch(verifyClearError()), [dispatch]);
 
   const handleSendNewCodeLinkClick = useCallback(() => {
-    resetFormValues();
-    if (isGenerating) return;
-    if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
-      generateOtpCode(applicantInfo);
+    resetOtpForm();
+    if (!isGenerating) {
+      /* istanbul ignore else */
+      if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
+        dispatch(generateOtpCode(applicantInfo));
+      }
+      setLoginAttempt(loginAttempt + 1);
     }
-    setLoginAttempt(loginAttempt + 1);
-  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, resetFormValues]);
+  }, [isGenerating, loginAttempt, dispatch, applicantInfo, resetOtpForm]);
 
-  const handleSubmit = useCallback(() => verifyOtp(values.join("")), [verifyOtp, values]);
-
-  const isValid = values.every(value => digitRegExp.test(value));
-  const isSubmitButtonDisable = !isValid || isPending || isGenerating;
-
-  const hasMaxAttemptsError =
-    loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
-
-  const hasVerifyError = !hasMaxAttemptsError && verificationError;
-
-  const hasUAECode = applicantInfo.countryCode === UAE_CODE;
+  const submitForm = useCallback(() => dispatch(verifyOtp(code.join(""))), [dispatch, code]);
 
   return (
     <Form
-      classes={classes}
-      formRef={formRef}
-      values={values}
+      applicantInfo={applicantInfo}
+      attempts={attempts}
+      loginAttempt={loginAttempt}
       isPending={isPending}
-      isSubmitButtonDisable={isSubmitButtonDisable}
-      hasUAECode={hasUAECode}
-      hasMaxAttemptsError={hasMaxAttemptsError}
-      hasVerifyError={hasVerifyError}
-      onChange={setValues}
-      onSubmit={handleSubmit}
-      onSendNewCode={handleSendNewCodeLinkClick}
+      isGenerating={isGenerating}
+      verificationError={verificationError}
+      otpRef={otpRef}
+      code={code}
+      setCode={setCode}
+      handleSendNewCodeLinkClick={handleSendNewCodeLinkClick}
+      submitForm={submitForm}
     />
   );
 };
