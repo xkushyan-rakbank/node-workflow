@@ -1,6 +1,6 @@
 import React from "react";
 
-import { OTPform } from "../../../components/OTPform";
+import { Otp } from "../../Otp";
 
 import { useStyles } from "./../styled";
 
@@ -9,7 +9,7 @@ export const ComeBackVerificationComponent = ({ redirectRoute }) => {
 
   return (
     <div className={classes.container}>
-      <OTPform redirectRoute={redirectRoute} />
+      <Otp redirectRoute={redirectRoute} />
     </div>
   );
 };

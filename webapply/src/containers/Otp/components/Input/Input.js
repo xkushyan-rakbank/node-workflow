@@ -2,7 +2,7 @@ import React, { useCallback, useImperativeHandle, forwardRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 
-import { isNumeric } from "../../utils/validation";
+import { isNumeric } from "../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -15,7 +15,7 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-const OtpInputBase = ({ onChange, code }, ref) => {
+const InputBase = ({ onChange, code }, ref) => {
   const classes = useStyles();
 
   useImperativeHandle(ref, () => ({
@@ -76,4 +76,4 @@ const OtpInputBase = ({ onChange, code }, ref) => {
   ));
 };
 
-export const OtpInput = forwardRef(OtpInputBase);
+export const Input = forwardRef(InputBase);

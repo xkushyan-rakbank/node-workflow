@@ -1,6 +1,6 @@
 import React from "react";
 
-import { OTPform } from "../../../components/OTPform";
+import { Otp } from "../..//Otp";
 import routes from "../../../routes";
 
 import { useStyles } from "./styled";
@@ -11,7 +11,7 @@ export const FormConfirm = () => {
   return (
     <div className={classes.container}>
       <h2 className={classes.heading}>Confirm It’s You</h2>
-      <OTPform
+      <Otp
         redirectRoute={routes.companyInfo}
         classes={{
           centeredContainer: classes.centeredContainer,

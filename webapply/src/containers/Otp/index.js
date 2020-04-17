@@ -4,7 +4,7 @@ import { getOtp } from "../../store/selectors/otp";
 import { generateOtpCode, verifyOtp, verifyClearError } from "../../store/actions/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 
-import { OTPformComponent } from "./OTPform";
+import { Form } from "./components/Form";
 
 const mapStateToProps = state => ({
   otp: getOtp(state),
@@ -17,7 +17,7 @@ const mapDispatchToProps = {
   verifyClearError
 };
 
-export const OTPform = connect(
+export const Otp = connect(
   mapStateToProps,
   mapDispatchToProps
-)(OTPformComponent);
+)(Form);

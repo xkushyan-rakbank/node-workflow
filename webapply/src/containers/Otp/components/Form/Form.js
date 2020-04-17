@@ -1,22 +1,21 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form as FormikForm } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
-import { UAE_CODE, digitRegExp } from "../../constants";
-
-import { ErrorMessage } from "../../components/Notifications";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { OtpInput } from "./OTPInput";
-import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
+import { UAE_CODE, digitRegExp } from "../../../../constants";
+import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
+import { ErrorMessage } from "../../../../components/Notifications";
+import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
+import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
+import { Input } from "../Input";
 
 import { useStyles } from "./styled";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const MAX_ATTEMPT_ALLOWED = 3;
 export const MAX_NUMBER_VALIDATION_ERRORS = 4;
 
-export const OTPformComponent = ({
+export const Form = ({
   otp,
   verifyOtp,
   verifyClearError,
@@ -81,10 +80,10 @@ export const OTPformComponent = ({
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
-          <Form className={classes.form}>
+          <FormikForm className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpInput code={code} onChange={setCode} ref={otpRef} />
+                <Input code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
               {!hasMaxAttemptsError && verificationError && (
@@ -121,7 +120,7 @@ export const OTPformComponent = ({
                 submitButtonClassName={classes.submitButton}
               />
             </div>
-          </Form>
+          </FormikForm>
         )}
       </Formik>
     </div>
