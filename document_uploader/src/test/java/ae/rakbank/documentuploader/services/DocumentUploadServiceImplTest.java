@@ -68,4 +68,12 @@ public class DocumentUploadServiceImplTest {
 
         documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"text/plain\"}", "myProspect..Id");
     }
+
+    @Test(expected = ApiException.class)
+    public void processUploadNotAllowedProspectId() {
+        MockMultipartFile multiFile =
+                new MockMultipartFile("file", "filename.txt", "text/plain", "g".getBytes());
+
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspect..Id");
+    }
 }

@@ -1,5 +1,5 @@
 import { CompanyDetails } from "./components/CompanyDetails";
-import { Industry } from "./components/Industry";
+import { Industry } from "./Industry";
 import { LicenseInformation } from "./components/LicenseInformation";
 import { GA_EVENTS } from "../../utils/ga";
 

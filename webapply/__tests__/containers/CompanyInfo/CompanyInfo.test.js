@@ -1,21 +1,24 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
 
-import { CompanyInfo } from "../../src/containers/CompanyInfo/components/CompanyInfo";
-import { CompanyInfoPage } from "../../src/containers/CompanyInfo/CompanyInfoPage";
-import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
-import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
-import { useStep } from "../../src/utils/useStep";
-import { checkAllStepsCompleted } from "../../src/utils/checkAllStepsCompleted";
-import { formStepper, CONTINUE, SAVE, NEXT } from "../../src/constants";
-import { companyInfoSteps, COMPANY_INFO_PAGE_ID } from "../../src/containers/CompanyInfo/constants";
-import routes from "../../src/routes";
+import { CompanyInfo } from "../../../src/containers/CompanyInfo/components/CompanyInfo";
+import { CompanyInfoPage } from "../../../src/containers/CompanyInfo/CompanyInfoPage";
+import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
+import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
+import { useStep } from "../../../src/utils/useStep";
+import { checkAllStepsCompleted } from "../../../src/utils/checkAllStepsCompleted";
+import { formStepper, CONTINUE, SAVE, NEXT } from "../../../src/constants";
+import {
+  companyInfoSteps,
+  COMPANY_INFO_PAGE_ID
+} from "../../../src/containers/CompanyInfo/constants";
+import routes from "../../../src/routes";
 
-jest.mock("../../src/containers/CompanyInfo/components/CompanyInfo");
-jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
-jest.mock("../../src/utils/useTrackingHistory");
-jest.mock("../../src/utils/useStep");
-jest.mock("../../src/utils/checkAllStepsCompleted");
+jest.mock("../../../src/containers/CompanyInfo/components/CompanyInfo");
+jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../../src/utils/useTrackingHistory");
+jest.mock("../../../src/utils/useStep");
+jest.mock("../../../src/utils/checkAllStepsCompleted");
 
 describe("CompanyInfo test", () => {
   const isSendingProspect = "some value";

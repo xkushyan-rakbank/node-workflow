@@ -3,7 +3,8 @@ import { Provider } from "react-redux";
 import { render, act } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 
-import { useDocuments } from "../../../../src/containers/AgentPages/SearchedAppInfo/utils/useDocuments";
+import { Documents } from "../../../../src/containers/AgentPages/SearchedAppInfo/Documents";
+import { Documents as DocumentsStep } from "../../../../src/containers/AgentPages/SearchedAppInfo/components/Documents";
 import {
   getProspectOverviewId,
   getOverviewDocuments
@@ -12,14 +13,9 @@ import { downloadDocumentFile } from "../../../../src/store/actions/uploadDocume
 
 jest.mock("../../../../src/store/selectors/searchProspect");
 jest.mock("../../../../src/store/actions/uploadDocuments");
+jest.mock("../../../../src/containers/AgentPages/SearchedAppInfo/components/Documents");
 
-describe("useDocuments test", () => {
-  const SomeComponent = jest.fn(() => null);
-  const TestComponent = () => {
-    const props = useDocuments();
-
-    return <SomeComponent {...props} />;
-  };
+describe("Documents test", () => {
   const mockStore = configureStore([]);
   const state = "some state";
   const store = mockStore(state);
@@ -28,31 +24,32 @@ describe("useDocuments test", () => {
 
   const TestComponentWithProvider = () => (
     <Provider store={store}>
-      <TestComponent />
+      <Documents />
     </Provider>
   );
 
   beforeEach(() => {
     jest.clearAllMocks();
+    store.clearActions();
     getProspectOverviewId.mockReturnValue(prospectId);
     getOverviewDocuments.mockReturnValue(docs);
+    DocumentsStep.mockReturnValue(null);
   });
 
-  it("should return data for render test component", () => {
+  it("should render test component", () => {
     render(<TestComponentWithProvider />);
 
-    expect(SomeComponent.mock.calls[0][0]).toMatchObject({
-      prospectId,
+    expect(DocumentsStep.mock.calls[0][0]).toMatchObject({
       docs
     });
   });
 
-  it("should return empty object when overview documents is not set", () => {
+  it("should render test component with props `docs` as empty object when overview documents is not set", () => {
     getOverviewDocuments.mockReturnValue(null);
 
     render(<TestComponentWithProvider />);
 
-    expect(SomeComponent.mock.calls[0][0].docs).toEqual({});
+    expect(DocumentsStep.mock.calls[0][0].docs).toEqual({});
   });
 
   it("should handle `downloadDocumentFile` action", () => {
@@ -62,7 +59,7 @@ describe("useDocuments test", () => {
     render(<TestComponentWithProvider />);
 
     act(() => {
-      SomeComponent.mock.calls[0][0].downloadDocument(documentKey, fileName)
+      DocumentsStep.mock.calls[0][0].downloadDocument(documentKey, fileName);
     });
 
     expect(store.getActions()).toEqual([

@@ -7,11 +7,9 @@ import { LinkButton } from "../../../../../components/Buttons/LinkButton";
 import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
 
 import { useStyles } from "./styled";
-import { useDocuments } from "../../utils/useDocuments";
 
-export const Documents = ({ signatoryInfo }) => {
+export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
   const classes = useStyles();
-  const { downloadDocument, docs } = useDocuments();
   const headingClassName = cx(classes.checkListData, classes.heading);
 
   return (

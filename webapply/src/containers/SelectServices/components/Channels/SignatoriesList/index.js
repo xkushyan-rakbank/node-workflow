@@ -14,10 +14,7 @@ export const SignatoriesList = ({ stakeholders }) => {
   return (
     <>
       <div className={classes.signatoryLabel}>Signatory names on business debit cards</div>
-      <InfoTitle
-        title="Names on business debit cards have a limit of 19 characters"
-        classes={{ wrapper: classes.infoTitle }}
-      />
+      <InfoTitle title="Names on business debit cards have a limit of 19 characters" />
 
       <div className={classes.signatoryNamesContainer}>
         {stakeholders.map(({ firstName, lastName, kycDetails = {}, debitCardInfo }, index) => {
