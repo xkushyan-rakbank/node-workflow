@@ -7,7 +7,7 @@ import { UAE_CODE, digitRegExp } from "../../constants";
 
 import { ErrorMessage } from "../../components/Notifications";
 import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { OtpVerification } from "../../components/OtpVerification";
+import { OtpInput } from "./OTPInput";
 import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
 
 import { useStyles } from "./styled";
@@ -23,10 +23,12 @@ export const OTPformComponent = ({
   applicantInfo,
   redirectRoute,
   generateOtpCode,
-  classes: extendetClasses
+  classes: extendedClasses
 }) => {
-  const pushHistory = useTrackingHistory();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
+  const classes = useStyles({ classes: extendedClasses });
+  const pushHistory = useTrackingHistory();
+
   const [code, setCode] = useState(Array(6).fill(""));
   const [loginAttempt, setLoginAttempt] = useState(0);
 
@@ -64,7 +66,6 @@ export const OTPformComponent = ({
   const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
 
   const isValid = code.every(value => digitRegExp.test(value));
-  const classes = useStyles({ classes: extendetClasses });
   const hasMaxAttemptsError =
     loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
 
@@ -83,7 +84,7 @@ export const OTPformComponent = ({
           <Form className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={setCode} ref={otpRef} />
+                <OtpInput code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
               {!hasMaxAttemptsError && verificationError && (

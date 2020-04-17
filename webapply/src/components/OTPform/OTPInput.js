@@ -15,16 +15,14 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-const OtpInput = ({ onChange, code }, ref) => {
+const OtpInputBase = ({ onChange, code }, ref) => {
   const classes = useStyles();
 
   useImperativeHandle(ref, () => ({
     resetFocus: () => inputRefs[0].focus()
   }));
 
-  const handleInputFocus = useCallback(event => {
-    event.target.select();
-  }, []);
+  const handleInputFocus = event => event.target.select();
 
   const handleChange = useCallback(
     event => {
@@ -78,4 +76,4 @@ const OtpInput = ({ onChange, code }, ref) => {
   ));
 };
 
-export const OtpVerification = forwardRef(OtpInput);
+export const OtpInput = forwardRef(OtpInputBase);
