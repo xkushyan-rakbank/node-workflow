@@ -4,7 +4,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
-import { LinkedButton } from "../../../../../../components/LinkedButton";
+import { LinkedButton } from "../../../../../../components/Buttons/LinkedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { accountsDataRows, accountTypes } from "../../constants";
 import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
