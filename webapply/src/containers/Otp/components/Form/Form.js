@@ -1,70 +1,34 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import { Formik, Form } from "formik";
+import React from "react";
+import { Formik, Form as FormikForm } from "formik";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
-import { UAE_CODE, digitRegExp } from "../../constants";
-
-import { ErrorMessage } from "../../components/Notifications";
-import { SubmitButton } from "../../components/Buttons/SubmitButton";
-import { OtpVerification } from "../../components/OtpVerification";
-import { SectionTitleWithInfo } from "../SectionTitleWithInfo";
+import { UAE_CODE, digitRegExp } from "../../../../constants";
+import { ErrorMessage } from "../../../../components/Notifications";
+import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
+import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
+import { Input } from "../Input";
+import { MAX_NUMBER_VALIDATION_ERRORS, MAX_ATTEMPT_ALLOWED } from "../../constants";
 
 import { useStyles } from "./styled";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
-export const MAX_ATTEMPT_ALLOWED = 3;
-export const MAX_NUMBER_VALIDATION_ERRORS = 4;
-
-export const OTPformComponent = ({
-  otp,
-  verifyOtp,
-  verifyClearError,
+export const Form = ({
   applicantInfo,
-  redirectRoute,
-  generateOtpCode,
-  classes: extendetClasses
+  attempts,
+  loginAttempt,
+  isPending,
+  isGenerating,
+  verificationError,
+  code,
+  otpRef,
+  setCode,
+  submitForm,
+  handleSendNewCodeLinkClick,
+  classes: extendedClasses
 }) => {
-  const pushHistory = useTrackingHistory();
-  const { attempts, verificationError, isVerified, isPending, isGenerating } = otp;
-  const [code, setCode] = useState(Array(6).fill(""));
-  const [loginAttempt, setLoginAttempt] = useState(0);
-
-  const otpRef = useRef(null);
-
-  const resetOtpForm = useCallback(() => {
-    setCode(Array(6).fill(""));
-    otpRef.current.resetFocus();
-  }, [setCode]);
-
-  useEffect(() => {
-    if (isVerified) {
-      pushHistory(redirectRoute, true);
-    }
-  }, [isVerified, pushHistory, redirectRoute]);
-
-  useEffect(() => {
-    if (verificationError) {
-      resetOtpForm();
-    }
-  }, [verificationError, resetOtpForm]);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => () => verifyClearError(), []);
-
-  const handleSendNewCodeLinkClick = useCallback(() => {
-    resetOtpForm();
-    if (isGenerating) return;
-    if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
-      generateOtpCode(applicantInfo);
-    }
-    setLoginAttempt(loginAttempt + 1);
-  }, [isGenerating, loginAttempt, generateOtpCode, applicantInfo, resetOtpForm]);
-
-  const submitForm = useCallback(() => verifyOtp(code.join("")), [verifyOtp, code]);
+  const classes = useStyles({ classes: extendedClasses });
 
   const isValid = code.every(value => digitRegExp.test(value));
-  const classes = useStyles({ classes: extendetClasses });
   const hasMaxAttemptsError =
     loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
 
@@ -80,10 +44,10 @@ export const OTPformComponent = ({
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
-          <Form className={classes.form}>
+          <FormikForm className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <OtpVerification code={code} onChange={setCode} ref={otpRef} />
+                <Input code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
               {!hasMaxAttemptsError && verificationError && (
@@ -120,7 +84,7 @@ export const OTPformComponent = ({
                 submitButtonClassName={classes.submitButton}
               />
             </div>
-          </Form>
+          </FormikForm>
         )}
       </Formik>
     </div>
