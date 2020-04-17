@@ -1,13 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Formik, FieldArray, Form, getIn } from "formik";
 import * as Yup from "yup";
 import uniqueId from "lodash/uniqueId";
 import Grid from "@material-ui/core/Grid";
 import get from "lodash/get";
 
-import { getOrgKYCDetails, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
-import { updateProspect } from "../../../../store/actions/appConfig";
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { MAX_INDUSTRIES_LENGTH } from "../../constants";
 
@@ -35,11 +32,11 @@ const industrySchema = Yup.object().shape({
   )
 });
 
-export const IndustryStep = ({
+export const Industry = ({
   handleContinue,
   industries,
-  updateProspect,
-  isIslamicBanking,
+  datalistId,
+  updateIndustry,
   createFormChangeHandler
 }) => {
   const classes = useStyles();
@@ -65,15 +62,11 @@ export const IndustryStep = ({
       "industries",
       newValues.length ? newValues : [{ ...initialIndustry, id: uniqueId() }]
     );
-    updateProspect({
-      "prospect.orgKYCDetails.industryMultiSelect[0]": {
-        industry: newValuesIndustries,
-        subCategory: newValuesSubCategories
-      }
+    updateIndustry({
+      industry: newValuesIndustries,
+      subCategory: newValuesSubCategories
     });
   };
-
-  const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   return (
     <Formik
@@ -224,17 +217,3 @@ export const IndustryStep = ({
     </Formik>
   );
 };
-
-const mapStateToProps = state => ({
-  industries: get(getOrgKYCDetails(state), "industryMultiSelect", []),
-  isIslamicBanking: getIsIslamicBanking(state)
-});
-
-const mapDispatchToProps = {
-  updateProspect
-};
-
-export const Industry = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IndustryStep);
