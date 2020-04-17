@@ -4,7 +4,7 @@ import { getOtp } from "../../store/selectors/otp";
 import { generateOtpCode, verifyOtp, verifyClearError } from "../../store/actions/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 
-import { Form } from "./components/Form";
+import { OtpContainer } from "./Otp";
 
 const mapStateToProps = state => ({
   otp: getOtp(state),
@@ -20,4 +20,4 @@ const mapDispatchToProps = {
 export const Otp = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form);
+)(OtpContainer);
