@@ -1,9 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
-  infoTitle: {
-    marginTop: "0"
-  },
   signatoryLabel: {
     fontSize: "14px",
     fontWeight: 600,
