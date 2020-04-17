@@ -1,7 +1,7 @@
 import { CompanyDetails } from "./components/CompanyDetails";
 import { AuditTrail } from "./components/AuditTrail";
-import { Documents } from "./components/Documents";
-import { CheckList } from "./components/CheckList";
+import { Documents } from "./Documents";
+import { CheckList } from "./CheckList";
 
 export const CONFIRM_MESSAGE =
   "Editing the application will result in re-performing the pre-screening checks and might change the results.";

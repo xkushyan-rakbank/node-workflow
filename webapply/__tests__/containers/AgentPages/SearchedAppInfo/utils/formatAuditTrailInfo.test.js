@@ -1,4 +1,4 @@
-import { formatAuditTrailInfo } from "../../../../src/containers/AgentPages/SearchedAppInfo/utils/formatAuditTrailInfo";
+import { formatAuditTrailInfo } from "../../../../../src/containers/AgentPages/SearchedAppInfo/utils/formatAuditTrailInfo";
 
 describe("formatAuditTrailInfo test", () => {
   it("should return empty array when auditTrailInfo is empty", () => {

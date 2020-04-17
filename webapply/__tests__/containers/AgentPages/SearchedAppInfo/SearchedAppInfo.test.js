@@ -1,16 +1,19 @@
 import React from "react";
 import { act, render } from "@testing-library/react";
-import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
-import { useDisplayScreenBasedOnViewId } from "../../../src/utils/useDisplayScreenBasedOnViewId";
-import { SearchedAppInfoContainer } from "../../../src/containers/AgentPages/SearchedAppInfo/SearchedAppInfo";
-import { SearchedAppInfoComponent } from "../../../src/containers/AgentPages/SearchedAppInfo/components/SearchedAppInfo";
-import { searchProspectStepper } from "../../../src/constants";
+import { useFormNavigation } from "../../../../src/components/FormNavigation/FormNavigationProvider";
+import { useDisplayScreenBasedOnViewId } from "../../../../src/utils/useDisplayScreenBasedOnViewId";
+import { SearchedAppInfoContainer } from "../../../../src/containers/AgentPages/SearchedAppInfo/SearchedAppInfo";
+import { SearchedAppInfoComponent } from "../../../../src/containers/AgentPages/SearchedAppInfo/components/SearchedAppInfo";
+import { searchProspectStepper } from "../../../../src/constants";
 
-jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
-jest.mock("../../../src/containers/AgentPages/SearchedAppInfo/components/SearchedAppInfo", () => {
-  return { SearchedAppInfoComponent: jest.fn().mockImplementation(() => null) };
-});
-jest.mock("../../../src/utils/useDisplayScreenBasedOnViewId");
+jest.mock("../../../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock(
+  "../../../../src/containers/AgentPages/SearchedAppInfo/components/SearchedAppInfo",
+  () => ({
+    SearchedAppInfoComponent: jest.fn().mockImplementation(() => null)
+  })
+);
+jest.mock("../../../../src/utils/useDisplayScreenBasedOnViewId");
 
 describe("SearchedAppInfoContainer test", () => {
   const pushDisplayScreenToHistory = jest.fn();
