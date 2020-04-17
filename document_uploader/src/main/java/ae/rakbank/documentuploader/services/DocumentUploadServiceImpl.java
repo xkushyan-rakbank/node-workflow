@@ -1,6 +1,5 @@
 package ae.rakbank.documentuploader.services;
 
-import ae.rakbank.documentuploader.constants.DocumentTypes;
 import ae.rakbank.documentuploader.dto.ApiError;
 import ae.rakbank.documentuploader.exception.ApiException;
 import ae.rakbank.documentuploader.exception.DocumentUploadException;
