@@ -29,12 +29,6 @@ export const AccountInfo = props => {
   const pushHistory = useTrackingHistory();
   const { pathname: locationPath } = useLocation();
   const pathname = trimEnd(locationPath, "/");
-  const isHideTitleOnSmBreakpoint = [
-    routes.comeBackLogin,
-    routes.comeBackLoginVerification,
-    routes.MyApplications,
-    routes.reUploadDocuments
-  ].includes(pathname);
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());
@@ -51,6 +45,13 @@ export const AccountInfo = props => {
       applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
     );
   }, [pushHistory, accountType, isIslamicBanking]);
+
+  const isHideTitleOnSmBreakpoint = [
+    routes.comeBackLogin,
+    routes.comeBackLoginVerification,
+    routes.MyApplications,
+    routes.reUploadDocuments
+  ].includes(pathname);
 
   return (
     <AccountInfoScreen
