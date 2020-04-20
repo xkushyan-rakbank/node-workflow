@@ -28,7 +28,9 @@ const comebackSchema = Yup.object({
     .required(getRequiredMessage("Your E-mail Address"))
     .email(getInvalidMessage("Your E-mail Address")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
-  mobileNo: Yup.string().required(getRequiredMessage("Your Mobile Number"))
+  mobileNo: Yup.string()
+    .required(getRequiredMessage("Your Mobile Number"))
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
 export const ComeBackLoginComponent = ({

@@ -7,7 +7,9 @@ import { useFormNavigation } from "../../src/components/FormNavigation/FormNavig
 import routes from "../../src/routes";
 
 jest.mock("../../src/utils/useTrackingHistory");
-jest.mock("../../src/containers/ComeBackLogin/components/ComeBackLogin");
+jest.mock("../../src/containers/ComeBackLogin/components/ComeBackLogin", () => ({
+  ComeBackLoginComponent: jest.fn().mockImplementation(() => null)
+}));
 jest.mock("../../src/store/actions/reCaptcha");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 
@@ -41,7 +43,6 @@ describe("ComeBackLogin test", () => {
   beforeEach(() => {
     useFormNavigation.mockImplementation(() => {});
     useTrackingHistory.mockReturnValue(pushHistory);
-    ComeBackLoginComponent.mockImplementation(() => null);
 
     jest.clearAllMocks();
   });
