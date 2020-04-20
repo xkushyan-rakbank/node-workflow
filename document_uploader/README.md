@@ -42,4 +42,3 @@ Environment variables:
 
 1. WEB_APPLY_DIR - path to web apply directory
 2. WEB_APPLY_ENV - name of profile, list of all profiles you can see into DocUploadConfig.json file.
-3. WEBAPPLY_LOGGING_LEVEL - logging level
