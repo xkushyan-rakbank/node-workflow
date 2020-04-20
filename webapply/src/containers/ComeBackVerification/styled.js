@@ -9,5 +9,15 @@ export const useStyles = makeStyles(theme => ({
       paddingTop: "15vh",
       marginBottom: 0
     }
+  },
+  heading: {
+    display: "none",
+    [theme.breakpoints.only("sm")]: {
+      display: "block",
+      marginTop: 0,
+      marginBottom: 0,
+      fontSize: 38,
+      lineHeight: "46px"
+    }
   }
 }));

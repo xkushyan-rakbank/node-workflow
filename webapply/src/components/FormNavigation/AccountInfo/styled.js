@@ -34,6 +34,9 @@ export const useStyles = makeStyles(theme => ({
       marginTop: 60,
       [theme.breakpoints.only("xs")]: buttonMobile
     },
+    [theme.breakpoints.only("sm")]: {
+      display: ({ isHideTitleOnSmBreakpoint }) => (isHideTitleOnSmBreakpoint ? "none" : "block")
+    },
     [theme.breakpoints.down("sm")]: {
       fontSize: 38
     },

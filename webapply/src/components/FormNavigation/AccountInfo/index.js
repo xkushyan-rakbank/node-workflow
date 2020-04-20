@@ -46,6 +46,13 @@ export const AccountInfo = props => {
     );
   }, [pushHistory, accountType, isIslamicBanking]);
 
+  const isHideTitleOnSmBreakpoint = [
+    routes.comeBackLogin,
+    routes.comeBackLoginVerification,
+    routes.MyApplications,
+    routes.reUploadDocuments
+  ].includes(pathname);
+
   return (
     <AccountInfoScreen
       title={getTitleByPathname(pathname, accountType)}
@@ -59,6 +66,7 @@ export const AccountInfo = props => {
       handleCheckStatus={handleCheckStatus}
       handleStart={handleStart}
       handleApply={handleApply}
+      isHideTitleOnSmBreakpoint={isHideTitleOnSmBreakpoint}
       {...props}
     />
   );

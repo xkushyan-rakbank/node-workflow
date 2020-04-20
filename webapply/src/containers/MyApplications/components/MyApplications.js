@@ -37,6 +37,7 @@ export const MyApplications = ({
 
   return (
     <div className={classes.centeredContainer}>
+      <h3 className={classes.heading}>Your applications, at a glance</h3>
       <Grid
         container
         classes={{ root: "hide-on-mobile" }}

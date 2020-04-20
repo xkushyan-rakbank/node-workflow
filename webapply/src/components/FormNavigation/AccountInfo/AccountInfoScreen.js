@@ -15,9 +15,10 @@ export const AccountInfoScreen = ({
   handleStart,
   handleApply,
   title,
-  subtitle
+  subtitle,
+  isHideTitleOnSmBreakpoint
 }) => {
-  const classes = useStyles({ isShowApply });
+  const classes = useStyles({ isShowApply, isHideTitleOnSmBreakpoint });
 
   return (
     <div className={cx(classes.contentContainer, "small-menu-hide")}>
