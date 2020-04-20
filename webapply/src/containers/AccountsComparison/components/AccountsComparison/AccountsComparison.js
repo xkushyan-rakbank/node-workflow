@@ -32,7 +32,7 @@ export const AccountsComparisonComponent = ({
         <div ref={firstSection}>
           <BackgroundVideoPlayer
             video={getVideoByAccountType()}
-            videoClass={classes.video}
+            classes={{ video: classes.video }}
             handleClick={() => setCurrentSection(1)}
           />
         </div>

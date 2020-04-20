@@ -26,7 +26,7 @@ export const DetailedAccountComponent = ({
       <div ref={firstSection} className="hide-on-mobile">
         <BackgroundVideoPlayer
           video={getVideoByAccountType(accountType, isIslamicBanking)}
-          videoWrapperClass="hide-on-mobile"
+          classes={{ container: "hide-on-mobile" }}
           handleClick={() => setCurrentSection(1)}
         />
       </div>
