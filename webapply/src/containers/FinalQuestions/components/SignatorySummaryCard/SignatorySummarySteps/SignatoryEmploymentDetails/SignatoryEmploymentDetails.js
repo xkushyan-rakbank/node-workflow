@@ -181,7 +181,9 @@ export const SignatoryEmploymentDetailsComponent = ({
                 }}
                 contextualHelpText={
                   <>
-                    <b>{"<Please DON'T use ENTER key in this field>"}</b>
+                    <b>
+                      {"<"}Please DON{"'"}T use ENTER key in this field{">"}
+                    </b>
                     <br />
                     <br />
                     Starting with the most recent enter jobwise list of experience:
