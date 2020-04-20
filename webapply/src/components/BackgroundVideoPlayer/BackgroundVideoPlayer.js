@@ -1,22 +1,17 @@
 import React, { useContext } from "react";
 import { createPortal } from "react-dom";
-import cx from "classnames";
 
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 import { ExpandMoreButton } from "./ExpandMoreButton";
 
 import { useStyles } from "./styled";
 
-export const BackgroundVideoPlayer = ({
-  handleClick,
-  videoWrapperClass,
-  video: { mp4, webm, poster }
-}) => {
+export const BackgroundVideoPlayer = ({ handleClick, video: { mp4, webm, poster }, ...rest }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
-  const classes = useStyles({ isMobileNotificationActive });
+  const classes = useStyles({ isMobileNotificationActive, ...rest });
 
   return createPortal(
-    <div className={cx(classes.container, videoWrapperClass)}>
+    <div className={classes.container}>
       <video
         muted
         id="video-background"
