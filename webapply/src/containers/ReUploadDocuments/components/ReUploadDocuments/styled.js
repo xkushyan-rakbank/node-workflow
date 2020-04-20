@@ -1,10 +1,20 @@
 import { makeStyles } from "@material-ui/core/index";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   root: {
     minHeight: "calc(100vh - 170px)",
     display: "flex",
     flexDirection: "column"
+  },
+  title: {
+    display: "none",
+    [theme.breakpoints.only("sm")]: {
+      display: "block",
+      marginBottom: 40,
+      marginTop: 0,
+      fontSize: 38,
+      lineHeight: "46px"
+    }
   },
   heading: {
     fontSize: "24px",
@@ -20,7 +30,10 @@ export const useStyles = makeStyles({
     marginBottom: 68,
     fontSize: 20,
     lineHeight: "26px",
-    letterSpacing: "normal"
+    letterSpacing: "normal",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: 40
+    }
   },
   footer: {
     display: "flex",
@@ -32,4 +45,4 @@ export const useStyles = makeStyles({
   submitBtn: {
     marginLeft: 40
   }
-});
+}));

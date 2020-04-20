@@ -31,9 +31,10 @@ export const AccountInfo = props => {
   const pathname = trimEnd(locationPath, "/");
   const isHideTitleOnSmBreakpoint = [
     routes.comeBackLogin,
-    routes.comeBackLoginVerification
+    routes.comeBackLoginVerification,
+    routes.MyApplications,
+    routes.reUploadDocuments
   ].includes(pathname);
-  console.log(isHideTitleOnSmBreakpoint);
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());

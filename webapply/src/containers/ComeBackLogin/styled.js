@@ -20,6 +20,7 @@ export const useStyles = makeStyles(theme => ({
     display: "none",
     [theme.breakpoints.only("sm")]: {
       display: "block",
+      marginTop: 0,
       marginBottom: 40,
       fontSize: 38,
       lineHeight: "46px"
@@ -30,9 +31,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "space-between",
     paddingBottom: 15,
-    [theme.breakpoints.only("xs")]: {
-      marginTop: "30px"
-    }
+    marginTop: "30px"
   },
   btnWrapper: {
     marginBottom: "80px",

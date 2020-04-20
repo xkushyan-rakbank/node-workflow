@@ -22,7 +22,8 @@ export const ReUploadDocumentsComponent = ({
 
   return (
     <div className={classes.root}>
-      <h3 className={classes.heading}>Almost done! We need a few extra documents</h3>
+      <h3 className={classes.title}>Upload your documents</h3>
+      <h4 className={classes.heading}>Almost done! We need a few extra documents</h4>
       <p className={classes.subtitle}>
         One of our agents asked you for some more documents? Please upload them here.
       </p>

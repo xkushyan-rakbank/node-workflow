@@ -11,10 +11,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   heading: {
-    marginBottom: 0,
     display: "none",
     [theme.breakpoints.only("sm")]: {
       display: "block",
+      marginTop: 0,
+      marginBottom: 0,
       fontSize: 38,
       lineHeight: "46px"
     }

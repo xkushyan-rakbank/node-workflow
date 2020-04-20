@@ -1,6 +1,17 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
+  heading: {
+    display: "none",
+    [theme.breakpoints.only("sm")]: {
+      display: "block",
+      marginBottom: 40,
+      marginTop: 0,
+      fontSize: 38,
+      lineHeight: "46px",
+      letterSpacing: "normal"
+    }
+  },
   rootTitle: {
     color: "#373737",
     fontWeight: "600",
@@ -53,6 +64,9 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100%",
     marginTop: "174px",
+    [theme.breakpoints.only("sm")]: {
+      marginTop: 100
+    },
     [theme.breakpoints.only("xs")]: {
       marginTop: "80px"
     }
