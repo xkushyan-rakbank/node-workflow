@@ -29,6 +29,11 @@ export const AccountInfo = props => {
   const pushHistory = useTrackingHistory();
   const { pathname: locationPath } = useLocation();
   const pathname = trimEnd(locationPath, "/");
+  const isHideTitleOnSmBreakpoint = [
+    routes.comeBackLogin,
+    routes.comeBackLoginVerification
+  ].includes(pathname);
+  console.log(isHideTitleOnSmBreakpoint);
 
   const handleCheckStatus = useCallback(() => {
     dispatch(resetApplicantInfo());
@@ -59,6 +64,7 @@ export const AccountInfo = props => {
       handleCheckStatus={handleCheckStatus}
       handleStart={handleStart}
       handleApply={handleApply}
+      isHideTitleOnSmBreakpoint={isHideTitleOnSmBreakpoint}
       {...props}
     />
   );
