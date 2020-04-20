@@ -41,7 +41,7 @@ describe("ComeBackLogin test", () => {
   beforeEach(() => {
     useFormNavigation.mockImplementation(() => {});
     useTrackingHistory.mockReturnValue(pushHistory);
-    ComeBackLoginComponent.mockImplementation(() => null);
+    ComeBackLoginComponent.mockReturnValue(null);
 
     jest.clearAllMocks();
   });
