@@ -23,15 +23,16 @@ import { useStyles } from "./../styled";
 
 export const MAX_LENGTH_EMAIL = 50;
 
-const comebackSchema = Yup.object({
-  email: Yup.string()
-    .required(getRequiredMessage("Your E-mail Address"))
-    .email(getInvalidMessage("Your E-mail Address")),
-  countryCode: Yup.string().required(getRequiredMessage("Country code")),
-  mobileNo: Yup.string()
-    .required(getRequiredMessage("Your Mobile Number"))
-    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
-});
+const getComebackSchema = () =>
+  Yup.object({
+    email: Yup.string()
+      .required(getRequiredMessage("Your E-mail Address"))
+      .email(getInvalidMessage("Your E-mail Address")),
+    countryCode: Yup.string().required(getRequiredMessage("Country code")),
+    mobileNo: Yup.string()
+      .required(getRequiredMessage("Your Mobile Number"))
+      .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
+  });
 
 export const ComeBackLoginComponent = ({
   recaptchaToken,
@@ -58,7 +59,7 @@ export const ComeBackLoginComponent = ({
           countryCode: UAE_CODE,
           mobileNo: ""
         }}
-        validationSchema={comebackSchema}
+        validationSchema={getComebackSchema}
         validateOnChange={false}
         onSubmit={submitForm}
       >
