@@ -10,6 +10,7 @@ import { useStyles } from "./styled";
 export const BackgroundVideoPlayer = ({
   handleClick,
   videoWrapperClass,
+  videoClass,
   video: { mp4, webm, poster }
 }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
@@ -20,7 +21,7 @@ export const BackgroundVideoPlayer = ({
       <video
         muted
         id="video-background"
-        className={classes.video}
+        className={cx(classes.video, videoClass)}
         key={mp4}
         poster={poster}
         playsInline
