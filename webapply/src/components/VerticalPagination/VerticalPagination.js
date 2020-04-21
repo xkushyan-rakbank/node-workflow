@@ -4,7 +4,6 @@ import cx from "classnames";
 import { VerticalPaginationContext } from "./VerticalPaginationProvider";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
 import { getAverage } from "./utils";
-import { useWindowSize } from "../../utils/useWindowSize";
 import { useStyles } from "./styled";
 
 export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
@@ -16,7 +15,6 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const childrenCount = children.length;
-  const windowSize = useWindowSize();
 
   const handleKeyDown = useCallback(
     e => {
@@ -28,11 +26,6 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
     },
     [setCurrentSection, childrenCount, currentSectionIndex]
   );
-
-  useEffect(() => {
-    setCurrentSection(currentSectionIndex);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, windowSize);
 
   useEffect(() => {
     scrollToSection(currentSectionIndex);
