@@ -1,0 +1,1 @@
+export { DetailedAccountComponent } from "./DetailedAccount";

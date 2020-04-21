@@ -36,7 +36,7 @@ export const AccountsComparisonComponent = ({
             handleClick={() => setCurrentSection(1)}
           />
         </div>
-        <div ref={secondSection}>
+        <div ref={secondSection} className={classes.section}>
           <SectionTitleWithInfo
             title="Business accounts for every business stage"
             info="Available in both conventional and islamic variants"
@@ -46,7 +46,7 @@ export const AccountsComparisonComponent = ({
           <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
         </div>
 
-        <div ref={tableRef}>
+        <div ref={tableRef} className={classes.section}>
           <SectionTitleWithInfo
             title="Compare the accounts"
             info="Our three business accounts, side by side"

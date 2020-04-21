@@ -9,6 +9,7 @@ import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import routes, { agentBaseName, smeBaseName } from "../../routes";
+import { detailedAccountRoutes } from "../../constants";
 
 export const FormLayoutContainer = ({
   children,
@@ -63,6 +64,10 @@ export const FormLayoutContainer = ({
       routes.SubmitApplication
     ].includes(pathname);
 
+  const isVerticalPagination = [...detailedAccountRoutes, routes.accountsComparison].includes(
+    pathname
+  );
+
   return (
     <Providers>
       <MobileNotification>
@@ -71,7 +76,8 @@ export const FormLayoutContainer = ({
           isDisplayHeader={isDisplayHeader}
           isDisplayScreeningError={isDisplayScreeningError}
           errorIcon={getErrorScreensIcons(accountType, isIslamicBanking, ERRORS_TYPE.BLOCK_EDITING)}
-          isFullContentWidth={checkIsShowSmallMenu(pathname)}
+          isVerticalPagination={isVerticalPagination}
+          isSmallContentWidth={!checkIsShowSmallMenu(pathname)}
           screeningError={screeningError}
         >
           {children}
