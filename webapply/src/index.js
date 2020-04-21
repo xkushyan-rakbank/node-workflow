@@ -1,5 +1,6 @@
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
+import smoothscroll from "smoothscroll-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -12,6 +13,7 @@ import { persistor, store } from "./store";
 import { tagManagerArgs } from "./constants/gtm";
 import { addPhoneNoValidationToYup } from "./utils/validation";
 
+smoothscroll.polyfill();
 TagManager.initialize(tagManagerArgs);
 addPhoneNoValidationToYup();
 
