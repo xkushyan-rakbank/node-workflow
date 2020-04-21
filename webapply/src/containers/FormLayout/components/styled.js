@@ -4,7 +4,9 @@ import {
   sideNavWidthSM,
   sideNavWidthMD,
   sideNavWidthLG,
-  sideNavWidthCollapsed
+  sideNavWidthCollapsed,
+  contentWidthSM,
+  contentWidth
 } from "../../../constants/styles";
 import { ELITE, ISLAMIC, STANDART } from "../../../utils/useBlobColor/constants";
 
@@ -88,8 +90,8 @@ export const useStyles = makeStyles(theme => ({
   mainContainer: {
     width: ({ isVerticalPagination, isSmallContentWidth }) => {
       if (isVerticalPagination) return "100%";
-      if (isSmallContentWidth) return 634;
-      return 780;
+      if (isSmallContentWidth) return contentWidthSM;
+      return contentWidth;
     },
     minWidth: "40vw",
     maxWidth: "100%",

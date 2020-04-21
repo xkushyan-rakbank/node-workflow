@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { render } from "@testing-library/react";
 import { DetailedAccount as DetailedAccountContainer } from "../../src/containers/DetailedAccount/DetailedAccount";
-import { DetailedAccountComponent } from "../../src/containers/DetailedAccount/components/DetailedAccount/DetailedAccount";
+import { DetailedAccountComponent } from "../../src/containers/DetailedAccount/components/DetailedAccount";
 
 import { useAccountTypeByPathname } from "../../src/utils/useAccountTypeByPathname";
 import { getAccountType } from "../../src/store/selectors/appConfig";
@@ -13,7 +13,7 @@ import { VerticalPaginationContext } from "../../src/components/VerticalPaginati
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/utils/useAccountTypeByPathname");
 jest.mock("../../src/store/selectors/appConfig");
-jest.mock("../../src/containers/DetailedAccount/components/DetailedAccount/DetailedAccount");
+jest.mock("../../src/containers/DetailedAccount/components/DetailedAccount");
 
 describe("DetailedAccount test", () => {
   const accountType = "some accountType";

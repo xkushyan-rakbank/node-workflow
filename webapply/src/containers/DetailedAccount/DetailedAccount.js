@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 
 import { VerticalPaginationContext } from "../../components/VerticalPagination";
-import { DetailedAccountComponent } from "./components/DetailedAccount/DetailedAccount";
+import { DetailedAccountComponent } from "./components/DetailedAccount";
 import { useAccountTypeByPathname } from "../../utils/useAccountTypeByPathname";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { getAccountType } from "../../store/selectors/appConfig";

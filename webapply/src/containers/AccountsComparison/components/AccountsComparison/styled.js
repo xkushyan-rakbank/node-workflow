@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles/index";
+import { contentWidth } from "../../../../constants/styles";
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -7,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
   },
   section: {
     [theme.breakpoints.up("sm")]: {
-      width: 780,
+      width: contentWidth,
       marginLeft: "auto",
       marginRight: "auto"
     }
