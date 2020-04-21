@@ -1,10 +1,11 @@
 import React, { useCallback, useRef } from "react";
 
-import { scrollToDOMNode, VerticalPagination } from "../../../components/VerticalPagination";
-import { AccountBenefits } from "./AccountBenefits";
-import { AccountingSoftware } from "./../components/AccountingSoftware";
-import { getVideoByAccountType } from "../../../utils/getVideoByAccountType";
-import { BackgroundVideoPlayer } from "../../../components/BackgroundVideoPlayer";
+import { scrollToDOMNode, VerticalPagination } from "../../../../components/VerticalPagination";
+import { AccountBenefits } from "../AccountBenefits";
+import { AccountingSoftware } from "../AccountingSoftware";
+import { getVideoByAccountType } from "../../../../utils/getVideoByAccountType";
+import { BackgroundVideoPlayer } from "../../../../components/BackgroundVideoPlayer";
+import { useStyles } from "./styled";
 
 export const DetailedAccountComponent = ({
   setCurrentSection,
@@ -12,6 +13,7 @@ export const DetailedAccountComponent = ({
   selectedAccountType,
   isIslamicBanking
 }) => {
+  const classes = useStyles();
   const firstSection = useRef(null);
   const secondSection = useRef(null);
   const thirdSection = useRef(null);
@@ -30,10 +32,10 @@ export const DetailedAccountComponent = ({
           handleClick={() => setCurrentSection(1)}
         />
       </div>
-      <div ref={secondSection}>
+      <div ref={secondSection} className={classes.section}>
         <AccountBenefits accountType={selectedAccountType} />
       </div>
-      <div ref={thirdSection}>
+      <div ref={thirdSection} className={classes.section}>
         <AccountingSoftware />
       </div>
     </VerticalPagination>

@@ -5,6 +5,13 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column"
   },
+  section: {
+    [theme.breakpoints.up("sm")]: {
+      width: 780,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  },
   externalLink: {
     color: "#888888",
     textDecoration: "underline"

@@ -60,8 +60,8 @@ export const useStyles = makeStyles(theme => ({
       }
     },
     [theme.breakpoints.only("sm")]: {
-      paddingLeft: ({ isFullContentWidth }) =>
-        isFullContentWidth ? sideNavWidthCollapsed : sideNavWidthSM
+      paddingLeft: ({ isSmallContentWidth }) =>
+        isSmallContentWidth ? sideNavWidthSM : sideNavWidthCollapsed
     },
     [theme.breakpoints.up("md")]: {
       paddingLeft: sideNavWidthMD
@@ -86,7 +86,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mainContainer: {
-    width: ({ isFullContentWidth }) => (isFullContentWidth ? 780 : 634),
+    width: ({ isVerticalPagination, isSmallContentWidth }) => {
+      if (isVerticalPagination) return "100%";
+      if (isSmallContentWidth) return 634;
+      return 780;
+    },
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "0 auto",

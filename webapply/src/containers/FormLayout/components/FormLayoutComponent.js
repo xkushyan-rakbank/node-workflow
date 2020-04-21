@@ -16,14 +16,16 @@ export const FormLayoutComponent = ({
   screeningError,
   errorCode,
   errorIcon,
-  isFullContentWidth,
+  isVerticalPagination,
+  isSmallContentWidth,
   children
 }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
     isDisplayHeader,
     color: blobColor,
-    isFullContentWidth
+    isVerticalPagination,
+    isSmallContentWidth
   });
 
   return (
