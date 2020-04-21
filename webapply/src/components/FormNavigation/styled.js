@@ -130,30 +130,7 @@ export const useStyles = makeStyles(theme => ({
       width: sideNavWidthLG
     },
     [theme.breakpoints.up("xl")]: {
-      width: sideNavWidthXL,
-      "&:before": {
-        content: "''",
-        position: "absolute",
-        zIndex: -1,
-        left: 0,
-        top: 0,
-        bottom: 0,
-        width: "calc((100vw - 1920px) / 2)",
-        pointerEvents: "none",
-        transition: theme.transitions.create("background"),
-        background: ({ color }) => {
-          switch (color) {
-            case ELITE:
-              return "linear-gradient(to bottom, #831334, #b1536f 90%, #b25470 100%)";
-            case ISLAMIC:
-              return "#417C35";
-            case STANDART:
-              return "linear-gradient(to bottom, #E9320F, #EA1C44)";
-            default:
-              return "transparent";
-          }
-        }
-      }
+      width: sideNavWidthXL
     },
     "& ul": {
       margin: 0,
