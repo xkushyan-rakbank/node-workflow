@@ -7,12 +7,16 @@ import TableCell from "@material-ui/core/TableCell";
 import { LinkedButton } from "../../../../../../components/Buttons/LinkedButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { accountsDataRows, accountTypes } from "../../constants";
-import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../../../constants";
 
 import { FIRST_ROW_POSITION, TABLE_POSITION_OFFSET } from "./constants";
 import { useStyles } from "./styled";
 
-export const StyledTableBodyComponent = ({ selectedCurrentColumn, handleHover, refs }) => {
+export const StyledTableBodyComponent = ({
+  handleSelectAccount,
+  selectedCurrentColumn,
+  handleHover,
+  refs
+}) => {
   const classes = useStyles();
   return (
     <TableBody>
@@ -72,10 +76,7 @@ export const StyledTableBodyComponent = ({ selectedCurrentColumn, handleHover, r
               [classes.tableCellActive]: selectedCurrentColumn === index + TABLE_POSITION_OFFSET
             })}
           >
-            <LinkedButton
-              label="Read more"
-              to={detailedAccountRoutesMap[accountName][CONVENTIONAL]}
-            />
+            <LinkedButton label="Read more" onClick={handleSelectAccount(accountName)} />
           </TableCell>
         ))}
       </TableRow>
