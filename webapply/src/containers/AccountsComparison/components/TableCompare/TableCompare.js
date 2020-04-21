@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
-import { useHistory } from "react-router-dom";
 
 import { StyledTableHeader } from "./components/StyledTableHeader";
 import { StyledTableBody } from "./components/StyledTableBody";
 import { StyledTableBodyMobile } from "./components/StyledTableBodyMobile";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { useWindowSize } from "../../../../utils/useWindowSize";
 import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
 import { sizes, accountTypes } from "./constants";
-import { useWindowSize } from "../../../../utils/useWindowSize";
 
 import { useStyles } from "./styled";
 
@@ -19,6 +21,7 @@ export const TableCompareComponent = ({ selectedAccount }) => {
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
   const [width] = useWindowSize();
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const RAKstarter = useRef(null);
@@ -55,9 +58,19 @@ export const TableCompareComponent = ({ selectedAccount }) => {
     handleHighlightSelectedAccount(position);
   }, [selectedAccount, handleHighlightSelectedAccount]);
 
-  const handleSelectAccount = accountType => {
-    history.push(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
-  };
+  const handleSelectAccount = useCallback(
+    accountType => () => {
+      dispatch(
+        updateProspect({
+          "prospect.applicationInfo.accountType": accountType
+        })
+      );
+      setTimeout(() => {
+        history.push(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
+      }, 4);
+    },
+    [dispatch, history]
+  );
 
   const handleHover = e => {
     const { order } = e.currentTarget.dataset;

@@ -1,14 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import cx from "classnames";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
-const styles = {
+const useStyles = makeStyles({
   link: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "14px 0"
+    margin: "14px 0",
+    cursor: "pointer"
   },
   buttonStyle: {
     display: "flex",
@@ -36,21 +35,16 @@ const styles = {
     fontSize: "14px",
     textAlign: "center"
   }
-};
+});
 
-const ButtonLink = ({
-  label,
-  to,
-  customLinkStyle = "",
-  customButtonStyle = "",
-  customLabelStyle = "",
-  classes
-}) => (
-  <Link to={to} className={cx(classes.link, customLinkStyle)}>
-    <div className={cx(classes.buttonStyle, customButtonStyle)}>
-      <span className={cx(classes.labelStyle, customLabelStyle)}>{label}</span>
+export const LinkedButton = ({ label, ...rest }) => {
+  const classes = useStyles(rest);
+
+  return (
+    <div className={classes.link} {...rest}>
+      <div className={classes.buttonStyle}>
+        <span className={classes.labelStyle}>{label}</span>
+      </div>
     </div>
-  </Link>
-);
-
-export const LinkedButton = withStyles(styles)(ButtonLink);
+  );
+};
