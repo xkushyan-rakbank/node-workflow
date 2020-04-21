@@ -190,7 +190,8 @@ export const useStyles = makeStyles(theme => ({
       backgroundImage: ({ color, isSmallBg }) =>
         `url(${blobImages[`${color}${isSmallBg ? "S" : "M"}`]})`,
       backgroundSize: "cover",
-      backgroundPosition: "center bottom"
+      backgroundPosition: "center bottom",
+      backgroundRepeat: "no-repeat"
     }
   },
   chatButton: {
