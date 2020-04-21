@@ -45,7 +45,6 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   }, [handleKeyDown]);
 
   const handleWheel = e => {
-    console.log(e);
     const offset = e.deltaY < 0 ? -1 : 1;
     const nextSectionIndex = currentSectionIndex + offset;
 
