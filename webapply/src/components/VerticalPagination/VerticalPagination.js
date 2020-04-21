@@ -2,8 +2,9 @@ import React, { useRef, useContext, useEffect, useCallback } from "react";
 import cx from "classnames";
 
 import { VerticalPaginationContext } from "./VerticalPaginationProvider";
-import { getAverage } from "./utils";
 import { MobileNotificationContext } from "../Notifications/MobileNotification/MobileNotification";
+import { getAverage } from "./utils";
+import { useWindowSize } from "../../utils/useWindowSize";
 import { useStyles } from "./styled";
 
 export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
@@ -15,17 +16,23 @@ export const VerticalPaginationComponent = ({ children, scrollToSection }) => {
   const scrollings = useRef([]);
   const prevTime = useRef(new Date().getTime());
   const childrenCount = children.length;
+  const windowSize = useWindowSize();
 
   const handleKeyDown = useCallback(
     e => {
       if (e.keyCode === 38 || e.keyCode === 33) {
-        setCurrentSection(currentIndex => Math.max(0, currentIndex - 1));
+        setCurrentSection(Math.max(0, currentSectionIndex - 1));
       } else if (e.keyCode === 40 || e.keyCode === 34) {
-        setCurrentSection(currentIndex => Math.min(childrenCount - 1, currentIndex + 1));
+        setCurrentSection(Math.min(childrenCount - 1, currentSectionIndex + 1));
       }
     },
-    [setCurrentSection, childrenCount]
+    [setCurrentSection, childrenCount, currentSectionIndex]
   );
+
+  useEffect(() => {
+    setCurrentSection(currentSectionIndex);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, windowSize);
 
   useEffect(() => {
     scrollToSection(currentSectionIndex);
