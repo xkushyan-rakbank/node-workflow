@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, useLayoutEffect } from "react";
+import React, { useState, useCallback, useMemo, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { transitionDuration } from "./styled";
@@ -6,14 +6,14 @@ import { transitionDuration } from "./styled";
 export const VerticalPaginationContext = React.createContext({});
 
 export const VerticalPaginationProvider = ({ children }) => {
-  // reset scroll params when location changes.
   const location = useLocation();
   const [currentSection, setCurrentSectionValue] = useState({ index: 0, counter: 0 });
   const isCanScroll = useRef(true);
   const scrollTimeout = useRef(0);
 
-  useLayoutEffect(() => {
-    setCurrentSectionValue({ index: 0, counter: 0 });
+  useEffect(() => {
+    setCurrentSectionValue({ index: 0, counter: currentSection.counter });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const setCurrentSection = useCallback(

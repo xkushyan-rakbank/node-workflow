@@ -6,7 +6,5 @@ export const getAverage = (elements, number) => {
 };
 
 export const scrollToDOMNode = ref => {
-  setTimeout(() => {
-    ref.current && ref.current.parentNode.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, 4);
+  ref.current && ref.current.parentNode.scrollIntoView({ behavior: "smooth", block: "start" });
 };
