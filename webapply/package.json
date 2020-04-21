@@ -40,6 +40,7 @@
     "redux-saga": "^1.0.5",
     "redux-wait-for-action": "0.0.8",
     "reselect": "^4.0.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "styled-components": "^5.0.1",
     "yup": "^0.27.0"
   },
