@@ -28,7 +28,9 @@ public class EncodeResponseAdviser implements ResponseBodyAdvice<Object> {
     }
 
     @Override
-    public Object beforeBodyWrite(Object jsonObject, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+    public Object beforeBodyWrite(Object jsonObject, MethodParameter methodParameter, MediaType mediaType,
+                                  Class<? extends HttpMessageConverter<?>> aClass,
+                                  ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         byte[] randomKey = getKeyFromRequest(serverHttpRequest.getHeaders());
         if (randomKey.length > 0) {
             SecretKeySpec spec = securityUtil.getSecretKeySpec(randomKey);
