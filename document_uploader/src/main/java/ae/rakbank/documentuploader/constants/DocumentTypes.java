@@ -9,10 +9,7 @@ public class DocumentTypes {
     }
 
     public static final List<String> ALLOWED_DOCUMENT_TYPES = Arrays.asList(
-            "Passport",
-            "EMID",
-            "TradeLicenseNo",
-            "MOA",
-            "Visa",
-            "Others");
+            "Constitutional_Documents",
+            "Passport_Copies",
+            "Others_Documents");
 }
