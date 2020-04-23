@@ -7,6 +7,7 @@ import { FinalQuestionsPage } from "../../src/containers/FinalQuestions/FinalQue
 import { FinalQuestions } from "../../src/containers/FinalQuestions/components/FinalQuestions";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
 import { getSignatoriesSteps, getCompanySteps } from "../../src/store/selectors/completedSteps";
+import { useViewId } from "../../src/utils/useViewId";
 import { checkAllStepsCompleted } from "../../src/utils/checkAllStepsCompleted";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
 import { formStepper } from "../../src/constants";
@@ -17,6 +18,7 @@ jest.mock("../../src/store/selectors/completedSteps");
 jest.mock("../../src/utils/checkAllStepsCompleted");
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../src/utils/useViewId");
 
 describe("FinalQuestions tests", () => {
   const signatories = "some signatories";
@@ -42,6 +44,7 @@ describe("FinalQuestions tests", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useFormNavigation.mockReturnValue(null);
+    useViewId.mockReturnValue(null);
     FinalQuestions.mockReturnValue(null);
     useTrackingHistory.mockReturnValue(pushHistory);
     getCompanySteps.mockReturnValue(companySteps);
@@ -61,6 +64,12 @@ describe("FinalQuestions tests", () => {
       isCompanyStepsCompleted,
       expandedSignatoryIndex: null
     });
+  });
+
+  it("should call `useViewId` hook", () => {
+    render(<TestComponent />);
+
+    expect(useViewId).toBeCalledWith(true);
   });
 
   it("should call `useFormNavigation` hook", () => {

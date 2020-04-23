@@ -5,9 +5,10 @@ import { CompanyStakeholdersContainer } from "../../../src/containers/CompanySta
 import { CompanyStakeholdersComponent } from "../../../src/containers/CompanyStakeholders/components/CompanyStakeholders/CompanyStakeholders";
 
 import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
+import { useViewId } from "../../../src/utils/useViewId";
 import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
 import { StakeholdersNameManager } from "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider";
-import { NEXT } from "../../../src/constants";
+import { NEXT, formStepper } from "../../../src/constants";
 
 jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock(
@@ -15,6 +16,7 @@ jest.mock(
   () => ({ CompanyStakeholdersComponent: jest.fn().mockImplementation(() => null) })
 );
 jest.mock("../../../src/utils/useTrackingHistory");
+jest.mock("../../../src/utils/useViewId");
 jest.mock(
   "../../../src/containers/CompanyStakeholders/components/StakeholdersNameProvider/StakeholdersNameProvider",
   () => ({
@@ -58,6 +60,7 @@ describe("CompanyStakeholders container tests", () => {
 
   beforeEach(() => {
     useFormNavigation.mockImplementation(() => {});
+    useViewId.mockImplementation(() => {});
     useTrackingHistory.mockReturnValue(pushHistory);
 
     jest.clearAllMocks();
@@ -78,8 +81,21 @@ describe("CompanyStakeholders container tests", () => {
     });
   });
 
+  it("should call `useFormNavigation` hook", () => {
+    render(<CompanyStakeholdersContainer {...props} />);
+
+    expect(useFormNavigation).toHaveBeenCalledWith([false, true, formStepper]);
+  });
+
+  it("should call `useViewId` hook", () => {
+    render(<CompanyStakeholdersContainer {...props} />);
+
+    expect(useViewId).toHaveBeenCalledWith(true);
+  });
+
   it("should create new stakeholder is there is no stakeholders on mount", () => {
     render(<CompanyStakeholdersContainer {...props} stakeholders={[]} />);
+
     expect(createNewStakeholder).toHaveBeenCalled();
   });
 

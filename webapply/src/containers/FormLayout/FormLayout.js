@@ -8,31 +8,17 @@ import { checkIsShowSmallMenu } from "../../components/FormNavigation/utils";
 
 import { ERRORS_TYPE } from "../../utils/getErrorScreenIcons/constants";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
-import routes, { agentBaseName, smeBaseName } from "../../routes";
+import routes from "../../routes";
 import { detailedAccountRoutes } from "../../constants";
 
 export const FormLayoutContainer = ({
   children,
   screeningError,
-  updateViewId,
   accountType,
   isIslamicBanking,
   errorCode
 }) => {
   const { pathname } = useLocation();
-
-  useEffect(() => {
-    const viewId = pathname.replace(smeBaseName, "").replace(agentBaseName, "");
-    const isSendToApi = [
-      routes.companyInfo,
-      routes.stakeholdersInfo,
-      routes.finalQuestions,
-      routes.selectServices,
-      routes.SubmitApplication
-    ].includes(pathname);
-
-    updateViewId(viewId, isSendToApi);
-  }, [pathname, updateViewId]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

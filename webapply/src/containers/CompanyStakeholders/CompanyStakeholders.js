@@ -6,6 +6,7 @@ import {
 } from "./components/StakeholdersNameProvider/StakeholdersNameProvider";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { CompanyStakeholdersComponent } from "./components/CompanyStakeholders/CompanyStakeholders";
+import { useViewId } from "../../utils/useViewId";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { formStepper, NEXT } from "../../constants";
@@ -28,6 +29,7 @@ export const CompanyStakeholdersContainer = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
+  useViewId(true);
 
   useEffect(() => {
     if (!stakeholders.length) {

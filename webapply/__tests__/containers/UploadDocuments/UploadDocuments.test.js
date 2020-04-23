@@ -1,15 +1,18 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
-import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
+
 import { UploadDocuments } from "../../../src/containers/UploadDocuments/UploadDocuments";
 import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
-import { formStepper, NEXT } from "../../../src/constants";
 import { UploadDocumentsComponent } from "../../../src/containers/UploadDocuments/components/UploadDocuments/UploadDocuments";
+import { useViewId } from "../../../src/utils/useViewId";
+import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
+import { formStepper, NEXT } from "../../../src/constants";
 import routes from "../../../src/routes";
 
 jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../../src/store/actions/uploadDocuments");
 jest.mock("../../../src/utils/useTrackingHistory");
+jest.mock("../../../src/utils/useViewId");
 jest.mock(
   "../../../src/containers/UploadDocuments/components/UploadDocuments/UploadDocuments",
   () => ({
@@ -44,18 +47,26 @@ describe("UploadDocuments container tests", () => {
   };
 
   useTrackingHistory.mockReturnValue(pushHistory);
+  useFormNavigation.mockImplementation(() => {});
+  useViewId.mockImplementation(() => {});
 
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("should useFormNavigation on mount", () => {
+  it("should call `useFormNavigation` hook on mount", () => {
     render(<UploadDocuments {...props} />);
 
     expect(useFormNavigation).toHaveBeenCalledWith([false, true, formStepper]);
   });
 
-  it("should receiveDocDetails on mount", () => {
+  it("should call `useViewId` hook on mount", () => {
+    render(<UploadDocuments {...props} />);
+
+    expect(useViewId).toHaveBeenCalledWith();
+  });
+
+  it("should dispatch `receiveDocDetails` action on mount", () => {
     render(<UploadDocuments {...props} />);
 
     expect(retrieveDocDetails).toHaveBeenCalled();

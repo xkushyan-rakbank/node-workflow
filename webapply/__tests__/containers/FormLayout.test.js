@@ -4,7 +4,6 @@ import { render } from "@testing-library/react";
 
 import { FormLayoutContainer } from "../../src/containers/FormLayout/FormLayout";
 import { FormLayoutComponent } from "../../src/containers/FormLayout/components/FormLayoutComponent";
-import { VIEW_IDS } from "../../src/constants";
 import routes from "../../src/routes";
 
 jest.mock("../../src/store/actions/appConfig");
@@ -17,7 +16,6 @@ describe("FormLayout tests", () => {
   const pathname = "some pathname";
   const children = "some children";
   const screeningError = { error: "some screening error" };
-  const updateViewId = jest.fn();
   const accountType = "some account type";
   const isIslamicBanking = true;
   const errorCode = "some error code";
@@ -26,7 +24,6 @@ describe("FormLayout tests", () => {
   const props = {
     children,
     screeningError,
-    updateViewId,
     accountType,
     isIslamicBanking,
     errorCode
@@ -67,24 +64,6 @@ describe("FormLayout tests", () => {
     render(<FormLayoutContainer {...props} />);
 
     expect(FormLayoutComponent.mock.calls[0][0].isDisplayHeader).toEqual(true);
-  });
-
-  it("should updateViewId on mount", () => {
-    updateViewId.mockReturnValue(null);
-
-    render(<FormLayoutContainer {...props} />);
-
-    expect(updateViewId.mock.calls[0]).toEqual([pathname, false]);
-  });
-
-  it("should updateViewId and sendToApi on mount", () => {
-    const pathname = routes.companyInfo;
-    useLocation.mockReturnValue({ pathname });
-    updateViewId.mockReturnValue(null);
-
-    render(<FormLayoutContainer {...props} />);
-
-    expect(updateViewId.mock.calls[0]).toEqual([VIEW_IDS.CompanyInfo, true]);
   });
 
   it("should scroll To 0, 0 on mount", () => {

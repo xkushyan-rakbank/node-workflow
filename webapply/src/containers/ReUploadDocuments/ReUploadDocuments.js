@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useViewId } from "../../utils/useViewId";
 import { ReUploadDocumentsComponent } from "./components/ReUploadDocuments/ReUploadDocuments";
 import {
   addOtherDocument,
@@ -26,6 +27,7 @@ export const ReUploadDocuments = () => {
   const pushHistory = useTrackingHistory();
 
   useFormNavigation([true, false]);
+  useViewId();
 
   useEffect(() => {
     dispatch(retrieveDocDetails());

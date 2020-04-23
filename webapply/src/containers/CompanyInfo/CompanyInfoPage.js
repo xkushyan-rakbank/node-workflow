@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useStep } from "../../utils/useStep";
+import { useViewId } from "../../utils/useViewId";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { CONTINUE, NEXT, formStepper, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
@@ -17,6 +18,7 @@ export const CompanyInfoPage = ({
   isComeFromROScreens
 }) => {
   useFormNavigation([false, true, formStepper]);
+  useViewId(true);
 
   const pushHistory = useTrackingHistory();
   const [
