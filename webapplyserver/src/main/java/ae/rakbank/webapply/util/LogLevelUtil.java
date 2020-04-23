@@ -1,4 +1,4 @@
-package ae.rakbank.documentuploader.util;
+package ae.rakbank.webapply.util;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-import static ae.rakbank.documentuploader.constants.ConfigurationKeys.APPLICATION_LOGGING_LEVEL;
-import static ae.rakbank.documentuploader.constants.ConfigurationKeys.OTHER_CONFIGS;
+import static ae.rakbank.webapply.constants.ConfigurationKeys.APPLICATION_LOGGING_LEVEL;
+import static ae.rakbank.webapply.constants.ConfigurationKeys.OTHER_CONFIGS;
 
 
 @Slf4j

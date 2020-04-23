@@ -112,8 +112,8 @@ public class RecaptchaServiceTest {
 
         recaptchaService.validateReCaptcha(node, servletRequest);
 
-        Mockito.verifyNoInteractions(servletRequest);
-        Mockito.verifyNoInteractions(restTemplate);
+        Mockito.verifyNoMoreInteractions(servletRequest);
+        Mockito.verifyNoMoreInteractions(restTemplate);
 
     }
 
@@ -139,8 +139,8 @@ public class RecaptchaServiceTest {
 
         recaptchaService.validateReCaptcha(node, servletRequest);
 
-        Mockito.verifyNoInteractions(servletRequest);
-        Mockito.verifyNoInteractions(restTemplate);
+        Mockito.verifyNoMoreInteractions(servletRequest);
+        Mockito.verifyNoMoreInteractions(restTemplate);
 
     }
 
