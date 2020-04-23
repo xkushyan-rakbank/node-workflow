@@ -5,6 +5,7 @@ import configureStore from "redux-mock-store";
 
 import { FinalQuestionsPage } from "../../src/containers/FinalQuestions/FinalQuestionsPage";
 import { FinalQuestions } from "../../src/containers/FinalQuestions/components/FinalQuestions";
+import { useLayoutParams } from "../../src/containers/FormLayout";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
 import { getSignatoriesSteps, getCompanySteps } from "../../src/store/selectors/completedSteps";
 import { useViewId } from "../../src/utils/useViewId";
@@ -14,10 +15,11 @@ import { formStepper } from "../../src/constants";
 import routes from "../../src/routes";
 
 jest.mock("../../src/containers/FinalQuestions/components/FinalQuestions");
+jest.mock("../../src/containers/FormLayout");
+jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/store/selectors/completedSteps");
 jest.mock("../../src/utils/checkAllStepsCompleted");
 jest.mock("../../src/utils/useTrackingHistory");
-jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/utils/useViewId");
 
 describe("FinalQuestions tests", () => {
@@ -44,6 +46,7 @@ describe("FinalQuestions tests", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useFormNavigation.mockReturnValue(null);
+    useLayoutParams.mockReturnValue(null);
     useViewId.mockReturnValue(null);
     FinalQuestions.mockReturnValue(null);
     useTrackingHistory.mockReturnValue(pushHistory);

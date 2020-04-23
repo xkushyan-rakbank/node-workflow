@@ -8,6 +8,7 @@ import { CompanyCard } from "./CompanyCard";
 import { BlockConfirm } from "./BlockConfirm";
 import { ServerRequestLoadingScreen } from "../../../../components/ServerRequestLoadingScreen/ServerRequestLoadingScreen";
 import { NotificationsManager } from "../../../../components/Notification";
+import { useLayoutParams } from "../../../FormLayout";
 import { useViewId } from "../../../../utils/useViewId";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NEXT, SUBMIT } from "../../../../constants";
@@ -23,8 +24,9 @@ export const SubmitApplicationComponent = ({
   currentProspectStatus,
   isAgent
 }) => {
-  const pushHistory = useTrackingHistory();
   useViewId(true);
+  useLayoutParams(true, true);
+  const pushHistory = useTrackingHistory();
   const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     !isAgent && NotificationsManager.add(trustMessageContent);

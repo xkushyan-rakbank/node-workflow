@@ -3,6 +3,7 @@ import { render, act } from "@testing-library/react";
 
 import { SelectServicesPage } from "../../src/containers/SelectServices/SelectServicesPage";
 import { SelectServices } from "../../src/containers/SelectServices/components/SelectServices";
+import { useLayoutParams } from "../../src/containers/FormLayout";
 import { useViewId } from "../../src/utils/useViewId";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
 import { useStep } from "../../src/utils/useStep";
@@ -16,6 +17,7 @@ import {
 import routes from "../../src/routes";
 
 jest.mock("../../src/containers/SelectServices/components/SelectServices");
+jest.mock("../../src/containers/FormLayout");
 jest.mock("../../src/utils/useViewId");
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
@@ -36,6 +38,7 @@ describe("SelectServices test", () => {
 
   SelectServices.mockReturnValue(null);
   useFormNavigation.mockReturnValue(null);
+  useLayoutParams.mockReturnValue(null);
   useViewId.mockReturnValue(null);
   useTrackingHistory.mockReturnValue(pushHistory);
 

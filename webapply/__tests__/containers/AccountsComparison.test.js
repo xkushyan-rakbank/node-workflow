@@ -1,8 +1,10 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
-import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+
 import { AccountsComparisonComponent } from "../../src/containers/AccountsComparison/components/AccountsComparison/AccountsComparison";
 import { AccountsComparisonContainer } from "../../src/containers/AccountsComparison/AccountsComparison";
+import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../src/containers/FormLayout";
 import { VerticalPaginationContext } from "../../src/components/VerticalPagination";
 import { accountTypes } from "../../src/containers/AccountsComparison/components/TableCompare/constants";
 
@@ -10,6 +12,7 @@ jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock(
   "../../src/containers/AccountsComparison/components/AccountsComparison/AccountsComparison"
 );
+jest.mock("../../src/containers/FormLayout");
 
 describe("AccountsComparison container tests", () => {
   const accountType = "some account type";
@@ -25,6 +28,7 @@ describe("AccountsComparison container tests", () => {
   );
 
   beforeEach(() => {
+    useLayoutParams.mockImplementation(() => {});
     useFormNavigation.mockImplementation(() => {});
     AccountsComparisonComponent.mockImplementation(() => null);
 

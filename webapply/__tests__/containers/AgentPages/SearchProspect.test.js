@@ -3,11 +3,13 @@ import { act, render } from "@testing-library/react";
 
 import { SearchProspectPage } from "../../../src/containers/AgentPages/SearchProspect/SearchProspectPage";
 import { SearchProspect } from "../../../src/containers/AgentPages/SearchProspect/components/SearchProspect/SearchProspect";
+import { useLayoutParams } from "../../../src/containers/FormLayout";
 
 jest.mock(
   "../../../src/containers/AgentPages/SearchProspect/components/SearchProspect/SearchProspect",
   () => ({ SearchProspect: jest.fn().mockImplementation(() => null) })
 );
+jest.mock("../../../src/containers/FormLayout");
 
 describe("SearchProspect test", () => {
   const searchApplications = jest.fn();
@@ -19,6 +21,9 @@ describe("SearchProspect test", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    useLayoutParams.mockImplementation(() => {});
+
     render(<SearchProspectPage {...props} />);
   });
 

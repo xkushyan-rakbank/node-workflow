@@ -5,6 +5,7 @@ import { render } from "@testing-library/react";
 import { ReUploadDocumentsComponent } from "../../src/containers/ReUploadDocuments/components/ReUploadDocuments/ReUploadDocuments";
 import { ReUploadDocuments } from "../../src/containers/ReUploadDocuments/ReUploadDocuments";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../src/containers/FormLayout/LayoutProvider";
 import { getOtherDocuments } from "../../src/store/selectors/appConfig";
 import { getProgress, getUploadErrors } from "../../src/store/selectors/uploadDocuments";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
@@ -25,6 +26,7 @@ jest.mock("../../src/store/selectors/appConfig");
 jest.mock("../../src/store/selectors/uploadDocuments");
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../src/containers/FormLayout/LayoutProvider");
 jest.mock("../../src/store/actions/uploadDocuments");
 jest.mock("../../src/store/actions/sendProspectToAPI");
 jest.mock("../../src/utils/useViewId");
@@ -52,6 +54,7 @@ describe("ReUploadDocuments container tests", () => {
   ReUploadDocumentsComponent.mockImplementation(() => null);
   useFormNavigation.mockImplementation(() => {});
   useViewId.mockImplementation(() => {});
+  useLayoutParams.mockImplementation(() => {});
 
   beforeEach(() => {
     sendProspectToAPIPromisify.mockImplementation(() => Promise.resolve());

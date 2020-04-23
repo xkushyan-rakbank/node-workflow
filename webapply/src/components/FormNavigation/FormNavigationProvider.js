@@ -18,5 +18,6 @@ export const useFormNavigation = params => {
     if (setValues) {
       setValues(params);
     }
-  }, [params]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...params]);
 };

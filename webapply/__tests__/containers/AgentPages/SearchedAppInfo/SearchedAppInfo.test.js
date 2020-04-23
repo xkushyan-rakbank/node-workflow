@@ -1,6 +1,7 @@
 import React from "react";
 import { act, render } from "@testing-library/react";
 import { useFormNavigation } from "../../../../src/components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../../../src/containers/FormLayout";
 import { useDisplayScreenBasedOnViewId } from "../../../../src/utils/useDisplayScreenBasedOnViewId";
 import { SearchedAppInfoContainer } from "../../../../src/containers/AgentPages/SearchedAppInfo/SearchedAppInfo";
 import { SearchedAppInfoComponent } from "../../../../src/containers/AgentPages/SearchedAppInfo/components/SearchedAppInfo";
@@ -14,6 +15,7 @@ jest.mock(
   })
 );
 jest.mock("../../../../src/utils/useDisplayScreenBasedOnViewId");
+jest.mock("../../../../src/containers/FormLayout");
 
 describe("SearchedAppInfoContainer test", () => {
   const pushDisplayScreenToHistory = jest.fn();
@@ -46,6 +48,7 @@ describe("SearchedAppInfoContainer test", () => {
 
   beforeEach(() => {
     useFormNavigation.mockImplementation(() => {});
+    useLayoutParams.mockImplementation(() => {});
     useDisplayScreenBasedOnViewId.mockReturnValue({ pushDisplayScreenToHistory });
 
     jest.clearAllMocks();

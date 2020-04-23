@@ -4,6 +4,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useStep } from "../../utils/useStep";
 import { useViewId } from "../../utils/useViewId";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../FormLayout";
 import { CONTINUE, NEXT, formStepper, SAVE } from "../../constants";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import routes from "./../../routes";
@@ -18,6 +19,7 @@ export const CompanyInfoPage = ({
   isComeFromROScreens
 }) => {
   useFormNavigation([false, true, formStepper]);
+  useLayoutParams(true, true);
   useViewId(true);
 
   const pushHistory = useTrackingHistory();

@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 
 import { SearchProspect } from "./components/SearchProspect/SearchProspect";
+import { useLayoutParams } from "../../FormLayout";
 
 export const SearchProspectPage = ({
   searchApplications,
@@ -8,6 +9,8 @@ export const SearchProspectPage = ({
   isLoading,
   resetProspect
 }) => {
+  useLayoutParams(true);
+
   const [isSearchLaunched, setSearchStatus] = useState(false);
 
   useEffect(() => {

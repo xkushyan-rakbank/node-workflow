@@ -3,6 +3,7 @@ import { render, act } from "@testing-library/react";
 
 import { ApplicantInfoContainer } from "../../src/containers/ApplicantInfo/ApplicantInfo";
 import { ApplicantInfoComponent } from "../../src/containers/ApplicantInfo/components/ApplicantInfo";
+import { useLayoutParams } from "../../src/containers/FormLayout";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
 import { accountNames } from "../../src/constants";
@@ -12,6 +13,7 @@ jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/containers/ApplicantInfo/components/ApplicantInfo", () => {
   return { ApplicantInfoComponent: jest.fn().mockImplementation(() => null) };
 });
+jest.mock("../../src/containers/FormLayout");
 jest.mock("../../src/utils/useTrackingHistory");
 
 describe("ApplicantInfo container tests", () => {
@@ -44,6 +46,7 @@ describe("ApplicantInfo container tests", () => {
   const values = "some values";
 
   beforeEach(() => {
+    useLayoutParams.mockImplementation(() => {});
     useFormNavigation.mockImplementation(() => {});
     useTrackingHistory.mockReturnValue(pushHistory);
 

@@ -10,6 +10,7 @@ import { useViewId } from "../../utils/useViewId";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { formStepper, NEXT } from "../../constants";
+import { useLayoutParams } from "../FormLayout";
 
 export const CompanyStakeholdersContainer = ({
   deleteStakeholder: deleteHandler,
@@ -29,6 +30,7 @@ export const CompanyStakeholdersContainer = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
+  useLayoutParams(true, true);
   useViewId(true);
 
   useEffect(() => {

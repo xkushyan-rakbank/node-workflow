@@ -1,31 +1,35 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { FormNavigation } from "../../../components/FormNavigation";
+import { checkIsShowSmallMenu } from "../../../components/FormNavigation/utils";
 import { HeaderTitle } from "../../../components/HeaderTitle";
 import { Notifications } from "../../../components/Notification";
 import { ApplicationStatus } from "../../../components/ApplicationStatus/ApplicationStatus";
 
 import { ERROR_MESSAGES } from "../../../constants";
 import { useBlobColor } from "../../../utils/useBlobColor/useBlobColor";
+import { LayoutContext } from "../LayoutProvider";
 
 import { useStyles } from "./styled";
 
 export const FormLayoutComponent = ({
-  isDisplayHeader,
-  isDisplayScreeningError,
   screeningError,
   errorCode,
   errorIcon,
-  isVerticalPagination,
-  isSmallContentWidth,
+  pathname,
   children
 }) => {
+  const [
+    isDisplayHeader = false,
+    isDisplayScreeningError = false,
+    hasVerticalPagination = false
+  ] = useContext(LayoutContext);
   const blobColor = useBlobColor();
   const classes = useStyles({
     isDisplayHeader,
     color: blobColor,
-    isVerticalPagination,
-    isSmallContentWidth
+    hasVerticalPagination,
+    isSmallContentWidth: !checkIsShowSmallMenu(pathname)
   });
 
   return (
@@ -38,7 +42,7 @@ export const FormLayoutComponent = ({
 
             <Notifications />
 
-            {isDisplayScreeningError ? (
+            {screeningError && isDisplayScreeningError ? (
               <ApplicationStatus {...screeningError} />
             ) : errorCode ? (
               <ApplicationStatus icon={errorIcon} text={ERROR_MESSAGES[errorCode]} />

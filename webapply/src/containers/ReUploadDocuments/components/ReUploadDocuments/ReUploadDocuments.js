@@ -1,11 +1,11 @@
 import React from "react";
 
 import { DocumentRow } from "../DocumentRow/DocumentRow";
-import { MAX_OTHER_DOCUMENTS } from "../../constants";
 import { UploadButton } from "../UploadButton/UploadButton";
 import { BackLink } from "../../../../components/Buttons/BackLink";
-import routes from "../../../../routes";
 import { ContainedButton } from "../../../../components/Buttons/ContainedButton";
+import routes from "../../../../routes";
+import { MAX_OTHER_DOCUMENTS } from "../../constants";
 
 import { useStyles } from "./styled";
 

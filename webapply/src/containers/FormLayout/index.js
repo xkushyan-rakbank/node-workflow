@@ -5,6 +5,8 @@ import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appCo
 import { getScreeningError } from "../../store/selectors/sendProspectToAPI";
 import { FormLayoutContainer } from "./FormLayout";
 
+export { useLayoutParams } from "./LayoutProvider";
+
 const mapStateToProps = state => ({
   screeningError: getScreeningError(state),
   accountType: getAccountType(state),

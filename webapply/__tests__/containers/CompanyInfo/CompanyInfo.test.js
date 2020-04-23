@@ -3,6 +3,7 @@ import { render, act } from "@testing-library/react";
 
 import { CompanyInfo } from "../../../src/containers/CompanyInfo/components/CompanyInfo";
 import { CompanyInfoPage } from "../../../src/containers/CompanyInfo/CompanyInfoPage";
+import { useLayoutParams } from "../../../src/containers/FormLayout";
 import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
 import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
 import { useViewId } from "../../../src/utils/useViewId";
@@ -16,6 +17,7 @@ import {
 import routes from "../../../src/routes";
 
 jest.mock("../../../src/containers/CompanyInfo/components/CompanyInfo");
+jest.mock("../../../src/containers/FormLayout");
 jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../../src/utils/useTrackingHistory");
 jest.mock("../../../src/utils/useStep");
@@ -42,6 +44,7 @@ describe("CompanyInfo test", () => {
   const createFormChangeHandler = "some create handler";
   const isAllStepsCompleted = "some bool";
   const event = "some event";
+  useLayoutParams.mockReturnValue(null);
   useFormNavigation.mockReturnValue(null);
   useViewId.mockReturnValue(null);
   CompanyInfo.mockReturnValue(null);
