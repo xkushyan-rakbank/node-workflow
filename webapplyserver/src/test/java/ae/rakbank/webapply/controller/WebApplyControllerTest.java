@@ -164,7 +164,7 @@ public class WebApplyControllerTest {
         List<String> jwtHeader = loginResponse.getHeaders().get(AuthConstants.JWT_TOKEN_KEY);
         Assert.assertNull(jwtHeader);
 
-        Mockito.verifyNoInteractions(authorizationService);
+        Mockito.verifyNoMoreInteractions(authorizationService);
 
     }
 

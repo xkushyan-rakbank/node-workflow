@@ -93,7 +93,8 @@
       "RSAPublicKeyFilename": "RSAPublicKey.txt",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "N",
-      "ShouldSendErrorDebugDetails": true
+      "ShouldSendErrorDebugDetails": true,
+      "ApplicationLoggingLevel": "DEBUG"
     },
     "dev": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -114,7 +115,8 @@
       "RSAPublicKeyFilename": "",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "N",
-      "ShouldSendErrorDebugDetails": true
+      "ShouldSendErrorDebugDetails": true,
+      "ApplicationLoggingLevel": "DEBUG"
     },
     "uat": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -135,7 +137,8 @@
       "RSAPublicKeyFilename": "",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "Y",
-      "ShouldSendErrorDebugDetails": false
+      "ShouldSendErrorDebugDetails": false,
+      "ApplicationLoggingLevel": "INFO"
     },
     "prod": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -156,7 +159,8 @@
       "RSAPublicKeyFilename": "",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "Y",
-      "ShouldSendErrorDebugDetails": false
+      "ShouldSendErrorDebugDetails": false,
+      "ApplicationLoggingLevel": "INFO"
     }
   }
 }

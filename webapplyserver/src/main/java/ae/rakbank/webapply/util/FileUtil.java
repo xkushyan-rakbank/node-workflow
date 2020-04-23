@@ -81,6 +81,7 @@ public class FileUtil {
         return null;
     }
 
+    @SuppressWarnings("Duplicates")
     private String loadFileContents(String filename, boolean fromConfigDirectory) {
         try {
             if (fromConfigDirectory) {

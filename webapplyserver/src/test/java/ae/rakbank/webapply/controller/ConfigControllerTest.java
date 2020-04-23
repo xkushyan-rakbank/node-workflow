@@ -95,7 +95,7 @@ public class ConfigControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, webApplyConfig.getStatusCode());
         assertEquals(config, webApplyConfig.getBody());
 
-        Mockito.verifyNoInteractions(configService);
+        Mockito.verifyNoMoreInteractions(configService);
 
     }
 
