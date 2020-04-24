@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
-import { render } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
+import { Router } from "react-router-dom";
+import { createMemoryHistory } from "history";
 
 import {
   LayoutProvider,
@@ -8,6 +10,7 @@ import {
 } from "../../../src/containers/FormLayout/LayoutProvider";
 
 describe("LayoutProvider tests", () => {
+  const history = createMemoryHistory();
   const saveContext = jest.fn();
   const TestComponent = () => {
     useLayoutParams();
@@ -26,13 +29,22 @@ describe("LayoutProvider tests", () => {
 
   it("should render component", () => {
     render(
-      <LayoutProvider>
-        <TestConsumer />
-        <TestComponent />
-      </LayoutProvider>
+      <Router history={history}>
+        <LayoutProvider>
+          <TestConsumer />
+          <TestComponent />
+        </LayoutProvider>
+      </Router>
     );
 
-    expect(saveContext.mock.calls[0][0]).toEqual([]);
-    expect(saveContext.mock.calls[1][0]).toEqual([false, false, false]);
+    expect(saveContext).toBeCalledTimes(2);
+    expect(saveContext).nthCalledWith(1, []);
+    expect(saveContext).nthCalledWith(2, [false, false, false]);
+
+    act(() => {
+      history.push("/somepage");
+    });
+
+    expect(saveContext).nthCalledWith(3, []);
   });
 });

@@ -42,7 +42,7 @@ export const FormLayoutComponent = ({
 
             <Notifications />
 
-            {screeningError && isDisplayScreeningError ? (
+            {screeningError.error && isDisplayScreeningError ? (
               <ApplicationStatus {...screeningError} />
             ) : errorCode ? (
               <ApplicationStatus icon={errorIcon} text={ERROR_MESSAGES[errorCode]} />

@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export const LayoutContext = React.createContext({});
 
-let setValues;
+export let setValues;
 
 export const LayoutProvider = ({ children }) => {
+  const { pathname } = useLocation();
   const [contextValue, setContextValues] = useState([]);
   setValues = setContextValues;
+
+  useEffect(() => {
+    contextValue.length && setContextValues([]);
+  }, [pathname]);
 
   return <LayoutContext.Provider value={contextValue}>{children}</LayoutContext.Provider>;
 };
