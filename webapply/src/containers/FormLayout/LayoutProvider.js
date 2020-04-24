@@ -12,6 +12,7 @@ export const LayoutProvider = ({ children }) => {
 
   useEffect(() => {
     contextValue.length && setContextValues([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return <LayoutContext.Provider value={contextValue}>{children}</LayoutContext.Provider>;
