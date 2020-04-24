@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 
 import { FinalQuestions } from "./components/FinalQuestions";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../FormLayout";
 import { getCompanySteps, getSignatoriesSteps } from "../../store/selectors/completedSteps";
+import { useViewId } from "../../utils/useViewId";
 import { checkAllStepsCompleted } from "../../utils/checkAllStepsCompleted";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper, NEXT } from "../../constants";
@@ -11,6 +13,8 @@ import routes from "../../routes";
 
 export const FinalQuestionsPage = ({ signatories, sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
+  useLayoutParams(true, true);
+  useViewId(true);
   const pushHistory = useTrackingHistory();
 
   const [expandedSignatoryIndex, setExpandedSignatoryIndex] = useState(null);

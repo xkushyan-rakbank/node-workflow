@@ -3,11 +3,15 @@ import { render } from "@testing-library/react";
 
 import { ApplicationSubmittedContainer } from "../../src/containers/ApplicationSubmitted/ApplicationSubmitted";
 import { ApplicationSubmittedComponent } from "../../src/containers/ApplicationSubmitted/components/ApplicationSubmitted";
+import { useLayoutParams } from "../../src/containers/FormLayout";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+import { useViewId } from "../../src/utils/useViewId";
 import { formStepper } from "../../src/constants";
 
 jest.mock("../../src/containers/ApplicationSubmitted/components/ApplicationSubmitted");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../src/utils/useViewId");
+jest.mock("../../src/containers/FormLayout");
 
 describe("FormLayout tests", () => {
   const accountNumbers = "some account numbers";
@@ -21,6 +25,8 @@ describe("FormLayout tests", () => {
   beforeEach(() => {
     ApplicationSubmittedComponent.mockImplementation(() => null);
     useFormNavigation.mockImplementation(() => {});
+    useLayoutParams.mockImplementation(() => {});
+    useViewId.mockImplementation(() => {});
 
     jest.clearAllMocks();
   });
@@ -32,11 +38,15 @@ describe("FormLayout tests", () => {
     expect(ApplicationSubmittedComponent.mock.calls[0][0]).toEqual(props);
   });
 
-  it("should call useFormNavigation", () => {
+  it("should call `useFormNavigation` hook", () => {
     render(<ApplicationSubmittedContainer {...props} />);
 
-    expect(ApplicationSubmittedComponent).toHaveBeenCalledTimes(1);
-    expect(useFormNavigation).toHaveBeenCalled();
-    expect(useFormNavigation.mock.calls[0]).toEqual([[true, true, formStepper]]);
+    expect(useFormNavigation).toHaveBeenCalledWith([true, true, formStepper]);
+  });
+
+  it("should call `useViewId` hook", () => {
+    render(<ApplicationSubmittedContainer {...props} />);
+
+    expect(useViewId).toHaveBeenCalledWith();
   });
 });

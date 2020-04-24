@@ -88,8 +88,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mainContainer: {
-    width: ({ isVerticalPagination, isSmallContentWidth }) => {
-      if (isVerticalPagination) return "100%";
+    width: ({ hasVerticalPagination, isSmallContentWidth }) => {
+      if (hasVerticalPagination) return "100%";
       if (isSmallContentWidth) return contentWidthSM;
       return contentWidth;
     },

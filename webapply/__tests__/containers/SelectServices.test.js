@@ -3,6 +3,8 @@ import { render, act } from "@testing-library/react";
 
 import { SelectServicesPage } from "../../src/containers/SelectServices/SelectServicesPage";
 import { SelectServices } from "../../src/containers/SelectServices/components/SelectServices";
+import { useLayoutParams } from "../../src/containers/FormLayout";
+import { useViewId } from "../../src/utils/useViewId";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
 import { useStep } from "../../src/utils/useStep";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
@@ -15,6 +17,8 @@ import {
 import routes from "../../src/routes";
 
 jest.mock("../../src/containers/SelectServices/components/SelectServices");
+jest.mock("../../src/containers/FormLayout");
+jest.mock("../../src/utils/useViewId");
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/utils/useStep");
@@ -34,6 +38,8 @@ describe("SelectServices test", () => {
 
   SelectServices.mockReturnValue(null);
   useFormNavigation.mockReturnValue(null);
+  useLayoutParams.mockReturnValue(null);
+  useViewId.mockReturnValue(null);
   useTrackingHistory.mockReturnValue(pushHistory);
 
   describe("When sendProspectToAPI resolved", () => {
@@ -55,7 +61,11 @@ describe("SelectServices test", () => {
       render(<SelectServicesPage {...props} />);
     });
 
-    it("should call `useFormNavigation`", () => {
+    it("should call `useViewId` hook", () => {
+      expect(useViewId).toHaveBeenCalledWith(true);
+    });
+
+    it("should call `useFormNavigation` hook", () => {
       expect(useFormNavigation).toHaveBeenCalledWith([false, true, formStepper]);
     });
 

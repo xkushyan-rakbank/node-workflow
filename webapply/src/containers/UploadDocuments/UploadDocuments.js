@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { UploadDocumentsComponent } from "./components/UploadDocuments/UploadDocuments";
+import { useLayoutParams } from "../FormLayout";
 import { formStepper, NEXT } from "../../constants";
+import { useViewId } from "../../utils/useViewId";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 
@@ -23,6 +25,8 @@ export const UploadDocuments = ({
   const pushHistory = useTrackingHistory();
   const [isLoading, setIsLoading] = useState(false);
   useFormNavigation([false, true, formStepper]);
+  useLayoutParams(true, true);
+  useViewId();
 
   useEffect(() => {
     retrieveDocDetails();

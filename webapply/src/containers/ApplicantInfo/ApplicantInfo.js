@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper } from "../../constants";
@@ -20,6 +21,7 @@ export const ApplicantInfoContainer = ({
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
   useFormNavigation([false, false, formStepper]);
+  useLayoutParams(true);
 
   useEffect(() => {
     receiveAppConfig();

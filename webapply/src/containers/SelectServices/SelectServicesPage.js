@@ -1,7 +1,9 @@
 import React, { useCallback } from "react";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../FormLayout";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper, SAVE } from "../../constants";
+import { useViewId } from "../../utils/useViewId";
 import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
@@ -12,6 +14,8 @@ import { SelectServices } from "./components/SelectServices";
 export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
   const pushHistory = useTrackingHistory();
   useFormNavigation([false, true, formStepper]);
+  useLayoutParams(true, true);
+  useViewId(true);
 
   const [
     activeStep,

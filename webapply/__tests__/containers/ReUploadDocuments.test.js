@@ -1,12 +1,15 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { render } from "@testing-library/react";
 
 import { ReUploadDocumentsComponent } from "../../src/containers/ReUploadDocuments/components/ReUploadDocuments/ReUploadDocuments";
 import { ReUploadDocuments } from "../../src/containers/ReUploadDocuments/ReUploadDocuments";
+import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../src/containers/FormLayout/LayoutProvider";
 import { getOtherDocuments } from "../../src/store/selectors/appConfig";
 import { getProgress, getUploadErrors } from "../../src/store/selectors/uploadDocuments";
 import { useTrackingHistory } from "../../src/utils/useTrackingHistory";
-import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
+import { useViewId } from "../../src/utils/useViewId";
 import {
   addOtherDocument,
   cancelDocUpload,
@@ -16,7 +19,6 @@ import {
 } from "../../src/store/actions/uploadDocuments";
 import { sendProspectToAPIPromisify } from "../../src/store/actions/sendProspectToAPI";
 import { NEXT, SUBMIT, UPLOADED } from "../../src/constants";
-import { useDispatch } from "react-redux";
 import routes from "../../src/routes";
 
 jest.mock("../../src/containers/ReUploadDocuments/components/ReUploadDocuments/ReUploadDocuments");
@@ -24,8 +26,10 @@ jest.mock("../../src/store/selectors/appConfig");
 jest.mock("../../src/store/selectors/uploadDocuments");
 jest.mock("../../src/utils/useTrackingHistory");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
+jest.mock("../../src/containers/FormLayout/LayoutProvider");
 jest.mock("../../src/store/actions/uploadDocuments");
 jest.mock("../../src/store/actions/sendProspectToAPI");
+jest.mock("../../src/utils/useViewId");
 jest.mock("react-redux", () => ({
   useSelector: jest.fn().mockImplementation(fn => fn()),
   useDispatch: jest
@@ -48,6 +52,9 @@ describe("ReUploadDocuments container tests", () => {
   getUploadErrors.mockReturnValue(uploadErrors);
   useTrackingHistory.mockReturnValue(pushHistory);
   ReUploadDocumentsComponent.mockImplementation(() => null);
+  useFormNavigation.mockImplementation(() => {});
+  useViewId.mockImplementation(() => {});
+  useLayoutParams.mockImplementation(() => {});
 
   beforeEach(() => {
     sendProspectToAPIPromisify.mockImplementation(() => Promise.resolve());
@@ -67,11 +74,16 @@ describe("ReUploadDocuments container tests", () => {
     });
   });
 
-  it("should useFormNavigation", () => {
+  it("should call `useViewId` hook", () => {
     render(<ReUploadDocuments />);
 
-    expect(useFormNavigation).toHaveBeenCalled();
-    expect(useFormNavigation.mock.calls[0]).toEqual([[true, false]]);
+    expect(useViewId).toHaveBeenCalledWith();
+  });
+
+  it("should call `useFormNavigation` hook", () => {
+    render(<ReUploadDocuments />);
+
+    expect(useFormNavigation).toHaveBeenCalledWith([true, false]);
   });
 
   it("should dispatch retrieveDocDetails on mount", () => {

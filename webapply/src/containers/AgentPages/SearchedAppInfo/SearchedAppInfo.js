@@ -3,6 +3,7 @@ import get from "lodash/get";
 
 import { SearchedAppInfoComponent } from "./components/SearchedAppInfo";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../FormLayout";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
 
@@ -18,9 +19,11 @@ export const SearchedAppInfoContainer = ({
   updateProspectId,
   resetProspect
 }) => {
+  useFormNavigation([false, false, searchProspectStepper]);
+  useLayoutParams(true);
+
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
-  useFormNavigation([false, false, searchProspectStepper]);
 
   const handleSetStep = nextStep => {
     if (initialAvailableSteps.includes(nextStep)) {

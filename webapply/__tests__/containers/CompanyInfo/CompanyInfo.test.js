@@ -3,8 +3,10 @@ import { render, act } from "@testing-library/react";
 
 import { CompanyInfo } from "../../../src/containers/CompanyInfo/components/CompanyInfo";
 import { CompanyInfoPage } from "../../../src/containers/CompanyInfo/CompanyInfoPage";
+import { useLayoutParams } from "../../../src/containers/FormLayout";
 import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
 import { useTrackingHistory } from "../../../src/utils/useTrackingHistory";
+import { useViewId } from "../../../src/utils/useViewId";
 import { useStep } from "../../../src/utils/useStep";
 import { checkAllStepsCompleted } from "../../../src/utils/checkAllStepsCompleted";
 import { formStepper, CONTINUE, SAVE, NEXT } from "../../../src/constants";
@@ -15,10 +17,12 @@ import {
 import routes from "../../../src/routes";
 
 jest.mock("../../../src/containers/CompanyInfo/components/CompanyInfo");
+jest.mock("../../../src/containers/FormLayout");
 jest.mock("../../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../../src/utils/useTrackingHistory");
 jest.mock("../../../src/utils/useStep");
 jest.mock("../../../src/utils/checkAllStepsCompleted");
+jest.mock("../../../src/utils/useViewId");
 
 describe("CompanyInfo test", () => {
   const isSendingProspect = "some value";
@@ -40,7 +44,9 @@ describe("CompanyInfo test", () => {
   const createFormChangeHandler = "some create handler";
   const isAllStepsCompleted = "some bool";
   const event = "some event";
+  useLayoutParams.mockReturnValue(null);
   useFormNavigation.mockReturnValue(null);
+  useViewId.mockReturnValue(null);
   CompanyInfo.mockReturnValue(null);
   useTrackingHistory.mockReturnValue(pushHistory);
   checkAllStepsCompleted.mockReturnValue(isAllStepsCompleted);
@@ -64,8 +70,12 @@ describe("CompanyInfo test", () => {
       render(<CompanyInfoPage {...props} />);
     });
 
-    it("should call `useFormNavigation`", () => {
+    it("should call `useFormNavigation` hook", () => {
       expect(useFormNavigation).toHaveBeenCalledWith([false, true, formStepper]);
+    });
+
+    it("should call `useViewId` hook", () => {
+      expect(useViewId).toHaveBeenCalledWith(true);
     });
 
     it("should call `useTrackingHistory`", () => {
