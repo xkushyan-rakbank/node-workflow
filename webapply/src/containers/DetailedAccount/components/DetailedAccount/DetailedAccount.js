@@ -8,10 +8,10 @@ import { BackgroundVideoPlayer } from "../../../../components/BackgroundVideoPla
 import { useStyles } from "./styled";
 
 export const DetailedAccountComponent = ({
-  setCurrentSection,
   accountType,
   selectedAccountType,
-  isIslamicBanking
+  isIslamicBanking,
+  handleClickonReadMoreBtn
 }) => {
   const classes = useStyles();
   const firstSection = useRef(null);
@@ -29,7 +29,7 @@ export const DetailedAccountComponent = ({
         <BackgroundVideoPlayer
           video={getVideoByAccountType(accountType, isIslamicBanking)}
           classes={{ container: "hide-on-mobile" }}
-          handleClick={() => setCurrentSection(1)}
+          handleClick={handleClickonReadMoreBtn}
         />
       </div>
       <div ref={secondSection} className={classes.section}>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
-import { render } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
 
 import { DetailedAccount as DetailedAccountContainer } from "../../src/containers/DetailedAccount/DetailedAccount";
 import { DetailedAccountComponent } from "../../src/containers/DetailedAccount/components/DetailedAccount";
@@ -10,10 +10,12 @@ import { useFormNavigation } from "../../src/components/FormNavigation/FormNavig
 import { useAccountTypeByPathname } from "../../src/utils/useAccountTypeByPathname";
 import { getAccountType } from "../../src/store/selectors/appConfig";
 import { VerticalPaginationContext } from "../../src/components/VerticalPagination";
+import { sendGoogleAnalyticsMetrics } from "../../src/store/actions/googleAnalytics";
 
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/utils/useAccountTypeByPathname");
 jest.mock("../../src/store/selectors/appConfig");
+jest.mock("../../src/store/actions/googleAnalytics");
 jest.mock("../../src/containers/DetailedAccount/components/DetailedAccount");
 jest.mock("../../src/containers/FormLayout");
 
@@ -21,6 +23,7 @@ describe("DetailedAccount test", () => {
   const accountType = "some accountType";
   const selectedAccountType = "some selected account type";
   const isIslamicBanking = "some bool";
+  const sendGoogleAnalyticsMetricsAction = { type: "some action type" };
   const setCurrentSection = jest.fn();
   const contextValue = { setCurrentSection };
   const mockStore = configureStore([]);
@@ -32,6 +35,7 @@ describe("DetailedAccount test", () => {
     useAccountTypeByPathname.mockReturnValue({ accountType, isIslamicBanking });
     DetailedAccountComponent.mockReturnValue(null);
     getAccountType.mockReturnValue(selectedAccountType);
+    sendGoogleAnalyticsMetrics.mockReturnValue(sendGoogleAnalyticsMetricsAction);
 
     render(
       <Provider store={store}>
@@ -51,11 +55,20 @@ describe("DetailedAccount test", () => {
   });
 
   it("should render DetailedAccountComponent", () => {
-    expect(DetailedAccountComponent.mock.calls[0][0]).toEqual({
+    expect(DetailedAccountComponent.mock.calls[0][0]).toMatchObject({
       accountType,
       isIslamicBanking,
-      setCurrentSection,
       selectedAccountType
     });
+  });
+
+  it("should on click `Read more` button", () => {
+    act(() => {
+      DetailedAccountComponent.mock.calls[0][0].handleClickonReadMoreBtn();
+    });
+
+    expect(setCurrentSection).toBeCalledWith(1);
+    expect(sendGoogleAnalyticsMetrics).toBeCalled();
+    expect(store.getActions()).toEqual([sendGoogleAnalyticsMetricsAction]);
   });
 });
