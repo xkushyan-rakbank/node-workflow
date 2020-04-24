@@ -62,7 +62,7 @@ describe("DetailedAccount test", () => {
     });
   });
 
-  it("should on click `Read more` button", () => {
+  it("should change current section and send tag to analytics on click `Read more` button", () => {
     act(() => {
       DetailedAccountComponent.mock.calls[0][0].handleClickonReadMoreBtn();
     });
