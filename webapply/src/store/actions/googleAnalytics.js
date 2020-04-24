@@ -13,14 +13,12 @@ export const appendGaEventToAction = (action, gaEvent = null) => {
   return action;
 };
 
-export function sendGoogleAnalyticsMetrics(event) {
-  return {
-    type: SEND_GOOGLE_ANALYTICS_METRICS,
-    event,
-    meta: {
-      analytics: {
-        eventType: event
-      }
+export const sendGoogleAnalyticsMetrics = event => ({
+  type: SEND_GOOGLE_ANALYTICS_METRICS,
+  event,
+  meta: {
+    analytics: {
+      eventType: event
     }
-  };
-}
+  }
+});

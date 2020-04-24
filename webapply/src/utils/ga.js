@@ -6,8 +6,8 @@ export const GA = {
 };
 
 export const GA_EVENTS = {
-  PRODUCT_PAGE: "ProductPage", // ???
-  PRODUCT_REVIEW_PAGE: "ProductReviewPage", // ???
+  PRODUCT_PAGE: "ProductPage",
+  PRODUCT_REVIEW_PAGE: "ProductReviewPage",
   PRODUCT_APPLY: "ProductApply",
   PRODUCT_START: "ProductStart",
   PRODUCT_BASIC_INFORMATION: "ProductBasicInformation",
