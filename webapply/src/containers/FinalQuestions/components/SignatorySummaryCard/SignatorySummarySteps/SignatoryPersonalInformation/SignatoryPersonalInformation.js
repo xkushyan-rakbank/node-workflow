@@ -18,25 +18,31 @@ import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/va
 
 import { useStyles } from "./styled";
 
-export const signatoryPersonalInformationSchema = Yup.object().shape({
-  maritalStatus: Yup.string().required(getRequiredMessage("Marital Status")),
-  mothersMaidenName: Yup.string()
-    .required(getRequiredMessage("Mother's maiden name"))
-    // eslint-disable-next-line no-template-curly-in-string
-    .max(MAX_MOTHERS_MAIDEN_NAME_LENGTH, "Maximum ${max} characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("Mother's maiden name")),
-  maritalStatusOthers: Yup.string().when("maritalStatus", {
-    is: value => value === OTHER_OPTION_CODE,
-    then: Yup.string()
-      .required(getRequiredMessage("Other"))
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
-  })
-});
+export const createSignatoryPersonalInformationSchema = isSignatory =>
+  Yup.object().shape({
+    maritalStatus: Yup.string().test(
+      "required",
+      getRequiredMessage("Marital Status"),
+      value => !isSignatory || value
+    ),
+    mothersMaidenName: Yup.string()
+      .test("required", getRequiredMessage("Mother's maiden name"), value => !isSignatory || value)
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_MOTHERS_MAIDEN_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(NAME_REGEX, getInvalidMessage("Mother's maiden name")),
+    maritalStatusOthers: Yup.string().when("maritalStatus", {
+      is: value => value === OTHER_OPTION_CODE,
+      then: Yup.string()
+        .required(getRequiredMessage("Other"))
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
+    })
+  });
 
 export const SignatoryPersonalInformation = ({
   index,
   handleContinue,
-  createFormChangeHandler
+  createFormChangeHandler,
+  isSignatory
 }) => {
   const classes = useStyles();
 
@@ -48,7 +54,7 @@ export const SignatoryPersonalInformation = ({
         maritalStatusOthers: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={signatoryPersonalInformationSchema}
+      validationSchema={createSignatoryPersonalInformationSchema(isSignatory)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values }) => (
@@ -59,7 +65,7 @@ export const SignatoryPersonalInformation = ({
                 name="maritalStatus"
                 path={`prospect.signatoryInfo[${index}].maritalStatus`}
                 datalistId="maritalStatus"
-                label="Marital Status"
+                label={`Marital Status${!isSignatory ? " (optional)" : ""}`}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
@@ -69,7 +75,7 @@ export const SignatoryPersonalInformation = ({
               <Field
                 name="mothersMaidenName"
                 path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
-                label="Mother's maiden name"
+                label={`Mother's maiden name${!isSignatory ? " (optional)" : ""}`}
                 placeholder="Mother's maiden name"
                 component={Input}
                 contextualHelpText="Provide mother's surname before marriage"
