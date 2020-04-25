@@ -43,7 +43,8 @@ public class OtpServiceEnabledImplTest {
     public void verifyIfResultTrue() {
         JsonNode requestJSON = RequestFactory.newGenerateOtpValidationRequest();
         Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/otp", HttpMethod.POST, requestJSON,
-                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null)).thenReturn(ResponseEntity.ok(ResponseFactory.newOtpVerifyResponseVerified()));
+                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null))
+                .thenReturn(ResponseEntity.ok(ResponseFactory.newOtpVerifyResponseVerified()));
         final OtpVerifyGenerateResponse response = otpService.verifyOrGenerate(requestJSON);
         boolean[] result = new boolean[1];
         HttpEntity<?>[] httpResult = new HttpEntity[1];

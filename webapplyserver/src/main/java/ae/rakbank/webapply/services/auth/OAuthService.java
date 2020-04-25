@@ -29,7 +29,7 @@ import static ae.rakbank.webapply.constants.AuthConstants.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-class OAuthService {
+public class OAuthService {
 
     // 30 seconds shift to prevent access_token expire error while calling the API
     static final int TIME_SHIFT_FOR_REQUEST = 30;
@@ -39,7 +39,7 @@ class OAuthService {
     private final OauthClient oauthClient;
     private final ContextOAuthService contextOAuthService;
 
-    String getAndUpdateContextOauthToken() {
+    public String getAndUpdateContextOauthToken() {
         ResponseEntity<JsonNode> oAuthContextResponse =
                 (ResponseEntity<JsonNode>) servletContext.getAttribute(OAUTH_CONTEXT_OBJECT_KEY);
 

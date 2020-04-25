@@ -21,6 +21,8 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static ae.rakbank.webapply.constants.ConfigurationKeys.SHOULD_SEND_ERROR_DEBUG_DETAILS;
+
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -34,7 +36,7 @@ public class AdviceController extends ResponseEntityExceptionHandler {
     public void init() {
         JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
         String errorDebugDetails = appConfigJSON.get("OtherConfigs")
-                .get(EnvUtil.getEnv()).get("ShouldSendErrorDebugDetails").asText();
+                .get(EnvUtil.getEnv()).get(SHOULD_SEND_ERROR_DEBUG_DETAILS).asText();
         if (StringUtils.isEmpty(errorDebugDetails)) {
             shouldSendErrorDebugDetails = false;
         } else {
