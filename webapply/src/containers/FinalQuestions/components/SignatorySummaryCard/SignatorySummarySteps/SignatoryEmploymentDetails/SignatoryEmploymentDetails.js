@@ -29,12 +29,24 @@ import {
 
 import { useStyles } from "./styled";
 
-export const signatoryEmploymentDetailsSchema = () =>
+export const createSignatoryEmploymentDetailsSchema = isSignatory =>
   Yup.object().shape({
-    qualification: Yup.string().required(getRequiredMessage("Qualification")),
-    employmentType: Yup.string().required(getRequiredMessage("Employment Type")),
+    qualification: Yup.string().test(
+      "required",
+      getRequiredMessage("Qualification"),
+      value => !isSignatory || value
+    ),
+    employmentType: Yup.string().test(
+      "required",
+      getRequiredMessage("Employment Type"),
+      value => !isSignatory || value
+    ),
     totalExperienceYrs: Yup.string()
-      .required(getRequiredMessage("Background information of the signatory"))
+      .test(
+        "required",
+        getRequiredMessage("Background information of the signatory"),
+        value => !isSignatory || value
+      )
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
       .matches(
@@ -48,12 +60,12 @@ export const signatoryEmploymentDetailsSchema = () =>
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
     }),
     employerName: Yup.string()
-      .required(getRequiredMessage("Employer name"))
+      .test("required", getRequiredMessage("Employer name"), value => !isSignatory || value)
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Employer name")),
     designation: Yup.string()
-      .required(getRequiredMessage("Designation"))
+      .test("required", getRequiredMessage("Designation"), value => !isSignatory || value)
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Designation"))
   });
 
@@ -61,7 +73,8 @@ export const SignatoryEmploymentDetailsComponent = ({
   index,
   companyName,
   handleContinue,
-  createFormChangeHandler
+  createFormChangeHandler,
+  isSignatory
 }) => {
   const classes = useStyles();
 
@@ -79,7 +92,7 @@ export const SignatoryEmploymentDetailsComponent = ({
         employerName: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={signatoryEmploymentDetailsSchema}
+      validationSchema={createSignatoryEmploymentDetailsSchema(isSignatory)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values, setFieldValue }) => (
@@ -90,7 +103,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                 name="qualification"
                 path={`${basePath}.kycDetails.qualification`}
                 datalistId="qualification"
-                label="Qualification"
+                label={`Qualification${!isSignatory ? " (optional)" : ""}`}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
@@ -101,7 +114,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                 name="employmentType"
                 path={`${basePath}.employmentDetails.employmentType`}
                 datalistId="employmentType"
-                label="Employment Type"
+                label={`Employment Type${!isSignatory ? " (optional)" : ""}`}
                 isSearchable
                 component={SelectAutocomplete}
                 contextualHelpProps={{ isDisableHoverListener: false }}
@@ -133,7 +146,7 @@ export const SignatoryEmploymentDetailsComponent = ({
               <Field
                 name="designation"
                 path={`${basePath}.employmentDetails.designation`}
-                label="Designation"
+                label={`Designation${!isSignatory ? " (optional)" : ""}`}
                 placeholder="Designation"
                 component={Input}
                 contextualHelpText="If unemployed, then mention the designation as 'Unemployed'"
@@ -160,7 +173,7 @@ export const SignatoryEmploymentDetailsComponent = ({
               <Field
                 name="employerName"
                 path={`${basePath}.employmentDetails.employerName`}
-                label="Employer name / Company name"
+                label={`Employer name / Company name${!isSignatory ? " (optional)" : ""}`}
                 placeholder="Employer name"
                 component={Input}
                 disabled={values[`isWorkAtTheCompany${index}`]}
@@ -171,7 +184,9 @@ export const SignatoryEmploymentDetailsComponent = ({
               <Field
                 name="totalExperienceYrs"
                 path={`${basePath}.employmentDetails.totalExperienceYrs`}
-                label="Background information of the signatory (Maximum 255 characters)"
+                label={`Background information of the signatory (Maximum 255 characters)${
+                  !isSignatory ? " (optional)" : ""
+                }`}
                 placeholder="Work Experience"
                 component={Input}
                 multiline

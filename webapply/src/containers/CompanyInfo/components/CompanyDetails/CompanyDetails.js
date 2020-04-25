@@ -85,7 +85,7 @@ export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
             <Grid item md={6} sm={12}>
               <Field
                 name="vatRegistrationNumber"
-                label="VAT registration number (Optional)"
+                label="VAT registration number (optional)"
                 placeholder="123456789012345"
                 path="prospect.organizationInfo.vatRegistrationNumber"
                 infoTitle="This should be the same as your TRN number of UAE"

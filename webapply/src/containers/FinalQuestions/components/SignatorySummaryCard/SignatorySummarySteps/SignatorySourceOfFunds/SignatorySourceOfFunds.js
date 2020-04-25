@@ -24,25 +24,35 @@ import {
 import { OTHER_SOURCE_OF_WEALTH } from "./constants";
 import { useStyles } from "./styled";
 
-export const signatorySourceOfFundsSchema = Yup.object().shape({
-  sourceOfWealth: Yup.array()
-    .of(
-      Yup.object().shape({
-        wealthType: Yup.string(),
-        others: Yup.string()
+export const createSignatorySourceOfFundsSchema = isSignatory =>
+  Yup.object().shape({
+    sourceOfWealth: Yup.array()
+      .of(
+        Yup.object().shape({
+          wealthType: Yup.string(),
+          others: Yup.string()
+        })
+      )
+      .test(
+        "required",
+        getRequiredMessage("Source of funds"),
+        value => !isSignatory || value.length
+      ),
+    others: Yup.string()
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
+      .when("sourceOfWealth", {
+        is: sourceOfWealth =>
+          sourceOfWealth.map(value => value.wealthType).includes(OTHER_SOURCE_OF_WEALTH),
+        then: Yup.string().required()
       })
-    )
-    .required(getRequiredMessage("Source of funds")),
-  others: Yup.string()
-    .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
-    .when("sourceOfWealth", {
-      is: sourceOfWealth =>
-        sourceOfWealth.map(value => value.wealthType).includes(OTHER_SOURCE_OF_WEALTH),
-      then: Yup.string().required()
-    })
-});
+  });
 
-export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChangeHandler }) => {
+export const SignatorySourceOfFunds = ({
+  index,
+  handleContinue,
+  createFormChangeHandler,
+  isSignatory
+}) => {
   const classes = useStyles();
 
   return (
@@ -52,7 +62,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChange
         others: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={signatorySourceOfFundsSchema}
+      validationSchema={createSignatorySourceOfFundsSchema(isSignatory)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values, setFieldValue }) => (
@@ -64,7 +74,7 @@ export const SignatorySourceOfFunds = ({ index, handleContinue, createFormChange
                 name="sourceOfWealth"
                 path={`prospect.signatoryInfo[${index}].kycDetails.sourceOfWealth`}
                 datalistId="wealthType"
-                label="Source of funds"
+                label={`Source of funds${!isSignatory ? " (optional)" : ""}`}
                 onChange={selectedValue => {
                   const withOption = selectedValue.includes(OTHER_SOURCE_OF_WEALTH);
                   const sourceOfWealth = selectedValue.map(value => ({

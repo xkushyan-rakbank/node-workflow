@@ -255,10 +255,7 @@
 				"isPEP": "",
 				"qualification": "",
 				"experienceInYrs": "",
-				"sourceOfWealth": [{
-					"wealthType": "",
-					"others": ""
-				}]
+				"sourceOfWealth": []
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",

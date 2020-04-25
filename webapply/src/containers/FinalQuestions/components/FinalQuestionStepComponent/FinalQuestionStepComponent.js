@@ -9,7 +9,8 @@ export const FinalQuestionStepComponent = ({
   handleFinalStepContinue,
   sendProspectToAPI,
   stepsArray,
-  page
+  page,
+  ...rest
 }) => {
   const [
     activeStep,
@@ -62,6 +63,7 @@ export const FinalQuestionStepComponent = ({
       handleContinue={handleContinue(item.eventName)}
       createFormChangeHandler={createFormChangeHandler}
       stepForm={item.component}
+      {...rest}
     />
   ));
 };
