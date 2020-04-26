@@ -20,7 +20,7 @@ import {
   MAX_COMPANY_NAME_LENGTH,
   MAX_TRADE_LICENSE_LENGTH
 } from "../CompanyBusinessRelationships/constants";
-import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
   getInvalidMessage
@@ -39,7 +39,8 @@ const companyBranchesAndSubsidiariesSchema = () =>
             .required(getRequiredMessage("Company name"))
             // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name"))
+            .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
           emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
           tradeLicenseNo: Yup.string()
             .required(getRequiredMessage("Trade license number"))
@@ -57,7 +58,8 @@ const companyBranchesAndSubsidiariesSchema = () =>
             .required(getRequiredMessage("Company name"))
             // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name"))
+            .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
           country: Yup.string().required(getRequiredMessage("Country"))
         })
       )
