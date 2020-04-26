@@ -1,7 +1,6 @@
 package ae.rakbank.webapply.services.otp;
 
 import ae.rakbank.webapply.client.DehClient;
-import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
@@ -9,14 +8,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-
-import static ae.rakbank.webapply.constants.MessageConstants.TOO_MANY_REQUEST_MESSAGE;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,18 +42,9 @@ class OtpServiceImpl implements OtpService {
     }
 
     private OtpVerifyGenerateResponse verifyOrGenerateIfOptEnabled(JsonNode requestJSON) {
-        final ResponseEntity<?> result;
-        try {
-            result = dehClient.invokeApiEndpoint(url, HttpMethod.POST, requestJSON,
-                    "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
-        } catch (ApiException e) {
-            if (HttpStatus.TOO_MANY_REQUESTS.equals(e.getStatus())) {
-                e.getApiError().setMessage(TOO_MANY_REQUEST_MESSAGE);
-                log.error("Too many requests for OTP", e);
-                throw e;
-            }
-            throw e;
-        }
+        final ResponseEntity<?> result = dehClient.invokeApiEndpoint(url, HttpMethod.POST, requestJSON,
+                "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
+
         String action = requestJSON.get("action").asText();
         boolean verifyResult = "verify".equalsIgnoreCase(action) && extractOtpVerificationResult(result);
 
