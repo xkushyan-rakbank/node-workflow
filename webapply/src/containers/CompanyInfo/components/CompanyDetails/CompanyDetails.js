@@ -11,7 +11,11 @@ import {
   NumberFormat
 } from "../../../../components/Form";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-import { NUMBER_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../utils/validation";
+import {
+  NUMBER_REGEX,
+  SPECIAL_CHARACTERS_REGEX,
+  checkIsTrimmed
+} from "../../../../utils/validation";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
@@ -29,7 +33,8 @@ const companyDetailsSchema = () =>
       .required(getRequiredMessage("Company name"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name")),
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name"))
+      .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
     vatRegistrationNumber: Yup.string().matches(
       NUMBER_REGEX,
       getInvalidMessage("Registration number")
