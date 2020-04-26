@@ -21,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.ServletContext;
 
 import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_CONTEXT_OBJECT_KEY;
-import static ae.rakbank.webapply.constants.MessageConstants.TOO_MANY_REQUEST_MESSAGE;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -62,7 +61,6 @@ public class OtpServiceImplTest {
             assertEquals(HttpStatus.TOO_MANY_REQUESTS, e.getStatus());
             assertEquals(HttpStatus.TOO_MANY_REQUESTS, e.getApiError().getStatus());
             assertEquals(HttpStatus.TOO_MANY_REQUESTS.value(), e.getApiError().getStatusCode().intValue());
-            assertEquals(TOO_MANY_REQUEST_MESSAGE, e.getApiError().getMessage());
         }
     }
 }
