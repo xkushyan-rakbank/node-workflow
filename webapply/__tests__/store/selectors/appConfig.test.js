@@ -190,6 +190,9 @@ describe("appConfig selector test", () => {
   it("should return prospect id", () => {
     expect(getProspectId(state)).toBe(prospectId);
   });
+  it("should return default value", () => {
+    expect(getProspectId({ appConfig: {} })).toBe("");
+  });
 
   it("should return recaptcha site key", () => {
     expect(getReCaptchaSiteKey(state)).toBe(reCaptchaSiteKey);
