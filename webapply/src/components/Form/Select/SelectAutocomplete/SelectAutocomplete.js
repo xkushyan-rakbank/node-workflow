@@ -49,13 +49,6 @@ const SelectAutocompleteBase = ({
     ? options.find(option => extractValue(option) === field.value)
     : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
-  const isShrink = () => {
-    if (hasFocus) return true;
-    if (multiple && renderValue.length) return true;
-    if (!multiple && !!renderValue) return true;
-    return false;
-  };
-
   return (
     <FormControl
       classes={{ root: classes.formControlRoot }}
@@ -90,7 +83,7 @@ const SelectAutocompleteBase = ({
             label,
             error: !!isError,
             InputLabelProps: {
-              shrink: isShrink()
+              shrink: hasFocus || !!(Array.isArray(renderValue) ? renderValue.length : renderValue)
             }
           }}
           getOptionLabel={extractLabel}
