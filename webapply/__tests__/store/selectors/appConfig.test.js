@@ -190,7 +190,8 @@ describe("appConfig selector test", () => {
   it("should return prospect id", () => {
     expect(getProspectId(state)).toBe(prospectId);
   });
-  it("should return default value", () => {
+
+  it("should return empty string if prospect id doesn't exist", () => {
     expect(getProspectId({ appConfig: {} })).toBe("");
   });
 
