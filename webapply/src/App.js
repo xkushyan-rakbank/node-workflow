@@ -14,7 +14,8 @@ import {
   ProspectProtectedRoute,
   OTPProtectedRoute,
   AccountTypeProtectedRoute,
-  ProtectedRoute
+  ProtectedRoute,
+  OTPGeneratedProtectedRoute
 } from "./containers/Routers";
 
 import { receiveAppConfig } from "./store/actions/appConfig";
@@ -111,7 +112,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 component={DetailedAccount}
               />
               <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
-              <ProtectedRoute
+              <OTPGeneratedProtectedRoute
                 exact
                 path={routes.comeBackLoginVerification}
                 component={ComeBackVerification}
