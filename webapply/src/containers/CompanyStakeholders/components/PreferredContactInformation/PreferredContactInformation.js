@@ -17,7 +17,7 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
-const getPreferredContactInformationSchema = () =>
+const createPreferredContactInformationSchema = () =>
   Yup.object().shape({
     primaryEmail: Yup.string()
       .required(getRequiredMessage("E-mail address"))
@@ -52,7 +52,7 @@ const PreferredContactInformationStep = ({
       primaryPhoneNo: ""
     }}
     onSubmit={handleContinue}
-    validationSchema={isSignatory && getPreferredContactInformationSchema}
+    validationSchema={isSignatory && createPreferredContactInformationSchema}
     validateOnChange={false}
   >
     {createFormChangeHandler(() => (

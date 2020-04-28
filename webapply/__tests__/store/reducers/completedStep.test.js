@@ -3,7 +3,8 @@ import { LOAD_META_DATA } from "../../../src/store/actions/appConfig";
 import {
   SET_STEP_STATUS,
   SET_INITIAL_STEPS,
-  REMOVE_SIGNATORY
+  REMOVE_SIGNATORY,
+  SET_STEPS_STATUS
 } from "../../../src/store/actions/completedSteps";
 import { log } from "../../../src/utils/loggger";
 
@@ -51,6 +52,25 @@ describe("completedSteps reducer test", () => {
         payload: { ...step, step: 0, status }
       })
     ).toStrictEqual([{ ...step, step: 0, status }, { ...step, step: 1 }]);
+  });
+
+  it("should handle SET_STEPS_STATUS action type", () => {
+    const flowId = "some flowId";
+    const initialState = [
+      { flowId, step: 0, status: "some status 1" },
+      { flowId, step: 1, status: "some status 2" }
+    ];
+    const steps = [{ flowId, step: 0 }, { flowId, step: 1 }];
+    const status = "some status";
+    const action = {
+      type: SET_STEPS_STATUS,
+      payload: { steps, status }
+    };
+
+    expect(reducer(initialState, action)).toStrictEqual([
+      { flowId, step: 0, status },
+      { flowId, step: 1, status }
+    ]);
   });
 
   it("should handle SET_INITIAL_STEPS action type", () => {

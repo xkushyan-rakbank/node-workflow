@@ -1,8 +1,10 @@
 import {
   SET_STEP_STATUS,
+  SET_STEPS_STATUS,
   SET_INITIAL_STEPS,
   REMOVE_SIGNATORY,
   setStepStatus,
+  setStepsStatus,
   setInitialSteps,
   removeSignatory
 } from "../../../src/store/actions/completedSteps";
@@ -17,6 +19,16 @@ describe("actions for completedSteps", () => {
       payload: { flowId, step, status }
     };
     expect(setStepStatus(flowId, step, status)).toEqual(expectedAction);
+  });
+
+  it("should create an action to set steps", () => {
+    const steps = "some steps";
+    const status = "some status";
+    const expectedAction = {
+      type: SET_STEPS_STATUS,
+      payload: { steps, status }
+    };
+    expect(setStepsStatus(steps, status)).toEqual(expectedAction);
   });
 
   it("should create an action to set initial steps", () => {
