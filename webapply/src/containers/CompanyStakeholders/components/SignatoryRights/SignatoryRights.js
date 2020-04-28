@@ -72,10 +72,12 @@ const SignatoryRightsComponent = ({
               tabIndex="0"
               changeProspect={(prospect, value) => ({
                 ...prospect,
-                [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]:
-                  value === SOLE_PROPRIETOR ? true : "",
-                [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]:
-                  value === SOLE_PROPRIETOR ? 100 : ""
+                ...(value === SOLE_PROPRIETOR
+                  ? {
+                      [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: true,
+                      [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: 100
+                    }
+                  : {})
               })}
             />
           </Grid>
