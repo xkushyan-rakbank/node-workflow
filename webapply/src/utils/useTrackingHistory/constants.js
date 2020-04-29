@@ -4,11 +4,11 @@ import { applicationOverviewRoutes, detailedAccountRoutes } from "../../constant
 
 export const gaEventsMap = {
   ...detailedAccountRoutes.reduce(
-    (acc, route) => ({ ...acc, [acc[route]]: GA_EVENTS.PRODUCT_PAGE }),
+    (acc, route) => ({ ...acc, [route]: GA_EVENTS.PRODUCT_PAGE }),
     {}
   ),
   ...applicationOverviewRoutes.reduce(
-    (acc, route) => ({ ...acc, [acc[route]]: GA_EVENTS.PRODUCT_APPLY }),
+    (acc, route) => ({ ...acc, [route]: GA_EVENTS.PRODUCT_APPLY }),
     {}
   ),
   [routes.applicantInfo]: GA_EVENTS.PRODUCT_START,
