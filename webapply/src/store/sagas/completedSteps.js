@@ -1,11 +1,12 @@
 import { select, all, put, takeEvery } from "@redux-saga/core/effects";
 import get from "lodash/get";
 import set from "lodash/set";
+
 import { UPDATE_PROSPECT } from "../actions/appConfig";
 import { setStepsStatus } from "../actions/completedSteps";
 import { getStakeholdersIds } from "../selectors/stakeholders";
 import { getCompletedSteps } from "../selectors/completedSteps";
-
+import { getSignatories } from "../selectors/appConfig";
 import { COMPANY_SIGNATORY_ID, STEP_STATUS } from "../../constants";
 import { COMPANY_STAKEHOLDER_ID, STEP_6 } from "../../containers/CompanyStakeholders/constants";
 import {
@@ -14,18 +15,16 @@ import {
   STEP_3,
   STEP_4
 } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
-import { getSignatories } from "../selectors/appConfig";
 
 export function* signatoryStepsSaga({ payload }) {
-  const signatoryInfoFromProspect = yield select(getSignatories);
+  const signatoryInfo = yield select(getSignatories);
   const prospect = Object.entries(payload).reduce(
     (acc, [name, value]) => set(acc, name, value),
     {}
   );
-  const signatoryInfo = get(prospect, "prospect.signatoryInfo", []);
-  const indexes = signatoryInfo.reduce((acc, item, index) => {
+  const indexes = get(prospect, "prospect.signatoryInfo", []).reduce((acc, item, index) => {
     if (
-      !get(signatoryInfoFromProspect[index], "kycDetails.isSignatory") &&
+      !get(signatoryInfo[index], "kycDetails.isSignatory") &&
       get(item, "kycDetails.isSignatory")
     ) {
       return [...acc, index];
