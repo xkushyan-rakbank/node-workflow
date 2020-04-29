@@ -1,3 +1,5 @@
+import get from "lodash/get";
+
 import { UPLOADED } from "../../constants";
 
 export const getAppConfig = state => state.appConfig || {};
@@ -22,7 +24,12 @@ export const getSignatoriesCount = state => getSignatories(state).length;
 
 export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
+export const getAccountCurrencies = state => get(getAccountInfo(state)[0], "accountCurrencies", "");
+
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
+
+export const getPrimaryMobCountryCode = state =>
+  get(getOrganizationInfo(state), "contactDetails.primaryMobCountryCode", "");
 
 export const getCompanyName = state => getOrganizationInfo(state).companyName;
 
@@ -41,6 +48,8 @@ export const getApplicationInfo = state => getProspect(state).applicationInfo ||
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
 
 export const getAccountType = state => getApplicationInfo(state).accountType;
+
+export const getRakValuePackage = state => getApplicationInfo(state).rakValuePackage || "";
 
 export const getDocuments = state => getProspect(state).documents || {};
 

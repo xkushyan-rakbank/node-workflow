@@ -22,7 +22,10 @@ import {
   getAuthorizationHeader,
   getAppConfig,
   getSignatoriesCount,
-  createGetAuthorityTypeDisplayText
+  createGetAuthorityTypeDisplayText,
+  getAccountCurrencies,
+  getPrimaryMobCountryCode,
+  getRakValuePackage
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
@@ -32,9 +35,12 @@ describe("appConfig selector test", () => {
   const datalist = { authorityType: authorityTypeDatalist };
   const signatoryModel = "some signatory model";
   const signatoryInfo = ["some signatory info"];
-  const accountInfo = "some account info";
+  const accountCurrencies = ["some currency"];
+  const accountInfo = [{ accountCurrencies }];
   const companyName = "some company name";
-  const organizationInfo = { companyName };
+  const primaryMobCountryCode = "some code";
+  const contactDetails = { primaryMobCountryCode };
+  const organizationInfo = { companyName, contactDetails };
   const orgKYCDetails = "some org kyc details";
   const prospectId = "some prospect id";
   const generalInfo = { prospectId };
@@ -42,7 +48,8 @@ describe("appConfig selector test", () => {
   const applicantInfo = { fullName };
   const islamicBanking = false;
   const accountType = "some account type";
-  const applicationInfo = { islamicBanking, accountType };
+  const rakValuePackage = "some package";
+  const applicationInfo = { islamicBanking, accountType, rakValuePackage };
   const prospect = {
     signatoryInfo,
     accountInfo,
@@ -127,12 +134,28 @@ describe("appConfig selector test", () => {
     expect(getAccountInfo({ appConfig: {} })).toEqual([]);
   });
 
+  it("should return accountCurrencies", () => {
+    expect(getAccountCurrencies(state)).toEqual(accountCurrencies);
+  });
+
+  it("should return empty string when accountCurrencies is not set", () => {
+    expect(getAccountCurrencies({ appConfig: {} })).toEqual("");
+  });
+
   it("should return organizationInfo", () => {
     expect(getOrganizationInfo(state)).toBe(organizationInfo);
   });
 
   it("should return empty object when organizationInfo is not set", () => {
     expect(getOrganizationInfo({ appConfig: {} })).toEqual({});
+  });
+
+  it("should return primaryMobCountryCode", () => {
+    expect(getPrimaryMobCountryCode(state)).toEqual(primaryMobCountryCode);
+  });
+
+  it("should return empty string when primaryMobCountryCode is not set", () => {
+    expect(getPrimaryMobCountryCode({ appConfig: {} })).toEqual("");
   });
 
   it("should return companyName", () => {
@@ -185,6 +208,14 @@ describe("appConfig selector test", () => {
 
   it("should return value of accountType", () => {
     expect(getAccountType(state)).toBe(accountType);
+  });
+
+  it("should return value of rakValuePackage", () => {
+    expect(getRakValuePackage(state)).toBe(rakValuePackage);
+  });
+
+  it("should return empty string when rakValuePackage is not set", () => {
+    expect(getRakValuePackage({ appConfig: {} })).toBe("");
   });
 
   it("should return prospect id", () => {
