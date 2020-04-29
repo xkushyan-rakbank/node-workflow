@@ -4,11 +4,13 @@ import { render } from "@testing-library/react";
 
 import { FormLayoutContainer } from "../../../src/containers/FormLayout/FormLayout";
 import { FormLayoutComponent } from "../../../src/containers/FormLayout/components/FormLayoutComponent";
+import { Providers } from "../../../src/containers/FormLayout/components/Providers";
 import { getErrorScreensIcons } from "../../../src/utils/getErrorScreenIcons/getErrorScreenIcons";
 
 jest.mock("../../../src/store/actions/appConfig");
 jest.mock("../../../src/containers/FormLayout/components/FormLayoutComponent");
 jest.mock("../../../src/utils/getErrorScreenIcons/getErrorScreenIcons");
+jest.mock("../../../src/containers/FormLayout/components/Providers");
 jest.mock("react-router-dom", () => ({
   useLocation: jest.fn()
 }));
@@ -37,6 +39,7 @@ describe("FormLayout tests", () => {
     useLocation.mockReturnValue({ pathname });
     windowSpy = jest.spyOn(window, "scrollTo").mockImplementation(() => {});
     getErrorScreensIcons.mockReturnValue(errorIcon);
+    Providers.mockImplementation(({ children }) => children);
   });
 
   it("should render component", () => {

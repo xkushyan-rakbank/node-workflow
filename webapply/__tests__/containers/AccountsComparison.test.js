@@ -4,7 +4,7 @@ import { render, act } from "@testing-library/react";
 import { AccountsComparisonComponent } from "../../src/containers/AccountsComparison/components/AccountsComparison/AccountsComparison";
 import { AccountsComparisonContainer } from "../../src/containers/AccountsComparison/AccountsComparison";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
-import { useLayoutParams } from "../../src/containers/FormLayout";
+import { useLayoutParams, useLogoType } from "../../src/containers/FormLayout";
 import { VerticalPaginationContext } from "../../src/components/VerticalPagination";
 import { accountTypes } from "../../src/containers/AccountsComparison/components/TableCompare/constants";
 
@@ -29,6 +29,7 @@ describe("AccountsComparison container tests", () => {
 
   beforeEach(() => {
     useLayoutParams.mockImplementation(() => {});
+    useLogoType.mockImplementation(() => {});
     useFormNavigation.mockImplementation(() => {});
     AccountsComparisonComponent.mockImplementation(() => null);
 

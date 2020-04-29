@@ -6,6 +6,7 @@ import { getScreeningError } from "../../store/selectors/sendProspectToAPI";
 import { FormLayoutContainer } from "./FormLayout";
 
 export { useLayoutParams } from "./LayoutProvider";
+export { useLogoType } from "./LogoTypeProvider";
 
 const mapStateToProps = state => ({
   screeningError: getScreeningError(state),
