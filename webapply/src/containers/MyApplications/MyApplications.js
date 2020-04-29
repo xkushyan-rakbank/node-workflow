@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { MyApplications as BaseComponent } from "./components/MyApplications";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { LOGO_ELITE } from "../../components/Header/constants";
+import { useLogoType } from "../FormLayout";
 import { searchApplications } from "../../store/actions/searchProspect";
 import { getProspectInfoPromisify } from "./../../store/actions/retrieveApplicantInfo";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
@@ -22,6 +24,7 @@ export const MyApplications = () => {
   const dispatch = useDispatch();
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
   useFormNavigation([true, false, searchProspectStepper]);
+  useLogoType(LOGO_ELITE);
 
   useEffect(() => {
     dispatch(searchApplications(inputParam));

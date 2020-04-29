@@ -1,33 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import cx from "classnames";
 
-import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
+import { LogoTypeContext } from "../../containers/FormLayout/LogoTypeProvider";
 import { isOtpVerified } from "../../store/selectors/otp";
 import routes from "../../routes";
+
+import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
 import { useStyles } from "./styled";
-import { accountNames } from "../../constants";
+
 import { ReactComponent as EliteIslamicLogo } from "../../assets/images/logo-elite-islamic.svg";
 import { ReactComponent as StandartLogo } from "../../assets/images/logo-standart.svg";
 import { ReactComponent as EliteLogo } from "../../assets/images/logo-elite.svg";
 import { ReactComponent as IslamicLogo } from "../../assets/images/logo-islamic.svg";
 import { ReactComponent as LogoSmall } from "../../assets/images/logo-small.svg";
-import { LOGO_ELITE, LOGO_ELITE_ISLAMIC, LOGO_ISLAMIC, LOGO_STANDART } from "./constants";
 
-const HeaderComponent = ({ className, isIslamicBanking, accountType, isOtpVerified }) => {
-  const {
-    location: { pathname }
-  } = useHistory();
-
-  const logoType = (() => {
-    const isAccountsComparison = routes.accountsComparison === pathname;
-    if (!isAccountsComparison && accountType === accountNames.elite && isIslamicBanking)
-      return LOGO_ELITE_ISLAMIC;
-    if (!isAccountsComparison && accountType === accountNames.elite) return LOGO_ELITE;
-    if (!isAccountsComparison && isIslamicBanking) return LOGO_ISLAMIC;
-    return LOGO_STANDART;
-  })();
+const HeaderComponent = ({ className, isOtpVerified }) => {
+  const logoType = useContext(LogoTypeContext);
 
   const classes = useStyles({
     logoType
@@ -60,8 +50,6 @@ const HeaderComponent = ({ className, isIslamicBanking, accountType, isOtpVerifi
 };
 
 const mapStateToProps = state => ({
-  isIslamicBanking: getIsIslamicBanking(state),
-  accountType: getAccountType(state),
   isOtpVerified: isOtpVerified(state)
 });
 
