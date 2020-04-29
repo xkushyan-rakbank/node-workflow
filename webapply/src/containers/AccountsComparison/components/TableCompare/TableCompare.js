@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
 
@@ -9,6 +8,7 @@ import { StyledTableBody } from "./components/StyledTableBody";
 import { StyledTableBodyMobile } from "./components/StyledTableBodyMobile";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { useWindowSize } from "../../../../utils/useWindowSize";
+import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
 import { sizes, accountTypes } from "./constants";
 
@@ -17,7 +17,7 @@ import { useStyles } from "./styled";
 const { INITIAL_OFFSET, OFFSET } = sizes;
 
 export const TableCompareComponent = ({ selectedAccount }) => {
-  const history = useHistory();
+  const pusHistory = useTrackingHistory();
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
   const [width] = useWindowSize();
@@ -66,10 +66,10 @@ export const TableCompareComponent = ({ selectedAccount }) => {
         })
       );
       setTimeout(() => {
-        history.push(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
+        pusHistory(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
       }, 4);
     },
-    [dispatch, history]
+    [dispatch, pusHistory]
   );
 
   const handleHover = e => {
