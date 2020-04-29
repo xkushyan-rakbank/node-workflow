@@ -92,7 +92,7 @@
       "ReCaptchaSecret": "6LcypLgUAAAAAEKwQm1kPLrFtJ9k3T-ZywbQqU0R",
       "RSAPublicKeyFilename": "RSAPublicKey.txt",
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
-      "OtpEnabled": "N",
+      "OtpEnabled": "Y",
       "ShouldSendErrorDebugDetails": true,
       "ApplicationLoggingLevel": "DEBUG"
     },

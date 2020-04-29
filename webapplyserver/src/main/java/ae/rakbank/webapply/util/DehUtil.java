@@ -14,6 +14,8 @@ import java.util.List;
 @Component
 public class DehUtil {
 
+    private static final String CHANNEL_CONTEXT = "ChannelContext";
+
     public ApiError initApiError(HttpStatusCodeException e, HttpStatus status) {
         ApiError apiError = ApiError.builder()
                 .status(status)
@@ -32,10 +34,10 @@ public class DehUtil {
 
     @SuppressWarnings("all")
     private JsonNode gerErrors(HttpStatusCodeException e) {
-        List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
         ObjectMapper mapper = new ObjectMapper();
         try {
-            if (channelContext != null) {
+            if (e.getResponseHeaders() !=null && e.getResponseHeaders().get(CHANNEL_CONTEXT) != null) {
+                List<String> channelContext = e.getResponseHeaders().get(CHANNEL_CONTEXT);
                 return mapper.readTree(channelContext.get(0)).get("errors");
             } else {
                 return mapper.readTree(e.getResponseBodyAsString()).get("errors");
@@ -50,15 +52,15 @@ public class DehUtil {
     private String getErrorType(HttpStatusCodeException e) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            List<String> channelContext = e.getResponseHeaders().get("ChannelContext");
-            if (channelContext != null) {
+            if (e.getResponseHeaders() !=null && e.getResponseHeaders().get(CHANNEL_CONTEXT) != null) {
+                List<String> channelContext = e.getResponseHeaders().get(CHANNEL_CONTEXT);
                 return mapper.readTree(channelContext.get(0)).get("errorType").asText();
-            } else {
+            } else if (e.getResponseHeaders() != null){
                 return mapper.readTree(e.getResponseBodyAsString()).get("errorType").asText();
             }
         } catch (Exception e1) {
             log.warn("Can't parse errorType from the response", e1);
-            return "";
         }
+        return "";
     }
 }

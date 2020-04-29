@@ -63,5 +63,7 @@ public class MandatoryVariables {
             "ReCaptchaSecret",
             "RSAPublicKeyFilename",
             "JwtSecret",
-            "OtpEnabled"));
+            "OtpEnabled",
+            "ShouldSendErrorDebugDetails",
+            "ApplicationLoggingLevel"));
 }

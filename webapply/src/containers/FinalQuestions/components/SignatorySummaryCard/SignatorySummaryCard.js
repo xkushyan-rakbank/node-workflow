@@ -69,6 +69,7 @@ export const SignatorySummaryCardComponent = ({
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}
           page={`${COMPANY_SIGNATORY_ID}${stakeholdersIds[index]}`}
+          isSignatory={get(signatory, "kycDetails.isSignatory", false)}
         />
       </div>
     </FormCard>

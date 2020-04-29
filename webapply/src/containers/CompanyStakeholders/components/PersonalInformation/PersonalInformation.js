@@ -201,8 +201,8 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
               <Field
                 name="middleName"
                 path={`prospect.signatoryInfo[${index}].middleName`}
-                label="Middle Name (Optional)"
-                placeholder="Middle Name (Optional)"
+                label="Middle Name (optional)"
+                placeholder="Middle Name (optional)"
                 disabled={!!values.isShareholderACompany}
                 component={Input}
                 onChange={createChangeHandler(values, setFieldValue)}

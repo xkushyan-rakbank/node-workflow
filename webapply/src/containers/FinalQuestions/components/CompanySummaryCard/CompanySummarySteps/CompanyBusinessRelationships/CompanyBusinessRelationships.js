@@ -23,7 +23,7 @@ import {
   MAX_BANK_NAME_LENGTH,
   MAX_COMPANY_NAME_LENGTH
 } from "./constants";
-import { SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage
@@ -39,7 +39,8 @@ const companyBusinessRelationshipsSchema = () =>
           .required(getRequiredMessage("Customer name"))
           // eslint-disable-next-line no-template-curly-in-string
           .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name")),
+          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name"))
+          .test("space validation", getInvalidMessage("Customer name"), checkIsTrimmed),
         country: Yup.string().required(getRequiredMessage("Country"))
       })
     ),
@@ -52,7 +53,8 @@ const companyBusinessRelationshipsSchema = () =>
             .required(getRequiredMessage("Supplier name"))
             // eslint-disable-next-line no-template-curly-in-string
             .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name")),
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name"))
+            .test("space validation", getInvalidMessage("Supplier name"), checkIsTrimmed),
           country: Yup.string().required(getRequiredMessage("Country"))
         })
       )

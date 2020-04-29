@@ -45,7 +45,6 @@ public class ProspectValidatorService {
             }
         }
         indexesToRemove.forEach(rootNode::remove);
-
     }
 
     public void validateProspectOwner(ResponseEntity<Object> responseForFiltering, JwtPayload jwtPayload) {

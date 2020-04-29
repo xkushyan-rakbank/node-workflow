@@ -69,8 +69,8 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verifyNoInteractions(authorizationService);
-        Mockito.verifyNoInteractions(response);
+        Mockito.verifyNoMoreInteractions(authorizationService);
+        Mockito.verifyNoMoreInteractions(response);
         Mockito.verify(filterChain).doFilter(request, response);
     }
 
@@ -80,8 +80,8 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verifyNoInteractions(authorizationService);
-        Mockito.verifyNoInteractions(response);
+        Mockito.verifyNoMoreInteractions(authorizationService);
+        Mockito.verifyNoMoreInteractions(response);
         Mockito.verify(filterChain).doFilter(request, response);
     }
 
@@ -108,8 +108,8 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verifyNoInteractions(authorizationService);
-        Mockito.verifyNoInteractions(response);
+        Mockito.verifyNoMoreInteractions(authorizationService);
+        Mockito.verifyNoMoreInteractions(response);
         Mockito.verify(filterChain).doFilter(request, response);
     }
 

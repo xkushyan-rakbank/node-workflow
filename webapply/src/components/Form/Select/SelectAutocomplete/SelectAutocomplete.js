@@ -83,7 +83,7 @@ const SelectAutocompleteBase = ({
             label,
             error: !!isError,
             InputLabelProps: {
-              shrink: hasFocus || !!renderValue
+              shrink: hasFocus || !!(Array.isArray(renderValue) ? renderValue.length : renderValue)
             }
           }}
           getOptionLabel={extractLabel}

@@ -26,21 +26,29 @@ import {
 
 import { useStyles } from "./styled";
 
-const signatoryPreferredMailingAddressSchema = () =>
+const createSignatoryPreferredMailingAddressSchema = isSignatory =>
   Yup.object().shape({
     addressLine2: Yup.string()
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
     addressLine1: Yup.string()
-      .required(getRequiredMessage("Flat / Villa / Building"))
+      .test(
+        "required",
+        getRequiredMessage("Flat / Villa / Building"),
+        value => !isSignatory || value
+      )
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
     poBox: Yup.string()
-      .required(getRequiredMessage("PO Box Number"))
+      .test("required", getRequiredMessage("PO Box Number"), value => !isSignatory || value)
       .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-    emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
+    emirateCity: Yup.string().test(
+      "required",
+      getRequiredMessage("Emirate/ City"),
+      value => !isSignatory || value
+    )
   });
 
 export const SignatoryPreferredMailingAddressComponent = ({
@@ -50,7 +58,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
   organisationAddressLine2,
   organisationAddressLine1,
   organisationPoBox,
-  organisationEmirateCity
+  organisationEmirateCity,
+  isSignatory
 }) => {
   const classes = useStyles();
 
@@ -67,7 +76,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
         country: DEFAULT_SIGNATORY_COUNTRY
       }}
       onSubmit={handleContinue}
-      validationSchema={signatoryPreferredMailingAddressSchema}
+      validationSchema={createSignatoryPreferredMailingAddressSchema(isSignatory)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values, setValues }) => (
@@ -119,7 +128,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 name="addressLine1"
                 path={`${autoSavePathBase}.addressLine1`}
                 disabled={values.sameAsCompanyAddress}
-                label="Flat / Villa / Building"
+                label={`Flat / Villa / Building${!isSignatory ? " (optional)" : ""}`}
                 placeholder="Flat / Villa / Building"
                 component={Input}
                 InputProps={{
@@ -132,7 +141,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 name="addressLine2"
                 path={`${autoSavePathBase}.addressLine2`}
                 disabled={values.sameAsCompanyAddress}
-                label="Street / Location"
+                label="Street / Location (optional)"
                 placeholder="Street / Location"
                 component={Input}
                 InputProps={{
@@ -144,7 +153,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 path={`${autoSavePathBase}.emirateCity`}
                 disabled={values.sameAsCompanyAddress}
                 datalistId="emirateCity"
-                label="Emirate/ City"
+                label={`Emirate/ City${!isSignatory ? " (optional)" : ""}`}
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
@@ -155,7 +164,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 name="poBox"
                 path={`${autoSavePathBase}.poBox`}
                 disabled={values.sameAsCompanyAddress}
-                label="PO Box Number"
+                label={`PO Box Number${!isSignatory ? " (optional)" : ""}`}
                 placeholder="AB1234"
                 component={Input}
                 InputProps={{

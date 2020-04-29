@@ -142,7 +142,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
             <Grid item md={6} sm={12}>
               <Field
                 name="yearsInBusiness"
-                label="Years in business (Optional)"
+                label="Years in business (optional)"
                 path="prospect.orgKYCDetails.yearsInBusiness"
                 contextualHelpText="The number of years the company has been in business"
                 contextualHelpProps={{ isDisableHoverListener: false }}

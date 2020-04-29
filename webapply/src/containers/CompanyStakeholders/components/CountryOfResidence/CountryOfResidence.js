@@ -16,7 +16,7 @@ import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
 import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
 
-const getCountryOfResidenceSchema = isSignatory =>
+const createCountryOfResidenceSchema = isSignatory =>
   Yup.object().shape({
     residenceCountry: Yup.string().test(
       "required",
@@ -48,7 +48,7 @@ const CountryOfResidenceStep = ({
         eidNumber: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={getCountryOfResidenceSchema(isSignatory)}
+      validationSchema={createCountryOfResidenceSchema(isSignatory)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values, setFieldValue }) => (

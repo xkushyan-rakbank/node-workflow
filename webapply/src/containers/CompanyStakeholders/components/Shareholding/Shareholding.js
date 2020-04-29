@@ -22,7 +22,7 @@ import { SOLE_PROPRIETOR } from "../../../../constants";
 
 const PercentageInput = props => <NumberFormat decimalSeparator="." decimalScale={2} {...props} />;
 
-const getShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
+const createShareholdingRightsSchema = totalPercentageWithoutCurrentStakeholder =>
   Yup.object().shape({
     isShareholderACompany: Yup.boolean().required(
       "Field Is this person a shareholder is not filled"
@@ -60,7 +60,7 @@ const ShareholdingStep = ({
     <Formik
       initialValues={initialValues}
       onSubmit={handleContinue}
-      validationSchema={getShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
+      validationSchema={createShareholdingRightsSchema(totalPercentageWithoutCurrentStakeholder)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values, setFieldValue }) => {

@@ -75,7 +75,7 @@ public class DehClient {
         } catch (HttpClientErrorException e) {
             log.error(String.format("HttpClientErrorException: Endpoint=[%s], HttpStatus=[%s], response=%s", url,
                     e.getRawStatusCode(), e.getResponseBodyAsString()), e);
-            HttpStatus status = HttpStatus.BAD_REQUEST;
+            HttpStatus status = e.getStatusCode();
             ApiError apiError = dehUtil.initApiError(e, status);
 
             throw new ApiException(apiError, new HttpHeaders(), status);

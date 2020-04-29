@@ -191,6 +191,10 @@ describe("appConfig selector test", () => {
     expect(getProspectId(state)).toBe(prospectId);
   });
 
+  it("should return empty string if prospect id doesn't exist", () => {
+    expect(getProspectId({ appConfig: {} })).toBe("");
+  });
+
   it("should return recaptcha site key", () => {
     expect(getReCaptchaSiteKey(state)).toBe(reCaptchaSiteKey);
   });

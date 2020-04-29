@@ -178,6 +178,8 @@ public class ConfigFactory {
                         .put("RSAPublicKeyFilename", "RSAPublicKeyFilename")
                         .put("JwtSecret", "JwtSecret")
                         .put("OtpEnabled", "OtpEnabled")
+                        .put("ShouldSendErrorDebugDetails", "ShouldSendErrorDebugDetails")
+                        .put("ApplicationLoggingLevel", "ApplicationLoggingLevel")
                 ));
 
         config.set("BaseURLs", objectMapper.createObjectNode()

@@ -6,6 +6,7 @@ import ae.rakbank.webapply.util.EnvUtil;
 import ae.rakbank.webapply.util.FileUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 class OtpServiceImpl implements OtpService {
@@ -42,6 +44,7 @@ class OtpServiceImpl implements OtpService {
     private OtpVerifyGenerateResponse verifyOrGenerateIfOptEnabled(JsonNode requestJSON) {
         final ResponseEntity<?> result = dehClient.invokeApiEndpoint(url, HttpMethod.POST, requestJSON,
                 "generateVerifyOTP()", MediaType.APPLICATION_JSON, null);
+
         String action = requestJSON.get("action").asText();
         boolean verifyResult = "verify".equalsIgnoreCase(action) && extractOtpVerificationResult(result);
 
@@ -56,5 +59,4 @@ class OtpServiceImpl implements OtpService {
         final JsonNode body = (JsonNode) optValidationResponse.getBody();
         return body != null && body.has("verified") && body.get("verified").asBoolean();
     }
-
 }

@@ -89,9 +89,10 @@ public class DehClientTest {
     @Test
     public void invokeApiEndpointWithEmptyBodyObjectResponseShouldBeOk() {
 
-        final HttpEntity<JsonNode> requestEntity = new HttpEntity<>(null);
+        final HttpEntity<JsonNode> requestEntity = new HttpEntity(null);
 
-        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity), eq(JsonNode.class))).thenReturn(ResponseEntity.ok().build());
+        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity),
+                eq(JsonNode.class))).thenReturn(ResponseEntity.ok().build());
 
         final ResponseEntity<Object> objectResponseEntity = dehClient.invokeApiEndpoint(HTTP_TEST_ENDPOINT_URL,
                 HttpMethod.POST,
@@ -111,9 +112,10 @@ public class DehClientTest {
     @Test
     public void invokeApiEndpointWithEmptyBodyObjectAndTokenIsPresentResponseShouldBeOk() {
 
-        final HttpEntity<JsonNode> requestEntity = new HttpEntity<>(null);
+        final HttpEntity<JsonNode> requestEntity = new HttpEntity(null);
 
-        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity), eq(JsonNode.class))).thenReturn(ResponseEntity.ok().build());
+        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity),
+                eq(JsonNode.class))).thenReturn(ResponseEntity.ok().build());
 
         final ResponseEntity<Object> objectResponseEntity = dehClient.invokeApiEndpoint(HTTP_TEST_ENDPOINT_URL,
                 HttpMethod.POST,
@@ -134,9 +136,10 @@ public class DehClientTest {
     @Test
     public void invokeApiEndpointWithEmptyBodyObjectResponseShouldBeOkWithResourceType() {
 
-        final HttpEntity<JsonNode> requestEntity = new HttpEntity<>(null);
+        final HttpEntity<JsonNode> requestEntity = new HttpEntity(null);
 
-        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity), eq(Resource.class))).thenReturn(ResponseEntity.ok().build());
+        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity),
+                eq(Resource.class))).thenReturn(ResponseEntity.ok().build());
 
         final ResponseEntity<Object> objectResponseEntity = dehClient.invokeApiEndpoint(HTTP_TEST_ENDPOINT_URL,
                 HttpMethod.POST,
@@ -155,14 +158,15 @@ public class DehClientTest {
     @Test(expected = ApiException.class)
     public void invokeApiEndpointWithEmptyBodyObjectResponseShouldBeBadRequest() {
 
-        final HttpEntity<JsonNode> requestEntity = new HttpEntity<>(null);
+        final HttpEntity requestEntity = new HttpEntity(null);
         final HttpClientErrorException httpClientErrorException = new HttpClientErrorException(HttpStatus.BAD_REQUEST);
         final ApiError error = ApiError
                 .builder()
                 .status(HttpStatus.BAD_REQUEST)
                 .build();
 
-        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity), eq(JsonNode.class)))
+        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity),
+                eq(JsonNode.class)))
                 .thenThrow(httpClientErrorException);
 
         Mockito.when(dehUtil.initApiError(httpClientErrorException, HttpStatus.BAD_REQUEST)).thenReturn(error);
@@ -179,14 +183,16 @@ public class DehClientTest {
     @Test(expected = ApiException.class)
     public void invokeApiEndpointWithEmptyBodyObjectResponseShouldBeInternalServerError() {
 
-        final HttpEntity<JsonNode> requestEntity = new HttpEntity<>(null);
-        final HttpServerErrorException httpClientErrorException = new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
+        final HttpEntity<JsonNode> requestEntity = new HttpEntity(null);
+        final HttpServerErrorException httpClientErrorException =
+                new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
         final ApiError error = ApiError
                 .builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
 
-        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity), eq(JsonNode.class)))
+        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity),
+                eq(JsonNode.class)))
                 .thenThrow(httpClientErrorException);
 
         Mockito.when(dehUtil.initApiError(httpClientErrorException, HttpStatus.INTERNAL_SERVER_ERROR)).thenReturn(error);
@@ -265,7 +271,8 @@ public class DehClientTest {
 
         final HttpEntity<JsonNode> requestEntity = new HttpEntity<>(requestNode);
 
-        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity), eq(JsonNode.class)))
+        Mockito.when(restTemplate.exchange(eq(HTTP_TEST_ENDPOINT_URL), eq(HttpMethod.POST), eq(requestEntity),
+                eq(JsonNode.class)))
                 .thenReturn(ResponseEntity.ok().body(responseNode));
 
         final ResponseEntity<Object> objectResponseEntity = dehClient.invokeApiEndpoint(HTTP_TEST_ENDPOINT_URL,
@@ -280,6 +287,5 @@ public class DehClientTest {
         Assert.assertSame(HttpStatus.OK, objectResponseEntity.getStatusCode());
         Assert.assertNotNull(objectResponseEntity.getBody());
         Assert.assertEquals(responseNode, objectResponseEntity.getBody());
-
     }
 }

@@ -30,7 +30,7 @@ export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};
 
-export const getProspectId = state => getGeneralInfo(state).prospectId;
+export const getProspectId = state => getGeneralInfo(state).prospectId || "";
 
 export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 

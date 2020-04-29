@@ -49,7 +49,6 @@ public class SecurityFilter implements Filter {
                 HttpServletRequestWritableWrapper requestWrapper = new HttpServletRequestWritableWrapper(request, decryptedData);
                 chain.doFilter(requestWrapper, response);
             }
-
         }
     }
 
