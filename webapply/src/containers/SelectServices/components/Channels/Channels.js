@@ -55,7 +55,7 @@ export const ChannelsComponent = ({
   createFormChangeHandler,
   updateProspect,
   primaryMobCountryCode,
-  accountCurrencies: selectedCurrency
+  selectedCurrency
 }) => {
   const classes = useStyles();
 
