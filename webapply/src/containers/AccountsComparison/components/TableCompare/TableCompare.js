@@ -17,7 +17,7 @@ import { useStyles } from "./styled";
 const { INITIAL_OFFSET, OFFSET } = sizes;
 
 export const TableCompareComponent = ({ selectedAccount }) => {
-  const pusHistory = useTrackingHistory();
+  const pushHistory = useTrackingHistory();
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
   const [width] = useWindowSize();
@@ -66,10 +66,10 @@ export const TableCompareComponent = ({ selectedAccount }) => {
         })
       );
       setTimeout(() => {
-        pusHistory(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
+        pushHistory(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
       }, 4);
     },
-    [dispatch, pusHistory]
+    [dispatch, pushHistory]
   );
 
   const handleHover = e => {
