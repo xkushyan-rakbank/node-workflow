@@ -4,25 +4,25 @@ import { render, act } from "@testing-library/react";
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
-import { MyApplications } from "../../src/containers/MyApplications/MyApplications";
-import { MyApplications as MyApplicationsComponent } from "../../src/containers/MyApplications/components/MyApplications";
-import { getApplicantInfo } from "../../src/store/selectors/appConfig";
+import { MyApplications } from "../../../src/containers/MyApplications/MyApplications";
+import { MyApplications as MyApplicationsComponent } from "../../../src/containers/MyApplications/components/MyApplications";
+import { getApplicantInfo } from "../../../src/store/selectors/appConfig";
 import {
   getIsLoadingSearchProspects,
   getSearchResults
-} from "../../src/store/selectors/searchProspect";
-import { getLoadingProspectId } from "../../src/store/selectors/retrieveApplicantInfo";
-import { searchApplications } from "../../src/store/actions/searchProspect";
-import { getProspectInfoPromisify } from "../../src/store/actions/retrieveApplicantInfo";
-import { useDisplayScreenBasedOnViewId } from "../../src/utils/useDisplayScreenBasedOnViewId";
+} from "../../../src/store/selectors/searchProspect";
+import { getLoadingProspectId } from "../../../src/store/selectors/retrieveApplicantInfo";
+import { searchApplications } from "../../../src/store/actions/searchProspect";
+import { getProspectInfoPromisify } from "../../../src/store/actions/retrieveApplicantInfo";
+import { useDisplayScreenBasedOnViewId } from "../../../src/utils/useDisplayScreenBasedOnViewId";
 
-jest.mock("../../src/store/selectors/appConfig");
-jest.mock("../../src/store/selectors/searchProspect");
-jest.mock("../../src/store/selectors/retrieveApplicantInfo");
-jest.mock("../../src/utils/useDisplayScreenBasedOnViewId");
-jest.mock("../../src/store/actions/searchProspect");
-jest.mock("../../src/store/actions/retrieveApplicantInfo");
-jest.mock("../../src/containers/MyApplications/components/MyApplications");
+jest.mock("../../../src/store/selectors/appConfig");
+jest.mock("../../../src/store/selectors/searchProspect");
+jest.mock("../../../src/store/selectors/retrieveApplicantInfo");
+jest.mock("../../../src/utils/useDisplayScreenBasedOnViewId");
+jest.mock("../../../src/store/actions/searchProspect");
+jest.mock("../../../src/store/actions/retrieveApplicantInfo");
+jest.mock("../../../src/containers/MyApplications/components/MyApplications");
 
 describe("MyApplications test", () => {
   const prospectId = "some prospectId";
