@@ -15,9 +15,11 @@ import {
 import { getStakeholdersIds } from "../../../src/store/selectors/stakeholders";
 import { getCompletedSteps } from "../../../src/store/selectors/completedSteps";
 import { UPDATE_PROSPECT } from "../../../src/store/actions/appConfig";
+import { getSignatories } from "../../../src/store/selectors/appConfig";
 
 jest.mock("../../../src/store/selectors/stakeholders");
 jest.mock("../../../src/store/selectors/completedSteps");
+jest.mock("../../../src/store/selectors/appConfig");
 
 describe("completedSteps tests", () => {
   let dispatched = [];
@@ -34,6 +36,7 @@ describe("completedSteps tests", () => {
 
   beforeEach(() => {
     dispatched = [];
+    getSignatories.mockReturnValue([{ kycDetails: { isSignatory: false } }]);
     getCompletedSteps.mockReturnValue([
       {
         flowId: `${COMPANY_SIGNATORY_ID}${stakeholderId}`,
@@ -85,6 +88,12 @@ describe("completedSteps tests", () => {
         STEP_STATUS.AVAILABLE
       )
     ]);
+  });
+
+  it("should do nothing if value of isSignatory was not changed", async () => {
+    getSignatories.mockReturnValue([{ kycDetails: { isSignatory: true } }]);
+    await runSaga(store, signatoryStepsSaga, { payload }).toPromise();
+    expect(dispatched).toEqual([]);
   });
 
   it("should do nothing if no COMPLETED steps for this signatory", async () => {

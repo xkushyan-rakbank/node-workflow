@@ -14,15 +14,20 @@ import {
   STEP_3,
   STEP_4
 } from "../../containers/FinalQuestions/components/SignatorySummaryCard/constants";
+import { getSignatories } from "../selectors/appConfig";
 
 export function* signatoryStepsSaga({ payload }) {
+  const signatoryInfoFromProspect = yield select(getSignatories);
   const prospect = Object.entries(payload).reduce(
     (acc, [name, value]) => set(acc, name, value),
     {}
   );
   const signatoryInfo = get(prospect, "prospect.signatoryInfo", []);
   const indexes = signatoryInfo.reduce((acc, item, index) => {
-    if (get(item, "kycDetails.isSignatory")) {
+    if (
+      !get(signatoryInfoFromProspect[index], "kycDetails.isSignatory") &&
+      get(item, "kycDetails.isSignatory")
+    ) {
       return [...acc, index];
     }
     return acc;
