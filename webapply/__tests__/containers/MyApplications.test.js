@@ -6,7 +6,6 @@ import thunk from "redux-thunk";
 
 import { MyApplications } from "../../src/containers/MyApplications/MyApplications";
 import { MyApplications as MyApplicationsComponent } from "../../src/containers/MyApplications/components/MyApplications";
-import { useLogoType } from "../../src/containers/FormLayout";
 import { getApplicantInfo } from "../../src/store/selectors/appConfig";
 import {
   getIsLoadingSearchProspects,
@@ -24,7 +23,6 @@ jest.mock("../../src/utils/useDisplayScreenBasedOnViewId");
 jest.mock("../../src/store/actions/searchProspect");
 jest.mock("../../src/store/actions/retrieveApplicantInfo");
 jest.mock("../../src/containers/MyApplications/components/MyApplications");
-jest.mock("../../src/containers/FormLayout");
 
 describe("MyApplications test", () => {
   const prospectId = "some prospectId";
@@ -47,7 +45,6 @@ describe("MyApplications test", () => {
     useDisplayScreenBasedOnViewId.mockReturnValue({
       pushDisplayScreenToHistory
     });
-    useLogoType.mockImplementation(() => {});
     getProspectInfoPromisify.mockReturnValue(dispatch => {
       dispatch(getProspectInfoAction);
 
