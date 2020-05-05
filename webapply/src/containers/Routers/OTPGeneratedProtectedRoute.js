@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 import { RedirectRoute } from "./components/RedirectRoute";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import routes from "../../routes";
-import { isOtpGenerated as getIsOtpGenerated } from "../../store/selectors/otp";
+import {
+  isOtpVerified as getIsOtpVerified,
+  isOtpGenerated as getIsOtpGenerated
+} from "../../store/selectors/otp";
 
 export const OTPGeneratedProtectedRoute = props => {
   const isOtpGenerated = useSelector(getIsOtpGenerated);
-
-  if (process.env.REACT_APP_OTP_ENABLE === "N" || isOtpGenerated) {
+  const isOtpVerified = useSelector(getIsOtpVerified);
+  if (process.env.REACT_APP_OTP_ENABLE === "N" || isOtpGenerated || isOtpVerified) {
     return <ProtectedRoute {...props} />;
   }
 
