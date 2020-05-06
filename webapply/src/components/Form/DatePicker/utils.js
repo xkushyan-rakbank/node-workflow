@@ -7,7 +7,7 @@ export class LocalizedUtils extends DateFnsUtils {
 }
 
 export const getYearOptions = isFutureDisabled => {
-  const firstYear = 1950;
+  const firstYear = 1900;
   const lastYear = isFutureDisabled ? new Date().getFullYear() : 2100;
 
   return [...Array(lastYear - firstYear + 1).keys()].map(i => {
