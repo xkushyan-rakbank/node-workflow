@@ -45,7 +45,6 @@ export const LoginComponent = ({ submitForm, isLoading }) => {
             <Field
               name="password"
               type="password"
-              path="login.password"
               label="Your Password"
               placeholder="Your Password"
               onPaste={e => e.preventDefault()}

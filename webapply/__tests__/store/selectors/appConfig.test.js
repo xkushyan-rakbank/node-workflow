@@ -1,4 +1,5 @@
 import {
+  getAgentName,
   getDatalist,
   getProspect,
   getSignatoryModel,
@@ -29,6 +30,7 @@ import {
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
+  const agentName = "agent name";
   const displayText = "some text";
   const authorityTypeValue = "some value";
   const authorityTypeDatalist = [{ value: authorityTypeValue, displayText }];
@@ -69,7 +71,9 @@ describe("appConfig selector test", () => {
   };
   const authorizationToken = "some secret string";
   const recaptchaEnable = true;
+  const login = {userName: agentName};
   const appConfig = {
+    login,
     datalist,
     prospect,
     signatoryModel,
@@ -81,6 +85,10 @@ describe("appConfig selector test", () => {
     recaptchaEnable
   };
   const state = { appConfig };
+
+  it("should return agent name", () => {
+    expect(getAgentName(state)).toBe(agentName);
+  });
 
   it("should return appConfig", () => {
     expect(getAppConfig(state)).toBe(appConfig);
