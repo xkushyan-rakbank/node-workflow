@@ -2,6 +2,8 @@ import get from "lodash/get";
 
 import { UPLOADED } from "../../constants";
 
+export const getAgentName = state => state.appConfig.login.userName;
+
 export const getAppConfig = state => state.appConfig || {};
 
 export const getDatalist = state => getAppConfig(state).datalist || {};

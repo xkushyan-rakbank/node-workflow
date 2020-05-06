@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import {
-  OTHER_OPTION_CODE,
+  EMPLOYMENT_OTHER_OPTION_CODE,
   OTHER_OPTION_VALUE,
   MAX_EMPLOYMENT_TYPE_OTHER_LENGTH,
   MAX_DESIGNATION_LENGTH
@@ -54,7 +54,7 @@ export const createSignatoryEmploymentDetailsSchema = isSignatory =>
         getInvalidMessage("Background information of the signatory")
       ),
     otherEmploymentType: Yup.string().when("employmentType", {
-      is: value => value === OTHER_OPTION_CODE,
+      is: value => value === EMPLOYMENT_OTHER_OPTION_CODE,
       then: Yup.string()
         .required(getRequiredMessage("Other"))
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
