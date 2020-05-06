@@ -77,7 +77,10 @@ const SignatoryRightsComponent = ({
                       [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: true,
                       [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: 100
                     }
-                  : {})
+                  : {
+                      [`prospect.signatoryInfo[${index}].kycDetails.isShareholder`]: "",
+                      [`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`]: ""
+                    })
               })}
             />
           </Grid>
