@@ -11,5 +11,6 @@ public class DocumentTypes {
     public static final List<String> ALLOWED_DOCUMENT_TYPES = Arrays.asList(
             "Constitutional_Documents",
             "Passport_Copies",
+            "Others",
             "Others_Documents");
 }
