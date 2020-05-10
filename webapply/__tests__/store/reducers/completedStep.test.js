@@ -74,8 +74,7 @@ describe("completedSteps reducer test", () => {
   });
 
   it("should handle SET_INITIAL_STEPS action type", () => {
-    expect(reducer(["1"], { type: SET_INITIAL_STEPS, payload: { steps: ["2"] } })).toStrictEqual([
-      "1",
+    expect(reducer(["2"], { type: SET_INITIAL_STEPS, payload: { steps: ["2"] } })).toStrictEqual([
       "2"
     ]);
   });
