@@ -23,7 +23,11 @@ import { DATE_FORMAT } from "../../../../constants";
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { ContexualHelp } from "../../../../components/Notifications";
 import { Icon, ICONS } from "../../../../components/Icons";
-import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
+import {
+  getInvalidMessage,
+  getRequiredMessage,
+  getMinDateMessage
+} from "../../../../utils/getValidationMessage";
 import { StakeholdersNameManager } from "../StakeholdersNameProvider/StakeholdersNameProvider";
 import { NAME_REGEX, checkIsTrimmed } from "../../../../utils/validation";
 
@@ -82,6 +86,7 @@ const personalInformationSchema = Yup.object().shape({
     is: isShareholderACompany => !isShareholderACompany,
     then: Yup.date()
       .nullable()
+      .min(new Date(1900, 0, 1), getMinDateMessage("Date of birth"))
       .max(new Date(), getInvalidMessage("Date of birth"))
       .typeError(getInvalidMessage("Date of birth"))
       .required(getRequiredMessage("Date of birth"))

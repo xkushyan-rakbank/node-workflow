@@ -20,7 +20,7 @@ const DatePickerBase = ({
   infoTitle,
   placeholder = "__/__/____",
   format = "dd/MM/yyyy",
-  minDate = new Date(1950, 0, 1),
+  minDate = new Date(1900, 0, 1),
   maxDate = new Date(),
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
@@ -49,9 +49,10 @@ const DatePickerBase = ({
             inputVariant="outlined"
             variant="inline"
             placeholder={placeholder}
-            error={isError}
+            error={false}
             invalidDateMessage={false}
             maxDateMessage={false}
+            minDateMessage={false}
             KeyboardButtonProps={{
               "aria-label": "change date"
             }}
