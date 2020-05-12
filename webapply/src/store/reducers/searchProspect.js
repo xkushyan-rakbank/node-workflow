@@ -14,7 +14,9 @@ export const initialState = {
   isApplyEditApplication: null,
   isSearchLoading: false,
   errorCode: null,
-  prospectOverview: {}
+  prospectOverview: {},
+  searchError: false,
+  searchErrorDesc: []
 };
 
 export default handleActions(
@@ -22,17 +24,21 @@ export default handleActions(
     [SEARCH_APPLICATIONS_REQUEST]: state => ({
       ...state,
       searchResults: initialState.searchResults,
-      isSearchLoading: true
+      isSearchLoading: true,
+      searchError: initialState.searchError,
+      searchErrorDesc: initialState.searchErrorDesc
     }),
     [SEARCH_APPLICATIONS_SUCCESS]: (state, { payload }) => ({
       ...state,
       searchResults: payload || [],
       isSearchLoading: false
     }),
-    [SEARCH_APPLICATIONS_FAILURE]: state => ({
+    [SEARCH_APPLICATIONS_FAILURE]: (state, { payload }) => ({
       ...state,
       searchResults: initialState.searchResults,
-      isSearchLoading: false
+      isSearchLoading: false,
+      searchError: payload.errorType ? true : false,
+      searchErrorDesc: payload.errors ? payload.errors : []
     }),
     [IS_APPLY_EDIT_APPLICATION]: (state, { payload }) => ({
       ...state,

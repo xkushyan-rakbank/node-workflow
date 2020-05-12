@@ -19,8 +19,9 @@ export const searchApplicationsSuccess = data => ({
   payload: data
 });
 
-export const searchApplicationsFailure = () => ({
-  type: SEARCH_APPLICATIONS_FAILURE
+export const searchApplicationsFailure = data => ({
+  type: SEARCH_APPLICATIONS_FAILURE,
+  payload: data
 });
 
 export const setIsApplyEditApplication = isApplyEditApplication => ({

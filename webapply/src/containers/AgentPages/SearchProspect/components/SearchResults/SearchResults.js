@@ -4,10 +4,20 @@ import { SearchItem } from "./SearchItem";
 
 import { useStyles } from "./styled";
 
-export const SearchResults = ({ searchResults }) => {
+export const SearchResults = ({ searchResults, searchError, searchErrorDesc }) => {
   const classes = useStyles();
 
-  if (!searchResults.length) return <div>No Record Found.</div>;
+  if (!searchResults.length) {
+    if (searchError) {
+      let errorMsg = "";
+      searchErrorDesc[0].errorCode == "12019"
+        ? (errorMsg = searchErrorDesc[0].message)
+        : (errorMsg = "Something went wrong, please try after sometime.");
+      return <div>{errorMsg}</div>;
+    } else {
+      return <div>No Record Found.</div>;
+    }
+  }
 
   return (
     <>
