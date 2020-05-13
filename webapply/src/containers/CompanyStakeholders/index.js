@@ -10,7 +10,8 @@ import {
 } from "../../store/selectors/stakeholders";
 import {
   getIsAnyStakeholderStepsCompleted,
-  getIsAllStakeholdersStepsCompleted
+  getIsAllStakeholdersStepsCompleted,
+  getStakeholderSteps
 } from "../../store/selectors/completedSteps";
 import {
   changeEditableStakeholder,
@@ -19,6 +20,7 @@ import {
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { CompanyStakeholdersContainer } from "./CompanyStakeholders";
+import { setStepStatus } from "../../store/actions/completedSteps";
 
 const mapStateToProps = state => ({
   isSendingProspect: getIsSendingProspect(state),
@@ -28,14 +30,16 @@ const mapStateToProps = state => ({
   isAllStakeholdersStepsCompleted: getIsAllStakeholdersStepsCompleted(state),
   isAnyStakeholderStepsCompleted: getIsAnyStakeholderStepsCompleted(state),
   editableStakeholder: getEditableStakeholder(state),
-  hasSignatories: checkIsHasSignatories(state)
+  hasSignatories: checkIsHasSignatories(state),
+  stakeholderSteps: getStakeholderSteps(state)
 });
 
 const mapDispatchToProps = {
   deleteStakeholder,
   createNewStakeholder,
   changeEditableStakeholder,
-  sendProspectToAPI: sendProspectToAPIPromisify
+  sendProspectToAPI: sendProspectToAPIPromisify,
+  setStepStatusUpdate: setStepStatus
 };
 
 export default connect(

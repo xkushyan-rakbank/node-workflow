@@ -9,7 +9,7 @@ import { CompanyStakeholdersComponent } from "./components/CompanyStakeholders/C
 import { useViewId } from "../../utils/useViewId";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper, NEXT } from "../../constants";
+import { formStepper, NEXT, STEP_STATUS } from "../../constants";
 import { useLayoutParams } from "../FormLayout";
 
 export const CompanyStakeholdersContainer = ({
@@ -23,7 +23,9 @@ export const CompanyStakeholdersContainer = ({
   isAllStakeholdersStepsCompleted,
   isAnyStakeholderStepsCompleted,
   isSendingProspect,
-  editableStakeholder
+  editableStakeholder,
+  setStepStatusUpdate,
+  stakeholderSteps
 }) => {
   const pushHistory = useTrackingHistory();
 
@@ -38,6 +40,17 @@ export const CompanyStakeholdersContainer = ({
       createNewStakeholder();
     }
   }, [createNewStakeholder, stakeholders.length]);
+
+  useEffect(() => {
+    let totalStakeholderSteps = stakeholderSteps.length / 6;
+    if (stakeholders.length < totalStakeholderSteps) {
+      stakeholderSteps.map((step, index) => {
+        if (index + 1 > stakeholders.length * 6) {
+          setStepStatusUpdate(step.flowId, step.step, STEP_STATUS.COMPLETED);
+        }
+      });
+    }
+  }, [stakeholderSteps, stakeholders, setStepStatusUpdate]);
 
   useEffect(() => {
     StakeholdersNameManager && StakeholdersNameManager.setStakeholderFullNames(stakeholders);
