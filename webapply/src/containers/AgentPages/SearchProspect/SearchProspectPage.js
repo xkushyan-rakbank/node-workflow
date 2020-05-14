@@ -7,7 +7,9 @@ export const SearchProspectPage = ({
   searchApplications,
   searchResults,
   isLoading,
-  resetProspect
+  resetProspect,
+  searchError,
+  searchErrorDesc
 }) => {
   useLayoutParams(true);
 
@@ -31,6 +33,8 @@ export const SearchProspectPage = ({
       isLoading={isLoading}
       isSearchLaunched={isSearchLaunched}
       searchResults={searchResults}
+      searchError={searchError}
+      searchErrorDesc={searchErrorDesc}
     />
   );
 };

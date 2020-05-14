@@ -36,7 +36,15 @@ const completedSteps = handleActions(
       setStepsStatus(state, [{ flowId, step }], status),
     [SET_STEPS_STATUS]: (state, { payload: { steps, status } }) =>
       setStepsStatus(state, steps, status),
-    [SET_INITIAL_STEPS]: (state, { payload: { steps } }) => [...state, ...steps],
+    [SET_INITIAL_STEPS]: (state, { payload: { steps } }) => {
+      state.map(item =>
+        steps.map(
+          (step, index) =>
+            item.flowId == step.flowId && item.step == step.step && steps.splice(index, 1)
+        )
+      );
+      return [...state, ...steps];
+    },
     [REMOVE_SIGNATORY]: (state, { payload: { signatoryId } }) =>
       state.filter(step => !step.flowId.includes(signatoryId))
   },

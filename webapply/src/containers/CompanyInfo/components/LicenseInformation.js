@@ -15,7 +15,11 @@ import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import { InfoTitle } from "../../../components/InfoTitle";
 import { MAX_LICENSE_NUMBER_LENGTH, MAX_YEARS_IN_BUSINESS_LENGTH } from "../constants";
 import { UAE, DATE_FORMAT } from "../../../constants";
-import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidationMessage";
+import {
+  getRequiredMessage,
+  getInvalidMessage,
+  getMinDateMessage
+} from "../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
 import { LICENSE_NUMBER_REGEX } from "../../../utils/validation";
 
@@ -37,6 +41,7 @@ const licenseInformationSchema = () =>
       .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("License number")),
     licenseIssueDate: Yup.date()
       .nullable()
+      .min(new Date(1900, 0, 1), getMinDateMessage("License issuing date"))
       .max(new Date(), getInvalidMessage("License issuing date"))
       .typeError(getInvalidMessage("License issuing date"))
       .required(getRequiredMessage("License issuing date")),
@@ -44,6 +49,7 @@ const licenseInformationSchema = () =>
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
     dateOfIncorporation: Yup.date()
       .nullable()
+      .min(new Date(1900, 0, 1), getMinDateMessage("Date of incorporation"))
       .max(new Date(), getInvalidMessage("Date of incorporation"))
       .typeError(getInvalidMessage("Date of incorporation"))
       .required(getRequiredMessage("Date of incorporation")),

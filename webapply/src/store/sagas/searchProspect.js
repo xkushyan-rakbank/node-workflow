@@ -28,9 +28,13 @@ export function* searchProspectFormSaga({ payload }) {
     };
 
     const response = yield call(search.searchApplication, inputParam, headers);
-    yield put(searchApplicationsSuccess(response.data.searchResult));
+    if (response.data.searchResult) {
+      yield put(searchApplicationsSuccess(response.data.searchResult));
+    } else {
+      yield put(searchApplicationsFailure(response.data));
+    }
   } catch (error) {
-    yield put(searchApplicationsFailure());
+    yield put(searchApplicationsFailure({}));
     log(error);
   }
 }

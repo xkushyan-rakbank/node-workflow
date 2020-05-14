@@ -6,6 +6,10 @@ export const getSearchProspect = state => state.searchProspect;
 
 export const getSearchResults = state => getSearchProspect(state).searchResults;
 
+export const getSearchError = state => getSearchProspect(state).searchError;
+
+export const getSearchErrorDesc = state => getSearchProspect(state).searchErrorDesc;
+
 export const getProspectOverview = state => getSearchProspect(state).prospectOverview;
 
 export const getProspectOverviewId = state => getProspectOverview(state).generalInfo.prospectId;

@@ -12,7 +12,9 @@ import { logout } from "../../../src/store/actions/loginForm";
 describe("searchProspect reducer test", () => {
   it("should handle SEARCH_APPLICATIONS_REQUEST action type", () => {
     expect(reducer(undefined, searchApplications())).toMatchObject({
-      isSearchLoading: true
+      isSearchLoading: true,
+      searchError: false,
+      searchErrorDesc: []
     });
   });
 
@@ -33,8 +35,15 @@ describe("searchProspect reducer test", () => {
   });
 
   it("should handle SEARCH_APPLICATIONS_FAILURE action type", () => {
-    expect(reducer(undefined, searchApplicationsFailure())).toMatchObject({
+    expect(reducer(undefined, searchApplicationsFailure({}))).toMatchObject({
       isSearchLoading: false
+    });
+  });
+
+  it("should handle SEARCH_APPLICATIONS_FAILURE action type with error description", () => {
+    expect(reducer(undefined, searchApplicationsFailure({errorType:"Others", errors:[1,2]}))).toMatchObject({
+      searchError: true,
+      searchErrorDesc: [1,2]
     });
   });
 

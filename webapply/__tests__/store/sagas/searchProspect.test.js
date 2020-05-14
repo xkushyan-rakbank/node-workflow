@@ -89,7 +89,7 @@ describe("searchProspect saga test", () => {
     await runSaga(store, searchProspectFormSaga, { payload }).toPromise();
     expect(spy.mock.calls[0]).toEqual([input, header]);
     expect(log.mock.calls[0]).toEqual([error]);
-    expect(dispatched).toEqual([{ type: SEARCH_APPLICATIONS_FAILURE }]);
+    expect(dispatched).toEqual([{ type: SEARCH_APPLICATIONS_FAILURE, payload: {}  }]);
     spy.mockRestore();
   });
 

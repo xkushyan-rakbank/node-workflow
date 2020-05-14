@@ -9,6 +9,8 @@ import { ReactComponent as Brief } from "../../../../../assets/icons/brief.svg";
 
 import { useStyles } from "./styled";
 
+import { getTitleForAccountType } from "../../../../MyApplications/utils";
+
 export const CompanyCard = ({
   companyName = "Company name",
   applicationInfo,
@@ -32,7 +34,7 @@ export const CompanyCard = ({
         <Brief alt="brief" width={24} height={24} />
       </div>
       <div className={classes.mainTitle}>{companyName}</div>
-      <div className={classes.grayText}>{accountType}</div>
+      <div className={classes.grayText}>{getTitleForAccountType(accountType)}</div>
 
       <Divider classes={{ divider: classes.divider }} />
 
