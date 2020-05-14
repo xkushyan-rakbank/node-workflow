@@ -52,8 +52,7 @@ describe("searchProspect saga test", () => {
       freeField5: JSON.stringify({
         completedSteps: [
           { flowId: "companyStakeholder_1" },
-          { flowId: "companyStakeholder_2" },
-          { flowId: "someflowid_2" }
+          { flowId: "companyStakeholder_2" }
         ]
       })
     },

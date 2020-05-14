@@ -12,7 +12,9 @@ import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
-import { VIEW_IDS, STEP_STATUS, COMPANY_SIGNATORY_ID } from "../../constants";
+import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
+import { COMPANY_INFO_PAGE_ID } from "../../containers/CompanyInfo/constants";
+import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constants";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -59,28 +61,36 @@ export function* getProspectIdInfo({ payload }) {
 
           let stakeholderStep = 0;
           let signatoryStep = 0;
+
+          let newSteps = [];
+
           completedSteps.map(step => {
             step.flowId.startsWith(COMPANY_STAKEHOLDER_ID) &&
               (stakeholderStep = stakeholderStep + 1);
 
             step.flowId.startsWith(COMPANY_SIGNATORY_ID) && (signatoryStep = signatoryStep + 1);
 
-            if (stakeholderStep > config.prospect.signatoryInfo.length * 6) {
-              step.flowId.startsWith(COMPANY_STAKEHOLDER_ID) &&
-                (step.status = STEP_STATUS.COMPLETED);
+            step.flowId.includes(COMPANY_INFO_PAGE_ID) && newSteps.push(step);
+
+            step.flowId.includes(FINAL_QUESTIONS_COMPANY_ID) && newSteps.push(step);
+
+            step.flowId.includes(SELECT_SERVICES_PAGE_ID) && newSteps.push(step);
+
+            if (stakeholderStep < config.prospect.signatoryInfo.length * 6 + 1) {
+              step.flowId.startsWith(COMPANY_STAKEHOLDER_ID) && newSteps.push(step);
             }
 
-            if (signatoryStep > config.prospect.signatoryInfo.length * 4) {
-              step.flowId.startsWith(COMPANY_SIGNATORY_ID) && (step.status = STEP_STATUS.COMPLETED);
+            if (signatoryStep < config.prospect.signatoryInfo.length * 4 + 1) {
+              step.flowId.startsWith(COMPANY_SIGNATORY_ID) && newSteps.push(step);
             }
           });
 
-          freeFieldsInfo.freeField5 = JSON.stringify({ completedSteps });
+          freeFieldsInfo.freeField5 = JSON.stringify({ completedSteps: newSteps });
 
           yield put(loadMetaData(freeFieldsInfo));
 
           const stakeholdersIds = [
-            ...completedSteps.reduce((acc, { flowId }) => {
+            ...newSteps.reduce((acc, { flowId }) => {
               if (flowId.startsWith(COMPANY_STAKEHOLDER_ID)) {
                 acc.add(flowId.split(COMPANY_STAKEHOLDER_ID)[1]);
               }
