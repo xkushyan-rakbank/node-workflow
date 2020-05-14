@@ -126,6 +126,7 @@ describe("searchProspect saga test", () => {
     expect(dispatched).toMatchObject([
       { type: SET_CONFIG, payload: { prospect: data } },
       { type: LOAD_META_DATA, payload: data.freeFieldsInfo.freeField5 },
+      { type: LOAD_META_DATA, payload: data.freeFieldsInfo.freeField5 },
       {
         type: UPDATE_STAKEHOLDERS_IDS,
         payload: ["1", "2"]
@@ -142,12 +143,13 @@ describe("searchProspect saga test", () => {
     const failedData = {
       freeFieldsInfo: {
         freeField5: JSON.stringify({
-          info: "some info"
+          completedSteps: []
         })
       },
       signatoryInfo: [],
       applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
     };
+
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
@@ -155,6 +157,7 @@ describe("searchProspect saga test", () => {
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
       { type: SET_CONFIG, payload: { prospect: failedData } },
+      { type: LOAD_META_DATA, payload: failedData.freeFieldsInfo.freeField5 },
       { type: LOAD_META_DATA, payload: failedData.freeFieldsInfo.freeField5 },
       {
         type: UPDATE_STAKEHOLDERS_IDS,

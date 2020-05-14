@@ -43,8 +43,6 @@ describe("CompanyStakeholders container tests", () => {
   const isAnyStakeholderStepsCompleted = true;
   const isSendingProspect = false;
   const editableStakeholder = "some id";
-  const stakeholderSteps = [stakeholder];
-  const setStepStatusUpdate = jest.fn();
 
   const props = {
     deleteStakeholder,
@@ -57,9 +55,7 @@ describe("CompanyStakeholders container tests", () => {
     hasSignatories,
     isAllStakeholdersStepsCompleted,
     isAnyStakeholderStepsCompleted,
-    isSendingProspect,
-    setStepStatusUpdate,
-    stakeholderSteps
+    isSendingProspect
   };
 
   beforeEach(() => {
@@ -107,12 +103,6 @@ describe("CompanyStakeholders container tests", () => {
     render(<CompanyStakeholdersContainer {...props} />);
 
     expect(createNewStakeholder).toHaveBeenCalledTimes(0);
-  });
-
-  it("should not update status of steps if there is no stakeholders", () => {
-    render(<CompanyStakeholdersContainer {...props} stakeholders={[]}/>);
-
-    expect(setStepStatusUpdate).toHaveBeenCalledTimes(1);
   });
 
   it("should call StakeholdersNameManager", () => {
