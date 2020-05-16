@@ -39,6 +39,9 @@ apiClient.interceptors.request.use(config => ({
   ...config,
   headers: {
     ...config.headers,
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Expires": 0,
+    "Pragma": "no-cache",
     [REQUEST_ID_HEADER]: nanoid()
   }
 }));
