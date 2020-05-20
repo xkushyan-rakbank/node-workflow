@@ -24,7 +24,7 @@ export const ComeBackLoginContainer = ({
   const submitForm = useCallback(
     values => {
       let loginData = { ...values };
-
+      loginData.action = "generate";
       if (isRecaptchaEnable) {
         loginData.recaptchaToken = recaptchaToken;
       }
