@@ -14,7 +14,8 @@ export const generateOtpCode = payload => ({
   payload: {
     email: payload.email,
     countryCode: payload.countryCode,
-    mobileNo: payload.mobileNo
+    mobileNo: payload.mobileNo,
+    action: payload.action
   }
 });
 
@@ -56,6 +57,7 @@ export const generateOtpCodePromisify = payload => ({
   payload: {
     email: payload.email,
     countryCode: payload.countryCode,
-    mobileNo: payload.mobileNo
+    mobileNo: payload.mobileNo,
+    action: payload.action
   }
 });

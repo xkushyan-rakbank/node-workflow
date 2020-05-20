@@ -40,7 +40,7 @@ export const otp = {
       method: "POST",
       ...headers,
       data: {
-        action: OTP_ACTION_GENERATE,
+        //action: OTP_ACTION_GENERATE,
         ...payload
       }
     }),
