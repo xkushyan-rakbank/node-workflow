@@ -2,7 +2,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   formWrapper: {
-    display: "flex"
+    display: "flex",
+    overflowX: "auto"
   },
   cardsWrapper: {
     border: "none",

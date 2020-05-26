@@ -59,8 +59,8 @@ export const CompanyPreferredContactInformationComponent = ({
     >
       {createFormChangeHandler(() => (
         <Form>
-          <Grid container spacing={3}>
-            <Grid item sm={12}>
+          <Grid item container spacing={3}>
+            <Grid item xs={12}>
               <Field
                 name="primaryEmail"
                 path="prospect.organizationInfo.contactDetails.primaryEmail"
@@ -74,7 +74,7 @@ export const CompanyPreferredContactInformationComponent = ({
             </Grid>
           </Grid>
           <Grid item container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <InputGroup>
                 <LinkedField
                   name="primaryMobCountryCode"
@@ -106,7 +106,7 @@ export const CompanyPreferredContactInformationComponent = ({
                 />
               </InputGroup>
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <InputGroup>
                 <LinkedField
                   name="primaryPhoneCountryCode"
@@ -134,7 +134,7 @@ export const CompanyPreferredContactInformationComponent = ({
               </InputGroup>
             </Grid>
           </Grid>
-          <div className={classes.infoTitleWrap}>
+          {/* <div className={classes.infoTitleWrap}>
             <InfoTitle
               classes={{ wrapper: classes.infoTitle }}
               title="We will use the information in this section to communicate with you."
@@ -142,7 +142,18 @@ export const CompanyPreferredContactInformationComponent = ({
           </div>
           <div className={classes.buttonWrapper}>
             <ContinueButton type="submit" />
-          </div>
+          </div> */}
+          <Grid
+            className={classes.continueButtonContainer}
+            container
+            direction="row"
+            justify="space-between"
+          >
+            <InfoTitle title="We will use the information in this section to communicate with you." />
+            <span className={classes.continueBtn}>
+              <ContinueButton type="submit" />
+            </span>
+          </Grid>
         </Form>
       ))}
     </Formik>

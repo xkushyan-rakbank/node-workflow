@@ -143,7 +143,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
       {createFormChangeHandler(({ values, setFieldValue, errors, touched }) => (
         <Form>
           <Grid item container spacing={3}>
-            <Grid item sm={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
+            <Grid item xs={12} className={cx("mb-25 mt-25", classes.companyFieldWrapper)}>
               <Field
                 name="isShareholderACompany"
                 path={"prospect.orgKYCDetails.isShareholderACompany"}
@@ -167,7 +167,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
             </Grid>
           </Grid>
           <Grid item container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <InputGroup
                 error={
                   (touched.firstName && errors.firstName) ||
@@ -202,7 +202,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
                 />
               </InputGroup>
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="middleName"
                 path={`prospect.signatoryInfo[${index}].middleName`}
@@ -219,7 +219,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
             </Grid>
           </Grid>
           <Grid item container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="lastName"
                 path={`prospect.signatoryInfo[${index}].lastName`}
@@ -235,7 +235,7 @@ export const PersonalInformation = ({ index, handleContinue, id, createFormChang
                 contextualHelpText="Surname of the stakeholder exactly the way it is mentioned in the passport"
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="dateOfBirth"
                 path={`prospect.signatoryInfo[${index}].kycDetails.dateOfBirth`}

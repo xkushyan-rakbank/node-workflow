@@ -82,7 +82,7 @@ const ShareholdingStep = ({
                   inputProps: { tabIndex: 0 }
                 }}
               />
-              <Grid item md={12}>
+              <Grid item xs={12}>
                 <Field
                   name="shareHoldingPercentage"
                   path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}

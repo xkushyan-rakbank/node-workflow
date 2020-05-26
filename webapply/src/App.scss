@@ -387,6 +387,10 @@ h3 {
   display: none;
 }
 
+.display-none {
+  display: none;
+}
+
 @media (max-width: #{$mobileResolution}px) and (max-device-width: #{$mobileResolution}px) {
   .hide-on-mobile {
     display: none !important;

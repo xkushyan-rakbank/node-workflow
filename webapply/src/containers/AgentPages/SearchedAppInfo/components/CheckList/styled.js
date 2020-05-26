@@ -15,7 +15,11 @@ export const useStyles = makeStyles({
     },
     display: "flex",
     alignItems: "center",
-    padding: "24px 20px 19px 30px"
+    padding: "24px 20px 19px 30px",
+    justifyContent: "space-between",
+    "@media (max-width: 500px)": {
+      padding: "15px 5px"
+    }
   },
   checkListData: {
     fontSize: "14px",
@@ -23,7 +27,10 @@ export const useStyles = makeStyles({
     color: "#86868b",
     marginTop: 5,
     wordBreak: "break-word",
-    flex: "0 0 33%"
+    flex: "0 0 33%",
+    "@media (max-width: 500px)": {
+      fontSize: "13px"
+    }
   },
   heading: {
     fontWeight: 600,

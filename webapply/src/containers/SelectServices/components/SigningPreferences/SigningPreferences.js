@@ -175,7 +175,7 @@ export const SigningPreferencesComponent = ({
                         <Grid
                           containerkey={index}
                           item
-                          sm={isMaxAddedSignatories ? 11 : 12}
+                          xs={isMaxAddedSignatories ? 11 : 12}
                           key={index}
                           className={classes.confirmingTransaction}
                         >
@@ -194,7 +194,7 @@ export const SigningPreferencesComponent = ({
                           />
 
                           <Grid container spacing={3}>
-                            <Grid item md={6} sm={12}>
+                            <Grid item sm={6} xs={12}>
                               <InputGroup>
                                 <LinkedField
                                   name={`signatories[${index}].primaryMobCountryCode`}
@@ -221,7 +221,7 @@ export const SigningPreferencesComponent = ({
                               </InputGroup>
                             </Grid>
 
-                            <Grid item md={6} sm={12}>
+                            <Grid item sm={6} xs={12}>
                               <InputGroup>
                                 <Field
                                   name={`signatories[${index}].primaryPhoneCountryCode`}
@@ -234,7 +234,7 @@ export const SigningPreferencesComponent = ({
                                 <Field
                                   name={`signatories[${index}].primaryPhoneNo`}
                                   path={`${prospectPath}.primaryPhoneNo`}
-                                  label="Landline phone no. (optional)"
+                                  label="Landline number (optional)"
                                   placeholder="42xxxxxx"
                                   component={Input}
                                   InputProps={{

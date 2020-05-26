@@ -36,5 +36,17 @@ export const useStyles = makeStyles(theme => ({
     height: "100%",
     paddingBottom: "20px",
     outline: "none"
+  },
+  continueButtonContainer: {
+    flexWrap: "nowrap",
+    [theme.breakpoints.only("xs")]: {
+      flexDirection: "column"
+    }
+  },
+  continueBtn: {
+    [theme.breakpoints.only("xs")]: {
+      alignSelf: "flex-end",
+      marginTop: "10px"
+    }
   }
 }));

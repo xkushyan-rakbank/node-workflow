@@ -20,7 +20,7 @@ export const useStyles = makeStyles({
     flexShrink: 0
   },
   label: {
-    marginRight: "42px"
+    marginRight: "10px"
   },
   disabledLabel: {
     color: "#86868b"

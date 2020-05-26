@@ -58,7 +58,7 @@ const PreferredContactInformationStep = ({
     {createFormChangeHandler(() => (
       <Form>
         <Grid container spacing={3}>
-          <Grid item sm={12}>
+          <Grid item xs={12}>
             <Field
               name="primaryEmail"
               path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
@@ -73,7 +73,7 @@ const PreferredContactInformationStep = ({
           </Grid>
         </Grid>
         <Grid item container spacing={3}>
-          <Grid item md={6} sm={12}>
+          <Grid item sm={6} xs={12}>
             <InputGroup>
               <LinkedField
                 name="primaryMobCountryCode"
@@ -103,7 +103,7 @@ const PreferredContactInformationStep = ({
               />
             </InputGroup>
           </Grid>
-          <Grid item md={6} sm={12}>
+          <Grid item sm={6} xs={12}>
             <InputGroup>
               <Field
                 name="primaryPhoneCountryCode"

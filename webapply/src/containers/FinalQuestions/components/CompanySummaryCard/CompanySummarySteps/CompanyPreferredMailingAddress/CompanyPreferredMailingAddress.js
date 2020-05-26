@@ -75,7 +75,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
         {({ values }) => (
           <Form>
             <Grid container spacing={3} className={classes.flexContainer}>
-              <Grid item md={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <Field
                   name="addressLine1"
                   path={`${BASE_PATH}.addressLine1`}
@@ -107,7 +107,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                   tabIndex="3"
                 />
               </Grid>
-              <Grid item md={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <Field
                   name="typeOfSpaceOccupied.spaceType"
                   path={`${BASE_PATH}.typeOfSpaceOccupied.spaceType`}
@@ -145,7 +145,7 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
                 <Field name="country" disabled component={Input} />
               </Grid>
             </Grid>
-            <div className={classes.infoTitleWrap}>
+            {/* <div className={classes.infoTitleWrap}>
               <InfoTitle
                 classes={{ wrapper: classes.infoTitle }}
                 title="You guessed it! We will use the information in this section to communicate with you"
@@ -153,7 +153,18 @@ export const CompanyPreferredMailingAddress = ({ handleContinue }) => {
             </div>
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
-            </div>
+            </div> */}
+            <Grid
+              className={classes.continueButtonContainer}
+              container
+              direction="row"
+              justify="space-between"
+            >
+              <InfoTitle title="You guessed it! We will use the information in this section to communicate with you" />
+              <span className={classes.continueBtn}>
+                <ContinueButton type="submit" />
+              </span>
+            </Grid>
           </Form>
         )}
       </Formik>

@@ -165,6 +165,9 @@ export const useStyles = makeStyles({
     letterSpacing: "normal",
     "& p": {
       margin: 0
+    },
+    "@media (max-width: 620px)": {
+      lineHeight: "1"
     }
   },
   ControlsBox: {

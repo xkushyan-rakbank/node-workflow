@@ -131,7 +131,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       <Grid container spacing={3} className={classes.flexContainer}>
                         {values.entitiesInUAE.map((item, index) => (
                           <React.Fragment key={item.id}>
-                            <Grid item sm={12} md={isEntitiesInUAE ? 10 : 12}>
+                            <Grid item sm={isEntitiesInUAE ? 10 : 12} xs={12}>
                               <Field
                                 name={`entitiesInUAE[${index}].companyName`}
                                 path={`${basisPath}.entitiesInUAE[${index}].companyName`}
@@ -153,8 +153,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             </Grid>
                             <Grid
                               item
-                              md={isEntitiesInUAE ? 5 : 6}
-                              sm={12}
+                              sm={isEntitiesInUAE ? 5 : 6}
+                              xs={12}
                               className={cx(classes.relative, { [classes.tablet]: !index })}
                             >
                               <Field
@@ -172,8 +172,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             </Grid>
                             <Grid
                               item
-                              md={isEntitiesInUAE ? 5 : 6}
-                              sm={12}
+                              sm={isEntitiesInUAE ? 5 : 6}
+                              xs={12}
                               className={cx(classes.relative, { [classes.tablet]: !index })}
                             >
                               <Field
@@ -251,7 +251,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                       <Grid container spacing={3} className={classes.flexContainer}>
                         {values.entitiesOutsideUAE.map((item, index) => (
                           <React.Fragment key={item.id}>
-                            <Grid item md={isEntitiesOutsideUAE ? 5 : 6} sm={12}>
+                            <Grid item sm={isEntitiesOutsideUAE ? 5 : 6} xs={12}>
                               <Field
                                 name={`entitiesOutsideUAE[${index}].companyName`}
                                 path={`${basisPath}.entitiesOutsideUAE[${index}].companyName`}
@@ -273,8 +273,8 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                             </Grid>
                             <Grid
                               item
-                              md={isEntitiesOutsideUAE ? 5 : 6}
-                              sm={12}
+                              sm={isEntitiesOutsideUAE ? 5 : 6}
+                              xs={12}
                               className={classes.relative}
                             >
                               <Field

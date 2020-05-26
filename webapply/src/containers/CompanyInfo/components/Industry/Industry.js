@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import uniqueId from "lodash/uniqueId";
 import Grid from "@material-ui/core/Grid";
 import get from "lodash/get";
+import cx from "classnames";
 
 import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { MAX_INDUSTRIES_LENGTH } from "../../constants";
@@ -102,7 +103,7 @@ export const Industry = ({
 
                   return (
                     <React.Fragment key={item.id}>
-                      <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
+                      <Grid item sm={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
                           name={`industries[${industryIndex}].industry`}
                           path={currentIndustry}
@@ -130,7 +131,7 @@ export const Industry = ({
                           }
                         />
                       </Grid>
-                      <Grid item md={isDisplayDeleteButton ? 5 : 6} xs={12}>
+                      <Grid item sm={isDisplayDeleteButton ? 5 : 6} xs={12}>
                         <Field
                           name={`industries[${industryIndex}].subCategory`}
                           path={currentSubCategory}
@@ -177,7 +178,7 @@ export const Industry = ({
                           }
                         />
                       </Grid>
-                      <Grid item md={isDisplayDeleteButton ? 2 : false} sm={12}>
+                      <Grid item sm={isDisplayDeleteButton ? 2 : false} xs={12}>
                         {isDisplayDeleteButton && (
                           <LinkButton
                             className={classes.deleteButton}
@@ -187,7 +188,7 @@ export const Industry = ({
                         )}
                       </Grid>
 
-                      <Grid item md={12} sm={12}>
+                      <Grid item sm={12} xs={12}>
                         {values.industries.length === industryIndex + 1 &&
                           values.industries.length < MAX_INDUSTRIES_LENGTH && (
                             <AddButton
@@ -204,13 +205,15 @@ export const Industry = ({
             />
           </Grid>
           <Grid
-            className={classes.continueButton}
+            className={cx(classes.continueButton, classes.continueButtonContainer)}
             container
             direction="row"
             justify="space-between"
           >
             <InfoTitle title="These should be the same as in your Trade License. You can select multiple industries." />
-            <ContinueButton type="submit" />
+            <span className={classes.continueBtn}>
+              <ContinueButton type="submit" />
+            </span>
           </Grid>
         </Form>
       ))}

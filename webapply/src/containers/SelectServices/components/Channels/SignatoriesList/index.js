@@ -24,10 +24,10 @@ export const SignatoriesList = ({ stakeholders }) => {
             kycDetails.isSignatory && (
               <div className={classes.signatoryName} key={index}>
                 <Grid container spacing={3} alignItems="center">
-                  <Grid item md={6} sm={12}>
+                  <Grid item sm={6} xs={12}>
                     <span>{`${firstName} ${lastName}`}</span>
                   </Grid>
-                  <Grid item md={6} sm={12}>
+                  <Grid item sm={6} xs={12}>
                     <Field
                       name={`signatory.${index}.nameOnDebitCard`}
                       path={`${prefix}.debitCardInfo.authSignatoryDetails.nameOnDebitCard`}

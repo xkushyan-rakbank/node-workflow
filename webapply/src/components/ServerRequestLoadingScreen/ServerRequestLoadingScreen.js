@@ -7,7 +7,7 @@ export const ServerRequestLoadingScreen = () => {
   const { awaiting } = useIconsByAccount();
   return (
     <div className={classes.appStatus}>
-      <img src={awaiting} alt="error" />
+      <img className={classes.image} src={awaiting} alt="error" />
     </div>
   );
 };

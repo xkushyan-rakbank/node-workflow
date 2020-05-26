@@ -9,5 +9,5 @@ export const titles = {
   STAKEHOLDER_TITLE: "Stakeholder",
   CHECK_NAME_TITLE: "Check Name",
   STATUS_TITLE: "Status",
-  RESULT_REASON_TITLE: "Result/Reason"
+  RESULT_REASON_TITLE: "Result/ Reason"
 };
