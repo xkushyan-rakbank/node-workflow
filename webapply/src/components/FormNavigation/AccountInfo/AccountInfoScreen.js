@@ -61,7 +61,13 @@ export const AccountInfoScreen = ({
             />
           </div>
           <div className="show-on-mobile">
-            <MobileNotification />
+            {/* <MobileNotification /> */}
+            <ContainedButton
+              withRightArrow
+              justify="flex-start"
+              label="Start application"
+              handleClick={handleStart}
+            />
           </div>
         </div>
       )}

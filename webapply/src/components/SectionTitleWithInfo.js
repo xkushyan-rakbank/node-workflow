@@ -7,7 +7,10 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     lineHeight: "32px",
     color: "#373737",
-    margin: 0
+    margin: 0,
+    [theme.breakpoints.only("xs")]: {
+      marginTop: "60px"
+    }
   },
   info: {
     fontSize: 20,

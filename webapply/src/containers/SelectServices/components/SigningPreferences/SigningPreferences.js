@@ -175,7 +175,9 @@ export const SigningPreferencesComponent = ({
                         <Grid
                           containerkey={index}
                           item
-                          xs={isMaxAddedSignatories ? 11 : 12}
+                          // xs={isMaxAddedSignatories ? 11 : 12}
+                          sm={11}
+                          xs={12}
                           key={index}
                           className={classes.confirmingTransaction}
                         >

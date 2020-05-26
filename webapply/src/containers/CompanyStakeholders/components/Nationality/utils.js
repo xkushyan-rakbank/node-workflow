@@ -16,7 +16,7 @@ export const createAddCitizenshipHandler = (arrayHelper, passportIndex) => () =>
     arrayHelper.push({ ...initialPassportDetails, id: uniqueId() });
   } else {
     arrayHelper.form.setTouched({
-      passportDetails: arrayHelper.form.touched.passportDetails.slice(0, passportIndex + 1)
+      passportDetails: arrayHelper.form.values.passportDetails.slice(0, passportIndex + 1)
     });
     arrayHelper.form.values.passportDetails.forEach(
       (_, index) => index > passportIndex && arrayHelper.pop()

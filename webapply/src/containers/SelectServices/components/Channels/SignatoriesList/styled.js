@@ -20,6 +20,11 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     "& span": {
       fontSize: "14px"
+    },
+    [theme.breakpoints.only("xs")]: {
+      "& span": {
+        marginLeft: "5px"
+      }
     }
   }
 }));
