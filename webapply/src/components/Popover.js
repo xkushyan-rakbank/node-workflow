@@ -15,7 +15,12 @@ const styles = {
     boxShadow: "0 2px 18px 0 rgba(0, 0, 0, 0.14)",
     lineHeight: "1.33",
     borderRadius: "8px",
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    "@media (max-width: 700px)": {
+      left: "-160px",
+      top: "35px",
+      width: "195px"
+    }
   },
   popoverArrow: {
     top: "20px",
@@ -24,11 +29,18 @@ const styles = {
     position: "absolute",
     boxShadow: "0 2px 18px 0 rgba(0, 0, 0, 0.14)",
     borderBottom: "6px solid transparent",
-    borderTop: "6px solid transparent"
+    borderTop: "6px solid transparent",
+    "@media (max-width: 700px)": {
+      transform: "rotate(90deg)",
+      top: "-9px"
+    }
   },
   left: {
     left: "-5px",
-    borderRight: "6px solid #fff"
+    borderRight: "6px solid #fff",
+    "@media (max-width: 700px)": {
+      left: "168px"
+    }
   },
   right: {
     right: "-5px",
