@@ -21,7 +21,7 @@ export const ContexualHelp = ({
       placement={placement}
       title={title}
       enterTouchDelay={0}
-      leaveTouchDelay={30000}
+      leaveTouchDelay={10000}
       leaveDelay={0}
     >
       {children}
