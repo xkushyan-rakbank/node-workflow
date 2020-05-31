@@ -21,6 +21,8 @@ export const ContexualHelp = ({
       placement={placement}
       title={title}
       enterTouchDelay={0}
+      leaveTouchDelay={30000}
+      leaveDelay={0}
     >
       {children}
     </Tooltip>
