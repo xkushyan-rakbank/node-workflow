@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useStyles } from "./styled";
 
 export const ContexualHelp = ({
   children,
   title = "",
-  placement = "left",
+  placement = window.innerWidth < 600 ? "top" : "left",
   isDisableHoverListener = true
 }) => {
   const classes = useStyles();

@@ -12,10 +12,10 @@ export const useStyles = makeStyles(theme => ({
       "& span": {
         fontWeight: "600"
       }
-    },
-    [theme.breakpoints.only("xs")]: {
-      display: "none"
     }
+    // [theme.breakpoints.only("xs")]: {
+    //   display: "none"
+    // }
   },
   headerTitleIn: {
     display: "flex",

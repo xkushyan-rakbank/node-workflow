@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { InfoTitle } from "./InfoTitle";
@@ -23,10 +23,15 @@ const useStyles = makeStyles({
 
 export const SectionTitle = ({ title, subTitle, ...props }) => {
   const classes = useStyles(props);
+  const sectionTitleRef = useRef();
+
+  useEffect(() => {
+    sectionTitleRef.current.scrollIntoView();
+  }, []);
 
   return (
     <>
-      <div className={classes.wrapper}>
+      <div ref={sectionTitleRef} className={classes.wrapper}>
         <div className={classes.divider} />
         {title}
       </div>

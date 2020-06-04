@@ -33,9 +33,9 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
                       handleClick={() => getProspectInfo(app.prospectId)}
                       isDisplayLoader={loadingProspectId === app.prospectId}
                     />
-                    <div className={classes.hint}>
+                    {/* <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}
-                    </div>
+                    </div> */}
                   </>
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
@@ -51,9 +51,9 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
                   label="Finish Application"
                   handleClick={() => getProspectInfo(app.prospectId)}
                 />
-                <div className={classes.hint}>
+                {/* <div className={classes.hint}>
                   {ctaStatuses[app.status.statusNotes].mobileStatus}
-                </div>
+                </div> */}
               </div>
             ]}
       </div>
