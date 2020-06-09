@@ -98,7 +98,7 @@ export const SignatoryEmploymentDetailsComponent = ({
       {createFormChangeHandler(({ values, setFieldValue }) => (
         <Form>
           <Grid container spacing={3} className={classes.flexContainer}>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="qualification"
                 path={`${basePath}.kycDetails.qualification`}
@@ -109,7 +109,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                 tabIndex="0"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="employmentType"
                 path={`${basePath}.employmentDetails.employmentType`}
@@ -129,7 +129,7 @@ export const SignatoryEmploymentDetailsComponent = ({
               />
             </Grid>
             {values.employmentType === OTHER_OPTION_VALUE && (
-              <Grid item md={12} sm={12}>
+              <Grid item xs={12}>
                 <Field
                   name="otherEmploymentType"
                   path={`${basePath}.employmentDetails.otherEmploymentType`}
@@ -142,7 +142,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                 />
               </Grid>
             )}
-            <Grid item md={12} sm={12}>
+            <Grid item xs={12}>
               <Field
                 name="designation"
                 path={`${basePath}.employmentDetails.designation`}
@@ -155,7 +155,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                 }}
               />
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <Field
                 name={`isWorkAtTheCompany${index}`}
                 path={`${basePath}.employmentDetails.isPersonWorkAtCompany`}
@@ -169,7 +169,7 @@ export const SignatoryEmploymentDetailsComponent = ({
                 inputProps={{ tabIndex: 0 }}
               />
             </Grid>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <Field
                 name="employerName"
                 path={`${basePath}.employmentDetails.employerName`}

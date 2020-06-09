@@ -61,7 +61,7 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
         />
 
         <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
+          <Grid item sm={6} xs={12}>
             <InputGroup>
               <LinkedField
                 name="countryCode"
@@ -89,7 +89,7 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
               />
             </InputGroup>
           </Grid>
-          <Grid item md={6} sm={12}>
+          <Grid item sm={6} xs={12}>
             <Field
               name="email"
               path="searchInfo.email"
@@ -104,7 +104,7 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          <Grid item md={6} sm={12}>
+          <Grid item sm={6} xs={12}>
             <Field
               name="leadNumber"
               path="searchInfo.raktrackNumber"
@@ -116,7 +116,7 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
               }}
             />
           </Grid>
-          <Grid item md={6} sm={12}>
+          <Grid item sm={6} xs={12}>
             <Field
               name="tradeLicenseNo"
               path="searchInfo.tradeLicenseNo"

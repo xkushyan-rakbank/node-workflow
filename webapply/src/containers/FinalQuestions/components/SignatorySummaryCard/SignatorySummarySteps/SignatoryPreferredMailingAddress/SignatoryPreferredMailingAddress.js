@@ -123,7 +123,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
             </ContexualHelp>
           </div>
           <Grid container spacing={3} className={classes.flexContainer}>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <Field
                 name="addressLine1"
                 path={`${autoSavePathBase}.addressLine1`}
@@ -136,7 +136,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 }}
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="addressLine2"
                 path={`${autoSavePathBase}.addressLine2`}
@@ -159,7 +159,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 tabIndex="0"
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="poBox"
                 path={`${autoSavePathBase}.poBox`}

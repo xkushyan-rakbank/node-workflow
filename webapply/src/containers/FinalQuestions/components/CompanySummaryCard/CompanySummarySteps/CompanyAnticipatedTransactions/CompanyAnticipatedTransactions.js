@@ -179,7 +179,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
         <Form autoComplete="off">
           <h4 className={classes.groupLabel}>Annual turnover</h4>
           <Grid container spacing={3} className={classes.flexContainer}>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <Field
                 name="annualFinTurnoverAmtInAED"
                 path="prospect.orgKYCDetails.annualFinTurnoverAmtInAED"
@@ -203,7 +203,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
           <div className={classes.divider} />
           <h4 className={classes.groupLabel}>Monthly transactions</h4>
           <Grid container spacing={3} className={classes.flexContainer}>
-            <Grid item sm={12}>
+            <Grid item xs={12}>
               <FormControl classes={{ root: classes.formControl }} className="formControl">
                 <TextField
                   className={classes.disabledInput}
@@ -226,7 +226,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
                 />
               </FormControl>
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="totalMonthlyCashAmountInFigures"
                 path="prospect.orgKYCDetails.anticipatedTransactionsDetails.totalMonthlyCashCreditsAED.amountInFigures"
@@ -249,7 +249,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
                 changeProspect={createChangeProspectHandler(values)}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="totalMonthlyNonCashAmountInFigures"
                 autoComplete="off"
@@ -285,7 +285,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
           <h4 className={classes.groupLabel}>Maximum amount expected in a single transaction</h4>
 
           <Grid container spacing={3} className={classes.flexContainer}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="maxAmtSingleTxnCashAED"
                 label="Maximum amount in Cash"
@@ -308,7 +308,7 @@ export const CompanyAnticipatedTransactions = ({ handleContinue, createFormChang
                 }
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="maxAmtSingleTxnNonCashAED"
                 label="Maximum amount in Non-Cash"

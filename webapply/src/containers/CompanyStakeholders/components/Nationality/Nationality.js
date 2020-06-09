@@ -67,8 +67,8 @@ export const NationalityStep = ({
                   const passportDetailsPath = `${kycDetailsPath}.passportDetails[${passportIndex}]`;
                   return (
                     <React.Fragment key={item.id}>
-                      {!!passportIndex && <Grid item sm={12} className={classes.divider} />}
-                      <Grid item md={6} sm={12}>
+                      {!!passportIndex && <Grid item xs={12} className={classes.divider} />}
+                      <Grid item sm={6} xs={12}>
                         <Field
                           name={`passportDetails[${passportIndex}].country`}
                           path={`${passportDetailsPath}.country`}
@@ -126,7 +126,7 @@ export const NationalityStep = ({
                           />
                         )}
                       </Grid>
-                      <Grid item md={6} sm={12}>
+                      <Grid item sm={6} xs={12}>
                         <Field
                           name={`passportDetails[${passportIndex}].passportNumber`}
                           path={`${passportDetailsPath}.passportNumber`}

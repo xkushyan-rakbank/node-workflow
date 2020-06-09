@@ -10,7 +10,14 @@ export const useStyles = makeStyles({
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
-    marginLeft: "35%"
+    margin: "0 auto",
+    "@media (max-width: 420px)": {
+      height: "320px",
+      overflow: "hidden"
+    },
+    "@media (max-width: 372px)": {
+      height: "370px"
+    }
   },
   title: {
     padding: "40px 40px 20px 40px",
@@ -22,7 +29,7 @@ export const useStyles = makeStyles({
     }
   },
   content: {
-    padding: "0 40px 40px"
+    padding: "8px 40px"
   },
   divider: {
     height: "1px",
@@ -30,7 +37,12 @@ export const useStyles = makeStyles({
   },
   dialogActions: {
     padding: "20px",
-    justifyContent: "center"
+    justifyContent: "center",
+    "@media (max-width: 372px)": {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }
   },
   buttonSpacing: {
     "& > * + *": {
@@ -44,6 +56,16 @@ export const useStyles = makeStyles({
     textTransform: "capitalize",
     fontSize: "16px",
     fontWeight: 600,
-    letterSpacing: "normal"
+    letterSpacing: "normal",
+    "@media (max-width: 372px)": {
+      width: "100%",
+      marginLeft: 0
+    }
+  },
+  marginTop12: {
+    "@media (max-width: 372px)": {
+      marginTop: "12px",
+      marginLeft: 0
+    }
   }
 });

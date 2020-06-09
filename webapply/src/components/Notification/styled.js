@@ -10,7 +10,10 @@ export const useStyles = makeStyles({
     backgroundColor: "#ffffff",
     display: "flex",
     color: "#373737",
-    transition: "all 0.4s ease"
+    transition: "all 0.4s ease",
+    "@media (max-width: 500px)": {
+      width: "auto"
+    }
   },
   icon: {
     width: "86px",

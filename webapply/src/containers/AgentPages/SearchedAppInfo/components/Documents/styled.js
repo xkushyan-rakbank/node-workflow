@@ -35,7 +35,10 @@ export const useStyles = makeStyles({
     },
     display: "flex",
     alignItems: "center",
-    padding: "24px 20px 19px 30px"
+    padding: "24px 20px 19px 30px",
+    "@media (max-width: 500px)": {
+      padding: "15px 5px"
+    }
   },
   checkListData: {
     fontSize: "14px",
@@ -49,7 +52,10 @@ export const useStyles = makeStyles({
       paddingRight: "10px"
     },
     "&:nth-child(2)": {
-      width: "20%"
+      width: "20%",
+      "@media (max-width: 500px)": {
+        width: "50%"
+      }
     },
     "&:last-child": {
       width: "30%"

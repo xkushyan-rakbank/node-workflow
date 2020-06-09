@@ -76,13 +76,13 @@ const ShareholdingStep = ({
                 options={yesNoOptions}
                 label="Is this person a shareholder?"
                 onChange={shareholderHandler}
-                contextualHelpProps={{ isDisableHoverListener: false }}
+                contextualHelpProps={{ isDisableHoverListener: false, placement: "bottom-end" }}
                 contextualHelpText="Select 'Yes' if this person holds any shares based on Memorandum of Association/ Articles of Association/ Partners agreement/ Service Agreement/ Share Certificate"
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
               />
-              <Grid item md={12}>
+              <Grid item xs={12}>
                 <Field
                   name="shareHoldingPercentage"
                   path={`prospect.signatoryInfo[${index}].kycDetails.shareHoldingPercentage`}

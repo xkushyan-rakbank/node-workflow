@@ -60,7 +60,7 @@ export const SignatoryPersonalInformation = ({
       {createFormChangeHandler(({ values }) => (
         <Form>
           <Grid spacing={3} container className={classes.flexContainer}>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="maritalStatus"
                 path={`prospect.signatoryInfo[${index}].maritalStatus`}
@@ -71,7 +71,7 @@ export const SignatoryPersonalInformation = ({
                 tabIndex="0"
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="mothersMaidenName"
                 path={`prospect.signatoryInfo[${index}].mothersMaidenName`}
@@ -85,7 +85,7 @@ export const SignatoryPersonalInformation = ({
               />
             </Grid>
             {values.maritalStatus === OTHER_OPTION_CODE && (
-              <Grid item md={12} sm={12}>
+              <Grid item md={12} xs={12}>
                 <Field
                   name="maritalStatusOthers"
                   path={`prospect.signatoryInfo[${index}].maritalStatusOthers`}

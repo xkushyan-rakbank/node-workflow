@@ -12,7 +12,8 @@ export const MobileNotification = ({ children }) => {
   return (
     <MobileNotificationContext.Provider value={isDisplayNotification}>
       <div className={classes.wrapper}>
-        <div className="show-on-mobile">
+        {/* previous code - <div className="show-on-mobile"> */}
+        <div className="display-none">
           {isDisplayNotification && (
             <div className={classes.mobileNotification}>
               <p className={classes.paper}>

@@ -176,13 +176,15 @@ export const ChannelsComponent = ({
             justify="space-between"
             classes={{ root: classes.rootGrid }}
           >
-            <Grid item xs={9}>
+            <Grid item xs={6}>
               {!values.eStatements && (
                 <InfoTitle title="Paper statements will be mailed by courier to your preferred address" />
               )}
             </Grid>
-            <Grid item xs={3}>
-              <ContinueButton type="submit" />
+            <Grid item xs={6}>
+              <span className={classes.continueBtn}>
+                <ContinueButton type="submit" />
+              </span>
             </Grid>
           </Grid>
         </Form>

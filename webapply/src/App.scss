@@ -125,6 +125,10 @@ form .MuiGrid-root {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 650px) {
+    max-width: calc(105%);
+  }
 }
 
 .flexContainerForButton {
@@ -384,6 +388,10 @@ h3 {
 }
 
 .show-on-mobile {
+  display: none;
+}
+
+.display-none {
   display: none;
 }
 

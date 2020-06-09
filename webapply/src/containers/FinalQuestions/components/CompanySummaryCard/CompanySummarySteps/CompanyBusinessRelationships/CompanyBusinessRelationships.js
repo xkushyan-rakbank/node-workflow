@@ -133,7 +133,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topCustomers.map((item, index) => (
                       <React.Fragment key={item.id}>
-                        <Grid item md={isTopCustomers ? 5 : 6} sm={12}>
+                        <Grid item sm={isTopCustomers ? 5 : 6} xs={12}>
                           <Field
                             name={`topCustomers[${index}].name`}
                             path={`prospect.orgKYCDetails.topCustomers[${index}].name`}
@@ -162,7 +162,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         </Grid>
                         <Grid
                           item
-                          md={isTopCustomers ? 5 : 6}
+                          sm={isTopCustomers ? 5 : 6}
                           xs={12}
                           className={cx(classes.relative, { [classes.tablet]: !index })}
                         >
@@ -235,7 +235,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topSuppliers.map((item, index) => (
                       <React.Fragment key={item.id}>
-                        <Grid item md={isTopSuppliers ? 5 : 6} sm={12}>
+                        <Grid item sm={isTopSuppliers ? 5 : 6} xs={12}>
                           <Field
                             name={`topSuppliers[${index}].name`}
                             path={`prospect.orgKYCDetails.topSuppliers[${index}].name`}
@@ -265,7 +265,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                         </Grid>
                         <Grid
                           item
-                          md={isTopSuppliers ? 5 : 6}
+                          sm={isTopSuppliers ? 5 : 6}
                           xs={12}
                           className={cx(classes.relative, { [classes.tablet]: !index })}
                         >
@@ -341,7 +341,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                       <React.Fragment key={item.id}>
                         <Grid
                           item
-                          md={isTopOriginGoodsCountries ? 10 : 12}
+                          sm={isTopOriginGoodsCountries ? 10 : 12}
                           xs={12}
                           className={cx(classes.relative, { [classes.tablet]: !index })}
                         >
@@ -427,8 +427,8 @@ export const CompanyBusinessRelationshipsComponent = ({
                             <React.Fragment key={item.id}>
                               <Grid
                                 item
-                                md={isOtherBankingRelationshipsInfo ? 10 : 12}
-                                sm={12}
+                                sm={isOtherBankingRelationshipsInfo ? 10 : 12}
+                                xs={12}
                                 className={cx(classes.relative, {
                                   [classes.tablet]: !index
                                 })}

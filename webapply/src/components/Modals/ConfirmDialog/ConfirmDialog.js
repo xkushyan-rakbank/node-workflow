@@ -4,6 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import cx from "classnames";
 
 import { useStyles } from "./styled";
 
@@ -35,7 +36,7 @@ export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm }) =
           onClick={handleConfirm}
           color="primary"
           variant="contained"
-          className={classes.actionButton}
+          className={cx(classes.actionButton, classes.marginTop12)}
         >
           Yes, I{"'"}m sure
         </Button>

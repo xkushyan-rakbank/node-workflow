@@ -11,7 +11,11 @@ export const useStyles = makeStyles({
     borderBottom: "1px solid #e6e6e6",
     display: "flex",
     padding: "24px 20px 19px 30px",
-    color: "#263d4c"
+    color: "#263d4c",
+    justifyContent: "center",
+    "@media (max-width: 620)": {
+      padding: "24px 10px 19px 10px"
+    }
   },
   disabled: {
     opacity: "0.5",
@@ -56,7 +60,8 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     color: "#373737",
     padding: "3px 5px",
-    display: "inline-block"
+    // display: "inline-block",
+    overflowWrap: "break-word"
   },
   action: {
     fontSize: "14px",

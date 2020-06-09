@@ -60,7 +60,7 @@ export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
       {createFormChangeHandler(() => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="companyName"
                 label="Company Name"
@@ -73,7 +73,7 @@ export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
                 }}
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="companyCategory"
                 label="Company Category"
@@ -87,7 +87,7 @@ export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="vatRegistrationNumber"
                 label="VAT registration number (optional)"
@@ -100,7 +100,7 @@ export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
                 }}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="numberOfEmployees"
                 label="Number of employees (optional)"

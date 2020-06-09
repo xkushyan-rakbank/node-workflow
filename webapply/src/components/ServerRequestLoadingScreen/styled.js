@@ -11,5 +11,17 @@ export const useStyles = makeStyles({
     backgroundColor: "#ffffff",
     maxWidth: 780,
     margin: "0 auto"
+  },
+  image: {
+    "@media (max-width: 800px)": {
+      height: "80%",
+      display: "block"
+    },
+    "@media (max-width: 620px)": {
+      height: "55%"
+    },
+    "@media (max-width: 450px)": {
+      height: "43%"
+    }
   }
 });

@@ -10,7 +10,10 @@ export const Button = styled("button")({
   border: "none",
   textDecoration: "underline",
   cursor: "pointer",
-  outline: "none"
+  outline: "none",
+  "@media (max-width: 500px)": {
+    fontSize: "13px"
+  }
 });
 
 Button.defaultProps = {

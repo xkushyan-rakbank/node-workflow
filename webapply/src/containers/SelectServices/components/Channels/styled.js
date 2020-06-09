@@ -15,6 +15,9 @@ export const useStyles = makeStyles({
     marginTop: "17px"
   },
   rootGrid: {
-    padding: "20px 20px 20px 0"
+    padding: "20px 0px"
+  },
+  continueBtn: {
+    float: "right"
   }
 });

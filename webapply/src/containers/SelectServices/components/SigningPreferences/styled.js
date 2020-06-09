@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   formWrapper: {
     margin: 0
   },
@@ -33,11 +33,20 @@ export const useStyles = makeStyles({
       borderTop: "1px solid #e6e6e680",
       "& $deleteContact": {
         top: "22px"
+      },
+      [theme.breakpoints.only("xs")]: {
+        "& $deleteContact": {
+          top: "unset"
+        }
       }
     }
   },
   deleteContact: {
     top: "0",
-    right: "-66px"
+    right: "-66px",
+    [theme.breakpoints.only("xs")]: {
+      top: "unset",
+      right: 0
+    }
   }
-});
+}));

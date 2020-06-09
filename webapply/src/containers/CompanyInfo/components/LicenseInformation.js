@@ -3,6 +3,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
 import { differenceInYears, format, isValid } from "date-fns";
+import cx from "classnames";
 
 import {
   Input,
@@ -74,7 +75,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
       {createFormChangeHandler(({ setFieldValue }) => (
         <Form>
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="licenseNumber"
                 label="License number"
@@ -85,7 +86,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
                 }}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="licenseIssueDate"
                 label="License issuing date"
@@ -100,7 +101,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="licenseIssuingAuthority"
                 label="License issuing authority"
@@ -111,7 +112,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
                 tabIndex="0"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="countryOfIncorporation"
                 label="Country of incorporation"
@@ -127,7 +128,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
           </Grid>
 
           <Grid container spacing={3}>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="dateOfIncorporation"
                 label="Date of incorporation"
@@ -145,7 +146,7 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
                 }}
               />
             </Grid>
-            <Grid item md={6} sm={12}>
+            <Grid item sm={6} xs={12}>
               <Field
                 name="yearsInBusiness"
                 label="Years in business (optional)"
@@ -169,10 +170,12 @@ export const LicenseInformation = ({ handleContinue, createFormChangeHandler }) 
             container
             direction="row"
             justify="space-between"
-            className={classes.continueButton}
+            className={cx(classes.continueButton, classes.continueButtonContainer)}
           >
             <InfoTitle title="These details be the same as in your Trade License" />
-            <ContinueButton type="submit" />
+            <span className={classes.continueBtn}>
+              <ContinueButton type="submit" />
+            </span>
           </Grid>
         </Form>
       ))}
