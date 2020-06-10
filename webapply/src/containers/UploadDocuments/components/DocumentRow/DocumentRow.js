@@ -58,7 +58,7 @@ export const DocumentRowComponent = ({
         ref={inputEl}
       />
 
-      {(selectedFile || isUploaded) && <FileIcon width="20" height="26" alt="companyIconSvg" />}
+      {(selectedFile || isUploaded) && <FileIcon className={classes.fileIcon} height="26" alt="companyIconSvg" />}
 
       <div className={classes.ContentBox}>
         <p className={classes.uploadedFileName}>

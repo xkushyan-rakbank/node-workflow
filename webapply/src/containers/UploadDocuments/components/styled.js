@@ -229,7 +229,7 @@ export const useStyles = makeStyles({
     paddingLeft: "11px"
   },
   cancel: {
-    width: "24px",
+    minWidth: "24px",
     height: "24px",
     boxShadow: "0 5px 21px 0 rgba(0, 0, 0, 0.03)",
     cursor: "pointer"
@@ -274,5 +274,8 @@ export const useStyles = makeStyles({
     fontSize: "12px",
     color: "#ea2925",
     margin: 0
+  },
+  fileIcon: {
+    minWidth: "26px"
   }
 });
