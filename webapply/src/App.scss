@@ -127,7 +127,9 @@ form .MuiGrid-root {
   text-overflow: ellipsis;
 
   @media (max-width: 650px) {
-    max-width: calc(105%);
+    max-width: calc(96%);
+    white-space: unset;
+    font-size: .9rem !important;
   }
 }
 
