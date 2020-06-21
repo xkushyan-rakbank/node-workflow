@@ -37,7 +37,8 @@ public class CriteriaParamsValidator {
         }
 
         if (StringUtils.isNotBlank(errorMessage)) {
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, errorMessage);
+            // ApiError error = new ApiError(HttpStatus.BAD_REQUEST, errorMessage, errorMessage);
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST);
             throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
     }
