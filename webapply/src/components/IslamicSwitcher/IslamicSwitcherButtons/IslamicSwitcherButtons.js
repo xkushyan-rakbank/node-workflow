@@ -10,7 +10,7 @@ import { useStyles } from "./styled";
 import { ReactComponent as ConventionalIcon } from "../../../assets/icons/conventional.svg";
 import { ReactComponent as IslamicIcon } from "../../../assets/icons/islamic.svg";
 
-export const IslamicSwitcherButtons = ({ isIslamicBanking, setIsIslamicBanking }) => {
+export const IslamicSwitcherButtons = ({ isIslamicBanking, setIsIslamicBanking, toggleSwitcherShow }) => {
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const classes = useStyles({ isMobileNotificationActive });
 
@@ -28,7 +28,10 @@ export const IslamicSwitcherButtons = ({ isIslamicBanking, setIsIslamicBanking }
           }),
           label: classes.labelStyle
         }}
-        onClick={() => setIsIslamicBanking(false)}
+        onClick={() => {
+          toggleSwitcherShow(false);
+          setIsIslamicBanking(false);
+        }}
       >
         <ConventionalIcon />
         Conventional
@@ -40,7 +43,10 @@ export const IslamicSwitcherButtons = ({ isIslamicBanking, setIsIslamicBanking }
           }),
           label: classes.labelStyle
         }}
-        onClick={() => setIsIslamicBanking(true)}
+        onClick={() => {
+          toggleSwitcherShow(false);
+          setIsIslamicBanking(true);
+        }}
       >
         <IslamicIcon />
         RAKislamic

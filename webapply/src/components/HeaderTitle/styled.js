@@ -12,6 +12,9 @@ export const useStyles = makeStyles(theme => ({
       "& span": {
         fontWeight: "600"
       }
+    },
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: "30px !important"
     }
     // [theme.breakpoints.only("xs")]: {
     //   display: "none"

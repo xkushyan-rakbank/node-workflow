@@ -45,6 +45,7 @@ export const IslamicSwitcher = ({ children, className, isSwitcherShow, toggleSwi
         <IslamicSwitcherButtons
           isIslamicBanking={isIslamicBanking}
           setIsIslamicBanking={setIsIslamicBanking}
+          toggleSwitcherShow={toggleSwitcherShow}
         />
       </div>
     </>

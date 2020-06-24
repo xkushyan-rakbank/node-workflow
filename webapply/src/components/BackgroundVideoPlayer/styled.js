@@ -13,9 +13,11 @@ export const useStyles = makeStyles(theme => ({
     maxHeight: "100vh",
     zIndex: 10,
     [theme.breakpoints.only("xs")]: {
-      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 64 : 0),
-      height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
-      maxHeight: "none"
+      // top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 64 : 0),
+      // height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
+      maxHeight: "none",
+      top: 0,
+      height: 671
     }
   },
   video: {

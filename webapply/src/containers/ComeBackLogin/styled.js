@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
       marginTop: 110
     },
     [theme.breakpoints.only("xs")]: {
-      marginTop: "50px",
+      marginTop: "0",
       padding: "0 16px",
       boxSizing: "border-box"
     }
