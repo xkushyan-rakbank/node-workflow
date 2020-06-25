@@ -68,7 +68,7 @@ export const useStyles = makeStyles(theme => ({
       marginTop: 100
     },
     [theme.breakpoints.only("xs")]: {
-      marginTop: "0"
+      marginTop: "80px"
     }
   }, //grid css start
   gridContainer: {

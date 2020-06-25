@@ -58,6 +58,7 @@ export const NationalityStep = ({
     >
       {createFormChangeHandler(({ values, errors }) => (
         <Form>
+          <Grid container spacing={3}>
             <FieldArray
               name="passportDetails"
               render={arrayHelper =>
@@ -65,7 +66,7 @@ export const NationalityStep = ({
                   // eslint-disable-next-line max-len
                   const passportDetailsPath = `${kycDetailsPath}.passportDetails[${passportIndex}]`;
                   return (
-                    <Grid container spacing={3} key={item.id}>
+                    <React.Fragment key={item.id}>
                       {!!passportIndex && <Grid item xs={12} className={classes.divider} />}
                       <Grid item sm={6} xs={12}>
                         <Field
@@ -99,25 +100,6 @@ export const NationalityStep = ({
                           shrink={true}
                           tabIndex={2 * passportIndex + 1}
                         />
-                      </Grid>
-                      <Grid item sm={6} xs={12}>
-                        <Field
-                          name={`passportDetails[${passportIndex}].passportNumber`}
-                          path={`${passportDetailsPath}.passportNumber`}
-                          label="Passport number"
-                          component={Input}
-                          contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
-                            Example: 'P-123/1950/456 to be entered as P1231950456'"
-                          InputProps={{
-                            inputProps: {
-                              maxLength: MAX_PASSPORT_NUMBER_LENGTH,
-                              tabIndex: 2 * passportIndex + 1
-                            }
-                          }}
-                        />
-                      </Grid>
-                      
-                      <Grid item sm={6} xs={12} className={classes.anotherCitizenshipContainer}>
                         {passportIndex < MAX_ANOTHER_CITIZENSHIP && (
                           <Field
                             name={`passportDetails[${passportIndex}].hasAnotherCitizenship`}
@@ -140,11 +122,25 @@ export const NationalityStep = ({
                               passportIndex,
                               errors
                             )}
-                            inputProps={{ tabIndex: 2 * passportIndex + 2 }} 
+                            inputProps={{ tabIndex: 2 * passportIndex + 2 }}
                           />
                         )}
                       </Grid>
                       <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`passportDetails[${passportIndex}].passportNumber`}
+                          path={`${passportDetailsPath}.passportNumber`}
+                          label="Passport number"
+                          component={Input}
+                          contextualHelpText="If Passport Number contains hyphen (-), oblique (/), spaces or any other special character please enter only alphabets and numbers.
+                            Example: 'P-123/1950/456 to be entered as P1231950456'"
+                          InputProps={{
+                            inputProps: {
+                              maxLength: MAX_PASSPORT_NUMBER_LENGTH,
+                              tabIndex: 2 * passportIndex + 1
+                            }
+                          }}
+                        />
                         <Field
                           name={`passportDetails[${passportIndex}].diplomatPassport`}
                           path={`${passportDetailsPath}.diplomatPassport`}
@@ -153,11 +149,12 @@ export const NationalityStep = ({
                           inputProps={{ tabIndex: 2 * passportIndex + 2 }}
                         />
                       </Grid>
-                    </Grid>
+                    </React.Fragment>
                   );
                 })
               }
             />
+          </Grid>
           <SubmitButton tabIndex={values.passportDetails.length * 2} />
         </Form>
       ))}

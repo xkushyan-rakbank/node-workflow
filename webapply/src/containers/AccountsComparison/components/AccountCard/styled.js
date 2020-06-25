@@ -8,9 +8,9 @@ export const useStyles = makeStyles(theme => ({
     overflow: "hidden",
     margin: "20px -26px 0",
     padding: "0 16px 25px",
-    // [portraitOrientationQueryIPads]: {
-    //   flexDirection: "column"
-    // },
+    [portraitOrientationQueryIPads]: {
+      flexDirection: "column"
+    },
     [theme.breakpoints.only("sm")]: {
       marginLeft: 0,
       marginRight: 0,
