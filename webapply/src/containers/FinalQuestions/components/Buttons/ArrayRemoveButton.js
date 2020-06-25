@@ -14,8 +14,7 @@ export const ArrayRemoveButton = ({
     onClick={() => {
       arrayHelpers.remove(itemIndex);
       updateProspect({
-        // [prospectPath]: [...dataArray].splice(itemIndex, 1)
-        [prospectPath]: [...dataArray].filter((item, index) => index !== itemIndex)
+        [prospectPath]: [...dataArray].splice(itemIndex, 1)
       });
     }}
     {...props}
