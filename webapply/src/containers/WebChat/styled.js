@@ -42,7 +42,7 @@ export const useStyles = makeStyles(theme => ({
       height: "30px"
     },
     [theme.breakpoints.only("xs")]: {
-      display: "none",
+      // display: "none",
       "& span": {
         width: "48px",
         height: "48px",
