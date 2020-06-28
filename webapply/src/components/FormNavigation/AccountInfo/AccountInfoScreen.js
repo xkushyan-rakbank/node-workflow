@@ -3,7 +3,7 @@ import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { ContainedButton } from "../../Buttons/ContainedButton";
-// import { MobileNotification } from "../../Modals";
+import { MobileNotification } from "../../Modals";
 import { useStyles } from "./styled";
 
 export const AccountInfoScreen = ({

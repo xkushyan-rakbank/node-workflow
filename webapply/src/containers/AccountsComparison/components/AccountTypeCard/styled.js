@@ -22,13 +22,13 @@ export const useStyles = makeStyles(theme => ({
       padding: "8px 20px",
       "& span": { justifyContent: "center", textAlign: "center" }
     },
-    // [portraitOrientationQueryIPads]: {
-    //   padding: "5px 24px 11px",
-    //   marginTop: "10px",
-    //   width: "100%",
-    //   height: "auto",
-    //   minWidth: "200px"
-    // }
+    [portraitOrientationQueryIPads]: {
+      padding: "5px 24px 11px",
+      marginTop: "10px",
+      width: "100%",
+      height: "auto",
+      minWidth: "200px"
+    }
   },
   header: {
     display: "flex",

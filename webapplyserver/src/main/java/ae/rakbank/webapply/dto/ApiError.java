@@ -41,12 +41,6 @@ public class ApiError implements Serializable {
         initTimestamp();
     }
 
-    public ApiError(HttpStatus status) {
-        this();
-        this.status = status;
-        this.statusCode = status.value();
-    }
-
     public ApiError(HttpStatus status, String message, String debugMessage) {
         this();
         this.status = status;
