@@ -38,7 +38,7 @@ export const FormLayoutComponent = ({
       <div className={classes.formWrapper}>
         <div className={classes.formInner}>
           <div className={classes.mainContainer}>
-            {isDisplayHeader && <HeaderTitle />}
+            {isDisplayHeader && <HeaderTitle withoutMarginBottom />}
 
             <Notifications />
 
@@ -47,8 +47,8 @@ export const FormLayoutComponent = ({
             ) : errorCode ? (
               <ApplicationStatus icon={errorIcon} text={ERROR_MESSAGES[errorCode]} />
             ) : (
-              children
-            )}
+                  children
+                )}
           </div>
         </div>
       </div>
