@@ -39,7 +39,7 @@ apiClient.interceptors.request.use(config => ({
   ...config,
   headers: {
     ...config.headers,
-    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Cache-Control": "no-cache, no-store",
     "Expires": 0,
     "Pragma": "no-cache",
     [REQUEST_ID_HEADER]: nanoid()
@@ -57,7 +57,7 @@ apiClient.interceptors.request.use(config => {
       ...config,
       headers: {
         ...config.headers,
-        "Cache-Control": "no-cache",
+        "Cache-Control": "no-cache, no-store",
         "Content-Type": "application/json",
         [SYM_KEY_HEADER]: encryptedSymKey
       },
