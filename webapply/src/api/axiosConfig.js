@@ -35,16 +35,22 @@ const apiClient = axios.create({
   baseURL: process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply"
 });
 
-apiClient.interceptors.request.use(config => ({
-  ...config,
-  headers: {
+apiClient.interceptors.request.use(config => {
+  const headers = {
     ...config.headers,
     "Cache-Control": "no-cache, no-store",
     "Expires": 0,
     "Pragma": "no-cache",
     [REQUEST_ID_HEADER]: nanoid()
   }
-}));
+  console.log(headers);
+  if (headers['Save-Data']) delete headers['Save-Data']
+  console.log(headers);
+  return {
+    ...config,
+    headers
+  }
+});
 
 apiClient.interceptors.request.use(config => {
   if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
@@ -53,14 +59,19 @@ apiClient.interceptors.request.use(config => {
       JSON.stringify(config.data)
     );
 
+    const headers = {
+      ...config.headers,
+      "Cache-Control": "no-cache, no-store",
+      "Content-Type": "application/json",
+      [SYM_KEY_HEADER]: encryptedSymKey
+    }
+    console.log(headers);
+    if (headers['Save-Data']) delete headers['Save-Data']
+    console.log(headers);
+
     return {
       ...config,
-      headers: {
-        ...config.headers,
-        "Cache-Control": "no-cache, no-store",
-        "Content-Type": "application/json",
-        [SYM_KEY_HEADER]: encryptedSymKey
-      },
+      headers,
       data: encryptedPayload,
       symKey
     };
