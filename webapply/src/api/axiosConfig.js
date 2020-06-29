@@ -57,7 +57,7 @@ apiClient.interceptors.request.use(config => {
       ...config,
       headers: {
         ...config.headers,
-        "Cache-Control": "no-cache",
+        "Cache-Control": "no-cache, no-store",
         "Content-Type": "application/json",
         [SYM_KEY_HEADER]: encryptedSymKey
       },
