@@ -39,7 +39,7 @@ apiClient.interceptors.request.use(config => {
   const headers = {
     ...config.headers,
     "Cache-Control": "no-cache, no-store",
-    "Expires": 0,
+    //"Expires": 0,
     "Pragma": "no-cache",
     [REQUEST_ID_HEADER]: nanoid()
   }
