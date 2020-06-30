@@ -39,29 +39,31 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
     ),
     isOpened && (
       <Portal key="window" id="chat">
-        <div
-          className={cx(classes.chatWrapper, {
-            [classes.mimimized]: isMinimized,
-            [classes.expand]: !isMinimized
-          })}
-        >
-          <Suspense fallback={<div>Loading...</div>}>
-            <WebChatComponent
-              onClose={closeWebChat}
-              onMinimize={minimizeChat}
-              isAuth={false}
-              onNewMessageReceive={handleReceiveNewMessage}
-              initiatedCustomerName={name || searchName}
-              initiatedCustomerMobile={`${countryCode}${mobileNo}`}
-              emailAddress={email}
-              config={{
-                channel: "/service/chatV2/Customer-Onboarding",
-                channelId: "WBA",
-                apiPath: process.env.REACT_APP_CHAT_API_PATH
-              }}
-              Header={Header}
-            />
-          </Suspense>
+        <div className={classes.chatContainer}>
+          <div
+            className={cx(classes.chatWrapper, {
+              [classes.mimimized]: isMinimized,
+              [classes.expand]: !isMinimized
+            })}
+          >
+            <Suspense fallback={<div>Loading...</div>}>
+              <WebChatComponent
+                onClose={closeWebChat}
+                onMinimize={minimizeChat}
+                isAuth={false}
+                onNewMessageReceive={handleReceiveNewMessage}
+                initiatedCustomerName={name || searchName}
+                initiatedCustomerMobile={`${countryCode}${mobileNo}`}
+                emailAddress={email}
+                config={{
+                  channel: "/service/chatV2/Customer-Onboarding",
+                  channelId: "WBA",
+                  apiPath: process.env.REACT_APP_CHAT_API_PATH
+                }}
+                Header={Header}
+              />
+            </Suspense>
+          </div>
         </div>
       </Portal>
     )

@@ -206,8 +206,12 @@ export const useStyles = makeStyles(theme => ({
       left: 40
     },
     [theme.breakpoints.only("xs")]: {
-      position: "fixed",
-      left: "15px"
+      left: "unset",
+      top: "42%",
+      right: "5px"
+    },
+    "@media (max-width: 800px)": {
+      top: "50%",
     }
   },
   sectionTitle: {

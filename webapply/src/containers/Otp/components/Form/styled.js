@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     width: "100%",
     [theme.breakpoints.only("xs")]: {
-      marginTop: "50px",
+      marginTop: 0,
       boxSizing: "border-box"
     }
   },
@@ -34,7 +34,10 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    marginTop: "42px"
+    marginTop: "42px",
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: "80px"
+    }
   },
   nextButton: {
     width: "auto",
@@ -43,7 +46,7 @@ export const useStyles = makeStyles(theme => ({
   title: {
     marginTop: "40px",
     [theme.breakpoints.only("xs")]: {
-      marginTop: "0"
+      marginTop: 0
     }
   },
   submitButton: {

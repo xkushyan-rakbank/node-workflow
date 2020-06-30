@@ -35,16 +35,17 @@ const apiClient = axios.create({
   baseURL: process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply"
 });
 
-apiClient.interceptors.request.use(config => ({
-  ...config,
-  headers: {
-    ...config.headers,
-    "Cache-Control": "no-cache, no-store, must-revalidate",
-    "Expires": 0,
-    "Pragma": "no-cache",
-    [REQUEST_ID_HEADER]: nanoid()
+apiClient.interceptors.request.use(config => {
+  return {
+    ...config,
+    headers: {
+      ...config.headers,
+      "Cache-Control": "no-cache, no-store",
+      "Pragma": "no-cache",
+      [REQUEST_ID_HEADER]: nanoid()
+    }
   }
-}));
+});
 
 apiClient.interceptors.request.use(config => {
   if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
@@ -57,7 +58,7 @@ apiClient.interceptors.request.use(config => {
       ...config,
       headers: {
         ...config.headers,
-        "Cache-Control": "no-cache",
+        "Cache-Control": "no-cache, no-store",
         "Content-Type": "application/json",
         [SYM_KEY_HEADER]: encryptedSymKey
       },

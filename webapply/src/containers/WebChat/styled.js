@@ -42,7 +42,7 @@ export const useStyles = makeStyles(theme => ({
       height: "30px"
     },
     [theme.breakpoints.only("xs")]: {
-      display: "none",
+      // display: "none",
       "& span": {
         width: "48px",
         height: "48px",
@@ -74,12 +74,27 @@ export const useStyles = makeStyles(theme => ({
       height: "100%"
     }
   },
+  chatContainer: {
+    "@media (max-width: 750px)": {
+      display: "flex",
+      justifyContent: "center"
+    }
+  },
   chatWrapper: {
     position: "fixed",
     bottom: "40px",
     left: "40px",
     transition: "all 0.3s ease",
-    zIndex: 100
+    zIndex: 100,
+    [theme.breakpoints.only("xs")]: {
+      left: "unset",
+      bottom: "unset",
+      right: "10px",
+      top: "10px"
+    },
+    "@media (max-width: 750px)": {
+      right: "unset"
+    }
   },
   mimimized: {
     bottom: "-105%"
