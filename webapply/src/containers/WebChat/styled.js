@@ -97,6 +97,10 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   mimimized: {
-    bottom: "-105%"
+    bottom: "-105%",
+    [theme.breakpoints.only("xs")]: {
+      bottom: "unset",
+      right: "-125%"
+    }
   }
 }));
