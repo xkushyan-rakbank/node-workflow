@@ -200,7 +200,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     position: "absolute",
     left: "77px",
-    bottom: "40px",
+    bottom: "72px",
     color: "#fff",
     [theme.breakpoints.down("sm")]: {
       left: 40
