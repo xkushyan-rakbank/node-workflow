@@ -204,7 +204,7 @@ export const useStyles = makeStyles(theme => ({
     color: "#fff",
     [theme.breakpoints.down("sm")]: {
       left: 40,
-      bottom: "102px"
+      bottom: "130px"
     },
     [theme.breakpoints.only("xs")]: {
       left: "unset",
