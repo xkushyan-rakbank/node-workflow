@@ -22,7 +22,7 @@ public class PatternMaskingLayout extends PatternLayout {
     }
 
     public PatternMaskingLayout() {
-        isEnabled = Boolean.parseBoolean(System.getenv("LOGGER_MASKING_FLAG"));
+        isEnabled = true;//Boolean.parseBoolean(System.getenv("LOGGER_MASKING_FLAG"));
     }
 
     public void addMaskPattern(String maskPattern) {
