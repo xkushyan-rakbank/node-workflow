@@ -53,6 +53,7 @@ public class DehClient {
 
     public ResponseEntity<Object> invokeApiEndpoint(String url, HttpMethod httpMethod, JsonNode requestBodyJSON,
                                                     String operationId, MediaType mediaType, String oauthAccessToken) {
+    	log.info("Inside invokeApiEndpoint method...");
         if (requestBodyJSON != null) {
             log.info(String.format(">>Invoke test1 API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
                     operationId, url, ReflectionToStringBuilder.toString(requestBodyJSON)));
