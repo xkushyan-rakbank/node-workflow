@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -52,8 +54,10 @@ public class DehClient {
     public ResponseEntity<Object> invokeApiEndpoint(String url, HttpMethod httpMethod, JsonNode requestBodyJSON,
                                                     String operationId, MediaType mediaType, String oauthAccessToken) {
         if (requestBodyJSON != null) {
-            log.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
-                    operationId, url, requestBodyJSON.toString()));
+            log.info(String.format(">>Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
+                    operationId, url, ReflectionToStringBuilder.toString(requestBodyJSON)));
+            log.info(String.format(">>>>Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
+                    operationId, url, ReflectionToStringBuilder.toString(requestBodyJSON.toString())));
         } else {
             log.info(String.format("Invoke API from %s method, Endpoint=[%s]", operationId, url));
         }
