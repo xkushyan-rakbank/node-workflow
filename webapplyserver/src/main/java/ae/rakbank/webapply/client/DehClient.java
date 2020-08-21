@@ -54,12 +54,12 @@ public class DehClient {
     public ResponseEntity<Object> invokeApiEndpoint(String url, HttpMethod httpMethod, JsonNode requestBodyJSON,
                                                     String operationId, MediaType mediaType, String oauthAccessToken) {
         if (requestBodyJSON != null) {
-            log.info(String.format(">>Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
+            log.info(String.format(">>Invoke test1 API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
                     operationId, url, ReflectionToStringBuilder.toString(requestBodyJSON)));
-            log.info(String.format(">>>>Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
+            log.info(String.format(">>>>Invoke test2 API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
                     operationId, url, ReflectionToStringBuilder.toString(requestBodyJSON.toString())));
         } else {
-            log.info(String.format("Invoke API from %s method, Endpoint=[%s]", operationId, url));
+            log.info(String.format("Invoke test3 API from %s method, Endpoint=[%s]", operationId, url));
         }
 
         HttpEntity<JsonNode> request;
@@ -116,7 +116,7 @@ public class DehClient {
 
         HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 
-        log.info(String.format("Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
+        log.info(String.format("Invoke test4 API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
 
         ResponseEntity<JsonNode> response;
         try {
