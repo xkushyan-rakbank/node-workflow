@@ -11,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -51,11 +53,13 @@ public class DehClient {
 
     public ResponseEntity<Object> invokeApiEndpoint(String url, HttpMethod httpMethod, JsonNode requestBodyJSON,
                                                     String operationId, MediaType mediaType, String oauthAccessToken) {
+    	log.info("..Inside invokeApi Endpoint method...");
         if (requestBodyJSON != null) {
-            log.info(String.format("Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
-                    operationId, url, requestBodyJSON.toString()));
+            log.info(String.format("> Invoke API from %s method, Endpoint=[%s], requestBodyJSON:[%s]",
+                    operationId, url, ReflectionToStringBuilder.toString(requestBodyJSON)));
+            
         } else {
-            log.info(String.format("Invoke API from %s method, Endpoint=[%s]", operationId, url));
+            log.info(String.format(">> Invoke API from %s method, Endpoint=[%s]", operationId, url));
         }
 
         HttpEntity<JsonNode> request;
@@ -112,7 +116,7 @@ public class DehClient {
 
         HttpEntity<JsonNode> request = new HttpEntity<>(null, headers);
 
-        log.info(String.format("Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
+        log.info(String.format(">>> Invoke API from %s method, Endpoint=[%s], request=%s", methodName, url, request.toString()));
 
         ResponseEntity<JsonNode> response;
         try {

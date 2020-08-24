@@ -11,8 +11,9 @@ import { NotificationsManager } from "../../../../components/Notification";
 import { useLayoutParams } from "../../../FormLayout";
 import { useViewId } from "../../../../utils/useViewId";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
-import { NEXT, SUBMIT } from "../../../../constants";
+import { NEXT, SUBMIT, formStepper } from "../../../../constants";
 import { trustMessageContent, submitApplication } from "./constants";
+import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
 
 export const SubmitApplicationComponent = ({
   accountInfo: [account],
@@ -27,6 +28,7 @@ export const SubmitApplicationComponent = ({
   useViewId(true);
   useLayoutParams(true, true);
   const pushHistory = useTrackingHistory();
+  useFormNavigation([false, true, formStepper]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     !isAgent && NotificationsManager.add(trustMessageContent);
