@@ -14,10 +14,16 @@ jest.mock(
 );
 jest.mock("../../src/containers/FormLayout");
 
+jest.mock("react-router-dom", () => ({
+  __esModule: true,
+  useLocation: jest.fn().mockReturnValue({})
+}));
+
 describe("AccountsComparison container tests", () => {
   const accountType = "some account type";
   const servicePricingGuideUrl = "some url";
-  const props = { servicePricingGuideUrl };
+  const setProspectLead = jest.fn();
+  const props = { servicePricingGuideUrl, setProspectLead };
   const currentSectionIndex = 1;
   const setCurrentSection = jest.fn();
 

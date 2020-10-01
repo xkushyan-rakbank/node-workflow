@@ -14,6 +14,7 @@ export const SAVE_SIGNATORY_MODEL = "SAVE_SIGNATORY_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
 export const LOAD_META_DATA = "LOAD_META_DATA";
+export const SET_PROSPECT_LEAD = "SET_PROSPECT_LEAD";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -69,3 +70,7 @@ export const saveSignatoryModel = payload => {
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });
 
 export const resetApplicantInfo = () => ({ type: RESET_APPLICANT_INFO });
+
+export const setProspectLead = payload => {
+  return { type: SET_PROSPECT_LEAD, payload };
+};

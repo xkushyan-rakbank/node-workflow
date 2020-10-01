@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
+import { useLocation } from "react-router-dom";
 
 import { VerticalPaginationContext } from "../../components/VerticalPagination";
 import { accountTypes } from "./components/TableCompare/constants";
@@ -7,7 +8,19 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
 import { LOGO_STANDART } from "../../components/Header/constants";
 
-export const AccountsComparisonContainer = ({ servicePricingGuideUrl }) => {
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+
+export const AccountsComparisonContainer = ({ servicePricingGuideUrl, setProspectLead }) => {
+  let query = useQuery();
+  useEffect(() => {
+    let referralName = "";
+    referralName = query.get("product-name");
+    const leadInfo = { productName: referralName ? referralName : "" };
+    setProspectLead(leadInfo);
+  }, []);
+
   const { setCurrentSection, currentSectionIndex } = useContext(VerticalPaginationContext);
   useFormNavigation([true, false, [], !!currentSectionIndex]);
   useLayoutParams(false, false, true);

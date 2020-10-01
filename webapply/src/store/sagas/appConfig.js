@@ -16,7 +16,12 @@ import {
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
 import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, AUTO } from "../../constants";
-import { getIsIslamicBanking, getAccountType, getProspect } from "../selectors/appConfig";
+import {
+  getIsIslamicBanking,
+  getAccountType,
+  getProspect,
+  getLeadSource
+} from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
 export function* receiveAppConfigSaga() {
@@ -46,6 +51,7 @@ export function* receiveAppConfigSaga() {
       if (!newConfig.prospect.applicantInfo.countryCode) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
+      newConfig.prospect.applicantInfo.LeadSource = yield select(getLeadSource);
       newConfig.prospect.applicationInfo.accountType = yield select(getAccountType);
       newConfig.prospect.applicationInfo.islamicBanking = yield select(getIsIslamicBanking);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;

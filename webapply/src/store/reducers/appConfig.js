@@ -13,7 +13,8 @@ import {
   SAVE_SIGNATORY_MODEL,
   SET_ACCESS_TOKEN,
   RESET_PROSPECT,
-  RESET_APPLICANT_INFO
+  RESET_APPLICANT_INFO,
+  SET_PROSPECT_LEAD
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -129,6 +130,10 @@ export default handleActions(
           applyOnbehalf: false
         }
       }
+    }),
+    [SET_PROSPECT_LEAD]: (state, action) => ({
+      ...state,
+      leadSource: action.payload
     })
   },
   initialState

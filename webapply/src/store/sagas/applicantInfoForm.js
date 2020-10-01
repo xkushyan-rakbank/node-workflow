@@ -18,6 +18,7 @@ import { FieldsValidationError } from "../../api/serverErrors";
 import { NEXT, SAVE } from "../../constants";
 import { getProspect } from "../selectors/appConfig";
 import { getReCaptchaToken } from "../selectors/reCaptcha";
+import { getLeadSource } from "../selectors/appConfig";
 
 export function* applicantInfoFormSaga({ payload }) {
   try {
@@ -25,6 +26,9 @@ export function* applicantInfoFormSaga({ payload }) {
     const prospect = yield select(getProspect);
     const applicationInfo = yield select(getApplicationInfo);
     const headers = yield select(getAuthorizationHeader);
+    const leadSource = yield select(getLeadSource);
+
+    // payload.LeadSource = leadSource;
 
     const prospectUpdated = {
       ...prospect,
