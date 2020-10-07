@@ -16,7 +16,7 @@ export const ApplicationOverview = () => {
   useEffect(() => {
     let referralName = "";
     referralName = query.get("product-name");
-    const leadInfo = { productName: referralName ? referralName : "" };
+    const leadInfo = { productName: referralName };
     dispatch(setProspectLead(leadInfo));
   }, []);
 

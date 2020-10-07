@@ -17,7 +17,7 @@ export const AccountsComparisonContainer = ({ servicePricingGuideUrl, setProspec
   useEffect(() => {
     let referralName = "";
     referralName = query.get("product-name");
-    const leadInfo = { productName: referralName ? referralName : "" };
+    const leadInfo = { productName: referralName };
     setProspectLead(leadInfo);
   }, []);
 
