@@ -39,6 +39,11 @@ export const useStyles = makeStyles({
     padding: "5px",
     width: "100%"
   },
+  agentBtnContainer: {
+    padding: "5px",
+    width: "100%",
+    textAlign: "center"
+  },
   dialogActions: {
     alignItems: "center",
     padding: "15px",
@@ -51,6 +56,19 @@ export const useStyles = makeStyles({
   },
   actionButton: {
     width: "100%",
+    height: "40px",
+    borderRadius: "21px",
+    textTransform: "capitalize",
+    fontSize: "16px",
+    fontWeight: 600,
+    letterSpacing: "normal",
+    "@media (max-width: 372px)": {
+      width: "100%",
+      marginLeft: 0
+    }
+  },
+  agentActionButton: {
+    width: "200px",
     height: "40px",
     borderRadius: "21px",
     textTransform: "capitalize",

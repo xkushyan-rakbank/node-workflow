@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 
 import { USER_IDLE_TIMEOUT, EXPIRY_INTERVAL } from "../../constants";
 import Alert from "./components/Alert";
-
 let reminderTimer = EXPIRY_INTERVAL;
 export const SessionExpiration = memo(props => {
   const location = useLocation();
@@ -11,6 +10,12 @@ export const SessionExpiration = memo(props => {
   const [showReminder, setShowReminder] = useState(false);
   const [expiryTime, setExpiryTime] = useState(reminderTimer);
   const [extendExpiryTime, setExtendExpiryTime] = useState(false);
+
+  let isAgent = false;
+  if (props.isAuthenticated) {
+    isAgent = true;
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       if (props.authToken && typeof props.authToken !== "undefined") {
@@ -45,11 +50,7 @@ export const SessionExpiration = memo(props => {
   const logout = () => {
     setExpiredStatus(true);
     setShowReminder(false);
-    if (props.isAuthenticated) {
-      props.logout();
-    } else {
-      props.setAccessToken("");
-    }
+    props.setAccessToken("");
   };
 
   if (!isExpired && !showReminder) {
@@ -67,6 +68,7 @@ export const SessionExpiration = memo(props => {
         }
         percentage={(expiryTime / EXPIRY_INTERVAL) * 100}
         progressLabel={String(expiryTime)}
+        isAgent={isAgent}
       />
     );
   }
@@ -77,6 +79,7 @@ export const SessionExpiration = memo(props => {
       isOpen={true}
       handleConfirm={() => window.location.reload()}
       details="Sorry, your session has expired. But don't worry, you can retrieve your application from where you left."
+      isAgent={isAgent}
     />
   );
 });

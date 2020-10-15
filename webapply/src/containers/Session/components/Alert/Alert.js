@@ -20,7 +20,8 @@ export const Alert = ({
   isOpen,
   handleConfirm,
   percentage = 0,
-  progressLabel = ""
+  progressLabel = "",
+  isAgent = false
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -44,7 +45,6 @@ export const Alert = ({
         ) : (
           <CloseIcon classes={{ root: classes.iconStyle }} />
         )}
-        {/* <CancelOutlinedIcon classes={{ root: classes.iconStyle }} /> */}
       </DialogTitle>
       {!!details && <DialogContent classes={{ root: classes.content }}>{details}</DialogContent>}
 
@@ -63,26 +63,42 @@ export const Alert = ({
           </Grid>
         ) : (
           <>
-            <Grid item xs={6} className={classes.btnContainer}>
-              <Button
-                onClick={redirectToHome}
-                color="primary"
-                variant="outlined"
-                className={classes.actionButton}
-              >
-                No, Thanks
-              </Button>
-            </Grid>
-            <Grid item xs={6} className={cx(classes.btnContainer, classes.ml0)}>
-              <Button
-                onClick={handleConfirm}
-                color="primary"
-                variant="contained"
-                className={classes.actionButton}
-              >
-                Continue
-              </Button>
-            </Grid>
+            {isAgent ? (
+              <Grid item xs={12} className={classes.agentBtnContainer}>
+                <Button
+                  onClick={handleConfirm}
+                  color="primary"
+                  variant="contained"
+                  className={classes.agentActionButton}
+                >
+                  Continue
+                </Button>
+              </Grid>
+            ) : (
+              <>
+                <Grid item xs={6} className={classes.btnContainer}>
+                  <Button
+                    onClick={redirectToHome}
+                    color="primary"
+                    variant="outlined"
+                    className={classes.actionButton}
+                  >
+                    No, Thanks
+                  </Button>
+                </Grid>
+
+                <Grid item xs={6} className={cx(classes.btnContainer, classes.ml0)}>
+                  <Button
+                    onClick={handleConfirm}
+                    color="primary"
+                    variant="contained"
+                    className={classes.actionButton}
+                  >
+                    Continue
+                  </Button>
+                </Grid>
+              </>
+            )}
           </>
         )}
       </DialogActions>
