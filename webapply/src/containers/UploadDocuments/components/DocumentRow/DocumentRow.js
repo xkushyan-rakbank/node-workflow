@@ -8,6 +8,7 @@ import { Icon, ICONS } from "../../../../components/Icons";
 import { useStyles } from "../styled";
 
 import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
+import { OverwriteAlert } from "../OverwriteAlert/OverwriteAlert";
 
 export const DocumentRowComponent = ({
   isDisabledUploadForRO,
@@ -25,6 +26,7 @@ export const DocumentRowComponent = ({
   const inputEl = useRef(null);
 
   const [errorMessage, setErrorMessage] = useState(null);
+  const [removeAlert, setRemoveAlert] = useState(false);
   const fileUploadClick = event => (event.target.value = null);
   const fileUploadChange = useCallback(() => {
     const file = inputEl.current.files[0];
@@ -43,84 +45,102 @@ export const DocumentRowComponent = ({
     reUploadHandler();
   };
 
+  const cancelUpload = () => {
+    cancelHandler();
+    setRemoveAlert(false);
+    inputEl.current.click();
+  };
+
   return (
-    <div
-      className={cx(classes.fileUploadPlaceholder, {
-        [classes.disabled]: isDisabledUploadForRO
-      })}
-    >
-      <input
-        className={classes.defaultInput}
-        name="file"
-        type="file"
-        onChange={fileUploadChange}
-        onClick={fileUploadClick}
-        ref={inputEl}
-      />
+    <>
+      <div
+        className={cx(classes.fileUploadPlaceholder, {
+          [classes.disabled]: isDisabledUploadForRO
+        })}
+      >
+        <input
+          className={classes.defaultInput}
+          name="file"
+          type="file"
+          onChange={fileUploadChange}
+          onClick={fileUploadClick}
+          ref={inputEl}
+        />
 
-      {(selectedFile || isUploaded) && <FileIcon className={classes.fileIcon} height="26" alt="companyIconSvg" />}
+        {(selectedFile || isUploaded) && (
+          <FileIcon className={classes.fileIcon} height="26" alt="companyIconSvg" />
+        )}
 
-      <div className={classes.ContentBox}>
-        <p className={classes.uploadedFileName}>
-          {(() => {
-            if (isUploading) {
-              return `Uploading ${document.documentTitle}`;
-            } else if (isUploaded && selectedFile) {
-              return selectedFile.name;
-            } else if (isUploaded && document.fileDescription) {
-              return document.fileDescription;
-            } else {
-              return document.documentTitle;
-            }
-          })()}
+        <div className={classes.ContentBox}>
+          <p className={classes.uploadedFileName}>
+            {(() => {
+              if (isUploading) {
+                return `Uploading ${document.documentTitle}`;
+              } else if (isUploaded && selectedFile) {
+                return selectedFile.name;
+              } else if (isUploaded && document.fileDescription) {
+                return document.fileDescription;
+              } else {
+                return document.documentTitle;
+              }
+            })()}
 
-          {selectedFile && (
-            <span className={classes.signatoryRights}>
-              {(selectedFile.size / BYTES_IN_MEGABYTE).toFixed(1)} MB
-            </span>
-          )}
-        </p>
+            {selectedFile && (
+              <span className={classes.signatoryRights}>
+                {(selectedFile.size / BYTES_IN_MEGABYTE).toFixed(1)} MB
+              </span>
+            )}
+          </p>
 
-        <div className={classes.fileSizeMessage}>
-          {isUploading && (
-            <div className={classes.uploadFileName}>
-              <div id="Progress_Status">
-                <div className={classes.myProgressBar} style={{ width: `${percentComplete}%` }} />
+          <div className={classes.fileSizeMessage}>
+            {isUploading && (
+              <div className={classes.uploadFileName}>
+                <div id="Progress_Status">
+                  <div className={classes.myProgressBar} style={{ width: `${percentComplete}%` }} />
+                </div>
+                <div className={classes.progressStatus}>{percentComplete}%</div>
               </div>
-              <div className={classes.progressStatus}>{percentComplete}%</div>
-            </div>
-          )}
+            )}
 
-          {isUploadError && <DocumentUploadError tryAgainHandler={tryAgain} />}
+            {isUploadError && <DocumentUploadError tryAgainHandler={tryAgain} />}
 
-          {!selectedFile && !isUploaded && !errorMessage && (
-            <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
-          )}
+            {!selectedFile && !isUploaded && !errorMessage && (
+              <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
+            )}
+          </div>
+
+          {errorMessage && <p className={classes.errorExplanation}>{errorMessage}</p>}
         </div>
 
-        {errorMessage && <p className={classes.errorExplanation}>{errorMessage}</p>}
+        {!isDisabledUploadForRO && (
+          <>
+            {selectedFile || isUploaded ? (
+              <Icon
+                name={ICONS.close}
+                className={classes.cancel}
+                onClick={() => setRemoveAlert(true)}
+                alt="cancel upload"
+              />
+            ) : (
+              <p
+                className={classes.ControlsBox}
+                justify="flex-end"
+                onClick={() => inputEl.current.click()}
+              >
+                Upload
+              </p>
+            )}
+          </>
+        )}
       </div>
-
-      {!isDisabledUploadForRO && (
-        <>
-          {selectedFile || isUploaded ? (
-            <Icon
-              name={ICONS.close}
-              className={classes.cancel}
-              onClick={cancelHandler}
-              alt="cancel upload"
-            />
-          ) : (
-            <p
-              className={classes.ControlsBox}
-              justify="flex-end"
-              onClick={() => inputEl.current.click()}
-            >
-              Upload
-            </p>
-          )}
-        </>
+      {removeAlert && (
+        <OverwriteAlert
+          message="We can see that you are about to re-upload a document. Keep in mind that this will replace your previous upload"
+          handleClose={() => setRemoveAlert(false)}
+          isOpen={removeAlert}
+          handleConfirm={cancelUpload}
+        />
       )}
-    </div>
+    </>
   );
 };
