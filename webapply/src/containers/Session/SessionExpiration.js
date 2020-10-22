@@ -10,11 +10,7 @@ export const SessionExpiration = memo(props => {
   const [showReminder, setShowReminder] = useState(false);
   const [expiryTime, setExpiryTime] = useState(reminderTimer);
   const [extendExpiryTime, setExtendExpiryTime] = useState(false);
-
-  let isAgent = false;
-  if (props.isAuthenticated) {
-    isAgent = true;
-  }
+  const [isAgent, setIsAgent] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -51,6 +47,10 @@ export const SessionExpiration = memo(props => {
     setExpiredStatus(true);
     setShowReminder(false);
     props.setAccessToken("");
+    if (props.isAuthenticated && props.authToken) {
+      setIsAgent(true);
+      props.logout();
+    }
   };
 
   if (!isExpired && !showReminder) {
