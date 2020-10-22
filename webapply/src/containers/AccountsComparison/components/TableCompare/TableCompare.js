@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import Paper from "@material-ui/core/Paper";
 
@@ -17,6 +18,7 @@ import { useStyles } from "./styled";
 const { INITIAL_OFFSET, OFFSET } = sizes;
 
 export const TableCompareComponent = ({ selectedAccount }) => {
+  const queryParams = useLocation().search;
   const pushHistory = useTrackingHistory();
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
@@ -66,7 +68,11 @@ export const TableCompareComponent = ({ selectedAccount }) => {
         })
       );
       setTimeout(() => {
-        pushHistory(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
+        if (queryParams) {
+          pushHistory(detailedAccountRoutesMap[accountType][CONVENTIONAL] + queryParams);
+        } else {
+          pushHistory(detailedAccountRoutesMap[accountType][CONVENTIONAL]);
+        }
       }, 4);
     },
     [dispatch, pushHistory]
