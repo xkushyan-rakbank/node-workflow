@@ -11,14 +11,15 @@ import { getAccountType } from "../../store/selectors/appConfig";
 import { sendGoogleAnalyticsMetrics } from "../../store/actions/googleAnalytics";
 import { GA_EVENTS } from "../../utils/ga";
 import { setProspectLead } from "../../store/actions/appConfig";
+import { DEFAULT_REFERRAL_NAME } from "../../constants";
 
 export const DetailedAccount = () => {
   const dispatch = useDispatch();
 
   const query = new URLSearchParams(useLocation().search);
   useEffect(() => {
-    let referralName = "";
-    referralName = query.get("product-name");
+    let referralName = query.get("product-name");
+    if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     dispatch(setProspectLead(leadInfo));
   }, []);

@@ -6,6 +6,7 @@ import { ApplicationOverviewComponent } from "./components/ApplicationOverviewCo
 import { removeProspectId, setProspectLead } from "../../store/actions/appConfig";
 import { useAccountTypeByPathname } from "../../utils/useAccountTypeByPathname";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
+import { DEFAULT_REFERRAL_NAME } from "../../constants";
 
 export const ApplicationOverview = () => {
   useAccountTypeByPathname();
@@ -14,8 +15,8 @@ export const ApplicationOverview = () => {
 
   const query = new URLSearchParams(useLocation().search);
   useEffect(() => {
-    let referralName = "";
-    referralName = query.get("product-name");
+    let referralName = query.get("product-name");
+    if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     dispatch(setProspectLead(leadInfo));
   }, []);

@@ -7,16 +7,17 @@ import { useLayoutParams, useLogoType } from "../FormLayout";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
 import { LOGO_STANDART } from "../../components/Header/constants";
+import { DEFAULT_REFERRAL_NAME } from "../../constants";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
-
+ 
 export const AccountsComparisonContainer = ({ servicePricingGuideUrl, setProspectLead }) => {
   let query = useQuery();
   useEffect(() => {
-    let referralName = "";
-    referralName = query.get("product-name");
+    let referralName = query.get("product-name");
+    if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     setProspectLead(leadInfo);
   }, []);

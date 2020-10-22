@@ -229,7 +229,6 @@ export function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, 
 
 export function* increaseDocumentUploadCountSaga() {
   try {
-    console.log("in sagaaa increaseDocumentUploadCountSaga");
     const state = yield select();
     const appConfig = { ...state.appConfig };
     let documents = appConfig.prospect.documents;
