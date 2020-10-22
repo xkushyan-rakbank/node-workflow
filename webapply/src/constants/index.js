@@ -348,5 +348,6 @@ export const applicationOverviewRoutes = [
   `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`
 ];
 
+export const DEFAULT_REFERRAL_NAME = "Direct";
 export const USER_IDLE_TIMEOUT = 14 * 60 * 1000;
 export const EXPIRY_INTERVAL = 60;
