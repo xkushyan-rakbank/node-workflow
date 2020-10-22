@@ -1,5 +1,7 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
+import { Router } from "react-router";
+import { createMemoryHistory } from "history";
 
 import { UploadDocuments } from "../../../src/containers/UploadDocuments/UploadDocuments";
 import { useFormNavigation } from "../../../src/components/FormNavigation/FormNavigationProvider";
@@ -23,10 +25,11 @@ jest.mock(
 );
 
 describe("UploadDocuments container tests", () => {
+  const history = createMemoryHistory();
   const pushHistory = jest.fn();
   const retrieveDocDetails = jest.fn();
   const sendProspectToAPI = jest.fn();
-  const companyDocuments = "some docs";
+  const companyDocuments = [{ DocumentUploadCnt: 20, DocumentUplTotalCnt: 0 }];
   const stakeholdersDocuments = "some docs";
   const companyName = "some company name";
   const signatories = "some signatories";
@@ -58,25 +61,41 @@ describe("UploadDocuments container tests", () => {
   });
 
   it("should call `useFormNavigation` hook on mount", () => {
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(useFormNavigation).toHaveBeenCalledWith([false, true, formStepper]);
   });
 
   it("should call `useViewId` hook on mount", () => {
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(useViewId).toHaveBeenCalledWith();
   });
 
   it("should dispatch `receiveDocDetails` action on mount", () => {
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(retrieveDocDetails).toHaveBeenCalled();
   });
 
   it("should pass default props", () => {
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
     expect(UploadDocumentsComponent.mock.calls[0][0]).toMatchObject({
@@ -92,7 +111,11 @@ describe("UploadDocuments container tests", () => {
 
   it("should handle goToSelectService callback without screening error", async () => {
     sendProspectToAPI.mockImplementation(() => Promise.resolve(false));
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
     await act(async () => {
@@ -108,7 +131,11 @@ describe("UploadDocuments container tests", () => {
 
   it("should handle goToSelectService callback with screening error", async () => {
     sendProspectToAPI.mockImplementation(() => Promise.resolve(true));
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
     await act(async () => {
@@ -124,7 +151,11 @@ describe("UploadDocuments container tests", () => {
 
   it("should handle goToSelectService callback with some error", async () => {
     sendProspectToAPI.mockImplementation(() => Promise.reject(true));
-    render(<UploadDocuments {...props} />);
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
 
     expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
     await act(async () => {

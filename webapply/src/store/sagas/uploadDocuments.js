@@ -180,6 +180,7 @@ function* uploadDocumentsBgSync({
     ) {
       yield put(sendProspectToAPI());
     }
+    yield call(increaseDocumentUploadCountSaga);
   } catch (error) {
     yield put(uploadFilesFail({ [documentKey]: error }));
   } finally {
@@ -221,6 +222,32 @@ export function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, 
     const { data } = yield call(downloadProspectDocument.get, prospectId, documentKey, headers);
     const blob = new Blob([data], { type: data.type });
     yield call(saveAs, blob, fileName);
+  } catch (error) {
+    log(error);
+  }
+}
+
+export function* increaseDocumentUploadCountSaga() {
+  try {
+    console.log("in sagaaa increaseDocumentUploadCountSaga");
+    const state = yield select();
+    const appConfig = { ...state.appConfig };
+    let documents = appConfig.prospect.documents;
+    documents.companyDocuments &&
+      documents.companyDocuments.map((companyDoc, companyDocIndex) => {
+        let cnt = companyDoc.DocumentUplTotalCnt ? companyDoc.DocumentUplTotalCnt : 0;
+        documents.companyDocuments[companyDocIndex].DocumentUplTotalCnt = cnt + 1;
+      });
+
+    Object.keys(documents.stakeholdersDocuments).map(shDocsIndex => {
+      Object.keys(documents.stakeholdersDocuments[shDocsIndex].documents).map(shDocIndex => {
+        const doc = documents.stakeholdersDocuments[shDocsIndex].documents[shDocIndex];
+        let cnt = doc.DocumentUplTotalCnt ? doc.DocumentUplTotalCnt : 0;
+        doc.DocumentUplTotalCnt = cnt + 1;
+      });
+    });
+    appConfig.prospect.documents = documents;
+    yield put(updateProspect(appConfig));
   } catch (error) {
     log(error);
   }

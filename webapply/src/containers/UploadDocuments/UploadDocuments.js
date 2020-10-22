@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { UploadDocumentsComponent } from "./components/UploadDocuments/UploadDocuments";
+import { UploadLimitComponent } from "./components/UploadLimit/UploadLimit";
 import { useLayoutParams } from "../FormLayout";
 import { formStepper, NEXT } from "../../constants";
 import { useViewId } from "../../utils/useViewId";
@@ -24,6 +25,8 @@ export const UploadDocuments = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const [docUploadLimit, setDocUploadLimit] = useState(0);
+  const [currentUplCnt, setCurrentUplCnt] = useState(0);
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
   useViewId();
@@ -31,6 +34,11 @@ export const UploadDocuments = ({
   useEffect(() => {
     retrieveDocDetails();
   }, [retrieveDocDetails]);
+
+  useEffect(() => {
+    setDocUploadLimit(companyDocuments[0].DocumentUploadCnt);
+    setCurrentUplCnt(companyDocuments[0].DocumentUplTotalCnt);
+  }, [companyDocuments]);
 
   const goToSelectService = () => {
     setIsLoading(true);
@@ -48,15 +56,21 @@ export const UploadDocuments = ({
     ) && !isRequiredDocsUploaded;
 
   return (
-    <UploadDocumentsComponent
-      isLoadingDocuments={isLoadingDocuments}
-      companyDocuments={companyDocuments}
-      stakeholdersDocuments={stakeholdersDocuments}
-      isDisabledNextStep={isDisabledNextStep}
-      isLoading={isLoading}
-      goToSelectService={goToSelectService}
-      signatories={signatories}
-      companyName={companyName}
-    />
+    <>
+      {docUploadLimit > currentUplCnt ? (
+        <UploadDocumentsComponent
+          isLoadingDocuments={isLoadingDocuments}
+          companyDocuments={companyDocuments}
+          stakeholdersDocuments={stakeholdersDocuments}
+          isDisabledNextStep={isDisabledNextStep}
+          isLoading={isLoading}
+          goToSelectService={goToSelectService}
+          signatories={signatories}
+          companyName={companyName}
+        />
+      ) : (
+        <UploadLimitComponent />
+      )}
+    </>
   );
 };
