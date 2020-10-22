@@ -17,7 +17,8 @@ import {
   getApplicationInfo,
   getAuthorizationHeader,
   getIsRecaptchaEnable,
-  getProspect
+  getProspect,
+  getLeadSource
 } from "../../../src/store/selectors/appConfig";
 import { getReCaptchaToken } from "../../../src/store/selectors/reCaptcha";
 import { log } from "../../../src/utils/loggger";
@@ -31,11 +32,11 @@ jest.mock("../../../src/store/selectors/reCaptcha");
 describe("applicantInfoForm saga test", () => {
   let dispatched = [];
   const state = "some state";
-  const payload = "some payload";
   const headers = "some headers";
   const someField = "some field value";
   const applicationInfo = { someField };
   const prospect = { someField };
+  const payload = { someField };
   const reCaptchaToken = "some reCaptcha token";
   const prospectId = "some prospectId";
   const data = { prospectId };
@@ -58,6 +59,7 @@ describe("applicantInfoForm saga test", () => {
     getApplicationInfo.mockReturnValue(applicationInfo);
     getReCaptchaToken.mockReturnValue(reCaptchaToken);
     getIsRecaptchaEnable.mockReturnValue(false);
+    getLeadSource.mockReturnValue("Direct");
     jest.clearAllMocks();
   });
 

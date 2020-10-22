@@ -28,7 +28,7 @@ export function* applicantInfoFormSaga({ payload }) {
     const headers = yield select(getAuthorizationHeader);
     const leadSource = yield select(getLeadSource);
 
-    // payload.LeadSource = leadSource;
+    payload.LeadSource = leadSource;
 
     const prospectUpdated = {
       ...prospect,
