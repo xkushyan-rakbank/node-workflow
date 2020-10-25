@@ -25,7 +25,7 @@ export const UploadDocuments = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const [isLoading, setIsLoading] = useState(false);
-  const [docUploadLimit, setDocUploadLimit] = useState(0);
+  const [docUploadLimit, setDocUploadLimit] = useState(1);
   const [currentUplCnt, setCurrentUplCnt] = useState(0);
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
@@ -36,8 +36,10 @@ export const UploadDocuments = ({
   }, [retrieveDocDetails]);
 
   useEffect(() => {
-    setDocUploadLimit(companyDocuments[0].DocumentUploadCnt);
-    setCurrentUplCnt(companyDocuments[0].DocumentUplTotalCnt);
+    if (typeof companyDocuments[0] !== "undefined") {
+      setDocUploadLimit(companyDocuments[0].DocumentUploadCnt);
+      setCurrentUplCnt(companyDocuments[0].DocumentUplTotalCnt);
+    }
   }, [companyDocuments]);
 
   const goToSelectService = () => {
