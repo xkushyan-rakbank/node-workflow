@@ -25,6 +25,7 @@ export const AccountInfo = props => {
   const accountType = useSelector(getAccountType);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
+  const queryParams = useLocation().search;
 
   const pushHistory = useTrackingHistory();
   const { pathname: locationPath } = useLocation();
@@ -41,9 +42,16 @@ export const AccountInfo = props => {
   }, [dispatch, pushHistory]);
 
   const handleApply = useCallback(() => {
-    pushHistory(
-      applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
-    );
+    if (queryParams) {
+      pushHistory(
+        applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL] +
+          queryParams
+      );
+    } else {
+      pushHistory(
+        applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
+      );
+    }
   }, [pushHistory, accountType, isIslamicBanking]);
 
   const isHideTitleOnSmBreakpoint = [

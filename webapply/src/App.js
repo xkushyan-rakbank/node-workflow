@@ -23,6 +23,7 @@ import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
 
 import { theme } from "./theme";
 import "./App.scss";
+import SessionExpiration from "./containers/Session";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -128,6 +129,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <Redirect exact path={`(${smeBaseName})?`} to={routes.accountsComparison} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
+            <SessionExpiration />
           </Suspense>
         </FormLayout>
       </ConnectedRouter>

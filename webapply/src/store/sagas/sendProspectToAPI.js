@@ -29,7 +29,8 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAccountType,
-  getIsIslamicBanking
+  getIsIslamicBanking,
+  getAuthToken
 } from "../selectors/appConfig";
 import { getCompletedSteps } from "../selectors/completedSteps";
 import { getScreeningError } from "../selectors/sendProspectToAPI";
@@ -111,9 +112,11 @@ export function* prospectAutoSave() {
       const screeningError = yield select(getScreeningError);
       const isScreeningError = screeningError.error;
       const viewId = newProspect.applicationInfo.viewId;
+      const authToken = yield select(getAuthToken);
 
       const isAutoSaveEnabled =
         !isScreeningError &&
+        authToken &&
         [
           VIEW_IDS.CompanyInfo,
           VIEW_IDS.StakeholdersInfo,

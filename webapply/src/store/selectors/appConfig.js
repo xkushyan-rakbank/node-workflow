@@ -95,3 +95,9 @@ export const createGetAuthorityTypeDisplayText = authorityType => state => {
 
   return authorityTypeFromDatalist.displayText || "";
 };
+
+export const getLeadSource = state => {
+  return typeof state.appConfig.leadSource !== "undefined"
+    ? state.appConfig.leadSource.productName
+    : "";
+};

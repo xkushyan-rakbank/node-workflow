@@ -38,7 +38,8 @@ import {
   getAuthorizationHeader,
   getIsIslamicBanking,
   getProspect,
-  getProspectId
+  getProspectId,
+  getAuthToken
 } from "../../../src/store/selectors/appConfig";
 import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
 import { updateAccountNumbers } from "../../../src/store/actions/accountNumbers";
@@ -217,6 +218,7 @@ describe("sendProspectToAPI sagas tests", () => {
       expect(gen.next().value).toEqual(delay(AUTO_SAVE_INTERVAL));
       expect(gen.next().value).toEqual(select(getProspect));
       expect(gen.next(prospect).value).toEqual(select(getScreeningError));
+      expect(gen.next(prospect).value).toEqual(select(getAuthToken));
       expect(gen.next(screeningError).value).toEqual(put(sendProspectRequest(prospect, AUTO)));
     });
 
@@ -230,7 +232,8 @@ describe("sendProspectToAPI sagas tests", () => {
       expect(gen.next().value).toEqual(delay(AUTO_SAVE_INTERVAL));
       expect(gen.next().value).toEqual(select(getProspect));
       expect(gen.next(prospect).value).toEqual(select(getScreeningError));
-      expect(gen.next(screeningError).value).toEqual(delay(AUTO_SAVE_INTERVAL));
+      expect(gen.next(screeningError).value).toEqual(select(getAuthToken));
+      expect(gen.next().value).toEqual(delay(AUTO_SAVE_INTERVAL));
     });
 
     it("error throws", async () => {
