@@ -97,7 +97,7 @@ describe("UploadDocuments container tests", () => {
       </Router>
     );
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(2);
     expect(UploadDocumentsComponent.mock.calls[0][0]).toMatchObject({
       isLoadingDocuments,
       companyDocuments,
@@ -117,14 +117,14 @@ describe("UploadDocuments container tests", () => {
       </Router>
     );
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(2);
     await act(async () => {
       UploadDocumentsComponent.mock.calls[0][0].goToSelectService();
     });
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(2);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(3);
     expect(UploadDocumentsComponent.mock.calls[0][0].isLoading).toBe(false);
-    expect(UploadDocumentsComponent.mock.calls[1][0].isLoading).toBe(true);
+    expect(UploadDocumentsComponent.mock.calls[2][0].isLoading).toBe(true);
     expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
     expect(pushHistory).toHaveBeenCalledWith(routes.selectServices, true);
   });
@@ -137,14 +137,14 @@ describe("UploadDocuments container tests", () => {
       </Router>
     );
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(2);
     await act(async () => {
       UploadDocumentsComponent.mock.calls[0][0].goToSelectService();
     });
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(2);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(3);
     expect(UploadDocumentsComponent.mock.calls[0][0].isLoading).toBe(false);
-    expect(UploadDocumentsComponent.mock.calls[1][0].isLoading).toBe(true);
+    expect(UploadDocumentsComponent.mock.calls[2][0].isLoading).toBe(true);
     expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
     expect(pushHistory).toHaveBeenCalledTimes(0);
   });
@@ -157,16 +157,40 @@ describe("UploadDocuments container tests", () => {
       </Router>
     );
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(2);
     await act(async () => {
       UploadDocumentsComponent.mock.calls[0][0].goToSelectService();
     });
 
-    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(3);
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(4);
     expect(UploadDocumentsComponent.mock.calls[0][0].isLoading).toBe(false);
-    expect(UploadDocumentsComponent.mock.calls[1][0].isLoading).toBe(true);
-    expect(UploadDocumentsComponent.mock.calls[2][0].isLoading).toBe(false);
+    expect(UploadDocumentsComponent.mock.calls[2][0].isLoading).toBe(true);
+    expect(UploadDocumentsComponent.mock.calls[3][0].isLoading).toBe(false);
     expect(sendProspectToAPI).toHaveBeenCalledWith(NEXT);
     expect(pushHistory).toHaveBeenCalledTimes(0);
+  });
+
+  it("should handle company documents count not set condition", async () => {
+    const companyDocuments = {};
+    props.companyDocuments = companyDocuments;
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
+
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
+  });
+  
+  it("should handle DocumentUploadCnt && DocumentUplTotalCnt same condition", async () => {
+    const companyDocuments = [{ DocumentUploadCnt: 20, DocumentUplTotalCnt: 20 }];
+    props.companyDocuments = companyDocuments;
+    render(
+      <Router history={history}>
+        <UploadDocuments {...props} />
+      </Router>
+    );
+
+    expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
   });
 });

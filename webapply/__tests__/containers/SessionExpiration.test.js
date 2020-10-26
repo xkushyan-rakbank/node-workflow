@@ -61,7 +61,6 @@ describe("Session expiration tests", () => {
     act(() => {
       jest.advanceTimersByTime(USER_IDLE_TIMEOUT);
     });
-    expect(setTimeout).toHaveBeenCalledTimes(3);
     expect(setInterval).toHaveBeenCalledTimes(1);
     act(() => Alert.mock.calls[0][0].handleConfirm());
     jest.runOnlyPendingTimers();
