@@ -164,6 +164,10 @@ export const screeningStatus = [
   {
     error: "Too many Stakeholders",
     screeningType: "Too many Stakeholders Check"
+  },
+  {
+    error: "Total No of Documents",
+    screeningType: "Total No of Documents uploaded check"
   }
 ];
 
