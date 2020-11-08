@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
 import { getAuthToken } from "../../store/selectors/appConfig";
+import { getUploadDocuments } from "../../store/selectors/uploadDocuments";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { logout } from "../../store/actions/loginForm";
 import { setAccessToken } from "../../store/actions/appConfig";
@@ -8,7 +9,8 @@ import { SessionExpiration } from "./SessionExpiration";
 
 const mapStateToProps = state => ({
   authToken: getAuthToken(state),
-  isAuthenticated: checkLoginStatus(state)
+  isAuthenticated: checkLoginStatus(state),
+  uploadDocuments: getUploadDocuments(state)
 });
 
 const mapDispatchToProps = {
