@@ -65,7 +65,6 @@ export function* watchRequest() {
 }
 
 export function* setScreeningResults({ preScreening }) {
-  const uploadLimitError = "Total No of Documents uploaded check";
   const currScreeningType = preScreening.screeningResults.find(screeningResult =>
     SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
   );
@@ -75,19 +74,17 @@ export function* setScreeningResults({ preScreening }) {
   );
 
   if (screenError) {
-    if (currScreeningType.screeningType !== uploadLimitError) {
-      const accountType = yield select(getAccountType);
-      const isIslamicBanking = yield select(getIsIslamicBanking);
-      const { screeningType } = screenError;
+    const accountType = yield select(getAccountType);
+    const isIslamicBanking = yield select(getIsIslamicBanking);
+    const { screeningType } = screenError;
 
-      yield put(
-        setScreeningError({
-          ...screenError,
-          text: currScreeningType.reasonNotes,
-          icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType)
-        })
-      );
-    }
+    yield put(
+      setScreeningError({
+        ...screenError,
+        text: currScreeningType.reasonNotes,
+        icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType)
+      })
+    );
   } else {
     yield put(setScreeningError(screeningStatusDefault));
   }

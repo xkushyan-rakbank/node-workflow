@@ -47,8 +47,8 @@ export const FormLayoutComponent = ({
             ) : errorCode ? (
               <ApplicationStatus icon={errorIcon} text={ERROR_MESSAGES[errorCode]} />
             ) : (
-                  children
-                )}
+              children
+            )}
           </div>
         </div>
       </div>
