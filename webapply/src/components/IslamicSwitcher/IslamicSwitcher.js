@@ -25,10 +25,13 @@ export const IslamicSwitcher = ({ children, className, isSwitcherShow, toggleSwi
 
   const pushHistory = useTrackingHistory();
   const { pathname } = useLocation();
+  const queryParams = useLocation().search;
 
   const setIsIslamicBanking = useCallback(
     islamicBanking => {
-      pushHistory(detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL]);
+      pushHistory(
+        detailedAccountRoutesMap[accountType][islamicBanking ? ISLAMIC : CONVENTIONAL] + queryParams
+      );
     },
     [pushHistory, accountType]
   );
