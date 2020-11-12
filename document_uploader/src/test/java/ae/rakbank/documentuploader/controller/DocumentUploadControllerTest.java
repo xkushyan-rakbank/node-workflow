@@ -1,10 +1,13 @@
 package ae.rakbank.documentuploader.controller;
 
+import ae.rakbank.documentuploader.deh.DehClient;
+import ae.rakbank.documentuploader.deh.OauthClient;
 import ae.rakbank.documentuploader.dto.FileDto;
 import ae.rakbank.documentuploader.services.DocumentUploadService;
 import ae.rakbank.documentuploader.services.ProspectValidatorService;
 import ae.rakbank.documentuploader.services.auth.AuthorizationService;
 import ae.rakbank.documentuploader.stub.util.FileUtilStub;
+import ae.rakbank.documentuploader.util.DehUtil;
 import ae.rakbank.documentuploader.util.FileUtil;
 import ae.rakbank.documentuploader.util.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,6 +59,12 @@ public class DocumentUploadControllerTest {
     private ProspectValidatorService prospectValidatorService;
     @MockBean
     private SecurityUtil securityUtil;
+    @MockBean
+    private DehClient dehClient;
+    @MockBean
+    private DehUtil dehUtil;
+    @MockBean
+    private OauthClient oauthClient;
 //    @MockBean
 //    private FileUtil fileUtil;
 
