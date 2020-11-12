@@ -3,6 +3,10 @@ package ae.rakbank.documentuploader.dto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -43,6 +47,11 @@ public class ApiError implements ApiErrorInterface{
         this.message = message;
         this.debugMessage = debugMessage;
         setException(ex);
+    }
+    
+    public void initTimestamp() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN);
+        timestamp = LocalDateTime.now().format(formatter);
     }
 
     private void setException(Throwable ex) {

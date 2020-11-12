@@ -56,4 +56,13 @@ public class ApiException extends RuntimeException {
         this.apiError = apiError;
         log.error(API_EXCEPTION_MESSAGE);
     }
+    
+    public ApiException(ApiError apiError, HttpHeaders headers, HttpStatus status) {
+        super(apiError.getMessage());
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern(TIMESTAMP_PATTERN));
+        this.headers = headers;
+        this.status = status;
+        this.apiError = apiError;
+        log.error(API_EXCEPTION_MESSAGE);
+    }
 }

@@ -1,21 +1,46 @@
 {
 	"BaseURLs": {
 		"local": {
+		"OAuthBaseUrl": "http://localhost:9091",
+		"DehBaseUrl": "http://10.15.24.32:8080/corp/rest/v1",
 			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
 		},
 		"dev": {
+		"OAuthBaseUrl": "http://localhost:9091",
+		"DehBaseUrl": "http://10.15.24.32:8080/corp/rest/v1",
 			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
 		},
 		"uat": {
+		"OAuthBaseUrl": "",
+		"DehBaseUrl": "http://10.15.24.32:8080/corp/rest/v1",
 			"s3BaseUrl": "https://dspemcecs.rakbank.co.ae"
 		},
 		"prod": {
+		"OAuthBaseUrl": "",
 			"s3BaseUrl": ""
 		}
 	},
 	"S3URIs": {
 		"s3Uri": ""
 	},
+	"OAuthURIs": {
+    "generateTokenUri": "/oauth/token"
+  },
+	"DehURIs": {
+    "datalistUri": "/banks/RAK/usertypes/{userType}/datalist",
+    "createProspectUri": "/banks/RAK/usertypes/{userType}/prospects",
+    "searchProspectUri": "/banks/RAK/usertypes/{userType}/prospects/search",
+    "getProspectUri": "/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
+    "updateProspectUri": "/banks/RAK/usertypes/{userType}/prospects/{prospectId}",
+    "getProspectDocumentsUri": "/banks/RAK/prospects/{prospectId}/documents",
+    "uploadDocumentUri": "/banks/RAK/prospects/{prospectId}/documents",
+    "reuploadDocumentUri": "/banks/RAK/prospects/{prospectId}/documents",
+    "getProspectDocumentByIdUri": "/banks/RAK/prospects/{prospectId}/documents/{documentId}",
+    "prescreeningUri": "/banks/RAK/prospects/{prospectId}/screening",
+    "authenticateUserUri": "/banks/RAK/users/authenticate",
+    "getDocumentByTitleUri": "/banks/RAK/legal/documents/{documentTitle}",
+    "otpUri": "/banks/RAK/otp"
+  },
 	"OtherConfigs": {
 		"local": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -24,7 +49,19 @@
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
 			"ShouldSendErrorDebugDetails": true,
-			"ApplicationLoggingLevel": "DEBUG"
+			"ApplicationLoggingLevel": "DEBUG",
+			"OAuthRefreshGrantType": "refresh_token",
+      "OAuthGrantType": "password",
+      "OAuthClientId": "0e50fbe72ae115ae5812",
+      "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+      "OAuthBankId": "RAK",
+      "OAuthChannelId": "I",
+      "OAuthLangId": "001",
+      "OAuthLoginFlag": "2",
+      "OAuthLoginType": "1",
+      "OAuthStateMode": "N",
+			 "OAuthUsername": "RAK.VTUSER",
+			 "OAuthPassword": "p@king1"
 		},
 		"dev": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -33,7 +70,19 @@
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
 			"ShouldSendErrorDebugDetails": true,
-			"ApplicationLoggingLevel": "DEBUG"
+			"ApplicationLoggingLevel": "DEBUG",
+			"OAuthRefreshGrantType": "refresh_token",
+      "OAuthGrantType": "password",
+      "OAuthClientId": "0e50fbe72ae115ae5812",
+      "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+      "OAuthBankId": "RAK",
+      "OAuthChannelId": "I",
+      "OAuthLangId": "001",
+      "OAuthLoginFlag": "2",
+      "OAuthLoginType": "1",
+      "OAuthStateMode": "N",
+			 "OAuthUsername": "RAK.VTUSER",
+			 "OAuthPassword": "p@king1"
 		},
 		"uat": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -42,7 +91,19 @@
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
 			"ShouldSendErrorDebugDetails": false,
-			"ApplicationLoggingLevel": "DEBUG"
+			"ApplicationLoggingLevel": "DEBUG",
+			"OAuthRefreshGrantType": "refresh_token",
+      "OAuthGrantType": "password",
+      "OAuthClientId": "0e50fbe72ae115ae5812",
+      "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+      "OAuthBankId": "RAK",
+      "OAuthChannelId": "I",
+      "OAuthLangId": "001",
+      "OAuthLoginFlag": "2",
+      "OAuthLoginType": "1",
+      "OAuthStateMode": "N",
+			 "OAuthUsername": "RAK.VTUSER",
+			 "OAuthPassword": "p@king1"
 		},
 		"prod": {
 			"s3AccessKeyId": "ecs_test_user",
@@ -51,7 +112,19 @@
 			"s3Bucket": "infra_bkp_test_bucket",
 			"JwtSecret": "M8ZJaKCCNCnxRKni3r2mzrQR2wLhvIs1",
 			"ShouldSendErrorDebugDetails": false,
-			"ApplicationLoggingLevel": "DEBUG"
+			"ApplicationLoggingLevel": "DEBUG",
+			"OAuthRefreshGrantType": "refresh_token",
+      "OAuthGrantType": "password",
+      "OAuthClientId": "0e50fbe72ae115ae5812",
+      "OAuthClientSecret": "693916a12ad010cb79b064b0f35d76405cb3df588a8280ae49ac2eec7f2c",
+      "OAuthBankId": "RAK",
+      "OAuthChannelId": "I",
+      "OAuthLangId": "001",
+      "OAuthLoginFlag": "2",
+      "OAuthLoginType": "1",
+      "OAuthStateMode": "N",
+			 "OAuthUsername": "RAK.VTUSER",
+			 "OAuthPassword": "p@king1"
 		}
 	}
 }
