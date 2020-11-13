@@ -65,17 +65,24 @@ public class OAuthService {
         return oAuthContextResponse.getBody().get(OAUTH_ACCESS_TOKEN_KEY).asText();
     }
 
-    void validateAndUpdateOauthToken(JwtPayload jwtPayload) {
+    void validateAndUpdateOauthToken(JwtPayload jwtPayload,boolean isRefreshToken) {
 
         validateOauthDetails(jwtPayload);
         LocalDateTime now = LocalDateTime.now();
         boolean isExpired = now.isAfter(jwtPayload.getOauthTokenExpiryTime());
         log.info("[Oauth validateAndUpdate] Checking expiration: now is {}, oauthToken expire time: {}, isExpired: {}",
                 now, jwtPayload.getOauthTokenExpiryTime(), isExpired);
-
-        if (isExpired) {
-            ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
+        
+        if(isRefreshToken) {
+        	ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
             updateJwtToken(jwtPayload, oauthResponse);
+        }else if (isExpired) {
+            /*ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
+            updateJwtToken(jwtPayload, oauthResponse);*/
+        	 log.error("[Oauth validateAndUpdate] Jwt token is expired");
+             throw new ApiException("[Oauth validateAndUpdate] Jwt token is expired," +
+                     " details: " + jwtPayload,
+                     HttpStatus.UNAUTHORIZED);
         }
 
         log.info("[Oauth validateAndUpdate] Jwt payload now is: {}", jwtPayload);

@@ -52,11 +52,11 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        String token = authorizationService.validateAndUpdateJwtToken("test-token");
+        String token = authorizationService.validateAndUpdateJwtToken("test-token",false);
 
         assertNotNull(token);
         assertEquals("encrypted-token", token);
-        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt);
+        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt,false);
 
     }
 
@@ -68,11 +68,11 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        String token = authorizationService.validateAndUpdateJwtToken("test-token");
+        String token = authorizationService.validateAndUpdateJwtToken("test-token",false);
 
         assertNotNull(token);
         assertEquals("encrypted-token", token);
-        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt);
+        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt,false);
 
     }
 
@@ -84,7 +84,7 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        authorizationService.validateAndUpdateJwtToken("test-token");
+        authorizationService.validateAndUpdateJwtToken("test-token",false);
 
     }
 
@@ -96,7 +96,7 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        authorizationService.validateAndUpdateJwtToken("test-token");
+        authorizationService.validateAndUpdateJwtToken("test-token",false);
     }
 
     @Test

@@ -115,24 +115,24 @@ public class OAuthServiceTest {
 
     @Test(expected = ApiException.class)
     public void validateAndUpdateOauthTokenWithNoAccessToken() {
-        oAuthService.validateAndUpdateOauthToken(JwtPayloadStub.getJwtPayloadWithNoAccessToken());
+        oAuthService.validateAndUpdateOauthToken(JwtPayloadStub.getJwtPayloadWithNoAccessToken(),false);
     }
 
     @Test(expected = ApiException.class)
     public void validateAndUpdateOauthTokenWithNoRefreshToken() {
-        oAuthService.validateAndUpdateOauthToken(JwtPayloadStub.getJwtPayloadWithNoRefreshToken());
+        oAuthService.validateAndUpdateOauthToken(JwtPayloadStub.getJwtPayloadWithNoRefreshToken(),false);
     }
 
     @Test(expected = ApiException.class)
     public void validateAndUpdateOauthTokenWithNoExpiryTime() {
-        oAuthService.validateAndUpdateOauthToken(JwtPayloadStub.getJwtPayloadWithNoExpiryTime());
+        oAuthService.validateAndUpdateOauthToken(JwtPayloadStub.getJwtPayloadWithNoExpiryTime(),false);
     }
 
     @Test
     public void validateAndUpdateOauthTokenExpiredTime() {
         JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
         Mockito.when(oauthClient.refreshAccessToken(jwtPayload.getOauthRefreshToken())).thenReturn(ResponseEntity.ok(ResponseFactory.newLoginResponse()));
-        oAuthService.validateAndUpdateOauthToken(jwtPayload);
+        oAuthService.validateAndUpdateOauthToken(jwtPayload,true);
 
         assertEquals("access-token-value", jwtPayload.getOauthAccessToken());
         assertEquals("refresh-token-value", jwtPayload.getOauthRefreshToken());
@@ -142,7 +142,7 @@ public class OAuthServiceTest {
     public void validateAndUpdateOauthTokenNotExpiredTime() {
         JwtPayload jwtPayload = JwtPayloadStub.getJwtPayloadExpTomorrow();
         Mockito.when(oauthClient.refreshAccessToken(jwtPayload.getOauthRefreshToken())).thenReturn(ResponseEntity.ok(ResponseFactory.newLoginResponse()));
-        oAuthService.validateAndUpdateOauthToken(jwtPayload);
+        oAuthService.validateAndUpdateOauthToken(jwtPayload,false);
 
         assertEquals("access-token", jwtPayload.getOauthAccessToken());
         assertEquals("refresh-token", jwtPayload.getOauthRefreshToken());

@@ -30,6 +30,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REINVOKE;
+import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REFRESH_STATUS;
 
 @Slf4j
 @Component
@@ -50,12 +52,15 @@ class AuthorizationFilter extends GenericFilterBean {
 
         if (!checkForExcludeUrl(httpRequest.getServletPath())) {
             final String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+            final String refreshOAuthStatus = httpRequest.getHeader(OAUTH_REFRESH_STATUS);
             log.info("[getExpireTime] >> Start with auth header: {}", authorizationHeader);
-            final Optional<String> bearerToken = getBearerToken(authorizationHeader);
+            log.info("[refreshOAuthStatus] >> Start with oauth refresh status: {}", refreshOAuthStatus);
+            Optional<String> bearerToken = getBearerToken(authorizationHeader);
+            final Optional<Boolean> isRefreshOauthToken = isRefreshToken(refreshOAuthStatus);
 
             try {
-                bearerToken
-                        .map(authorizationService::validateAndUpdateJwtToken)
+            	final Optional<String> jwtToken = Optional.of(authorizationService.validateAndUpdateJwtToken(bearerToken.toString(),isRefreshOauthToken.get()));
+            	jwtToken
                         .map(authorizationService::getPrincipal)
                         .ifPresent(principal -> {
                             if (HttpMethod.GET.name().equals(httpRequest.getMethod())
@@ -88,6 +93,12 @@ class AuthorizationFilter extends GenericFilterBean {
         return StringUtils.isNotBlank(authorizationHeader) && authorizationHeader.startsWith(BEARER_TOKEN_PREFIX)
                 ? Optional.of(authorizationHeader.split(BEARER_TOKEN_PREFIX)[1])
                 : Optional.empty();
+    }
+    
+    private Optional<Boolean> isRefreshToken(String refreshOAuthStatus) {
+        return StringUtils.isNotBlank(refreshOAuthStatus) && refreshOAuthStatus.equalsIgnoreCase(OAUTH_REINVOKE)
+                ? Optional.of(true)
+                : Optional.of(false);
     }
 
     private boolean checkForExcludeUrl(String path) {
