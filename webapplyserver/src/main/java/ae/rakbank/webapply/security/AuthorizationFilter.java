@@ -5,6 +5,7 @@ import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -55,11 +56,11 @@ class AuthorizationFilter extends GenericFilterBean {
             final String refreshOAuthStatus = httpRequest.getHeader(OAUTH_REFRESH_STATUS);
             log.info("[getExpireTime] >> Start with auth header: {}", authorizationHeader);
             log.info("[refreshOAuthStatus] >> Start with oauth refresh status: {}", refreshOAuthStatus);
-            Optional<String> bearerToken = getBearerToken(authorizationHeader);
-            final Optional<Boolean> isRefreshOauthToken = isRefreshToken(refreshOAuthStatus);
+            final Optional<String> bearerToken = getBearerToken(authorizationHeader);
+            final boolean isRefreshOauthToken = isRefreshToken(refreshOAuthStatus);
 
             try {
-            	final Optional<String> jwtToken = Optional.of(authorizationService.validateAndUpdateJwtToken(bearerToken.toString(),isRefreshOauthToken.get()));
+            	final Optional<String> jwtToken = getJWTToken(bearerToken,isRefreshOauthToken);
             	jwtToken
                         .map(authorizationService::getPrincipal)
                         .ifPresent(principal -> {
@@ -95,10 +96,8 @@ class AuthorizationFilter extends GenericFilterBean {
                 : Optional.empty();
     }
     
-    private Optional<Boolean> isRefreshToken(String refreshOAuthStatus) {
-        return StringUtils.isNotBlank(refreshOAuthStatus) && refreshOAuthStatus.equalsIgnoreCase(OAUTH_REINVOKE)
-                ? Optional.of(true)
-                : Optional.of(false);
+    private boolean isRefreshToken(String refreshOAuthStatus) {
+        return StringUtils.isNotBlank(refreshOAuthStatus) && refreshOAuthStatus.equalsIgnoreCase(OAUTH_REINVOKE)? true:false;
     }
 
     private boolean checkForExcludeUrl(String path) {
@@ -109,6 +108,17 @@ class AuthorizationFilter extends GenericFilterBean {
         final UsernamePasswordAuthenticationToken authenticate = new UsernamePasswordAuthenticationToken(principal, StringUtils.EMPTY,
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_".concat(principal.getRole().name()))));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
+    }
+    
+    private Optional<String> getJWTToken(Optional<String> bearerToken, boolean isRefreshOauthToken) {
+    	String bearerTokenForMethod = bearerToken.orElse(StringUtils.EMPTY);
+    	if(!StringUtils.EMPTY.equalsIgnoreCase(bearerTokenForMethod)){
+    		String jwtToken = authorizationService.validateAndUpdateJwtToken(bearerToken.orElse(StringUtils.EMPTY),isRefreshOauthToken);
+            return StringUtils.isNotBlank(jwtToken) ? Optional.of(jwtToken) : Optional.empty();
+    	}else{
+    		return Optional.empty();
+    	}
+    	
     }
 
 }
