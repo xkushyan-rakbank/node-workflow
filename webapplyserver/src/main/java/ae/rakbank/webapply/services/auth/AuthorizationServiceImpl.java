@@ -31,6 +31,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public String validateAndUpdateJwtToken(String jwtToken, boolean isRefresh) {
         JwtPayload jwtPayload = jwtService.decrypt(jwtToken);
         log.info("[getExpireTime] >> Parsed jwt token: {}", jwtToken);
+        log.info("[validateAndUpdateJwtToken inside authServiceImpl] >> : {}",isRefresh);
         if (UserRole.AGENT.equals(jwtPayload.getRole())) {
             validateAndUpdateAgentJwtPayload(jwtPayload,isRefresh);
         } else if (UserRole.CUSTOMER.equals(jwtPayload.getRole())) {
@@ -48,10 +49,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             throw new ApiException("JwtToken is not valid, the fields phoneNumber and prospectId are required for the Customer",
                     HttpStatus.UNAUTHORIZED);
         }
+        log.info("[validateAndUpdateCustomerJwtPayload inside authServiceImpl] >> : {}",isRefresh);
         oAuthService.validateAndUpdateOauthToken(jwtPayload,isRefresh);
     }
 
     private void validateAndUpdateAgentJwtPayload(JwtPayload jwtPayload,boolean isRefresh) {
+    	log.info("[validateAndUpdateAgentJwtPayload inside authServiceImpl] >> : {}",isRefresh);
         oAuthService.validateAndUpdateOauthToken(jwtPayload,isRefresh);
     }
 

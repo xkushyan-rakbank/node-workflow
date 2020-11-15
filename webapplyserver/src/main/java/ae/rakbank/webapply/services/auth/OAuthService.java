@@ -72,11 +72,13 @@ public class OAuthService {
         boolean isExpired = now.isAfter(jwtPayload.getOauthTokenExpiryTime());
         log.info("[Oauth validateAndUpdate] Checking expiration: now is {}, oauthToken expire time: {}, isExpired: {}",
                 now, jwtPayload.getOauthTokenExpiryTime(), isExpired);
-        
+        log.info("[OAUTHSERVICE inside authServiceImpl] >> : {}",isRefreshToken);
         if(isRefreshToken) {
+        	log.info("INSIDE ISREFRESH");
         	ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
             updateJwtToken(jwtPayload, oauthResponse);
         }else if (isExpired) {
+        	log.info("INSIDE ISEXPIRED");
             /*ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
             updateJwtToken(jwtPayload, oauthResponse);*/
         	 log.error("[Oauth validateAndUpdate] Jwt token is expired");

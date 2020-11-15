@@ -58,7 +58,7 @@ class AuthorizationFilter extends GenericFilterBean {
             log.info("[refreshOAuthStatus] >> Start with oauth refresh status: {}", refreshOAuthStatus);
             final Optional<String> bearerToken = getBearerToken(authorizationHeader);
             final boolean isRefreshOauthToken = isRefreshToken(refreshOAuthStatus);
-
+            log.info("isRefreshOauthToken", refreshOAuthStatus);
             try {
             	final Optional<String> jwtToken = getJWTToken(bearerToken,isRefreshOauthToken);
             	jwtToken
