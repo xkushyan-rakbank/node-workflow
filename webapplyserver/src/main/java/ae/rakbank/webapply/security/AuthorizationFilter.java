@@ -2,6 +2,7 @@ package ae.rakbank.webapply.security;
 
 import ae.rakbank.webapply.constants.AuthConstants;
 import ae.rakbank.webapply.dto.JwtPayload;
+import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -31,8 +32,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
-import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REINVOKE;
-import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REFRESH_STATUS;
+import static ae.rakbank.webapply.constants.AuthConstants.JWT_EXPIRED;
 
 @Slf4j
 @Component
@@ -53,15 +53,11 @@ class AuthorizationFilter extends GenericFilterBean {
 
         if (!checkForExcludeUrl(httpRequest.getServletPath())) {
             final String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
-            final String refreshOAuthStatus = httpRequest.getHeader(OAUTH_REFRESH_STATUS);
             log.info("[getExpireTime] >> Start with auth header: {}", authorizationHeader);
-            log.info("[refreshOAuthStatus] >> Start with oauth refresh status: {}", refreshOAuthStatus);
             final Optional<String> bearerToken = getBearerToken(authorizationHeader);
-            final boolean isRefreshOauthToken = isRefreshToken(refreshOAuthStatus);
-            log.info("isRefreshOauthToken", refreshOAuthStatus);
             try {
-            	final Optional<String> jwtToken = getJWTToken(bearerToken,isRefreshOauthToken);
-            	jwtToken
+            	bearerToken
+            	        .map(authorizationService::validateAndUpdateJwtToken)
                         .map(authorizationService::getPrincipal)
                         .ifPresent(principal -> {
                             if (HttpMethod.GET.name().equals(httpRequest.getMethod())
@@ -76,6 +72,9 @@ class AuthorizationFilter extends GenericFilterBean {
                                     .setHeader(AuthConstants.JWT_TOKEN_KEY, authorizationService.getTokenFromPrincipal(principal));
                         });
             } catch (Exception e) {
+            	if(JWT_EXPIRED.equalsIgnoreCase(e.getMessage())){
+            		throw new ApiException("JWT_EXPIRED", HttpStatus.UNAUTHORIZED);
+            	}
                 log.info("Unauthorized exception: ", e);
                 sendUnauthorizedErrorToClient((HttpServletResponse) response);
                 throw new UnauthorizedException(e);
@@ -96,10 +95,6 @@ class AuthorizationFilter extends GenericFilterBean {
                 : Optional.empty();
     }
     
-    private boolean isRefreshToken(String refreshOAuthStatus) {
-        return StringUtils.isNotBlank(refreshOAuthStatus) && refreshOAuthStatus.equalsIgnoreCase(OAUTH_REINVOKE)? true:false;
-    }
-
     private boolean checkForExcludeUrl(String path) {
         return authorizationExcludedUrls.contains(path);
     }
@@ -110,15 +105,4 @@ class AuthorizationFilter extends GenericFilterBean {
         SecurityContextHolder.getContext().setAuthentication(authenticate);
     }
     
-    private Optional<String> getJWTToken(Optional<String> bearerToken, boolean isRefreshOauthToken) {
-    	String bearerTokenForMethod = bearerToken.orElse(StringUtils.EMPTY);
-    	if(!StringUtils.EMPTY.equalsIgnoreCase(bearerTokenForMethod)){
-    		String jwtToken = authorizationService.validateAndUpdateJwtToken(bearerToken.orElse(StringUtils.EMPTY),isRefreshOauthToken);
-            return StringUtils.isNotBlank(jwtToken) ? Optional.of(jwtToken) : Optional.empty();
-    	}else{
-    		return Optional.empty();
-    	}
-    	
-    }
-
 }

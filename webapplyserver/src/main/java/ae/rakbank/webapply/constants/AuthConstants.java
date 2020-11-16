@@ -11,8 +11,7 @@ public class AuthConstants {
     public static final String BEARER_TOKEN_PREFIX = "Bearer ";
     public static final String EXPIRES_IN = "expires_in";
 
-    public static final String OAUTH_REFRESH_STATUS = "Status";
-    public static final String OAUTH_REINVOKE = "reinvoke";
+    public static final String JWT_EXPIRED = "JWT_EXPIRED";
     private AuthConstants() {
     }
 }
