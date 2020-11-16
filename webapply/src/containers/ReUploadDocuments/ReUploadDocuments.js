@@ -89,7 +89,10 @@ export const ReUploadDocuments = () => {
           documentKey
         })
       );
-      dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(() => {}, () => {});
+      setTimeout(
+        () => dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(() => {}, () => {}),
+        500
+      );
     },
     [dispatch]
   );
