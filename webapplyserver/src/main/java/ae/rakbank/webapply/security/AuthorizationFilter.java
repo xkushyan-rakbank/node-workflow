@@ -72,20 +72,27 @@ class AuthorizationFilter extends GenericFilterBean {
                                     .setHeader(AuthConstants.JWT_TOKEN_KEY, authorizationService.getTokenFromPrincipal(principal));
                         });
             } catch (Exception e) {
-            	if(JWT_EXPIRED.equalsIgnoreCase(e.getMessage())){
-            		throw new ApiException("JWT_EXPIRED", HttpStatus.UNAUTHORIZED);
-            	}
                 log.info("Unauthorized exception: ", e);
-                sendUnauthorizedErrorToClient((HttpServletResponse) response);
-                throw new UnauthorizedException(e);
+                
+                if(JWT_EXPIRED.equalsIgnoreCase(e.getMessage())){
+                	sendUnauthorizedErrorToClient((HttpServletResponse) response,JWT_EXPIRED);
+                }else{
+                	 sendUnauthorizedErrorToClient((HttpServletResponse) response,StringUtils.EMPTY);
+                }
+               
+            	throw new UnauthorizedException(e);
+                
             }
         }
         chain.doFilter(request, response);
     }
 
-    private void sendUnauthorizedErrorToClient(HttpServletResponse response) throws IOException {
+    private void sendUnauthorizedErrorToClient(HttpServletResponse response, String msg) throws IOException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        if(!StringUtils.EMPTY.equalsIgnoreCase(msg)){
+        	response.sendError(HttpStatus.UNAUTHORIZED.value(), msg);
+        }
         response.flushBuffer();
     }
 
