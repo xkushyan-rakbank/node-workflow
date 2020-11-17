@@ -85,15 +85,17 @@ class AuthorizationFilter extends GenericFilterBean {
     }
 
     private void sendUnauthorizedErrorToClient(HttpServletResponse response, String msg) throws IOException {
-    	response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
     	if(JWT_EXPIRED.equalsIgnoreCase(msg)){
-    		 log.info("Inside jwtexpired");
-    		 ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, JWT_EXPIRED, "JWT token is expired");
+    		response.setStatus(425);
+    		log.info("Inside jwtexpired");
+    		/*  ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, JWT_EXPIRED, "JWT token is expired");
     		 ObjectMapper mapper =new ObjectMapper();
     		 response.getWriter().write(mapper.writeValueAsString(mapper));
-    		 log.info("after response writer");
+    		 log.info("after response writer");*/
+        }else{
+        	response.setStatus(HttpStatus.UNAUTHORIZED.value());
         }
+    	response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.flushBuffer();
     }
 
