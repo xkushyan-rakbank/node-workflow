@@ -172,8 +172,7 @@ public class OAuthService {
         if (jwtPayload.getOauthTokenExpiryTime().plusSeconds(TIME_WINDOW_FOR_UPLOAD_SEC)
                 .isBefore(LocalDateTime.now())) {
             log.error("JwtToken is expired for api calls");
-            throw new ApiException("JWT_EXPIRED",
-                    HttpStatus.UNAUTHORIZED);
+            throw new ApiException(JWT_EXPIRED);
         }
     }
 }

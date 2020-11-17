@@ -1,6 +1,7 @@
 package ae.rakbank.webapply.security;
 
 import ae.rakbank.webapply.constants.AuthConstants;
+import ae.rakbank.webapply.dto.ApiError;
 import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.exception.ApiException;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
@@ -17,6 +18,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -73,25 +76,23 @@ class AuthorizationFilter extends GenericFilterBean {
                         });
             } catch (Exception e) {
                 log.info("Unauthorized exception: ", e);
-                
-                if(JWT_EXPIRED.equalsIgnoreCase(e.getMessage())){
-                	sendUnauthorizedErrorToClient((HttpServletResponse) response,JWT_EXPIRED);
-                }else{
-                	 sendUnauthorizedErrorToClient((HttpServletResponse) response,StringUtils.EMPTY);
-                }
-               
+                log.info("API exception to check::", e.getMessage());
+                sendUnauthorizedErrorToClient((HttpServletResponse) response,e.getMessage());
             	throw new UnauthorizedException(e);
-                
             }
         }
         chain.doFilter(request, response);
     }
 
     private void sendUnauthorizedErrorToClient(HttpServletResponse response, String msg) throws IOException {
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+    	response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        if(!StringUtils.EMPTY.equalsIgnoreCase(msg)){
-        	response.sendError(HttpStatus.UNAUTHORIZED.value(), msg);
+    	if(JWT_EXPIRED.equalsIgnoreCase(msg)){
+    		 log.info("Inside jwtexpired");
+    		 ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, JWT_EXPIRED, "JWT token is expired");
+    		 ObjectMapper mapper =new ObjectMapper();
+    		 response.getWriter().write(mapper.writeValueAsString(mapper));
+    		 log.info("after response writer");
         }
         response.flushBuffer();
     }
