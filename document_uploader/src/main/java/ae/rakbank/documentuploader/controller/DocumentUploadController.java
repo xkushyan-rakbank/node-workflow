@@ -111,6 +111,7 @@ public class DocumentUploadController {
 				totalUploadedDocCount = (Integer) request.getSession()
 						.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
         	}
+			log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
 			
 			if (totalUploadedDocCount < maxDocCount) {
 				log.info("The max number of documents uploads not reached.");
@@ -248,8 +249,6 @@ public class DocumentUploadController {
 		    		
 		    	}
 		    	
-		    	request.getSession().setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
-	    		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
 		    
 		    	/*if(docUploadedCount < maxDocUploadCount){
 		    		log.info("The max number of documents uploads from get Prospect not reached."); 
@@ -263,6 +262,8 @@ public class DocumentUploadController {
 		} else {
 			log.info("getProspect Response is Null");
 		}
+		request.getSession().setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
+		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
 	}
 
     private JsonNode getProspectDocuments(String jwtToken, String prospectId) {
@@ -338,6 +339,7 @@ public class DocumentUploadController {
               	totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
         	}
         	
+        	log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
         	if (totalUploadedDocCount < maxDocCount) {
 				log.info("The max number of documents uploads not reached.");
 			} else {
