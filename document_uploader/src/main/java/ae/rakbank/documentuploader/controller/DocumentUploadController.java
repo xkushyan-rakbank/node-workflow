@@ -103,18 +103,28 @@ public class DocumentUploadController {
 				maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
 				totalUploadedDocCount = (Integer) request.getSession()
 						.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
-				if (totalUploadedDocCount < maxDocCount) {
-					log.info("The max number of documents uploads not reached.");
-				} else {
-					log.info("The max number of documents uploads has been reached.Throwing Error");
-					throw new ApiException("The max number of documents uploads has been reached.",
-							HttpStatus.FORBIDDEN);
-				}
 			} else{
         		log.info("No values in session for doc count. Getting from DEH");
         		responseBody = getProspectDocuments(jwtToken, prospectId);
-                validateNumberOfDocuments(responseBody, prospectId,request);
+        		setDocumentCountInSession(responseBody, prospectId,request);
+        		maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
+				totalUploadedDocCount = (Integer) request.getSession()
+						.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
         	}
+			
+			if (totalUploadedDocCount < maxDocCount) {
+				log.info("The max number of documents uploads not reached.");
+			} else {
+				 log.info("The max number of documents uploads has been reached.Throwing Error");
+				 ObjectMapper objectMapper = new ObjectMapper();
+				 ObjectNode responseJSON = objectMapper.createObjectNode();
+        	     responseJSON.put("docUploadedCount", totalUploadedDocCount);
+        	     responseJSON.put("statusCode",(HttpStatus.FORBIDDEN).value());
+        	     responseJSON.put("errorType", "COUNT_EXCEEDED");
+				 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.FORBIDDEN);
+				/*throw new ApiException("The max number of documents uploads has been reached.",
+						HttpStatus.FORBIDDEN);*/
+			}
         	 
         } catch(Exception ex){
         	log.error("Exception while validating the number of documents."+ex);
@@ -132,7 +142,7 @@ public class DocumentUploadController {
         			JsonNode updateResponseBody = (JsonNode) updateResponse.getBody();
             		 ObjectMapper objectMapper = new ObjectMapper();
             	     responseJSON = objectMapper.createObjectNode();
-            	     responseJSON.set("updateProspectResult", updateResponseBody);
+            	    responseJSON.set("updateProspectResult", updateResponseBody);
             	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
         		 }
         		 log.info("upload success. Setting the count in session");
@@ -142,6 +152,9 @@ public class DocumentUploadController {
              	}else{
              		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
              	}
+             	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
+             	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
+             	 responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
              	
              }
         }catch(Exception ex){
@@ -151,7 +164,7 @@ public class DocumentUploadController {
     }
     
 
-	private void validateNumberOfDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request) {
+	private void setDocumentCountInSession(JsonNode responseBody,String prospectId,HttpServletRequest  request) {
 		log.info("Inside validateNuber OF Documents");
 		int maxDocUploadCount = 0;
 		 int docUploadedCount = 0;
@@ -162,14 +175,12 @@ public class DocumentUploadController {
 		    if(documents != null){
 		    	log.info("documents is not null");
 		    	JsonNode companyDocuments= documents.get("companyDocuments");
-		    	if(companyDocuments !=null){
-		    		log.info("companyDocuments is not null");
-		    		if(companyDocuments.isArray()){
+		    	if(companyDocuments !=null && companyDocuments.isArray()){
 		    			log.info("companyDocuments is Array");
 		        		for(JsonNode objNode : companyDocuments){
 		        			try{
 		        				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		            			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
+		            			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
 		            			countReceived = true;
 		            			log.info("Getting count from company Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
 		            			break;
@@ -179,7 +190,6 @@ public class DocumentUploadController {
 		            		}
 		        			
 		        		}
-		        	}
 		    	}
 		    	
 		    	if(!countReceived){
@@ -190,7 +200,7 @@ public class DocumentUploadController {
 		            		for(JsonNode objNode : otherDocuments){
 		            			try{
 		            				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		                			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
+		                			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
 		                			countReceived = true;
 		                			log.info("Getting count from other Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
 		                			break;
@@ -238,15 +248,17 @@ public class DocumentUploadController {
 		    		
 		    	}
 		    	
+		    	request.getSession().setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
+	    		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
 		    
-		    	if(docUploadedCount < maxDocUploadCount){
+		    	/*if(docUploadedCount < maxDocUploadCount){
 		    		log.info("The max number of documents uploads from get Prospect not reached."); 
 		    		request.getSession().setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
 		    		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
 		    	}else {
 		    		log.info("The max number of documents uploads has been reached.");
-		    		 throw new ApiException("The max number of documents uploads has been reached.", HttpStatus.FORBIDDEN);
-		    	}
+		    		 throw new ApiException("COUNT_EXCEEDED", HttpStatus.FORBIDDEN);
+		    	}*/
 		    }
 		} else {
 			log.info("getProspect Response is Null");
@@ -318,17 +330,27 @@ public class DocumentUploadController {
         	if(request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId) != null && request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
         	 maxDocCount = (Integer)request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId);
            	 totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-           	if(totalUploadedDocCount < maxDocCount){
-	    		log.info("The max number of documents uploads not reached.");
-	    	}else {
-	    		log.info("The max number of documents uploads has been reached.");
-	    		 throw new ApiException("The max number of documents uploads has been reached.", HttpStatus.FORBIDDEN);
-	    	}
         	} else{
         		log.info("No values in session for doc count. Getting from DEH");
         		responseBody = getProspectDocuments(jwtToken, prospectId);
-                validateNumberOfDocuments(responseBody, prospectId,request);
+        		setDocumentCountInSession(responseBody, prospectId,request);
+                maxDocCount = (Integer)request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId);
+              	totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
         	}
+        	
+        	if (totalUploadedDocCount < maxDocCount) {
+				log.info("The max number of documents uploads not reached.");
+			} else {
+				 log.info("The max number of documents uploads has been reached.Throwing Error");
+				 ObjectMapper objectMapper = new ObjectMapper();
+				 ObjectNode responseJSON = objectMapper.createObjectNode();
+        	     responseJSON.put("docUploadedCount", totalUploadedDocCount);
+        	     responseJSON.put("statusCode",(HttpStatus.FORBIDDEN).value());
+        	     responseJSON.put("errorType", "COUNT_EXCEEDED");
+				 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.FORBIDDEN);
+				/*throw new ApiException("The max number of documents uploads has been reached.",
+						HttpStatus.FORBIDDEN);*/
+			}
         	 
         } catch(Exception ex){
         	log.error("Exception while validating the number of documents."+ex);
@@ -348,6 +370,7 @@ public class DocumentUploadController {
             	     responseJSON = objectMapper.createObjectNode();
             	     responseJSON.set("updateProspectResult", updateResponseBody);
             	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
+            	    
         		 }
         		 log.info("upload success. Setting the count in session");
              	if(request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
@@ -356,6 +379,9 @@ public class DocumentUploadController {
              	}else{
              		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
              	}
+             	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
+             	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
+             	 responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
              	
              }
         }catch(Exception ex){
