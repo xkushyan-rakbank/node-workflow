@@ -26,6 +26,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
 import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
 
@@ -44,7 +46,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     }
 
     @Override
-    public ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId) {
+    public ResponseEntity<Object> processUploadRequest(MultipartFile file, String fileInfo, String prospectId, JsonNode responseBody,String docUploadeCount) {
         if (file == null) {
             throw new ApiException("the file should not be null", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -66,7 +68,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         }
         validateFileInfo(fileInfoJSON);
 
-        return saveUploadedFile(file, fileInfoJSON, prospectId);
+        return saveUploadedFile(file, fileInfoJSON, prospectId, responseBody, docUploadeCount);
     }
 
     private void validateFileInfo(JsonNode fileInfoJSON) {
@@ -76,7 +78,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         }
     }
 
-    private ResponseEntity<Object> saveUploadedFile(MultipartFile file, JsonNode fileInfo, String prospectId) {
+    private ResponseEntity<Object> saveUploadedFile(MultipartFile file, JsonNode fileInfo, String prospectId, JsonNode responseBody,String docUploadeCount) {
         log.info("[Begin] saveUploadedFile() method, prospectId = {}, originalFilename = {}, filesize = {}",
                 prospectId, file.getOriginalFilename(), file.getSize());
 
@@ -99,6 +101,9 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode responseJSON = objectMapper.createObjectNode();
         responseJSON.put("fileName", fileName);
+        //Get the updated response body to be updated in
+        responseBody = updateSMEProspectBody(responseBody,  file,  fileInfo,docUploadeCount ,  fileName);
+        responseJSON.set("updateBody", responseBody);
         return new ResponseEntity<>(responseJSON, headers, HttpStatus.OK);
     }
 
@@ -136,5 +141,116 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         return fileName
                 .replaceAll("[:\\\\/*?|<>]", "_")
                 .substring(0, maxLength);
+    }
+    
+    
+    private JsonNode updateSMEProspectBody(JsonNode responseBody, MultipartFile file, JsonNode fileInfo, String docUploadedCount, String fileName){
+    	log.info("Inside updateSMEProspectBody");
+    	if(fileInfo.get("documentKey") != null ){
+    		log.info("File Documents Document Key ::",fileInfo.get("documentKey").asText());
+    	}
+    	boolean isUpdated = false;
+    	if(responseBody != null ){
+    		log.info("responseBody is not null");
+    		JsonNode documents = responseBody.get("documents");
+    		if(documents != null){
+    			log.info("documents is not null");
+    			JsonNode companyDocuments= documents.get("companyDocuments");
+    			if(companyDocuments !=null && companyDocuments.get(0) !=null){
+    				log.info("companyDocuments is not null");
+    				if(companyDocuments.isArray()){
+    					log.info("companyDocuments is Array");
+    					for(JsonNode objNode : companyDocuments){
+    						if(objNode != null){
+    							log.info("objNode is not null");
+        						((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
+        						log.info("Company Documents Document Key ::",objNode.get("documentKey").asText());
+        						if(fileInfo.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+        							((ObjectNode)objNode).put("fileName", fileName);
+        							((ObjectNode)objNode).put("fileSize", file.getSize());
+        							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
+        							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
+        							isUpdated = true;
+        							log.info("company document updated with the documentdetails");
+        							break;
+        						}
+    						}
+    						
+    					}
+    				}
+    			}
+    			
+    			if(!isUpdated){
+    				log.info("Document not updated in the body");
+    				JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
+    				if(stakeholdersDocuments !=null){
+    					log.info("stakeholdersDocuments is not null");
+    					 Iterator<Map.Entry<String,JsonNode>> fieldsIterator = stakeholdersDocuments.fields();
+    		             while (fieldsIterator.hasNext()) {
+    		            	 log.info("stakeholdersDocuments next entry");
+    		            	 Map.Entry<String,JsonNode> field = fieldsIterator.next();
+    		            	 if(field.getValue() !=null){
+    		            		 JsonNode stakeDocuments= field.getValue().get("documents");
+    		            		 if(stakeDocuments != null && stakeDocuments.isArray()){
+    		            			 log.info("stakeDocuments entry is not null");
+    		            			 for(JsonNode objNode : stakeDocuments){
+    		            				 if(objNode != null){
+    		            					 log.info("objNode is not null");
+        		            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
+        		            				 log.info("Stake Documents Document Key ::",objNode.get("documentKey").asText());
+        		     						if(fileInfo.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+        		     							((ObjectNode)objNode).put("fileName", fileName);
+        		     							((ObjectNode)objNode).put("fileSize", file.getSize());
+        		     							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
+        		     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
+        		     							isUpdated = true;
+        		     							log.info("stakeholder document updated with the documentdetails");
+        		     							break;
+        		     						}
+    		            				 }
+    		            				 
+    		            			 }
+    		            		 }
+    		            	 }
+    		             }
+    				}
+    			}
+    			
+    			if(!isUpdated){
+    				log.info("Document not updated in the body");
+    				JsonNode otherDocuments= documents.get("otherDocuments");
+		        	if(otherDocuments !=null && otherDocuments.isArray()){
+		        		 for(JsonNode objNode : otherDocuments){
+		        			 if(objNode != null){
+		        				 log.info("objNode is not null");
+	            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
+	            				 log.info("Other Documents Document Key ::",objNode.get("documentKey").asText());
+	     						if(fileInfo.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+	     							((ObjectNode)objNode).put("fileName", fileName);
+	     							((ObjectNode)objNode).put("fileSize", file.getSize());
+	     							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
+	     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
+	     							isUpdated = true;
+	     							log.info("other document updated with the documentdetails");
+	     							break;
+	     						}
+		        			 }
+            			 }
+		        	}
+    			}
+    		}
+    		if(!isUpdated){
+    			log.info("Document still not updated in the updaterequest body");
+    		} else{
+    			log.info("Setting the values for actio Type and savetype as save and next");
+    			JsonNode applicationInfo = responseBody.get("applicationInfo");
+        		((ObjectNode)applicationInfo).put("actionType", "save");
+    			((ObjectNode)applicationInfo).put("saveType", "next");
+    		}
+    		
+    		
+			
+    	}
+    	return responseBody;
     }
 }

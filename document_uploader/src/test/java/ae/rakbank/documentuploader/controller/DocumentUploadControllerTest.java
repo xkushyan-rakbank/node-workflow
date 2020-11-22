@@ -10,6 +10,8 @@ import ae.rakbank.documentuploader.stub.util.FileUtilStub;
 import ae.rakbank.documentuploader.util.DehUtil;
 import ae.rakbank.documentuploader.util.FileUtil;
 import ae.rakbank.documentuploader.util.SecurityUtil;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.http.entity.ContentType;
@@ -106,7 +108,7 @@ public class DocumentUploadControllerTest {
                 .andExpect(status().is2xxSuccessful());
 
         then(this.docUploadService)
-                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001");
+                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001",null,"0");
     }
 
     @Test
@@ -132,7 +134,7 @@ public class DocumentUploadControllerTest {
 
 
         then(this.docUploadService)
-                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001");
+                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001",null,"0");
     }
 
     @Test
