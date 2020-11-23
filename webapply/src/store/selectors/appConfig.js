@@ -101,3 +101,5 @@ export const getLeadSource = state => {
     ? state.appConfig.leadSource.productName
     : "";
 };
+
+export const getExpired = state => getAppConfig(state).expired;

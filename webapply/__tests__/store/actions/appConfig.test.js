@@ -102,4 +102,10 @@ describe("actions for app config", () => {
     const expectedAction = { type: appConfig.RESET_APPLICANT_INFO };
     expect(appConfig.resetApplicantInfo()).toEqual(expectedAction);
   });
+
+  it("should set reinvoke", () => {
+    const payload = true;
+    const expectedAction = { type: appConfig.SET_EXPIRED, payload };
+    expect(appConfig.setExpired(payload)).toEqual(expectedAction);
+  });
 });

@@ -93,4 +93,19 @@ describe("Session expiration tests", () => {
       jest.runAllTimers();
     });
   });
+
+  it("check authtoken expired condition", () => {
+    props = {
+      authToken: "anytoken",
+      isAuthenticated: true,
+      setAccessToken,
+      logout,
+      expired: true
+    };
+    jest.useFakeTimers();
+    render(<SessionExpirationContainer {...props} />);
+    act(() => {
+      jest.runAllTimers();
+    });
+  });
 });

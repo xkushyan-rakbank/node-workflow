@@ -5,7 +5,7 @@ import get from "lodash/get";
 import nanoid from "nanoid";
 
 import { store } from "../store";
-import { setAccessToken } from "../store/actions/appConfig";
+import { setAccessToken, setExpired } from "../store/actions/appConfig";
 
 import { NotificationsManager } from "../components/Notification";
 
@@ -41,10 +41,10 @@ apiClient.interceptors.request.use(config => {
     headers: {
       ...config.headers,
       "Cache-Control": "no-cache, no-store",
-      "Pragma": "no-cache",
+      Pragma: "no-cache",
       [REQUEST_ID_HEADER]: nanoid()
     }
-  }
+  };
 });
 
 apiClient.interceptors.request.use(config => {
@@ -112,6 +112,7 @@ apiClient.interceptors.response.use(
   error => {
     const {
       data,
+      status,
       config: { symKey }
     } = error.response;
 
@@ -172,6 +173,9 @@ apiClient.interceptors.response.use(
           log(e);
         }
       }
+    } else if (status === 401) {
+      store.dispatch(setExpired(true));
+      notificationOptions = null;
     }
 
     if (notificationOptions && NotificationsManager.add) {
