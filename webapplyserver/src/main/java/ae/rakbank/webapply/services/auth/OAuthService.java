@@ -33,7 +33,7 @@ public class OAuthService {
 
     // 30 seconds shift to prevent access_token expire error while calling the API
     static final int TIME_SHIFT_FOR_REQUEST = 30;
-    private static final Integer TIME_WINDOW_FOR_UPLOAD_SEC = 1020;//17 mins to stop the session. Front end is 15mins .so adding 2 min extra
+    private static final Integer TIME_WINDOW_FOR_EXPIRY_SEC = 3600;//60 mins to expire the token.
 
     private final FileUtil fileUtil;
     private final ServletContext servletContext;
@@ -169,7 +169,7 @@ public class OAuthService {
     }
     
     private void validateExpirationTime(JwtPayload jwtPayload) {
-        if (jwtPayload.getOauthTokenExpiryTime().plusSeconds(TIME_WINDOW_FOR_UPLOAD_SEC)
+        if (jwtPayload.getOauthTokenExpiryTime().plusSeconds(TIME_WINDOW_FOR_EXPIRY_SEC)
                 .isBefore(LocalDateTime.now())) {
             log.error("JwtToken is expired for api calls");
             throw new ApiException(JWT_EXPIRED);
