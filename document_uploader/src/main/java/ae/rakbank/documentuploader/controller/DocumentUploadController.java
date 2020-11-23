@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +55,6 @@ public class DocumentUploadController {
     private final AuthorizationService authorizationService;
     private final ProspectValidatorService prospectValidatorService;
     private final DehClient dehClient;
-    private final ServletContext servletContext;
     
 	  
     private JsonNode dehURIs = null;
@@ -87,7 +87,7 @@ public class DocumentUploadController {
     public ResponseEntity<Object> handleUploadDocument(@RequestHeader String authorization,
                                                        @RequestParam("file") MultipartFile file,
                                                        @RequestParam("fileInfo") String fileInfo,
-                                                       @PathVariable String prospectId) {
+                                                       @PathVariable String prospectId,HttpServletRequest  request) {
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
         authorizationService.validateJwtToken(jwtToken);
         prospectValidatorService.validate(jwtToken, prospectId);
@@ -98,42 +98,75 @@ public class DocumentUploadController {
 		int totalUploadedDocCount = 0;
         try{
         	
-        	if(servletContext.getAttribute("MAX_NO_OF_DOCS_"+prospectId) != null && servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
-        	 maxDocCount = (Integer)servletContext.getAttribute("MAX_NO_OF_DOCS_"+prospectId);
-           	 totalUploadedDocCount = (Integer)servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-           	if(totalUploadedDocCount < maxDocCount){
-	    		log.info("The max number of documents uploads not reached.");
-	    	}else {
-	    		log.info("The max number of documents uploads has been reached.");
-	    		 throw new ApiException("The max number of documents uploads has been reached.", HttpStatus.FORBIDDEN);
-	    	}
-        	} else{
+			if (request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId) != null
+					&& request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId) != null) {
+				maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
+				totalUploadedDocCount = (Integer) request.getSession()
+						.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
+			} else{
         		log.info("No values in session for doc count. Getting from DEH");
         		responseBody = getProspectDocuments(jwtToken, prospectId);
-                validateNumberOfDocuments(responseBody, prospectId);
+        		setDocumentCountInSession(responseBody, prospectId,request);
+        		maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
+				totalUploadedDocCount = (Integer) request.getSession()
+						.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
         	}
+			log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
+			
+			if (totalUploadedDocCount < maxDocCount) {
+				log.info("The max number of documents uploads not reached.");
+			} else {
+				 log.info("The max number of documents uploads has been reached.Throwing Error");
+				 ObjectMapper objectMapper = new ObjectMapper();
+				 ObjectNode responseJSON = objectMapper.createObjectNode();
+        	     responseJSON.put("docUploadedCount", totalUploadedDocCount);
+        	     responseJSON.put("statusCode",(HttpStatus.FORBIDDEN).value());
+        	     responseJSON.put("errorType", "COUNT_EXCEEDED");
+				 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.FORBIDDEN);
+				/*throw new ApiException("The max number of documents uploads has been reached.",
+						HttpStatus.FORBIDDEN);*/
+			}
         	 
         } catch(Exception ex){
         	log.error("Exception while validating the number of documents."+ex);
         }
         
-        ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId);
+        ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId,responseBody,String.valueOf(totalUploadedDocCount));
+        ObjectNode responseJSON = null;
         try{
         	 if(response.getStatusCode().is2xxSuccessful()){
-             	if(servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
-             		totalUploadedDocCount = (Integer)servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-             		servletContext.setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
+        		 //First update the prospect
+        		 log.info("Upload Success to S3.");
+        		 ResponseEntity<Object> updateResponse = updateSMEProspect(jwtToken, ((JsonNode)response.getBody()).get("updateBody"), prospectId);
+        		 if(updateResponse.getStatusCode().is2xxSuccessful()){
+        			 log.info("update Prospect to DEH successful");
+        			JsonNode updateResponseBody = (JsonNode) updateResponse.getBody();
+            		 ObjectMapper objectMapper = new ObjectMapper();
+            	     responseJSON = objectMapper.createObjectNode();
+            	    responseJSON.set("updateProspectResult", updateResponseBody);
+            	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
+        		 }
+        		 log.info("upload success. Setting the count in session");
+             	if(request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
+             		totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
+             		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
+             	}else{
+             		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
              	}
+             	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
+             	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
+             	 responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
              	
              }
         }catch(Exception ex){
         	log.error("Exception while setting the number of documents."+ex);
         }
-       
-        return response;
+        return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
     }
+    
 
-	private void validateNumberOfDocuments(JsonNode responseBody,String prospectId) {
+	private void setDocumentCountInSession(JsonNode responseBody,String prospectId,HttpServletRequest  request) {
+		log.info("Inside validateNuber OF Documents");
 		int maxDocUploadCount = 0;
 		 int docUploadedCount = 0;
 		 boolean countReceived =false;
@@ -141,77 +174,96 @@ public class DocumentUploadController {
 			JsonNode documents = responseBody.get("documents");
 			log.info("documents from DEH::" + documents);
 		    if(documents != null){
+		    	log.info("documents is not null");
 		    	JsonNode companyDocuments= documents.get("companyDocuments");
-		    	if(companyDocuments !=null && companyDocuments.get(0) !=null){
-		    		if(companyDocuments.isArray()){
+		    	if(companyDocuments !=null && companyDocuments.isArray()){
+		    			log.info("companyDocuments is Array");
 		        		for(JsonNode objNode : companyDocuments){
 		        			try{
 		        				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		            			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
+		            			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
 		            			countReceived = true;
+		            			log.info("Getting count from company Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
 		            			break;
 		            		} catch(Exception ex){//any null values or other values continue
+		            			log.info("Getting count from company Documents any number format exception");
 		            				continue;
 		            		}
 		        			
 		        		}
-		        	}
-		    	}
-		    	if(!countReceived){
-		    		JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
-		    		 Iterator<Map.Entry<String,JsonNode>> fieldsIterator = stakeholdersDocuments.fields();
-		             while (fieldsIterator.hasNext()) {
-
-		                 Map.Entry<String,JsonNode> field = fieldsIterator.next();
-		                 if(field.getValue() !=null){
-		                 	JsonNode stakeDocuments= field.getValue().get("documents");
-		                 	if(stakeDocuments != null && stakeDocuments.isArray()){
-		                 		for(JsonNode objNode : stakeDocuments){
-		                 			try{
-		                				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		                    			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
-		                    			countReceived = true;
-		                    			break;
-		                    		} catch(Exception ex){//any null values or other values continue
-		                    				continue;
-		                    		}
-		                 		}
-		                 	}
-		                 }
-		                 if(countReceived){
-		                	 break;
-		                 }
-		             }
 		    	}
 		    	
 		    	if(!countReceived){
+		    		 log.info("company Documents did not find the count for document upload.");
 		    		JsonNode otherDocuments= documents.get("otherDocuments");
 		        	if(otherDocuments !=null && otherDocuments.isArray()){
+		        		 log.info("other Documents is not null");
 		            		for(JsonNode objNode : otherDocuments){
 		            			try{
 		            				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		                			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
+		                			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
 		                			countReceived = true;
+		                			log.info("Getting count from other Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
 		                			break;
 		                		} catch(Exception ex){//any null values or other values continue
+		                			log.info("Getting count from other Documents any number format exception");
 		                				continue;
 		                		}
 		            			
 		            		}
 		        	}
 		    	}
-		    	if(docUploadedCount < maxDocUploadCount){
-		    		log.info("The max number of documents uploads not reached."); 
-		    		servletContext.setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
-		            servletContext.setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
+		    	
+		    	if(!countReceived){
+		    		 log.info("Other Documents did not find the count for document upload.");
+		    		JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
+		    		if(stakeholdersDocuments != null){
+		    			 log.info("stakeholdersDocuments is not null");
+		    			 Iterator<Map.Entry<String,JsonNode>> fieldsIterator = stakeholdersDocuments.fields();
+			             while (fieldsIterator.hasNext()) {
+			            	 log.info("stakeholdersDocuments next entry");
+			                 Map.Entry<String,JsonNode> field = fieldsIterator.next();
+			                 if(field.getValue() !=null){
+			                 	JsonNode stakeDocuments= field.getValue().get("documents");
+			                 	if(stakeDocuments != null && stakeDocuments.isArray()){
+			                 		 log.info("stakeDocuments entry is not null");
+			                 		for(JsonNode objNode : stakeDocuments){
+			                 			try{
+			                				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
+			                    			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
+			                    			countReceived = true;
+			                    			log.info("Getting count from stakes Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
+			                    			break;
+			                    		} catch(Exception ex){//any null values or other values continue
+			                    			log.info("Getting count from stake Documents any number format exception");
+			                    				continue;
+			                    		}
+			                 		}
+			                 	}
+			                 }
+			                 if(countReceived){
+			                	 break;
+			                 }
+			             }
+		    		}
+		    		
+		    	}
+		    	
+		    
+		    	/*if(docUploadedCount < maxDocUploadCount){
+		    		log.info("The max number of documents uploads from get Prospect not reached."); 
+		    		request.getSession().setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
+		    		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
 		    	}else {
 		    		log.info("The max number of documents uploads has been reached.");
-		    		 throw new ApiException("The max number of documents uploads has been reached.", HttpStatus.FORBIDDEN);
-		    	}
+		    		 throw new ApiException("COUNT_EXCEEDED", HttpStatus.FORBIDDEN);
+		    	}*/
 		    }
 		} else {
 			log.info("getProspect Response is Null");
 		}
+		request.getSession().setAttribute("MAX_NO_OF_DOCS_"+prospectId,maxDocUploadCount);
+		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,docUploadedCount);
 	}
 
     private JsonNode getProspectDocuments(String jwtToken, String prospectId) {
@@ -226,12 +278,25 @@ public class DocumentUploadController {
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand("sme", prospectId);
         ResponseEntity<Object> prospectDocuments = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
                     "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload);
-        
-        
+        log.info("After DEH getProspect Call");
         JsonNode responseBody = (JsonNode) prospectDocuments.getBody();
-        log.info("Phone Number from getProsectID"+ responseBody.get("applicantInfo").get("mobileNo").asText());
+        log.info("Testing getPRospect repsonseBody:Phone Number from getProsectID"+ responseBody.get("applicantInfo").get("mobileNo").asText());
         return responseBody;
         
+	}
+    
+	public ResponseEntity<Object> updateSMEProspect(String jwtToken, JsonNode jsonNode, String prospectId) {
+		log.info("Begin updateSMEProspect() method");
+		//Update with the latest file detail
+		log.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
+				jsonNode.toString(), "sme", prospectId));
+		JwtPayload jwtPayload = authorizationService.getPrincipal(jwtToken);
+
+		String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
+		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand("sme", prospectId);
+
+		return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT, jsonNode, "updateSMEProspect()",
+				MediaType.APPLICATION_JSON, jwtPayload);
 	}
     
 
@@ -241,7 +306,7 @@ public class DocumentUploadController {
     public ResponseEntity<Object> handleReUploadDocument(@RequestHeader String authorization,
                                                          @RequestParam("file") MultipartFile file,
                                                          @RequestParam(name = "fileInfo", required = false) String fileInfo,
-                                                         @PathVariable String prospectId) {
+                                                         @PathVariable String prospectId,HttpServletRequest  request) {
         String jwtToken = getTokenFromAuthorizationHeader(authorization);
         authorizationService.validateJwtToken(jwtToken);
         prospectValidatorService.validate(jwtToken, prospectId);
@@ -263,39 +328,68 @@ public class DocumentUploadController {
 		int totalUploadedDocCount = 0;
         try{
         	
-        	if(servletContext.getAttribute("MAX_NO_OF_DOCS_"+prospectId) != null && servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
-        	 maxDocCount = (Integer)servletContext.getAttribute("MAX_NO_OF_DOCS_"+prospectId);
-           	 totalUploadedDocCount = (Integer)servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-           	if(totalUploadedDocCount < maxDocCount){
-	    		log.info("The max number of documents uploads not reached.");
-	    	}else {
-	    		log.info("The max number of documents uploads has been reached.");
-	    		 throw new ApiException("The max number of documents uploads has been reached.", HttpStatus.FORBIDDEN);
-	    	}
+        	if(request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId) != null && request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
+        	 maxDocCount = (Integer)request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId);
+           	 totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
         	} else{
         		log.info("No values in session for doc count. Getting from DEH");
         		responseBody = getProspectDocuments(jwtToken, prospectId);
-                validateNumberOfDocuments(responseBody, prospectId);
+        		setDocumentCountInSession(responseBody, prospectId,request);
+                maxDocCount = (Integer)request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId);
+              	totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
         	}
+        	
+        	log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
+        	if (totalUploadedDocCount < maxDocCount) {
+				log.info("The max number of documents uploads not reached.");
+			} else {
+				 log.info("The max number of documents uploads has been reached.Throwing Error");
+				 ObjectMapper objectMapper = new ObjectMapper();
+				 ObjectNode responseJSON = objectMapper.createObjectNode();
+        	     responseJSON.put("docUploadedCount", totalUploadedDocCount);
+        	     responseJSON.put("statusCode",(HttpStatus.FORBIDDEN).value());
+        	     responseJSON.put("errorType", "COUNT_EXCEEDED");
+				 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.FORBIDDEN);
+				/*throw new ApiException("The max number of documents uploads has been reached.",
+						HttpStatus.FORBIDDEN);*/
+			}
         	 
         } catch(Exception ex){
         	log.error("Exception while validating the number of documents."+ex);
         }
         
-        
-        ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId);
+        ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId,responseBody,String.valueOf(totalUploadedDocCount));
+        ObjectNode responseJSON = null;
         try{
         	 if(response.getStatusCode().is2xxSuccessful()){
-             	if(servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
-             		totalUploadedDocCount = (Integer)servletContext.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-             		servletContext.setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
+        		 //First update the prospect
+        		 log.info("Upload Success to S3.");
+        		 ResponseEntity<Object> updateResponse = updateSMEProspect(jwtToken, ((JsonNode)response.getBody()).get("updateBody"), prospectId);
+        		 if(updateResponse.getStatusCode().is2xxSuccessful()){
+        			 log.info("update Prospect to DEH successful");
+        			JsonNode updateResponseBody = (JsonNode) updateResponse.getBody();
+            		 ObjectMapper objectMapper = new ObjectMapper();
+            	     responseJSON = objectMapper.createObjectNode();
+            	     responseJSON.set("updateProspectResult", updateResponseBody);
+            	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
+            	    
+        		 }
+        		 log.info("upload success. Setting the count in session");
+             	if(request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
+             		totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
+             		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
+             	}else{
+             		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
              	}
+             	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
+             	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
+             	 responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
              	
              }
         }catch(Exception ex){
         	log.error("Exception while setting the number of documents."+ex);
         }
-        return response;
+        return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
        
     }
 

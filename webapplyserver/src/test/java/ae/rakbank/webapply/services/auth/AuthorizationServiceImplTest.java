@@ -52,11 +52,11 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        String token = authorizationService.validateAndUpdateJwtToken("test-token",false);
+        String token = authorizationService.validateAndUpdateJwtToken("test-token");
 
         assertNotNull(token);
         assertEquals("encrypted-token", token);
-        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt,false);
+        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt);
 
     }
 
@@ -68,11 +68,11 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        String token = authorizationService.validateAndUpdateJwtToken("test-token",false);
+        String token = authorizationService.validateAndUpdateJwtToken("test-token");
 
         assertNotNull(token);
         assertEquals("encrypted-token", token);
-        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt,false);
+        Mockito.verify(oAuthService).validateAndUpdateOauthToken(agentJwt);
 
     }
 
@@ -84,7 +84,7 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        authorizationService.validateAndUpdateJwtToken("test-token",false);
+        authorizationService.validateAndUpdateJwtToken("test-token");
 
     }
 
@@ -96,7 +96,7 @@ public class AuthorizationServiceImplTest {
         Mockito.when(jwtService.decrypt("test-token")).thenReturn(agentJwt);
         Mockito.when(jwtService.encrypt(agentJwt)).thenReturn("encrypted-token");
 
-        authorizationService.validateAndUpdateJwtToken("test-token",false);
+        authorizationService.validateAndUpdateJwtToken("test-token");
     }
 
     @Test

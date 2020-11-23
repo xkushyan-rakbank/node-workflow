@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static ae.rakbank.webapply.constants.AuthConstants.BEARER_TOKEN_PREFIX;
-import static ae.rakbank.webapply.constants.AuthConstants.OAUTH_REFRESH_STATUS;
 
 public class AuthorizationFilterTest {
 
@@ -59,7 +58,7 @@ public class AuthorizationFilterTest {
     @Test(expected = UnauthorizedException.class)
     public void doFilterIfTokenNotValidBySignature() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_TOKEN_PREFIX + BEARER_INVALID_TOKEN);
-        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_INVALID_TOKEN,false)).thenThrow(new ApiException("Token is not valid"));
+        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_INVALID_TOKEN)).thenThrow(new ApiException("Token is not valid"));
 
         filter.doFilter(request, response, filterChain);
     }
@@ -67,7 +66,6 @@ public class AuthorizationFilterTest {
     @Test
     public void doFilterIfTokenNotValidByStructure() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_INVALID_TOKEN);
-        Mockito.when(request.getHeader(OAUTH_REFRESH_STATUS)).thenReturn(Strings.EMPTY);
         filter.doFilter(request, response, filterChain);
 
         Mockito.verifyNoMoreInteractions(authorizationService);
@@ -78,7 +76,6 @@ public class AuthorizationFilterTest {
     @Test
     public void doFilterIfTokenBlank() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(Strings.EMPTY);
-        Mockito.when(request.getHeader(OAUTH_REFRESH_STATUS)).thenReturn(Strings.EMPTY);
 
         filter.doFilter(request, response, filterChain);
 
@@ -90,15 +87,14 @@ public class AuthorizationFilterTest {
     @Test
     public void doFilterIfTokenValid() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_TOKEN_PREFIX + BEARER_VALID_TOKEN);
-        Mockito.when(request.getHeader(OAUTH_REFRESH_STATUS)).thenReturn(Strings.EMPTY);
-        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN,false)).thenReturn(JWT_UPDATED_TOKEN);
+        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN)).thenReturn(JWT_UPDATED_TOKEN);
         JwtPayload jwtPayload = JwtPayloadStub.getJwtPayload();
         Mockito.when(authorizationService.getPrincipal(JWT_UPDATED_TOKEN)).thenReturn(jwtPayload);
         Mockito.when(authorizationService.getTokenFromPrincipal(jwtPayload)).thenReturn("jwt_response_token");
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN,false);
+        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN);
         Mockito.verify(authorizationService).getPrincipal(JWT_UPDATED_TOKEN);
         Mockito.verify(response).setHeader(AuthConstants.JWT_TOKEN_KEY, "jwt_response_token");
         Mockito.verify(filterChain).doFilter(request, response);
@@ -119,11 +115,10 @@ public class AuthorizationFilterTest {
     @Test
     public void doFilterForGetProspectUrlAndGetMethodWhereTokenValid() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_TOKEN_PREFIX + BEARER_VALID_TOKEN);
-        Mockito.when(request.getHeader(OAUTH_REFRESH_STATUS)).thenReturn(Strings.EMPTY);
         Mockito.when(request.getServletPath()).thenReturn("/api/v1/usertypes/sme/prospects/testPropsectId");
         Mockito.when(request.getMethod()).thenReturn("GET");
 
-        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN,false)).thenReturn(JWT_UPDATED_TOKEN);
+        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN)).thenReturn(JWT_UPDATED_TOKEN);
 
         JwtPayload jwtPayload = Mockito.mock(JwtPayload.class);
         Mockito.when(jwtPayload.getRole()).thenReturn(UserRole.CUSTOMER);
@@ -133,7 +128,7 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN,false);
+        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN);
         Mockito.verify(authorizationService).getPrincipal(JWT_UPDATED_TOKEN);
         Mockito.verify(response).setHeader(AuthConstants.JWT_TOKEN_KEY, "jwt_response_token");
         Mockito.verify(filterChain).doFilter(request, response);
@@ -143,11 +138,10 @@ public class AuthorizationFilterTest {
     @Test
     public void doFilterForPostMethodWithGetPropsectByIdWhereTokenValid() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_TOKEN_PREFIX + BEARER_VALID_TOKEN);
-        Mockito.when(request.getHeader(OAUTH_REFRESH_STATUS)).thenReturn(Strings.EMPTY);
         Mockito.when(request.getServletPath()).thenReturn("/api/v1/usertypes/sme/another_url/testPropsectId");
         Mockito.when(request.getMethod()).thenReturn("POST");
 
-        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN,false)).thenReturn(JWT_UPDATED_TOKEN);
+        Mockito.when(authorizationService.validateAndUpdateJwtToken(BEARER_VALID_TOKEN)).thenReturn(JWT_UPDATED_TOKEN);
 
         JwtPayload jwtPayload = Mockito.mock(JwtPayload.class);
         Mockito.when(jwtPayload.getRole()).thenReturn(UserRole.CUSTOMER);
@@ -157,7 +151,7 @@ public class AuthorizationFilterTest {
 
         filter.doFilter(request, response, filterChain);
 
-        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN,false);
+        Mockito.verify(authorizationService).validateAndUpdateJwtToken(BEARER_VALID_TOKEN);
         Mockito.verify(authorizationService).getPrincipal(JWT_UPDATED_TOKEN);
         Mockito.verify(response).setHeader(AuthConstants.JWT_TOKEN_KEY, "jwt_response_token");
         Mockito.verify(filterChain).doFilter(request, response);

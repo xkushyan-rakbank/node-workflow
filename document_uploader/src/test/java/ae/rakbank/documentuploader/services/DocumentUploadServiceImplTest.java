@@ -41,39 +41,35 @@ public class DocumentUploadServiceImplTest {
     }
 
     @Test(expected = ApiException.class)
-    public void processUploadNullFile() {
-        documentUploadService.processUploadRequest(null, "some file info", "myProspectId");
+    public void processUploadNullFile(){
+        documentUploadService.processUploadRequest(null, "some file info", "myProspectId",null,"0");
     }
 
     @Test(expected = ApiException.class)
-    public void processUploadIncorrectFileInfo() {
+    public void processUploadIncorrectFileInfo(){
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename1.txt", "text/plain", "some xml".getBytes());
-
-        documentUploadService.processUploadRequest(multiFile, "not json entry", "myProspectId");
+        documentUploadService.processUploadRequest(multiFile, "not json entry", "myProspectId",null,"0");
     }
 
     @Test
-    public void processUploadFile() {
+    public void processUploadFile(){
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
-
-        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspectId");
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspectId",null,"0");
     }
 
     @Test(expected = ApiException.class)
     public void processUploadFileIncorrectProspectId() {
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
-
-        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"text/plain\"}", "myProspect..Id");
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"text/plain\"}", "myProspect..Id",null,"0");
     }
 
     @Test(expected = ApiException.class)
-    public void processUploadNotAllowedProspectId() {
+    public void processUploadNotAllowedProspectId() throws Exception{
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "g".getBytes());
-
-        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspect..Id");
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspect..Id",null,"0");
     }
 }

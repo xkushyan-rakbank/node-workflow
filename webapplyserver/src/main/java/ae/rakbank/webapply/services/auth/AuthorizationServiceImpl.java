@@ -28,14 +28,13 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private final OauthClient oauthClient;
 
     @Override
-    public String validateAndUpdateJwtToken(String jwtToken, boolean isRefresh) {
+    public String validateAndUpdateJwtToken(String jwtToken) {
         JwtPayload jwtPayload = jwtService.decrypt(jwtToken);
         log.info("[getExpireTime] >> Parsed jwt token: {}", jwtToken);
-        log.info("[validateAndUpdateJwtToken inside authServiceImpl] >> : {}",isRefresh);
         if (UserRole.AGENT.equals(jwtPayload.getRole())) {
-            validateAndUpdateAgentJwtPayload(jwtPayload,isRefresh);
+            validateAndUpdateAgentJwtPayload(jwtPayload);
         } else if (UserRole.CUSTOMER.equals(jwtPayload.getRole())) {
-            validateAndUpdateCustomerJwtPayload(jwtPayload,isRefresh);
+            validateAndUpdateCustomerJwtPayload(jwtPayload);
         } else {
             log.error("[getExpireTime] >> JwtToken is not valid, field role is required");
             throw new ApiException("[getExpireTime] >> JwtToken is not valid, field role is required", HttpStatus.UNAUTHORIZED);
@@ -43,19 +42,17 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return jwtService.encrypt(jwtPayload);
     }
 
-    private void validateAndUpdateCustomerJwtPayload(JwtPayload jwtPayload,boolean isRefresh) {
+    private void validateAndUpdateCustomerJwtPayload(JwtPayload jwtPayload) {
         if (StringUtils.isEmpty(jwtPayload.getPhoneNumber())) {
             log.error("JwtToken is not valid, the fields phoneNumber and prospectId are required for the Customer");
             throw new ApiException("JwtToken is not valid, the fields phoneNumber and prospectId are required for the Customer",
                     HttpStatus.UNAUTHORIZED);
         }
-        log.info("[validateAndUpdateCustomerJwtPayload inside authServiceImpl] >> : {}",isRefresh);
-        oAuthService.validateAndUpdateOauthToken(jwtPayload,isRefresh);
+        oAuthService.validateAndUpdateOauthToken(jwtPayload);
     }
 
-    private void validateAndUpdateAgentJwtPayload(JwtPayload jwtPayload,boolean isRefresh) {
-    	log.info("[validateAndUpdateAgentJwtPayload inside authServiceImpl] >> : {}",isRefresh);
-        oAuthService.validateAndUpdateOauthToken(jwtPayload,isRefresh);
+    private void validateAndUpdateAgentJwtPayload(JwtPayload jwtPayload) {
+        oAuthService.validateAndUpdateOauthToken(jwtPayload);
     }
 
     @Override
