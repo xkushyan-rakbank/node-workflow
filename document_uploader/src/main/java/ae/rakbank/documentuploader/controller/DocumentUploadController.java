@@ -137,13 +137,14 @@ public class DocumentUploadController {
         }
         
         ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId,responseBody,String.valueOf(totalUploadedDocCount));
-        	 if(response.getStatusCode().is2xxSuccessful()){
+        try{	
+        if(response.getStatusCode().is2xxSuccessful()){
         		 //First update the prospect
         		 log.info("Upload Success to S3.");
         		 ObjectMapper objectMapper = new ObjectMapper();
         		 ObjectNode responseJSON = objectMapper.createObjectNode();
         	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
-        		 try{
+        		 
         			 ResponseEntity<Object> updateResponse = updateSMEProspect(jwtToken, ((JsonNode)response.getBody()).get("updateBody"), prospectId);
             		 if(updateResponse.getStatusCode().is2xxSuccessful()){
             			 log.info("update Prospect to DEH successful");
@@ -162,15 +163,12 @@ public class DocumentUploadController {
                  	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
                  	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
                  	responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
-        		 }catch(Exception ex){
-        	        	log.error("Exception while setting the number of documents."+ex);
-        	     }
         		 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
-             	
-             }else{
-            	 return response;
              }
-       
+        }catch(Exception ex){
+        	log.error("Exception while setting the number of documents."+ex);
+        }
+        	 return response;
     }
     
 
@@ -374,40 +372,38 @@ public class DocumentUploadController {
         }
         
         ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId,responseBody,String.valueOf(totalUploadedDocCount));
-        if(response.getStatusCode().is2xxSuccessful()){
-   		 //First update the prospect
-   		 log.info("Upload Success to S3.");
-   		 ObjectMapper objectMapper = new ObjectMapper();
-   		 ObjectNode responseJSON = objectMapper.createObjectNode();
-   	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
-   		 try{
-   			 ResponseEntity<Object> updateResponse = updateSMEProspect(jwtToken, ((JsonNode)response.getBody()).get("updateBody"), prospectId);
-       		 if(updateResponse.getStatusCode().is2xxSuccessful()){
-       			 log.info("update Prospect to DEH successful");
-       			JsonNode updateResponseBody = (JsonNode) updateResponse.getBody();
-           		 
-           	    responseJSON.set("updateProspectResult", updateResponseBody);
-           	    
-       		 }
-       		 log.info("upload success. Setting the count in session");
-            	if(request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
-            		totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-            		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
-            	}else{
-            		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
-            	}
-            	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
-            	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
-            	responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
-   		 }catch(Exception ex){
-   	        	log.error("Exception while setting the number of documents."+ex);
-   	     }
-   		 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
-        	
-        }else{
-       	 return response;
-        }
-       
+        try{	
+            if(response.getStatusCode().is2xxSuccessful()){
+            		 //First update the prospect
+            		 log.info("Upload Success to S3.");
+            		 ObjectMapper objectMapper = new ObjectMapper();
+            		 ObjectNode responseJSON = objectMapper.createObjectNode();
+            	     responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
+            		 
+            			 ResponseEntity<Object> updateResponse = updateSMEProspect(jwtToken, ((JsonNode)response.getBody()).get("updateBody"), prospectId);
+                		 if(updateResponse.getStatusCode().is2xxSuccessful()){
+                			 log.info("update Prospect to DEH successful");
+                			JsonNode updateResponseBody = (JsonNode) updateResponse.getBody();
+                    		 
+                    	    responseJSON.set("updateProspectResult", updateResponseBody);
+                    	    
+                		 }
+                		 log.info("upload success. Setting the count in session");
+                     	if(request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
+                     		totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
+                     		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
+                     	}else{
+                     		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
+                     	}
+                     	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
+                     	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);
+                     	responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
+            		 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
+                 }
+            }catch(Exception ex){
+            	log.error("Exception while setting the number of documents."+ex);
+            }
+            	 return response;
     }
 
     @GetMapping("/banks/RAK/prospects/{prospectId}/documents/{documentKey}")
