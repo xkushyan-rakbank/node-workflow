@@ -102,7 +102,14 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         ObjectNode responseJSON = objectMapper.createObjectNode();
         responseJSON.put("fileName", fileName);
         //Get the updated response body to be updated in
-        responseBody = updateSMEProspectBody(responseBody,  file,  fileInfo,docUploadeCount ,  fileName);
+        try {
+        	 responseBody = updateSMEProspectBody(responseBody,  file,  fileInfo,docUploadeCount ,  fileName);
+        }catch (Exception e) {
+            log.error("[End] updateSMEProspectBody() method, UPDATE BODY request creation failed for prospectId="+prospectId,e);
+            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage(), e.getMessage(), e);
+            throw new ApiException(error, HttpStatus.BAD_REQUEST);
+        }
+       
         responseJSON.set("updateBody", responseBody);
         return new ResponseEntity<>(responseJSON, headers, HttpStatus.OK);
     }
@@ -147,7 +154,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     private JsonNode updateSMEProspectBody(JsonNode responseBody, MultipartFile file, JsonNode fileInfo, String docUploadedCount, String fileName){
     	log.info("Inside updateSMEProspectBody");
     	if(fileInfo.get("documentKey") != null ){
-    		log.info("File Documents Document Key ::",fileInfo.get("documentKey").asText());
+    		log.info("File Documents Document Key ::"+fileInfo.get("documentKey").asText());
     	}
     	boolean isUpdated = false;
     	if(responseBody != null ){
@@ -164,8 +171,9 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     						if(objNode != null){
     							log.info("objNode is not null");
         						((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
-        						log.info("Company Documents Document Key ::",objNode.get("documentKey").asText());
+        						log.info("Company Documents Document Key ::"+objNode.get("documentKey").asText());
         						if(fileInfo.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+        							log.info("Inside company document key matching");
         							((ObjectNode)objNode).put("fileName", fileName);
         							((ObjectNode)objNode).put("fileSize", file.getSize());
         							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
@@ -173,6 +181,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         							isUpdated = true;
         							log.info("company document updated with the documentdetails");
         							break;
+        						}else{
+        							log.info("Document key not matching.");
         						}
     						}
     						
@@ -197,8 +207,9 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		            				 if(objNode != null){
     		            					 log.info("objNode is not null");
         		            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
-        		            				 log.info("Stake Documents Document Key ::",objNode.get("documentKey").asText());
+        		            				 log.info("Stake Documents Document Key ::"+objNode.get("documentKey").asText());
         		     						if(fileInfo.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+        		     							log.info("Inside stake document key matching");
         		     							((ObjectNode)objNode).put("fileName", fileName);
         		     							((ObjectNode)objNode).put("fileSize", file.getSize());
         		     							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
@@ -206,6 +217,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         		     							isUpdated = true;
         		     							log.info("stakeholder document updated with the documentdetails");
         		     							break;
+        		     						}else{
+        		     							log.info("stakeholder documentkey not matching.");
         		     						}
     		            				 }
     		            				 
@@ -224,8 +237,9 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 		        			 if(objNode != null){
 		        				 log.info("objNode is not null");
 	            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
-	            				 log.info("Other Documents Document Key ::",objNode.get("documentKey").asText());
+	            				 log.info("Other Documents Document Key ::"+objNode.get("documentKey").asText());
 	     						if(fileInfo.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+	     							log.info("Inside other document key matching");
 	     							((ObjectNode)objNode).put("fileName", fileName);
 	     							((ObjectNode)objNode).put("fileSize", file.getSize());
 	     							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
@@ -233,6 +247,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 	     							isUpdated = true;
 	     							log.info("other document updated with the documentdetails");
 	     							break;
+	     						}else{
+	     							log.info("other document key not matching");
 	     						}
 		        			 }
             			 }

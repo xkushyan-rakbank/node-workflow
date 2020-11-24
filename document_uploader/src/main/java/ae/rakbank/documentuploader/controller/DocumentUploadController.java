@@ -98,7 +98,7 @@ public class DocumentUploadController {
 		int totalUploadedDocCount = 0;
         try{
         	
-			if (request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId) != null
+			/*if (request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId) != null
 					&& request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId) != null) {
 				maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
 				totalUploadedDocCount = (Integer) request.getSession()
@@ -110,9 +110,14 @@ public class DocumentUploadController {
         		maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
 				totalUploadedDocCount = (Integer) request.getSession()
 						.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
-        	}
-			log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
-			
+        	}*/
+			//log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
+			responseBody = getProspectDocuments(jwtToken, prospectId);
+    		setDocumentCountInSession(responseBody, prospectId,request);
+    		maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
+			totalUploadedDocCount = (Integer) request.getSession()
+					.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
+			log.info("maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
 			if (totalUploadedDocCount < maxDocCount) {
 				log.info("The max number of documents uploads not reached.");
 			} else {
@@ -288,7 +293,7 @@ public class DocumentUploadController {
 	public ResponseEntity<Object> updateSMEProspect(String jwtToken, JsonNode jsonNode, String prospectId) {
 		log.info("Begin updateSMEProspect() method");
 		//Update with the latest file detail
-		log.debug(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
+		log.info(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
 				jsonNode.toString(), "sme", prospectId));
 		JwtPayload jwtPayload = authorizationService.getPrincipal(jwtToken);
 
@@ -328,7 +333,7 @@ public class DocumentUploadController {
 		int totalUploadedDocCount = 0;
         try{
         	
-        	if(request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId) != null && request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
+        	/*if(request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId) != null && request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId) != null){
         	 maxDocCount = (Integer)request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId);
            	 totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
         	} else{
@@ -337,10 +342,16 @@ public class DocumentUploadController {
         		setDocumentCountInSession(responseBody, prospectId,request);
                 maxDocCount = (Integer)request.getSession().getAttribute("MAX_NO_OF_DOCS_"+prospectId);
               	totalUploadedDocCount = (Integer)request.getSession().getAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId);
-        	}
+        	}*/
         	
-        	log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
-        	if (totalUploadedDocCount < maxDocCount) {
+        	//log.info("Getting count from session , maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
+        	responseBody = getProspectDocuments(jwtToken, prospectId);
+    		setDocumentCountInSession(responseBody, prospectId,request);
+    		maxDocCount = (Integer) request.getSession().getAttribute("MAX_NO_OF_DOCS_" + prospectId);
+			totalUploadedDocCount = (Integer) request.getSession()
+					.getAttribute("TOTAL_UPLOADNUM_OF_DOCS_" + prospectId);
+			log.info("maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
+			if (totalUploadedDocCount < maxDocCount) {
 				log.info("The max number of documents uploads not reached.");
 			} else {
 				 log.info("The max number of documents uploads has been reached.Throwing Error");
