@@ -104,13 +104,12 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         //Get the updated response body to be updated in
         try {
         	 responseBody = updateSMEProspectBody(responseBody,  file,  fileInfo,docUploadeCount ,  fileName);
+        	 responseJSON.set("updateBody", responseBody);
         }catch (Exception e) {
             log.error("[End] updateSMEProspectBody() method, UPDATE BODY request creation failed for prospectId="+prospectId,e);
-            ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage(), e.getMessage(), e);
-            throw new ApiException(error, HttpStatus.BAD_REQUEST);
+            //ApiError error = new ApiError(HttpStatus.BAD_REQUEST, e.getMessage(), e.getMessage(), e);
+            //throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
-       
-        responseJSON.set("updateBody", responseBody);
         return new ResponseEntity<>(responseJSON, headers, HttpStatus.OK);
     }
 
@@ -176,7 +175,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         							log.info("Inside company document key matching");
         							((ObjectNode)objNode).put("fileName", fileName);
         							((ObjectNode)objNode).put("fileSize", file.getSize());
-        							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
+        							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
+        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
         							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
         							isUpdated = true;
         							log.info("company document updated with the documentdetails");
