@@ -108,7 +108,7 @@ public class DocumentUploadControllerTest {
                 .andExpect(status().is2xxSuccessful());
 
         then(this.docUploadService)
-                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001",null,"0");
+                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001");
     }
 
     @Test
@@ -134,7 +134,7 @@ public class DocumentUploadControllerTest {
 
 
         then(this.docUploadService)
-                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001",null,"0");
+                .should().processUploadRequest(file, fileInfo.toString(), "cosme0001");
     }
 
     @Test
