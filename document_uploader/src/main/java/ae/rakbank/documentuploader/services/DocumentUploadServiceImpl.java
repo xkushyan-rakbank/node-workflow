@@ -212,7 +212,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         		     							log.info("Inside stake document key matching");
         		     							((ObjectNode)objNode).put("fileName", fileName);
         		     							((ObjectNode)objNode).put("fileSize", file.getSize());
-        		     							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
+        		     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
+        	        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
         		     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
         		     							isUpdated = true;
         		     							log.info("stakeholder document updated with the documentdetails");
@@ -242,7 +243,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 	     							log.info("Inside other document key matching");
 	     							((ObjectNode)objNode).put("fileName", fileName);
 	     							((ObjectNode)objNode).put("fileSize", file.getSize());
-	     							((ObjectNode)objNode).put("fileDescription", fileInfo.get("fileName").asText());
+	     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
+        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
 	     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
 	     							isUpdated = true;
 	     							log.info("other document updated with the documentdetails");
