@@ -158,6 +158,7 @@ function* uploadDocumentsBgSync({
 
     const documents = config.prospect.documents;
     const fileName = get(response, "data.fileName", "");
+    const docUploadedCount = get(response, "data.docUploadedCount", 0);
     const additionalProps = { ...docProps, fileName, fileDescription: userFileName };
 
     if (docOwner === COMPANY_DOCUMENTS || docOwner === OTHER_DOCUMENTS) {
@@ -173,16 +174,21 @@ function* uploadDocumentsBgSync({
     }
 
     yield put(setConfig(config));
-    if (
-      ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
-        prospectStatus
-      )
-    ) {
-      yield put(sendProspectToAPI());
-    }
-    yield call(increaseDocumentUploadCountSaga);
+    // if (
+    //   ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
+    //     prospectStatus
+    //   )
+    // ) {
+    //   yield put(sendProspectToAPI());
+    // }
+    yield call(increaseDocumentUploadCountSaga, docUploadedCount);
   } catch (error) {
-    yield put(uploadFilesFail({ [documentKey]: error }));
+    const errResponse = error.response.data;
+    if(errResponse.statusCode===403 && errResponse.errorType==="COUNT_EXCEEDED") {
+      yield call(increaseDocumentUploadCountSaga, errResponse.docUploadedCount);
+    } else {
+      yield put(uploadFilesFail({ [documentKey]: error }));
+    }
   } finally {
     if (yield cancelled()) {
       source.cancel();
@@ -227,24 +233,28 @@ export function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, 
   }
 }
 
-export function* increaseDocumentUploadCountSaga() {
+export function* increaseDocumentUploadCountSaga(docUploadedCount) {
   try {
     const state = yield select();
     const appConfig = { ...state.appConfig };
     let documents = appConfig.prospect.documents;
     documents.companyDocuments &&
       documents.companyDocuments.map((companyDoc, companyDocIndex) => {
-        let cnt = companyDoc.DocumentUplTotalCnt ? companyDoc.DocumentUplTotalCnt : 0;
-        documents.companyDocuments[companyDocIndex].DocumentUplTotalCnt = cnt + 1;
+        documents.companyDocuments[companyDocIndex].DocumentUplTotalCnt = docUploadedCount;
       });
 
     Object.keys(documents.stakeholdersDocuments).map(shDocsIndex => {
       Object.keys(documents.stakeholdersDocuments[shDocsIndex].documents).map(shDocIndex => {
         const doc = documents.stakeholdersDocuments[shDocsIndex].documents[shDocIndex];
-        let cnt = doc.DocumentUplTotalCnt ? doc.DocumentUplTotalCnt : 0;
-        doc.DocumentUplTotalCnt = cnt + 1;
+        doc.DocumentUplTotalCnt = docUploadedCount;
       });
     });
+
+    documents.otherDocuments &&
+      documents.otherDocuments.map((otherDoc, otherDocIndex) => {
+        documents.otherDocuments[otherDocIndex].DocumentUplTotalCnt = docUploadedCount;
+      });
+    
     appConfig.prospect.documents = documents;
     yield put(updateProspect(appConfig));
   } catch (error) {
