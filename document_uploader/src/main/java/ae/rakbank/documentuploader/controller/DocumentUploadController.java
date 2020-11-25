@@ -127,12 +127,12 @@ public class DocumentUploadController {
 			}
 		} catch (Exception ex) {
 			log.error("Exception while setting the number of documents." + ex);
-			ObjectMapper objectMapper = new ObjectMapper();
+			/*ObjectMapper objectMapper = new ObjectMapper();
 			ObjectNode responseJSON = objectMapper.createObjectNode();
 			responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
 			responseJSON.put("statusCode", (HttpStatus.OK).value());
 			responseJSON.put("errorType", "UPDATE_FAILED");
-			return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
+			return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);*/
 		}
         	 return response;
     }
@@ -150,8 +150,8 @@ public class DocumentUploadController {
 		 	}else{
 		 		request.getSession().setAttribute("TOTAL_UPLOADNUM_OF_DOCS_"+prospectId,totalUploadedDocCount+1);
 		 	}
-		 	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);
-		 	log.info("Set doc uploaded count as "+totalUploadedDocCount+1);*/
+		 	log.info("Set doc uploaded count as ",totalUploadedDocCount+1);*/
+		 	log.info("Set doc uploaded count as ::"+(totalUploadedDocCount+1));
 			 if(updateResponse.getStatusCode().is2xxSuccessful()){
 				 responseJSON.put("docUploadedCount", totalUploadedDocCount+1);
 			 } else {
@@ -345,12 +345,12 @@ public class DocumentUploadController {
 			}
 		} catch (Exception ex) {
 			log.error("Exception while setting the number of documents." + ex);
-			ObjectMapper objectMapper = new ObjectMapper();
+			/*ObjectMapper objectMapper = new ObjectMapper();
 			ObjectNode responseJSON = objectMapper.createObjectNode();
 			responseJSON.put("fileName", ((JsonNode)response.getBody()).get("fileName").asText());
 			responseJSON.put("statusCode", (HttpStatus.OK).value());
 			responseJSON.put("errorType", "UPDATE_FAILED");
-			return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
+			return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);*/
 		}
             	 return response;
     }
