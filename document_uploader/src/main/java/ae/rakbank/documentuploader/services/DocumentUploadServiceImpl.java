@@ -9,6 +9,8 @@ import ae.rakbank.documentuploader.s3.S3FileUploader;
 import ae.rakbank.documentuploader.util.EnvUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -159,7 +161,6 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     	}
     	boolean isUpdated = false;
     	if(responseBody != null ){
-    		log.info("responseBody is not null");
     		JsonNode documents = responseBody.get("documents");
     		if(documents != null){
     			log.info("documents is not null");
@@ -167,14 +168,11 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     			if(companyDocuments !=null && companyDocuments.get(0) !=null){
     				log.info("companyDocuments is not null");
     				if(companyDocuments.isArray()){
-    					log.info("companyDocuments is Array");
     					for(JsonNode objNode : companyDocuments){
     						if(objNode != null){
-    							log.info("objNode is not null");
         						((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
         						log.info("Company Documents Document Key ::"+objNode.get("documentKey").asText());
         						if(fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
-        							log.info("Inside company document key matching");
         							((ObjectNode)objNode).put("fileName", fileName);
         							((ObjectNode)objNode).put("fileSize", file.getSize());
         							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
@@ -236,26 +234,38 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     				log.info("Document not updated in the body");
     				JsonNode otherDocuments= documents.get("otherDocuments");
 		        	if(otherDocuments !=null && otherDocuments.isArray()){
-		        		 for(JsonNode objNode : otherDocuments){
-		        			 if(objNode != null){
-		        				 log.info("objNode is not null");
-	            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
-	            				 log.info("Other Documents Document Key ::"+objNode.get("documentKey").asText());
-	     						if(fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
-	     							log.info("Inside other document key matching");
-	     							((ObjectNode)objNode).put("fileName", fileName);
-	     							((ObjectNode)objNode).put("fileSize", file.getSize());
-	     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
-        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
-	     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
-	     							isUpdated = true;
-	     							log.info("other document updated with the documentdetails");
-	     							break;
-	     						}else{
-	     							log.info("other document key not matching");
-	     						}
-		        			 }
-            			 }
+		        		if("Others".equalsIgnoreCase(fileInfoJSON.get("documentType").asText())){
+		        			ObjectNode nodeNew=objectMapper.createObjectNode();
+		        			((ObjectNode)nodeNew).put("DocumentUplTotalCnt", docUploadedCount);
+		        			((ObjectNode)nodeNew).set("DocumentUploadCnt", null);
+		        			((ObjectNode)nodeNew).put("avsCheck", false);
+		        			((ObjectNode)nodeNew).set("avsCheckDt", null);
+		        			((ObjectNode)nodeNew).put("documentKey", fileInfoJSON.get("documentKey").asText());
+		        			((ObjectNode)nodeNew).set("documentTitle", null);
+		        			((ObjectNode)nodeNew).put("documentType", fileInfoJSON.get("documentType").asText());
+		        			((ObjectNode)nodeNew).set("encryptionDetails", null);
+		        			((ObjectNode)nodeNew).set("fileData", null);
+		        			((ObjectNode)nodeNew).put("fileDescription", file.getOriginalFilename());
+		        			((ObjectNode)nodeNew).put("fileFormat", file.getContentType());
+		        			((ObjectNode)nodeNew).put("fileName", fileName);
+		        			((ObjectNode)nodeNew).set("filePath", null);
+ 							((ObjectNode)nodeNew).put("fileSize", file.getSize());
+ 							((ObjectNode)nodeNew).put("isEncrypted", false);
+ 							((ObjectNode)nodeNew).put("required", true);
+ 							((ObjectNode)nodeNew).set("signatoryId", null);
+ 							((ObjectNode)nodeNew).set("signatoryName", null);
+ 							((ObjectNode)nodeNew).set("submittedBy", null);
+ 							((ObjectNode)nodeNew).set("submittedDt", null);
+ 							((ObjectNode)nodeNew).set("updatedBy", null);
+ 							((ObjectNode)nodeNew).set("updatedDt", null);
+ 							((ObjectNode)nodeNew).put("uploadStatus", "Uploaded");
+ 							((ObjectNode)nodeNew).set("url", null);
+ 							((ObjectNode)nodeNew).put("verified", false);
+ 							((ObjectNode)nodeNew).set("verifiedBy", null);
+			    			((ArrayNode)otherDocuments).add(nodeNew);
+			    			isUpdated = true;
+ 							log.info("other document updated with the documentdetails");
+		        		}
 		        	}
     			}
     		}

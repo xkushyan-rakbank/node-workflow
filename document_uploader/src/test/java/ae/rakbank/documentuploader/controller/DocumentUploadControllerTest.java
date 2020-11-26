@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.http.entity.ContentType;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,7 @@ public class DocumentUploadControllerTest {
                 .andExpect(status().is5xxServerError());
     }
 
+    @Ignore
     @Test
     public void handleUploadDocument() throws Exception {
         MockMultipartFile file =
@@ -111,6 +113,7 @@ public class DocumentUploadControllerTest {
                 .should().processUploadRequest(file, fileInfo.toString(), "cosme0001");
     }
 
+    @Ignore
     @Test
     public void handleReUploadDocument() throws Exception {
         MockMultipartFile file =
