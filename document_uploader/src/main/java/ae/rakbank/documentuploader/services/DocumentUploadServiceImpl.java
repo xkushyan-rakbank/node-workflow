@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
+import static ae.rakbank.documentuploader.constants.AuthConstants.UPDATE_FAILED;
 import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
 
 @Slf4j
@@ -230,47 +231,58 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     				}
     			}
     			
-    			if(!isUpdated){
-    				log.info("Document not updated in the body");
-    				JsonNode otherDocuments= documents.get("otherDocuments");
-		        	if(otherDocuments !=null && otherDocuments.isArray()){
-		        		if("Others".equalsIgnoreCase(fileInfoJSON.get("documentType").asText())){
-		        			ObjectNode nodeNew=objectMapper.createObjectNode();
-		        			((ObjectNode)nodeNew).put("DocumentUplTotalCnt", docUploadedCount);
-		        			((ObjectNode)nodeNew).set("DocumentUploadCnt", null);
-		        			((ObjectNode)nodeNew).put("avsCheck", false);
-		        			((ObjectNode)nodeNew).set("avsCheckDt", null);
-		        			((ObjectNode)nodeNew).put("documentKey", fileInfoJSON.get("documentKey").asText());
-		        			((ObjectNode)nodeNew).set("documentTitle", null);
-		        			((ObjectNode)nodeNew).put("documentType", fileInfoJSON.get("documentType").asText());
-		        			((ObjectNode)nodeNew).set("encryptionDetails", null);
-		        			((ObjectNode)nodeNew).set("fileData", null);
-		        			((ObjectNode)nodeNew).put("fileDescription", file.getOriginalFilename());
-		        			((ObjectNode)nodeNew).put("fileFormat", file.getContentType());
-		        			((ObjectNode)nodeNew).put("fileName", fileName);
-		        			((ObjectNode)nodeNew).set("filePath", null);
- 							((ObjectNode)nodeNew).put("fileSize", file.getSize());
- 							((ObjectNode)nodeNew).put("isEncrypted", false);
- 							((ObjectNode)nodeNew).put("required", true);
- 							((ObjectNode)nodeNew).set("signatoryId", null);
- 							((ObjectNode)nodeNew).set("signatoryName", null);
- 							((ObjectNode)nodeNew).set("submittedBy", null);
- 							((ObjectNode)nodeNew).set("submittedDt", null);
- 							((ObjectNode)nodeNew).set("updatedBy", null);
- 							((ObjectNode)nodeNew).set("updatedDt", null);
- 							((ObjectNode)nodeNew).put("uploadStatus", "Uploaded");
- 							((ObjectNode)nodeNew).set("url", null);
- 							((ObjectNode)nodeNew).put("verified", false);
- 							((ObjectNode)nodeNew).set("verifiedBy", null);
-			    			((ArrayNode)otherDocuments).add(nodeNew);
-			    			isUpdated = true;
- 							log.info("other document updated with the documentdetails");
-		        		}
-		        	}
-    			}
+				if (!isUpdated) {
+					log.info("Document not updated in the body");
+					if ("Others".equalsIgnoreCase(fileInfoJSON.get("documentType").asText())) {
+						JsonNode otherDocuments = documents.get("otherDocuments");
+						if (otherDocuments == null) {
+							ObjectMapper mapper = new ObjectMapper();
+							JsonNode arrayNode = mapper.createArrayNode();
+							((ObjectNode) documents).set("otherDocuments", arrayNode);
+							otherDocuments = documents.get("otherDocuments");
+						}
+
+						if (otherDocuments != null && otherDocuments.isArray()) {
+							ObjectNode nodeNew = objectMapper.createObjectNode();
+							((ObjectNode) nodeNew).put("DocumentUplTotalCnt", docUploadedCount);
+							((ObjectNode) nodeNew).set("DocumentUploadCnt", null);
+							((ObjectNode) nodeNew).put("avsCheck", false);
+							((ObjectNode) nodeNew).set("avsCheckDt", null);
+							((ObjectNode) nodeNew).put("documentKey", fileInfoJSON.get("documentKey").asText());
+							((ObjectNode) nodeNew).set("documentTitle", null);
+							((ObjectNode) nodeNew).put("documentType", fileInfoJSON.get("documentType").asText());
+							((ObjectNode) nodeNew).set("encryptionDetails", null);
+							((ObjectNode) nodeNew).set("fileData", null);
+							((ObjectNode) nodeNew).put("fileDescription", file.getOriginalFilename());
+							((ObjectNode) nodeNew).put("fileFormat", file.getContentType());
+							((ObjectNode) nodeNew).put("fileName", fileName);
+							((ObjectNode) nodeNew).set("filePath", null);
+							((ObjectNode) nodeNew).put("fileSize", file.getSize());
+							((ObjectNode) nodeNew).put("isEncrypted", false);
+							((ObjectNode) nodeNew).put("required", true);
+							((ObjectNode) nodeNew).set("signatoryId", null);
+							((ObjectNode) nodeNew).set("signatoryName", null);
+							((ObjectNode) nodeNew).set("submittedBy", null);
+							((ObjectNode) nodeNew).set("submittedDt", null);
+							((ObjectNode) nodeNew).set("updatedBy", null);
+							((ObjectNode) nodeNew).set("updatedDt", null);
+							((ObjectNode) nodeNew).put("uploadStatus", "Uploaded");
+							((ObjectNode) nodeNew).set("url", null);
+							((ObjectNode) nodeNew).put("verified", false);
+							((ObjectNode) nodeNew).set("verifiedBy", null);
+							((ArrayNode) otherDocuments).add(nodeNew);
+							isUpdated = true;
+							log.info("other document updated with the documentdetails");
+						}
+					}
+
+				}
     		}
     		if(!isUpdated){
-    			log.info("Document still not updated in the updaterequest body");
+    			log.error("No document to update in the update request body. Throwing Exception");
+    			ApiError error =
+                        new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, UPDATE_FAILED,"update failed");
+                throw new ApiException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     		} else{
     			log.info("Setting the values for actio Type and savetype as save and next");
     			JsonNode applicationInfo = responseBody.get("applicationInfo");

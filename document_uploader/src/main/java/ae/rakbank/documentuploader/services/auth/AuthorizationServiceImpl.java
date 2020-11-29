@@ -18,7 +18,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     private final JwtService jwtService;
 
-    private static final Integer TIME_WINDOW_FOR_UPLOAD_SEC = 900;//3600*3
+    private static final Integer TIME_WINDOW_FOR_UPLOAD_SEC = 3600;//3600*3
 
     @Override
     public void validateJwtToken(String jwtToken) {

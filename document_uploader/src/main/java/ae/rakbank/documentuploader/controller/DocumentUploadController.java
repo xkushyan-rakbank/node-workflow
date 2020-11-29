@@ -101,16 +101,25 @@ public class DocumentUploadController {
         JsonNode responseBody = null;
         int maxDocCount = 0;
 		int totalUploadedDocCount = 0;
+		JsonNode prospectDocuments = null;
         try{
         	
-			responseBody = getProspectDocuments(jwtToken, prospectId);
+			responseBody = getProspectDetails(jwtToken, prospectId);
     		setDocumentCountInSession(responseBody, prospectId,request);
+    		if((Integer) request.getSession().getAttribute(MAX_NO_OF_DOCS_ + prospectId) == 0){
+    			log.info("No value for document count from getProspectByID");
+    			prospectDocuments = getProspectDocuments(jwtToken, prospectId);
+    			setCountFromGetDocuments(prospectDocuments, prospectId,request);
+    			((ObjectNode)responseBody).set("documents", prospectDocuments);
+    		}
     		maxDocCount = (Integer) request.getSession().getAttribute(MAX_NO_OF_DOCS_ + prospectId);
 			totalUploadedDocCount = (Integer) request.getSession()
 					.getAttribute(TOTAL_UPLOADNUM_OF_DOCS_ + prospectId);
 			log.info("maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
 			if(maxDocCount != 0 && totalUploadedDocCount >= maxDocCount){
 				 return sendDocCountErrorResponse(prospectId, totalUploadedDocCount);
+			}else if (maxDocCount == 0){
+				throw new Exception("Count not received in getDocuments");
 			}else {
 				log.info("Total number of documents not exceeded for prospectID :"+prospectId);
 			}
@@ -123,10 +132,6 @@ public class DocumentUploadController {
         
         ResponseEntity<Object> response = docUploadService.processUploadRequest(file, fileInfo, prospectId);
 		if (response.getStatusCode().is2xxSuccessful()) {
-				if(maxDocCount == 0){//Adding this check for the new upload scenario 
-					//response for first case does not have the document section 
-					responseBody = getProspectDocuments(jwtToken, prospectId);
-				}
 				return updateCountForDocument(file, fileInfo, prospectId, request, jwtToken, responseBody,
 						totalUploadedDocCount, response);
 		}
@@ -158,24 +163,33 @@ public class DocumentUploadController {
         //getProspectById and compare the number of documents uploaded and the max limit
         //IF limit exceeds then throw error
         JsonNode responseBody = null;
+        JsonNode prospectDocuments = null;
         int maxDocCount = 0;
 		int totalUploadedDocCount = 0;
         try{
-        	responseBody = getProspectDocuments(jwtToken, prospectId);
+        	responseBody = getProspectDetails(jwtToken, prospectId);
     		setDocumentCountInSession(responseBody, prospectId,request);
+    		if((Integer) request.getSession().getAttribute(MAX_NO_OF_DOCS_ + prospectId) == 0){
+    			log.info("No value for document count from getProspectByID");
+    			prospectDocuments = getProspectDocuments(jwtToken, prospectId);
+    			setCountFromGetDocuments(prospectDocuments, prospectId,request);
+    			((ObjectNode)responseBody).set("documents", prospectDocuments);
+    		}
     		maxDocCount = (Integer) request.getSession().getAttribute(MAX_NO_OF_DOCS_ + prospectId);
 			totalUploadedDocCount = (Integer) request.getSession()
 					.getAttribute(TOTAL_UPLOADNUM_OF_DOCS_ + prospectId);
 			log.info("maxDocUploadCount ={},docUploadedCount={}",maxDocCount,totalUploadedDocCount);
 			if(maxDocCount != 0 && totalUploadedDocCount >= maxDocCount){
 				 return sendDocCountErrorResponse(prospectId, totalUploadedDocCount);
-			}else{
+			}else if (maxDocCount == 0){
+				throw new Exception("Count not received in getDocuments");
+			} else{
 				log.info("Total number of documents not exceeded for prospectID :"+prospectId);
 			}
         	 
         } catch(Exception ex){
         	log.error("Exception while validating the number of documents."+ex);
-       	 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Exception while validating the number of documents.", ex.getMessage(), ex);
+       	 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "Exception while getting the number of documents.", ex.getMessage(), ex);
             throw new ApiException(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
@@ -259,10 +273,65 @@ public class DocumentUploadController {
 			 }
 		 return new ResponseEntity<>(responseJSON, new HttpHeaders(), HttpStatus.OK);
 	}
+	
+	private void setCountFromGetDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request) throws Exception{
+		log.info("Inside setCountFromGetDocuments OF Documents");
+		int maxDocUploadCount = 0;
+		 int docUploadedCount = 0;
+		 boolean countReceived =false;
+		 if(responseBody != null && responseBody.get("companyDocuments") != null){
+			 JsonNode companyDocuments= responseBody.get("companyDocuments");
+			 if(companyDocuments !=null && companyDocuments.isArray()){
+	        		for(JsonNode objNode : companyDocuments){
+	        			try{
+	        				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
+	            			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
+	            			countReceived = true;
+	            			log.info("Getting count from company Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
+	            			break;
+	            		} catch(Exception ex){//any null values or other values continue
+	            			log.info("Getting count from company Documents any number format exception");
+	            				continue;
+	            		}
+	        			
+	        		}
+	    	}
+			 
+		 }
+		 
+		 if(!countReceived){
+    		 log.info("company Documents did not find the count for document upload.");
+    		JsonNode otherDocuments= responseBody.get("otherDocuments");
+        	if(otherDocuments !=null && otherDocuments.isArray()){
+            		for(JsonNode objNode : otherDocuments){
+            			try{
+            				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
+                			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
+                			countReceived = true;
+                			log.info("Getting count from other Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
+                			break;
+                		} catch(Exception ex){//any null values or other values continue
+                			log.info("Getting count from other Documents any number format exception");
+                				continue;
+                		}
+            			
+            		}
+        	}
+    	}
+		 
+		 
+		 if(!countReceived){
+			 log.error("No Document Count available in the getProspectDocuments");
+			 throw new Exception("No Document Count available");
+		 } else{
+			 request.getSession().setAttribute(MAX_NO_OF_DOCS_+prospectId,maxDocUploadCount);
+			 request.getSession().setAttribute(TOTAL_UPLOADNUM_OF_DOCS_+prospectId,docUploadedCount);
+		 }
+	}
     
 
 	private void setDocumentCountInSession(JsonNode responseBody,String prospectId,HttpServletRequest  request) {
-		log.info("Inside validateNuber OF Documents");
+		log.info("Inside setDocumentCountInSession OF Documents");
 		int maxDocUploadCount = 0;
 		 int docUploadedCount = 0;
 		 boolean countReceived =false;
@@ -347,7 +416,7 @@ public class DocumentUploadController {
 		request.getSession().setAttribute(TOTAL_UPLOADNUM_OF_DOCS_+prospectId,docUploadedCount);
 	}
 
-    private JsonNode getProspectDocuments(String jwtToken, String prospectId) {
+    private JsonNode getProspectDetails(String jwtToken, String prospectId) {
 		// TODO Auto-generated method stub
     	log.info("Begin getProspectById() method");
         log.debug(
@@ -357,9 +426,9 @@ public class DocumentUploadController {
 
         String url = dehBaseUrl + dehURIs.get("getProspectUri").asText();
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand("sme", prospectId);
-        ResponseEntity<Object> prospectDocuments = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
+        ResponseEntity<Object> prospectDetails = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
                     "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload);
-        JsonNode responseBody = (JsonNode) prospectDocuments.getBody();
+        JsonNode responseBody = (JsonNode) prospectDetails.getBody();
         log.info("Testing getProspect repsonseBody:ProsectID: "+prospectId+"phone number::"+ responseBody.get("applicantInfo").get("mobileNo").asText());
         return responseBody;
         
@@ -377,6 +446,21 @@ public class DocumentUploadController {
 
 		return dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.PUT, jsonNode, "updateSMEProspect()",
 				MediaType.APPLICATION_JSON, jwtPayload);
+	}
+	
+	
+	private JsonNode getProspectDocuments(String jwtToken, String prospectId) {
+		log.info("Begin getProspectDocuments() method");
+		log.debug(String.format("getProspectDocuments() method args, prospectId=[%s]", prospectId));
+		JwtPayload jwtPayload = authorizationService.getPrincipal(jwtToken);
+
+		String url = dehBaseUrl + dehURIs.get("getProspectDocumentsUri").asText();
+		UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(prospectId);
+
+		ResponseEntity<Object> prospectDetails =  dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null, "getProspectDocuments()",
+				MediaType.APPLICATION_JSON, jwtPayload);
+		 JsonNode responseBody = (JsonNode) prospectDetails.getBody();
+		return responseBody;
 	}
     
 }
