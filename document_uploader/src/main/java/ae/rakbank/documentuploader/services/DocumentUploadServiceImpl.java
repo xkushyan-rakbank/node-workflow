@@ -504,8 +504,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		            	 if(field.getValue() !=null){
     		            		 JsonNode stakeDocuments= field.getValue().get("documents");
     		            		 if(stakeDocuments != null && stakeDocuments.isArray()){
+    		            			 int stakeDocIndex = 0;
     		            			 for(JsonNode objNode : stakeDocuments){
-    		            				 int stakeDocIndex = 0;
     		            				 if(objNode != null){
     		            					 ((ObjectNode)objNode).put("documentKey", objNode.get("documentType").asText()+'-'+stakeDocIndex);
     		            					 log.info("Document Key Updated as::"+objNode.get("documentType").asText()+'-'+stakeDocIndex);
