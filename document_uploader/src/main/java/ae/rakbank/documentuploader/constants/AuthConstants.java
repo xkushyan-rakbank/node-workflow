@@ -10,4 +10,5 @@ public class AuthConstants {
 	public static final String UPDATE_FAILED = "UPDATE_FAILED";
 	public static final String TOTAL_UPLOADNUM_OF_DOCS_ = "TOTAL_UPLOADNUM_OF_DOCS_";
 	public static final String MAX_NO_OF_DOCS_ = "MAX_NO_OF_DOCS_";
+	public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 }

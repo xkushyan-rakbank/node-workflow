@@ -27,6 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,6 +38,7 @@ import static ae.rakbank.documentuploader.constants.AuthConstants.MAX_NO_OF_DOCS
 import static ae.rakbank.documentuploader.constants.AuthConstants.TOTAL_UPLOADNUM_OF_DOCS_;
 import static ae.rakbank.documentuploader.constants.AuthConstants.UPDATE_FAILED;
 import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
+import static ae.rakbank.documentuploader.constants.AuthConstants.DATE_FORMAT;
 
 @Slf4j
 @Service
@@ -152,6 +154,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     	log.info("Inside updateSMEProspectBody");
     	ObjectMapper objectMapper = new ObjectMapper();
         JsonNode fileInfoJSON;
+        String currentDate = "";
         try {
             fileInfoJSON = objectMapper.readValue(fileInfo, JsonNode.class);
         } catch (Exception e) {
@@ -163,7 +166,21 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         }
     	if(fileInfoJSON.get("documentKey") != null ){
     		log.info("File Documents Document Key ::"+fileInfoJSON.get("documentKey").asText());
+    	} else{
+    		throw new ApiException("Document KEy is null", HttpStatus.BAD_REQUEST);
     	}
+    	if(fileInfoJSON.get("documentType") != null ){
+    		log.info("File Documents Document Type ::"+fileInfoJSON.get("documentType").asText());
+    	}
+    	try{
+    		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+    		Date date = new Date();
+    		currentDate = sdf.format(date);
+    	}catch (Exception e) {
+            log.error("Unable to set submitted Date into JsonNode.", e);
+        }
+    	
+		
     	boolean isUpdated = false;
     	if(responseBody != null ){
     		JsonNode documents = responseBody.get("documents");
@@ -182,6 +199,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         							((ObjectNode)objNode).put("fileSize", file.getSize());
         							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
         							((ObjectNode)objNode).put("fileFormat", file.getContentType());
+        							((ObjectNode)objNode).put("submittedDt", currentDate);
         							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
         							isUpdated = true;
         							log.info("company document updated with the documentdetails");
@@ -219,6 +237,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         		     							((ObjectNode)objNode).put("fileSize", file.getSize());
         		     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
         	        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
+        	        							((ObjectNode)objNode).put("submittedDt", currentDate);
         		     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
         		     							isUpdated = true;
         		     							log.info("stakeholder document updated with the documentdetails");
@@ -267,7 +286,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 							((ObjectNode) nodeNew).set("signatoryId", null);
 							((ObjectNode) nodeNew).set("signatoryName", null);
 							((ObjectNode) nodeNew).set("submittedBy", null);
-							((ObjectNode) nodeNew).set("submittedDt", null);
+							((ObjectNode)nodeNew).put("submittedDt", currentDate);
 							((ObjectNode) nodeNew).set("updatedBy", null);
 							((ObjectNode) nodeNew).set("updatedDt", null);
 							((ObjectNode) nodeNew).put("uploadStatus", "Uploaded");
