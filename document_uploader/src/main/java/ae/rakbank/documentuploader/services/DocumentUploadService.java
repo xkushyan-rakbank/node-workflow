@@ -1,6 +1,9 @@
 package ae.rakbank.documentuploader.services;
 
 import ae.rakbank.documentuploader.dto.FileDto;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,4 +16,10 @@ public interface DocumentUploadService {
     FileDto findOneByDocumentKey(String documentKey);
     
     JsonNode getUpdateProspectBody(JsonNode responseBody, MultipartFile file, String fileInfo, String docUploadedCount, String fileName);
+    
+    JsonNode setDocumentKeyinBody(JsonNode documents, String fileInfo);
+    
+    void setCountFromGetDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request) throws Exception;
+    
+    void setDocumentCountInSession(JsonNode responseBody,String prospectId,HttpServletRequest  request);
 }
