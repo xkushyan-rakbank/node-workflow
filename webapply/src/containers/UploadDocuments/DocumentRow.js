@@ -13,7 +13,11 @@ import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import { COMPANY_DOCUMENTS, STAKEHOLDER_DOCUMENTS, UPLOADED } from "../../constants";
 import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 
-export const DocumentRow = ({ document, type: docOwner, index, stakeholderIndex }) => {
+export const DocumentRow = ({ document, type: docOwner, index, stakeholderIndex }) => {  
+  let documentIndex = 0;
+  if(stakeholderIndex){
+    documentIndex = parseInt(stakeholderIndex.charAt(0));
+  }
   const dispatch = useDispatch();
   const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
   const prospectStatusInfo = useSelector(getProspectStatus);
@@ -28,7 +32,7 @@ export const DocumentRow = ({ document, type: docOwner, index, stakeholderIndex 
 
   const uploadDocument = useCallback(
     file => {
-      const fileInfo = JSON.stringify({ documentKey, documentType });
+      const fileInfo = JSON.stringify({ documentKey, documentType, documentIndex });
       const docProps = {
         uploadStatus: UPLOADED,
         fileSize: file.size,
