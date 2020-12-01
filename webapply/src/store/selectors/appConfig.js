@@ -61,10 +61,10 @@ export const getDocumentUploadCnt = state => {
   const companyDocuments = getCompanyDocuments(state);
   let DocumentUploadCnt = 0;
   if (companyDocuments[0]) {
-    DocumentUploadCnt = companyDocuments[0].DocumentUploadCnt
+    DocumentUploadCnt = companyDocuments[0].DocumentUploadCnt;
   }
   return DocumentUploadCnt;
-}
+};
 
 export const getStakeholdersDocuments = state => getDocuments(state).stakeholdersDocuments || [];
 

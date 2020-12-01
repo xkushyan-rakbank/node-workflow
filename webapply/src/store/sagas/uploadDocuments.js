@@ -176,22 +176,18 @@ function* uploadDocumentsBgSync({
     }
 
     yield put(setConfig(config));
-    // if (
-    //   ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
-    //     prospectStatus
-    //   )
-    // ) {
-    //   yield put(sendProspectToAPI());
-    // }
     yield call(increaseDocumentUploadCountSaga, docUploadedCount);
-    if(docUploadedCount >= maxDocumentUploadCnt) {
+    if ((docUploadedCount >= maxDocumentUploadCnt) &&
+      ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
+        prospectStatus
+      )
+    ) {
       yield put(sendProspectToAPI());
     }
   } catch (error) {
     const errResponse = error.response.data;
-    if(errResponse.statusCode===403 && errResponse.errorType==="COUNT_EXCEEDED") {
+    if (errResponse.statusCode === 403 && errResponse.errorType === "COUNT_EXCEEDED") {
       yield call(increaseDocumentUploadCountSaga, errResponse.docUploadedCount);
-      yield put(sendProspectToAPI());
     } else {
       yield put(uploadFilesFail({ [documentKey]: error }));
     }
@@ -260,7 +256,7 @@ export function* increaseDocumentUploadCountSaga(docUploadedCount) {
       documents.otherDocuments.map((otherDoc, otherDocIndex) => {
         documents.otherDocuments[otherDocIndex].DocumentUplTotalCnt = docUploadedCount;
       });
-    
+
     appConfig.prospect.documents = documents;
     yield put(updateProspect(appConfig));
   } catch (error) {
