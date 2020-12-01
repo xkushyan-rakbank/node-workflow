@@ -70,7 +70,7 @@ export const ReUploadDocuments = () => {
       );
 
       const data = new FormData();
-      data.append("fileInfo", JSON.stringify({ documentKey, documentType }));
+      data.append("fileInfo", JSON.stringify({ documentKey, documentType, documentIndex:0 }));
       data.append("file", file);
 
       const successfulUploadProps = {
