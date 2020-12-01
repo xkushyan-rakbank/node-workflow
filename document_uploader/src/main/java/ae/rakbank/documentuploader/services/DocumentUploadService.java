@@ -19,7 +19,7 @@ public interface DocumentUploadService {
     
     JsonNode setDocumentKeyinBody(JsonNode documents, String fileInfo);
     
-    void setCountFromGetDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request) throws Exception;
+    void setCountFromGetDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request, boolean isDocumentCall);
     
     void setDocumentCountInSession(JsonNode responseBody,String prospectId,HttpServletRequest  request);
 }

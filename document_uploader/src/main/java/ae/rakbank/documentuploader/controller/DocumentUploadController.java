@@ -237,16 +237,12 @@ public class DocumentUploadController {
         ResponseEntity<Object> prospectDetails = dehClient.invokeApiEndpoint(uriComponents.toString(), HttpMethod.GET, null,
                     "getProspectById()", MediaType.APPLICATION_JSON, jwtPayload);
         JsonNode responseBody = (JsonNode) prospectDetails.getBody();
-        log.info("Testing getProspect repsonseBody:ProsectID: "+prospectId+"phone number::"+ responseBody.get("applicantInfo").get("mobileNo").asText());
         return responseBody;
         
 	}
     
 	public ResponseEntity<Object> updateSMEProspect(String jwtToken, JsonNode jsonNode, String prospectId) {
-		log.info("Begin updateSMEProspect() method");
-		//Update with the latest file detail
-		log.info(String.format("updateSMEProspect() method args, RequestBody=[%s], segment=[%s], prospectId=[%s]",
-				jsonNode.toString(), "sme", prospectId));
+		log.info(String.format("updateSMEProspect() method args, prospectId=[%s]", prospectId));
 		JwtPayload jwtPayload = authorizationService.getPrincipal(jwtToken);
 
 		String url = dehBaseUrl + dehURIs.get("updateProspectUri").asText();
@@ -278,9 +274,10 @@ public class DocumentUploadController {
 			JsonNode responseBody = getProspectDetails(jwtToken, prospectId);
 			docUploadService.setDocumentCountInSession(responseBody, prospectId, request);
 			if ((Integer) request.getSession().getAttribute(MAX_NO_OF_DOCS_ + prospectId) == 0) {
+				//This is to get the count from getProspectDocumentsAPI since getProspectAPI returned none
 				log.info("No value for document count from getProspectByID ::" + prospectId);
 				prospectDocuments = getProspectDocuments(jwtToken, prospectId);
-				docUploadService.setCountFromGetDocuments(prospectDocuments, prospectId, request);
+				docUploadService.setCountFromGetDocuments(prospectDocuments, prospectId, request,true);
 				prospectDocuments = docUploadService.setDocumentKeyinBody(prospectDocuments, fileInfo);
 				((ObjectNode) responseBody).set("documents", prospectDocuments);
 			}

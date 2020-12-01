@@ -56,7 +56,7 @@ public class DocumentUploadServiceImplTest {
     public void processUploadFile(){
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
-        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspectId");
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\",\"documentKey\":\"testKey\",\"documentIndex\":\"0\"}", "myProspectId");
     }
 
     @Test(expected = ApiException.class)

@@ -85,6 +85,25 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
             log.error("The document type is not allowed");
             throw new ApiException("The document type is not allowed", HttpStatus.BAD_REQUEST);
         }
+        
+        if (fileInfoJSON.get("documentKey") != null) {
+			log.info("File Documents Document Key ::" + fileInfoJSON.get("documentKey").asText());
+		} else {
+			throw new ApiException("Document Key is mandatory", HttpStatus.BAD_REQUEST);
+		}
+        
+        if(fileInfoJSON.get("documentIndex") != null){
+			try{
+				int documentIndex = Integer.parseInt(fileInfoJSON.get("documentIndex").asText());
+				log.info("document index  from file request::" + documentIndex);
+			}catch(NumberFormatException ex){
+				log.error("document index is not a number");
+				 throw new ApiException("The document index is not a number", HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			log.error("document index is mandatory");
+			 throw new ApiException("The document index is mandatory", HttpStatus.BAD_REQUEST);
+		}
     }
 
     private ResponseEntity<Object> saveUploadedFile(MultipartFile file, JsonNode fileInfo, String prospectId) {
@@ -150,45 +169,38 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     }
     
     
-    public JsonNode getUpdateProspectBody(JsonNode responseBody, MultipartFile file, String fileInfo, String docUploadedCount, String fileName){
-    	log.info("Inside updateSMEProspectBody");
-    	ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode fileInfoJSON;
-        String currentDate = "";
-        try {
-            fileInfoJSON = objectMapper.readValue(fileInfo, JsonNode.class);
-        } catch (Exception e) {
-            log.error("Unable to parse fileInfo string into JsonNode.", e);
-            ApiError error =
-                    new ApiError(HttpStatus.BAD_REQUEST, "fileInfo is not valid JSON string", e.getMessage(), e);
+	public JsonNode getUpdateProspectBody(JsonNode responseBody, MultipartFile file, String fileInfo,
+			String docUploadedCount, String fileName) {
+		log.info("Inside updateSMEProspectBody");
+		ObjectMapper objectMapper = new ObjectMapper();
+		JsonNode fileInfoJSON;
+		String currentDate = "";
+		try {
+			fileInfoJSON = objectMapper.readValue(fileInfo, JsonNode.class);
+		} catch (Exception e) {
+			log.error("Unable to parse fileInfo string into JsonNode.", e);
+			ApiError error = new ApiError(HttpStatus.BAD_REQUEST, "fileInfo is not valid JSON string", e.getMessage(),
+					e);
 
-            throw new ApiException(error, HttpStatus.BAD_REQUEST);
-        }
-    	if(fileInfoJSON.get("documentKey") != null ){
-    		log.info("File Documents Document Key ::"+fileInfoJSON.get("documentKey").asText());
-    	} else{
-    		throw new ApiException("Document KEy is null", HttpStatus.BAD_REQUEST);
-    	}
-    	if(fileInfoJSON.get("documentType") != null ){
-    		log.info("File Documents Document Type ::"+fileInfoJSON.get("documentType").asText());
-    	}
-    	try{
-    		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-    		Date date = new Date();
-    		currentDate = sdf.format(date);
-    	}catch (Exception e) {
-            log.error("Unable to set submitted Date into JsonNode.", e);
-        }
-    	
-		
-    	boolean isUpdated = false;
-    	if(responseBody != null ){
+			throw new ApiException(error, HttpStatus.BAD_REQUEST);
+		}
+		validateFileInfo(fileInfoJSON);
+		int documentIndex = Integer.parseInt(fileInfoJSON.get("documentIndex").asText());
+		log.info("document Index from request ::" +documentIndex);
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			Date date = new Date();
+			currentDate = sdf.format(date);
+		} catch (Exception e) {
+			log.error("Unable to set submitted Date into JsonNode.", e);
+		}
+
+		boolean isUpdated = false;
+		if (responseBody != null){
     		JsonNode documents = responseBody.get("documents");
     		if(documents != null){
-    			log.info("documents is not null");
     			JsonNode companyDocuments= documents.get("companyDocuments");
     			if(companyDocuments !=null && companyDocuments.get(0) !=null){
-    				log.info("companyDocuments is not null");
     				if(companyDocuments.isArray()){
     					for(JsonNode objNode : companyDocuments){
     						if(objNode != null){
@@ -214,24 +226,22 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     			}
     			
     			if(!isUpdated){
-    				log.info("Document not updated in the body");
+    				log.info("Document not updated in the body.Checking forstakeholder documents.");
     				JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
     				if(stakeholdersDocuments !=null){
-    					log.info("stakeholdersDocuments is not null");
     					 Iterator<Map.Entry<String,JsonNode>> fieldsIterator = stakeholdersDocuments.fields();
+    					 int stakeHolderIteration = 0;
     		             while (fieldsIterator.hasNext()) {
-    		            	 log.info("stakeholdersDocuments next entry");
+    		            	 log.info("stakeholder Iteration ::"+stakeHolderIteration);
     		            	 Map.Entry<String,JsonNode> field = fieldsIterator.next();
     		            	 if(field.getValue() !=null){
     		            		 JsonNode stakeDocuments= field.getValue().get("documents");
     		            		 if(stakeDocuments != null && stakeDocuments.isArray()){
-    		            			 log.info("stakeDocuments entry is not null");
     		            			 for(JsonNode objNode : stakeDocuments){
     		            				 if(objNode != null){
-    		            					 log.info("objNode is not null");
         		            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
         		            				 log.info("Stake Documents Document Key ::"+objNode.get("documentKey").asText());
-        		     						if(fileInfoJSON.get("documentType").asText().equalsIgnoreCase(objNode.get("documentType").asText()) && fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+        		     						if(stakeHolderIteration == documentIndex && fileInfoJSON.get("documentType").asText().equalsIgnoreCase(objNode.get("documentType").asText()) && fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
         		     							log.info("Inside stake document key matching");
         		     							((ObjectNode)objNode).put("fileName", fileName);
         		     							((ObjectNode)objNode).put("fileSize", file.getSize());
@@ -250,12 +260,13 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		            			 }
     		            		 }
     		            	 }
+    		            	 stakeHolderIteration = stakeHolderIteration+1;
     		             }
     				}
     			}
     			
 				if (!isUpdated) {
-					log.info("Document not updated in the body");
+					log.info("Document not updated in the body in company and stakeholder.");
 					if ("Others".equalsIgnoreCase(fileInfoJSON.get("documentType").asText())) {
 						JsonNode otherDocuments = documents.get("otherDocuments");
 						if (otherDocuments == null) {
@@ -312,149 +323,83 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         		((ObjectNode)applicationInfo).put("actionType", "save");
     			((ObjectNode)applicationInfo).put("saveType", "next");
     		}
-    		
-    		
-			
+
     	}
-    	return responseBody;
-    }
+		return responseBody;
+	}
+
     
 	public void setDocumentCountInSession(JsonNode responseBody,String prospectId,HttpServletRequest  request) {
 		log.info(
                 String.format("setDocumentCountInSession() method args, prospectId=[%s]", prospectId));
-		int maxDocUploadCount = 0;
-		 int docUploadedCount = 0;
-		 boolean countReceived =false;
 		if(responseBody != null ){
 			JsonNode documents = responseBody.get("documents");
 			log.info("documents from DEH for prospectID - "+prospectId+"::"+ documents);
-		    if(documents != null){
-		    	JsonNode companyDocuments= documents.get("companyDocuments");
-		    	if(companyDocuments !=null && companyDocuments.isArray()){
-		        		for(JsonNode objNode : companyDocuments){
-		        			try{
-		        				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		            			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
-		            			countReceived = true;
-		            			log.info("Getting count from company Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
-		            			break;
-		            		} catch(Exception ex){//any null values or other values continue
-		            			log.info("Getting count from company Documents any number format exception");
-		            				continue;
-		            		}
-		        			
-		        		}
-		    	}
-		    	
-		    	if(!countReceived){
-		    		 log.info("company Documents did not find the count for document upload.");
-		    		JsonNode otherDocuments= documents.get("otherDocuments");
-		        	if(otherDocuments !=null && otherDocuments.isArray()){
-		            		for(JsonNode objNode : otherDocuments){
-		            			try{
-		            				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-		                			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
-		                			countReceived = true;
-		                			log.info("Getting count from other Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
-		                			break;
-		                		} catch(Exception ex){//any null values or other values continue
-		                			log.info("Getting count from other Documents any number format exception");
-		                				continue;
-		                		}
-		            			
-		            		}
-		        	}
-		    	}
-		    	
-		    	if(!countReceived){
-		    		 log.info("Other Documents did not find the count for document upload.");
-		    		JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
-		    		if(stakeholdersDocuments != null){
-		    			 Iterator<Map.Entry<String,JsonNode>> fieldsIterator = stakeholdersDocuments.fields();
-			             while (fieldsIterator.hasNext()) {
-			                 Map.Entry<String,JsonNode> field = fieldsIterator.next();
-			                 if(field.getValue() !=null){
-			                 	JsonNode stakeDocuments= field.getValue().get("documents");
-			                 	if(stakeDocuments != null && stakeDocuments.isArray()){
-			                 		for(JsonNode objNode : stakeDocuments){
-			                 			try{
-			                				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-			                    			docUploadedCount = Integer.parseInt(objNode.get(0).get("DocumentUplTotalCnt").asText());
-			                    			countReceived = true;
-			                    			log.info("Getting count from stakes Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
-			                    			break;
-			                    		} catch(Exception ex){//any null values or other values continue
-			                    			log.info("Getting count from stake Documents any number format exception");
-			                    				continue;
-			                    		}
-			                 		}
-			                 	}
-			                 }
-			                 if(countReceived){
-			                	 break;
-			                 }
-			             }
-		    		}
-		    		
-		    	}
-		    }
+			setCountFromGetDocuments( documents, prospectId,request,false);
 		} else {
 			log.info("getProspect Response is Null");
+			request.getSession().setAttribute(MAX_NO_OF_DOCS_+prospectId,0);
+			request.getSession().setAttribute(TOTAL_UPLOADNUM_OF_DOCS_+prospectId,0);
 		}
-		request.getSession().setAttribute(MAX_NO_OF_DOCS_+prospectId,maxDocUploadCount);
-		request.getSession().setAttribute(TOTAL_UPLOADNUM_OF_DOCS_+prospectId,docUploadedCount);
 	}
 	
-	public void setCountFromGetDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request) throws Exception{
+	public void setCountFromGetDocuments(JsonNode responseBody,String prospectId,HttpServletRequest  request, boolean isDocumentCall){
 		log.info(
                 String.format("setCountFromGetDocuments() method args, prospectId=[%s]", prospectId));
+		log.info("Checking count after calling getProspectDocuments::"+isDocumentCall);
 		int maxDocUploadCount = 0;
 		 int docUploadedCount = 0;
 		 boolean countReceived =false;
-		 if(responseBody != null && responseBody.get("companyDocuments") != null){
-			 JsonNode companyDocuments= responseBody.get("companyDocuments");
-			 if(companyDocuments !=null && companyDocuments.isArray()){
-	        		for(JsonNode objNode : companyDocuments){
-	        			try{
-	        				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-	            			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
-	            			countReceived = true;
-	            			log.info("Getting count from company Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
-	            			break;
-	            		} catch(Exception ex){//any null values or other values continue
-	            			log.info("Getting count from company Documents any number format exception");
-	            				continue;
-	            		}
-	        			
-	        		}
-	    	}
-			 
-		 }
-		 
-		 if(!countReceived){
-    		 log.info("company Documents did not find the count for document upload.");
-    		JsonNode otherDocuments= responseBody.get("otherDocuments");
-        	if(otherDocuments !=null && otherDocuments.isArray()){
-            		for(JsonNode objNode : otherDocuments){
-            			try{
-            				maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
-                			docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
-                			countReceived = true;
-                			log.info("Getting count from other Documents, maxDocUploadCount ={},docUploadedCount={}",maxDocUploadCount,docUploadedCount);
-                			break;
-                		} catch(Exception ex){//any null values or other values continue
-                			log.info("Getting count from other Documents any number format exception");
-                				continue;
-                		}
-            			
-            		}
-        	}
-    	}
-		 
-		 
-		 if(!countReceived){
+		if (responseBody != null) {
+			if (responseBody.get("companyDocuments") != null) {
+				JsonNode companyDocuments = responseBody.get("companyDocuments");
+				if (companyDocuments != null && companyDocuments.isArray()) {
+					for (JsonNode objNode : companyDocuments) {
+						try {
+							maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
+							docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
+							countReceived = true;
+							log.info("Getting count from company Documents, maxDocUploadCount ={},docUploadedCount={}",
+									maxDocUploadCount, docUploadedCount);
+							break;
+						} catch (Exception ex) {// any null values or other
+												// values continue
+							log.info("Getting count from company Documents any number format exception");
+							continue;
+						}
+
+					}
+				}
+
+			}
+
+			if (!countReceived) {
+				log.info("company Documents did not find the count for document upload.");
+				JsonNode otherDocuments = responseBody.get("otherDocuments");
+				if (otherDocuments != null && otherDocuments.isArray()) {
+					for (JsonNode objNode : otherDocuments) {
+						try {
+							maxDocUploadCount = Integer.parseInt(objNode.get("DocumentUploadCnt").asText());
+							docUploadedCount = Integer.parseInt(objNode.get("DocumentUplTotalCnt").asText());
+							countReceived = true;
+							log.info("Getting count from other Documents, maxDocUploadCount ={},docUploadedCount={}",
+									maxDocUploadCount, docUploadedCount);
+							break;
+						} catch (Exception ex) {// any null values or other
+												// values continue
+							log.info("Getting count from other Documents any number format exception");
+							continue;
+						}
+
+					}
+				}
+			}
+
+		} 
+		 if(!countReceived && isDocumentCall){//only throw error if call is after the getDocuments
 			 log.error("No Document Count available in the getProspectDocuments");
-			 throw new Exception("No Document Count available");
+			 ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, "No Document Count available", "No Document Count available");
+			 throw new ApiException(error, HttpStatus.INTERNAL_SERVER_ERROR);
 		 } else{
 			 request.getSession().setAttribute(MAX_NO_OF_DOCS_+prospectId,maxDocUploadCount);
 			 request.getSession().setAttribute(TOTAL_UPLOADNUM_OF_DOCS_+prospectId,docUploadedCount);
@@ -474,12 +419,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 
             throw new ApiException(error, HttpStatus.BAD_REQUEST);
         }
-    	if(fileInfoJSON.get("documentKey") != null ){
-    		log.info("File Documents Document Key ::"+fileInfoJSON.get("documentKey").asText());
-    	}
-    	if(fileInfoJSON.get("documentType") != null ){
-    		log.info("File Documents Document Type ::"+fileInfoJSON.get("documentType").asText());
-    	}
+        validateFileInfo(fileInfoJSON);
     	if(documents != null ){
     			JsonNode companyDocuments= documents.get("companyDocuments");
     			if(companyDocuments !=null && companyDocuments.get(0) !=null){
@@ -518,22 +458,6 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		             }
     				}
     			
-					if ("Others".equalsIgnoreCase(fileInfoJSON.get("documentType").asText())) {
-						JsonNode otherDocuments = documents.get("otherDocuments");
-						if (otherDocuments == null) {
-							ObjectMapper mapper = new ObjectMapper();
-							JsonNode arrayNode = mapper.createArrayNode();
-							((ObjectNode) documents).set("otherDocuments", arrayNode);
-							otherDocuments = documents.get("otherDocuments");
-						}
-
-						if (otherDocuments != null && otherDocuments.isArray()) {
-							ObjectNode nodeNew = objectMapper.createObjectNode();
-							((ObjectNode) nodeNew).put("documentKey", fileInfoJSON.get("documentKey").asText());
-							((ArrayNode) otherDocuments).add(nodeNew);
-							log.info("other document updated with the documentdetails");
-						}
-					}
 
     	}
     	return documents;
