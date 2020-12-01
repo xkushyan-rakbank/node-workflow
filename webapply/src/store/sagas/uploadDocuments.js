@@ -25,7 +25,8 @@ import {
   getProspectId,
   getAuthorizationHeader,
   getAppConfig,
-  getDocuments
+  getDocuments,
+  getDocumentUploadCnt
 } from "../selectors/appConfig";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
@@ -149,6 +150,7 @@ function* uploadDocumentsBgSync({
     const headers = getAuthorizationHeader(state);
     const prospectId = getProspectId(state);
     const prospectStatus = getProspectStatus(state);
+    const maxDocumentUploadCnt = yield select(getDocumentUploadCnt);
 
     const [uploadPromise, chan] = yield call(createUploader, prospectId, data, source, headers);
 
@@ -182,10 +184,14 @@ function* uploadDocumentsBgSync({
     //   yield put(sendProspectToAPI());
     // }
     yield call(increaseDocumentUploadCountSaga, docUploadedCount);
+    if(docUploadedCount >= maxDocumentUploadCnt) {
+      yield put(sendProspectToAPI());
+    }
   } catch (error) {
     const errResponse = error.response.data;
     if(errResponse.statusCode===403 && errResponse.errorType==="COUNT_EXCEEDED") {
       yield call(increaseDocumentUploadCountSaga, errResponse.docUploadedCount);
+      yield put(sendProspectToAPI());
     } else {
       yield put(uploadFilesFail({ [documentKey]: error }));
     }

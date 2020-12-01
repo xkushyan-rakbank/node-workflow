@@ -30,7 +30,8 @@ import {
   getPrimaryMobCountryCode,
   getRakValuePackage,
   getLeadSource,
-  getExpired
+  getExpired,
+  getDocumentUploadCnt
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
@@ -289,6 +290,29 @@ describe("appConfig selector test", () => {
     expect(getLeadSource(state)).toBe(productName);
   });
   
+  it("should return expired", () => {
+    expect(getExpired(state)).toBe(expired);
+  });
+
+  it("should return document upload limit", () => {
+    expect(getDocumentUploadCnt(state)).toBe(0);
+  });
+
+  it("should return max document upload limitd", () => {
+    let newState;
+    const companyDocuments = [
+      { DocumentUploadCnt:20, DocumentUplTotalCnt:10 }
+    ];
+    const documents = {
+      companyDocuments
+    };
+    const newAppConfig = {
+      prospect: { documents }
+    };
+    newState = set({}, "appConfig", newAppConfig);
+    expect(getDocumentUploadCnt(newState)).toBe(20);
+  });
+
   it("leadsource not defined", () => {
     let newState;
 
@@ -310,7 +334,4 @@ describe("appConfig selector test", () => {
     expect(getLeadSource(newState)).toBe("");
   });
 
-  it("should return expired", () => {
-    expect(getExpired(state)).toBe(expired);
-  });
 });
