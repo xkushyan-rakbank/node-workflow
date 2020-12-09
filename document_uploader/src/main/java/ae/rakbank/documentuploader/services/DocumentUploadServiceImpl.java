@@ -39,6 +39,9 @@ import static ae.rakbank.documentuploader.constants.AuthConstants.TOTAL_UPLOADNU
 import static ae.rakbank.documentuploader.constants.AuthConstants.UPDATE_FAILED;
 import static ae.rakbank.documentuploader.constants.DocumentTypes.ALLOWED_DOCUMENT_TYPES;
 import static ae.rakbank.documentuploader.constants.AuthConstants.DATE_FORMAT;
+import static ae.rakbank.documentuploader.constants.AuthConstants.DEH_UPLOADED;
+import static ae.rakbank.documentuploader.constants.AuthConstants.DEH_SAVE_TYPE;
+import static ae.rakbank.documentuploader.constants.AuthConstants.DEH_ACTION_TYPE;
 
 @Slf4j
 @Service
@@ -212,7 +215,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
         							((ObjectNode)objNode).put("fileFormat", file.getContentType());
         							((ObjectNode)objNode).put("submittedDt", currentDate);
-        							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
+        							((ObjectNode)objNode).put("uploadStatus", DEH_UPLOADED);
         							isUpdated = true;
         							log.info("company document updated with the documentdetails");
         							break;
@@ -248,7 +251,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
         		     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
         	        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
         	        							((ObjectNode)objNode).put("submittedDt", currentDate);
-        		     							((ObjectNode)objNode).put("uploadStatus", "Uploaded");
+        		     							((ObjectNode)objNode).put("uploadStatus", DEH_UPLOADED);
         		     							isUpdated = true;
         		     							log.info("stakeholder document updated with the documentdetails");
         		     							break;
@@ -300,7 +303,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 							((ObjectNode)nodeNew).put("submittedDt", currentDate);
 							((ObjectNode) nodeNew).set("updatedBy", null);
 							((ObjectNode) nodeNew).set("updatedDt", null);
-							((ObjectNode) nodeNew).put("uploadStatus", "Uploaded");
+							((ObjectNode) nodeNew).put("uploadStatus", DEH_UPLOADED);
 							((ObjectNode) nodeNew).set("url", null);
 							((ObjectNode) nodeNew).put("verified", false);
 							((ObjectNode) nodeNew).set("verifiedBy", null);
@@ -320,8 +323,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		} else{
     			log.info("Setting the values for actio Type and savetype as save and next");
     			JsonNode applicationInfo = responseBody.get("applicationInfo");
-        		((ObjectNode)applicationInfo).put("actionType", "save");
-    			((ObjectNode)applicationInfo).put("saveType", "next");
+        		((ObjectNode)applicationInfo).put("actionType", DEH_ACTION_TYPE);
+    			((ObjectNode)applicationInfo).put("saveType", DEH_SAVE_TYPE);
     		}
 
     	}

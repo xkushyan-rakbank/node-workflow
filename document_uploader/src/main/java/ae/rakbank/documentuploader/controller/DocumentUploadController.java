@@ -202,7 +202,7 @@ public class DocumentUploadController {
 			responseBody = docUploadService.getUpdateProspectBody(responseBody,  file,  fileInfo,String.valueOf(totalUploadedDocCount) ,  ((JsonNode)response.getBody()).get("fileName").asText());
 			return updateProspect(prospectId, jwtToken, ((JsonNode)response.getBody()).get("fileName").asText(), request,responseBody,totalUploadedDocCount);
 		}catch (Exception ex) {
-			log.error("Exception while setting the number of documents." + ex);
+			log.error("Exception while setting the number of documents for prospect-"+prospectId+"::" + ex);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, UPDATE_FAILED, ex.getMessage(), ex);
             throw new ApiException(error, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -283,7 +283,7 @@ public class DocumentUploadController {
 			}
 			return responseBody;
 		} catch (Exception ex) {
-			log.error("Exception while validating the number of documents." + ex);
+			log.error("Exception while validating the number of documents for prospect-"+prospectId+"::" + ex);
 			ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
 					"Exception while validating the number of documents.", ex.getMessage(), ex);
 			throw new ApiException(error, HttpStatus.INTERNAL_SERVER_ERROR);

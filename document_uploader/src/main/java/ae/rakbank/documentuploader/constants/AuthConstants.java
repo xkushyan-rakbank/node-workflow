@@ -11,4 +11,8 @@ public class AuthConstants {
 	public static final String TOTAL_UPLOADNUM_OF_DOCS_ = "TOTAL_UPLOADNUM_OF_DOCS_";
 	public static final String MAX_NO_OF_DOCS_ = "MAX_NO_OF_DOCS_";
 	public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+	
+	public static final String DEH_UPLOADED = "Uploaded";
+	public static final String DEH_ACTION_TYPE = "save";
+	public static final String DEH_SAVE_TYPE = "continue";
 }
