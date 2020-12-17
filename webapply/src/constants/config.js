@@ -108,7 +108,13 @@ export const prospect = {
             typeOfSpaceOccupied: {
               spaceType: "",
               others: ""
-            }
+            },
+            officeAddrsLine1: "",
+            officeAddrsPoBox: "",
+            officeAddrsEmirateCity: "",
+            officeAddrsCountry : "United Arab Emirates",
+            preferredMailingAddrs:"",
+            isDontSameAsRegisteredAddress:false
           }
         ]
       }
