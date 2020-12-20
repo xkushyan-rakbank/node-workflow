@@ -30,6 +30,13 @@ const createPreferredContactInformationSchema = () =>
         codeFieldName: "primaryMobCountryCode",
         fieldName: "Mobile number"
       }),
+    primaryHomeCountryNo: Yup.string()
+    .required(getRequiredMessage("Home country contact number"))
+    .phoneNo({
+      codeFieldName: "primaryHomeCountryCode",
+      fieldName: "Home country contact no"
+    }),
+    primaryHomeCountryCode: Yup.string().required(getRequiredMessage("Home Country code")),
     primaryPhoneNo: Yup.string().phoneNo({
       codeFieldName: "primaryPhoneCountryCode",
       fieldName: "Landline number",
@@ -49,7 +56,9 @@ const PreferredContactInformationStep = ({
       primaryMobCountryCode: "",
       primaryMobileNo: "",
       primaryPhoneCountryCode: "",
-      primaryPhoneNo: ""
+      primaryPhoneNo: "",
+      primaryHomeCountryNo: "",
+      primaryHomeCountryCode: ""
     }}
     onSubmit={handleContinue}
     validationSchema={isSignatory && createPreferredContactInformationSchema}
@@ -125,6 +134,37 @@ const PreferredContactInformationStep = ({
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+              />
+            </InputGroup>
+          </Grid>
+          {/* SCR for RO change */}
+          <Grid item sm={6} xs={12}>
+            <InputGroup>
+              <LinkedField
+                name="primaryHomeCountryCode"
+                linkedFieldName="primaryHomeCountryNo"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryCode`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryNo`}
+                component={CustomSelect}
+                shrink={false}
+                disabled={!isSignatory}
+                datalistId="countryCode"
+                inputProps={{ tabIndex: 0 }}
+              />
+
+              <LinkedField
+                name="primaryHomeCountryNo"
+                linkedFieldName="primaryHomeCountryCode"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryNo`}
+                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryCode`}
+                label="Home country contact no"
+                placeholder="55xxxxxxx"
+                component={Input}
+                disabled={!isSignatory}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+                contextualHelpText="This number will be used as primary Home country contact for any future communication"
               />
             </InputGroup>
           </Grid>

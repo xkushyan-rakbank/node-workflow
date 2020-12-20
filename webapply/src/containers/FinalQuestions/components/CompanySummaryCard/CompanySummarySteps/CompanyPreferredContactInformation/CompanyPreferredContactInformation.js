@@ -34,7 +34,14 @@ const getCompanyPreferredContactInformationSchema = () =>
       codeFieldName: "primaryPhoneCountryCode",
       fieldName: "Landline number",
       isLandline: true
-    })
+    }),
+    website : Yup.string()
+        .max(100, "Maximum 100 characters allowed")
+        .matches(
+            /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+            // /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+            getInvalidMessage("Entered website URL address")
+        )
   });
 
 export const CompanyPreferredContactInformationComponent = ({
@@ -51,7 +58,8 @@ export const CompanyPreferredContactInformationComponent = ({
         primaryMobileNo: "",
         primaryEmail: "",
         primaryPhoneNo: "",
-        primaryPhoneCountryCode: UAE_CODE
+        primaryPhoneCountryCode: UAE_CODE,
+        website:""
       }}
       onSubmit={handleContinue}
       validationSchema={getCompanyPreferredContactInformationSchema}
@@ -132,6 +140,21 @@ export const CompanyPreferredContactInformationComponent = ({
                   }}
                 />
               </InputGroup>
+            </Grid>
+          </Grid>
+          {/* SCR for RO change */}
+          <Grid item container spacing={3}>
+            <Grid item xs={12}>
+              <Field
+                name="website"
+                path="prospect.organizationInfo.contactDetails.website"
+                label="Enter your website address"
+                placeholder="Enter your website URL "
+                component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
             </Grid>
           </Grid>
           {/* <div className={classes.infoTitleWrap}>

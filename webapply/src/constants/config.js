@@ -112,9 +112,9 @@ export const prospect = {
             officeAddrsLine1: "",
             officeAddrsPoBox: "",
             officeAddrsEmirateCity: "",
-            officeAddrsCountry : "United Arab Emirates",
-            preferredMailingAddrs:"",
-            isDontSameAsRegisteredAddress:false
+            officeAddrsCountry: "United Arab Emirates",
+            preferredMailingAddrs: "",
+            isDontSameAsRegisteredAddress: false
           }
         ]
       }
@@ -281,6 +281,8 @@ export const prospect = {
       contactDetails: {
         primaryMobileNo: "",
         primaryMobCountryCode: UAE_CODE,
+        primaryHomeCountryNo: "",
+        primaryHomeCountryCode: UAE_CODE,
         primaryEmail: "",
         primaryPhoneNo: "",
         primaryPhoneCountryCode: UAE_CODE,
