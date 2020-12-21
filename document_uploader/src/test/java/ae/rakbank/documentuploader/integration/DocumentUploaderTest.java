@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import ae.rakbank.documentuploader.services.auth.JwtService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class DocumentUploaderTest {
 				.andExpect(status().is(403));
 	}
 
+	@Ignore
 	@Test
 	public void shouldSaveUploadedFile() throws Exception {
 		String prospectId = "cosme0001";

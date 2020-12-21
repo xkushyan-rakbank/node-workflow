@@ -66,7 +66,6 @@ public class AuthorizationFilterTest {
     @Test
     public void doFilterIfTokenNotValidByStructure() throws IOException, ServletException {
         Mockito.when(request.getHeader(HttpHeaders.AUTHORIZATION)).thenReturn(BEARER_INVALID_TOKEN);
-
         filter.doFilter(request, response, filterChain);
 
         Mockito.verifyNoMoreInteractions(authorizationService);

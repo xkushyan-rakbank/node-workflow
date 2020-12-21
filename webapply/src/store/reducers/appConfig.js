@@ -14,7 +14,8 @@ import {
   SET_ACCESS_TOKEN,
   RESET_PROSPECT,
   RESET_APPLICANT_INFO,
-  SET_PROSPECT_LEAD
+  SET_PROSPECT_LEAD,
+  SET_EXPIRED
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -134,6 +135,10 @@ export default handleActions(
     [SET_PROSPECT_LEAD]: (state, action) => ({
       ...state,
       leadSource: action.payload
+    }),
+    [SET_EXPIRED]: (state, action) => ({
+      ...state,
+      expired: action.payload
     })
   },
   initialState

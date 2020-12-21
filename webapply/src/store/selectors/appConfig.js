@@ -57,6 +57,15 @@ export const getDocuments = state => getProspect(state).documents || {};
 
 export const getCompanyDocuments = state => getDocuments(state).companyDocuments || [];
 
+export const getDocumentUploadCnt = state => {
+  const companyDocuments = getCompanyDocuments(state);
+  let DocumentUploadCnt = 0;
+  if (companyDocuments[0]) {
+    DocumentUploadCnt = companyDocuments[0].DocumentUploadCnt;
+  }
+  return DocumentUploadCnt;
+};
+
 export const getStakeholdersDocuments = state => getDocuments(state).stakeholdersDocuments || [];
 
 export const getOtherDocuments = state => getDocuments(state).otherDocuments || [];
@@ -101,3 +110,5 @@ export const getLeadSource = state => {
     ? state.appConfig.leadSource.productName
     : "";
 };
+
+export const getExpired = state => getAppConfig(state).expired;

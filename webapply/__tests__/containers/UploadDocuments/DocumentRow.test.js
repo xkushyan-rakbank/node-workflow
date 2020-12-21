@@ -76,6 +76,12 @@ describe("DocumentRow container tests", () => {
     });
   });
 
+  it("stakeholder undefined props", () => {
+    const props = { document, type, index };
+    render(<DocumentRow {...props} />);
+    expect(DocumentRowComponent).toHaveBeenCalled();
+  });
+
   it("should pass percentComplete as 100 if doc is Uploaded", () => {
     const document = {
       documentKey,

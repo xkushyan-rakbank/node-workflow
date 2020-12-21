@@ -12,7 +12,9 @@ import {
   saveSignatoryModel,
   resetProspect,
   setAccessToken,
-  resetApplicantInfo
+  resetApplicantInfo,
+  setProspectLead,
+  setExpired
 } from "../../../src/store/actions/appConfig";
 import { loginInfoFormSuccess, logout } from "../../../src/store/actions/loginForm";
 import { UAE_CODE } from "../../../src/constants";
@@ -168,5 +170,23 @@ describe("app config reducer", () => {
       }
     };
     expect(reducer(initialState, resetApplicantInfo())).toStrictEqual(expectedState);
+  });
+
+  it("should create a reducer to set prospect lead", () => {
+    const payload = { productName: "any product" };
+    const expectedState = {
+      ...initialState,
+      leadSource: payload
+    };
+    expect(reducer(initialState, setProspectLead(payload))).toStrictEqual(expectedState);
+  });
+
+  it("should create a reducer to set expired", () => {
+    const payload = true;
+    const expectedState = {
+      ...initialState,
+      expired: payload
+    };
+    expect(reducer(initialState, setExpired(payload))).toStrictEqual(expectedState);
   });
 });

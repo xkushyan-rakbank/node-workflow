@@ -13,6 +13,16 @@ export const SessionExpiration = memo(props => {
   const [isAgent, setIsAgent] = useState(false);
 
   useEffect(() => {
+    setExtendExpiryTime(true);
+  }, [props.uploadDocuments]);
+
+  useEffect(() => {
+    if (props.expired === true) {
+      logout();
+    }
+  }, [props.expired]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       if (props.authToken && typeof props.authToken !== "undefined") {
         startExpiryInterval();

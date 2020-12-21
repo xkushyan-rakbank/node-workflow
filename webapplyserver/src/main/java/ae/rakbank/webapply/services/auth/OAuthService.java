@@ -33,6 +33,7 @@ public class OAuthService {
 
     // 30 seconds shift to prevent access_token expire error while calling the API
     static final int TIME_SHIFT_FOR_REQUEST = 30;
+    private static final Integer TIME_WINDOW_FOR_EXPIRY_SEC = 3600;//60 mins to expire the token.
 
     private final FileUtil fileUtil;
     private final ServletContext servletContext;
@@ -72,10 +73,10 @@ public class OAuthService {
         boolean isExpired = now.isAfter(jwtPayload.getOauthTokenExpiryTime());
         log.info("[Oauth validateAndUpdate] Checking expiration: now is {}, oauthToken expire time: {}, isExpired: {}",
                 now, jwtPayload.getOauthTokenExpiryTime(), isExpired);
-
-        if (isExpired) {
-            ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
-            updateJwtToken(jwtPayload, oauthResponse);
+        validateExpirationTime(jwtPayload);
+       if (isExpired) {
+    	   ResponseEntity<JsonNode> oauthResponse = refreshAndGetOauthObject(jwtPayload);
+           updateJwtToken(jwtPayload, oauthResponse);
         }
 
         log.info("[Oauth validateAndUpdate] Jwt payload now is: {}", jwtPayload);
@@ -165,5 +166,13 @@ public class OAuthService {
         channelContext.set("authorizationDetails", authorizationDetails);
         headers.set("ChannelContext", channelContext.toString());
         return headers;
+    }
+    
+    private void validateExpirationTime(JwtPayload jwtPayload) {
+        if (jwtPayload.getOauthTokenExpiryTime().plusSeconds(TIME_WINDOW_FOR_EXPIRY_SEC)
+                .isBefore(LocalDateTime.now())) {
+            log.error("JwtToken is expired for api calls");
+            throw new ApiException(JWT_EXPIRED);
+        }
     }
 }

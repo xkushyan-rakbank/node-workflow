@@ -1,3 +1,5 @@
+import set from "lodash/set";
+
 import {
   getAgentName,
   getDatalist,
@@ -26,7 +28,10 @@ import {
   createGetAuthorityTypeDisplayText,
   getAccountCurrencies,
   getPrimaryMobCountryCode,
-  getRakValuePackage
+  getRakValuePackage,
+  getLeadSource,
+  getExpired,
+  getDocumentUploadCnt
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
@@ -70,6 +75,9 @@ describe("appConfig selector test", () => {
     rakValueMaxIslamicReadMoreUrl: "some url 4"
   };
   const authorizationToken = "some secret string";
+  const expired = false;
+  const productName = "any product"
+  const leadSource = {productName: productName};
   const recaptchaEnable = true;
   const login = {userName: agentName};
   const appConfig = {
@@ -82,7 +90,9 @@ describe("appConfig selector test", () => {
     servicePricingGuideUrl,
     ...readMoreUrls,
     authorizationToken,
-    recaptchaEnable
+    recaptchaEnable,
+    leadSource,
+    expired
   };
   const state = { appConfig };
 
@@ -275,4 +285,53 @@ describe("appConfig selector test", () => {
   it("should return empty string if value does not exist", () => {
     expect(createGetAuthorityTypeDisplayText("another val")(state)).toBe("");
   });
+
+  it("should return leadsource", () => {
+    expect(getLeadSource(state)).toBe(productName);
+  });
+  
+  it("should return expired", () => {
+    expect(getExpired(state)).toBe(expired);
+  });
+
+  it("should return document upload limit", () => {
+    expect(getDocumentUploadCnt(state)).toBe(0);
+  });
+
+  it("should return max document upload limitd", () => {
+    let newState;
+    const companyDocuments = [
+      { DocumentUploadCnt:20, DocumentUplTotalCnt:10 }
+    ];
+    const documents = {
+      companyDocuments
+    };
+    const newAppConfig = {
+      prospect: { documents }
+    };
+    newState = set({}, "appConfig", newAppConfig);
+    expect(getDocumentUploadCnt(newState)).toBe(20);
+  });
+
+  it("leadsource not defined", () => {
+    let newState;
+
+    const newAppConfig = {
+      login,
+      datalist,
+      prospect,
+      signatoryModel,
+      signatoryInfo,
+      reCaptchaSiteKey,
+      servicePricingGuideUrl,
+      ...readMoreUrls,
+      authorizationToken,
+      recaptchaEnable,
+      expired: true
+    };
+
+    newState = set({}, "appConfig", newAppConfig);
+    expect(getLeadSource(newState)).toBe("");
+  });
+
 });

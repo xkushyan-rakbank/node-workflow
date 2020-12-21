@@ -10,7 +10,6 @@ export const useStyles = makeStyles({
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
-    margin: "0 auto",
     "@media (max-width: 420px)": {
       height: "320px",
       overflow: "hidden"

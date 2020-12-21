@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import nanoid from "nanoid";
 
@@ -15,14 +15,18 @@ import {
 } from "../../store/actions/uploadDocuments";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getProgress, getUploadErrors } from "../../store/selectors/uploadDocuments";
-import { getOtherDocuments } from "../../store/selectors/appConfig";
+import { getOtherDocuments, getCompanyDocuments } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { NEXT, OTHER_DOCUMENTS, SUBMIT, UPLOADED } from "../../constants";
 import routes from "../../routes";
+import { UploadLimitComponent } from "../UploadDocuments/components/UploadLimit/UploadLimit";
 
 export const ReUploadDocuments = () => {
+  const [docUploadLimit, setDocUploadLimit] = useState(1);
+  const [currentUplCnt, setCurrentUplCnt] = useState(0);
   const dispatch = useDispatch();
   const otherDocuments = useSelector(getOtherDocuments);
+  const companyDocuments = useSelector(getCompanyDocuments);
   const progress = useSelector(getProgress);
   const uploadErrors = useSelector(getUploadErrors);
   const pushHistory = useTrackingHistory();
@@ -34,6 +38,13 @@ export const ReUploadDocuments = () => {
   useEffect(() => {
     dispatch(retrieveDocDetails());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (typeof companyDocuments[0] !== "undefined") {
+      setDocUploadLimit(companyDocuments[0].DocumentUploadCnt);
+      setCurrentUplCnt(companyDocuments[0].DocumentUplTotalCnt);
+    }
+  }, [companyDocuments]);
 
   const isSubmitButtonActive =
     !!otherDocuments.length && otherDocuments.every(doc => doc.uploadStatus === UPLOADED);
@@ -59,7 +70,7 @@ export const ReUploadDocuments = () => {
       );
 
       const data = new FormData();
-      data.append("fileInfo", JSON.stringify({ documentKey, documentType }));
+      data.append("fileInfo", JSON.stringify({ documentKey, documentType, documentIndex:0 }));
       data.append("file", file);
 
       const successfulUploadProps = {
@@ -77,6 +88,10 @@ export const ReUploadDocuments = () => {
           documentType,
           documentKey
         })
+      );
+      setTimeout(
+        () => dispatch(sendProspectToAPIPromisify(NEXT, null, SUBMIT)).then(() => {}, () => {}),
+        500
       );
     },
     [dispatch]
@@ -98,14 +113,20 @@ export const ReUploadDocuments = () => {
   }, [dispatch, pushHistory]);
 
   return (
-    <ReUploadDocumentsComponent
-      uploadDocument={uploadDocument}
-      isSubmitButtonActive={isSubmitButtonActive}
-      otherDocuments={otherDocuments}
-      progress={progress}
-      removeDocument={removeDocument}
-      submitForm={submitForm}
-      uploadErrors={uploadErrors}
-    />
+    <>
+      {docUploadLimit > currentUplCnt ? (
+        <ReUploadDocumentsComponent
+          uploadDocument={uploadDocument}
+          isSubmitButtonActive={isSubmitButtonActive}
+          otherDocuments={otherDocuments}
+          progress={progress}
+          removeDocument={removeDocument}
+          submitForm={submitForm}
+          uploadErrors={uploadErrors}
+        />
+      ) : (
+        <UploadLimitComponent />
+      )}
+    </>
   );
 };

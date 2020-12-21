@@ -41,39 +41,35 @@ public class DocumentUploadServiceImplTest {
     }
 
     @Test(expected = ApiException.class)
-    public void processUploadNullFile() {
+    public void processUploadNullFile(){
         documentUploadService.processUploadRequest(null, "some file info", "myProspectId");
     }
 
     @Test(expected = ApiException.class)
-    public void processUploadIncorrectFileInfo() {
+    public void processUploadIncorrectFileInfo(){
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename1.txt", "text/plain", "some xml".getBytes());
-
         documentUploadService.processUploadRequest(multiFile, "not json entry", "myProspectId");
     }
 
     @Test
-    public void processUploadFile() {
+    public void processUploadFile(){
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
-
-        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspectId");
+        documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\",\"documentKey\":\"testKey\",\"documentIndex\":\"0\"}", "myProspectId");
     }
 
     @Test(expected = ApiException.class)
     public void processUploadFileIncorrectProspectId() {
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "some xml".getBytes());
-
         documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"text/plain\"}", "myProspect..Id");
     }
 
     @Test(expected = ApiException.class)
-    public void processUploadNotAllowedProspectId() {
+    public void processUploadNotAllowedProspectId() throws Exception{
         MockMultipartFile multiFile =
                 new MockMultipartFile("file", "filename.txt", "text/plain", "g".getBytes());
-
         documentUploadService.processUploadRequest(multiFile, "{\"documentType\":\"" + ALLOWED_DOCUMENT_TYPES.get(0) + "\"}", "myProspect..Id");
     }
 }
