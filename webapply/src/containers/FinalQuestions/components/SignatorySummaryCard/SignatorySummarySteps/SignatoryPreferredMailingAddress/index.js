@@ -1,25 +1,15 @@
 import { connect } from "react-redux";
 import get from "lodash/get";
 import { SignatoryPreferredMailingAddressComponent } from "./SignatoryPreferredMailingAddress";
-import { getOrganizationInfo } from "../../../../../../store/selectors/appConfig";
+import { getSignatories } from "../../../../../../store/selectors/appConfig";
 
-const mapStateToProps = state => ({
-  organisationAddressLine2: get(
-    getOrganizationInfo(state),
-    "addressInfo[0].addressDetails[0].addressLine2",
-    ""
-  ),
-  organisationAddressLine1: get(
-    getOrganizationInfo(state),
-    "addressInfo[0].addressDetails[0].addressLine1",
-    ""
-  ),
-  organisationEmirateCity: get(
-    getOrganizationInfo(state),
+const mapStateToProps = (state, { index }) => ({
+  signatoriesEmirateCity: get(
+    getSignatories(state)[index],
     "addressInfo[0].addressDetails[0].emirateCity",
     ""
   ),
-  organisationPoBox: get(getOrganizationInfo(state), "addressInfo[0].addressDetails[0].poBox", "")
+  signatoriesPoBox: get(getSignatories(state)[index], "addressInfo[0].addressDetails[0].poBox", "")
 });
 
 export const SignatoryPreferredMailingAddress = connect(mapStateToProps)(
