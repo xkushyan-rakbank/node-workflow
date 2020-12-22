@@ -175,8 +175,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
               label="Same as Resisdence Address"
               onSelect={() => {
                 if(!values.sameAsResidenceAddress){
-                  console.log('inside the if signatoriesEmirateCity ',signatoriesEmirateCity)
-                  console.log('inside the if signatoriesPoBox ',signatoriesPoBox)
                   setFieldValue("sameAsResidenceAddress", !values.sameAsResidenceAddress)
                   setFieldValue("officeAddrsEmirateCity", !values.sameAsResidenceAddress ? signatoriesEmirateCity : "",)
                   setFieldValue("officeAddrsPoBox", !values.sameAsResidenceAddress ? signatoriesPoBox: "",)
@@ -194,11 +192,10 @@ export const SignatoryPreferredMailingAddressComponent = ({
             <ContexualHelp
               title={
                 <span>
-                  Select this checkbox if you want the Company address to be the preferred mailing
-                  address.
+                  Select this checkbox if you want the Resisdence address to be same as office address.
                   <br />
                   <br />
-                  If not, please enter the Residence address in below fields.
+                  If not, please enter the Office address in below fields.
                   <br />
                   <br />
                   Kindly note, the Business Debit Card of this stakeholder will be delivered to this

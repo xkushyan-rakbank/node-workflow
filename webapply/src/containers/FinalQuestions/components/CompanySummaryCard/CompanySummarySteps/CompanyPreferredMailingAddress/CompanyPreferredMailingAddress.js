@@ -201,7 +201,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                       if(!values.isDontSameAsRegisteredAddress){
                         setFieldValue("isDontSameAsRegisteredAddress", !values.isDontSameAsRegisteredAddress);
                         setFieldValue("officeAddrsLine1", !values.isDontSameAsRegisteredAddress ?  organisationAddressLine1 : "");
-                        setFieldValue("officeAddrsCountry", !values.isDontSameAsRegisteredAddress ?  organisationCountry : "");
+                        setFieldValue("officeAddrsCountry", !values.isDontSameAsRegisteredAddress ?  organisationCountry === "AE" ? "United Arab Emirates" : organisationCountry : "");
                         setFieldValue("officeAddrsPoBox", !values.isDontSameAsRegisteredAddress ?  organisationPoBox : "");
                         setFieldValue("officeAddrsEmirateCity", !values.isDontSameAsRegisteredAddress ?  organisationEmirateCity : "");
                       } else {
