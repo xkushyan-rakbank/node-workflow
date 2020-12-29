@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from "react";
 
 import { SearchProspect } from "./components/SearchProspect/SearchProspect";
 import { useLayoutParams } from "../../FormLayout";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
+import { agentFormStepper } from "../../../constants";
 
 export const SearchProspectPage = ({
   searchApplications,
@@ -11,6 +13,7 @@ export const SearchProspectPage = ({
   searchError,
   searchErrorDesc
 }) => {
+  useFormNavigation([false, false, agentFormStepper, true, true]);
   useLayoutParams(true);
 
   const [isSearchLaunched, setSearchStatus] = useState(false);

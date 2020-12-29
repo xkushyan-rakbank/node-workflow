@@ -25,6 +25,11 @@ export const formStepper = [
   }
 ];
 
+export const agentFormStepper = [
+  { step: 1, title: "Search Applications", path: routes.searchProspect },
+  { step: 2, title: "Send Invite", path: routes.inviteCustomer }
+];
+
 export const searchProspectStepper = [
   {
     step: 1,
