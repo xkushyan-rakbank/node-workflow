@@ -10,10 +10,11 @@ import { StyledTableBodyMobile } from "./components/StyledTableBodyMobile";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { useWindowSize } from "../../../../utils/useWindowSize";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
-import { CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
-import { sizes, accountTypes } from "./constants";
+import { accountNames, CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
+import { sizes, accountTypes, RAK_STARTER_CONFIRM_MESSAGE } from "./constants";
 
 import { useStyles } from "./styled";
+import { ConfirmDialog } from "../../../../components/Modals";
 
 const { INITIAL_OFFSET, OFFSET } = sizes;
 
@@ -22,6 +23,7 @@ export const TableCompareComponent = ({ selectedAccount }) => {
   const pushHistory = useTrackingHistory();
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
+  const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
   const [width] = useWindowSize();
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -60,8 +62,28 @@ export const TableCompareComponent = ({ selectedAccount }) => {
     handleHighlightSelectedAccount(position);
   }, [selectedAccount, handleHighlightSelectedAccount]);
 
+  const closeDialogHandler = useCallback(() => {
+    setIsDisplayConfirmDialog(false);
+  }, [setIsDisplayConfirmDialog]);
+
+  const confirmHandler = useCallback(() => {
+    closeDialogHandler();
+    navigateTo(accountNames.starter);
+  }, [setIsDisplayConfirmDialog]);
+
   const handleSelectAccount = useCallback(
     accountType => () => {
+      if (accountType == accountNames.starter) {
+        setIsDisplayConfirmDialog(true);
+      } else {
+        navigateTo(accountType);
+      }
+    },
+    [setIsDisplayConfirmDialog, navigateTo]
+  );
+
+  const navigateTo = useCallback(
+    accountType => {
       dispatch(
         updateProspect({
           "prospect.applicationInfo.accountType": accountType
@@ -114,6 +136,13 @@ export const TableCompareComponent = ({ selectedAccount }) => {
           </Table>
         </div>
       </div>
+      <ConfirmDialog
+        isOpen={isDisplayConfirmDialog}
+        handleConfirm={confirmHandler}
+        handleReject={closeDialogHandler}
+        handleClose={closeDialogHandler}
+        message={RAK_STARTER_CONFIRM_MESSAGE}
+      />
     </Paper>
   );
 };
