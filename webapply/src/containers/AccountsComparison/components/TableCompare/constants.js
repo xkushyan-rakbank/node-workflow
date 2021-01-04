@@ -1,9 +1,6 @@
 import { accountNames, accountTitles } from "../../../../constants";
 import checkIc from "../../../../assets/icons/check.svg";
 
-export const RAK_STARTER_CONFIRM_MESSAGE =
-  "Please note that RAKstarter account is only available for business with a length of business less than a year. Would you like to learn more about RAKstarter account?";
-
 export const accountsDataRows = [
   {
     info: ["Monthly Average ", "Credit Balance"],
