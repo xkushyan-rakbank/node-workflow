@@ -8,13 +8,22 @@ import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { NotificationsManager } from "../../../../../components/Notification";
 import { TermsAgreedLabel } from "./TermsAgreedLabel";
 import routes from "../../../../../routes";
-import { termsMessageContent, IS_ALL_LINKS_VISITED, NONE_VISITED } from "../constants";
+import { termsMessageContent, IS_ALL_LINKS_VISITED, NONE_VISITED,MAX_PROMO_CODE_LENGTH } from "../constants";
 
 import { useStyles } from "./styled";
 
+import {ALPHANUMERIC_REGEX} from "../../../../../utils/validation";
+import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
+import {Input} from "../../../../../components/Form";
+import Grid from "@material-ui/core/Grid";
+
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
-  areTermsAgreed: Yup.boolean().oneOf([true], "Required")
+  areTermsAgreed: Yup.boolean().oneOf([true], "Required"),
+  promoCode: Yup.string().matches(
+    ALPHANUMERIC_REGEX,
+    getInvalidMessage("PromoCode")
+  ),
 });
 
 export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent }) => {
@@ -37,7 +46,8 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
       initialValues={{
         isInformationProvided: false,
         areTermsAgreed: false,
-        needCommunication: true
+        needCommunication: true,
+        promoCode: ""
       }}
       onSubmit={handleSubmit}
       validationSchema={!isAgent && blockConfirmSchema}
@@ -45,6 +55,21 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
     >
       {() => (
         <Form>
+            <Grid container spacing={3}>
+              <Grid item sm={6} xs={12}>
+                <Field
+                  name="promoCode"
+                  label="Promo Code (optional)"
+                  placeholder="Promo Code"
+                  path="prospect.applicationInfo.promoCode"
+                  infoTitle=""
+                  component={Input}
+                  InputProps={{
+                    inputProps: { maxLength: MAX_PROMO_CODE_LENGTH, tabIndex: 0 }
+                  }}
+                />
+              </Grid>
+            </Grid>
           {!isAgent && (
             <div className={classes.checkboxesWrapper}>
               <Field

@@ -54,3 +54,4 @@ export const NONE_VISITED = 0;
 export const IS_TERMS_CONDITION_VISITED = 1;
 export const IS_TERMS_ENROLLMENT_VISITED = 2;
 export const IS_ALL_LINKS_VISITED = 3;
+export const MAX_PROMO_CODE_LENGTH = 50;
