@@ -127,3 +127,12 @@ export const downloadProspectDocument = {
       ...headers
     })
 };
+
+export const createInvite = {
+  send: data =>
+    httpClient.request({
+      url: buildURI("createInviteUri"),
+      method: "POST",
+      data
+    })
+};

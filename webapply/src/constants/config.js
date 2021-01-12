@@ -14,7 +14,8 @@ export const endpoints = {
   screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
   otpUri: "/webapply/api/v1/otp",
   authenticateUserUri: "/webapply/api/v1/users/authenticate",
-  docUploaderUri: "/docUploader/api/v1/banks/RAK/prospects/:prospectId/documents"
+  docUploaderUri: "/docUploader/api/v1/banks/RAK/prospects/:prospectId/documents",
+  createInviteUri: "/webapply/api/v1/agent/createInvite"
 };
 
 export const prospect = {

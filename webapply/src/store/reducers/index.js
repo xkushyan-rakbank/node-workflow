@@ -13,6 +13,7 @@ import screenProspect from "./screenProspect";
 import uploadDocuments from "./uploadDocuments";
 import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
+import agentFeatures from "./agentFeatures";
 
 const reducers = history =>
   combineReducers({
@@ -29,7 +30,8 @@ const reducers = history =>
     screenProspect,
     uploadDocuments,
     completedSteps,
-    accountNumbers
+    accountNumbers,
+    agentFeatures
   });
 
 export default reducers;

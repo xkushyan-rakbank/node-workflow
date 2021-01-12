@@ -5,32 +5,30 @@ import { agentFormStepper } from "../../../constants";
 import { NotificationsManager } from "../../../components/Notification";
 import { ICONS } from "../../../components/Icons";
 
-export const InviteCustomer = () => {
+export const InviteCustomer = ({ invite }) => {
   useFormNavigation([false, false, agentFormStepper, true, true]);
   const [isLoading, setIsLoading] = useState(false);
-  const sendInvitation = inviteData => {
-    const successMessageContent = {
-      message: "Invite has been sent!",
-      title: "",
-      icon: ICONS.info
-    };
-    NotificationsManager.add(successMessageContent);
-  };
 
   const submitForm = useCallback(
     values => {
       let inviteData = { ...values };
       setIsLoading(true);
-      return sendInvitation(inviteData).then(
+      return invite(inviteData).then(
         () => {
+          const successMessageContent = {
+            message: "Invite has been sent!",
+            title: "",
+            icon: ICONS.info
+          };
+          NotificationsManager.add(successMessageContent);
           setIsLoading(false);
         },
-        () => {
+        err => {
           setIsLoading(false);
         }
       );
     },
-    [sendInvitation]
+    [invite]
   );
 
   return <InviteForm isLoading={isLoading} submitForm={submitForm} />;
