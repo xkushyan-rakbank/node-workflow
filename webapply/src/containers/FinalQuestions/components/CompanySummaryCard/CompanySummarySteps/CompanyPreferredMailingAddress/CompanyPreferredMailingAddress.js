@@ -236,7 +236,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                     setFieldValue(
                       "officeAddrsEmirateCity",
                       !values.isDontSameAsRegisteredAddress
-                        ? emirateCityRef.current.state.value.value
+                        ? emirateCityRef.current.props.value.value
                         : ""
                     );
                   } else {
