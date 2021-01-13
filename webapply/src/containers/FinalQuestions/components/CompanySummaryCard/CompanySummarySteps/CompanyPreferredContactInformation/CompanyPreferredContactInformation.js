@@ -35,13 +35,15 @@ const getCompanyPreferredContactInformationSchema = () =>
       fieldName: "Landline number",
       isLandline: true
     }),
-    website : Yup.string()
-        .max(100, "Maximum 100 characters allowed")
-        .matches(
-            /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-            // /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-            getInvalidMessage("Entered website URL address")
-        )
+    website: Yup.string()
+      .max(100, "Maximum 100 characters allowed")
+      .matches(
+        // eslint-disable-next-line max-len
+        /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        // eslint-disable-next-line max-len
+        // /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        getInvalidMessage("Entered website URL address")
+      )
   });
 
 export const CompanyPreferredContactInformationComponent = ({
@@ -59,7 +61,7 @@ export const CompanyPreferredContactInformationComponent = ({
         primaryEmail: "",
         primaryPhoneNo: "",
         primaryPhoneCountryCode: UAE_CODE,
-        website:""
+        website: ""
       }}
       onSubmit={handleContinue}
       validationSchema={getCompanyPreferredContactInformationSchema}
@@ -72,7 +74,7 @@ export const CompanyPreferredContactInformationComponent = ({
               <Field
                 name="primaryEmail"
                 path="prospect.organizationInfo.contactDetails.primaryEmail"
-                label="Primary e-mail address"
+                label="E-mail address"
                 placeholder="Primary e-mail address"
                 component={Input}
                 InputProps={{
@@ -148,7 +150,7 @@ export const CompanyPreferredContactInformationComponent = ({
               <Field
                 name="website"
                 path="prospect.organizationInfo.contactDetails.website"
-                label="Enter your website address"
+                label="Website (optional)"
                 placeholder="Enter your website URL "
                 component={Input}
                 InputProps={{

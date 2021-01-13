@@ -51,7 +51,9 @@ export const SignatoryPersonalInformation = ({
       initialValues={{
         maritalStatus: "",
         mothersMaidenName: "",
-        maritalStatusOthers: ""
+        maritalStatusOthers: "",
+        countryOfBirth: "",
+        placeOfBirth: ""
       }}
       onSubmit={handleContinue}
       validationSchema={createSignatoryPersonalInformationSchema(isSignatory)}
@@ -70,6 +72,15 @@ export const SignatoryPersonalInformation = ({
                 component={SelectAutocomplete}
                 tabIndex="0"
               />
+              <Field
+                name="countryOfBirth"
+                path={`prospect.signatoryInfo[${index}].countryOfBirth`}
+                datalistId="country"
+                label="Country of Birth"
+                isSearchable
+                component={SelectAutocomplete}
+                tabIndex="3"
+              />
             </Grid>
             <Grid item sm={6} xs={12}>
               <Field
@@ -81,6 +92,16 @@ export const SignatoryPersonalInformation = ({
                 contextualHelpText="Provide mother's surname before marriage"
                 InputProps={{
                   inputProps: { maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH, tabIndex: 0 }
+                }}
+              />
+              <Field
+                name="placeOfBirth"
+                path={`prospect.signatoryInfo[${index}].placeOfBirth`}
+                label={"Place of Birth"}
+                placeholder="Place of Birth"
+                component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
                 }}
               />
             </Grid>

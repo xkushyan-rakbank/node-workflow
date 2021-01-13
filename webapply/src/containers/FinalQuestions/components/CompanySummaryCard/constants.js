@@ -38,7 +38,7 @@ export const finalQuestionsSteps = [
   },
   {
     step: STEP_5,
-    title: "Preferred contact information",
+    title: "Contact information",
     component: CompanyPreferredContactInformation,
     eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_CONTACT_CONTINUE
   }

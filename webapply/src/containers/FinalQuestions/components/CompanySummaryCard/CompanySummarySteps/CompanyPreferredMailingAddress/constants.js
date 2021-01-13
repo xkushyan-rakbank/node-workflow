@@ -1,4 +1,5 @@
-export const BASE_PATH = "prospect.organizationInfo.addressInfo[0].addressDetails[0]";
+export const BASE_PATH_1 = "prospect.organizationInfo.addressInfo[0].addressDetails[0]";
+export const BASE_PATH_2 = "prospect.organizationInfo.addressInfo[1].addressDetails[0]";
 
 export const OTHER_OPTION_CODE = "6";
 

@@ -2,9 +2,8 @@ import { SignatoryEmploymentDetails } from "./SignatorySummarySteps/SignatoryEmp
 import { SignatorySourceOfFunds } from "./SignatorySummarySteps/SignatorySourceOfFunds";
 import { SignatoryPersonalInformation } from "./SignatorySummarySteps/SignatoryPersonalInformation";
 import { SignatoryPreferredMailingAddress } from "./SignatorySummarySteps/SignatoryPreferredMailingAddress";
-import { SignatoryHomeCountryAddressComponent } from './SignatorySummarySteps/SignatoryHomeCountryAddress';
 import { GA_EVENTS } from "../../../../utils/ga";
-import { STEP_1, STEP_2, STEP_3, STEP_4 , STEP_5 } from "./constants";
+import { STEP_1, STEP_2, STEP_3, STEP_4 } from "./constants";
 
 export const signatoriesSteps = [
   {
@@ -30,11 +29,5 @@ export const signatoriesSteps = [
     title: "Addresses",
     component: SignatoryPreferredMailingAddress,
     eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_MAILING_ADDRESS_CONTINUE
-  },
-  {
-    step: STEP_5,
-    title: "Home country address",
-    component: SignatoryHomeCountryAddressComponent,
-    eventName: GA_EVENTS.FINAL_QUESTION_HOME_COUNTRY_ADDRESS_CONTINUE
   }
 ];

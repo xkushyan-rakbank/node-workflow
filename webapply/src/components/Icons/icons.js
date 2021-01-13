@@ -23,6 +23,7 @@ import { ReactComponent as InfoRed } from "../../assets/icons/infoRed.svg";
 import { ReactComponent as ArrowDown } from "../../assets/icons/arrowDown.svg";
 import { ReactComponent as Error } from "../../assets/images/error.svg";
 import { ReactComponent as File } from "../../assets/icons/file.svg";
+import { ReactComponent as MinimizeChat } from "../../assets/icons/chat-minimize.svg";
 
 export const iconComponents = {
   done: Done,
@@ -49,7 +50,8 @@ export const iconComponents = {
   infoRed: InfoRed,
   arrowDown: ArrowDown,
   error: Error,
-  file: File
+  file: File,
+  minimizeChat: MinimizeChat
 };
 
 export const ICONS = {
@@ -77,5 +79,6 @@ export const ICONS = {
   infoRed: "infoRed",
   arrowDown: "arrowDown",
   error: "error",
-  file: "file"
+  file: "file",
+  minimizeChat: "minimizeChat"
 };

@@ -47,7 +47,7 @@ export const stakeHoldersSteps = [
   },
   {
     step: STEP_6,
-    title: "Preferred contact information",
+    title: "Contact information",
     component: PreferredContactInformation,
     eventName: GA_EVENTS.COMPANY_STAKEHOLDER_PREFERRED_CONTACT_CONTINUE
   }
