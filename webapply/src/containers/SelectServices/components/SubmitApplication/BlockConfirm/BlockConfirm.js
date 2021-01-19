@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+import { useDispatch } from "react-redux";
 
 import { AutoSaveField as Field, Checkbox } from "../../../../../components/Form";
 import { BackLink } from "../../../../../components/Buttons/BackLink";
@@ -9,18 +10,19 @@ import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { NotificationsManager } from "../../../../../components/Notification";
 import { TermsAgreedLabel } from "./TermsAgreedLabel";
 import routes from "../../../../../routes";
+
+import { useStyles } from "./styled";
+
+import { updateProspect } from "../../../../../store/actions/appConfig";
+import { ALPHANUMERIC_REGEX } from "../../../../../utils/validation";
+import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
+import { Input } from "../../../../../components/Form";
 import {
   termsMessageContent,
   IS_ALL_LINKS_VISITED,
   NONE_VISITED,
   MAX_PROMO_CODE_LENGTH
 } from "../constants";
-
-import { useStyles } from "./styled";     
-import { ALPHANUMERIC_REGEX } from "../../../../../utils/validation";
-import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
-import { Input } from "../../../../../components/Form";
-
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
@@ -30,6 +32,7 @@ const blockConfirmSchema = Yup.object({
 
 export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [isLinkVisited, setIsLinkVisited] = useState(NONE_VISITED);
   const isAllLinksVisited = IS_ALL_LINKS_VISITED === isLinkVisited;
 
@@ -42,6 +45,12 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
     operation => setIsLinkVisited(isLinkVisited | operation),
     [isLinkVisited, setIsLinkVisited]
   );
+  //ro-assist-brd3-13
+  const handleTandCSelection = bool => {
+    const prospect = {};
+    prospect["prospect.applicationInfo.sanctionUndertaking"] = !bool;
+    dispatch(updateProspect(prospect));
+  };
 
   return (
     <Formik
@@ -55,7 +64,7 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
       validationSchema={!isAgent && blockConfirmSchema}
       validateOnChange={false}
     >
-      {() => (
+      {({ values }) => (
         <Form>
           <Grid container spacing={3}>
             <Grid item sm={6} xs={12}>
@@ -94,6 +103,10 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
                   classes={{
                     label: classes.checkboxLabel,
                     checkbox: classes.checkbox
+                  }}
+                  //ro-assist-brd3-13
+                  onSelect={() => {
+                    handleTandCSelection(values.areTermsAgreed);
                   }}
                   component={Checkbox}
                   inputProps={{ tabIndex: 0 }}
