@@ -38,7 +38,8 @@ export const CheckboxGroup = ({
   textArea,
   classes: extendedClasses,
   contextualHelpText,
-  contextualHelpProps = {}
+  contextualHelpProps = {},
+  disabled = false
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -46,7 +47,6 @@ export const CheckboxGroup = ({
   const opts = useMemo(() => filterOptions(options), [options, filterOptions]);
 
   const classes = useStyles();
-
   return (
     <FormControl classes={{ root: classes.formControlRoot }} className="formControl">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
@@ -74,6 +74,7 @@ export const CheckboxGroup = ({
                 value={extractValue(item)}
                 label={extractLabel(item)}
                 onSelect={onSelect}
+                disabled={disabled}
                 checked={(field.value || []).includes(extractValue(item))}
                 classes={extendedClasses}
               />

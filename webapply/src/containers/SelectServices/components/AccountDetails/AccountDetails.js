@@ -31,7 +31,13 @@ const accountDetailsSchema = Yup.object({
   receiveInterest: Yup.bool()
 });
 
-export const AccountDetailsComponent = ({ goToNext, createFormChangeHandler, islamicBanking }) => {
+export const AccountDetailsComponent = ({
+  goToNext,
+  createFormChangeHandler,
+  islamicBanking,
+  //ro-assist-brd3-17
+  isExpress
+}) => {
   const classes = useStyles();
 
   return (
@@ -55,6 +61,7 @@ export const AccountDetailsComponent = ({ goToNext, createFormChangeHandler, isl
             path={`prospect.accountInfo[${INITIAL_INDEX}].accountCurrencies`}
             infoTitle={INFO_TITLE}
             component={CheckboxGroup}
+            disabled={isExpress}
             options={DATA_CURRENCIES}
             classes={{ root: classes.radioButtonRoot }}
             contextualHelpProps={{ isDisableHoverListener: false }}
