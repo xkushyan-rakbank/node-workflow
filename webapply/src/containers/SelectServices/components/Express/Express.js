@@ -17,7 +17,7 @@ import { NotificationsManager } from "../../../../components/Notification";
 import { ICONS } from "../../../../components/Icons";
 import { ErrorMessage } from "../../../../components/Notifications";
 import { InfoTitle } from "../../../../components/InfoTitle";
-import declinedRegular from "../../../../assets/gif/declined_regular.gif";
+import expressService from "../../../../assets/images/ExpressService.png";
 
 const expressCharges = 400;
 const texts = [
@@ -89,7 +89,7 @@ export const ExpressServicesComponent = ({
         <Form>
           <Grid container spacing={3} className={classes.flexContainer}>
             <Grid item sm={2} xs={12} className={classes.imgContainer}>
-              <img width={70} height={70} src={declinedRegular} alt="SuccessStakeholder" />
+              <img width={100} height={100} src={expressService} alt="SuccessStakeholder" />
             </Grid>
             <Grid item sm={10} xs={12}>
               <div className={classes.title}>

@@ -80,7 +80,7 @@ export const useStyles = makeStyles({
     marginBottom: "0px"
   },
   imgContainer: {
-    marginTop: "5px",
+    marginTop: "16px",
     display: "flex",
     justifyContent: "center"
   }
