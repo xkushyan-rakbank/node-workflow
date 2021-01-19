@@ -51,5 +51,25 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     justifyContent: "flex-end",
     margin: "40px 0"
+  },
+  dnfbpStyle: {
+    fontWeight: "normal",
+    marginBottom: "0px",
+    marginTop: "0px"
+  },
+  dnfbpTitleWrapper: {
+    margin: "15px 0",
+    display: "flex",
+    alignItems: "center"
+  },
+  dnfbpHelp: {
+    marginLeft: "5px",
+    fontSize: "12px",
+    textDecoration: "underline",
+    textTransform: "none"
+  },
+  iconSize: {
+    width: "24px",
+    height: "24px"
   }
 }));

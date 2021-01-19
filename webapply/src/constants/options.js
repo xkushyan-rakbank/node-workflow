@@ -12,3 +12,18 @@ export const yesNoOptions = [
     label: "No"
   }
 ];
+
+export const enumYesNoOptions = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: "No",
+    label: "No"
+  }
+];

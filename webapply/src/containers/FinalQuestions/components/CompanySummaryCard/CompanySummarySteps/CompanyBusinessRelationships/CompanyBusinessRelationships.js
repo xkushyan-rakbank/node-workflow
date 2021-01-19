@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import uniqueId from "lodash/uniqueId";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 import {
   Input,
   Checkbox,
   SelectAutocomplete,
-  AutoSaveField as Field
+  AutoSaveField as Field,
+  InlineRadioGroup
 } from "../../../../../../components/Form";
 import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
 import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
@@ -21,7 +24,10 @@ import {
   initialTopOriginGoodsCountries,
   initialTopSuppliers,
   MAX_BANK_NAME_LENGTH,
-  MAX_COMPANY_NAME_LENGTH
+  MAX_COMPANY_NAME_LENGTH,
+  IS_DNFBP_INFO_VISITED,
+  NONE_VISITED,
+  dnfbpInfoContent
 } from "./constants";
 import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../../utils/validation";
 import {
@@ -30,6 +36,10 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { enumYesNoOptions, yesNoOptions } from "../../../../../../constants/options";
+import { ContexualHelp, ContextualDnfbpHelp } from "../../../../../../components/Notifications";
+import { NotificationsManager } from "../../../../../../components/Notification";
+import { Icon, ICONS } from "../../../../../../components/Icons";
 
 const companyBusinessRelationshipsSchema = () =>
   Yup.object().shape({
@@ -82,7 +92,14 @@ const companyBusinessRelationshipsSchema = () =>
           })
         )
       })
-    })
+    }),
+    dnfbpField: Yup.string()
+      .required("Field Is your company dealing in Designated Business Categories is not filled")
+      .oneOf(
+        ["Yes", "No"],
+        "Field Is your company dealing in Designated Business Categories is not filled"
+      ),
+    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled")
   });
 
 export const CompanyBusinessRelationshipsComponent = ({
@@ -98,6 +115,23 @@ export const CompanyBusinessRelationshipsComponent = ({
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
 
+  const [isLinkVisited, setIsLinkVisited] = useState(NONE_VISITED);
+  const [open, setOpen] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+    setIsLinkVisited(IS_DNFBP_INFO_VISITED);
+  };
+
+  const handleShowNotification = useCallback(
+    () => !isLinkVisited && NotificationsManager && NotificationsManager.add(dnfbpInfoContent),
+    [isLinkVisited]
+  );
+
   return (
     <Formik
       initialValues={{
@@ -112,7 +146,9 @@ export const CompanyBusinessRelationshipsComponent = ({
         otherBankingRelationshipsInfo: {
           otherBankingRelationshipsExist: false,
           otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
-        }
+        },
+        dnfbpField: "na",
+        isCompanyUSEntity: ""
       }}
       onSubmit={handleContinue}
       validationSchema={companyBusinessRelationshipsSchema}
@@ -473,6 +509,103 @@ export const CompanyBusinessRelationshipsComponent = ({
                 </>
               )}
             </FieldArray>
+            <div className={classes.divider} />
+            <h4 className={classes.groupLabel}>Deals In Designated Business Categories</h4>
+            <Grid container spacing={3}>
+              <Grid item sm={8} xs={12}>
+                <h5 className={classes.groupLabel}>
+                  Is your company dealing in Designated Business Categories?
+                </h5>
+                <h6 className={classes.dnfbpStyle}>
+                  <i>
+                    Kindly click on Need more Information and read carefully before you make a
+                    selection
+                  </i>
+                </h6>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <div className={classes.dnfbpTitleWrapper}>
+                  {
+                    <ClickAwayListener onClickAway={handleTooltipClose}>
+                      <div>
+                        <ContextualDnfbpHelp
+                          title={
+                            <>
+                              Dealing in precious metals/precious stones/real estate or any
+                              commercial and/or financial transactions/ operations,on behalf of /for
+                              benefit of, our and/or potentila clients, business/trade/ professional
+                              counterparts, and/ortheir beneficial owners
+                            </>
+                          }
+                          placement="right"
+                          isDisableHoverListener={true}
+                          onClose={handleTooltipClose}
+                          open={open}
+                        >
+                          <Button onClick={handleTooltipOpen}>
+                            <span className={classes.questionIcon}>
+                              <Icon name={ICONS.info} alt="info" className={classes.iconSize} />
+                            </span>
+                            <span className={classes.dnfbpHelp}>Need More information</span>
+                          </Button>
+                        </ContextualDnfbpHelp>
+                      </div>
+                    </ClickAwayListener>
+                  }
+                </div>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+              <div onClick={handleShowNotification}>
+                <Field
+                  name="dnfbpField"
+                  path={"prospect.orgKYCDetails.dnfbpField"}
+                  component={InlineRadioGroup}
+                  options={enumYesNoOptions}
+                  InputProps={{
+                    inputProps: { tabIndex: 0, label: "" }
+                  }}
+                  disabled={!isLinkVisited}
+                  exhaustiveDeps={isLinkVisited}
+                />
+              </div>
+            </Grid>
+            <div className={classes.divider} />
+            <h4 className={classes.groupLabel}>US Entity</h4>
+            <Grid container spacing={3}>
+              <Grid item sm={8} xs={12}>
+                <h5 className={classes.groupLabel}>Is your company a US entity?</h5>
+              </Grid>
+              <Grid item sm={4} xs={12}>
+                <ContexualHelp
+                  title={
+                    "You are US entity if - company is incorporated in US, or holding mailing address of US"
+                  }
+                  placement="right"
+                  isDisableHoverListener={false}
+                  // onClose=""
+                  // open=""
+                >
+                  <Button>
+                    <span className={classes.questionIcon}>
+                      <Icon name={ICONS.info} alt="info" className={classes.iconSize} />
+                    </span>
+                    <span className={classes.dnfbpHelp}>Need More information</span>
+                  </Button>
+                </ContexualHelp>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3}>
+              <Field
+                name="isCompanyUSEntity"
+                path={"prospect.orgKYCDetails.isCompanyUSEntity"}
+                component={InlineRadioGroup}
+                options={yesNoOptions}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
             <div className={classes.buttonWrapper}>
               <ContinueButton type="submit" />
             </div>
