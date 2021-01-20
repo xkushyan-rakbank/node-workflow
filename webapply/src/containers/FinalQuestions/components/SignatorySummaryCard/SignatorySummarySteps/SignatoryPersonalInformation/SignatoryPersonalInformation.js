@@ -35,7 +35,10 @@ export const createSignatoryPersonalInformationSchema = isSignatory =>
       then: Yup.string()
         .required(getRequiredMessage("Other"))
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
-    })
+    }),
+    //ro-assist-brd3-15
+    countryOfBirth: Yup.string().required(getRequiredMessage("Country of Birth")),
+    placeOfBirth: Yup.string().required(getRequiredMessage("Place of Birth"))
   });
 
 export const SignatoryPersonalInformation = ({
@@ -100,6 +103,7 @@ export const SignatoryPersonalInformation = ({
                 label={"Place of Birth"}
                 placeholder="Place of Birth"
                 component={Input}
+                contextualHelpText="City/Town of Place of Birth"
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}

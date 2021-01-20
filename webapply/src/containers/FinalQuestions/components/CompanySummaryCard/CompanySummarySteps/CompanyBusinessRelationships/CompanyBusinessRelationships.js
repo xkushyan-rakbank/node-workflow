@@ -12,7 +12,8 @@ import {
   Checkbox,
   SelectAutocomplete,
   AutoSaveField as Field,
-  InlineRadioGroup
+  InlineRadioGroup,
+  GlobalIntermediaryID
 } from "../../../../../../components/Form";
 import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
 import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
@@ -27,19 +28,27 @@ import {
   MAX_COMPANY_NAME_LENGTH,
   IS_DNFBP_INFO_VISITED,
   NONE_VISITED,
-  dnfbpInfoContent
+  dnfbpInfoContent,
+  usEntity,
+  financialInstitution,
+  nonFinancialInstitution
 } from "./constants";
-import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../../utils/validation";
+import {
+  SPECIAL_CHARACTERS_REGEX,
+  checkIsTrimmed,
+  GLOBAL_INTERMEDIARY_REGEX
+} from "../../../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
-import { enumYesNoOptions, yesNoOptions } from "../../../../../../constants/options";
+import { enumYesNoOptions } from "../../../../../../constants/options";
 import { ContexualHelp, ContextualDnfbpHelp } from "../../../../../../components/Notifications";
 import { NotificationsManager } from "../../../../../../components/Notification";
 import { Icon, ICONS } from "../../../../../../components/Icons";
+import { InfoTitle } from "../../../../../../components/InfoTitle";
 
 const companyBusinessRelationshipsSchema = () =>
   Yup.object().shape({
@@ -96,10 +105,31 @@ const companyBusinessRelationshipsSchema = () =>
     dnfbpField: Yup.string()
       .required("Field Is your company dealing in Designated Business Categories is not filled")
       .oneOf(
-        ["Yes", "No"],
+        ["yes", "no"],
         "Field Is your company dealing in Designated Business Categories is not filled"
       ),
-    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled")
+    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled"),
+    //ro-assist-brd3-15
+    isFinancialInstitution: Yup.string().oneOf(
+      ["yes", "no"],
+      "Field Is your company a Financial Instituion is not filled"
+    ),
+    isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {
+      is: "no",
+      then: Yup.string().oneOf(
+        ["active", "passive"],
+        "Field Is your company a active or passive Non-Financial Instituion is not filled"
+      )
+    }),
+    globalintermediaryId: Yup.string().when("isFinancialInstitution", {
+      is: "yes",
+      then: Yup.string()
+        .required(getRequiredMessage("Global Intermediary Identification No"))
+        .matches(
+          GLOBAL_INTERMEDIARY_REGEX,
+          getInvalidMessage("Global Intermediary Identification No")
+        )
+    })
   });
 
 export const CompanyBusinessRelationshipsComponent = ({
@@ -132,6 +162,48 @@ export const CompanyBusinessRelationshipsComponent = ({
     [isLinkVisited]
   );
 
+  //ro-assist-brd3-15
+  const lableAndRadio = ({ options, helperText, body, title, infoText, path, fieldName }) => {
+    return (
+      <div>
+        {title && <h4 className={classes.groupLabel}>{title}</h4>}
+        <Grid container spacing={3}>
+          <Grid item sm={8} xs={12}>
+            <h5 className={classes.groupLabel}>{body}</h5>
+            <h6 className={classes.dnfbpStyle}>
+              <i>{infoText}</i>
+            </h6>
+          </Grid>
+          <Grid item sm={4} xs={12} className={classes.dispFlxJustEnd}>
+            <ContexualHelp
+              title={helperText}
+              placement="right"
+              isDisableHoverListener={false}
+              // onClose=""
+              // open=""
+            >
+              <Button className={classes.marginT5}>
+                <Icon name={ICONS.info} alt="info" fill={"#909093"} className={classes.iconSize} />
+                <span className={classes.dnfbpHelp}>Need More information?</span>
+              </Button>
+            </ContexualHelp>
+          </Grid>
+        </Grid>
+        <Grid container className={classes.paddingH12} spacing={3}>
+          <Field
+            name={fieldName}
+            path={path}
+            component={InlineRadioGroup}
+            options={options}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+          />
+        </Grid>
+      </div>
+    );
+  };
+
   return (
     <Formik
       initialValues={{
@@ -148,7 +220,10 @@ export const CompanyBusinessRelationshipsComponent = ({
           otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
         },
         dnfbpField: "na",
-        isCompanyUSEntity: ""
+        isCompanyUSEntity: "",
+        isFinancialInstitution: "na",
+        isNonFinancialInstitution: "na",
+        globalintermediaryId: ""
       }}
       onSubmit={handleContinue}
       validationSchema={companyBusinessRelationshipsSchema}
@@ -523,7 +598,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   </i>
                 </h6>
               </Grid>
-              <Grid item sm={4} xs={12}>
+              <Grid item sm={4} xs={12} className={classes.dispFlxJustEnd}>
                 <div className={classes.dnfbpTitleWrapper}>
                   {
                     <ClickAwayListener onClickAway={handleTooltipClose}>
@@ -542,11 +617,14 @@ export const CompanyBusinessRelationshipsComponent = ({
                           onClose={handleTooltipClose}
                           open={open}
                         >
-                          <Button onClick={handleTooltipOpen}>
-                            <span className={classes.questionIcon}>
-                              <Icon name={ICONS.info} alt="info" className={classes.iconSize} />
-                            </span>
-                            <span className={classes.dnfbpHelp}>Need More information</span>
+                          <Button onClick={handleTooltipOpen} className={classes.marginT5}>
+                            <Icon
+                              name={ICONS.info}
+                              alt="info"
+                              fill={"#909093"}
+                              className={classes.iconSize}
+                            />
+                            <span className={classes.dnfbpHelp}>Need More information?</span>
                           </Button>
                         </ContextualDnfbpHelp>
                       </div>
@@ -555,7 +633,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                 </div>
               </Grid>
             </Grid>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} className={classes.paddingH12}>
               <div onClick={handleShowNotification}>
                 <Field
                   name="dnfbpField"
@@ -571,44 +649,52 @@ export const CompanyBusinessRelationshipsComponent = ({
               </div>
             </Grid>
             <div className={classes.divider} />
-            <h4 className={classes.groupLabel}>US Entity</h4>
-            <Grid container spacing={3}>
-              <Grid item sm={8} xs={12}>
-                <h5 className={classes.groupLabel}>Is your company a US entity?</h5>
+            {/* ro-assist-brd3-15 */}
+            {lableAndRadio(usEntity)}
+            <div className={classes.divider} />
+            {lableAndRadio(financialInstitution)}
+            {values.isFinancialInstitution === "no" && lableAndRadio(nonFinancialInstitution)}
+            {values.isFinancialInstitution === "yes" && (
+              <Grid container className={classes.flexContainer}>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name={"globalintermediaryId"}
+                    path={"prospect.orgKYCDetails.globalintermediaryId"}
+                    component={GlobalIntermediaryID}
+                    contextualHelpText={
+                      <>
+                        GIIN is a Global Intermediary Identification Number assigned by the FATCA
+                        Registration System to financial institutions and direct reporting
+                        non-financial foreign entities
+                        <br />
+                        If Number contains hyphen (.), spaces or any other special character please
+                        enter only alphabets and numbers
+                      </>
+                    }
+                  />
+                </Grid>
               </Grid>
-              <Grid item sm={4} xs={12}>
-                <ContexualHelp
-                  title={
-                    "You are US entity if - company is incorporated in US, or holding mailing address of US"
-                  }
-                  placement="right"
-                  isDisableHoverListener={false}
-                  // onClose=""
-                  // open=""
-                >
-                  <Button>
-                    <span className={classes.questionIcon}>
-                      <Icon name={ICONS.info} alt="info" className={classes.iconSize} />
-                    </span>
-                    <span className={classes.dnfbpHelp}>Need More information</span>
-                  </Button>
-                </ContexualHelp>
-              </Grid>
-            </Grid>
-            <Grid container spacing={3}>
-              <Field
-                name="isCompanyUSEntity"
-                path={"prospect.orgKYCDetails.isCompanyUSEntity"}
-                component={InlineRadioGroup}
-                options={yesNoOptions}
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
-                }}
+            )}
+            <Grid
+              className={classes.continueButtonContainer}
+              container
+              direction="row"
+              justify="space-between"
+            >
+              <InfoTitle
+                title={
+                  <span>
+                    <i>RAKBANK</i> does not provide any accounting, tax, regulatory or legal advice
+                    and shall not be liable or responsible for any incorrect information provided by
+                    you. You should consult your professional financial, legal and tax advisors
+                    before submitting the information.
+                  </span>
+                }
               />
+              <span className={classes.continueBtn}>
+                <ContinueButton type="submit" />
+              </span>
             </Grid>
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
           </Form>
         );
       })}

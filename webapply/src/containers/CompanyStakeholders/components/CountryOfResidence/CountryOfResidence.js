@@ -128,7 +128,7 @@ const CountryOfResidenceStep = ({
                   label="I have US relation"
                   onChange={preferredMailingAddress}
                   contextualHelpProps={{ isDisableHoverListener: false, placement: "bottom-end" }}
-                  contextualHelpText="Please select your answer"
+                  contextualHelpText="You have relation with US if - You are a US national / Resident of the USA / Holder of a US Green Card / Tax Resident of US"
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}
