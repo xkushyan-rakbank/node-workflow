@@ -5,7 +5,7 @@ import MaskedInput from "react-text-mask";
 import { Input } from "./Input";
 
 // prettier-ignore
-const MASK = [/[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, ".", /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/, ".", /[A-z,0-9]/, /[A-z,0-9]/, ".", /[A-z,0-9]/, /[A-z,0-9]/, /[A-z,0-9]/];
+const MASK = [/[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, ".", /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, ".", /[A-z0-9]/, /[A-z0-9]/, ".", /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/];
 
 const TextMask = ({ inputRef, ...rest }) => (
   <MaskedInput
