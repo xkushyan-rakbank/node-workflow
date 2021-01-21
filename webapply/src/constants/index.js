@@ -148,7 +148,14 @@ export const screeningStatus = [
   {
     error: "not Eligible",
     screeningType: "RAK-Starter Account Validation",
-    link: true
+    link: true,
+    //ro-assist-brd2-3
+    buttons: [
+      {
+        link: routes.currentAccount,
+        label: "Open Current Account"
+      }
+    ]
   },
   {
     error: "Not Registered In UAE",

@@ -28,11 +28,10 @@ export const useStyles = makeStyles({
   },
   appStatusLink: {
     color: "#373737",
-    width: 120,
     border: "solid 1px #373737",
-    padding: "3px 0",
+    padding: "3px 9px",
     fontSize: 14,
-    margin: "20px auto 0",
+    margin: "5px",
     borderRadius: 21,
     display: "block",
     transition: "all 0.2s ease",
@@ -40,5 +39,10 @@ export const useStyles = makeStyles({
       backgroundColor: "#373737",
       color: "#fff"
     }
+  },
+  linkWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

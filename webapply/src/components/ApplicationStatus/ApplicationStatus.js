@@ -4,7 +4,18 @@ import routes from "../../routes";
 import { useStyles } from "./styled";
 import { UploadLimitComponent } from "../../containers/UploadDocuments/components/UploadLimit/UploadLimit";
 
-export const ApplicationStatus = ({ icon, text, link, screeningType = "" }) => {
+//ro-assist-brd2-3
+const accountComparisionRoute = {
+  link: routes.accountsComparison,
+  label: "See products"
+};
+export const ApplicationStatus = ({
+  icon,
+  text,
+  link,
+  screeningType = "",
+  buttons = [accountComparisionRoute]
+}) => {
   const classes = useStyles();
 
   return (
@@ -16,10 +27,15 @@ export const ApplicationStatus = ({ icon, text, link, screeningType = "" }) => {
           <img src={icon} alt="error" />
           <div className={classes.message}>
             <p>{text}</p>
+            {/* ro-assist-brd2-3 */}
             {link && (
-              <Link to={routes.accountsComparison} className={classes.appStatusLink}>
-                See products
-              </Link>
+              <div className={classes.linkWrapper}>
+                {buttons.map((btn, index) => (
+                  <Link key={index} to={btn.link} className={classes.appStatusLink}>
+                    {btn.label}
+                  </Link>
+                ))}
+              </div>
             )}
           </div>
         </div>

@@ -27,7 +27,7 @@ export const servicesSteps = [
     step: STEP_1,
     title: "Express Service (for AED Accounts only*)",
     component: ExpressServices,
-    icon: ICONS.accountDetails,
+    icon: ICONS.bolt,
     eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
   },
   {

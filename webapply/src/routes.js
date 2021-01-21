@@ -21,5 +21,7 @@ export default {
   login: `${agentBaseName}/Login`,
   SubmitApplication: `${smeBaseName}/SubmitApplication`,
   SearchedAppInfo: `${agentBaseName}/SearchedAppInfo/:id`,
-  inviteCustomer: `${agentBaseName}/InviteCustomer`
+  inviteCustomer: `${agentBaseName}/InviteCustomer`,
+  //ro-assist-brd2-3
+  currentAccount: `${smeBaseName}/accounts/current-account`
 };
