@@ -45,6 +45,9 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
 export const getApplicantFullName = state => getApplicantInfo(state).fullName;
 
+// ro-assist-brd3-3
+export const getValidRoCode = state => getApplicantInfo(state).validRoCode || false;
+
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
@@ -56,6 +59,12 @@ export const getRakValuePackage = state => getApplicationInfo(state).rakValuePac
 export const getDocuments = state => getProspect(state).documents || {};
 
 export const getCompanyDocuments = state => getDocuments(state).companyDocuments || [];
+
+export const getCompanyBankStatements = state => getDocuments(state).companyBankStatements || [];
+
+export const getCompanyAddressProof = state => getDocuments(state).companyAddressProof || [];
+
+export const getCompanyInvoices = state => getDocuments(state).companyInvoices || [];
 
 export const getDocumentUploadCnt = state => {
   const companyDocuments = getCompanyDocuments(state);
@@ -74,6 +83,11 @@ export const checkIfRequiredDocsUploaded = docs =>
   docs.length && docs.filter(doc => doc.required).every(doc => doc.uploadStatus === UPLOADED);
 
 export const getIsRequiredDocsUploaded = state => {
+  // ro-assist-brd3-3 starts
+  if (getValidRoCode(state)) {
+    return true;
+  }
+  // // ro-assist-brd3-3 end
   const { companyDocuments, stakeholdersDocuments } = getDocuments(state);
   const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments || {}).reduce(
     (acc, { documents }) => [...acc, ...documents],
@@ -109,6 +123,10 @@ export const getLeadSource = state => {
   return typeof state.appConfig.leadSource !== "undefined"
     ? state.appConfig.leadSource.productName
     : "";
+};
+
+export const getRoCode = state => {
+  return typeof state.appConfig.roCode !== "undefined" ? state.appConfig.roCode : "";
 };
 
 export const getExpired = state => getAppConfig(state).expired;
