@@ -34,7 +34,8 @@ public class MandatoryVariables {
             "prescreeningUri",
             "authenticateUserUri",
             "getDocumentByTitleUri",
-            "otpUri"));
+            "otpUri",
+            "createInviteUri"));
 
     public static final List<String> OAUTH_URIS_LIST = Collections.singletonList(
             "generateTokenUri");

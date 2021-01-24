@@ -48,6 +48,7 @@ public class ConfigFactory {
         dehURIs.put("updateProspectUri", "/deh-uri");
         dehURIs.put("searchProspectUri", "/deh-uri");
         dehURIs.put("otpUri", "/otp");
+        dehURIs.put("createInviteUri", "/deh-uri");
 
         config.set("DehURIs", dehURIs);
         config.set("BaseURLs", objectMapper.createObjectNode().set("local", objectMapper.createObjectNode().put("DehBaseUrl", "http://deh-test-url")));
@@ -231,6 +232,7 @@ public class ConfigFactory {
                 .put("getProspectDocumentsUri", "getProspectDocumentsUri")
                 .put("uploadDocumentUri", "uploadDocumentUri")
                 .put("otpUri", "otpUri")
+                .put("createInviteUri", "createInviteUri")
         );
 
         return config.set("BaseURLs", objectMapper.createObjectNode()
@@ -321,6 +323,7 @@ public class ConfigFactory {
                 .put("getProspectDocumentsUri", "getProspectDocumentsUri")
                 .put("uploadDocumentUri", "uploadDocumentUri")
                 .put("otpUri", "otpUri")
+                .put("createInviteUri", "createInviteUri")
         );
 
         return config.set("BaseURLs", objectMapper.createObjectNode()

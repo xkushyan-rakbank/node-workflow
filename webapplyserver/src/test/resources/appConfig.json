@@ -62,7 +62,8 @@
     "prescreeningUri": "/banks/RAK/prospects/{prospectId}/screening",
     "authenticateUserUri": "/banks/RAK/users/authenticate",
     "getDocumentByTitleUri": "/banks/RAK/legal/documents/{documentTitle}",
-    "otpUri": "/banks/RAK/otp"
+    "otpUri": "/banks/RAK/otp",
+    "createInviteUri": "/banks/RAK/agent/createInvite"
   },
   "OAuthURIs": {
     "generateTokenUri": "/oauth/token"
