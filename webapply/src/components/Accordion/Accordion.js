@@ -25,16 +25,16 @@ export const Accordion = props => {
     try {
       if (Array.isArray(props)) {
         props.forEach(element => {
-          if (element.props != undefined && element.props.name != undefined) {
+          if (element.props !== undefined && element.props.name !== undefined) {
             labelsConstant.push(element.props.name);
           } else {
-            if (element.props != undefined && element.props.children != undefined) {
+            if (element.props !== undefined && element.props.children !== undefined) {
               extractLabels(element.props.children);
             }
           }
         });
       }
-      if (props.children != undefined) {
+      if (props.children !== undefined) {
         if (Array.isArray(props.children)) {
           extractLabels(props.children);
         } else {
@@ -49,15 +49,17 @@ export const Accordion = props => {
 
   React.useEffect(() => {
     extractLabels(props);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     if (!isEmpty(formik.errors))
       formLabels.forEach(element => {
-        if (formik.errors[element.split(".")[0]] != undefined) {
+        if (formik.errors[element.split(".")[0]] !== undefined) {
           setExpanded(true);
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik]);
 
   return (

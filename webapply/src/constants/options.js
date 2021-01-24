@@ -42,3 +42,10 @@ export const enumYesNoOptions = [
     label: "No"
   }
 ];
+//ro-assist-brd1-5
+export const OthersOption = {
+  code: "Others",
+  displayText: "Others",
+  key: "Others",
+  value: "Others"
+};

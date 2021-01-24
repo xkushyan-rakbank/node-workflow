@@ -9,6 +9,7 @@ const mapStateToProps = (state, { index }) => ({
     "addressInfo[0].addressDetails[0].emirateCity",
     ""
   ),
+  signatoriesNationality: get(getSignatories(state)[index], "kycDetails.nationality", ""),
   signatoriesPoBox: get(getSignatories(state)[index], "addressInfo[0].addressDetails[0].poBox", ""),
   organisationInfo: get(getOrganizationInfo(state), "addressInfo", "")
 });

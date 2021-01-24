@@ -15,7 +15,7 @@ import {
   SelectAutocomplete,
   InlineRadioGroup
 } from "../../../../../../components/Form";
-import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
+import { DEFAULT_SIGNATORY_COUNTRY, MAX_CITY_NAME_LENGTH } from "./constants";
 import {
   MAX_OFFICE_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH,
@@ -29,8 +29,10 @@ import { yesNoOptions } from "./options";
 import { useStyles } from "./styled";
 import { Accordion } from "../../../../../../components/Accordion/Accordion";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
+import { UAE } from "../../../../../../constants";
+import { OthersOption } from "../../../../../../constants/options";
 
-const createSignatoryPreferredMailingAddressSchema = () =>
+const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
   Yup.object().shape({
     addressLine2: Yup.string()
       // eslint-disable-next-line no-template-curly-in-string
@@ -54,17 +56,31 @@ const createSignatoryPreferredMailingAddressSchema = () =>
     isResisdenceOrOfficeAddress: Yup.boolean().required(
       "Please select your preferred mailing address"
     ),
-    homeCountryAddressLine2: Yup.string()
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
-    homeCountryAddressLine1: Yup.string()
-      .required(getRequiredMessage("Flat / Villa / Building"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
-
-    homeCountryAddressCity: Yup.string().required(getRequiredMessage("Emirate/ City"))
+    //ro-assist-brd1-5
+    homeCountryAddressLine3:
+      signatoriesNationality !== UAE &&
+      Yup.string().when("homeCountryAddressCity", {
+        is: value => value === OthersOption.value,
+        then: Yup.string().required(getRequiredMessage("City"))
+      }),
+    homeCountryAddressLine2:
+      signatoriesNationality !== UAE &&
+      Yup.string()
+        .required(getRequiredMessage("Street / Location"))
+        // eslint-disable-next-line no-template-curly-in-string
+        .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
+    homeCountryAddressLine1:
+      signatoriesNationality !== UAE &&
+      Yup.string()
+        .required(getRequiredMessage("Flat / Villa / Building"))
+        // eslint-disable-next-line no-template-curly-in-string
+        .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
+    homeCountryAddressCity:
+      signatoriesNationality !== UAE && Yup.string().required(getRequiredMessage("Emirate/ City")),
+    homeCountryAddressCountry:
+      signatoriesNationality !== UAE && Yup.string().required(getRequiredMessage("Home Country"))
   });
 
 export const SignatoryPreferredMailingAddressComponent = ({
@@ -73,6 +89,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
   createFormChangeHandler,
   signatoriesEmirateCity,
   signatoriesPoBox,
+  signatoriesNationality,
   organisationInfo
 }) => {
   const classes = useStyles();
@@ -114,11 +131,12 @@ export const SignatoryPreferredMailingAddressComponent = ({
         isResisdenceOrOfficeAddress: "",
         homeCountryAddressLine1: "",
         homeCountryAddressLine2: "",
+        homeCountryAddressLine3: "",
         homeCountryAddressCity: "",
-        homeCountryAddressCountry: DEFAULT_SIGNATORY_COUNTRY
+        homeCountryAddressCountry: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={createSignatoryPreferredMailingAddressSchema}
+      validationSchema={() => createSignatoryPreferredMailingAddressSchema(signatoriesNationality)}
       validateOnChange={false}
     >
       {createFormChangeHandler(({ values, setFieldValue }) => {
@@ -320,11 +338,24 @@ export const SignatoryPreferredMailingAddressComponent = ({
                     name="homeCountryAddressCity"
                     path={`${autoSavePathBase_HomeCountryAdd}.emirateCity`}
                     datalistId="emirateCity"
+                    addOthers={true}
                     label="Emirate/ City"
                     isSearchable
                     component={SelectAutocomplete}
                     tabIndex="3"
                   />
+                  {/* ro-assist-brd1-5 */}
+                  {values.homeCountryAddressCity === OthersOption.value && (
+                    <Field
+                      name="homeCountryAddressLine3"
+                      label="Enter your Home Country City"
+                      path={`${autoSavePathBase_HomeCountryAdd}.addressLine3`}
+                      component={Input}
+                      InputProps={{
+                        inputProps: { maxLength: MAX_CITY_NAME_LENGTH, tabIndex: 0 }
+                      }}
+                    />
+                  )}
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <Field

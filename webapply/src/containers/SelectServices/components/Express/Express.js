@@ -34,9 +34,9 @@ const texts = [
 
 const termConditionLinks = {
   [CONVENTIONAL]:
-    "https://revamp.rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29+J00781+RAK++Debit+Card+-+Bisiness+A4-T%26C-New+Guide-EN%26AR%28withe+out+c....pdf?MOD=AJPERES&CVID=lTLVCHV",
+    "https://revamp.rakbank.ae/wps/wcm/connect/fd988245-f58a-44f5-ac54-a531c6cbc65c/EXPRESS+%28AED%29+SERVICE+TERMS+%26+CONDITIONS.PDF?MOD=AJPERES",
   [ISLAMIC]:
-    "https://revamp.rakbank.ae/wps/wcm/connect/32cb9ff6-706a-489b-98fb-55d639b97c16/%28K%29+J00203+-+Debit+Card+T%26C+Business+A4+02.04.17.pdf?MOD=AJPERES&CVID=IQ7xQCk"
+    "https://revamp.rakbank.ae/wps/wcm/connect/fd988245-f58a-44f5-ac54-a531c6cbc65c/EXPRESS+%28AED%29+SERVICE+TERMS+%26+CONDITIONS.PDF?MOD=AJPERES"
 };
 
 const termsMessageContent = {

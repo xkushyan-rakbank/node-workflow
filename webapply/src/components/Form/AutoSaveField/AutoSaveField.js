@@ -7,6 +7,7 @@ import isEqual from "lodash/isEqual";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
 import { getDatalist } from "../../../store/selectors/appConfig";
+import { OthersOption } from "../../../constants/options";
 
 export const AutoSaveField = ({
   name,
@@ -17,6 +18,7 @@ export const AutoSaveField = ({
   filterOptions = option => option,
   changeProspect = prospect => prospect,
   initialValue = "",
+  addOthers = false,
   ...rest
 }) => {
   const dispatch = useDispatch();
@@ -46,6 +48,13 @@ export const AutoSaveField = ({
         setFieldValue(name, value);
       }
       setIsLoadedDefaultValueFromStore(true);
+    }
+    //ro-assist-brd1-5
+    if (
+      addOthers === true &&
+      datalist[datalistId][datalist[datalistId].length - 1].code !== "Others"
+    ) {
+      datalist[datalistId].push(OthersOption);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
