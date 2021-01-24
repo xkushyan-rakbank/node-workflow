@@ -127,7 +127,7 @@ public class WebApplyController {
         return response.body(dehResponse.getBody());
     }
     
-    //Added for ro-assist-brd1
+    //Added below method for ro-assist-brd1-1 - CreateInvite DEH call
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/agent/createInvite", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Object> createInvite(@AuthenticationPrincipal JwtPayload jwtPayload,@RequestBody JsonNode jsonNode){
