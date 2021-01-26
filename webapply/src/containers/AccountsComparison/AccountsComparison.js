@@ -12,15 +12,22 @@ import { DEFAULT_REFERRAL_NAME } from "../../constants";
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
- 
-export const AccountsComparisonContainer = ({ servicePricingGuideUrl, setProspectLead }) => {
+
+export const AccountsComparisonContainer = ({
+  servicePricingGuideUrl,
+  setProspectLead,
+  setRoCode
+}) => {
   let query = useQuery();
   useEffect(() => {
     let referralName = query.get("product-name");
     if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     setProspectLead(leadInfo);
-  }, []);
+    let roCode = query.get("agentCode");
+    if (!roCode) roCode = "";
+    setRoCode(roCode);
+  }, [query, setRoCode, setProspectLead]);
 
   const { setCurrentSection, currentSectionIndex } = useContext(VerticalPaginationContext);
   useFormNavigation([true, false, [], !!currentSectionIndex]);

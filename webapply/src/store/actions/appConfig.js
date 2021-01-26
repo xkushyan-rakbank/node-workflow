@@ -16,6 +16,7 @@ export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
 export const LOAD_META_DATA = "LOAD_META_DATA";
 export const SET_PROSPECT_LEAD = "SET_PROSPECT_LEAD";
 export const SET_EXPIRED = "SET_EXPIRED";
+export const SET_RO_CODE = "SET_RO_CODE";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -74,6 +75,10 @@ export const resetApplicantInfo = () => ({ type: RESET_APPLICANT_INFO });
 
 export const setProspectLead = payload => {
   return { type: SET_PROSPECT_LEAD, payload };
+};
+
+export const setRoCode = payload => {
+  return { type: SET_RO_CODE, payload };
 };
 
 export const setExpired = expired => ({ type: SET_EXPIRED, payload: expired });

@@ -20,7 +20,8 @@ import {
   getIsIslamicBanking,
   getAccountType,
   getProspect,
-  getLeadSource
+  getLeadSource,
+  getRoCode
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -52,6 +53,7 @@ export function* receiveAppConfigSaga() {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicantInfo.LeadSource = yield select(getLeadSource);
+      newConfig.prospect.applicantInfo.roCode = yield select(getRoCode);
       newConfig.prospect.applicationInfo.accountType = yield select(getAccountType);
       newConfig.prospect.applicationInfo.islamicBanking = yield select(getIsIslamicBanking);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;

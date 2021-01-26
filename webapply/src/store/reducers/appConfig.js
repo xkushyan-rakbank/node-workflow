@@ -15,7 +15,8 @@ import {
   RESET_PROSPECT,
   RESET_APPLICANT_INFO,
   SET_PROSPECT_LEAD,
-  SET_EXPIRED
+  SET_EXPIRED,
+  SET_RO_CODE
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -139,6 +140,10 @@ export default handleActions(
     [SET_EXPIRED]: (state, action) => ({
       ...state,
       expired: action.payload
+    }),
+    [SET_RO_CODE]: (state, action) => ({
+      ...state,
+      roCode: action.payload
     })
   },
   initialState

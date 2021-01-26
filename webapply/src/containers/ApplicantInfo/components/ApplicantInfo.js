@@ -2,6 +2,7 @@ import React from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { Grid } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
 
 import {
   AutoSaveField as Field,
@@ -19,6 +20,7 @@ import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { NAME_REGEX } from "../../../utils/validation";
+import { InfoCard } from "./InfoCard";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -39,7 +41,9 @@ const initialValues = {
   fullName: "",
   email: "",
   countryCode: UAE_CODE,
-  mobileNo: ""
+  mobileNo: "",
+  roCode: "",
+  allianceCode: ""
 };
 
 export const ApplicantInfoComponent = ({
@@ -130,17 +134,61 @@ export const ApplicantInfoComponent = ({
             </InputGroup>
           )}
 
-          <Grid container direction="row" justify="space-between" alignItems="center">
-            {isRecaptchaEnable && (
-              <ErrorBoundaryForReCaptcha>
-                <ReCaptcha
-                  onVerify={handleReCaptchaVerify}
-                  onExpired={handleVerifiedFailed}
-                  onError={handleVerifiedFailed}
-                  reCaptchaSiteKey={reCaptchaSiteKey}
+          {isRecaptchaEnable && (
+            <Grid container>
+              <Box mb="24px">
+                <ErrorBoundaryForReCaptcha className="recaptchaPos">
+                  <ReCaptcha
+                    onVerify={handleReCaptchaVerify}
+                    onExpired={handleVerifiedFailed}
+                    onError={handleVerifiedFailed}
+                    reCaptchaSiteKey={reCaptchaSiteKey}
+                  />
+                </ErrorBoundaryForReCaptcha>
+              </Box>
+            </Grid>
+          )}
+
+          <Grid container spacing={3}>
+            <Grid item sm={6} xs={12}>
+              {isConfigLoading ? (
+                <SkeletonLoader />
+              ) : (
+                <Field
+                  name="roCode"
+                  path="prospect.applicantInfo.roCode"
+                  label="Agent Code (Optional)"
+                  placeholder="Agent Code"
+                  component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
                 />
-              </ErrorBoundaryForReCaptcha>
-            )}
+              )}
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              {isConfigLoading ? (
+                <SkeletonLoader />
+              ) : (
+                <Field
+                  name="allianceCode"
+                  path="prospect.applicantInfo.allianceCode"
+                  label="Partner Code (Optional)"
+                  placeholder="Partner Code"
+                  component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                />
+              )}
+            </Grid>
+            <Grid item sm={5} xs={12}>
+              <InfoCard message="You only need to enter this if you have received it from a RAKBANK sales agent." />
+            </Grid>
+          </Grid>
+
+          <Grid container direction="row" justify="flex-end" alignItems="center">
+            {/* message */}
             <div className="linkContainer">
               <BackLink
                 path={

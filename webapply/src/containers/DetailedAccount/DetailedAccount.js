@@ -22,7 +22,7 @@ export const DetailedAccount = () => {
     if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     dispatch(setProspectLead(leadInfo));
-  }, []);
+  }, [dispatch, query]);
 
   const selectedAccountType = useSelector(getAccountType);
   const { accountType, isIslamicBanking } = useAccountTypeByPathname();
