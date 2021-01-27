@@ -18,6 +18,7 @@ import {
   ReCaptchaError,
   FieldsValidationError
 } from "./serverErrors";
+import { endpoints } from "../constants/config";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
@@ -113,7 +114,7 @@ apiClient.interceptors.response.use(
     const {
       data,
       status,
-      config: { symKey }
+      config: { symKey, url }
     } = error.response;
 
     let jsonData = data;
@@ -138,6 +139,7 @@ apiClient.interceptors.response.use(
 
     let notificationOptions = {};
     let serverError = null;
+    const ignoreNotificationUrls = [endpoints.createInviteUri];
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
@@ -152,6 +154,9 @@ apiClient.interceptors.response.use(
         };
       } else if (HANDLED_ERROR_CODES.includes(get(errors, "[0].errorCode"))) {
         serverError = new ErrorOccurredWhilePerforming(jsonData);
+        notificationOptions = null;
+      } else if (ignoreNotificationUrls.includes(url)) {
+        // ro-assist-brd3-1
         notificationOptions = null;
       } else {
         log(jsonData);

@@ -33,7 +33,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
       <Formik
         initialValues={{ fullName: "", email: "" }}
         validationSchema={inviteSchema}
-        validateOnChange={true}
+        validateOnChange={false}
         onSubmit={submitForm}
       >
         {({ values }) => (

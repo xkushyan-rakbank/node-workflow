@@ -5,6 +5,7 @@ import { agentFormStepper } from "../../../constants";
 import { NotificationsManager } from "../../../components/Notification";
 import { ICONS } from "../../../components/Icons";
 
+// ro-assist-brd3-1
 export const InviteCustomer = ({ invite }) => {
   useFormNavigation([false, false, agentFormStepper, true, true]);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +25,12 @@ export const InviteCustomer = ({ invite }) => {
           setIsLoading(false);
         },
         err => {
+          const errorMessageContent = {
+            message: "Send Invite has failed. Please retry!",
+            title: "",
+            icon: ICONS.info
+          };
+          NotificationsManager.add(errorMessageContent);
           setIsLoading(false);
         }
       );
