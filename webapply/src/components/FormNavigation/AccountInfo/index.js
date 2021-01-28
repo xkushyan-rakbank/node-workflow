@@ -38,21 +38,24 @@ export const AccountInfo = props => {
 
   const handleStart = useCallback(() => {
     dispatch(resetApplicantInfo());
-    pushHistory(routes.applicantInfo);
+    goto(routes.applicantInfo);
   }, [dispatch, pushHistory]);
 
+  //ro-assist-brd3-16
+  const goto = useCallback(
+    url => {
+      if (queryParams) {
+        pushHistory(url + queryParams);
+      } else {
+        pushHistory(url);
+      }
+    },
+    [pushHistory]
+  );
+
   const handleApply = useCallback(() => {
-    if (queryParams) {
-      pushHistory(
-        applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL] +
-          queryParams
-      );
-    } else {
-      pushHistory(
-        applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]
-      );
-    }
-  }, [pushHistory, accountType, isIslamicBanking]);
+    goto(applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]);
+  }, [accountType, isIslamicBanking]);
 
   const isHideTitleOnSmBreakpoint = [
     routes.comeBackLogin,
