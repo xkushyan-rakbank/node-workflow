@@ -24,8 +24,7 @@ export const AccountsComparisonContainer = ({
     if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     setProspectLead(leadInfo);
-    let roCode = query.get("agentCode");
-    if (!roCode) roCode = "";
+    let roCode = query.get("rocode") ? query.get("rocode") : "";
     setRoCode(roCode);
   }, [query, setRoCode, setProspectLead]);
 

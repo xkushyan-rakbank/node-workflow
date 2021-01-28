@@ -19,7 +19,7 @@ import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 
 import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
-import { NAME_REGEX } from "../../../utils/validation";
+import { NAME_REGEX, NUMBER_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 
 const aplicantInfoSchema = Yup.object({
@@ -34,7 +34,8 @@ const aplicantInfoSchema = Yup.object({
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
-    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" }),
+  roCode: Yup.string().matches(NUMBER_REGEX, getInvalidMessage("Agent Code"))
 });
 
 //ro-assist-brd3-16

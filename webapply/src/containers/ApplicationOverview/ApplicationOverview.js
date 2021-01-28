@@ -19,7 +19,7 @@ export const ApplicationOverview = () => {
     if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
     const leadInfo = { productName: referralName };
     dispatch(setProspectLead(leadInfo));
-    let roCode = query.get("agentCode") ? query.get("agentCode") : "";
+    let roCode = query.get("rocode") ? query.get("rocode") : "";
     dispatch(setRoCode(roCode));
   }, [dispatch, query]);
 
