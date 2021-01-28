@@ -3,7 +3,7 @@ export const yesNoOptions = [
       code: "Yes",
       key: "Yes",
       value: true,
-      label: "Resisdence Address"
+      label: "Residence Address"
     },
     {
       code: "No",

@@ -3,10 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   flexContainer: {
-    padding: "10px"
+    padding: "25px 25px 10px"
   },
   buttonWrapper: {
-    margin: "30px 0 40px 0"
+    margin: "20px 0"
   },
   subtitleBranch: {
     marginBottom: "20px"
@@ -21,8 +21,12 @@ export const useStyles = makeStyles({
   radioButtonRoot: {
     width: "calc(50% - 20px)"
   },
-  title: {
-    fontSize: "16px"
+  titleContainer: {
+    fontSize: "16px",
+    paddingBottom: "1px"
+  },
+  bodyContainer: {
+    fontSize: "14px"
   },
   icon: {
     display: "flex",
@@ -44,8 +48,7 @@ export const useStyles = makeStyles({
   },
   name: {
     fontWeight: 600,
-    textAlign: "left",
-    paddingBottom: "10px"
+    textAlign: "left"
   },
   link: {
     color: "#000",
@@ -83,5 +86,9 @@ export const useStyles = makeStyles({
     marginTop: "16px",
     display: "flex",
     justifyContent: "center"
+  },
+  logo: {
+    height: "90px",
+    width: "110px"
   }
 });

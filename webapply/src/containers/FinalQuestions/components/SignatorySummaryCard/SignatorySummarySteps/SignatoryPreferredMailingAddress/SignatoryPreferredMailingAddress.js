@@ -53,7 +53,7 @@ const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
     officeAddrsPoBox: Yup.string()
       .required(getRequiredMessage("Office address PO Box Number"))
       .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Office address PO Box Number")),
-    isResisdenceOrOfficeAddress: Yup.boolean().required(
+    isResidenceOrOfficeAddress: Yup.boolean().required(
       "Please select your preferred mailing address"
     ),
     //ro-assist-brd1-5
@@ -108,9 +108,9 @@ export const SignatoryPreferredMailingAddressComponent = ({
     prospect[`${autoSavePathBase}.preferredAddress`] = value ? "Yes" : "No";
     prospect[`${autoSavePathBase_OfficeAdd}.preferredAddress`] = value ? "No" : "Yes";
     dispatch(updateProspect(prospect));
-    setFieldValue("isResisdenceOrOfficeAddress", value);
+    setFieldValue("isResidenceOrOfficeAddress", value);
     if (value) {
-      setFieldValue("signoPreferredMailingAddrs", "Resisdence Address");
+      setFieldValue("signoPreferredMailingAddrs", "Residence Address");
     } else {
       setFieldValue("signoPreferredMailingAddrs", "Office Address");
     }
@@ -128,7 +128,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
         officeAddrsPoBox: "",
         officeAddrsCountry: DEFAULT_SIGNATORY_COUNTRY,
         country: DEFAULT_SIGNATORY_COUNTRY,
-        isResisdenceOrOfficeAddress: "",
+        isResidenceOrOfficeAddress: "",
         homeCountryAddressLine1: "",
         homeCountryAddressLine2: "",
         homeCountryAddressLine3: "",
@@ -308,11 +308,11 @@ export const SignatoryPreferredMailingAddressComponent = ({
             </Accordion>
             <Grid container>
               <Field
-                name="isResisdenceOrOfficeAddress"
+                name="isResidenceOrOfficeAddress"
                 component={InlineRadioGroup}
                 path={`${autoSavePathBase}.signoPreferredMailingAddrs`}
                 options={yesNoOptions}
-                label="Please select perferred mailing address"
+                label="Please select preferred mailing address"
                 onChange={preferredMailingAddress}
                 contextualHelpProps={{ isDisableHoverListener: false, placement: "bottom-end" }}
                 contextualHelpText="Please select your preferred mailing address"

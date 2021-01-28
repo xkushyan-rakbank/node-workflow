@@ -108,18 +108,23 @@ const companyBusinessRelationshipsSchema = () =>
         ["yes", "no"],
         "Field Is your company dealing in Designated Business Categories is not filled"
       ),
-    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled"),
+    isCompanyUSEntity: Yup.string()
+      .required("Field Is your company a US entity is not filled")
+      .oneOf(["yes", "no"], "Field Is your company a US entity is not filled"),
     //ro-assist-brd3-15
-    isFinancialInstitution: Yup.string().oneOf(
-      ["yes", "no"],
-      "Field Is your company a Financial Instituion is not filled"
-    ),
+    isFinancialInstitution: Yup.string()
+      .required("Field Is your company a Financial Instituion is not filled")
+      .oneOf(["yes", "no"], "Field Is your company a Financial Instituion is not filled"),
     isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {
       is: "no",
-      then: Yup.string().oneOf(
-        ["active", "passive"],
-        "Field Is your company a active or passive Non-Financial Instituion is not filled"
-      )
+      then: Yup.string()
+        .required(
+          "Field Is your company a active or passive Non-Financial Instituion is not filled"
+        )
+        .oneOf(
+          ["active", "passive"],
+          "Field Is your company a active or passive Non-Financial Instituion is not filled"
+        )
     }),
     globalintermediaryId: Yup.string().when("isFinancialInstitution", {
       is: "yes",
@@ -220,7 +225,7 @@ export const CompanyBusinessRelationshipsComponent = ({
           otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
         },
         dnfbpField: "na",
-        isCompanyUSEntity: "",
+        isCompanyUSEntity: false,
         isFinancialInstitution: "na",
         isNonFinancialInstitution: "na",
         globalintermediaryId: ""

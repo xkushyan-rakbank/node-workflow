@@ -17,6 +17,7 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getVali
 import { InfoTitle } from "../../../../components/InfoTitle";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { useStyles } from "./styled";
+import { ContactNumberInputGroup } from "../../../../components/Form/Input/ContactNumInputGroup";
 
 const createPreferredContactInformationSchema = () =>
   Yup.object().shape({
@@ -144,7 +145,7 @@ const PreferredContactInformationStep = ({
             </Grid>
             {/* SCR for RO change */}
             <Grid item sm={6} xs={12}>
-              <InputGroup>
+              <ContactNumberInputGroup>
                 <LinkedField
                   name="primaryHomeCountryCode"
                   linkedFieldName="primaryHomeCountryNo"
@@ -157,13 +158,9 @@ const PreferredContactInformationStep = ({
                   datalistId="countryCode"
                   inputProps={{ tabIndex: 0 }}
                 />
-
-                <LinkedField
+                <Field
                   name="primaryHomeCountryNo"
-                  linkedFieldName="primaryHomeCountryCode"
                   path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryNo`}
-                  // eslint-disable-next-line max-len
-                  linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryCode`}
                   label="Home country contact number"
                   placeholder="55xxxxxxx"
                   component={Input}
@@ -173,7 +170,7 @@ const PreferredContactInformationStep = ({
                   }}
                   contextualHelpText="This number will be used as primary Home country contact for any future communication"
                 />
-              </InputGroup>
+              </ContactNumberInputGroup>
             </Grid>
           </Grid>
           <Grid

@@ -17,7 +17,7 @@ import { NotificationsManager } from "../../../../components/Notification";
 import { ICONS } from "../../../../components/Icons";
 import { ErrorMessage } from "../../../../components/Notifications";
 import { InfoTitle } from "../../../../components/InfoTitle";
-import expressService from "../../../../assets/icons/ExpressServicesIcon.svg";
+import { ReactComponent as ExpressLogo } from "../../../../assets/icons/ExpressServicesIcon.svg";
 
 const expressCharges = 400;
 const texts = [
@@ -89,14 +89,14 @@ export const ExpressServicesComponent = ({
         <Form>
           <Grid container spacing={3} className={classes.flexContainer}>
             <Grid item sm={2} xs={12} className={classes.imgContainer}>
-              <img width={100} height={75} src={expressService} alt="SuccessStakeholder" />
+              <ExpressLogo className={classes.logo} />
             </Grid>
             <Grid item sm={10} xs={12}>
-              <div className={classes.title}>
+              <div className={classes.titleContainer}>
                 <p className={classes.name}>{texts[0]}</p>
                 <p className={classes.name}>{texts[1]}</p>
               </div>
-              <div>
+              <div className={classes.bodyContainer}>
                 <p className={classes.paddingB10}>
                   {texts[2]}{" "}
                   <span className={classes.name}>

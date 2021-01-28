@@ -5,7 +5,7 @@ import MaskedInput from "react-text-mask";
 import { Input } from "./Input";
 
 // prettier-ignore
-const MASK = [/[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, ".", /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, ".", /[A-z0-9]/, /[A-z0-9]/, ".", /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/];
+const MASK = [/[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, "-", /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/, "-", /[A-z0-9]/, /[A-z0-9]/, "-", /[A-z0-9]/, /[A-z0-9]/, /[A-z0-9]/];
 
 const TextMask = ({ inputRef, ...rest }) => (
   <MaskedInput
@@ -20,7 +20,7 @@ const TextMask = ({ inputRef, ...rest }) => (
 export const GlobalIntermediaryID = props => (
   <Input
     label="Global Intermediary Identification No."
-    placeholder="XXXXXX.XXXXX.XX.XXX"
+    placeholder="XXXXXX-XXXXX-XX-XXX"
     InputProps={{ inputComponent: TextMask }}
     {...props}
   />
