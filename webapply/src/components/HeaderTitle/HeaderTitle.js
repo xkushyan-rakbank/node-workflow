@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { getAgentName } from "../../store/selectors/appConfig";
+import { getRoCode } from "../../store/selectors/appConfig";
 import { getCompanyName } from "../../store/selectors/appConfig";
 import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
@@ -21,7 +22,8 @@ const HeaderTitleComponent = ({
   isAgent,
   withoutMarginBottom,
   logout,
-  agentName
+  agentName,
+  roCode
 }) => {
   const classes = useStyles({ withoutMarginBottom });
   const { pathname } = useLocation();
@@ -52,7 +54,10 @@ const HeaderTitleComponent = ({
         <span>
           {isAgent && (
             <>
-              <div>{agentName}</div>
+              {/* ro-assistant-scr-0.7 */}
+              <div>
+                {agentName} - {roCode}
+              </div>
               <div className={classes.logout} onClick={() => agentLogout()}>
                 Logout
               </div>
@@ -79,7 +84,8 @@ const mapStateToProps = state => ({
   isAgent: checkLoginStatus(state),
   islamicBanking: getIsIslamicBanking(state),
   accountType: getAccountType(state),
-  companyName: getCompanyName(state)
+  companyName: getCompanyName(state),
+  roCode: getRoCode(state)
 });
 
 const mapDispatchToProps = {

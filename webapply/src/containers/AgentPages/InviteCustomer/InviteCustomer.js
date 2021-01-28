@@ -4,10 +4,12 @@ import { useFormNavigation } from "../../../components/FormNavigation/FormNaviga
 import { agentFormStepper } from "../../../constants";
 import { NotificationsManager } from "../../../components/Notification";
 import { ICONS } from "../../../components/Icons";
+import { useLayoutParams } from "../../FormLayout";
 
 // ro-assist-brd3-1
 export const InviteCustomer = ({ invite }) => {
   useFormNavigation([false, false, agentFormStepper, true, true]);
+  useLayoutParams(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitForm = useCallback(

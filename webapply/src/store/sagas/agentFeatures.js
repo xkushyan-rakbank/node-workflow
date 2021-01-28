@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, select, put, takeLatest } from "redux-saga/effects";
 import {
   inviteCustomerFormSuccess,
   INVITE_CUSTOMER_FORM,
@@ -6,11 +6,13 @@ import {
 } from "../actions/agentFeatures";
 
 import { createInvite } from "../../api/apiClient";
+import { getAuthorizationHeader } from "../../store/selectors/appConfig";
 import { log } from "../../utils/loggger";
 
 export function* inviteFormSaga({ payload }) {
   try {
-    const response = yield call(createInvite.send, payload);
+    const headers = yield select(getAuthorizationHeader);
+    const response = yield call(createInvite.send, payload, headers);
     yield put(inviteCustomerFormSuccess(response.data));
   } catch (error) {
     log(error);
