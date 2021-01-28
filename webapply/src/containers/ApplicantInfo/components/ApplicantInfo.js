@@ -37,6 +37,14 @@ const aplicantInfoSchema = Yup.object({
     .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" })
 });
 
+//ro-assist-brd3-16
+const removeUnWantedKeys = (keys, values) => {
+  keys.forEach(element => {
+    delete values[element];
+  });
+  return values;
+};
+
 export const ApplicantInfoComponent = ({
   onSubmit,
   isConfigLoading,
@@ -73,7 +81,7 @@ export const ApplicantInfoComponent = ({
         }}
         validationSchema={aplicantInfoSchema}
         validateOnChange={false}
-        onSubmit={onSubmit}
+        onSubmit={values => onSubmit(removeUnWantedKeys(["allianceCodeFromDataList"], values))}
       >
         {({ values }) => (
           <Form>
