@@ -4,7 +4,10 @@
 		"email": "",
 		"countryCode": "971",
 		"mobileNo": "",
-		"applyOnbehalf": false
+		"applyOnbehalf": false,
+		"LeadSource": "Direct",
+        "roCode": "",
+        "allianceCode": ""
 	},
 	"generalInfo": {
 		"prospectId": "",
@@ -189,7 +192,10 @@
 		],
 		"isShareholderACompany": false,
 		"isDontHaveSuppliersYet": false,
-  		"isDontTradeGoodsYet": false
+  		"isDontTradeGoodsYet": false,
+  		"dnfbpField":"na",
+  		"isFinancialInstitution" : "na",
+  		"isNonFinancialInstitution" : "na"
 	},
 	"signatoryInfo": [
 		{
@@ -314,7 +320,8 @@
 					"fullNameOnPassport": "",
 					"nameOnDebitCard": ""
 				}
-			}
+			},
+			"isUSrelation": false
 		}
 	],
 	"channelServicesInfo": {
