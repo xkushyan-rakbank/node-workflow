@@ -40,7 +40,6 @@ export const InviteForm = ({ submitForm, isLoading }) => {
           <Form>
             <Field
               name="fullName"
-              path="invite.fullName"
               label="Customer Name"
               placeholder="Customer Name"
               component={Input}
@@ -50,7 +49,6 @@ export const InviteForm = ({ submitForm, isLoading }) => {
             />
             <Field
               name="email"
-              path="invite.email"
               label="Customer E-mail Address"
               placeholder="Customer Email"
               component={Input}
