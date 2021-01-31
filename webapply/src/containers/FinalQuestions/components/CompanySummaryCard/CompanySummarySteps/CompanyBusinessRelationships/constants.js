@@ -1,5 +1,5 @@
 import { ICONS } from "../../../../../../components/Icons";
-import { ActivePassiveOptions, enumYesNoOptions } from "../../../../../../constants/options";
+import { ActivePassiveOptions, enumYesNoOptions, yesNoOptions } from "../../../../../../constants/options";
 
 export const INITIAL_ARRAY_INDEX = 0;
 
@@ -30,7 +30,7 @@ export const dnfbpInfoContent = {
 };
 //ro-assist-brd3-15
 export const usEntity = {
-  options: enumYesNoOptions,
+  options: yesNoOptions,
   helperText:
     "You are US entity if - company is incorporated in US, or holding mailing address of US",
   body: "Is your company a US entity ?",

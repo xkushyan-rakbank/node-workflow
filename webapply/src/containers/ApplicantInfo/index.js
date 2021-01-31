@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 
 import {
   getAccountType,
+  getDatalist,
   getIsIslamicBanking,
   getIsRecaptchaEnable,
   getReCaptchaSiteKey
@@ -20,7 +21,8 @@ const mapStateToProps = state => ({
   isRecaptchaEnable: getIsRecaptchaEnable(state),
   reCaptchaSiteKey: getReCaptchaSiteKey(state),
   accountType: getAccountType(state),
-  isIslamicBanking: getIsIslamicBanking(state)
+  isIslamicBanking: getIsIslamicBanking(state),
+  dataList: getDatalist(state)
 });
 
 const mapDispatchToProps = {

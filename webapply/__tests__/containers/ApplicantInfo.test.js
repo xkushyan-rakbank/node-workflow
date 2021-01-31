@@ -13,6 +13,16 @@ jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
 jest.mock("../../src/containers/ApplicantInfo/components/ApplicantInfo", () => {
   return { ApplicantInfoComponent: jest.fn().mockImplementation(() => null) };
 });
+jest.mock("react-router-dom", () => ({
+  useLocation: jest.fn().mockImplementation(() => {
+    return {
+      search: jest
+        .fn()
+        .mockImplementation(() => jest.fn())
+        .mockReturnValue(fn => fn)
+    };
+  })
+}));
 jest.mock("../../src/containers/FormLayout");
 jest.mock("../../src/utils/useTrackingHistory");
 
@@ -29,6 +39,7 @@ describe("ApplicantInfo container tests", () => {
   const isConfigLoading = true;
   const accountType = accountNames.starter;
   const isIslamicBanking = true;
+  const dataList = { allianceCode: [] };
 
   const props = {
     submit,
@@ -40,7 +51,8 @@ describe("ApplicantInfo container tests", () => {
     resetScreeningError,
     isConfigLoading,
     accountType,
-    isIslamicBanking
+    isIslamicBanking,
+    dataList
   };
 
   const values = "some values";
@@ -109,7 +121,56 @@ describe("ApplicantInfo container tests", () => {
     expect(ApplicantInfoComponent.mock.calls[1][0].isLoading).toBe(true);
     expect(ApplicantInfoComponent.mock.calls[2][0].isLoading).toBe(false);
   });
-
+  it("Reading Alliance Code from the Query", async () => {
+    const spy = jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("someCode");
+    let allianceCodeProps = { ...props };
+    allianceCodeProps.dataList = {
+      allianceCode: [
+        {
+          code: "someCode",
+          key: "someCode",
+          value: "someCode",
+          displayText: "someDisplayText",
+          subGroup: null
+        }
+      ]
+    };
+    render(<ApplicantInfoContainer {...allianceCodeProps} />);
+    expect(ApplicantInfoComponent).toHaveBeenCalledTimes(1);
+    expect(ApplicantInfoComponent.mock.calls[0][0]).toMatchObject({
+      partnerInfo: {
+        code: "someCode",
+        key: "someCode",
+        value: "someCode",
+        displayText: "someDisplayText",
+        subGroup: null
+      },
+      isConfigLoading,
+      reCaptchaToken,
+      reCaptchaSiteKey,
+      isIslamicBanking,
+      accountType,
+      isLoading: false
+    });
+    spy.mockRestore();
+  });
+  it("No Alliance Code in dataList", async () => {
+    const spy = jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("someCode");
+    let allianceCodeProps = { ...props };
+    allianceCodeProps.dataList = {};
+    render(<ApplicantInfoContainer {...allianceCodeProps} />);
+    expect(ApplicantInfoComponent).toHaveBeenCalledTimes(1);
+    expect(ApplicantInfoComponent.mock.calls[0][0]).toMatchObject({
+      partnerInfo: undefined,
+      isConfigLoading,
+      reCaptchaToken,
+      reCaptchaSiteKey,
+      isIslamicBanking,
+      accountType,
+      isLoading: false
+    });
+    spy.mockRestore();
+  });
   it("should handle handleReCaptchaVerify", () => {
     const token = "some token";
     render(<ApplicantInfoContainer {...props} />);
