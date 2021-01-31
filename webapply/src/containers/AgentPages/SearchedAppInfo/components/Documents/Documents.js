@@ -11,7 +11,26 @@ import { useStyles } from "./styled";
 export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
   const classes = useStyles();
   const headingClassName = cx(classes.checkListData, classes.heading);
-
+  //ro-assist-brd3-1
+  const listDocuments = (docs, classes, downloadDocument, docType) => {
+    return get(docs, docType, []).map((application, index) => (
+      <div className={classes.applicationRow} key={index}>
+        <div className={classes.checkListData}>
+          {application.fileDescription || application.documentTitle}
+        </div>
+        <div className={classes.checkListData}>{application.uploadStatus}</div>
+        {!STATUS_NOT_ELIGIBLE.includes(application.uploadStatus) && (
+          <div className={classes.checkListData}>
+            <LinkButton
+              index={index}
+              title={titles.PRINT_DOWNLOAD_TITLE}
+              onClick={() => downloadDocument(application.fileName, application.fileName)}
+            />
+          </div>
+        )}
+      </div>
+    ));
+  };
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
@@ -22,21 +41,10 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
             <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
             <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
           </div>
-          {docs.companyDocuments.map((application, index) => (
-            <div className={classes.applicationRow} key={index}>
-              <div className={classes.checkListData}>
-                {application.fileDescription || application.documentTitle}
-              </div>
-              <div className={classes.checkListData}>{application.uploadStatus}</div>
-              <div className={classes.checkListData}>
-                <LinkButton
-                  index={index}
-                  title={titles.PRINT_DOWNLOAD_TITLE}
-                  onClick={() => downloadDocument(application.fileName, application.fileName)}
-                />
-              </div>
-            </div>
-          ))}
+          {listDocuments(docs, classes, downloadDocument, "companyDocuments")}
+          {listDocuments(docs, classes, downloadDocument, "companyBankStatements.documents")}
+          {listDocuments(docs, classes, downloadDocument, "companyInvoices.documents")}
+          {listDocuments(docs, classes, downloadDocument, "companyAddressProof.documents")}
         </div>
       ) : (
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_DOCUMENT_ERROR}</div>
@@ -59,24 +67,23 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
                 <div className={headingClassName}>{titles.UPLOAD_STATUS_TITLE}</div>
                 <div className={headingClassName}>{titles.ACTIONS_TITLE}</div>
               </div>
-              {get(docs, `stakeholdersDocuments[${index}_${user.fullName}].documents`, []).map(
-                (doc, index) => (
-                  <div className={classes.applicationRow} key={index}>
-                    <div className={classes.checkListData}>
-                      {doc.fileDescription || doc.documentTitle}
-                    </div>
-                    <div className={classes.checkListData}>{doc.uploadStatus}</div>
-                    {!STATUS_NOT_ELIGIBLE.includes(doc.uploadStatus) && (
-                      <div className={classes.checkListData}>
-                        <LinkButton
-                          index={index}
-                          title={titles.PRINT_DOWNLOAD_TITLE}
-                          onClick={() => downloadDocument(doc.fileName, doc.fileName)}
-                        />
-                      </div>
-                    )}
-                  </div>
-                )
+              {listDocuments(
+                docs,
+                classes,
+                downloadDocument,
+                `stakeholdersDocuments[${index}_${user.fullName}].documents`
+              )}
+              {listDocuments(
+                docs,
+                classes,
+                downloadDocument,
+                `stakeholdersDocuments[${index}_${user.fullName}].personalBankStatements.documents`
+              )}
+              {listDocuments(
+                docs,
+                classes,
+                downloadDocument,
+                `stakeholdersDocuments[${index}_${user.fullName}].personalBackground.documents`
               )}
             </div>
           </div>
