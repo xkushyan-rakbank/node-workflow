@@ -47,7 +47,7 @@ describe("invite customer test", () => {
     render(<InviteCustomer {...props} />);
 
     await act(async () => {
-      await InviteForm.mock.calls[0][0].submitForm(values);
+      await InviteForm.mock.calls[0][0].submitForm(values, { resetForm: jest.fn() });
     });
 
     expect(InviteForm).toHaveBeenCalledTimes(3);
@@ -61,7 +61,7 @@ describe("invite customer test", () => {
     render(<InviteCustomer {...props} invite={invite} />);
 
     await act(async () => {
-      await InviteForm.mock.calls[0][0].submitForm(values);
+      await InviteForm.mock.calls[0][0].submitForm(values, { resetForm: jest.fn() });
     });
 
     expect(InviteForm).toHaveBeenCalledTimes(3);

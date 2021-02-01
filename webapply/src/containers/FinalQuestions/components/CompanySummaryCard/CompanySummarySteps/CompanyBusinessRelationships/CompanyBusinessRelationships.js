@@ -108,9 +108,7 @@ const companyBusinessRelationshipsSchema = () =>
         ["yes", "no"],
         "Field Is your company dealing in Designated Business Categories is not filled"
       ),
-    isCompanyUSEntity: Yup.string()
-      .required("Field Is your company a US entity is not filled")
-      .oneOf(["yes", "no"], "Field Is your company a US entity is not filled"),
+    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled"),
     //ro-assist-brd3-15
     isFinancialInstitution: Yup.string()
       .required("Field Is your company a Financial Instituion is not filled")

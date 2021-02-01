@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
@@ -8,7 +7,11 @@ import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper } from "../../constants";
 import routes from "../../routes";
-import { getDatalist } from "../../store/selectors/appConfig";
+
+//ro-assist-brd3-16
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 export const ApplicantInfoContainer = ({
   submit,
@@ -20,11 +23,12 @@ export const ApplicantInfoContainer = ({
   resetScreeningError,
   isConfigLoading,
   accountType,
-  isIslamicBanking
+  isIslamicBanking,
+  dataList
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
-  const dataList = useSelector(getDatalist);
+  const query = useQuery();
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(true);
 
@@ -36,11 +40,6 @@ export const ApplicantInfoContainer = ({
     resetScreeningError();
   }, [resetScreeningError]);
 
-  //ro-assist-brd3-16
-  const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
-  };
-  const query = useQuery();
   const findInDataList = () => {
     const productCode = query.get("product-name");
     const lowerCaseProductCode = productCode !== null ? productCode.toLowerCase() : "";

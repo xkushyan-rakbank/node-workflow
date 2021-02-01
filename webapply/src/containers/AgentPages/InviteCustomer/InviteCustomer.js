@@ -13,7 +13,7 @@ export const InviteCustomer = ({ invite }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const submitForm = useCallback(
-    values => {
+    (values, { resetForm }) => {
       let inviteData = { ...values };
       setIsLoading(true);
       return invite(inviteData).then(
@@ -25,6 +25,8 @@ export const InviteCustomer = ({ invite }) => {
           };
           NotificationsManager.add(successMessageContent);
           setIsLoading(false);
+          //ro-assist-brd3-1
+          resetForm({ values: "" });
         },
         err => {
           const errorMessageContent = {
