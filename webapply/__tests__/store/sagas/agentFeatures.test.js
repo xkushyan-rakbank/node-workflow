@@ -8,12 +8,15 @@ import {
 } from "../../../src/store/actions/agentFeatures";
 import { log } from "../../../src/utils/loggger";
 import { createInvite } from "../../../src/api/apiClient";
+import { getAuthorizationHeader } from "../../../src/store/selectors/appConfig";
 
 jest.mock("../../../src/utils/loggger");
+jest.mock("../../../src/store/selectors/appConfig");
 
 describe("agentFeaturesSaga test", () => {
   let dispatched = [];
   const state = "some state";
+  const headers = "some headers";
   const payload = "some payload";
   const data = "some data";
   const error = "some error";
@@ -24,6 +27,7 @@ describe("agentFeaturesSaga test", () => {
 
   beforeEach(() => {
     dispatched = [];
+    getAuthorizationHeader.mockReturnValue(headers);
     jest.clearAllMocks();
   });
 
@@ -38,7 +42,7 @@ describe("agentFeaturesSaga test", () => {
 
     await runSaga(store, inviteFormSaga, { payload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([payload]);
+    expect(spy.mock.calls[0]).toEqual([payload, headers]);
     expect(dispatched).toEqual([{ type: INVITE_CUSTOMER_FORM_SUCCESS, payload: data }]);
 
     spy.mockRestore();
@@ -52,7 +56,7 @@ describe("agentFeaturesSaga test", () => {
 
     await runSaga(store, inviteFormSaga, { payload }).toPromise();
 
-    expect(spy.mock.calls[0]).toEqual([payload]);
+    expect(spy.mock.calls[0]).toEqual([payload, headers]);
     expect(log.mock.calls[0]).toEqual([error]);
     expect(dispatched).toEqual([{ type: INVITE_CUSTOMER_FORM_ERROR, error }]);
 
