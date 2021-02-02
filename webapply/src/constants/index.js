@@ -135,11 +135,76 @@ export const SIGNING_TRANSACTIONS_TYPE = {
   ANY: "100",
   OTHER: "000"
 };
-
+//ro-assist-brd1-3
+export const applicationdedupe = [
+  {
+    screeningNotes: "DECLINE",
+    link: true,
+    buttons: [
+      {
+        link: routes.currentAccount,
+        label: "Go to home page"
+      }
+    ]
+  },
+  {
+    screeningNotes: "INELIGIBLE",
+    link: true,
+    buttons: [
+      {
+        link: routes.currentAccount,
+        label: "Go to home page"
+      }
+    ]
+  },
+  {
+    screeningNotes: "PENDING",
+    link: true,
+    buttons: [
+      {
+        link: routes.currentAccount,
+        label: "Continue"
+      }
+    ]
+  },
+  {
+    screeningNotes: "SUCCESS",
+    link: true,
+    buttons: [
+      {
+        link: routes.currentAccount,
+        label: "No, thanks"
+      },
+      {
+        link: routes.currentAccount,
+        label: "Yes"
+      }
+    ]
+  },
+  {
+    screeningNotes: "WITH_RO",
+    link: true,
+    buttons: [
+      {
+        link: routes.currentAccount,
+        label: "No, thanks"
+      },
+      {
+        link: routes.currentAccount,
+        label: "Yes"
+      }
+    ]
+  }
+];
 export const screeningStatus = [
   {
     error: "Dedupe",
     screeningType: "Dedupe Check"
+  },
+  {
+    //ro-assist-brd1-3
+    error: "Application Dedupe",
+    screeningType: "Application Dedupe Check"
   },
   {
     error: "Virtual Currencies",

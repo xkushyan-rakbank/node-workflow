@@ -55,7 +55,8 @@ import {
   screeningStatus,
   screeningStatusDefault,
   STEP_STATUS,
-  VIEW_IDS
+  VIEW_IDS,
+  applicationdedupe
 } from "../../../src/constants";
 import { getErrorScreensIcons } from "../../../src/utils/getErrorScreenIcons/getErrorScreenIcons";
 import { ErrorOccurredWhilePerforming, FieldsValidationError } from "../../../src/api/serverErrors";
@@ -132,6 +133,7 @@ describe("sendProspectToAPI sagas tests", () => {
     const accountType = "some account type";
     const isIslamicBanking = true;
     const reasonNotes = "some reason notes";
+    const screeningNotes = "DECLINE";
 
     it("with custom error", async () => {
       const screeningType = screeningStatus[0].screeningType;
@@ -155,6 +157,67 @@ describe("sendProspectToAPI sagas tests", () => {
           ...screeningStatus[0],
           text: reasonNotes,
           icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType)
+        })
+      ]);
+    });
+    it("with Application dedupe check ScreeningNotes Condition", async () => {
+      const screeningType = screeningStatus[1].screeningType;
+      const data = {
+        preScreening: {
+          screeningResults: [
+            {
+              screeningReason: SCREENING_FAIL_REASONS[0],
+              screeningNotes,
+              screeningType,
+              reasonNotes
+            }
+          ]
+        }
+      };
+
+      getAccountType.mockReturnValue(accountType);
+      getIsIslamicBanking.mockReturnValue(isIslamicBanking);
+
+      await runSaga(store, setScreeningResults, data).toPromise();
+
+      expect(getAccountType.mock.calls[0]).toEqual([state]);
+      expect(getIsIslamicBanking.mock.calls[0]).toEqual([state]);
+      expect(dispatched).toEqual([
+        setScreeningError({
+          ...screeningStatus[1],
+          ...applicationdedupe[0],
+          text: reasonNotes,
+          icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType, screeningNotes)
+        })
+      ]);
+    });
+    it("with Application dedupe check ScreeningNotes Condition when ScreeningNotes == null", async () => {
+      const screeningType = screeningStatus[1].screeningType;
+      const data = {
+        preScreening: {
+          screeningResults: [
+            {
+              screeningReason: SCREENING_FAIL_REASONS[0],
+              screeningNotes: null,
+              screeningType,
+              reasonNotes
+            }
+          ]
+        }
+      };
+
+      getAccountType.mockReturnValue(accountType);
+      getIsIslamicBanking.mockReturnValue(isIslamicBanking);
+
+      await runSaga(store, setScreeningResults, data).toPromise();
+
+      expect(getAccountType.mock.calls[0]).toEqual([state]);
+      expect(getIsIslamicBanking.mock.calls[0]).toEqual([state]);
+      expect(dispatched).toEqual([
+        setScreeningError({
+          ...screeningStatus[1],
+          text: reasonNotes,
+          icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType, screeningNotes)
         })
       ]);
     });
