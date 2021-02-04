@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
 export const LayoutContext = React.createContext({});
 
 export let setValues;
 
 export const LayoutProvider = ({ children }) => {
-  const { pathname } = useLocation();
+  //ro-assist header missing issue fix
   const [contextValue, setContextValues] = useState([]);
   setValues = setContextValues;
-
-  useEffect(() => {
-    contextValue.length && setContextValues([]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
 
   return <LayoutContext.Provider value={contextValue}>{children}</LayoutContext.Provider>;
 };

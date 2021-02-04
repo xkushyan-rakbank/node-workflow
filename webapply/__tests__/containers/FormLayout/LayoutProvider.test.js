@@ -45,6 +45,6 @@ describe("LayoutProvider tests", () => {
       history.push("/somepage");
     });
 
-    expect(saveContext).nthCalledWith(3, []);
+    expect(saveContext).nthCalledWith(1, []);
   });
 });

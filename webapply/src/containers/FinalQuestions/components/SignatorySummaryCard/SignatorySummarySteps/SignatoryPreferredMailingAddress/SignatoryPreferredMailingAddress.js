@@ -103,7 +103,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
 
   const selectPreferredMailingAddrs = ({ values, setFieldValue }) => event => {
     const value = JSON.parse(event.target.value);
-    console.log("value=>", value);
     const prospect = {};
     prospect[`${autoSavePathBase}.preferredAddress`] = value ? "Yes" : "No";
     prospect[`${autoSavePathBase_OfficeAdd}.preferredAddress`] = value ? "No" : "Yes";
@@ -234,7 +233,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
                           );
                           setFieldValue("officeAddrsCountry", DEFAULT_SIGNATORY_COUNTRY);
                         } else {
-                          console.log("else ");
                           setFieldValue("sameAsResidenceAddress", values.sameAsResidenceAddress);
                           setFieldValue("officeAddrsEmirateCity", "");
                           setFieldValue("officeAddrsPoBox", "");

@@ -9,6 +9,7 @@ import { isEmpty } from "lodash";
 import { TitleWithHorizontalLine } from "../TitleWithHorizontalLine";
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../Icons";
+import { log } from "../../utils/loggger";
 
 export const Accordion = props => {
   const formik = useFormikContext();
@@ -42,8 +43,8 @@ export const Accordion = props => {
         }
       }
       if (labelsConstant.length > 0) setlabels(labelsConstant);
-    } catch (err) {
-      console.log("falied to capture Labels");
+    } catch (error) {
+      log(error);
     }
   };
 
