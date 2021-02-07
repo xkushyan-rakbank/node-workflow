@@ -89,12 +89,27 @@ export const getIsRequiredDocsUploaded = state => {
   }
   // // ro-assist-brd3-3 end
   const { companyDocuments, stakeholdersDocuments } = getDocuments(state);
+  // ro-assist-brd2-1
+  const companyBankStatements = getCompanyBankStatements(state).documents || [];
+  const companyAddressProof = getCompanyAddressProof(state).documents || [];
+  const companyInvoices = getCompanyInvoices(state).documents || [];
   const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments || {}).reduce(
-    (acc, { documents }) => [...acc, ...documents],
+    (acc, { documents, personalBankStatements, personalBackground }) => [
+      ...acc,
+      ...documents,
+      ...(personalBankStatements ? personalBankStatements.documents : []),
+      ...(personalBackground ? personalBackground.documents : [])
+    ],
     []
   );
 
-  return checkIfRequiredDocsUploaded([...(companyDocuments || []), ...stakeholdersDocsFlattened]);
+  return checkIfRequiredDocsUploaded([
+    ...(companyDocuments || []),
+    ...companyBankStatements,
+    ...companyAddressProof,
+    ...companyInvoices,
+    ...stakeholdersDocsFlattened
+  ]);
 };
 
 export const getUrlsReadMore = state => ({

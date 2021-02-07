@@ -5,6 +5,9 @@ import {
   getIsRequiredDocsUploaded,
   getCompanyName,
   getCompanyDocuments,
+  getCompanyBankStatements,
+  getCompanyAddressProof,
+  getCompanyInvoices,
   getStakeholdersDocuments
 } from "../../store/selectors/appConfig";
 import { getIsLoadingDocuments } from "../../store/selectors/uploadDocuments";
@@ -18,6 +21,9 @@ import {
 
 const mapStateToProps = state => ({
   companyDocuments: getCompanyDocuments(state),
+  companyBankStatements: getCompanyBankStatements(state),
+  companyAddressProof: getCompanyAddressProof(state),
+  companyInvoices: getCompanyInvoices(state),
   stakeholdersDocuments: getStakeholdersDocuments(state),
   companyName: getCompanyName(state),
   signatories: getSignatories(state),

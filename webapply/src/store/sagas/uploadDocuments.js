@@ -26,7 +26,9 @@ import {
   getAuthorizationHeader,
   getAppConfig,
   getDocuments,
-  getDocumentUploadCnt
+  getDocumentUploadCnt,
+  getOrganizationInfo,
+  getOrgKYCDetails
 } from "../selectors/appConfig";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
@@ -40,7 +42,8 @@ import {
   getProspectDocumentsFail,
   ADD_OTHER_DOCUMENT,
   DELETE_OTHER_DOCUMENT,
-  SAVE_AND_RETRIEVE_DOC_UPLOADER
+  SAVE_AND_RETRIEVE_DOC_UPLOADER,
+  ADD_MULTI_DOCUMENT
 } from "../actions/uploadDocuments";
 import {
   SEND_PROSPECT_TO_API_FAIL,
@@ -53,10 +56,27 @@ import {
   concatCompanyDocs,
   concatStakeholdersDocs,
   createDocumentMapper,
-  appendDocumentKey
+  appendDocumentKey,
+  appendMultiDocumentKey
 } from "../../utils/documents";
 import { cloneDeep } from "../../utils/cloneDeep";
-import { COMPANY_DOCUMENTS, OTHER_DOCUMENTS, STAKEHOLDER_DOCUMENTS } from "./../../constants";
+import {
+  COMPANY_DOCUMENTS,
+  OTHER_DOCUMENTS,
+  STAKEHOLDER_DOCUMENTS,
+  COMPANY_BANK_STATEMENTS,
+  COMPANY_ADDRESS_PROOF,
+  COMPANY_INVOICES,
+  PERSONAL_BANK_STATEMENTS,
+  PERSONAL_BACKGROUND,
+  COMPANY_BANK_STATEMENTS_DOCTYPE,
+  COMPANY_ADDRESS_PROOF_DOCTYPE,
+  COMPANY_INVOICES_DOCTYPE,
+  PERSONAL_BANK_STATEMENTS_DOCTYPE,
+  PERSONAL_BACKGROUND_DOCTYPE,
+  companyMultiDocs,
+  stakeholderMultiDocs
+} from "./../../constants";
 import { PROSPECT_STATUSES } from "../../constants/index";
 import { AUTO } from "../../constants";
 
@@ -100,6 +120,8 @@ function* getProspectDocumentsSaga() {
   const headers = yield select(getAuthorizationHeader);
   const prospectID = yield select(getProspectId);
   const existDocuments = yield select(getDocuments);
+  const organizationInfo = yield select(getOrganizationInfo);
+  const orgKYCDetails = yield select(getOrgKYCDetails);
   const isDocsUploaded =
     existDocuments &&
     existDocuments.companyDocuments.length > 0 &&
@@ -109,11 +131,41 @@ function* getProspectDocumentsSaga() {
     const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, headers);
     const appConfig = cloneDeep(yield select(getAppConfig));
     const companyDocs = appendDocumentKey(data.companyDocuments);
+    // ro-assist-brd2-1
+    const companyBankStatements = appendMultiDocumentKey(
+      data.companyBankStatements,
+      COMPANY_BANK_STATEMENTS,
+      organizationInfo,
+      orgKYCDetails
+    );
+    const companyAddressProof = appendMultiDocumentKey(
+      data.companyAddressProof,
+      COMPANY_ADDRESS_PROOF,
+      organizationInfo,
+      orgKYCDetails
+    );
+    const companyInvoices = appendMultiDocumentKey(
+      data.companyInvoices,
+      COMPANY_INVOICES,
+      organizationInfo,
+      orgKYCDetails
+    );
     const stakeHoldersDocs = mapValues(data.stakeholdersDocuments, stakeHolder => ({
       ...stakeHolder,
-      documents: appendDocumentKey(stakeHolder.documents)
+      documents: appendDocumentKey(stakeHolder.documents),
+      personalBankStatements: appendMultiDocumentKey(
+        stakeHolder.personalBankStatements,
+        PERSONAL_BANK_STATEMENTS,
+        organizationInfo,
+        orgKYCDetails
+      ),
+      personalBackground: appendMultiDocumentKey(
+        stakeHolder.personalBackground,
+        PERSONAL_BACKGROUND,
+        organizationInfo,
+        orgKYCDetails
+      )
     }));
-
     const companyDocuments = concatCompanyDocs(
       isDocsUploaded ? existDocuments.companyDocuments : [],
       companyDocs
@@ -124,7 +176,14 @@ function* getProspectDocumentsSaga() {
     );
     const otherDocuments = existDocuments.otherDocuments || [];
 
-    appConfig.prospect.documents = { companyDocuments, stakeholdersDocuments, otherDocuments };
+    appConfig.prospect.documents = {
+      companyDocuments,
+      companyBankStatements,
+      companyAddressProof,
+      companyInvoices,
+      stakeholdersDocuments,
+      otherDocuments
+    };
     yield put(updateProspect(appConfig));
     yield put(getProspectDocumentsSuccess());
   } catch (error) {
@@ -158,7 +217,7 @@ function* uploadDocumentsBgSync({
 
     const response = yield call(() => uploadPromise);
 
-    const documents = config.prospect.documents;
+    const documents = cloneDeep(config.prospect.documents);
     const fileName = get(response, "data.fileName", "");
     const docUploadedCount = get(response, "data.docUploadedCount", 0);
     const additionalProps = { ...docProps, fileName, fileDescription: userFileName };
@@ -167,17 +226,36 @@ function* uploadDocumentsBgSync({
       documents[docOwner] = documents[docOwner].map(
         createDocumentMapper(documentKey, additionalProps)
       );
+    } else if (companyMultiDocs.includes(docOwner)) {
+      documents[docOwner].documents = documents[docOwner].documents.map(
+        createDocumentMapper(documentKey, additionalProps)
+      );
     } else {
-      const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][
-        stakeholderIndex
-      ].documents.map(createDocumentMapper(documentKey, additionalProps));
+      if (stakeholderMultiDocs.includes(docOwner)) {
+        const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][
+          docOwner
+        ].documents.map(createDocumentMapper(documentKey, additionalProps));
 
-      documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholdersDocuments;
+        documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][
+          docOwner
+        ].documents = stakeholdersDocuments;
+      } else {
+        const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][
+          stakeholderIndex
+        ].documents.map(createDocumentMapper(documentKey, additionalProps));
+
+        documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholdersDocuments;
+      }
     }
 
-    yield put(setConfig(config));
-    yield call(increaseDocumentUploadCountSaga, docUploadedCount);
-    if ((docUploadedCount >= maxDocumentUploadCnt) &&
+    yield put(
+      updateProspect({
+        "prospect.documents": documents
+      })
+    );
+    yield call(increaseDocumentUploadCountSaga, docUploadedCount, documents);
+    if (
+      docUploadedCount >= maxDocumentUploadCnt &&
       ![PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
         prospectStatus
       )
@@ -235,11 +313,14 @@ export function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, 
   }
 }
 
-export function* increaseDocumentUploadCountSaga(docUploadedCount) {
+export function* increaseDocumentUploadCountSaga(docUploadedCount, documents = null) {
   try {
-    const state = yield select();
-    const appConfig = { ...state.appConfig };
-    let documents = appConfig.prospect.documents;
+    if (!documents) {
+      const state = yield select();
+      const appConfig = { ...state.appConfig };
+      documents = cloneDeep(appConfig.prospect.documents);
+    }
+
     documents.companyDocuments &&
       documents.companyDocuments.map((companyDoc, companyDocIndex) => {
         documents.companyDocuments[companyDocIndex].DocumentUplTotalCnt = docUploadedCount;
@@ -257,11 +338,36 @@ export function* increaseDocumentUploadCountSaga(docUploadedCount) {
         documents.otherDocuments[otherDocIndex].DocumentUplTotalCnt = docUploadedCount;
       });
 
-    appConfig.prospect.documents = documents;
-    yield put(updateProspect(appConfig));
+    yield put(
+      updateProspect({
+        "prospect.documents": documents
+      })
+    );
   } catch (error) {
     log(error);
   }
+}
+
+export function* addMultiDocumentSaga({ payload }) {
+  const { stakeholderIndex, document } = payload;
+  const config = cloneDeep(yield select(getAppConfig));
+  if (document.documentType === COMPANY_BANK_STATEMENTS_DOCTYPE) {
+    config.prospect.documents[COMPANY_BANK_STATEMENTS].documents.push(document);
+  } else if (document.documentType === COMPANY_ADDRESS_PROOF_DOCTYPE) {
+    config.prospect.documents[COMPANY_ADDRESS_PROOF].documents.push(document);
+  } else if (document.documentType === COMPANY_INVOICES_DOCTYPE) {
+    config.prospect.documents[COMPANY_INVOICES].documents.push(document);
+  } else if (document.documentType === PERSONAL_BANK_STATEMENTS_DOCTYPE) {
+    config.prospect.documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][
+      PERSONAL_BANK_STATEMENTS
+    ].documents.push(document);
+  } else if (document.documentType === PERSONAL_BACKGROUND_DOCTYPE) {
+    config.prospect.documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][
+      PERSONAL_BACKGROUND
+    ].documents.push(document);
+  }
+
+  yield put(setConfig(config));
 }
 
 export default function* uploadDocumentsSaga() {
@@ -271,6 +377,7 @@ export default function* uploadDocumentsSaga() {
     takeEvery(DOC_UPLOADER, uploadDocumentsFlowSaga),
     takeEvery(ADD_OTHER_DOCUMENT, addOtherDocumentSaga),
     takeEvery(DELETE_OTHER_DOCUMENT, deleteOtherDocumentSaga),
-    takeLatest(DOWNLOAD_DOCUMENT_FILE, downloadDocumentFileSaga)
+    takeLatest(DOWNLOAD_DOCUMENT_FILE, downloadDocumentFileSaga),
+    takeEvery(ADD_MULTI_DOCUMENT, addMultiDocumentSaga)
   ]);
 }

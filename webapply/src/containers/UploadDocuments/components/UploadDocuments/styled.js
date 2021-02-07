@@ -11,5 +11,14 @@ export const useStyles = makeStyles({
   Rectangle: {
     width: "622px",
     height: "940px"
+  },
+  formDescription: {
+    fontSize: "20px",
+    color: "#373737",
+    margin: "20px 0 5px",
+    lineHeight: "1.5"
+  },
+  titleInfo: {
+    margin: 0
   }
 });
