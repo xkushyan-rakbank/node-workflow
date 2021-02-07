@@ -91,7 +91,7 @@ export const MultiDocumentRow = ({
         })
       );
     },
-    [docOwner, dispatch, index, stakeholderIndex]
+    [docOwner, dispatch, index, stakeholderIndex, documents]
   );
 
   const fileUploadClick = event => (event.target.value = null);
