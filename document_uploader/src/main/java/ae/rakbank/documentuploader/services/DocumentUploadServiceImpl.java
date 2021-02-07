@@ -361,7 +361,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
 		return responseBody;
 	}
 
-	//Method to update the fileDetails for bank statements, invoices, address proof and personal background
+	//Method to update the fileDetails for bank statements, invoices, address proof and personal background 
 	private boolean setFileDetailsIntoRequest(MultipartFile file, String docUploadedCount, String fileName, JsonNode fileInfoJSON, String currentDate, 
 			JsonNode documents, String documentID) {
 		log.info("Inside setFileDetailsIntoRequest for " + documentID);

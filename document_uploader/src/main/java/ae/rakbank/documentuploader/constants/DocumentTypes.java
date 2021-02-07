@@ -17,5 +17,5 @@ public class DocumentTypes {
             "Invoices_Contracts_Shipment_MOU_Custom",
             "Company Address Proofs",
             "Personal Bank Statements",
-            "CV / Personal Background");
+            "CV / Personal Background"); 
 }
