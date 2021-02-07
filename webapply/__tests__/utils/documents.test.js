@@ -2,6 +2,7 @@ import {
   concatCompanyDocs,
   concatStakeholdersDocs,
   appendDocumentKey,
+  appendMultiDocumentKey,
   createDocumentMapper,
   range
 } from "../../src/utils/documents";
@@ -29,6 +30,49 @@ describe("documents utils tests", () => {
   it("should return concated stakeholders docs object", () => {
     const neededDocs = {
       signatory_1: {
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 0
+        },
+        personalBankStatements: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 0
+        }
+      },
+      signatory_2: {
+        documents: [{ documentKey: "2", documentTitle: "Two" }],
+        personalBackground: {
+          documents: [],
+          limit: 0
+        },
+        personalBankStatements: {
+          documents: [],
+          limit: 0
+        }
+      }
+    };
+    const uploadedDocs = {
+      signatory_1: {
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 0
+        },
+        personalBankStatements: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 0
+        }
+      }
+    };
+    const concated = { ...uploadedDocs, ...neededDocs };
+
+    expect(concatStakeholdersDocs(neededDocs, uploadedDocs)).toStrictEqual(concated);
+  });
+
+  it("should return concated stakeholders docs object, without personalBackground & personalBankStatements", () => {
+    const neededDocs = {
+      signatory_1: {
         documents: [{ documentKey: "1", documentTitle: "One" }]
       },
       signatory_2: {
@@ -40,7 +84,68 @@ describe("documents utils tests", () => {
         documents: [{ documentKey: "1", documentTitle: "One" }]
       }
     };
-    const concated = { ...uploadedDocs, ...neededDocs };
+    const concated = {
+      signatory_1: {
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [],
+          limit: 0
+        },
+        personalBankStatements: {
+          documents: [],
+          limit: 0
+        }
+      },
+      signatory_2: {
+        documents: [{ documentKey: "2", documentTitle: "Two" }],
+        personalBackground: {
+          documents: [],
+          limit: 0
+        },
+        personalBankStatements: {
+          documents: [],
+          limit: 0
+        }
+      }
+    };
+
+    expect(concatStakeholdersDocs(neededDocs, uploadedDocs)).toStrictEqual(concated);
+  });
+
+  it("should return concated stakeholders docs object; personalBackground & personalBankStatements are empty", () => {
+    const neededDocs = {
+      signatory_1: {
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 1
+        },
+        personalBankStatements: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 1
+        }
+      }
+    };
+    const uploadedDocs = {
+      signatory_1: {
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {},
+        personalBankStatements: {}
+      }
+    };
+    const concated = {
+      signatory_1: {
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 1
+        },
+        personalBankStatements: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 1
+        }
+      }
+    };
 
     expect(concatStakeholdersDocs(neededDocs, uploadedDocs)).toStrictEqual(concated);
   });
@@ -84,6 +189,60 @@ describe("documents utils tests", () => {
       { documentType: "Passport", documentKey: "Passport-1", documentTitle: "Second" }
     ];
     expect(appendDocumentKey(docs)).toStrictEqual(docsWithKey);
+  });
+
+  it("should return multi docs array with document key", () => {
+    const type = "Passport";
+    const organizationInfo = { dateOfIncorporation: "10-12-2018", licenseIssueDate: "10-12-2018" };
+    const orgKYCDetails = {
+      otherBankingRelationshipsInfo: {
+        otherBankingRelationshipsExist: true
+      }
+    };
+    const docs = {
+      documents: [
+        { documentType: "Passport", documentKey: null, documentTitle: "First" },
+        { documentType: "Passport", documentKey: null, documentTitle: "Second" }
+      ],
+      limit: 6
+    };
+    const docsWithKey = {
+      documents: [
+        {
+          documentType: "Passport",
+          documentKey: "Passport-0",
+          documentTitle: "First",
+          required: true
+        },
+        {
+          documentType: "Passport",
+          documentKey: "Passport-1",
+          documentTitle: "Second",
+          required: false
+        }
+      ],
+      limit: 6
+    };
+    expect(appendMultiDocumentKey(docs, type, organizationInfo, orgKYCDetails)).toStrictEqual(
+      docsWithKey
+    );
+  });
+
+  it("should return forr empty multi docs array with document key", () => {
+    const type = "Passport";
+    const organizationInfo = { dateOfIncorporation: "10-12-2018", licenseIssueDate: "10-12-2018" };
+    const orgKYCDetails = {
+      otherBankingRelationshipsInfo: {
+        otherBankingRelationshipsExist: true
+      }
+    };
+    const docs = {};
+    const docsWithKey = {
+      documents: []
+    };
+    expect(appendMultiDocumentKey(docs, type, organizationInfo, orgKYCDetails)).toStrictEqual(
+      docsWithKey
+    );
   });
 
   it("should return array of numbers ", () => {
