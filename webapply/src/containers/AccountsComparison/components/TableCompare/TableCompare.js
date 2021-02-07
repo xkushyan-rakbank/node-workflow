@@ -66,22 +66,6 @@ export const TableCompareComponent = ({ selectedAccount }) => {
     setIsDisplayConfirmDialog(false);
   }, [setIsDisplayConfirmDialog]);
 
-  const confirmHandler = useCallback(() => {
-    closeDialogHandler();
-    navigateTo(accountNames.starter);
-  }, [setIsDisplayConfirmDialog]);
-
-  const handleSelectAccount = useCallback(
-    accountType => () => {
-      if (accountType == accountNames.starter) {
-        setIsDisplayConfirmDialog(true);
-      } else {
-        navigateTo(accountType);
-      }
-    },
-    [setIsDisplayConfirmDialog, navigateTo]
-  );
-
   const navigateTo = useCallback(
     accountType => {
       dispatch(
@@ -97,9 +81,24 @@ export const TableCompareComponent = ({ selectedAccount }) => {
         }
       }, 4);
     },
-    [dispatch, pushHistory]
+    [dispatch, pushHistory, queryParams]
   );
 
+  const confirmHandler = useCallback(() => {
+    closeDialogHandler();
+    navigateTo(accountNames.starter);
+  }, [closeDialogHandler, navigateTo]);
+
+  const handleSelectAccount = useCallback(
+    accountType => () => {
+      if (accountType === accountNames.starter) {
+        setIsDisplayConfirmDialog(true);
+      } else {
+        navigateTo(accountType);
+      }
+    },
+    [setIsDisplayConfirmDialog, navigateTo]
+  );
   const handleHover = e => {
     const { order } = e.currentTarget.dataset;
 
@@ -137,6 +136,7 @@ export const TableCompareComponent = ({ selectedAccount }) => {
         </div>
       </div>
       <ConfirmDialog
+        title={null}
         isOpen={isDisplayConfirmDialog}
         handleConfirm={confirmHandler}
         handleReject={closeDialogHandler}

@@ -66,6 +66,7 @@ export const SearchedAppInfoComponent = ({
       </div>
 
       <ConfirmDialog
+        title={"Are you sure?"}
         isOpen={isDisplayConfirmDialog}
         handleConfirm={confirmHandler}
         handleReject={confirmDialogHandler}

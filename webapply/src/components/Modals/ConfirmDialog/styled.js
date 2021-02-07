@@ -18,6 +18,33 @@ export const useStyles = makeStyles({
       height: "370px"
     }
   },
+  noTitlePaper: {
+    top: "35%",
+    position: "fixed",
+    right: "65px",
+    width: "780px",
+    borderRadius: "8px",
+    boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
+    backgroundColor: "#ffffff",
+    "@media (max-width: 1440px)": {
+      top: "35%",
+      position: "fixed",
+      right: "75px",
+      width: "780px"
+    },
+    "@media (max-width: 1280px)": {
+      top: "35%",
+      position: "fixed",
+      right: "120px",
+      width: "780px"
+    },
+    "@media (max-width: 1024px)": {
+      top: 0,
+      position: "relative",
+      right: "0px",
+      width: "auto"
+    }
+  },
   title: {
     padding: "40px 40px 20px 40px",
     "& > h2": {

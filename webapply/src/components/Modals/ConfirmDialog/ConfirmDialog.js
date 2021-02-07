@@ -8,7 +8,13 @@ import cx from "classnames";
 
 import { useStyles } from "./styled";
 
-export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm }) => {
+export const ConfirmDialog = ({
+  title = "Are you sure?",
+  message,
+  handleClose,
+  isOpen,
+  handleConfirm
+}) => {
   const classes = useStyles();
 
   return (
@@ -16,11 +22,16 @@ export const ConfirmDialog = ({ message, handleClose, isOpen, handleConfirm }) =
       open={isOpen}
       onClose={handleClose}
       aria-labelledby="draggable-dialog-title"
-      classes={{ container: classes.container, paper: classes.paper }}
+      classes={{
+        container: classes.container,
+        paper: title !== null ? classes.paper : classes.noTitlePaper
+      }}
     >
-      <DialogTitle id="draggable-dialog-title" classes={{ root: classes.title }}>
-        Are you sure?
-      </DialogTitle>
+      {title !== null && (
+        <DialogTitle id="draggable-dialog-title" classes={{ root: classes.title }}>
+          {title}
+        </DialogTitle>
+      )}
       <DialogContent classes={{ root: classes.content }}>{message}</DialogContent>
       <div className={classes.divider} />
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
