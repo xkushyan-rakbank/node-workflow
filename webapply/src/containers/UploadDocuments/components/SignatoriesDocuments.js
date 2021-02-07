@@ -2,7 +2,10 @@ import React from "react";
 
 import { Avatar } from "./../../../components/Avatar/Avatar";
 import { DocumentRow } from "../DocumentRow";
+import { MultiDocumentRow } from "./MultiDocumentRow/MultiDocumentRow";
+import { getDocumentInfoMessage } from "../constants";
 import { useStyles } from "./styled";
+import { PERSONAL_BANK_STATEMENTS, PERSONAL_BACKGROUND } from "../../../constants";
 
 export const SignatoriesDocuments = ({ documents, signatories }) => {
   const classes = useStyles();
@@ -35,6 +38,26 @@ export const SignatoriesDocuments = ({ documents, signatories }) => {
               type="stakeholdersDocuments"
             />
           ))}
+          {/* ro-assist-brd2-1 */}
+          {docUploadDetails.personalBankStatements &&
+            docUploadDetails.personalBankStatements.documents && (
+              <MultiDocumentRow
+                documents={docUploadDetails.personalBankStatements.documents}
+                limit={docUploadDetails.personalBankStatements.limit}
+                stakeholderIndex={stakeholderIndex}
+                type={PERSONAL_BANK_STATEMENTS}
+                infoMessage={getDocumentInfoMessage(PERSONAL_BANK_STATEMENTS)}
+              />
+            )}
+          {docUploadDetails.personalBackground && docUploadDetails.personalBackground.documents && (
+            <MultiDocumentRow
+              documents={docUploadDetails.personalBackground.documents}
+              limit={docUploadDetails.personalBackground.limit}
+              stakeholderIndex={stakeholderIndex}
+              type={PERSONAL_BACKGROUND}
+              infoMessage={getDocumentInfoMessage(PERSONAL_BACKGROUND)}
+            />
+          )}
         </div>
       )
     );

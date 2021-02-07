@@ -164,7 +164,7 @@ export const useStyles = makeStyles({
     lineHeight: ".6",
     letterSpacing: "normal",
     "& p": {
-      margin: 0
+      margin: "3px 0 0 5px"
     },
     "@media (max-width: 620px)": {
       lineHeight: "1"
@@ -277,5 +277,36 @@ export const useStyles = makeStyles({
   },
   fileIcon: {
     minWidth: "26px"
+  },
+  infoTitles: {
+    position: "relative",
+    top: "-5px",
+    textDecoration: "underline"
+  },
+  uploadInfo: {
+    display: "inline-flex"
+  },
+  questionIcon: {
+    width: "14px",
+    height: "14px"
+  },
+  multiGrid: {
+    padding: "0 25px",
+    borderTop: "solid 1px #e6e6e680"
+  },
+  multiAddBtn: {
+    width: "132px",
+    float: "right"
+  },
+  disabledMultiAddBtn: {
+    color: "#ffffff",
+    boxShadow: "none",
+    cursor: "default",
+    backgroundColor: "#c6c6cc",
+    border: "none"
+  },
+  multiFileUploadPlaceholder: {
+    borderTop: "none",
+    padding: 0
   }
 });

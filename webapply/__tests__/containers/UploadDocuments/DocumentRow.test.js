@@ -5,6 +5,11 @@ import {
   getProspectStatus
 } from "../../../src/store/selectors/searchProspect";
 import { getProgress, getUploadErrors } from "../../../src/store/selectors/uploadDocuments";
+import {
+  getProspect,
+  getOrganizationInfo,
+  getOrgKYCDetails
+} from "../../../src/store/selectors/appConfig";
 import { DocumentRow } from "../../../src/containers/UploadDocuments/DocumentRow";
 import { DocumentRowComponent } from "../../../src/containers/UploadDocuments/components/DocumentRow/DocumentRow";
 import { cancelDocUpload, docUpload } from "../../../src/store/actions/uploadDocuments";
@@ -21,6 +26,7 @@ jest.mock("react-redux", () => ({
 }));
 jest.mock("../../../src/store/selectors/searchProspect");
 jest.mock("../../../src/store/selectors/uploadDocuments");
+jest.mock("../../../src/store/selectors/appConfig");
 jest.mock("../../../src/store/actions/uploadDocuments");
 jest.mock("../../../src/store/actions/appConfig");
 jest.mock("../../../src/store/actions/sendProspectToAPI");
@@ -51,10 +57,20 @@ describe("DocumentRow container tests", () => {
   const progress = {
     [documentKey]: docProgress
   };
+  const organizationInfo = { dateOfIncorporation: "10-12-2018", licenseIssueDate: "10-12-2018" };
+  const orgKYCDetails = {
+    otherBankingRelationshipsInfo: {
+      otherBankingRelationshipsExist: true
+    }
+  };
+  const prospect = { some: "field" };
 
   getIsEditableStatusSearchInfo.mockReturnValue(isApplyEditApplication);
   getProspectStatus.mockReturnValue(prospectStatusInfo);
   getUploadErrors.mockReturnValue(uploadErrors);
+  getProspect.mockReturnValue(prospect);
+  getOrganizationInfo.mockReturnValue(organizationInfo);
+  getOrgKYCDetails.mockReturnValue(orgKYCDetails);
 
   beforeEach(() => {
     getProgress.mockReturnValue(progress);

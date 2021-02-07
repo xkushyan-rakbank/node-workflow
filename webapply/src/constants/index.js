@@ -121,6 +121,22 @@ export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
 export const OTHER_DOCUMENTS = "otherDocuments";
 
+// ro-assist-brd2-1
+export const COMPANY_BANK_STATEMENTS = "companyBankStatements";
+export const COMPANY_ADDRESS_PROOF = "companyAddressProof";
+export const COMPANY_INVOICES = "companyInvoices";
+export const PERSONAL_BANK_STATEMENTS = "personalBankStatements";
+export const PERSONAL_BACKGROUND = "personalBackground";
+
+export const COMPANY_BANK_STATEMENTS_DOCTYPE = "Bank_Statements";
+export const COMPANY_ADDRESS_PROOF_DOCTYPE = "Company Address Proof";
+export const COMPANY_INVOICES_DOCTYPE = "Invoices_Contracts_Shipment_MOU_Custom";
+export const PERSONAL_BANK_STATEMENTS_DOCTYPE = "personal Bank Statements";
+export const PERSONAL_BACKGROUND_DOCTYPE = "CV / Personal Background";
+
+export const companyMultiDocs = [COMPANY_BANK_STATEMENTS, COMPANY_ADDRESS_PROOF, COMPANY_INVOICES];
+export const stakeholderMultiDocs = [PERSONAL_BANK_STATEMENTS, PERSONAL_BACKGROUND];
+
 /* Action Types */
 export const SAVE = "save";
 export const SUBMIT = "submit";

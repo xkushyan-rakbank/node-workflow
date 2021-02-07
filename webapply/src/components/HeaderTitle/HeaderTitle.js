@@ -52,7 +52,8 @@ const HeaderTitleComponent = ({
     <div className={classes.headerTitle}>
       <div className={classes.headerTitleIn}>
         <span>
-          {isAgent && (
+          {/* //ro-assist header missing issue fix */}
+          {isAgent && agentName !== undefined && (
             <>
               {/* ro-assistant-scr-0.7 */}
               <div>
@@ -63,7 +64,8 @@ const HeaderTitleComponent = ({
               </div>
             </>
           )}
-          {![routes.searchProspect].includes(pathname) && (
+          {/* //ro-assist header missing issue fix */}
+          {![routes.searchProspect.split("/")[1]].includes(pathname.split("/")[1]) && (
             <>
               {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
             </>

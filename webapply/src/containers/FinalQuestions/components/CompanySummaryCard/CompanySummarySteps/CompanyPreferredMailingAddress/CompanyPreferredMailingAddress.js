@@ -75,7 +75,6 @@ export const CompanyPreferredMailingAddressComponent = ({
 
   const selectPreferredMailingAddrs = ({ values, setFieldValue }) => event => {
     const value = JSON.parse(event.target.value);
-    console.log("value=>", value);
     const prospect = {};
     prospect[`${BASE_PATH_1}.preferredAddress`] = value ? "Yes" : "No";
     prospect[`${BASE_PATH_2}.preferredAddress`] = value ? "No" : "Yes";

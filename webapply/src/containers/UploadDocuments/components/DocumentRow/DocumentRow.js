@@ -9,6 +9,7 @@ import { useStyles } from "../styled";
 
 import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
 import { OverwriteAlert } from "../OverwriteAlert/OverwriteAlert";
+import { ContexualHelp } from "../../../../components/Notifications";
 
 export const DocumentRowComponent = ({
   isDisabledUploadForRO,
@@ -20,7 +21,9 @@ export const DocumentRowComponent = ({
   cancelHandler,
   isUploadError,
   uploadDocument,
-  document
+  document,
+  docRemoveWarning = true,
+  infoMessage = ""
 }) => {
   const classes = useStyles();
   const inputEl = useRef(null);
@@ -48,15 +51,19 @@ export const DocumentRowComponent = ({
   const cancelUpload = () => {
     cancelHandler();
     setRemoveAlert(false);
-    inputEl.current.click();
+    if (docRemoveWarning) inputEl.current.click();
   };
 
   return (
     <>
       <div
-        className={cx(classes.fileUploadPlaceholder, {
-          [classes.disabled]: isDisabledUploadForRO
-        })}
+        className={cx(
+          classes.fileUploadPlaceholder,
+          {
+            [classes.disabled]: isDisabledUploadForRO
+          },
+          { [classes.multiFileUploadPlaceholder]: !docRemoveWarning }
+        )}
       >
         <input
           className={classes.defaultInput}
@@ -103,9 +110,14 @@ export const DocumentRowComponent = ({
             )}
 
             {isUploadError && <DocumentUploadError tryAgainHandler={tryAgain} />}
-
-            {!selectedFile && !isUploaded && !errorMessage && (
-              <p>Supported formats are PDF, JPG and PNG | 5MB maximum size</p>
+            {/* ro-assist-brd2-1 */}
+            {infoMessage && !isUploaded && (
+              <ContexualHelp title={infoMessage} placement="right" isDisableHoverListener={false}>
+                <div className={classes.uploadInfo}>
+                  <Icon name={ICONS.question} alt="question" className={classes.questionIcon} />
+                  <p>Need more information ?</p>
+                </div>
+              </ContexualHelp>
             )}
           </div>
 
@@ -118,7 +130,7 @@ export const DocumentRowComponent = ({
               <Icon
                 name={ICONS.close}
                 className={classes.cancel}
-                onClick={() => setRemoveAlert(true)}
+                onClick={() => (docRemoveWarning ? setRemoveAlert(true) : cancelUpload())}
                 alt="cancel upload"
               />
             ) : (
