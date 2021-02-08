@@ -592,7 +592,7 @@ export const CompanyBusinessRelationshipsComponent = ({
             <Grid container spacing={3}>
               <Grid item sm={8} xs={12}>
                 <h5 className={classes.groupLabel}>
-                  Is your company dealing in Designated Business Categories?
+                  Is your Company Dealing in Designated Business Categories
                 </h5>
                 <h6 className={classes.dnfbpStyle}>
                   <i>
@@ -610,9 +610,9 @@ export const CompanyBusinessRelationshipsComponent = ({
                           title={
                             <>
                               Dealing in precious metals/precious stones/real estate or any
-                              commercial and/or financial transactions/ operations,on behalf of /for
-                              benefit of, our and/or potentila clients, business/trade/ professional
-                              counterparts, and/ortheir beneficial owners
+                              commercial and/or financial transactions/ operations, on behalf of/for
+                              benefit of, our existing and/or potential clients, business/trade/
+                              professional counterparts, and/or their beneficial owners
                             </>
                           }
                           placement="right"
@@ -668,10 +668,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                       <>
                         GIIN is a Global Intermediary Identification Number assigned by the FATCA
                         Registration System to financial institutions and direct reporting
-                        non-financial foreign entities
-                        <br />
-                        If Number contains hyphen (.), spaces or any other special character please
-                        enter only alphabets and numbers
+                        non-financial foreign entities.
                       </>
                     }
                   />

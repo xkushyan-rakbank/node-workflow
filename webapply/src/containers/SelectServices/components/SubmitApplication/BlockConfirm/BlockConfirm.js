@@ -73,6 +73,7 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
                 label="Promo Code (optional)"
                 placeholder="Promo Code"
                 path="prospect.applicationInfo.promoCode"
+                contextualHelpText="Enter Promotional Offer code if you have one"
                 infoTitle=""
                 component={Input}
                 InputProps={{

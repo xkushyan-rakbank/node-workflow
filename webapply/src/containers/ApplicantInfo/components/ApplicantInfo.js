@@ -172,6 +172,7 @@ export const ApplicantInfoComponent = ({
                     path="prospect.applicantInfo.roCode"
                     label="Agent Code (Optional)"
                     placeholder="Agent Code"
+                    contextualHelpText="Enter the Agent code of the Bank staff whom you are in touch with"
                     component={Input}
                     InputProps={{
                       inputProps: { tabIndex: 0 }
@@ -197,6 +198,7 @@ export const ApplicantInfoComponent = ({
                       placeholder="Partner Code"
                       disabled={allianceCodeFromQuery !== ""}
                       component={Input}
+                      contextualHelpText="If you were referred by one of our Partners, enter the code shared by them"
                       InputProps={{
                         inputProps: { tabIndex: 0 }
                       }}

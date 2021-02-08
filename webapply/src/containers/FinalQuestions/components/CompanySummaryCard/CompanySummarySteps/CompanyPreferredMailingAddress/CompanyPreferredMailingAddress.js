@@ -133,7 +133,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                       path={`${BASE_PATH_1}.addressLine1`}
                       label="Office / Shop Number"
                       placeholder="Office / Shop Number"
-                      contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
+                      contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company."
                       InputProps={{
                         inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 1 }
                       }}
@@ -263,7 +263,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           label="Office / Shop Number"
                           placeholder="Office / Shop Number"
                           disabled={values.isDontSameAsRegisteredAddress}
-                          contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company. This will be used as primary contact and Cheque book will be delivered to this address."
+                          contextualHelpText="Give the Registered address where the Company's office is located."
                           InputProps={{
                             inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 1 }
                           }}
@@ -274,6 +274,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           path={`${BASE_PATH_2}.poBox`}
                           label="PO Box Number"
                           disabled={values.isDontSameAsRegisteredAddress}
+                          contextualHelpText="Give the Registered address where the Company's office is located."
                           placeholder="AB1234"
                           component={Input}
                           InputProps={{
@@ -290,6 +291,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           path={`${BASE_PATH_2}.emirateCity`}
                           datalistId="emirateCity"
                           disabled={values.isDontSameAsRegisteredAddress}
+                          contextualHelpText="Give the Registered address where the Company's office is located."
                           label="Emirate / City"
                           isSearchable
                           component={SelectAutocomplete}
@@ -299,6 +301,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           name="officeAddrsCountry"
                           path={`${BASE_PATH_2}.country`}
                           disabled
+                          contextualHelpText="Give the Registered address where the Company's office is located."
                           component={Input}
                         />
                       </Grid>

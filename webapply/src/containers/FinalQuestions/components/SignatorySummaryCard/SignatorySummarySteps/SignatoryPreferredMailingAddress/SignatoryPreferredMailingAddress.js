@@ -244,15 +244,8 @@ export const SignatoryPreferredMailingAddressComponent = ({
                     <ContexualHelp
                       title={
                         <span>
-                          Select this checkbox if you want the Company address to be same as office
-                          address.
-                          <br />
-                          <br />
-                          If not, please enter the Office address in below fields.
-                          <br />
-                          <br />
                           Kindly note, the Business Debit Card of this stakeholder will be delivered
-                          address.
+                          to this address.
                         </span>
                       }
                       placement="right"
@@ -340,6 +333,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                     label="Emirate/ City"
                     isSearchable
                     component={SelectAutocomplete}
+                    contextualHelpText="Select 'Others' if your city is not available"
                     tabIndex="3"
                   />
                   {/* ro-assist-brd1-5 */}

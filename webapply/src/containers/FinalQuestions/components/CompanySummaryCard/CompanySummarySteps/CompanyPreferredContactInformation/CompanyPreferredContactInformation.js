@@ -151,7 +151,8 @@ export const CompanyPreferredContactInformationComponent = ({
                 name="website"
                 path="prospect.organizationInfo.contactDetails.website"
                 label="Website (optional)"
-                placeholder="Enter your website URL "
+                placeholder="www.yourcompanywebsite.com "
+                contextualHelpText="Enter your Company's website address URL"
                 component={Input}
                 InputProps={{
                   inputProps: { tabIndex: 0 }

@@ -32,7 +32,7 @@ export const dnfbpInfoContent = {
 export const usEntity = {
   options: yesNoOptions,
   helperText:
-    "You are US entity if - company is incorporated in US, or holding mailing address of US",
+    "You are US entity if – company is incorporated in US, Signatory / shareholder is US citizen or holding mailing address of US",
   body: "Is your company a US entity ?",
   title: "US Entity",
   infoText: null,
@@ -42,7 +42,7 @@ export const usEntity = {
 export const financialInstitution = {
   options: enumYesNoOptions,
   helperText:
-    "Includes all banks, Entities with Custody of financial assets, certain types of insurance companies, asset management companies and certain investment funds or investment vehicles link banks, security dealing companies, investment management services, insurance companies, fund managers, trusts & trustees.\nThe examples listed above are indicative in nature and have been provided for illustrative purposes only and should not be constructed as an exhaustive list of Financial Institutions / Non-Financial Entity",
+    "FI generally includes all banks, entities with custody of financial assets, certain types of insurance companies, asset management companies and certain investment funds or investment vehicles like banks, security dealing companies, investment management services, insurance companies, fund managers, trusts & trustees.",
   body: "Is your company a financial institution ?",
   title: "Financial Institution",
   infoText: null,
@@ -52,7 +52,7 @@ export const financialInstitution = {
 export const nonFinancialInstitution = {
   options: ActivePassiveOptions,
   helperText:
-    "Active NFE - Generally an entity with trading activities, manufacturers, wholesalers, retailers, restaurants and bars, hotels, construction companies, health and social work.\n\nPassive NFE - Generally entities with no trading activities and receive income or dividend generated from its assets including properties and shares etc.",
+    "Active NFE - An Active NFE generally refers to an entity with trading activities including manufacturers, wholesalers, retailers, restaurants and bars, hotels, construction companies, health and social work. Passive NFE - A Passive NFE generally refers to entities with no trading activities and receive income or dividend generated from its assets including properties and shares etc.",
   body: "Is your company an active or passive Non-financial Entity ?",
   title: null,
   infoText: null,
