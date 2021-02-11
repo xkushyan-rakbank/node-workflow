@@ -129,10 +129,10 @@ export const PERSONAL_BANK_STATEMENTS = "personalBankStatements";
 export const PERSONAL_BACKGROUND = "personalBackground";
 
 export const COMPANY_BANK_STATEMENTS_DOCTYPE = "Bank_Statements";
-export const COMPANY_ADDRESS_PROOF_DOCTYPE = "Company Address Proof";
+export const COMPANY_ADDRESS_PROOF_DOCTYPE = "Company_Address_Proof";
 export const COMPANY_INVOICES_DOCTYPE = "Invoices_Contracts_Shipment_MOU_Custom";
-export const PERSONAL_BANK_STATEMENTS_DOCTYPE = "personal Bank Statements";
-export const PERSONAL_BACKGROUND_DOCTYPE = "CV / Personal Background";
+export const PERSONAL_BANK_STATEMENTS_DOCTYPE = "Personal_Bank_Statements";
+export const PERSONAL_BACKGROUND_DOCTYPE = "CV_Personal_Background";
 
 export const companyMultiDocs = [COMPANY_BANK_STATEMENTS, COMPANY_ADDRESS_PROOF, COMPANY_INVOICES];
 export const stakeholderMultiDocs = [PERSONAL_BANK_STATEMENTS, PERSONAL_BACKGROUND];
@@ -158,7 +158,7 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.currentAccount,
+        link: routes.accountsComparison,
         label: "Go to home page"
       }
     ]
@@ -168,7 +168,7 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.currentAccount,
+        link: routes.accountsComparison,
         label: "Go to home page"
       }
     ]
@@ -178,7 +178,7 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.currentAccount,
+        link: routes.comeBackLogin,
         label: "Continue"
       }
     ]
@@ -188,11 +188,11 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.currentAccount,
+        link: routes.accountsComparison,
         label: "No, thanks"
       },
       {
-        link: routes.currentAccount,
+        link: routes.comeBackLogin,
         label: "Yes"
       }
     ]
@@ -202,11 +202,11 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.currentAccount,
+        link: routes.accountsComparison,
         label: "No, thanks"
       },
       {
-        link: routes.currentAccount,
+        link: routes.comeBackLogin,
         label: "Yes"
       }
     ]
@@ -215,7 +215,15 @@ export const applicationdedupe = [
 export const screeningStatus = [
   {
     error: "Dedupe",
-    screeningType: "Dedupe Check"
+    screeningType: "Dedupe Check",
+    //ro-assist-brd2-3
+    link: true,
+    buttons: [
+      {
+        link: routes.accountsComparison,
+        label: "Go to home page"
+      }
+    ]
   },
   {
     //ro-assist-brd1-3
