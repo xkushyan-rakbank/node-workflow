@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 import React from "react";
-import { render, act, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 
 import { TableCompareComponent } from "../../src/containers/AccountsComparison/components/TableCompare/TableCompare";
 import { accountTypes } from "../../src/containers/AccountsComparison/components/TableCompare/constants";
@@ -22,7 +23,7 @@ jest.mock("react-redux", () => ({
 describe("TableCompareComponent Component tests", () => {
   it("should open RAKstarter popup", () => {
     render(<TableCompareComponent selectedAccount={accountTypes.starter.name} />);
-    fireEvent.click(screen.queryAllByText(/read more/i)[0]);  // firing first ReadMore which is the RAKstarter.
-    expect(screen.queryAllByText(/are you sure/i)).toHaveLength(1) // this means the popup is open.
+    fireEvent.click(screen.queryAllByText(/read more/i)[0]); // firing first ReadMore which is the RAKstarter.
+    expect(screen.queryAllByText(/Yes, I'm sure/i)).toHaveLength(1); // this means the popup is open.
   });
 });
