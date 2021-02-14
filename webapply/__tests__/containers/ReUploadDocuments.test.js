@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { render } from "@testing-library/react";
+import { render, act } from "@testing-library/react";
 import { Router } from "react-router";
 import { createMemoryHistory } from "history";
 
@@ -115,7 +115,11 @@ describe("ReUploadDocuments container tests", () => {
     render(<ReUploadDocuments />);
 
     expect(ReUploadDocumentsComponent).toHaveBeenCalledTimes(2);
+    jest.useFakeTimers();
     ReUploadDocumentsComponent.mock.calls[0][0].uploadDocument(file);
+    act(() => {
+      jest.runAllTimers();
+    });
     expect(addOtherDocument).toHaveBeenCalled();
     expect(docUpload).toHaveBeenCalled();
   });

@@ -181,7 +181,7 @@ describe("UploadDocuments container tests", () => {
 
     expect(UploadDocumentsComponent).toHaveBeenCalledTimes(1);
   });
-  
+
   it("should handle DocumentUploadCnt && DocumentUplTotalCnt same condition", async () => {
     const companyDocuments = [{ DocumentUploadCnt: 20, DocumentUplTotalCnt: 20 }];
     props.companyDocuments = companyDocuments;

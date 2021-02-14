@@ -80,6 +80,14 @@ describe("getProspectDocuments selector test", () => {
     expect(getIsRequiredDocsUploaded({ appConfig: { prospect: { documents: {} } } })).toBe(0);
   });
 
+  it("should return true when validRocode is true", () => {
+    expect(
+      getIsRequiredDocsUploaded({
+        appConfig: { prospect: { applicantInfo: { validRoCode: true } } }
+      })
+    ).toBe(true);
+  });
+
   it("should return company documents", () => {
     expect(getCompanyDocuments(state)).toBe(companyDocuments);
   });
