@@ -32,7 +32,7 @@ const createPreferredContactInformationSchema = () =>
         codeFieldName: "primaryMobCountryCode",
         fieldName: "Mobile number"
       }),
-    primaryHomeCountryNo: Yup.string()
+    primaryHomeNo: Yup.string()
       .required(getRequiredMessage("Home country contact number"))
       .phoneNo({
         codeFieldName: "primaryHomeCountryCode",
@@ -62,7 +62,7 @@ const PreferredContactInformationStep = ({
         primaryMobileNo: "",
         primaryPhoneCountryCode: "",
         primaryPhoneNo: "",
-        primaryHomeCountryNo: "",
+        primaryHomeNo: "",
         primaryHomeCountryCode: ""
       }}
       onSubmit={handleContinue}
@@ -144,14 +144,12 @@ const PreferredContactInformationStep = ({
               </InputGroup>
             </Grid>
             {/* SCR for RO change */}
+            {/* ro-assist-brd1-5 */}
             <Grid item sm={6} xs={12}>
               <ContactNumberInputGroup>
-                <LinkedField
+                <Field
                   name="primaryHomeCountryCode"
-                  linkedFieldName="primaryHomeCountryNo"
                   path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryCode`}
-                  // eslint-disable-next-line max-len
-                  linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryNo`}
                   component={CustomSelect}
                   shrink={false}
                   disabled={!isSignatory}
@@ -159,8 +157,8 @@ const PreferredContactInformationStep = ({
                   inputProps={{ tabIndex: 0 }}
                 />
                 <Field
-                  name="primaryHomeCountryNo"
-                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryNo`}
+                  name="primaryHomeNo"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeNo`}
                   label="Home country contact number"
                   placeholder="55xxxxxxx"
                   component={Input}
