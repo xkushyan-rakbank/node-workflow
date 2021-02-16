@@ -77,11 +77,11 @@
 		"vatRegistrationNumber": "",
 		"addressInfo": [
 			{
-				"typeOfAddress": "",
-				"officeAddressDifferent": "",
+				"typeOfAddress": "Registered Address/Head office",
+				"officeAddressDifferent": "No",
 				"addressDetails": [
 					{
-						"addressFieldDesc": "",
+						"addressFieldDesc": "Registered Address/Head office",
 						"preferredAddress": "",
 						"addressLine1": "",
 						"addressLine2": "",
@@ -89,7 +89,28 @@
 						"addressLine4": "",
 						"poBox": "",
 						"emirateCity": "",
-						"country": "United Arab Emirates",
+						"country": "AE",
+						"typeOfSpaceOccupied": {
+							"spaceType": "",
+							"others": ""
+						}
+					}
+				]
+			},
+			{
+				"typeOfAddress": "Office Address",
+				"officeAddressDifferent": "No",
+				"addressDetails": [
+					{
+						"addressFieldDesc": "Office Address",
+						"preferredAddress": "",
+						"addressLine1": "",
+						"addressLine2": "",
+						"addressLine3": "",
+						"addressLine4": "",
+						"poBox": "",
+						"emirateCity": "",
+						"country": "AE",
 						"typeOfSpaceOccupied": {
 							"spaceType": "",
 							"others": ""
@@ -293,7 +314,38 @@
 			"sameAsCompanyAddress": false,
 			"addressInfo": [
 				{
-					"typeOfAddress": "",
+					"typeOfAddress": "Residence Address",
+					"addressDetails": [
+						{
+							"addressFieldDesc": "Residence Address",
+							"preferredAddress": "",
+							"addressLine1": "",
+							"addressLine2": "",
+							"addressLine3": "",
+							"addressLine4": "",
+							"poBox": "",
+							"emirateCity": "",
+							"country": "AE"
+						}
+					]
+				},
+					{
+					"typeOfAddress": "Office Address",
+					"addressDetails": [
+						{
+							"addressFieldDesc": "Office Address",
+							"preferredAddress": "",
+							"addressLine1": "",
+							"addressLine2": "",
+							"addressLine3": "",
+							"addressLine4": "",
+							"poBox": "",
+							"emirateCity": "",
+							"country": "AE"
+						}
+					]
+				},	{
+					"typeOfAddress": "Home Address",
 					"addressDetails": [
 						{
 							"addressFieldDesc": "",
@@ -304,7 +356,7 @@
 							"addressLine4": "",
 							"poBox": "",
 							"emirateCity": "",
-							"country": "United Arab Emirates"
+							"country": "AE"
 						}
 					]
 				}
