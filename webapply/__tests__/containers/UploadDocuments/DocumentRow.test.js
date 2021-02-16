@@ -184,6 +184,27 @@ describe("DocumentRow container tests", () => {
     expect(DocumentRowComponent.mock.calls[1][0].selectedFile).toBe(file);
   });
 
+  it("should handle uploadDocument callback for multiDocument", () => {
+    const file = "some file";
+    const uploadMultiDocument = jest.fn();
+    render(
+      <DocumentRow
+        {...props}
+        multiSelectedFile={file}
+        multiDoc={true}
+        uploadMultiDocument={uploadMultiDocument}
+      />
+    );
+
+    expect(DocumentRowComponent).toHaveBeenCalledTimes(2);
+
+    act(() => {
+      DocumentRowComponent.mock.calls[0][0].uploadDocument(file);
+    });
+    expect(DocumentRowComponent).toHaveBeenCalledTimes(2);
+    expect(DocumentRowComponent.mock.calls[1][0].selectedFile).toBe(file);
+  });
+
   it("should handle uploadDocument callback without documentType in prop", () => {
     const document = {
       documentKey,

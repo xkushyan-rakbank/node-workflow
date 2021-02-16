@@ -13,6 +13,14 @@ import {
   getStakeholdersDocuments
 } from "../../../src/store/selectors/appConfig";
 
+import {
+  COMPANY_BANK_STATEMENTS_DOCTYPE,
+  COMPANY_ADDRESS_PROOF_DOCTYPE,
+  COMPANY_INVOICES_DOCTYPE,
+  PERSONAL_BANK_STATEMENTS_DOCTYPE,
+  PERSONAL_BACKGROUND_DOCTYPE
+} from "../../../src/constants";
+
 describe("getProspectDocuments selector test", () => {
   const progress = "some progress";
   const uploadErrors = "some uploadErrors";
@@ -78,6 +86,41 @@ describe("getProspectDocuments selector test", () => {
 
   it("should return 0 when companyDocuments and stakeholdersDocuments is not exists", () => {
     expect(getIsRequiredDocsUploaded({ appConfig: { prospect: { documents: {} } } })).toBe(0);
+  });
+
+  it("should return true when all documents are submited", () => {
+    const documentsArr = {
+      companyDocuments: [],
+      companyBankStatements: {
+        limit: 6,
+        documents: [{ documentType: COMPANY_BANK_STATEMENTS_DOCTYPE }]
+      },
+      companyAddressProof: {
+        limit: 3,
+        documents: [{ documentType: COMPANY_ADDRESS_PROOF_DOCTYPE }]
+      },
+      companyInvoices: {
+        limit: 10,
+        documents: [{ documentType: COMPANY_INVOICES_DOCTYPE }]
+      },
+      stakeholdersDocuments: {
+        "0_stake holder": {
+          documents: [],
+          personalBankStatements: {
+            limit: 6,
+            documents: [{ documentType: PERSONAL_BANK_STATEMENTS_DOCTYPE }]
+          },
+          personalBackground: {
+            limit: 1,
+            documents: [{ documentType: PERSONAL_BACKGROUND_DOCTYPE }]
+          }
+        }
+      },
+      otherDocuments: []
+    };
+    expect(
+      getIsRequiredDocsUploaded({ appConfig: { prospect: { documents: documentsArr } } })
+    ).toBe(true);
   });
 
   it("should return true when validRocode is true", () => {
