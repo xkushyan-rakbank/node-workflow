@@ -8,6 +8,7 @@ export const RESET_PROSPECT = "RESET_PROSPECT";
 export const SET_CONFIG = "SET_CONFIG";
 export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
+export const UPDATE_VALID_RO_CODE = "UPDATE_VALID_RO_CODE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const REMOVE_PROSPECT_ID = "REMOVE_PROSPECT_ID";
 export const SAVE_SIGNATORY_MODEL = "SAVE_SIGNATORY_MODEL";
@@ -55,6 +56,10 @@ export const resetProspect = () => {
 
 export const updateProspectId = payload => {
   return { type: UPDATE_PROSPECT_ID, payload };
+};
+
+export const updateValidRoCode = payload => {
+  return { type: UPDATE_VALID_RO_CODE, payload };
 };
 
 export const removeProspectId = () => {

@@ -4,7 +4,7 @@ import {
   applicantInfoFormFail,
   applicantInfoFormSuccess
 } from "../actions/applicantInfoForm";
-import { updateProspectId, updateProspect } from "../actions/appConfig";
+import { updateProspectId, updateProspect, updateValidRoCode } from "../actions/appConfig";
 import { resetInputsErrors, setInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
 import { prospect as prospectApi } from "../../api/apiClient";
@@ -49,11 +49,16 @@ export function* applicantInfoFormSaga({ payload }) {
     }
 
     const {
-      data: { prospectId }
+      data: { prospectId, validRoCode }
     } = yield call(prospectApi.create, sendingData, headers);
 
     yield put(generateCodeSuccess());
     yield put(updateProspectId(prospectId));
+    yield put(
+      updateValidRoCode(
+        typeof validRoCode !== "undefined" && validRoCode !== null ? validRoCode : "N"
+      )
+    );
     yield put(resetInputsErrors());
     yield put(applicantInfoFormSuccess());
   } catch (error) {

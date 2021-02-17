@@ -7,6 +7,7 @@ import {
   RECEIVE_APPCONFIG_SUCCESS,
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
+  UPDATE_VALID_RO_CODE,
   REMOVE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
@@ -85,6 +86,16 @@ export default handleActions(
         generalInfo: {
           ...get(state, "prospect.generalInfo", {}),
           prospectId: action.payload
+        }
+      }
+    }),
+    [UPDATE_VALID_RO_CODE]: (state, action) => ({
+      ...state,
+      prospect: {
+        ...state.prospect,
+        applicantInfo: {
+          ...get(state, "prospect.applicantInfo", {}),
+          validRoCode: action.payload
         }
       }
     }),
