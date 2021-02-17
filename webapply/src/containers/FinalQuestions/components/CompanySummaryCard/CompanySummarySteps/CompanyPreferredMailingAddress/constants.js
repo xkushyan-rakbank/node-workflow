@@ -1,3 +1,6 @@
+//ro-assist-brd1-5
+export const OUTSIDE_BASE_PATH = "organizationInfo";
+export const BASE_ADDRESS_PATH_1 = "prospect.organizationInfo.addressInfo[0]";
 export const BASE_PATH_1 = "prospect.organizationInfo.addressInfo[0].addressDetails[0]";
 export const BASE_PATH_2 = "prospect.organizationInfo.addressInfo[1].addressDetails[0]";
 

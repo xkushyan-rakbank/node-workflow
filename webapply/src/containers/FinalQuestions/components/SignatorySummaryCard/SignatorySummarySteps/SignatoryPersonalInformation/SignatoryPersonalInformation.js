@@ -75,9 +75,10 @@ export const SignatoryPersonalInformation = ({
                 component={SelectAutocomplete}
                 tabIndex="0"
               />
+              {/* //ro-assist-brd1-5 */}
               <Field
                 name="countryOfBirth"
-                path={`prospect.signatoryInfo[${index}].countryOfBirth`}
+                path={`prospect.signatoryInfo[${index}].countryofBirth`}
                 datalistId="country"
                 label="Country of Birth"
                 isSearchable

@@ -21,7 +21,9 @@ import {
   MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH,
   MAX_OTHER_FIELD_LENGTH,
-  MAX_OFFICE_NUMBER_LENGTH
+  MAX_OFFICE_NUMBER_LENGTH,
+  OUTSIDE_BASE_PATH,
+  BASE_ADDRESS_PATH_1
 } from "./constants";
 import {
   getInvalidMessage,
@@ -80,15 +82,19 @@ export const CompanyPreferredMailingAddressComponent = ({
     prospect[`${BASE_PATH_2}.preferredAddress`] = value ? "No" : "Yes";
     dispatch(updateProspect(prospect));
     setFieldValue("isRegisteredAddrsOrOfficeAddrs", value);
-    setFieldValue(
-      "preferredMailingAddrs",
-      value ? "Registered Address/Head office" : "Office Address"
-    );
   };
-
-  const handleSubmit = useCallback(() => {
-    handleContinue();
-  }, [handleContinue]);
+  //ro-assist-brd1-5
+  const handleSubmit = useCallback(
+    values => {
+      const prospect = {};
+      prospect[`${BASE_ADDRESS_PATH_1}.officeAddressDifferent`] = values.isSameAsRegisteredAddress
+        ? "Yes"
+        : "No";
+      dispatch(updateProspect(prospect));
+      handleContinue();
+    },
+    [dispatch, updateProspect, handleContinue]
+  );
 
   const addressLine1Ref = useRef();
   const poBoxRef = useRef();
@@ -112,8 +118,7 @@ export const CompanyPreferredMailingAddressComponent = ({
           officeAddrsPoBox: "",
           officeAddrsEmirateCity: "",
           officeAddrsCountry: "United Arab Emirates",
-          preferredMailingAddrs: "",
-          isDontSameAsRegisteredAddress: false,
+          isSameAsRegisteredAddress: false,
           isRegisteredAddrsOrOfficeAddrs: ""
         }}
         onSubmit={handleSubmit}
@@ -201,26 +206,24 @@ export const CompanyPreferredMailingAddressComponent = ({
                   </Grid>
                 </Grid>
               </Accordion>
+              {/* //ro-assist-brd1-5 */}
               <Field
-                name="isDontSameAsRegisteredAddress"
-                path={`${BASE_PATH_1}.isDontSameAsRegisteredAddress`}
+                name="isSameAsRegisteredAddress"
+                path={`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`}
                 label="Same as Registered Address / Head office"
                 component={Checkbox}
                 onSelect={() => {
-                  if (!values.isDontSameAsRegisteredAddress) {
-                    setFieldValue(
-                      "isDontSameAsRegisteredAddress",
-                      !values.isDontSameAsRegisteredAddress
-                    );
+                  if (!values.isSameAsRegisteredAddress) {
+                    setFieldValue("isSameAsRegisteredAddress", !values.isSameAsRegisteredAddress);
                     setFieldValue(
                       "officeAddrsLine1",
-                      !values.isDontSameAsRegisteredAddress
+                      !values.isSameAsRegisteredAddress
                         ? addressLine1Ref.current.children[1].children[0].value
                         : ""
                     );
                     setFieldValue(
                       "officeAddrsCountry",
-                      !values.isDontSameAsRegisteredAddress
+                      !values.isSameAsRegisteredAddress
                         ? countryRef.current.children[0].children[0].value === "AE"
                           ? "United Arab Emirates"
                           : countryRef.current.children[0].children[0].value
@@ -228,21 +231,18 @@ export const CompanyPreferredMailingAddressComponent = ({
                     );
                     setFieldValue(
                       "officeAddrsPoBox",
-                      !values.isDontSameAsRegisteredAddress
+                      !values.isSameAsRegisteredAddress
                         ? poBoxRef.current.children[1].children[0].value
                         : ""
                     );
                     setFieldValue(
                       "officeAddrsEmirateCity",
-                      !values.isDontSameAsRegisteredAddress
+                      !values.isSameAsRegisteredAddress
                         ? emirateCityRef.current.props.value.value
                         : ""
                     );
                   } else {
-                    setFieldValue(
-                      "isDontSameAsRegisteredAddress",
-                      values.isDontSameAsRegisteredAddress
-                    );
+                    setFieldValue("isSameAsRegisteredAddress", values.isSameAsRegisteredAddress);
                     setFieldValue("officeAddrsLine1", "");
                     setFieldValue("officeAddrsCountry", "United Arab Emirates");
                     setFieldValue("officeAddrsPoBox", "");
@@ -255,6 +255,7 @@ export const CompanyPreferredMailingAddressComponent = ({
               <FieldArray name="officeAddress">
                 {arrayHelpers => (
                   <Accordion title={"Office Address"}>
+                    {/* //ro-assist-brd1-5 */}
                     <Grid container spacing={3} className={classes.flexContainer}>
                       <Grid item sm={6} xs={12}>
                         <Field
@@ -262,7 +263,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           path={`${BASE_PATH_2}.addressLine1`}
                           label="Office / Shop Number"
                           placeholder="Office / Shop Number"
-                          disabled={values.isDontSameAsRegisteredAddress}
+                          disabled={values.isSameAsRegisteredAddress}
                           contextualHelpText="Give the Registered address where the Company's office is located."
                           InputProps={{
                             inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 1 }
@@ -273,7 +274,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           name="officeAddrsPoBox"
                           path={`${BASE_PATH_2}.poBox`}
                           label="PO Box Number"
-                          disabled={values.isDontSameAsRegisteredAddress}
+                          disabled={values.isSameAsRegisteredAddress}
                           contextualHelpText="Give the Registered address where the Company's office is located."
                           placeholder="AB1234"
                           component={Input}
@@ -290,7 +291,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                           name="officeAddrsEmirateCity"
                           path={`${BASE_PATH_2}.emirateCity`}
                           datalistId="emirateCity"
-                          disabled={values.isDontSameAsRegisteredAddress}
+                          disabled={values.isSameAsRegisteredAddress}
                           contextualHelpText="Give the Registered address where the Company's office is located."
                           label="Emirate / City"
                           isSearchable
@@ -310,10 +311,11 @@ export const CompanyPreferredMailingAddressComponent = ({
                 )}
               </FieldArray>
               <Grid container>
+                {/* //ro-assist-brd1-5 */}
                 <Field
                   name="isRegisteredAddrsOrOfficeAddrs"
                   component={InlineRadioGroup}
-                  path={`${BASE_PATH_1}.preferredMailingAddrs`}
+                  path={`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`}
                   options={yesNoOptions}
                   label="Please select perferred mailing address"
                   onChange={preferredMailingAddress}

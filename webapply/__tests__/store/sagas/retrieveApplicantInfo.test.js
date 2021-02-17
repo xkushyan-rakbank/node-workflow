@@ -4,7 +4,7 @@ import retrieveApplicantSaga, {
   getProspectIdInfo,
   retrieveApplicantInfoSaga
 } from "../../../src/store/sagas/retrieveApplicantInfo";
-import { SET_CONFIG, LOAD_META_DATA } from "../../../src/store/actions/appConfig";
+import { SET_CONFIG, LOAD_META_DATA, UPDATE_PROSPECT } from "../../../src/store/actions/appConfig";
 import { UPDATE_STAKEHOLDERS_IDS } from "../../../src/store/actions/stakeholders";
 import {
   RETRIEVE_APPLICANT_INFO,
@@ -26,6 +26,11 @@ describe("searchProspect saga test", () => {
   const header = "some headers";
   const model = "some model";
   const state = "some state";
+  const failed_outside_prospect_values = {
+    "organizationInfo.isSameAsRegisteredAddress": false,
+    "organizationInfo.preferredMailingAddrs": "",
+    "signatoryInfo[0].signoPreferredMailingAddrs": ""
+  };
   const inputParam = {
     applicantName: "",
     countryCode: "",
@@ -50,10 +55,7 @@ describe("searchProspect saga test", () => {
   const data = {
     freeFieldsInfo: {
       freeField5: JSON.stringify({
-        completedSteps: [
-          { flowId: "companyStakeholder_1" },
-          { flowId: "companyStakeholder_2" }
-        ]
+        completedSteps: [{ flowId: "companyStakeholder_1" }, { flowId: "companyStakeholder_2" }]
       })
     },
     signatoryInfo: [],
@@ -123,6 +125,10 @@ describe("searchProspect saga test", () => {
 
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
+      {
+        type: UPDATE_PROSPECT,
+        payload: failed_outside_prospect_values
+      },
       { type: SET_CONFIG, payload: { prospect: data } },
       { type: LOAD_META_DATA, payload: data.freeFieldsInfo.freeField5 },
       { type: LOAD_META_DATA, payload: data.freeFieldsInfo.freeField5 },
@@ -155,18 +161,139 @@ describe("searchProspect saga test", () => {
 
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
+      {
+        type: UPDATE_PROSPECT,
+        payload: failed_outside_prospect_values
+      },
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: LOAD_META_DATA, payload: failedData.freeFieldsInfo.freeField5 },
       { type: LOAD_META_DATA, payload: failedData.freeFieldsInfo.freeField5 },
-      {
-        type: UPDATE_STAKEHOLDERS_IDS,
-        payload: []
-      },
+      { type: UPDATE_STAKEHOLDERS_IDS, payload: [] },
       {
         type: GET_PROSPECT_INFO_SUCCESS,
         payload: { prospect: { ...failedData, signatoryInfo: [model] } }
       }
     ]);
+    spy.mockRestore();
+  });
+
+  it("should load values to ouside of prospect to select Residential Address", async () => {
+    const failedData = {
+      freeFieldsInfo: {
+        freeField5: JSON.stringify({
+          completedSteps: []
+        })
+      },
+      signatoryInfo: [
+        {
+          addressInfo: [
+            { addressDetails: [{ preferredAddress: "Yes" }] },
+            { addressDetails: [{ preferredAddress: "No" }] }
+          ]
+        }
+      ],
+      organizationInfo: {
+        addressInfo: [
+          { officeAddressDifferent: "Yes", addressDetails: [{ preferredAddress: "Yes" }] },
+          { officeAddressDifferent: "No", addressDetails: [{ preferredAddress: "No" }] }
+        ]
+      },
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+    };
+
+    const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
+
+    await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
+
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
+    expect(dispatched[0]).toMatchObject({
+      type: UPDATE_PROSPECT,
+      payload: {
+        "organizationInfo.isSameAsRegisteredAddress": true,
+        "organizationInfo.preferredMailingAddrs": true,
+        "signatoryInfo[0].signoPreferredMailingAddrs": true
+      }
+    });
+    spy.mockRestore();
+  });
+
+  it("should load values to ouside of prospect to select Office Address", async () => {
+    const failedData = {
+      freeFieldsInfo: {
+        freeField5: JSON.stringify({
+          completedSteps: []
+        })
+      },
+      signatoryInfo: [
+        {
+          addressInfo: [
+            { addressDetails: [{ preferredAddress: "No" }] },
+            { addressDetails: [{ preferredAddress: "Yes" }] }
+          ]
+        }
+      ],
+      organizationInfo: {
+        addressInfo: [
+          { officeAddressDifferent: "Yes", addressDetails: [{ preferredAddress: "No" }] },
+          { officeAddressDifferent: "No", addressDetails: [{ preferredAddress: "Yes" }] }
+        ]
+      },
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+    };
+
+    const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
+
+    await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
+
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
+    expect(dispatched[0]).toMatchObject({
+      type: UPDATE_PROSPECT,
+      payload: {
+        "organizationInfo.isSameAsRegisteredAddress": true,
+        "organizationInfo.preferredMailingAddrs": false,
+        "signatoryInfo[0].signoPreferredMailingAddrs": false
+      }
+    });
+    spy.mockRestore();
+  });
+
+  it("should load values to ouside of prospect to select Office Address", async () => {
+    const failedData = {
+      freeFieldsInfo: {
+        freeField5: JSON.stringify({
+          completedSteps: []
+        })
+      },
+      signatoryInfo: [
+        {
+          addressInfo: [
+            { addressDetails: [{ preferredAddress: "" }] },
+            { addressDetails: [{ preferredAddress: "" }] }
+          ]
+        }
+      ],
+      organizationInfo: {
+        addressInfo: [
+          { officeAddressDifferent: "Yes", addressDetails: [{ preferredAddress: "" }] },
+          { officeAddressDifferent: "No", addressDetails: [{ preferredAddress: "" }] }
+        ]
+      },
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+    };
+
+    const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
+
+    await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();
+
+    expect(spy.mock.calls[0]).toEqual([prospectId, header]);
+    expect(dispatched[0]).toMatchObject({
+      type: UPDATE_PROSPECT,
+      payload: {
+        "organizationInfo.isSameAsRegisteredAddress": true,
+        "organizationInfo.preferredMailingAddrs": "",
+        "signatoryInfo[0].signoPreferredMailingAddrs": ""
+      }
+    });
     spy.mockRestore();
   });
 
@@ -184,6 +311,10 @@ describe("searchProspect saga test", () => {
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(log).toBeCalled();
     expect(dispatched).toEqual([
+      {
+        type: UPDATE_PROSPECT,
+        payload: failed_outside_prospect_values
+      },
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: LOAD_META_DATA, payload: {} },
       {
@@ -206,6 +337,10 @@ describe("searchProspect saga test", () => {
 
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
+      {
+        type: UPDATE_PROSPECT,
+        payload: failed_outside_prospect_values
+      },
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: GET_PROSPECT_INFO_SUCCESS, payload: { prospect: failedData } }
     ]);
@@ -220,6 +355,10 @@ describe("searchProspect saga test", () => {
 
     expect(spy.mock.calls[0]).toEqual([prospectId, header]);
     expect(dispatched).toMatchObject([
+      {
+        type: UPDATE_PROSPECT,
+        payload: failed_outside_prospect_values
+      },
       { type: SET_CONFIG, payload: { prospect: failedData } },
       { type: LOAD_META_DATA, payload: "" },
       { type: GET_PROSPECT_INFO_SUCCESS, payload: { prospect: failedData } }

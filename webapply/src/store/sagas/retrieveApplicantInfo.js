@@ -6,7 +6,7 @@ import {
   RETRIEVE_APPLICANT_INFO,
   GET_PROSPECT_INFO_REQUEST
 } from "../actions/retrieveApplicantInfo";
-import { setConfig, loadMetaData } from "../actions/appConfig";
+import { setConfig, loadMetaData, updateProspect } from "../actions/appConfig";
 import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
@@ -15,6 +15,7 @@ import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/con
 import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 import { COMPANY_INFO_PAGE_ID } from "../../containers/CompanyInfo/constants";
 import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constants";
+import { OUTSIDE_BASE_PATH } from "../../containers/FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -43,13 +44,45 @@ export function* getProspectIdInfo({ payload }) {
     const config = { prospect: response.data };
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
     const newStakeholder = yield select(getSignatoryModel);
-
     if (
       !config.prospect.signatoryInfo.length &&
       config.prospect.applicationInfo.viewId.includes(VIEW_IDS.StakeholdersInfo)
     ) {
       config.prospect.signatoryInfo = [newStakeholder];
     }
+    //ro-assist-brd1-5
+    const prospect = {};
+    try {
+      prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
+        config.prospect.organizationInfo.addressInfo[0].officeAddressDifferent === "Yes";
+      // eslint-disable-next-line prettier/prettier
+      if (config.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+        prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = true;
+        // eslint-disable-next-line prettier/prettier
+      } else if (config.prospect.organizationInfo.addressInfo[1].addressDetails[0].preferredAddress === "Yes") {
+        prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = false;
+      } else {
+        prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
+      }
+      config.prospect.signatoryInfo.forEach((element, index) => {
+        if (element.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = true;
+        } else if (element.addressInfo[1].addressDetails[0].preferredAddress === "Yes") {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = false;
+        } else {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+        }
+      });
+    } catch (error) {
+      prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] = false;
+      prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
+      config.prospect.signatoryInfo.forEach((element, index) => {
+        prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+      });
+      log(error);
+    }
+    //ro-assist-brd1-5
+    yield put(updateProspect(prospect));
 
     yield put(setConfig(config));
 

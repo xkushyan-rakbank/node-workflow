@@ -96,6 +96,9 @@ export const SignatoryPreferredMailingAddressComponent = ({
   const dispatch = useDispatch();
 
   const autoSavePathBase = `prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0]`;
+
+  //ro-assist-brd1-5
+  const OUTSIDE_BASE_PATH = `signatoryInfo[${index}]`;
   // eslint-disable-next-line max-len
   const autoSavePathBase_OfficeAdd = `prospect.signatoryInfo[${index}].addressInfo[1].addressDetails[0]`;
   // eslint-disable-next-line max-len
@@ -108,11 +111,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
     prospect[`${autoSavePathBase_OfficeAdd}.preferredAddress`] = value ? "No" : "Yes";
     dispatch(updateProspect(prospect));
     setFieldValue("isResidenceOrOfficeAddress", value);
-    if (value) {
-      setFieldValue("signoPreferredMailingAddrs", "Residence Address");
-    } else {
-      setFieldValue("signoPreferredMailingAddrs", "Office Address");
-    }
   };
 
   return (
@@ -189,16 +187,17 @@ export const SignatoryPreferredMailingAddressComponent = ({
                       inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
                     }}
                   />
+                  {/* //ro-assist-brd1-5 */}
                   <Field
                     name="country"
                     path={`${autoSavePathBase}.country`}
                     label="Country"
                     placeholder="Country"
                     disabled
-                    component={Input}
-                    InputProps={{
-                      inputProps: { tabIndex: 0 }
-                    }}
+                    datalistId="country"
+                    component={SelectAutocomplete}
+                    shrink
+                    tabIndex="0"
                   />
                 </Grid>
               </Grid>
@@ -283,25 +282,27 @@ export const SignatoryPreferredMailingAddressComponent = ({
                       inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
                     }}
                   />
+                  {/* //ro-assist-brd1-5 */}
                   <Field
                     name="officeAddrsCountry"
                     path={`${autoSavePathBase_OfficeAdd}.country`}
                     label="Country"
                     placeholder="Country"
                     disabled
-                    component={Input}
-                    InputProps={{
-                      inputProps: { tabIndex: 0 }
-                    }}
+                    datalistId="country"
+                    component={SelectAutocomplete}
+                    shrink
+                    tabIndex="0"
                   />
                 </Grid>
               </Grid>
             </Accordion>
             <Grid container>
+              {/* //ro-assist-brd1-5 */}
               <Field
                 name="isResidenceOrOfficeAddress"
                 component={InlineRadioGroup}
-                path={`${autoSavePathBase}.signoPreferredMailingAddrs`}
+                path={`${OUTSIDE_BASE_PATH}.signoPreferredMailingAddrs`}
                 options={yesNoOptions}
                 label="Please select preferred mailing address"
                 onChange={preferredMailingAddress}
