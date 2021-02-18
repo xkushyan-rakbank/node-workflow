@@ -37,7 +37,9 @@
 		"actionType": "",
 		"saveType": "",
 		"tncAgreed": false,
-		"declaration": false
+		"declaration": false,
+		"sanctionUndertaking": false,
+        "promoCode": ""
 	},
 	"accountInfo": [
 		{
@@ -53,7 +55,9 @@
 			"eStatements": true,
 			"mailStatements": false,
 			"receiveInterest": false,
-			"deliverByCourier": false
+			"deliverByCourier": false,
+			"expressTandC": false,
+            "express": false
 		}
 	],
 	"organizationInfo": {

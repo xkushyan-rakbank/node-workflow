@@ -10,7 +10,7 @@ export const trustMessageContent = {
 
 export const termsMessageContent = {
   message:
-    "It is important to read the terms and conditions as well as terms of enrollment before you proceed.",
+    "It is important to read the terms and conditions, terms of enrollment as well as sanctions undertaking before you proceed.",
   title: "",
   icon: ICONS.info
 };
