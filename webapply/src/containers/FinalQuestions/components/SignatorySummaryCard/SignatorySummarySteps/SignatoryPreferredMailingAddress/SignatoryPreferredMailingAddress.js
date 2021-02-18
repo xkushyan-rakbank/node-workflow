@@ -116,7 +116,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
   return (
     <Formik
       initialValues={{
-        sameAsResidenceAddress: false,
+        sameAsCompanyAddress: false,
         addressLine2: "",
         addressLine1: "",
         poBox: "",
@@ -207,32 +207,32 @@ export const SignatoryPreferredMailingAddressComponent = ({
                 <Grid item sm={6} xs={12}>
                   <div className={classes.sameAsCompanyAddressBox}>
                     <Field
-                      name="sameAsResidenceAddress"
+                      name="sameAsCompanyAddress"
                       classes={{ formControlRoot: classes.sameAsCompanyAddressCheckbox }}
-                      path={`prospect.signatoryInfo[${index}].sameAsResidenceAddress`}
+                      path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
                       component={Checkbox}
                       label="Same as Company Address"
                       onSelect={() => {
-                        if (!values.sameAsResidenceAddress) {
+                        if (!values.sameAsCompanyAddress) {
                           const preferredCompanyAddress = organisationInfo.find(
                             ele => ele.addressDetails[0].preferredAddress === "Yes"
                           );
-                          setFieldValue("sameAsResidenceAddress", !values.sameAsResidenceAddress);
+                          setFieldValue("sameAsCompanyAddress", !values.sameAsCompanyAddress);
                           setFieldValue(
                             "officeAddrsEmirateCity",
-                            !values.sameAsResidenceAddress
+                            !values.sameAsCompanyAddress
                               ? preferredCompanyAddress.addressDetails[0].emirateCity
                               : ""
                           );
                           setFieldValue(
                             "officeAddrsPoBox",
-                            !values.sameAsResidenceAddress
+                            !values.sameAsCompanyAddress
                               ? preferredCompanyAddress.addressDetails[0].poBox
                               : ""
                           );
                           setFieldValue("officeAddrsCountry", DEFAULT_SIGNATORY_COUNTRY);
                         } else {
-                          setFieldValue("sameAsResidenceAddress", values.sameAsResidenceAddress);
+                          setFieldValue("sameAsCompanyAddress", values.sameAsCompanyAddress);
                           setFieldValue("officeAddrsEmirateCity", "");
                           setFieldValue("officeAddrsPoBox", "");
                           setFieldValue("officeAddrsCountry", DEFAULT_SIGNATORY_COUNTRY);
@@ -262,7 +262,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   <Field
                     name="officeAddrsEmirateCity"
                     path={`${autoSavePathBase_OfficeAdd}.emirateCity`}
-                    disabled={values.sameAsResidenceAddress}
+                    disabled={values.sameAsCompanyAddress}
                     datalistId="emirateCity"
                     label="Emirate/ City"
                     isSearchable
@@ -274,7 +274,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   <Field
                     name="officeAddrsPoBox"
                     path={`${autoSavePathBase_OfficeAdd}.poBox`}
-                    disabled={values.sameAsResidenceAddress}
+                    disabled={values.sameAsCompanyAddress}
                     label="PO Box Number"
                     placeholder="AB1234"
                     component={Input}
