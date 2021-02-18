@@ -30,7 +30,6 @@ import { useStyles } from "./styled";
 import { Accordion } from "../../../../../../components/Accordion/Accordion";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { UAE } from "../../../../../../constants";
-import { OthersOption } from "../../../../../../constants/options";
 
 const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
   Yup.object().shape({
@@ -57,12 +56,6 @@ const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
       "Please select your preferred mailing address"
     ),
     //ro-assist-brd1-5
-    homeCountryAddressLine3:
-      signatoriesNationality !== UAE &&
-      Yup.string().when("homeCountryAddressCity", {
-        is: value => value === OthersOption.value,
-        then: Yup.string().required(getRequiredMessage("City"))
-      }),
     homeCountryAddressLine2:
       signatoriesNationality !== UAE &&
       Yup.string()
@@ -78,7 +71,10 @@ const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
         .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
     homeCountryAddressCity:
-      signatoriesNationality !== UAE && Yup.string().required(getRequiredMessage("Emirate/ City")),
+      signatoriesNationality !== UAE &&
+      Yup.string()
+        .required(getRequiredMessage("City"))
+        .max(MAX_CITY_NAME_LENGTH, "Maximum ${max} characters allowed"),
     homeCountryAddressCountry:
       signatoriesNationality !== UAE && Yup.string().required(getRequiredMessage("Home Country"))
   });
@@ -128,7 +124,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
         isResidenceOrOfficeAddress: "",
         homeCountryAddressLine1: "",
         homeCountryAddressLine2: "",
-        homeCountryAddressLine3: "",
         homeCountryAddressCity: "",
         homeCountryAddressCountry: ""
       }}
@@ -326,29 +321,16 @@ export const SignatoryPreferredMailingAddressComponent = ({
                       inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
                     }}
                   />
+                  {/* ro-assist-brd1-5 */}
                   <Field
                     name="homeCountryAddressCity"
+                    label="Enter your Home Country City"
                     path={`${autoSavePathBase_HomeCountryAdd}.emirateCity`}
-                    datalistId="emirateCity"
-                    addOthers={true}
-                    label="Emirate/ City"
-                    isSearchable
-                    component={SelectAutocomplete}
-                    contextualHelpText="Select 'Others' if your city is not available"
-                    tabIndex="3"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_CITY_NAME_LENGTH, tabIndex: 0 }
+                    }}
                   />
-                  {/* ro-assist-brd1-5 */}
-                  {values.homeCountryAddressCity === OthersOption.value && (
-                    <Field
-                      name="homeCountryAddressLine3"
-                      label="Enter your Home Country City"
-                      path={`${autoSavePathBase_HomeCountryAdd}.addressLine3`}
-                      component={Input}
-                      InputProps={{
-                        inputProps: { maxLength: MAX_CITY_NAME_LENGTH, tabIndex: 0 }
-                      }}
-                    />
-                  )}
                 </Grid>
                 <Grid item sm={6} xs={12}>
                   <Field
