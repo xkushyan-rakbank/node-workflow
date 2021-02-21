@@ -49,7 +49,7 @@ then
         #echo 'REACT_APP_CHAT_API_PATH=https://rmt.rakbankonline.ae/CHAT/cometd' >> webapply/.env.production
         echo 'REACT_APP_CHAT_API_PATH=https://quickapply.rakbank.ae/genesys/cometd' >> webapply/.env.production
         echo 'REACT_APP_AD_APPKEY=EUM-AAB-AWG' >>webapply/.env.production
-        echo 'REACT_APP_AD_URL=https://rakbankonline.ae:7002' >>webapply/.env.production
+        echo 'REACT_APP_AD_URL=https://rakbankonline.ae/appd/cowebapply' >>webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production        
 
