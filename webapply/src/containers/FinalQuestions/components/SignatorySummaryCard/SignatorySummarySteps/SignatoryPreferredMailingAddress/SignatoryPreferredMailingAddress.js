@@ -74,7 +74,8 @@ const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
       signatoriesNationality !== UAE &&
       Yup.string()
         .required(getRequiredMessage("City"))
-        .max(MAX_CITY_NAME_LENGTH, "Maximum ${max} characters allowed"),
+        .max(MAX_CITY_NAME_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("City")),
     homeCountryAddressCountry:
       signatoriesNationality !== UAE && Yup.string().required(getRequiredMessage("Home Country"))
   });
