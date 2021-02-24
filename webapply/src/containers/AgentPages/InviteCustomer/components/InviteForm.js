@@ -10,11 +10,11 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getVali
 import { useStyles } from "./styled";
 
 const inviteSchema = Yup.object({
-  fullName: Yup.string()
+  custName: Yup.string()
     .required(getRequiredMessage("Customer Name"))
     .max(79, "Maximum 79 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Customer Name")),
-  email: Yup.string()
+  custEmail: Yup.string()
     .required(getRequiredMessage("Customer E-mail Address"))
     .max(50, "Maximum 50 characters allowed")
     .email(getInvalidMessage("Customer E-mail Address"))
@@ -31,7 +31,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
         Enter your customer's name and email address to send them your custom link.
       </p>
       <Formik
-        initialValues={{ fullName: "", email: "" }}
+        initialValues={{ custName: "", custEmail: "" }}
         validationSchema={inviteSchema}
         validateOnChange={false}
         onSubmit={submitForm}
@@ -39,7 +39,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
         {({ values }) => (
           <Form>
             <Field
-              name="fullName"
+              name="custName"
               label="Customer Name"
               placeholder="Customer Name"
               component={Input}
@@ -48,7 +48,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
               }}
             />
             <Field
-              name="email"
+              name="custEmail"
               label="Customer E-mail Address"
               placeholder="Customer Email"
               component={Input}
