@@ -340,6 +340,11 @@ export const DEDUPE_CHECK = {
   screeningStatus: "Not completed",
   screeningLabel: "Dedupe"
 };
+export const APPLICATION_DEDUPE_CHECK = {
+  screeningType: "Application Dedupe Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Application Dedupe"
+};
 export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
@@ -358,6 +363,7 @@ export const TOO_MANY_STAKEHOLDERS = {
 
 export const COMPANY_CHECK_NAMES = [
   DEDUPE_CHECK,
+  APPLICATION_DEDUPE_CHECK,
   BLACKLIST_CHECK,
   NEGATIVE_LIST_CHECK,
   COUNTRYOFINCORPORATION_CHECK,

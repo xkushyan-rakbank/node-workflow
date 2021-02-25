@@ -40,13 +40,13 @@ const companyInvoices = (
 );
 const personalBackground = (
   <span>
-    Upload Personal Bank statement for last 6 months.
+    Upload your CV having your previous work experience history.
     <br />
   </span>
 );
 const personalBankStatements = (
   <span>
-    Upload your CV having your previous work experience history.
+    Upload Personal Bank statement for last 6 months.
     <br />
   </span>
 );
