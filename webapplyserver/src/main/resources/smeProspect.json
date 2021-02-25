@@ -219,8 +219,11 @@
 		"isDontHaveSuppliersYet": false,
   		"isDontTradeGoodsYet": false,
   		"dnfbpField":"na",
+  		"isCompanyUSEntity" : "",
   		"isFinancialInstitution" : "na",
-  		"isNonFinancialInstitution" : "na"
+  		"isNonFinancialInstitution" : "na",
+  		"globalintermediaryId" : ""
+  		
 	},
 	"signatoryInfo": [
 		{
@@ -294,6 +297,8 @@
 				"primaryEmail": "",
 				"primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "971",
+				"primaryHomeNo" : "",
+				"primaryHomeCountryCode": "",
 				"fax": "",
 				"faxCountryCode": "",
 				"secondaryPhoneNo": "",
@@ -377,7 +382,7 @@
 					"nameOnDebitCard": ""
 				}
 			},
-			"isUSrelation": false
+			"isUSrelation": ""
 		}
 	],
 	"channelServicesInfo": {
