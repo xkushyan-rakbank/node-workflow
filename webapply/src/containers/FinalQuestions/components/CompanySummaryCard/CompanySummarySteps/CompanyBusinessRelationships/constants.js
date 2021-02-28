@@ -1,5 +1,10 @@
+import React from "react";
 import { ICONS } from "../../../../../../components/Icons";
-import { ActivePassiveOptions, enumYesNoOptions, yesNoOptions } from "../../../../../../constants/options";
+import {
+  ActivePassiveOptions,
+  enumYesNoOptions,
+  yesNoOptions
+} from "../../../../../../constants/options";
 
 export const INITIAL_ARRAY_INDEX = 0;
 
@@ -49,10 +54,19 @@ export const financialInstitution = {
   path: "prospect.orgKYCDetails.isFinancialInstitution",
   fieldName: "isFinancialInstitution"
 };
+export const nonFinancialInsContextualHelp = (
+  <>
+    Active NFE - An Active NFE generally refers to an entity with trading activities including
+    manufacturers, wholesalers, retailers, restaurants and bars, hotels, construction companies,
+    health and social work. <br />
+    <br />
+    Passive NFE - A Passive NFE generally refers to entities with no trading activities and receive
+    income or dividend generated from its assets including properties and shares etc.
+  </>
+);
 export const nonFinancialInstitution = {
   options: ActivePassiveOptions,
-  helperText:
-    "Active NFE - An Active NFE generally refers to an entity with trading activities including manufacturers, wholesalers, retailers, restaurants and bars, hotels, construction companies, health and social work. Passive NFE - A Passive NFE generally refers to entities with no trading activities and receive income or dividend generated from its assets including properties and shares etc.",
+  helperText: nonFinancialInsContextualHelp,
   body: "Is your company an active or passive Non-financial Entity ?",
   title: null,
   infoText: null,
