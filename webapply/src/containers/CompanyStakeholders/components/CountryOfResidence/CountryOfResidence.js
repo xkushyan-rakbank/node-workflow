@@ -15,7 +15,11 @@ import {
 import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import { EMIRATES_ID_REGEX } from "../../../../utils/validation";
 import { UAE } from "../../../../constants";
-import { getRequiredMessage, getInvalidMessage } from "../../../../utils/getValidationMessage";
+import {
+  getRequiredMessage,
+  getInvalidMessage,
+  getRequiredNotTextInputMessage
+} from "../../../../utils/getValidationMessage";
 import { yesNoOptions } from "../../../../constants/options";
 
 const createCountryOfResidenceSchema = isSignatory =>
@@ -32,7 +36,8 @@ const createCountryOfResidenceSchema = isSignatory =>
         .transform(value => value.replace(/-/g, ""))
         .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
     }),
-    isUSrelation: isSignatory && Yup.boolean().required("Please select a option")
+    isUSrelation:
+      isSignatory && Yup.boolean().required(getRequiredNotTextInputMessage("I have US relation"))
   });
 
 const CountryOfResidenceStep = ({

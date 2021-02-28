@@ -27,6 +27,7 @@ import {
   getSignatoriesCount,
   createGetAuthorityTypeDisplayText,
   getAccountCurrencies,
+  getExpressTandC,
   getPrimaryMobCountryCode,
   getRakValuePackage,
   getLeadSource,
@@ -44,7 +45,7 @@ describe("appConfig selector test", () => {
   const signatoryModel = "some signatory model";
   const signatoryInfo = ["some signatory info"];
   const accountCurrencies = ["some currency"];
-  const accountInfo = [{ accountCurrencies }];
+  const accountInfo = [{ accountCurrencies, expressTandC: true }];
   const companyName = "some company name";
   const primaryMobCountryCode = "some code";
   const contactDetails = { primaryMobCountryCode };
@@ -161,6 +162,14 @@ describe("appConfig selector test", () => {
 
   it("should return empty string when accountCurrencies is not set", () => {
     expect(getAccountCurrencies({ appConfig: {} })).toEqual("");
+  });
+
+  it("should return expressTandC false, if not defined", () => {
+    expect(getExpressTandC({ appConfig: {} })).toEqual(false);
+  });
+
+  it("should return expressTandC true if selected", () => {
+    expect(getExpressTandC(state)).toEqual(true);
   });
 
   it("should return organizationInfo", () => {
@@ -298,7 +307,7 @@ describe("appConfig selector test", () => {
   });
 
   it("should return empty roCode when roCode Undefined", () => {
-    expect(getRoCode({ appConfig : {} })).toBe("");
+    expect(getRoCode({ appConfig: {} })).toBe("");
   });
 
   it("should return expired", () => {

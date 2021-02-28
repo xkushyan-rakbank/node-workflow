@@ -46,17 +46,18 @@ const termsMessageContent = {
   icon: ICONS.info
 };
 
-const ErrorMessageInfo = "Required";
+const ErrorMessageInfo = "Please accept terms and conditions of Express Service";
 
 export const ExpressServicesComponent = ({
   goToNext,
   createFormChangeHandler,
-  isIslamicBanking
+  isIslamicBanking,
+  expressTandC
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [hasError, setErrorFlag] = useState(false);
-  const [isLinkVisited, setIsLinkVisited] = useState(false);
+  const [isLinkVisited, setIsLinkVisited] = useState(expressTandC);
   const typeOfAccount = isIslamicBanking ? ISLAMIC : CONVENTIONAL;
 
   const handleFormSubmit = (values, bool) => {

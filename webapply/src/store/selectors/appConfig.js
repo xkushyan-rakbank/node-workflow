@@ -28,6 +28,8 @@ export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
 export const getAccountCurrencies = state => get(getAccountInfo(state)[0], "accountCurrencies", "");
 
+export const getExpressTandC = state => get(getAccountInfo(state)[0], "expressTandC", false);
+
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
 export const getPrimaryMobCountryCode = state =>
@@ -46,7 +48,10 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 export const getApplicantFullName = state => getApplicantInfo(state).fullName;
 
 // ro-assist-brd3-3
-export const getValidRoCode = state => getApplicantInfo(state).validRoCode || false;
+export const getValidRoCode = state => {
+  const validRoCode = getApplicantInfo(state).validRoCode || "N";
+  return validRoCode === "Y" ? true : false;
+};
 
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 

@@ -126,7 +126,7 @@ describe("getProspectDocuments selector test", () => {
   it("should return true when validRocode is true", () => {
     expect(
       getIsRequiredDocsUploaded({
-        appConfig: { prospect: { applicantInfo: { validRoCode: true } } }
+        appConfig: { prospect: { applicantInfo: { validRoCode: "Y" } } }
       })
     ).toBe(true);
   });
