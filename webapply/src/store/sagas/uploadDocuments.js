@@ -170,6 +170,18 @@ function* getProspectDocumentsSaga() {
       isDocsUploaded ? existDocuments.companyDocuments : [],
       companyDocs
     );
+    companyBankStatements.documents = concatCompanyDocs(
+      isDocsUploaded ? existDocuments.companyBankStatements.documents : [],
+      companyBankStatements.documents
+    );
+    companyAddressProof.documents = concatCompanyDocs(
+      isDocsUploaded ? existDocuments.companyAddressProof.documents : [],
+      companyAddressProof.documents
+    );
+    companyInvoices.documents = concatCompanyDocs(
+      isDocsUploaded ? existDocuments.companyInvoices.documents : [],
+      companyInvoices.documents
+    );
     const stakeholdersDocuments = concatStakeholdersDocs(
       stakeHoldersDocs,
       isDocsUploaded ? existDocuments.stakeholdersDocuments : {}

@@ -23,7 +23,8 @@ export const DocumentRowComponent = ({
   uploadDocument,
   document,
   docRemoveWarning = true,
-  infoMessage = ""
+  infoMessage = "",
+  multiDoc = false
 }) => {
   const classes = useStyles();
   const inputEl = useRef(null);
@@ -83,7 +84,7 @@ export const DocumentRowComponent = ({
             {(() => {
               if (isUploading) {
                 return `Uploading ${document.documentTitle}`;
-              } else if (isUploaded && selectedFile) {
+              } else if (isUploaded && selectedFile && !multiDoc) {
                 return selectedFile.name;
               } else if (isUploaded && document.fileDescription) {
                 return document.fileDescription;

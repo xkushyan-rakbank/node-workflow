@@ -70,41 +70,55 @@ describe("documents utils tests", () => {
     expect(concatStakeholdersDocs(neededDocs, uploadedDocs)).toStrictEqual(concated);
   });
 
-  it("should return concated stakeholders docs object, without personalBackground & personalBankStatements", () => {
+  it("should return concated stakeholders docs object, after morethan one personalBackground or personalBankStatements uploaded", () => {
     const neededDocs = {
       signatory_1: {
-        documents: [{ documentKey: "1", documentTitle: "One" }]
-      },
-      signatory_2: {
-        documents: [{ documentKey: "2", documentTitle: "Two" }]
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 2
+        },
+        personalBankStatements: {
+          documents: [{ documentKey: "1", documentTitle: "One" }],
+          limit: 3
+        }
       }
     };
     const uploadedDocs = {
       signatory_1: {
-        documents: [{ documentKey: "1", documentTitle: "One" }]
+        documents: [{ documentKey: "1", documentTitle: "One" }],
+        personalBackground: {
+          documents: [
+            { documentKey: "1", documentTitle: "One" },
+            { documentKey: "1", documentTitle: "One" }
+          ],
+          limit: 2
+        },
+        personalBankStatements: {
+          documents: [
+            { documentKey: "1", documentTitle: "One" },
+            { documentKey: "1", documentTitle: "One" }
+          ],
+          limit: 3
+        }
       }
     };
     const concated = {
       signatory_1: {
         documents: [{ documentKey: "1", documentTitle: "One" }],
         personalBackground: {
-          documents: [],
-          limit: 0
+          documents: [
+            { documentKey: "1", documentTitle: "One" },
+            { documentKey: "1", documentTitle: "One" }
+          ],
+          limit: 2
         },
         personalBankStatements: {
-          documents: [],
-          limit: 0
-        }
-      },
-      signatory_2: {
-        documents: [{ documentKey: "2", documentTitle: "Two" }],
-        personalBackground: {
-          documents: [],
-          limit: 0
-        },
-        personalBankStatements: {
-          documents: [],
-          limit: 0
+          documents: [
+            { documentKey: "1", documentTitle: "One" },
+            { documentKey: "1", documentTitle: "One" }
+          ],
+          limit: 3
         }
       }
     };

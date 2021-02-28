@@ -205,6 +205,7 @@ export const DocumentRow = ({
       document={document}
       docRemoveWarning={docRemoveWarning}
       infoMessage={infoMessage}
+      multiDoc={multiDoc}
     />
   );
 };
