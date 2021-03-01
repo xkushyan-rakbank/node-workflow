@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Button from "@material-ui/core/Button/Button";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 import { UploadLimitComponent } from "../../containers/UploadDocuments/components/UploadLimit/UploadLimit";
@@ -17,7 +18,11 @@ export const ApplicationStatus = ({
   buttons = [accountComparisionRoute]
 }) => {
   const classes = useStyles();
-
+  const history = useHistory();
+  const redirectTo = route => {
+    history.push(route);
+    window.location.reload();
+  };
   return (
     <>
       {screeningType === "Total No of Documents uploaded check" ? (
@@ -31,9 +36,13 @@ export const ApplicationStatus = ({
             {link && (
               <div className={classes.linkWrapper}>
                 {buttons.map((btn, index) => (
-                  <Link key={index} to={btn.link} className={classes.appStatusLink}>
+                  <Button
+                    key={index}
+                    onClick={() => redirectTo(btn.link)}
+                    className={classes.appStatusLink}
+                  >
                     {btn.label}
-                  </Link>
+                  </Button>
                 ))}
               </div>
             )}
