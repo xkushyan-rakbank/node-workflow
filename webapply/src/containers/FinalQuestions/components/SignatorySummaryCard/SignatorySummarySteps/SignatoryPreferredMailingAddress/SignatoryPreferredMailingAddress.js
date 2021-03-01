@@ -17,9 +17,9 @@ import {
 } from "../../../../../../components/Form";
 import { DEFAULT_SIGNATORY_COUNTRY, MAX_CITY_NAME_LENGTH } from "./constants";
 import {
-  MAX_OFFICE_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH,
-  MAX_PO_BOX_NUMBER_LENGTH
+  MAX_PO_BOX_NUMBER_LENGTH,
+  MAX_FLAT_NUMBER_LENGTH
 } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import {
   getRequiredMessage,
@@ -40,7 +40,7 @@ const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
     addressLine1: Yup.string()
       .required(getRequiredMessage("Flat / Villa / Building"))
       // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
     poBox: Yup.string()
       .required(getRequiredMessage("PO Box Number"))
@@ -68,7 +68,7 @@ const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
       Yup.string()
         .required(getRequiredMessage("Flat / Villa / Building"))
         // eslint-disable-next-line no-template-curly-in-string
-        .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
     homeCountryAddressCity:
       signatoriesNationality !== UAE &&
@@ -84,8 +84,6 @@ export const SignatoryPreferredMailingAddressComponent = ({
   index,
   handleContinue,
   createFormChangeHandler,
-  signatoriesEmirateCity,
-  signatoriesPoBox,
   signatoriesNationality,
   organisationInfo
 }) => {
@@ -101,7 +99,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
   // eslint-disable-next-line max-len
   const autoSavePathBase_HomeCountryAdd = `prospect.signatoryInfo[${index}].addressInfo[2].addressDetails[0]`;
 
-  const selectPreferredMailingAddrs = ({ values, setFieldValue }) => event => {
+  const selectPreferredMailingAddrs = ({ setFieldValue }) => event => {
     const value = JSON.parse(event.target.value);
     const prospect = {};
     prospect[`${autoSavePathBase}.preferredAddress`] = value ? "Yes" : "No";
@@ -147,7 +145,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                     placeholder="Flat / Villa / Building"
                     component={Input}
                     InputProps={{
-                      inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                      inputProps: { maxLength: MAX_FLAT_NUMBER_LENGTH, tabIndex: 0 }
                     }}
                   />
                 </Grid>
@@ -319,7 +317,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
                     placeholder="Flat / Villa / Building"
                     component={Input}
                     InputProps={{
-                      inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
+                      inputProps: { maxLength: MAX_FLAT_NUMBER_LENGTH, tabIndex: 0 }
                     }}
                   />
                   {/* ro-assist-brd1-5 */}

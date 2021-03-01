@@ -37,8 +37,16 @@ export const createSignatoryPersonalInformationSchema = isSignatory =>
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
     }),
     //ro-assist-brd3-15
-    countryOfBirth: Yup.string().required(getRequiredMessage("Country of Birth")),
-    placeOfBirth: Yup.string().required(getRequiredMessage("Place of Birth"))
+    countryOfBirth: Yup.string().test(
+      "required",
+      getRequiredMessage("Country of Birth"),
+      value => !isSignatory || value
+    ),
+    placeOfBirth: Yup.string().test(
+      "required",
+      getRequiredMessage("Place of Birth"),
+      value => !isSignatory || value
+    )
   });
 
 export const SignatoryPersonalInformation = ({
