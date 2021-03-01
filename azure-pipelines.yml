@@ -400,6 +400,10 @@ jobs:
       pool:
        name: Hosted macOS
       steps:
+      - task: NodeTool@0
+        displayName: 'Use Node 10.x'
+        inputs:
+          versionSpec: 10.x
       #prepare the Sonarqube for executing the sonar 
       - task: SonarCloudPrepare@1
         inputs:
