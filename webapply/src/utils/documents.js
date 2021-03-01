@@ -78,14 +78,14 @@ export const appendDocumentKey = docs =>
 
 // ro-assist-brd2-1
 export const appendMultiDocumentKey = (docs, type, organizationInfo, orgKYCDetails) => {
-  docs.documents = (docs.documents || []).map((doc, index) => {
+  const indexedDocs = (docs.documents || []).map((doc, index) => {
     const docIndex = docs.documents
       .slice(0, index)
       .filter(document => document.documentType === doc.documentType).length;
     return { ...doc, documentKey: `${doc.documentType}-${docIndex}` };
   });
-  docs.documents = multiDocumentValidation(docs.documents, type, organizationInfo, orgKYCDetails);
-  return docs;
+  const validatedDocs = multiDocumentValidation(indexedDocs, type, organizationInfo, orgKYCDetails);
+  return { ...docs, documents: validatedDocs };
 };
 
 export const range = (end, start = 0) => Array.from({ length: end - start }, (_, i) => start + i);
