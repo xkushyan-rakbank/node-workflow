@@ -252,6 +252,8 @@
 			"gender": "MR.",
 			"maritalStatus": "",
 			"maritalStatusOthers": "",
+			"countryofBirth": "",
+            "placeOfBirth": "",
 			"occupation": "",
 			"mothersMaidenName": "",
 			"numberOfDependants": 0,
