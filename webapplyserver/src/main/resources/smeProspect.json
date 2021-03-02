@@ -81,11 +81,11 @@
 		"vatRegistrationNumber": "",
 		"addressInfo": [
 			{
-				"typeOfAddress": "Registered Address/Head office",
+				"typeOfAddress": "Registered",
 				"officeAddressDifferent": "No",
 				"addressDetails": [
 					{
-						"addressFieldDesc": "Registered Address/Head office",
+						"addressFieldDesc": "",
 						"preferredAddress": "",
 						"addressLine1": "",
 						"addressLine2": "",
@@ -102,11 +102,11 @@
 				]
 			},
 			{
-				"typeOfAddress": "Office Address",
+				"typeOfAddress": "OFFICE",
 				"officeAddressDifferent": "No",
 				"addressDetails": [
 					{
-						"addressFieldDesc": "Office Address",
+						"addressFieldDesc": "",
 						"preferredAddress": "",
 						"addressLine1": "",
 						"addressLine2": "",
@@ -325,10 +325,10 @@
 			"sameAsCompanyAddress": false,
 			"addressInfo": [
 				{
-					"typeOfAddress": "Residence Address",
+					"typeOfAddress": "RESIDENCE",
 					"addressDetails": [
 						{
-							"addressFieldDesc": "Residence Address",
+							"addressFieldDesc": "",
 							"preferredAddress": "",
 							"addressLine1": "",
 							"addressLine2": "",
@@ -341,10 +341,10 @@
 					]
 				},
 					{
-					"typeOfAddress": "Office Address",
+					"typeOfAddress": "OFFICE",
 					"addressDetails": [
 						{
-							"addressFieldDesc": "Office Address",
+							"addressFieldDesc": "",
 							"preferredAddress": "",
 							"addressLine1": "",
 							"addressLine2": "",
@@ -356,7 +356,7 @@
 						}
 					]
 				},	{
-					"typeOfAddress": "Home Address",
+					"typeOfAddress": "Home",
 					"addressDetails": [
 						{
 							"addressFieldDesc": "",
