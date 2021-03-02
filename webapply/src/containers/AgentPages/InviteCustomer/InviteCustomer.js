@@ -7,14 +7,14 @@ import { ICONS } from "../../../components/Icons";
 import { useLayoutParams } from "../../FormLayout";
 
 // ro-assist-brd3-1
-export const InviteCustomer = ({ invite }) => {
+export const InviteCustomer = ({ invite, roAgentId, roCode }) => {
   useFormNavigation([false, false, agentFormStepper, true, true]);
   useLayoutParams(true);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitForm = useCallback(
     (values, { resetForm }) => {
-      let inviteData = { ...values };
+      let inviteData = { ...values, roCode, roAgentId };
       setIsLoading(true);
       return invite(inviteData).then(
         () => {
