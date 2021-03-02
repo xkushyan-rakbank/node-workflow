@@ -10,7 +10,6 @@ pr:
     include:
       - develop
       - release
-      - ro-assistant-change
 #trigger: none
 trigger:
   - develop
@@ -395,8 +394,7 @@ jobs:
        - Webapply
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
-       #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
-        and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/ro-assistant-change'))
+       and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))
       pool:
        name: Hosted macOS
       steps:
