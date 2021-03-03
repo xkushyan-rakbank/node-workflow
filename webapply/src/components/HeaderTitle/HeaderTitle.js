@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { getAgentName } from "../../store/selectors/appConfig";
-import { getRoCode } from "../../store/selectors/appConfig";
+import { getRoCode } from "../../store/selectors/loginSelector";
 import { getCompanyName } from "../../store/selectors/appConfig";
 import { logout } from "../../store/actions/loginForm";
 import { getAccountType } from "../../store/selectors/appConfig";
