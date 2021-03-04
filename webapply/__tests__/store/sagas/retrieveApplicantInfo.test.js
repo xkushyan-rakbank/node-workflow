@@ -13,7 +13,11 @@ import {
   GET_PROSPECT_INFO_FAIL,
   GET_PROSPECT_INFO_SUCCESS
 } from "../../../src/store/actions/retrieveApplicantInfo";
-import { getAuthorizationHeader, getSignatoryModel } from "../../../src/store/selectors/appConfig";
+import {
+  getAuthorizationHeader,
+  getSignatoryModel,
+  getProspect
+} from "../../../src/store/selectors/appConfig";
 import { search, prospect } from "../../../src/api/apiClient";
 import { log } from "../../../src/utils/loggger";
 import { VIEW_IDS } from "../../../src/constants";
@@ -24,7 +28,22 @@ jest.mock("../../../src/utils/loggger");
 describe("searchProspect saga test", () => {
   let dispatched = [];
   const header = "some headers";
-  const model = "some model";
+  const model = {
+    addressInfo: [
+      {
+        typeOfAddress: "RESIDENCE",
+        addressDetails: []
+      },
+      {
+        typeOfAddress: "OFFICE",
+        addressDetails: []
+      },
+      {
+        typeOfAddress: "Home",
+        addressDetails: []
+      }
+    ]
+  };
   const state = "some state";
   const failed_outside_prospect_values = {
     "organizationInfo.isSameAsRegisteredAddress": false,
@@ -59,7 +78,24 @@ describe("searchProspect saga test", () => {
       })
     },
     signatoryInfo: [],
-    applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+    applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo },
+    organizationInfo: { addressInfo: [] }
+  };
+  const configProspectData = {
+    organizationInfo: {
+      addressInfo: [
+        {
+          typeOfAddress: "Registered",
+          officeAddressDifferent: "No",
+          addressDetails: []
+        },
+        {
+          typeOfAddress: "OFFICE",
+          officeAddressDifferent: "No",
+          addressDetails: []
+        }
+      ]
+    }
   };
   const error = "some error";
   const store = {
@@ -72,6 +108,7 @@ describe("searchProspect saga test", () => {
     jest.clearAllMocks();
     getAuthorizationHeader.mockReturnValue(header);
     getSignatoryModel.mockReturnValue(model);
+    getProspect.mockReturnValue(configProspectData);
     log.mockReturnValue(null);
   });
 
@@ -152,7 +189,8 @@ describe("searchProspect saga test", () => {
         })
       },
       signatoryInfo: [],
-      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo },
+      organizationInfo: { addressInfo: [] }
     };
 
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
@@ -301,7 +339,8 @@ describe("searchProspect saga test", () => {
     const failedData = {
       freeFieldsInfo: { freeField5: {} },
       signatoryInfo: [],
-      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo },
+      organizationInfo: { addressInfo: [] }
     };
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
     log.mockReturnValue(error);
@@ -329,7 +368,8 @@ describe("searchProspect saga test", () => {
     const failedData = {
       freeFieldsInfo: "",
       signatoryInfo: [{}],
-      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo }
+      applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo },
+      organizationInfo: { addressInfo: [] }
     };
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
 
@@ -348,7 +388,11 @@ describe("searchProspect saga test", () => {
   });
 
   it("should log error when freeField5 is undefined", async () => {
-    const failedData = { freeFieldsInfo: "info", signatoryInfo: [{}] };
+    const failedData = {
+      freeFieldsInfo: "info",
+      signatoryInfo: [{}],
+      organizationInfo: { addressInfo: [] }
+    };
     const spy = jest.spyOn(prospect, "get").mockReturnValue({ data: failedData });
 
     await runSaga(store, getProspectIdInfo, { payload: getProspectInfoPayload }).toPromise();

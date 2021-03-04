@@ -9,7 +9,7 @@ import {
 import { setConfig, loadMetaData, updateProspect } from "../actions/appConfig";
 import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
+import { getAuthorizationHeader, getSignatoryModel, getProspect } from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
@@ -37,11 +37,45 @@ export function* retrieveApplicantInfoSaga({ payload }) {
   }
 }
 
+const concatAddressInfo = (configAddress, existAddress) => {
+  return configAddress.map((address, addressIndex) => {
+    if (address.officeAddressDifferent) {
+      return {
+        ...address,
+        addressDetails: existAddress[addressIndex]
+          ? existAddress[addressIndex].addressDetails
+          : address.addressDetails,
+        officeAddressDifferent:
+          existAddress[addressIndex] && existAddress[addressIndex].officeAddressDifferent
+            ? existAddress[addressIndex].officeAddressDifferent
+            : address.officeAddressDifferent
+      };
+    } else {
+      return {
+        ...address,
+        addressDetails: existAddress[addressIndex]
+          ? existAddress[addressIndex].addressDetails
+          : address.addressDetails
+      };
+    }
+  });
+};
+
 export function* getProspectIdInfo({ payload }) {
   try {
     const headers = yield select(getAuthorizationHeader);
+    const configProspect = yield select(getProspect);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
+    if (
+      configProspect.organizationInfo.addressInfo.length >
+      config.prospect.organizationInfo.addressInfo.length
+    ) {
+      config.prospect.organizationInfo.addressInfo = concatAddressInfo(
+        configProspect.organizationInfo.addressInfo,
+        config.prospect.organizationInfo.addressInfo
+      );
+    }
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
     const newStakeholder = yield select(getSignatoryModel);
     if (
@@ -67,10 +101,22 @@ export function* getProspectIdInfo({ payload }) {
       config.prospect.signatoryInfo.forEach((element, index) => {
         if (element.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
           prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = true;
-        } else if (element.addressInfo[1].addressDetails[0].preferredAddress === "Yes") {
+        } else if (
+          element.addressInfo[1] &&
+          element.addressInfo[1].addressDetails[0].preferredAddress === "Yes"
+        ) {
           prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = false;
         } else {
           prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+        }
+        if (
+          newStakeholder.addressInfo.length >
+          config.prospect.signatoryInfo[index].addressInfo.length
+        ) {
+          config.prospect.signatoryInfo[index].addressInfo = concatAddressInfo(
+            newStakeholder.addressInfo,
+            config.prospect.signatoryInfo[index].addressInfo
+          );
         }
       });
     } catch (error) {
