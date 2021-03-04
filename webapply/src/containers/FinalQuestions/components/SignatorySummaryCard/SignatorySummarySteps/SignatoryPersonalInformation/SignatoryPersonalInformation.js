@@ -14,7 +14,11 @@ import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
-import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import {
+  NAME_REGEX,
+  SPECIAL_CHARACTERS_REGEX,
+  ALPHANUMERIC_REGEX
+} from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -42,11 +46,10 @@ export const createSignatoryPersonalInformationSchema = isSignatory =>
       getRequiredMessage("Country of Birth"),
       value => !isSignatory || value
     ),
-    placeOfBirth: Yup.string().test(
-      "required",
-      getRequiredMessage("Place of Birth"),
-      value => !isSignatory || value
-    )
+    placeOfBirth: Yup.string()
+      .test("required", getRequiredMessage("Place of Birth"), value => !isSignatory || value)
+      .max(100, "Maximum ${max} characters allowed")
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Place of Birth"))
   });
 
 export const SignatoryPersonalInformation = ({

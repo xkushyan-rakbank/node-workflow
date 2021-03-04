@@ -318,17 +318,17 @@ export const STEP_STATUS = {
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Negative List"
+  screeningLabel: "Negative List Check"
 };
 export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Virtual Currency"
+  screeningLabel: "Virtual Currency Check"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Country of Incorporation"
+  screeningLabel: "Offshore Company Check"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAK-Starter Account Validation",
@@ -338,27 +338,27 @@ export const RAKSTARTER_ACCOUNT_CHECK = {
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Dedupe"
+  screeningLabel: "Dedupe Check"
 };
 export const APPLICATION_DEDUPE_CHECK = {
   screeningType: "Application Dedupe Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Application Dedupe"
+  screeningLabel: "Application Dedupe Check"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Company is a Stakeholder"
+  screeningLabel: "Company is a Stakeholder Check"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Blacklist"
+  screeningLabel: "Blacklist Check"
 };
 export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Too many Stakeholders"
+  screeningLabel: "Too many Stakeholders Check"
 };
 
 export const COMPANY_CHECK_NAMES = [
