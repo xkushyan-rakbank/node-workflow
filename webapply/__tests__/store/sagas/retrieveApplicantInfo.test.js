@@ -16,7 +16,7 @@ import {
 import {
   getAuthorizationHeader,
   getSignatoryModel,
-  getProspect
+  getOrganizationInfoModel
 } from "../../../src/store/selectors/appConfig";
 import { search, prospect } from "../../../src/api/apiClient";
 import { log } from "../../../src/utils/loggger";
@@ -81,21 +81,19 @@ describe("searchProspect saga test", () => {
     applicationInfo: { viewId: VIEW_IDS.StakeholdersInfo },
     organizationInfo: { addressInfo: [] }
   };
-  const configProspectData = {
-    organizationInfo: {
-      addressInfo: [
-        {
-          typeOfAddress: "Registered",
-          officeAddressDifferent: "No",
-          addressDetails: []
-        },
-        {
-          typeOfAddress: "OFFICE",
-          officeAddressDifferent: "No",
-          addressDetails: []
-        }
-      ]
-    }
+  const organizationInfoModel = {
+    addressInfo: [
+      {
+        typeOfAddress: "Registered",
+        officeAddressDifferent: "No",
+        addressDetails: []
+      },
+      {
+        typeOfAddress: "OFFICE",
+        officeAddressDifferent: "No",
+        addressDetails: []
+      }
+    ]
   };
   const error = "some error";
   const store = {
@@ -108,7 +106,7 @@ describe("searchProspect saga test", () => {
     jest.clearAllMocks();
     getAuthorizationHeader.mockReturnValue(header);
     getSignatoryModel.mockReturnValue(model);
-    getProspect.mockReturnValue(configProspectData);
+    getOrganizationInfoModel.mockReturnValue(organizationInfoModel);
     log.mockReturnValue(null);
   });
 

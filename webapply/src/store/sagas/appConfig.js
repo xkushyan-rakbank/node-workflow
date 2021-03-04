@@ -11,7 +11,8 @@ import {
   setConfig,
   updateProspect,
   UPDATE_VIEW_ID,
-  saveSignatoryModel
+  saveSignatoryModel,
+  saveOrganizationInfoModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
@@ -45,6 +46,9 @@ export function* receiveAppConfigSaga() {
     const signatoryModel = newConfig.prospect
       ? cloneDeep(newConfig.prospect.signatoryInfo[0])
       : null;
+    const organizationInfoModel = newConfig.prospect
+      ? cloneDeep(newConfig.prospect.organizationInfo)
+      : null;
 
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
@@ -62,6 +66,9 @@ export function* receiveAppConfigSaga() {
 
     if (signatoryModel) {
       yield put(saveSignatoryModel(signatoryModel));
+    }
+    if (organizationInfoModel) {
+      yield put(saveOrganizationInfoModel(organizationInfoModel));
     }
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());

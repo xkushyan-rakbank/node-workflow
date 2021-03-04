@@ -10,6 +10,8 @@ export const getDatalist = state => getAppConfig(state).datalist || {};
 
 export const getSignatoryModel = state => getAppConfig(state).signatoryModel || {};
 
+export const getOrganizationInfoModel = state => getAppConfig(state).organizationInfoModel || {};
+
 export const getReCaptchaSiteKey = state => getAppConfig(state).reCaptchaSiteKey;
 
 export const getIsRecaptchaEnable = state => getAppConfig(state).recaptchaEnable;

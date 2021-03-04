@@ -231,12 +231,6 @@ describe("documents utils tests", () => {
 
   it("should return multi docs array with document key", () => {
     const type = "Passport";
-    const organizationInfo = { dateOfIncorporation: "10-12-2018", licenseIssueDate: "10-12-2018" };
-    const orgKYCDetails = {
-      otherBankingRelationshipsInfo: {
-        otherBankingRelationshipsExist: true
-      }
-    };
     const docs = {
       documents: [
         { documentType: "Passport", documentKey: null, documentTitle: "First" },

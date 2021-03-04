@@ -12,6 +12,7 @@ import {
   SET_CONFIG,
   SET_PROSPECT,
   SAVE_SIGNATORY_MODEL,
+  SAVE_ORGANIZATION_INFO_MODEL,
   SET_ACCESS_TOKEN,
   RESET_PROSPECT,
   RESET_APPLICANT_INFO,
@@ -112,6 +113,10 @@ export default handleActions(
     [SAVE_SIGNATORY_MODEL]: (state, action) => ({
       ...state,
       signatoryModel: action.payload
+    }),
+    [SAVE_ORGANIZATION_INFO_MODEL]: (state, action) => ({
+      ...state,
+      organizationInfoModel: action.payload
     }),
     [LOGOUT]: state => ({
       ...state,

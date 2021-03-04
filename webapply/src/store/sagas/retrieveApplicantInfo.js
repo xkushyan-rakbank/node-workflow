@@ -9,7 +9,11 @@ import {
 import { setConfig, loadMetaData, updateProspect } from "../actions/appConfig";
 import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader, getSignatoryModel, getProspect } from "../selectors/appConfig";
+import {
+  getAuthorizationHeader,
+  getSignatoryModel,
+  getOrganizationInfoModel
+} from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
@@ -64,15 +68,12 @@ const concatAddressInfo = (configAddress, existAddress) => {
 export function* getProspectIdInfo({ payload }) {
   try {
     const headers = yield select(getAuthorizationHeader);
-    const configProspect = yield select(getProspect);
+    const organizationInfoModel = yield select(getOrganizationInfoModel);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
-    if (
-      configProspect.organizationInfo.addressInfo.length >
-      config.prospect.organizationInfo.addressInfo.length
-    ) {
+    if (organizationInfoModel.addressInfo.length > organizationInfoModel.addressInfo.length) {
       config.prospect.organizationInfo.addressInfo = concatAddressInfo(
-        configProspect.organizationInfo.addressInfo,
+        organizationInfoModel.addressInfo,
         config.prospect.organizationInfo.addressInfo
       );
     }

@@ -79,7 +79,6 @@ import {
 } from "./../../constants";
 import { PROSPECT_STATUSES } from "../../constants/index";
 import { AUTO } from "../../constants";
-import { multiDocumentValidation } from "../../utils/multiDocumentValidaton";
 
 export function createUploader(prospectId, data, source, headers) {
   let emit;

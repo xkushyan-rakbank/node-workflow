@@ -5,6 +5,7 @@ import {
   getDatalist,
   getProspect,
   getSignatoryModel,
+  getOrganizationInfoModel,
   getSignatories,
   getAccountInfo,
   getOrganizationInfo,
@@ -43,6 +44,7 @@ describe("appConfig selector test", () => {
   const authorityTypeDatalist = [{ value: authorityTypeValue, displayText }];
   const datalist = { authorityType: authorityTypeDatalist };
   const signatoryModel = "some signatory model";
+  const organizationInfoModel = "some organization Info model";
   const signatoryInfo = ["some signatory info"];
   const accountCurrencies = ["some currency"];
   const accountInfo = [{ accountCurrencies, expressTandC: true }];
@@ -88,6 +90,7 @@ describe("appConfig selector test", () => {
     datalist,
     prospect,
     signatoryModel,
+    organizationInfoModel,
     signatoryInfo,
     reCaptchaSiteKey,
     servicePricingGuideUrl,
@@ -134,6 +137,14 @@ describe("appConfig selector test", () => {
 
   it("should return empty object when signatoryModel is not set", () => {
     expect(getSignatoryModel({ appConfig: {} })).toEqual({});
+  });
+
+  it("should return signatoryModel", () => {
+    expect(getOrganizationInfoModel(state)).toBe(organizationInfoModel);
+  });
+
+  it("should return empty object when signatoryModel is not set", () => {
+    expect(getOrganizationInfoModel({ appConfig: {} })).toEqual({});
   });
 
   it("should return signatoryInfo", () => {
