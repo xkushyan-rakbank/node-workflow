@@ -79,6 +79,7 @@ import {
 } from "./../../constants";
 import { PROSPECT_STATUSES } from "../../constants/index";
 import { AUTO } from "../../constants";
+import { multiDocumentValidation } from "../../utils/multiDocumentValidaton";
 
 export function createUploader(prospectId, data, source, headers) {
   let emit;
@@ -132,59 +133,51 @@ function* getProspectDocumentsSaga() {
     const appConfig = cloneDeep(yield select(getAppConfig));
     const companyDocs = appendDocumentKey(data.companyDocuments);
     // ro-assist-brd2-1
-    const companyBankStatements = appendMultiDocumentKey(
-      data.companyBankStatements,
-      COMPANY_BANK_STATEMENTS,
-      organizationInfo,
-      orgKYCDetails
-    );
-    const companyAddressProof = appendMultiDocumentKey(
-      data.companyAddressProof,
-      COMPANY_ADDRESS_PROOF,
-      organizationInfo,
-      orgKYCDetails
-    );
-    const companyInvoices = appendMultiDocumentKey(
-      data.companyInvoices,
-      COMPANY_INVOICES,
-      organizationInfo,
-      orgKYCDetails
-    );
+    const companyBankStatements = appendMultiDocumentKey(data.companyBankStatements);
+    const companyAddressProof = appendMultiDocumentKey(data.companyAddressProof);
+    const companyInvoices = appendMultiDocumentKey(data.companyInvoices);
     const stakeHoldersDocs = mapValues(data.stakeholdersDocuments, stakeHolder => ({
       ...stakeHolder,
       documents: appendDocumentKey(stakeHolder.documents),
-      personalBankStatements: appendMultiDocumentKey(
-        stakeHolder.personalBankStatements,
-        PERSONAL_BANK_STATEMENTS,
-        organizationInfo,
-        orgKYCDetails
-      ),
-      personalBackground: appendMultiDocumentKey(
-        stakeHolder.personalBackground,
-        PERSONAL_BACKGROUND,
-        organizationInfo,
-        orgKYCDetails
-      )
+      personalBankStatements: appendMultiDocumentKey(stakeHolder.personalBankStatements),
+      personalBackground: appendMultiDocumentKey(stakeHolder.personalBackground)
     }));
     const companyDocuments = concatCompanyDocs(
       isDocsUploaded ? existDocuments.companyDocuments : [],
       companyDocs
     );
     companyBankStatements.documents = concatCompanyDocs(
-      isDocsUploaded ? existDocuments.companyBankStatements.documents : [],
-      companyBankStatements.documents
+      isDocsUploaded && existDocuments.companyBankStatements
+        ? existDocuments.companyBankStatements.documents
+        : [],
+      companyBankStatements.documents,
+      COMPANY_BANK_STATEMENTS,
+      organizationInfo,
+      orgKYCDetails
     );
     companyAddressProof.documents = concatCompanyDocs(
-      isDocsUploaded ? existDocuments.companyAddressProof.documents : [],
-      companyAddressProof.documents
+      isDocsUploaded && existDocuments.companyAddressProof
+        ? existDocuments.companyAddressProof.documents
+        : [],
+      companyAddressProof.documents,
+      COMPANY_ADDRESS_PROOF,
+      organizationInfo,
+      orgKYCDetails
     );
     companyInvoices.documents = concatCompanyDocs(
-      isDocsUploaded ? existDocuments.companyInvoices.documents : [],
-      companyInvoices.documents
+      isDocsUploaded && existDocuments.companyInvoices
+        ? existDocuments.companyInvoices.documents
+        : [],
+      companyInvoices.documents,
+      COMPANY_INVOICES,
+      organizationInfo,
+      orgKYCDetails
     );
     const stakeholdersDocuments = concatStakeholdersDocs(
       stakeHoldersDocs,
-      isDocsUploaded ? existDocuments.stakeholdersDocuments : {}
+      isDocsUploaded ? existDocuments.stakeholdersDocuments : {},
+      organizationInfo,
+      orgKYCDetails
     );
     const otherDocuments = existDocuments.otherDocuments || [];
 

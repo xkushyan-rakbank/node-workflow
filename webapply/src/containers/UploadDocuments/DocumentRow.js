@@ -140,6 +140,7 @@ export const DocumentRow = ({
     } else {
       let newDocs = docs.filter((doc, docIndex) => parseInt(docIndex) !== parseInt(index));
       newDocs = appendDocumentKey(newDocs);
+      newDocs = multiDocumentValidation(newDocs, docOwner, organizationInfo, orgKYCDetails);
 
       dispatch(
         updateProspect({

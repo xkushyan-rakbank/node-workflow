@@ -35,6 +35,7 @@ export const useStyles = makeStyles({
     borderRadius: 21,
     display: "block",
     transition: "all 0.2s ease",
+    textTransform: "inherit",
     "&:hover": {
       backgroundColor: "#373737",
       color: "#fff"

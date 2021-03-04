@@ -1,16 +1,32 @@
 import differenceBy from "lodash/differenceBy";
 import get from "lodash/get";
+import mapValues from "lodash/mapValues";
 import { multiDocumentValidation } from "./multiDocumentValidaton";
+import { PERSONAL_BANK_STATEMENTS, PERSONAL_BACKGROUND } from "./../constants";
 
-export const concatCompanyDocs = (existDocs, incomeDocs) => {
+export const concatCompanyDocs = (
+  existDocs,
+  incomeDocs,
+  type = "",
+  organizationInfo = {},
+  orgKYCDetails = {}
+) => {
   const companyDocsDiff = differenceBy(incomeDocs, existDocs, "documentType");
-
-  return [...(existDocs || []), ...companyDocsDiff];
+  let docs = [...(existDocs || []), ...companyDocsDiff];
+  if (type) {
+    docs = multiDocumentValidation(docs, type, organizationInfo, orgKYCDetails);
+  }
+  return docs;
 };
 
 // ro-assist-brd2-1
-export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
-  return Object.entries(neededDocs || {}).reduce(
+export const concatStakeholdersDocs = (
+  neededDocs,
+  uploadedDocs,
+  organizationInfo = [],
+  orgKYCDetails = []
+) => {
+  const stakeholdersDocuments = Object.entries(neededDocs || {}).reduce(
     (acc, [signatoryId, { documents, personalBankStatements, personalBackground }]) => {
       acc[signatoryId] = {
         documents: documents.map(
@@ -58,6 +74,31 @@ export const concatStakeholdersDocs = (neededDocs, uploadedDocs) => {
     },
     {}
   );
+
+  const newStakeDocs = mapValues(stakeholdersDocuments, stakeHolder => {
+    return {
+      ...stakeHolder,
+      personalBankStatements: {
+        ...stakeHolder.personalBankStatements,
+        documents: multiDocumentValidation(
+          stakeHolder.personalBankStatements.documents,
+          PERSONAL_BANK_STATEMENTS,
+          organizationInfo,
+          orgKYCDetails
+        )
+      },
+      personalBackground: {
+        ...stakeHolder.personalBackground,
+        documents: multiDocumentValidation(
+          stakeHolder.personalBackground.documents,
+          PERSONAL_BACKGROUND,
+          organizationInfo,
+          orgKYCDetails
+        )
+      }
+    };
+  });
+  return newStakeDocs;
 };
 
 export const createDocumentMapper = (documentKey, additionalProps) => doc => {
@@ -77,15 +118,14 @@ export const appendDocumentKey = docs =>
   });
 
 // ro-assist-brd2-1
-export const appendMultiDocumentKey = (docs, type, organizationInfo, orgKYCDetails) => {
+export const appendMultiDocumentKey = docs => {
   const indexedDocs = (docs.documents || []).map((doc, index) => {
     const docIndex = docs.documents
       .slice(0, index)
       .filter(document => document.documentType === doc.documentType).length;
     return { ...doc, documentKey: `${doc.documentType}-${docIndex}` };
   });
-  const validatedDocs = multiDocumentValidation(indexedDocs, type, organizationInfo, orgKYCDetails);
-  return { ...docs, documents: validatedDocs };
+  return { ...docs, documents: indexedDocs };
 };
 
 export const range = (end, start = 0) => Array.from({ length: end - start }, (_, i) => start + i);
