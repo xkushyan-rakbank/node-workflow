@@ -142,6 +142,9 @@ export const TableCompareComponent = ({ selectedAccount }) => {
         handleReject={closeDialogHandler}
         handleClose={closeDialogHandler}
         message={RAK_STARTER_CONFIRM_MESSAGE}
+        cancelLabel="No"
+        confirmLabel="Yes"
+        divider={false}
       />
     </Paper>
   );

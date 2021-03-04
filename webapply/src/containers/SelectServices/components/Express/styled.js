@@ -61,7 +61,10 @@ export const useStyles = makeStyles({
     fontSize: "16px",
     fontWeight: 600,
     letterSpacing: "normal",
-    marginRight: "70px"
+    marginRight: "70px",
+    "@media (max-width: 767px)": {
+      marginRight: "5px"
+    }
   },
   dispFlxJustCenter: {
     display: "flex",

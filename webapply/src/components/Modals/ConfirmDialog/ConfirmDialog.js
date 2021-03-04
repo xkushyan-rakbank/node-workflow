@@ -13,7 +13,10 @@ export const ConfirmDialog = ({
   message,
   handleClose,
   isOpen,
-  handleConfirm
+  handleConfirm,
+  cancelLabel = "",
+  confirmLabel = "",
+  divider = true
 }) => {
   const classes = useStyles();
 
@@ -33,7 +36,7 @@ export const ConfirmDialog = ({
         </DialogTitle>
       )}
       <DialogContent classes={{ root: classes.content }}>{message}</DialogContent>
-      <div className={classes.divider} />
+      {divider && <div className={classes.divider} />}
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <Button
           onClick={handleClose}
@@ -41,7 +44,7 @@ export const ConfirmDialog = ({
           variant="outlined"
           className={classes.actionButton}
         >
-          Cancel
+          {cancelLabel != null && cancelLabel !== "" ? cancelLabel : "Cancel"}
         </Button>
         <Button
           onClick={handleConfirm}
@@ -49,7 +52,7 @@ export const ConfirmDialog = ({
           variant="contained"
           className={cx(classes.actionButton, classes.marginTop12)}
         >
-          Yes, I{"'"}m sure
+          {confirmLabel != null && confirmLabel !== "" ? confirmLabel : "Yes, I'm sure"}
         </Button>
       </DialogActions>
     </Dialog>
