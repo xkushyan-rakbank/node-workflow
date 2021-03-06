@@ -19,7 +19,7 @@ import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 
 import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
-import { NAME_REGEX, NUMBER_REGEX } from "../../../utils/validation";
+import { NAME_REGEX, NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 
 const aplicantInfoSchema = Yup.object({
@@ -35,7 +35,8 @@ const aplicantInfoSchema = Yup.object({
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
     .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" }),
-  roCode: Yup.string().matches(NUMBER_REGEX, getInvalidMessage("Agent Code"))
+  roCode: Yup.string().matches(NUMBER_REGEX, getInvalidMessage("Agent Code")),
+  allianceCode: Yup.string().matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code"))
 });
 
 //ro-assist-brd3-16
@@ -57,7 +58,8 @@ export const ApplicantInfoComponent = ({
   isIslamicBanking,
   accountType,
   isLoading,
-  partnerInfo
+  partnerInfo,
+  roCode
 }) => {
   //ro-assist-brd3-16
   const allianceCodeFromQuery = partnerInfo !== undefined ? partnerInfo.code : "";
@@ -174,6 +176,7 @@ export const ApplicantInfoComponent = ({
                     placeholder="Agent Code"
                     contextualHelpText="Enter the Agent code of the Bank staff whom you are in touch with"
                     component={Input}
+                    disabled={roCode !== ""}
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}

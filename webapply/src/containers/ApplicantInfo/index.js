@@ -5,7 +5,8 @@ import {
   getDatalist,
   getIsIslamicBanking,
   getIsRecaptchaEnable,
-  getReCaptchaSiteKey
+  getReCaptchaSiteKey,
+  getRoCode
 } from "../../store/selectors/appConfig";
 import { resetScreeningError } from "../../store/actions/sendProspectToAPI";
 import { receiveAppConfig } from "../../store/actions/appConfig";
@@ -22,7 +23,8 @@ const mapStateToProps = state => ({
   reCaptchaSiteKey: getReCaptchaSiteKey(state),
   accountType: getAccountType(state),
   isIslamicBanking: getIsIslamicBanking(state),
-  dataList: getDatalist(state)
+  dataList: getDatalist(state),
+  roCode: getRoCode(state)
 });
 
 const mapDispatchToProps = {

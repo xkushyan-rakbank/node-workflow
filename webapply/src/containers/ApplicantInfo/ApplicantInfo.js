@@ -24,7 +24,8 @@ export const ApplicantInfoContainer = ({
   isConfigLoading,
   accountType,
   isIslamicBanking,
-  dataList
+  dataList,
+  roCode
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -90,6 +91,7 @@ export const ApplicantInfoContainer = ({
       isIslamicBanking={isIslamicBanking}
       isLoading={isLoading}
       accountType={accountType}
+      roCode={roCode}
     />
   );
 };

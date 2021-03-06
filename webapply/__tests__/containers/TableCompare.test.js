@@ -24,6 +24,6 @@ describe("TableCompareComponent Component tests", () => {
   it("should open RAKstarter popup", () => {
     render(<TableCompareComponent selectedAccount={accountTypes.starter.name} />);
     fireEvent.click(screen.queryAllByText(/read more/i)[0]); // firing first ReadMore which is the RAKstarter.
-    expect(screen.queryAllByText(/Yes, I'm sure/i)).toHaveLength(1); // this means the popup is open.
+    expect(screen.queryAllByText(/Yes/i)).toHaveLength(1); // this means the popup is open.
   });
 });

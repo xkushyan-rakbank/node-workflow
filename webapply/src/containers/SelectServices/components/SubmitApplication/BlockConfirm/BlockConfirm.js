@@ -27,7 +27,9 @@ import {
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
   areTermsAgreed: Yup.boolean().oneOf([true], "Required"),
-  promoCode: Yup.string().matches(ALPHANUMERIC_REGEX, getInvalidMessage("PromoCode"))
+  promoCode: Yup.string()
+    .max(MAX_PROMO_CODE_LENGTH, "Maximum ${max} characters allowed for PromoCode")
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PromoCode"))
 });
 
 export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent }) => {

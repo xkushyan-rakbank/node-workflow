@@ -14,8 +14,8 @@ export const ConfirmDialog = ({
   handleClose,
   isOpen,
   handleConfirm,
-  cancelLabel = "",
-  confirmLabel = "",
+  cancelLabel = "Cancel",
+  confirmLabel = "Yes, I'm sure",
   divider = true
 }) => {
   const classes = useStyles();
@@ -44,7 +44,7 @@ export const ConfirmDialog = ({
           variant="outlined"
           className={classes.actionButton}
         >
-          {cancelLabel != null && cancelLabel !== "" ? cancelLabel : "Cancel"}
+          {cancelLabel}
         </Button>
         <Button
           onClick={handleConfirm}
@@ -52,7 +52,7 @@ export const ConfirmDialog = ({
           variant="contained"
           className={cx(classes.actionButton, classes.marginTop12)}
         >
-          {confirmLabel != null && confirmLabel !== "" ? confirmLabel : "Yes, I'm sure"}
+          {confirmLabel}
         </Button>
       </DialogActions>
     </Dialog>
