@@ -9,8 +9,8 @@ then
     echo 'REACT_APP_SERVER_ENV=development' >>webapply/.env.production
     #echo 'REACT_APP_CHAT_API_PATH=https://uatrmt.rakbankonline.ae/RMTCHAT/cometd' >> webapply/.env.production
     echo 'REACT_APP_CHAT_API_PATH=https://quickapplydev.rakbank.ae/genesys/cometd' >> webapply/.env.production
-    echo 'REACT_APP_AD_APPKEY=EUM-AAD-CXF' >>webapply/.env.production
-    echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae:7002' >>webapply/.env.production
+    echo 'REACT_APP_AD_APPKEY=EUM-AAD-RVT' >>webapply/.env.production
+    echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
     echo 'REACT_APP_RECAPTCHA_ENABLE=N' >> webapply/.env.production
     echo 'REACT_APP_ENCRYPTION_ENABLE=N' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "release" ];
@@ -22,8 +22,8 @@ then
         echo 'REACT_APP_SERVER_ENV=development' >>webapply/.env.production
         #echo 'REACT_APP_CHAT_API_PATH=https://uatrmt.rakbankonline.ae/RMTCHAT/cometd' >> webapply/.env.production
         echo 'REACT_APP_CHAT_API_PATH=https://quickapplyuat.rakbank.ae/genesys/cometd' >> webapply/.env.production
-        echo 'REACT_APP_AD_APPKEY=EUM-AAD-CXF' >>webapply/.env.production
-        echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae:7002' >>webapply/.env.production
+        echo 'REACT_APP_AD_APPKEY=EUM-AAD-RVT' >>webapply/.env.production
+        echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "replica" ];
@@ -35,8 +35,8 @@ then
         echo 'REACT_APP_SERVER_ENV=development' >>webapply/.env.production
         #echo 'REACT_APP_CHAT_API_PATH=https://uatrmt.rakbankonline.ae/RMTCHAT/cometd' >> webapply/.env.production
         echo 'REACT_APP_CHAT_API_PATH=https://quickapplyuat.rakbank.ae:9443/genesys/cometd' >> webapply/.env.production
-        echo 'REACT_APP_AD_APPKEY=EUM-AAD-CXF' >>webapply/.env.production
-        echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae:7002' >>webapply/.env.production
+        echo 'REACT_APP_AD_APPKEY=EUM-AAD-RVT' >>webapply/.env.production
+        echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "prod" ];
@@ -49,7 +49,7 @@ then
         #echo 'REACT_APP_CHAT_API_PATH=https://rmt.rakbankonline.ae/CHAT/cometd' >> webapply/.env.production
         echo 'REACT_APP_CHAT_API_PATH=https://quickapply.rakbank.ae/genesys/cometd' >> webapply/.env.production
         echo 'REACT_APP_AD_APPKEY=EUM-AAB-AWG' >>webapply/.env.production
-        echo 'REACT_APP_AD_URL=https://rakbankonline.ae:7002' >>webapply/.env.production
+        echo 'REACT_APP_AD_URL=https://rakbankonline.ae/appd/cowebapply' >>webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production        
 
