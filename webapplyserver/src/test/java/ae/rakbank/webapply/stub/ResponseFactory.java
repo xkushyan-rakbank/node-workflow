@@ -69,5 +69,10 @@ public class ResponseFactory {
         return objectMapper.createObjectNode()
                 .put("generated", "true");
     }
+    
+    public static JsonNode createInviteResponse() {
+        return objectMapper.createObjectNode()
+                .put("Inviterefnum", "1234");
+    }
 
 }

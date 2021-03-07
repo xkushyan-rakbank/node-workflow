@@ -357,7 +357,7 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		}
 
     	}
-		 log.info(String.format("> Invoke API from  requestBodyJSON:[%s]", ReflectionToStringBuilder.toString(responseBody)));
+		// log.info(String.format("> Invoke API from  requestBodyJSON:[%s]", ReflectionToStringBuilder.toString(responseBody)));
 		return responseBody;
 	}
 

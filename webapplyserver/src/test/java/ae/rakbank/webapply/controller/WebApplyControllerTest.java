@@ -2,11 +2,13 @@ package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
 import ae.rakbank.webapply.constants.AuthConstants;
+import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.RecaptchaService;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.services.otp.OtpService;
 import ae.rakbank.webapply.services.otp.OtpVerifyGenerateResponse;
 import ae.rakbank.webapply.stub.ConfigFactory;
+import ae.rakbank.webapply.stub.JwtPayloadStub;
 import ae.rakbank.webapply.stub.RequestFactory;
 import ae.rakbank.webapply.stub.ResponseFactory;
 import ae.rakbank.webapply.util.FileUtil;
@@ -24,6 +26,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 public class WebApplyControllerTest {
@@ -167,5 +172,28 @@ public class WebApplyControllerTest {
         Mockito.verifyNoMoreInteractions(authorizationService);
 
     }
+    
+    @Test
+    public void createInviteSuccess(){
+    	//HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+    	JsonNode createInviteRequest = RequestFactory.createInviteRequest();
+
+    	JsonNode dehResponse = ResponseFactory.createInviteResponse();
+
+        ResponseEntity<Object> responseEntity = ResponseEntity.ok(dehResponse);
+    	 JwtPayload jwt = JwtPayloadStub.newAgentJwt();
+    	 Mockito.when(dehClient.invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.POST,
+    			 createInviteRequest, "createInvite()", MediaType.APPLICATION_JSON, jwt.getOauthAccessToken())).thenReturn(responseEntity);
+    	 
+    	 ResponseEntity<Object> createInviteResponse = webApplyController.createInvite(jwt, createInviteRequest);
+    	 assertNotNull(createInviteRequest);
+    	  Assert.assertEquals(HttpStatus.OK, createInviteResponse.getStatusCode());
+          Assert.assertNotNull(createInviteResponse.getBody());
+          Assert.assertEquals(dehResponse, createInviteResponse.getBody());
+          Mockito.verify(dehClient).invokeApiEndpoint("http://deh-test-url/deh-uri", HttpMethod.POST,
+        		  createInviteRequest, "createInvite()", MediaType.APPLICATION_JSON, jwt.getOauthAccessToken());
+    }
+    
+    
 
 }
