@@ -142,13 +142,14 @@ export const CompanyBusinessRelationshipsComponent = ({
   topSuppliers,
   topOriginGoodsCountries,
   otherBankDetails,
-  updateProspect
+  updateProspect,
+  dnfbpField
 }) => {
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
 
-  const [isLinkVisited, setIsLinkVisited] = useState(NONE_VISITED);
+  const [isLinkVisited, setIsLinkVisited] = useState(dnfbpField);
   const [open, setOpen] = React.useState(false);
 
   const handleTooltipClose = () => {

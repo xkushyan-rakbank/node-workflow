@@ -15,7 +15,13 @@ const useStyles = makeStyles({
     padding: "0 10px",
     fontSize: "16px",
     fontWeight: "600",
-    color: "#373737"
+    color: "#373737",
+    "@media only screen and (max-width: 400px)": {
+      fontSize: "13px"
+    },
+    "@media only screen and (max-width: 320px)": {
+      fontSize: "11px"
+    }
   }
 });
 
