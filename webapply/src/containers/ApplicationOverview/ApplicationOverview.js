@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
+import { useLayoutParams } from "../FormLayout";
 import { ApplicationOverviewComponent } from "./components/ApplicationOverviewComponent";
 import { removeProspectId, setProspectLead, setRoCode } from "../../store/actions/appConfig";
 import { useAccountTypeByPathname } from "../../utils/useAccountTypeByPathname";
@@ -11,6 +12,7 @@ import { DEFAULT_REFERRAL_NAME } from "../../constants";
 export const ApplicationOverview = () => {
   useAccountTypeByPathname();
   useFormNavigation([true, false]);
+  useLayoutParams();
   const dispatch = useDispatch();
 
   const query = new URLSearchParams(useLocation().search);
