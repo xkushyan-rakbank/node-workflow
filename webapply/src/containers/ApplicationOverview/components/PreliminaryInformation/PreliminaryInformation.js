@@ -5,6 +5,7 @@ import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInf
 import { IconCardsContainer } from "../../../../components/IconCards/IconCardsContainer";
 import { IconCardItem } from "../../../../components/IconCards/IconCardItem";
 import { CommonQuestions } from "../CommonQuestions";
+import { Youtube } from "../../../../components/Youtube/Youtube";
 
 import { questions } from "./constants";
 
@@ -31,6 +32,7 @@ export const PreliminaryInformation = () => {
       <div className={classes.info}>
         On submission of a completed application get an inactive account number instantly.
       </div>
+      <Youtube src="https://www.youtube.com/embed/_qjhtz4ocRY" />
       <div className={classes.answers}>
         <div className={classes.title}>Have more questions? Here are some answers</div>
         <CommonQuestions questions={questions} />

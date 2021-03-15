@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => ({
   },
   answers: {
     marginBottom: 60,
-    marginTop: 60,
+    marginTop: 30,
     borderRadius: "8px",
     overflow: "auto",
     [theme.breakpoints.only("xs")]: {
