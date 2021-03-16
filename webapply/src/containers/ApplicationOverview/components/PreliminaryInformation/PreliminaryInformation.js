@@ -32,6 +32,9 @@ export const PreliminaryInformation = () => {
       <div className={classes.info}>
         On submission of a completed application get an inactive account number instantly.
       </div>
+      <div className={classes.videoTitle}>
+        Here&apos;s a quick video guide to help you get started!{" "}
+      </div>
       <Youtube src="https://www.youtube.com/embed/_qjhtz4ocRY" />
       <div className={classes.answers}>
         <div className={classes.title}>Have more questions? Here are some answers</div>

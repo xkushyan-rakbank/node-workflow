@@ -29,6 +29,11 @@ export const useStyles = makeStyles(theme => ({
       borderRadius: "8px 8px 0 0"
     }
   },
+  videoTitle: {
+    fontSize: 16,
+    fontWeight: 600,
+    padding: "40px 0 24px 0"
+  },
   info: {
     fontSize: 20,
     lineHeight: 1.3,
