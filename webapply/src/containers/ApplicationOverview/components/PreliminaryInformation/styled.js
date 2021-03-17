@@ -30,7 +30,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   videoTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 600,
     padding: "40px 0 24px 0"
   },
