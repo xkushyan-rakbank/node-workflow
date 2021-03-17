@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => ({
   },
   answers: {
     marginBottom: 60,
-    marginTop: 60,
+    marginTop: 30,
     borderRadius: "8px",
     overflow: "auto",
     [theme.breakpoints.only("xs")]: {
@@ -28,6 +28,11 @@ export const useStyles = makeStyles(theme => ({
       padding: 0,
       borderRadius: "8px 8px 0 0"
     }
+  },
+  videoTitle: {
+    fontSize: 20,
+    fontWeight: 600,
+    padding: "40px 0 24px 0"
   },
   info: {
     fontSize: 20,
