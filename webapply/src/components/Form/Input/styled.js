@@ -44,7 +44,6 @@ export const useStyles = makeStyles(theme => {
         opacity: 0
       },
       "& > div:first-child": {
-        marginTop: "0.5px !important",
         width: "90px",
         zIndex: 1,
         "& fieldset": {

@@ -175,7 +175,7 @@ export const CompanyPreferredContactInformationComponent = ({
             direction="row"
             justify="space-between"
           >
-            <InfoTitle title="We will use the information in this section to communicate with you." />
+            <InfoTitle title="We will use the information in this section to communicate with you. Please check the email address entered as your application form may be sent to this address." />
             <span className={classes.continueBtn}>
               <ContinueButton type="submit" />
             </span>
