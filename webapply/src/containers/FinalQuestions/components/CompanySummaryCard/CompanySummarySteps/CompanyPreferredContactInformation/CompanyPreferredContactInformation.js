@@ -19,6 +19,7 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { WEBSITE_REGEX } from "../../../../../../utils/validation";
 
 const getCompanyPreferredContactInformationSchema = () =>
   Yup.object().shape({
@@ -37,13 +38,7 @@ const getCompanyPreferredContactInformationSchema = () =>
     }),
     website: Yup.string()
       .max(100, "Maximum 100 characters allowed")
-      .matches(
-        // eslint-disable-next-line max-len
-        /((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        // eslint-disable-next-line max-len
-        // /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
-        getInvalidMessage("Entered website URL address")
-      )
+      .matches(WEBSITE_REGEX, getInvalidMessage("Entered website URL address"))
   });
 
 export const CompanyPreferredContactInformationComponent = ({

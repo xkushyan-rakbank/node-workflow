@@ -27,6 +27,8 @@ export const GLOBAL_INTERMEDIARY_REGEX = /^[a-zA-Z- 0-9]{19}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 export const POBOX_REGEX = /^([a-zA-Z0-9])*$/;
 
+// eslint-disable-next-line max-len
+export const WEBSITE_REGEX = /^(((https?):\/\/)?(www.)?[a-z0-9-]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#-]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?))$/;
 export const FILE_SIZE = 5 * 1048576;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
 
