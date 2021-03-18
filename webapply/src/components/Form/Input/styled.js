@@ -46,6 +46,12 @@ export const useStyles = makeStyles(theme => {
       "& > div:first-child": {
         width: "90px",
         zIndex: 1,
+        "& > div": {
+          "@media all and (-ms-high-contrast: active), (-ms-high-contrast: none)": {
+            height: "61px !important",
+            marginTop: "-5.5px !important"
+          }
+        },
         "& fieldset": {
           borderRight: "1px solid #ffffff",
           borderTopRightRadius: "0",
