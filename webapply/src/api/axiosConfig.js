@@ -28,7 +28,7 @@ const rsaPublicKey = process.env.REACT_APP_RSA_PUBLIC_KEY;
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
 export const uploadClient = axios.create({
-  baseURL: process.env.REACT_APP_UPLOAD_PATH || "https://uatrmtc.rakbankonline.ae"
+  baseURL: process.env.REACT_APP_UPLOAD_PATH || "https://uatrmtc.rakbankonline.ae/docUploader"
 });
 
 const apiClient = axios.create({
