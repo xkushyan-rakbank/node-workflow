@@ -35,8 +35,12 @@ const aplicantInfoSchema = Yup.object({
   mobileNo: Yup.string()
     .required(getRequiredMessage("Your Mobile Number"))
     .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" }),
-  roCode: Yup.string().matches(NUMBER_REGEX, getInvalidMessage("Agent Code")),
-  allianceCode: Yup.string().matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code"))
+  roCode: Yup.string()
+    .max(6, "Maximum 6 characters allowed")
+    .matches(NUMBER_REGEX, getInvalidMessage("Agent Code")),
+  allianceCode: Yup.string()
+    .max(50, "Maximum 50 characters allowed")
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code"))
 });
 
 //ro-assist-brd3-16
