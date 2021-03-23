@@ -44,8 +44,9 @@ export const Otp = ({ redirectRoute }) => {
     if (!isGenerating) {
       /* istanbul ignore else */
       if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
-        applicantInfo.action = "resend";
-        dispatch(generateOtpCode(applicantInfo));
+        const otpData = { ...applicantInfo };
+        otpData.action = "resend";
+        dispatch(generateOtpCode(otpData));
       }
       setLoginAttempt(loginAttempt + 1);
     }
