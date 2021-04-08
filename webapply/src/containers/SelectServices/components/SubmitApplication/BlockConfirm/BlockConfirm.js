@@ -28,6 +28,7 @@ const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
   areTermsAgreed: Yup.boolean().oneOf([true], "Required"),
   promoCode: Yup.string()
+    .nullable()
     .max(MAX_PROMO_CODE_LENGTH, "Maximum ${max} characters allowed for PromoCode")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PromoCode"))
 });
