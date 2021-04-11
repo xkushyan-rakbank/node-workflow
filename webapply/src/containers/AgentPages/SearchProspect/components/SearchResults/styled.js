@@ -35,7 +35,8 @@ export const useStyles = makeStyles({
     fontSize: "18px",
     fontWeight: 600,
     lineHeight: 1,
-    color: "#263d4c"
+    color: "#263d4c",
+    wordBreak: "break-word"
   },
   notFound: {
     fontSize: "18px",
