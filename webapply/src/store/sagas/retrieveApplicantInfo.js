@@ -72,7 +72,8 @@ export function* getProspectIdInfo({ payload }) {
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
     if (
-      organizationInfoModel.addressInfo.length > config.prospect.organizationInfo.addressInfo.length
+      config.prospect.organizationInfo.addressInfo[0] &&
+      !config.prospect.organizationInfo.addressInfo[0].typeOfAddress
     ) {
       config.prospect.organizationInfo.addressInfo = concatAddressInfo(
         organizationInfoModel.addressInfo,
