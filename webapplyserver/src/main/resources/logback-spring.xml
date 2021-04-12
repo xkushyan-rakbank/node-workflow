@@ -21,6 +21,7 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 	</appender>
@@ -35,6 +36,7 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -65,6 +67,7 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -95,6 +98,7 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -125,6 +129,7 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
