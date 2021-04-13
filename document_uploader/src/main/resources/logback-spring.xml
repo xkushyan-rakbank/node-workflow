@@ -25,6 +25,8 @@
 			<maskPattern>${primaryAccessCodeLog}</maskPattern>
 			<maskPattern>${eidNumberLog}</maskPattern>
 			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
             <Pattern>${outputPattern}</Pattern>
         </layout>
     </appender>
@@ -42,6 +44,8 @@
 			<maskPattern>${primaryAccessCodeLog}</maskPattern>
 			<maskPattern>${eidNumberLog}</maskPattern>
 			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
             <Pattern>${outputPattern}</Pattern>
         </layout>
 
@@ -75,6 +79,8 @@
 			<maskPattern>${primaryAccessCodeLog}</maskPattern>
 			<maskPattern>${eidNumberLog}</maskPattern>
 			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
             <Pattern>${outputPattern}</Pattern>
         </layout>
 
@@ -108,6 +114,8 @@
 			<maskPattern>${primaryAccessCodeLog}</maskPattern>
 			<maskPattern>${eidNumberLog}</maskPattern>
 			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
             <Pattern>${outputPattern}</Pattern>
         </layout>
 
@@ -141,6 +149,8 @@
 			<maskPattern>${primaryAccessCodeLog}</maskPattern>
 			<maskPattern>${eidNumberLog}</maskPattern>
 			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
             <Pattern>${outputPattern}</Pattern>
         </layout>
 
