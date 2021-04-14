@@ -15,6 +15,8 @@ public class EnvUtil {
     private static String env = System.getenv("WEB_APPLY_ENV");
 
     private static String webApplyDir = System.getenv("WEB_APPLY_DIR");
+    
+    private static String logMaskingFlag = System.getenv("LOGGER_MASKING_FLAG");
 
     static {
         if (StringUtils.isBlank(webApplyDir)) {
@@ -27,6 +29,13 @@ public class EnvUtil {
         } else {
             env = env.toLowerCase();
         }
+        //Added to check the new environment variable-Start
+        if(StringUtils.isBlank(logMaskingFlag)){
+        	log.error("System property 'LOGGER_MASKING_FLAG' not configured, will be defaulted to 'true'. Allowed values true.false");
+        }else{
+        	log.info("$LOGGER_MASKING_FLAG={}",logMaskingFlag);
+        }
+      //Added to check the new environment variable-End
         log.info("$WEB_APPLY_ENV={}, $WEB_APPLY_DIR={}", env, webApplyDir);
         createDirs();
     }

@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PatternMaskingLayout extends PatternLayout {
 
     private Pattern multilinePattern;
@@ -22,7 +24,11 @@ public class PatternMaskingLayout extends PatternLayout {
     }
 
     public PatternMaskingLayout() {
-        isEnabled = Boolean.parseBoolean(System.getenv("LOGGER_MASKING_FLAG"));
+        if (!StringUtils.isBlank(System.getenv("LOGGER_MASKING_FLAG"))) {
+        	isEnabled = Boolean.parseBoolean(System.getenv("LOGGER_MASKING_FLAG"));
+        }else{
+        	isEnabled = true;
+        }
     }
 
     public void addMaskPattern(String maskPattern) {
