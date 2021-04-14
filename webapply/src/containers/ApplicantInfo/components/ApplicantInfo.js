@@ -18,7 +18,11 @@ import { ErrorBoundaryForReCaptcha } from "../../../components/ReCaptcha/ErrorBo
 import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 
 import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";
-import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
+import {
+  getInvalidMessage,
+  getRequiredMessage,
+  getROInvalidMessage
+} from "../../../utils/getValidationMessage";
 import { NAME_REGEX, NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 
@@ -37,7 +41,7 @@ const aplicantInfoSchema = Yup.object({
     .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" }),
   roCode: Yup.string()
     .max(6, "Maximum 6 characters allowed")
-    .matches(NUMBER_REGEX, getInvalidMessage("Agent Code")),
+    .matches(NUMBER_REGEX, getROInvalidMessage),
   allianceCode: Yup.string()
     .max(50, "Maximum 50 characters allowed")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code"))
