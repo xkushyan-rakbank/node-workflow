@@ -33,6 +33,13 @@ const blockConfirmSchema = Yup.object({
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PromoCode"))
 });
 
+const promoCodeSchema = Yup.object({
+  promoCode: Yup.string()
+    .nullable()
+    .max(MAX_PROMO_CODE_LENGTH, "Maximum ${max} characters allowed for PromoCode")
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PromoCode"))
+});
+
 export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -64,7 +71,7 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
         promoCode: ""
       }}
       onSubmit={handleSubmit}
-      validationSchema={!isAgent && blockConfirmSchema}
+      validationSchema={isAgent ? promoCodeSchema : blockConfirmSchema}
       validateOnChange={false}
     >
       {({ values }) => (
