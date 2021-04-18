@@ -152,12 +152,15 @@ export const SIGNING_TRANSACTIONS_TYPE = {
   OTHER: "000"
 };
 //ro-assist-brd1-3
+export const smeSouqLink = "https://rakbank.ae/wps/portal/business-banking/smesouk";
+
 export const applicationdedupe = [
   {
     screeningNotes: "DECLINE",
     link: true,
     buttons: [
       {
+        external: false,
         link: routes.accountsComparison,
         label: "Go to home page"
       }
@@ -168,6 +171,7 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
+        external: false,
         link: routes.accountsComparison,
         label: "Go to home page"
       }
@@ -178,6 +182,7 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
+        external: false,
         link: routes.comeBackLogin,
         label: "Continue"
       }
@@ -188,10 +193,12 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.accountsComparison,
+        external: true,
+        link: smeSouqLink,
         label: "No, thanks"
       },
       {
+        external: false,
         link: routes.comeBackLogin,
         label: "Yes"
       }
@@ -202,10 +209,12 @@ export const applicationdedupe = [
     link: true,
     buttons: [
       {
-        link: routes.accountsComparison,
+        external: true,
+        link: smeSouqLink,
         label: "No, thanks"
       },
       {
+        external: false,
         link: routes.comeBackLogin,
         label: "Yes"
       }
@@ -220,6 +229,7 @@ export const screeningStatus = [
     link: true,
     buttons: [
       {
+        external: false,
         link: routes.accountsComparison,
         label: "Go to home page"
       }
@@ -241,6 +251,7 @@ export const screeningStatus = [
     //ro-assist-brd2-3
     buttons: [
       {
+        external: false,
         link: routes.currentAccount,
         label: "Open Current Account"
       }

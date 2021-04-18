@@ -19,9 +19,13 @@ export const ApplicationStatus = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
-  const redirectTo = route => {
-    history.push(route);
-    window.location.reload();
+  const redirectTo = (route, external) => {
+    if (external) {
+      window.location.href = route;
+    } else {
+      history.push(route);
+      window.location.reload();
+    }
   };
   return (
     <>
@@ -38,7 +42,7 @@ export const ApplicationStatus = ({
                 {buttons.map((btn, index) => (
                   <Button
                     key={index}
-                    onClick={() => redirectTo(btn.link)}
+                    onClick={() => redirectTo(btn.link, btn.external)}
                     className={classes.appStatusLink}
                   >
                     {btn.label}
