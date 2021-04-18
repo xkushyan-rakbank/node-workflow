@@ -86,16 +86,6 @@ export const SignatoryPersonalInformation = ({
                 component={SelectAutocomplete}
                 tabIndex="0"
               />
-              {/* //ro-assist-brd1-5 */}
-              <Field
-                name="countryOfBirth"
-                path={`prospect.signatoryInfo[${index}].countryofBirth`}
-                datalistId="country"
-                label="Country of Birth"
-                isSearchable
-                component={SelectAutocomplete}
-                tabIndex="3"
-              />
             </Grid>
             <Grid item sm={6} xs={12}>
               <Field
@@ -107,17 +97,6 @@ export const SignatoryPersonalInformation = ({
                 contextualHelpText="Provide mother's surname before marriage"
                 InputProps={{
                   inputProps: { maxLength: MAX_MOTHERS_MAIDEN_NAME_LENGTH, tabIndex: 0 }
-                }}
-              />
-              <Field
-                name="placeOfBirth"
-                path={`prospect.signatoryInfo[${index}].placeOfBirth`}
-                label={"Place of Birth"}
-                placeholder="Place of Birth"
-                component={Input}
-                contextualHelpText="City/Town of Place of Birth"
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
                 }}
               />
             </Grid>
@@ -135,6 +114,31 @@ export const SignatoryPersonalInformation = ({
                 />
               </Grid>
             )}
+            {/* //ro-assist-brd1-5 */}
+            <Grid item sm={6} xs={12}>
+              <Field
+                name="countryOfBirth"
+                path={`prospect.signatoryInfo[${index}].countryofBirth`}
+                datalistId="country"
+                label="Country of Birth"
+                isSearchable
+                component={SelectAutocomplete}
+                tabIndex="3"
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Field
+                name="placeOfBirth"
+                path={`prospect.signatoryInfo[${index}].placeOfBirth`}
+                label={"Place of Birth"}
+                placeholder="Place of Birth"
+                component={Input}
+                contextualHelpText="City/Town of Place of Birth"
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
           </Grid>
           <div className={classes.buttonWrapper}>
             <ContinueButton type="submit" />

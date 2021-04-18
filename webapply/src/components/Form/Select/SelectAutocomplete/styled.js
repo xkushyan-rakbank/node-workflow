@@ -74,6 +74,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     whiteSpace: "normal",
     lineHeight: "normal",
+    wordBreak: "break-word",
     "& .MuiCheckbox-root": {
       marginLeft: "auto"
     }
