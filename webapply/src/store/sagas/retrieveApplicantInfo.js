@@ -92,7 +92,7 @@ export function* getProspectIdInfo({ payload }) {
     const prospect = {};
     try {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
-        config.prospect.organizationInfo.addressInfo[0].officeAddressDifferent === "Yes";
+        config.prospect.organizationInfo.addressInfo[0].officeAddressDifferent === "No";
       // eslint-disable-next-line prettier/prettier
       if (config.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = true;

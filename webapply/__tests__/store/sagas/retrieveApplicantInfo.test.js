@@ -245,7 +245,7 @@ describe("searchProspect saga test", () => {
     expect(dispatched[0]).toMatchObject({
       type: UPDATE_PROSPECT,
       payload: {
-        "organizationInfo.isSameAsRegisteredAddress": true,
+        "organizationInfo.isSameAsRegisteredAddress": false,
         "organizationInfo.preferredMailingAddrs": true,
         "signatoryInfo[0].signoPreferredMailingAddrs": true
       }
@@ -285,7 +285,7 @@ describe("searchProspect saga test", () => {
     expect(dispatched[0]).toMatchObject({
       type: UPDATE_PROSPECT,
       payload: {
-        "organizationInfo.isSameAsRegisteredAddress": true,
+        "organizationInfo.isSameAsRegisteredAddress": false,
         "organizationInfo.preferredMailingAddrs": false,
         "signatoryInfo[0].signoPreferredMailingAddrs": false
       }
@@ -325,7 +325,7 @@ describe("searchProspect saga test", () => {
     expect(dispatched[0]).toMatchObject({
       type: UPDATE_PROSPECT,
       payload: {
-        "organizationInfo.isSameAsRegisteredAddress": true,
+        "organizationInfo.isSameAsRegisteredAddress": false,
         "organizationInfo.preferredMailingAddrs": "",
         "signatoryInfo[0].signoPreferredMailingAddrs": ""
       }
