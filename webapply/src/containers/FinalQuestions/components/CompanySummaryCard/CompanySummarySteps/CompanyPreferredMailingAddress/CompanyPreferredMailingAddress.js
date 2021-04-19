@@ -88,8 +88,8 @@ export const CompanyPreferredMailingAddressComponent = ({
     values => {
       const prospect = {};
       prospect[`${BASE_ADDRESS_PATH_1}.officeAddressDifferent`] = values.isSameAsRegisteredAddress
-        ? "Yes"
-        : "No";
+        ? "No"
+        : "Yes";
       dispatch(updateProspect(prospect));
       handleContinue();
     },
