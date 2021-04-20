@@ -190,7 +190,9 @@ export const ApplicantInfoComponent = ({
                     }}
                   />
                 )}
-                <InfoCard message="You only need to enter this if you have received it from a RAKBANK sales agent." />
+                {!roCode && (
+                  <InfoCard message="You only need to enter this if you have received it from a RAKBANK sales agent." />
+                )}
               </Grid>
               <Grid item sm={6} xs={12}>
                 {isConfigLoading ? (
