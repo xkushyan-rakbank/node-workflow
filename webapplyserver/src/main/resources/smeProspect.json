@@ -82,7 +82,7 @@
 		"addressInfo": [
 			{
 				"typeOfAddress": "Registered",
-				"officeAddressDifferent": "No",
+				"officeAddressDifferent": "Yes",
 				"addressDetails": [
 					{
 						"addressFieldDesc": "",
@@ -103,7 +103,7 @@
 			},
 			{
 				"typeOfAddress": "OFFICE",
-				"officeAddressDifferent": "No",
+				"officeAddressDifferent": "Yes",
 				"addressDetails": [
 					{
 						"addressFieldDesc": "",
