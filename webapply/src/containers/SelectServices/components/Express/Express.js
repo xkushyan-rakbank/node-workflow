@@ -32,12 +32,22 @@ const texts = [
   "* Accounts opened based on Bank's policy and approval subject to terms and conditions"
 ];
 
-const termConditionLinks = {
+let termConditionLinks = {};
+termConditionLinks = {
   [CONVENTIONAL]:
     "https://revamp.rakbank.ae/wps/wcm/connect/fd988245-f58a-44f5-ac54-a531c6cbc65c/EXPRESS+%28AED%29+SERVICE+TERMS+%26+CONDITIONS.PDF?MOD=AJPERES",
   [ISLAMIC]:
     "https://revamp.rakbank.ae/wps/wcm/connect/fd988245-f58a-44f5-ac54-a531c6cbc65c/EXPRESS+%28AED%29+SERVICE+TERMS+%26+CONDITIONS.PDF?MOD=AJPERES"
 };
+
+if (process.env.REACT_APP_SERVER_ENV === "production") {
+  termConditionLinks = {
+    [CONVENTIONAL]:
+      "https://rakbank.ae/wps/wcm/connect/fd988245-f58a-44f5-ac54-a531c6cbc65c/EXPRESS+%28AED%29+SERVICE+TERMS+%26+CONDITIONS.PDF?MOD=AJPERES",
+    [ISLAMIC]:
+      "https://rakbank.ae/wps/wcm/connect/fd988245-f58a-44f5-ac54-a531c6cbc65c/EXPRESS+%28AED%29+SERVICE+TERMS+%26+CONDITIONS.PDF?MOD=AJPERES"
+  };
+}
 
 const termsMessageContent = {
   message:
