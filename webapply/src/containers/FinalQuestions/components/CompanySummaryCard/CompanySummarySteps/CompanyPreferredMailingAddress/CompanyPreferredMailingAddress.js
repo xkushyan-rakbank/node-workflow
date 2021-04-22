@@ -300,7 +300,6 @@ export const CompanyPreferredMailingAddressComponent = ({
                         />
                         <Field
                           name="officeAddrsCountry"
-                          path={`${BASE_PATH_2}.country`}
                           disabled
                           contextualHelpText="Give the Registered address where the Company's office is located."
                           component={Input}
