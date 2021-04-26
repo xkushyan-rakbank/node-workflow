@@ -16,6 +16,7 @@ import {
   UPDATE_PROSPECT,
   UPDATE_VIEW_ID,
   saveSignatoryModel,
+  saveOrganizationInfoModel,
   receiveAppConfigSuccess,
   receiveAppConfigFail,
   updateProspect,
@@ -57,6 +58,7 @@ describe("appConfig sagas tests", () => {
     const state = "some state";
     const isIslamicBanking = true;
     const signatory = {};
+    const organizationInfo = {};
     const response = {
       data: {
         prospect: {
@@ -97,6 +99,7 @@ describe("appConfig sagas tests", () => {
       expect(spy.mock.calls[0]).toEqual([accountType]);
       expect(dispatched).toEqual([
         saveSignatoryModel(signatory),
+        saveOrganizationInfoModel(organizationInfo),
         receiveAppConfigSuccess(newConfig),
         sendProspectToAPISuccess()
       ]);
@@ -128,6 +131,7 @@ describe("appConfig sagas tests", () => {
       expect(spy.mock.calls[0]).toEqual([null]);
       expect(dispatched).toEqual([
         saveSignatoryModel(signatory),
+        saveOrganizationInfoModel(organizationInfo),
         receiveAppConfigSuccess(newConfig),
         sendProspectToAPISuccess()
       ]);

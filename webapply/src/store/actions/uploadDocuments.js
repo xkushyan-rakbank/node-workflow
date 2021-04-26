@@ -9,6 +9,7 @@ export const UPLOAD_FILES_PROGRESS = "UPLOAD_FILES_PROGRESS";
 export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
 export const GET_PROSPECT_DOCUMENTS_FAIL = "GET_PROSPECT_DOCUMENTS_FAIL";
 export const DOWNLOAD_DOCUMENT_FILE = "DOWNLOAD_DOCUMENT_FILE";
+export const ADD_MULTI_DOCUMENT = "ADD_MULTI_DOCUMENT";
 
 export const saveAndRetrieveDocDetails = () => ({
   type: SAVE_AND_RETRIEVE_DOC_UPLOADER
@@ -39,3 +40,6 @@ export const downloadDocumentFile = (prospectId, documentKey, fileName) => ({
 export const addOtherDocument = document => ({ type: ADD_OTHER_DOCUMENT, payload: document });
 
 export const deleteOtherDocument = index => ({ type: DELETE_OTHER_DOCUMENT, payload: index });
+
+// ro-assist-brd2-1
+export const addMultiDocument = document => ({ type: ADD_MULTI_DOCUMENT, payload: document });

@@ -4,7 +4,10 @@
 		"email": "",
 		"countryCode": "971",
 		"mobileNo": "",
-		"applyOnbehalf": false
+		"applyOnbehalf": false,
+		"LeadSource": "Direct",
+        "roCode": "",
+        "allianceCode": ""
 	},
 	"generalInfo": {
 		"prospectId": "",
@@ -34,7 +37,9 @@
 		"actionType": "",
 		"saveType": "",
 		"tncAgreed": false,
-		"declaration": false
+		"declaration": false,
+		"sanctionUndertaking": false,
+        "promoCode": ""
 	},
 	"accountInfo": [
 		{
@@ -50,7 +55,9 @@
 			"eStatements": true,
 			"mailStatements": false,
 			"receiveInterest": false,
-			"deliverByCourier": false
+			"deliverByCourier": false,
+			"expressTandC": false,
+            "express": false
 		}
 	],
 	"organizationInfo": {
@@ -74,8 +81,8 @@
 		"vatRegistrationNumber": "",
 		"addressInfo": [
 			{
-				"typeOfAddress": "",
-				"officeAddressDifferent": "",
+				"typeOfAddress": "Registered",
+				"officeAddressDifferent": "Yes",
 				"addressDetails": [
 					{
 						"addressFieldDesc": "",
@@ -86,7 +93,28 @@
 						"addressLine4": "",
 						"poBox": "",
 						"emirateCity": "",
-						"country": "United Arab Emirates",
+						"country": "AE",
+						"typeOfSpaceOccupied": {
+							"spaceType": "",
+							"others": ""
+						}
+					}
+				]
+			},
+			{
+				"typeOfAddress": "OFFICE",
+				"officeAddressDifferent": "Yes",
+				"addressDetails": [
+					{
+						"addressFieldDesc": "",
+						"preferredAddress": "",
+						"addressLine1": "",
+						"addressLine2": "",
+						"addressLine3": "",
+						"addressLine4": "",
+						"poBox": "",
+						"emirateCity": "",
+						"country": "AE",
 						"typeOfSpaceOccupied": {
 							"spaceType": "",
 							"others": ""
@@ -189,7 +217,13 @@
 		],
 		"isShareholderACompany": false,
 		"isDontHaveSuppliersYet": false,
-  		"isDontTradeGoodsYet": false
+  		"isDontTradeGoodsYet": false,
+  		"dnfbpField":"na",
+  		"isCompanyUSEntity" : "",
+  		"isFinancialInstitution" : "na",
+  		"isNonFinancialInstitution" : "na",
+  		"globalintermediaryId" : ""
+  		
 	},
 	"signatoryInfo": [
 		{
@@ -218,6 +252,8 @@
 			"gender": "MR.",
 			"maritalStatus": "",
 			"maritalStatusOthers": "",
+			"countryofBirth": "",
+            "placeOfBirth": "",
 			"occupation": "",
 			"mothersMaidenName": "",
 			"numberOfDependants": 0,
@@ -263,6 +299,8 @@
 				"primaryEmail": "",
 				"primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "971",
+				"primaryHomeNo" : "",
+				"primaryHomeCountryCode": "",
 				"fax": "",
 				"faxCountryCode": "",
 				"secondaryPhoneNo": "",
@@ -287,7 +325,7 @@
 			"sameAsCompanyAddress": false,
 			"addressInfo": [
 				{
-					"typeOfAddress": "",
+					"typeOfAddress": "RESIDENCE",
 					"addressDetails": [
 						{
 							"addressFieldDesc": "",
@@ -298,7 +336,38 @@
 							"addressLine4": "",
 							"poBox": "",
 							"emirateCity": "",
-							"country": "United Arab Emirates"
+							"country": "AE"
+						}
+					]
+				},
+					{
+					"typeOfAddress": "OFFICE",
+					"addressDetails": [
+						{
+							"addressFieldDesc": "",
+							"preferredAddress": "",
+							"addressLine1": "",
+							"addressLine2": "",
+							"addressLine3": "",
+							"addressLine4": "",
+							"poBox": "",
+							"emirateCity": "",
+							"country": "AE"
+						}
+					]
+				},	{
+					"typeOfAddress": "Home",
+					"addressDetails": [
+						{
+							"addressFieldDesc": "",
+							"preferredAddress": "",
+							"addressLine1": "",
+							"addressLine2": "",
+							"addressLine3": "",
+							"addressLine4": "",
+							"poBox": "",
+							"emirateCity": "",
+							"country": ""
 						}
 					]
 				}
@@ -314,7 +383,8 @@
 					"fullNameOnPassport": "",
 					"nameOnDebitCard": ""
 				}
-			}
+			},
+			"isUSrelation": ""
 		}
 	],
 	"channelServicesInfo": {

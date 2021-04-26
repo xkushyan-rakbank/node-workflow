@@ -13,6 +13,9 @@ import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "./constants";
 
 export const UploadDocuments = ({
   companyDocuments,
+  companyBankStatements,
+  companyAddressProof,
+  companyInvoices,
   stakeholdersDocuments,
   companyName,
   signatories,
@@ -63,6 +66,9 @@ export const UploadDocuments = ({
         <UploadDocumentsComponent
           isLoadingDocuments={isLoadingDocuments}
           companyDocuments={companyDocuments}
+          companyBankStatements={companyBankStatements}
+          companyAddressProof={companyAddressProof}
+          companyInvoices={companyInvoices}
           stakeholdersDocuments={stakeholdersDocuments}
           isDisabledNextStep={isDisabledNextStep}
           isLoading={isLoading}

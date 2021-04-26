@@ -8,7 +8,9 @@ import {
   initialOtherBankDetails,
   initialTopOriginGoodsCountries,
   initialTopSuppliers,
-  initialTopCustomers
+  initialTopCustomers,
+  NONE_VISITED,
+  IS_DNFBP_INFO_VISITED
 } from "./constants";
 
 const mapStateToProps = state => ({
@@ -23,7 +25,9 @@ const mapStateToProps = state => ({
     getOrgKYCDetails(state),
     "otherBankingRelationshipsInfo.otherBankDetails",
     initialOtherBankDetails
-  )
+  ),
+  dnfbpField:
+    get(getOrgKYCDetails(state), "dnfbpField", "na") != "na" ? IS_DNFBP_INFO_VISITED : NONE_VISITED
 });
 
 const mapDispatchToProps = {

@@ -10,11 +10,12 @@ export const endpoints = {
   uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
   reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
   searchProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/search",
-  getDocumentByIdUri: "/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
+  getDocumentByIdUri: "/docUploader/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
   screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
   otpUri: "/webapply/api/v1/otp",
   authenticateUserUri: "/webapply/api/v1/users/authenticate",
-  docUploaderUri: "/api/v1/banks/RAK/prospects/:prospectId/documents"
+  docUploaderUri: "/docUploader/api/v1/banks/RAK/prospects/:prospectId/documents",
+  createInviteUri: "/webapply/api/v1/agent/createInvite"
 };
 
 export const prospect = {
@@ -108,7 +109,13 @@ export const prospect = {
             typeOfSpaceOccupied: {
               spaceType: "",
               others: ""
-            }
+            },
+            officeAddrsLine1: "",
+            officeAddrsPoBox: "",
+            officeAddrsEmirateCity: "",
+            officeAddrsCountry: "United Arab Emirates",
+            preferredMailingAddrs: "",
+            isDontSameAsRegisteredAddress: false
           }
         ]
       }
@@ -275,6 +282,8 @@ export const prospect = {
       contactDetails: {
         primaryMobileNo: "",
         primaryMobCountryCode: UAE_CODE,
+        primaryHomeCountryNo: "",
+        primaryHomeCountryCode: UAE_CODE,
         primaryEmail: "",
         primaryPhoneNo: "",
         primaryPhoneCountryCode: UAE_CODE,

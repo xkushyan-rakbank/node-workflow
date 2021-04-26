@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import uniqueId from "lodash/uniqueId";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import cx from "classnames";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 import {
   Input,
   Checkbox,
   SelectAutocomplete,
-  AutoSaveField as Field
+  AutoSaveField as Field,
+  InlineRadioGroup,
+  GlobalIntermediaryID
 } from "../../../../../../components/Form";
 import { ArrayRemoveButton } from "../../../Buttons/ArrayRemoveButton";
 import { ArrayAddButton } from "../../../Buttons/ArrayAddButton";
@@ -21,15 +25,30 @@ import {
   initialTopOriginGoodsCountries,
   initialTopSuppliers,
   MAX_BANK_NAME_LENGTH,
-  MAX_COMPANY_NAME_LENGTH
+  MAX_COMPANY_NAME_LENGTH,
+  IS_DNFBP_INFO_VISITED,
+  NONE_VISITED,
+  dnfbpInfoContent,
+  usEntity,
+  financialInstitution,
+  nonFinancialInstitution
 } from "./constants";
-import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../../utils/validation";
+import {
+  SPECIAL_CHARACTERS_REGEX,
+  checkIsTrimmed,
+  GLOBAL_INTERMEDIARY_REGEX
+} from "../../../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { enumYesNoOptions } from "../../../../../../constants/options";
+import { ContexualHelp, ContextualDnfbpHelp } from "../../../../../../components/Notifications";
+import { NotificationsManager } from "../../../../../../components/Notification";
+import { Icon, ICONS } from "../../../../../../components/Icons";
+import { InfoTitle } from "../../../../../../components/InfoTitle";
 
 const companyBusinessRelationshipsSchema = () =>
   Yup.object().shape({
@@ -82,6 +101,37 @@ const companyBusinessRelationshipsSchema = () =>
           })
         )
       })
+    }),
+    dnfbpField: Yup.string()
+      .required("Field Is your company dealing in Designated Business Categories is not filled")
+      .oneOf(
+        ["yes", "no"],
+        "Field Is your company dealing in Designated Business Categories is not filled"
+      ),
+    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled"),
+    //ro-assist-brd3-15
+    isFinancialInstitution: Yup.string()
+      .required("Field Is your company a Financial Instituion is not filled")
+      .oneOf(["yes", "no"], "Field Is your company a Financial Instituion is not filled"),
+    isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {
+      is: "no",
+      then: Yup.string()
+        .required(
+          "Field Is your company a active or passive Non-Financial Instituion is not filled"
+        )
+        .oneOf(
+          ["active", "passive"],
+          "Field Is your company a active or passive Non-Financial Instituion is not filled"
+        )
+    }),
+    globalintermediaryId: Yup.string().when("isFinancialInstitution", {
+      is: "yes",
+      then: Yup.string()
+        .required(getRequiredMessage("Global Intermediary Identification No"))
+        .matches(
+          GLOBAL_INTERMEDIARY_REGEX,
+          getInvalidMessage("Global Intermediary Identification No")
+        )
     })
   });
 
@@ -92,11 +142,71 @@ export const CompanyBusinessRelationshipsComponent = ({
   topSuppliers,
   topOriginGoodsCountries,
   otherBankDetails,
-  updateProspect
+  updateProspect,
+  dnfbpField
 }) => {
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
+
+  const [isLinkVisited, setIsLinkVisited] = useState(dnfbpField);
+  const [open, setOpen] = React.useState(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+    setIsLinkVisited(IS_DNFBP_INFO_VISITED);
+  };
+
+  const handleShowNotification = useCallback(
+    () => !isLinkVisited && NotificationsManager && NotificationsManager.add(dnfbpInfoContent),
+    [isLinkVisited]
+  );
+
+  //ro-assist-brd3-15
+  const lableAndRadio = ({ options, helperText, body, title, infoText, path, fieldName }) => {
+    return (
+      <div>
+        {title && <h4 className={classes.groupLabel}>{title}</h4>}
+        <Grid container spacing={3}>
+          <Grid item sm={8} xs={12}>
+            <h5 className={classes.groupLabel}>{body}</h5>
+            <h6 className={classes.dnfbpStyle}>
+              <i>{infoText}</i>
+            </h6>
+          </Grid>
+          <Grid item sm={4} xs={12} className={classes.dispFlxJustEnd}>
+            <ContexualHelp
+              title={helperText}
+              placement="right"
+              isDisableHoverListener={false}
+              // onClose=""
+              // open=""
+            >
+              <Button className={classes.marginT5}>
+                <Icon name={ICONS.info} alt="info" fill={"#909093"} className={classes.iconSize} />
+                <span className={classes.dnfbpHelp}>Need More information?</span>
+              </Button>
+            </ContexualHelp>
+          </Grid>
+        </Grid>
+        <Grid container className={classes.paddingH12} spacing={3}>
+          <Field
+            name={fieldName}
+            path={path}
+            component={InlineRadioGroup}
+            options={options}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+          />
+        </Grid>
+      </div>
+    );
+  };
 
   return (
     <Formik
@@ -112,7 +222,12 @@ export const CompanyBusinessRelationshipsComponent = ({
         otherBankingRelationshipsInfo: {
           otherBankingRelationshipsExist: false,
           otherBankDetails: otherBankDetails.map(item => ({ ...item, id: uniqueId() }))
-        }
+        },
+        dnfbpField: "na",
+        isCompanyUSEntity: false,
+        isFinancialInstitution: "na",
+        isNonFinancialInstitution: "na",
+        globalintermediaryId: ""
       }}
       onSubmit={handleContinue}
       validationSchema={companyBusinessRelationshipsSchema}
@@ -473,9 +588,114 @@ export const CompanyBusinessRelationshipsComponent = ({
                 </>
               )}
             </FieldArray>
-            <div className={classes.buttonWrapper}>
-              <ContinueButton type="submit" />
-            </div>
+            <div className={classes.divider} />
+            <h4 className={classes.groupLabel}>Deals In Designated Business Categories</h4>
+            <Grid container spacing={3}>
+              <Grid item sm={8} xs={12}>
+                <h5 className={classes.groupLabel}>
+                  Is your Company Dealing in Designated Business Categories
+                </h5>
+                <h6 className={classes.dnfbpStyle}>
+                  <i>
+                    Kindly click on Need more Information and read carefully before you make a
+                    selection
+                  </i>
+                </h6>
+              </Grid>
+              <Grid item sm={4} xs={12} className={classes.dispFlxJustEnd}>
+                <div className={classes.dnfbpTitleWrapper}>
+                  {
+                    <ClickAwayListener onClickAway={handleTooltipClose}>
+                      <div>
+                        <ContextualDnfbpHelp
+                          title={
+                            <>
+                              Dealing in precious metals/precious stones/real estate or any
+                              commercial and/or financial transactions/ operations, on behalf of/for
+                              benefit of, our existing and/or potential clients, business/trade/
+                              professional counterparts, and/or their beneficial owners
+                            </>
+                          }
+                          placement="right"
+                          isDisableHoverListener={true}
+                          onClose={handleTooltipClose}
+                          open={open}
+                        >
+                          <Button onClick={handleTooltipOpen} className={classes.marginT5}>
+                            <Icon
+                              name={ICONS.info}
+                              alt="info"
+                              fill={"#909093"}
+                              className={classes.iconSize}
+                            />
+                            <span className={classes.dnfbpHelp}>Need More information?</span>
+                          </Button>
+                        </ContextualDnfbpHelp>
+                      </div>
+                    </ClickAwayListener>
+                  }
+                </div>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} className={classes.paddingH12}>
+              <div onClick={handleShowNotification}>
+                <Field
+                  name="dnfbpField"
+                  path={"prospect.orgKYCDetails.dnfbpField"}
+                  component={InlineRadioGroup}
+                  options={enumYesNoOptions}
+                  InputProps={{
+                    inputProps: { tabIndex: 0, label: "" }
+                  }}
+                  disabled={!isLinkVisited}
+                  exhaustiveDeps={isLinkVisited}
+                />
+              </div>
+            </Grid>
+            <div className={classes.divider} />
+            {/* ro-assist-brd3-15 */}
+            {lableAndRadio(usEntity)}
+            <div className={classes.divider} />
+            {lableAndRadio(financialInstitution)}
+            {values.isFinancialInstitution === "no" && lableAndRadio(nonFinancialInstitution)}
+            {values.isFinancialInstitution === "yes" && (
+              <Grid container className={classes.flexContainer}>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name={"globalintermediaryId"}
+                    path={"prospect.orgKYCDetails.globalintermediaryId"}
+                    component={GlobalIntermediaryID}
+                    contextualHelpText={
+                      <>
+                        GIIN is a Global Intermediary Identification Number assigned by the FATCA
+                        Registration System to financial institutions and direct reporting
+                        non-financial foreign entities.
+                      </>
+                    }
+                  />
+                </Grid>
+              </Grid>
+            )}
+            <Grid
+              className={classes.continueButtonContainer}
+              container
+              direction="row"
+              justify="space-between"
+            >
+              <InfoTitle
+                title={
+                  <span>
+                    <i>RAKBANK</i> does not provide any accounting, tax, regulatory or legal advice
+                    and shall not be liable or responsible for any incorrect information provided by
+                    you. You should consult your professional financial, legal and tax advisors
+                    before submitting the information.
+                  </span>
+                }
+              />
+              <span className={classes.continueBtn}>
+                <ContinueButton type="submit" />
+              </span>
+            </Grid>
           </Form>
         );
       })}

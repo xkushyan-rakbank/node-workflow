@@ -5,7 +5,8 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     lineHeight: 1.33,
     color: "#86868b",
-    height: "60px"
+    height: "60px",
+    wordBreak: "break-word"
   },
   email: {
     fontSize: "14px",

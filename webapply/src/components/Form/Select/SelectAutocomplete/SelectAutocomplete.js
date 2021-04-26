@@ -59,6 +59,7 @@ const SelectAutocompleteBase = ({
         <Select
           {...field}
           {...props}
+          ref={props.innerRef}
           classes={classes}
           isOpen
           options={options}

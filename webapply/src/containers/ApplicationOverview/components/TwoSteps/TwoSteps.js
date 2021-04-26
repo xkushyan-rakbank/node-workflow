@@ -3,7 +3,6 @@ import React from "react";
 import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
 import { IconCardsContainer } from "../../../../components/IconCards/IconCardsContainer";
 import { IconCardItem } from "../../../../components/IconCards/IconCardItem";
-import { HeaderTitle } from "../../../../components/HeaderTitle";
 import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 
 import { useStyles } from "./styled";
@@ -20,7 +19,7 @@ export const TwoSteps = () => {
 
   return (
     <>
-      <HeaderTitle withoutMarginBottom />
+      {/* //ro-assist header missing issue fix --- removed manual call */}
       <div className={classes.firstGroup}>
         <SectionTitleWithInfo
           title="Have these ready"

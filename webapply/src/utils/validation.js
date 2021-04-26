@@ -23,9 +23,12 @@ export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
 export const MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH = 50;
 
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;
+export const GLOBAL_INTERMEDIARY_REGEX = /^[a-zA-Z- 0-9]{19}$/;
 export const SPACE_OCCUPIED_OTHER_REGEX = /^[a-zA-Z. ]{1,50}$/;
 export const POBOX_REGEX = /^([a-zA-Z0-9])*$/;
 
+// eslint-disable-next-line max-len
+export const WEBSITE_REGEX = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/;
 export const FILE_SIZE = 5 * 1048576;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
 

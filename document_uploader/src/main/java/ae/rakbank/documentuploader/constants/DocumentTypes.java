@@ -12,5 +12,10 @@ public class DocumentTypes {
             "Constitutional_Documents",
             "Passport_Copies",
             "Others",
-            "Others_Documents");
+            "Others_Documents",
+            "Bank_Statements",
+            "Invoices_Contracts_Shipment_MOU_Custom",
+            "Company_Address_Proof",
+            "Personal_Bank_Statements",
+            "CV_Personal_Background"); 
 }

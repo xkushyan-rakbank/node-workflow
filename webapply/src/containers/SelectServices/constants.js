@@ -5,6 +5,7 @@ import { Channels } from "./components/Channels";
 import { ValueAddedServices } from "./components/ValueAddedServices";
 import { GA_EVENTS } from "../../utils/ga";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../constants";
+import { ExpressServices } from "./components/Express";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
@@ -20,23 +21,31 @@ export const signingInfo = {
   [SIGNING_TRANSACTIONS_TYPE.OTHER]: "Other"
 };
 
+//ro-assist-brd3-17
 export const servicesSteps = [
   {
     step: STEP_1,
+    title: "Express Service (for AED Accounts only*)",
+    component: ExpressServices,
+    icon: ICONS.bolt,
+    eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+  },
+  {
+    step: STEP_2,
     title: "Account details",
     component: AccountDetails,
     icon: ICONS.accountDetails,
     eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
   },
   {
-    step: STEP_2,
+    step: STEP_3,
     title: "Signing preferences",
     component: SigningPreferences,
     icon: ICONS.signingPreferences,
     eventName: GA_EVENTS.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
   },
   {
-    step: STEP_3,
+    step: STEP_4,
     title: "Channels",
     component: Channels,
     icon: ICONS.channels,
@@ -44,14 +53,11 @@ export const servicesSteps = [
     eventName: GA_EVENTS.SELECT_SERVICE_CHANNELS_CONTINUE
   },
   {
-    step: STEP_4,
+    step: STEP_5,
     title: "Value added services",
     component: ValueAddedServices,
     icon: ICONS.valueAddedServices,
     eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
-  },
-  {
-    step: STEP_5
   }
 ];
 

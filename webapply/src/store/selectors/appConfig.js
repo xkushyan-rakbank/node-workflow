@@ -10,6 +10,8 @@ export const getDatalist = state => getAppConfig(state).datalist || {};
 
 export const getSignatoryModel = state => getAppConfig(state).signatoryModel || {};
 
+export const getOrganizationInfoModel = state => getAppConfig(state).organizationInfoModel || {};
+
 export const getReCaptchaSiteKey = state => getAppConfig(state).reCaptchaSiteKey;
 
 export const getIsRecaptchaEnable = state => getAppConfig(state).recaptchaEnable;
@@ -28,6 +30,8 @@ export const getAccountInfo = state => getProspect(state).accountInfo || [];
 
 export const getAccountCurrencies = state => get(getAccountInfo(state)[0], "accountCurrencies", "");
 
+export const getExpressTandC = state => get(getAccountInfo(state)[0], "expressTandC", false);
+
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
 export const getPrimaryMobCountryCode = state =>
@@ -45,6 +49,12 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
 export const getApplicantFullName = state => getApplicantInfo(state).fullName;
 
+// ro-assist-brd3-3
+export const getValidRoCode = state => {
+  const validRoCode = getApplicantInfo(state).validRoCode || "N";
+  return validRoCode === "Y" ? true : false;
+};
+
 export const getApplicationInfo = state => getProspect(state).applicationInfo || {};
 
 export const getIsIslamicBanking = state => getApplicationInfo(state).islamicBanking;
@@ -56,6 +66,12 @@ export const getRakValuePackage = state => getApplicationInfo(state).rakValuePac
 export const getDocuments = state => getProspect(state).documents || {};
 
 export const getCompanyDocuments = state => getDocuments(state).companyDocuments || [];
+
+export const getCompanyBankStatements = state => getDocuments(state).companyBankStatements || [];
+
+export const getCompanyAddressProof = state => getDocuments(state).companyAddressProof || [];
+
+export const getCompanyInvoices = state => getDocuments(state).companyInvoices || [];
 
 export const getDocumentUploadCnt = state => {
   const companyDocuments = getCompanyDocuments(state);
@@ -74,13 +90,33 @@ export const checkIfRequiredDocsUploaded = docs =>
   docs.length && docs.filter(doc => doc.required).every(doc => doc.uploadStatus === UPLOADED);
 
 export const getIsRequiredDocsUploaded = state => {
+  // ro-assist-brd3-3 starts
+  if (getValidRoCode(state)) {
+    return true;
+  }
+  // // ro-assist-brd3-3 end
   const { companyDocuments, stakeholdersDocuments } = getDocuments(state);
+  // ro-assist-brd2-1
+  const companyBankStatements = getCompanyBankStatements(state).documents || [];
+  const companyAddressProof = getCompanyAddressProof(state).documents || [];
+  const companyInvoices = getCompanyInvoices(state).documents || [];
   const stakeholdersDocsFlattened = Object.values(stakeholdersDocuments || {}).reduce(
-    (acc, { documents }) => [...acc, ...documents],
+    (acc, { documents, personalBankStatements, personalBackground }) => [
+      ...acc,
+      ...documents,
+      ...(personalBankStatements ? personalBankStatements.documents : []),
+      ...(personalBackground ? personalBackground.documents : [])
+    ],
     []
   );
 
-  return checkIfRequiredDocsUploaded([...(companyDocuments || []), ...stakeholdersDocsFlattened]);
+  return checkIfRequiredDocsUploaded([
+    ...(companyDocuments || []),
+    ...companyBankStatements,
+    ...companyAddressProof,
+    ...companyInvoices,
+    ...stakeholdersDocsFlattened
+  ]);
 };
 
 export const getUrlsReadMore = state => ({
@@ -109,6 +145,10 @@ export const getLeadSource = state => {
   return typeof state.appConfig.leadSource !== "undefined"
     ? state.appConfig.leadSource.productName
     : "";
+};
+
+export const getRoCode = state => {
+  return typeof state.appConfig.roCode !== "undefined" ? state.appConfig.roCode : "";
 };
 
 export const getExpired = state => getAppConfig(state).expired;

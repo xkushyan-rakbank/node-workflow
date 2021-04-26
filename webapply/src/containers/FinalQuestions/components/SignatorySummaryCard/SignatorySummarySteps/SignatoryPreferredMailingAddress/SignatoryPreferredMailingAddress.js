@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
+import { useDispatch } from "react-redux";
 
 import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { ContexualHelp } from "../../../../../../components/Notifications";
@@ -11,59 +12,101 @@ import {
   Input,
   AutoSaveField as Field,
   Checkbox,
-  SelectAutocomplete
+  SelectAutocomplete,
+  InlineRadioGroup
 } from "../../../../../../components/Form";
-import { DEFAULT_SIGNATORY_COUNTRY } from "./constants";
+import { DEFAULT_SIGNATORY_COUNTRY, MAX_CITY_NAME_LENGTH } from "./constants";
 import {
-  MAX_OFFICE_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH,
-  MAX_PO_BOX_NUMBER_LENGTH
+  MAX_PO_BOX_NUMBER_LENGTH,
+  MAX_FLAT_NUMBER_LENGTH
 } from "../../../CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
-
+import { yesNoOptions } from "./options";
 import { useStyles } from "./styled";
+import { Accordion } from "../../../../../../components/Accordion/Accordion";
+import { updateProspect } from "../../../../../../store/actions/appConfig";
+import { UAE } from "../../../../../../constants";
 
-const createSignatoryPreferredMailingAddressSchema = isSignatory =>
+const createSignatoryPreferredMailingAddressSchema = signatoriesNationality =>
   Yup.object().shape({
     addressLine2: Yup.string()
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
     addressLine1: Yup.string()
-      .test(
-        "required",
-        getRequiredMessage("Flat / Villa / Building"),
-        value => !isSignatory || value
-      )
+      .required(getRequiredMessage("Flat / Villa / Building"))
       // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
     poBox: Yup.string()
-      .test("required", getRequiredMessage("PO Box Number"), value => !isSignatory || value)
+      .required(getRequiredMessage("PO Box Number"))
       .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
-    emirateCity: Yup.string().test(
-      "required",
-      getRequiredMessage("Emirate/ City"),
-      value => !isSignatory || value
-    )
+    emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City")),
+    officeAddrsEmirateCity: Yup.string().required(
+      getRequiredMessage("Office address Emirate/ City")
+    ),
+    officeAddrsPoBox: Yup.string()
+      .required(getRequiredMessage("Office address PO Box Number"))
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Office address PO Box Number")),
+    isResidenceOrOfficeAddress: Yup.boolean().required(
+      "Please select your preferred mailing address"
+    ),
+    //ro-assist-brd1-5
+    homeCountryAddressLine2:
+      signatoriesNationality !== UAE &&
+      Yup.string()
+        .required(getRequiredMessage("Street / Location"))
+        // eslint-disable-next-line no-template-curly-in-string
+        .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
+    homeCountryAddressLine1:
+      signatoriesNationality !== UAE &&
+      Yup.string()
+        .required(getRequiredMessage("Flat / Villa / Building"))
+        // eslint-disable-next-line no-template-curly-in-string
+        .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
+    homeCountryAddressCity:
+      signatoriesNationality !== UAE &&
+      Yup.string()
+        .required(getRequiredMessage("City"))
+        .max(MAX_CITY_NAME_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("City")),
+    homeCountryAddressCountry:
+      signatoriesNationality !== UAE && Yup.string().required(getRequiredMessage("Home Country"))
   });
 
 export const SignatoryPreferredMailingAddressComponent = ({
   index,
   handleContinue,
   createFormChangeHandler,
-  organisationAddressLine2,
-  organisationAddressLine1,
-  organisationPoBox,
-  organisationEmirateCity,
-  isSignatory
+  signatoriesNationality,
+  organisationInfo
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const autoSavePathBase = `prospect.signatoryInfo[${index}].addressInfo[0].addressDetails[0]`;
+
+  //ro-assist-brd1-5
+  const OUTSIDE_BASE_PATH = `signatoryInfo[${index}]`;
+  // eslint-disable-next-line max-len
+  const autoSavePathBase_OfficeAdd = `prospect.signatoryInfo[${index}].addressInfo[1].addressDetails[0]`;
+  // eslint-disable-next-line max-len
+  const autoSavePathBase_HomeCountryAdd = `prospect.signatoryInfo[${index}].addressInfo[2].addressDetails[0]`;
+
+  const selectPreferredMailingAddrs = ({ setFieldValue }) => event => {
+    const value = JSON.parse(event.target.value);
+    const prospect = {};
+    prospect[`${autoSavePathBase}.preferredAddress`] = value ? "Yes" : "No";
+    prospect[`${autoSavePathBase_OfficeAdd}.preferredAddress`] = value ? "No" : "Yes";
+    dispatch(updateProspect(prospect));
+    setFieldValue("isResidenceOrOfficeAddress", value);
+  };
 
   return (
     <Formik
@@ -73,122 +116,250 @@ export const SignatoryPreferredMailingAddressComponent = ({
         addressLine1: "",
         poBox: "",
         emirateCity: "",
-        country: DEFAULT_SIGNATORY_COUNTRY
+        officeAddrsEmirateCity: "",
+        officeAddrsPoBox: "",
+        officeAddrsCountry: DEFAULT_SIGNATORY_COUNTRY,
+        country: DEFAULT_SIGNATORY_COUNTRY,
+        isResidenceOrOfficeAddress: "",
+        homeCountryAddressLine1: "",
+        homeCountryAddressLine2: "",
+        homeCountryAddressCity: "",
+        homeCountryAddressCountry: ""
       }}
       onSubmit={handleContinue}
-      validationSchema={createSignatoryPreferredMailingAddressSchema(isSignatory)}
+      validationSchema={() => createSignatoryPreferredMailingAddressSchema(signatoriesNationality)}
       validateOnChange={false}
     >
-      {createFormChangeHandler(({ values, setValues }) => (
-        <Form>
-          <div className={classes.sameAsCompanyAddressBox}>
-            <Field
-              name="sameAsCompanyAddress"
-              classes={{ formControlRoot: classes.sameAsCompanyAddressCheckbox }}
-              path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
-              component={Checkbox}
-              label="Same as Company Address"
-              onSelect={() => {
-                setValues({
-                  sameAsCompanyAddress: !values.sameAsCompanyAddress,
-                  addressLine2: !values.sameAsCompanyAddress ? organisationAddressLine2 : "",
-                  addressLine1: !values.sameAsCompanyAddress ? organisationAddressLine1 : "",
-                  emirateCity: !values.sameAsCompanyAddress ? organisationEmirateCity : "",
-                  poBox: !values.sameAsCompanyAddress ? organisationPoBox : "",
-                  country: DEFAULT_SIGNATORY_COUNTRY
-                });
-              }}
-              inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
-            />
-            <ContexualHelp
-              title={
-                <span>
-                  Select this checkbox if you want the Company address to be the preferred mailing
-                  address.
-                  <br />
-                  <br />
-                  If not, please enter the Residence address in below fields.
-                  <br />
-                  <br />
-                  Kindly note, the Business Debit Card of this stakeholder will be delivered to this
-                  address.
-                </span>
-              }
-              placement="right"
-              isDisableHoverListener={false}
-            >
-              <span className={classes.questionIcon}>
-                <Icon name={ICONS.question} alt="question" className={classes.questionIcon} />
-              </span>
-            </ContexualHelp>
-          </div>
-          <Grid container spacing={3} className={classes.flexContainer}>
-            <Grid item xs={12}>
+      {createFormChangeHandler(({ values, setFieldValue }) => {
+        const preferredMailingAddress = selectPreferredMailingAddrs({ values, setFieldValue });
+        return (
+          <Form>
+            {/* SCR RO changes */}
+            <Accordion title={"Residence Address"}>
+              <Grid container spacing={3} className={classes.flexContainer}>
+                <Grid item xs={12}>
+                  <Field
+                    name="addressLine1"
+                    path={`${autoSavePathBase}.addressLine1`}
+                    label="Flat / Villa / Building"
+                    placeholder="Flat / Villa / Building"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_FLAT_NUMBER_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="addressLine2"
+                    path={`${autoSavePathBase}.addressLine2`}
+                    label="Street / Location"
+                    placeholder="Street / Location"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                  <Field
+                    name="emirateCity"
+                    path={`${autoSavePathBase}.emirateCity`}
+                    datalistId="emirateCity"
+                    label="Emirate/ City"
+                    isSearchable
+                    component={SelectAutocomplete}
+                    tabIndex="0"
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="poBox"
+                    path={`${autoSavePathBase}.poBox`}
+                    label="PO Box Number"
+                    placeholder="AB1234"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                  {/* //ro-assist-brd1-5 */}
+                  <Field
+                    name="country"
+                    path={`${autoSavePathBase}.country`}
+                    label="Country"
+                    placeholder="Country"
+                    disabled
+                    datalistId="country"
+                    component={SelectAutocomplete}
+                    shrink
+                    tabIndex="0"
+                  />
+                </Grid>
+              </Grid>
+            </Accordion>
+            <Accordion title={"Office Address"}>
+              <Grid container spacing={3} className={classes.flexContainer}>
+                <Grid item sm={6} xs={12}>
+                  <div className={classes.sameAsCompanyAddressBox}>
+                    <Field
+                      name="sameAsCompanyAddress"
+                      classes={{ formControlRoot: classes.sameAsCompanyAddressCheckbox }}
+                      path={`prospect.signatoryInfo[${index}].sameAsCompanyAddress`}
+                      component={Checkbox}
+                      label="Same as Company Address"
+                      onSelect={() => {
+                        if (!values.sameAsCompanyAddress) {
+                          const preferredCompanyAddress = organisationInfo.find(
+                            ele => ele.addressDetails[0].preferredAddress === "Yes"
+                          );
+                          setFieldValue("sameAsCompanyAddress", !values.sameAsCompanyAddress);
+                          setFieldValue(
+                            "officeAddrsEmirateCity",
+                            !values.sameAsCompanyAddress
+                              ? preferredCompanyAddress.addressDetails[0].emirateCity
+                              : ""
+                          );
+                          setFieldValue(
+                            "officeAddrsPoBox",
+                            !values.sameAsCompanyAddress
+                              ? preferredCompanyAddress.addressDetails[0].poBox
+                              : ""
+                          );
+                          setFieldValue("officeAddrsCountry", DEFAULT_SIGNATORY_COUNTRY);
+                        } else {
+                          setFieldValue("sameAsCompanyAddress", values.sameAsCompanyAddress);
+                          setFieldValue("officeAddrsEmirateCity", "");
+                          setFieldValue("officeAddrsPoBox", "");
+                          setFieldValue("officeAddrsCountry", DEFAULT_SIGNATORY_COUNTRY);
+                        }
+                      }}
+                      inputProps={{ maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }}
+                    />
+                    <ContexualHelp
+                      title={
+                        <span>
+                          Kindly note, the Business Debit Card of this stakeholder will be delivered
+                          to this address.
+                        </span>
+                      }
+                      placement="right"
+                      isDisableHoverListener={false}
+                    >
+                      <span className={classes.questionIcon}>
+                        <Icon
+                          name={ICONS.question}
+                          alt="question"
+                          className={classes.questionIcon}
+                        />
+                      </span>
+                    </ContexualHelp>
+                  </div>
+                  <Field
+                    name="officeAddrsEmirateCity"
+                    path={`${autoSavePathBase_OfficeAdd}.emirateCity`}
+                    disabled={values.sameAsCompanyAddress}
+                    datalistId="emirateCity"
+                    label="Emirate/ City"
+                    isSearchable
+                    component={SelectAutocomplete}
+                    tabIndex="0"
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="officeAddrsPoBox"
+                    path={`${autoSavePathBase_OfficeAdd}.poBox`}
+                    disabled={values.sameAsCompanyAddress}
+                    label="PO Box Number"
+                    placeholder="AB1234"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                  {/* //ro-assist-brd1-5 */}
+                  <Field
+                    name="officeAddrsCountry"
+                    path={`${autoSavePathBase_OfficeAdd}.country`}
+                    label="Country"
+                    placeholder="Country"
+                    disabled
+                    datalistId="country"
+                    component={SelectAutocomplete}
+                    shrink
+                    tabIndex="0"
+                  />
+                </Grid>
+              </Grid>
+            </Accordion>
+            <Grid container>
+              {/* //ro-assist-brd1-5 */}
               <Field
-                name="addressLine1"
-                path={`${autoSavePathBase}.addressLine1`}
-                disabled={values.sameAsCompanyAddress}
-                label={`Flat / Villa / Building${!isSignatory ? " (optional)" : ""}`}
-                placeholder="Flat / Villa / Building"
-                component={Input}
-                InputProps={{
-                  inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 0 }
-                }}
-              />
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <Field
-                name="addressLine2"
-                path={`${autoSavePathBase}.addressLine2`}
-                disabled={values.sameAsCompanyAddress}
-                label="Street / Location (optional)"
-                placeholder="Street / Location"
-                component={Input}
-                InputProps={{
-                  inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
-                }}
-              />
-              <Field
-                name="emirateCity"
-                path={`${autoSavePathBase}.emirateCity`}
-                disabled={values.sameAsCompanyAddress}
-                datalistId="emirateCity"
-                label={`Emirate/ City${!isSignatory ? " (optional)" : ""}`}
-                isSearchable
-                component={SelectAutocomplete}
-                tabIndex="0"
-              />
-            </Grid>
-            <Grid item sm={6} xs={12}>
-              <Field
-                name="poBox"
-                path={`${autoSavePathBase}.poBox`}
-                disabled={values.sameAsCompanyAddress}
-                label={`PO Box Number${!isSignatory ? " (optional)" : ""}`}
-                placeholder="AB1234"
-                component={Input}
-                InputProps={{
-                  inputProps: { maxLength: MAX_PO_BOX_NUMBER_LENGTH, tabIndex: 0 }
-                }}
-              />
-              <Field
-                name="country"
-                path={`${autoSavePathBase}.country`}
-                label="Country"
-                placeholder="Country"
-                disabled
-                component={Input}
+                name="isResidenceOrOfficeAddress"
+                component={InlineRadioGroup}
+                path={`${OUTSIDE_BASE_PATH}.signoPreferredMailingAddrs`}
+                options={yesNoOptions}
+                label="Please select preferred mailing address"
+                onChange={preferredMailingAddress}
+                contextualHelpProps={{ isDisableHoverListener: false, placement: "bottom-end" }}
+                contextualHelpText="Please select your preferred mailing address"
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
               />
             </Grid>
-          </Grid>
-          <div className={classes.buttonWrapper}>
-            <ContinueButton type="submit" />
-          </div>
-        </Form>
-      ))}
+            <Accordion title={"Home Country Address"}>
+              <Grid container spacing={3} className={classes.flexContainer}>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="homeCountryAddressLine1"
+                    path={`${autoSavePathBase_HomeCountryAdd}.addressLine1`}
+                    label="Flat / Villa / Building"
+                    placeholder="Flat / Villa / Building"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_FLAT_NUMBER_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                  {/* ro-assist-brd1-5 */}
+                  <Field
+                    name="homeCountryAddressCity"
+                    label="Enter your Home Country City"
+                    path={`${autoSavePathBase_HomeCountryAdd}.emirateCity`}
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_CITY_NAME_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="homeCountryAddressLine2"
+                    path={`${autoSavePathBase_HomeCountryAdd}.addressLine2`}
+                    label="Street / Location"
+                    placeholder="Street / Location"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { maxLength: MAX_STREET_NUMBER_LENGTH, tabIndex: 0 }
+                    }}
+                  />
+                  <Field
+                    name="homeCountryAddressCountry"
+                    path={`${autoSavePathBase_HomeCountryAdd}.country`}
+                    datalistId="country"
+                    label="Country"
+                    isSearchable
+                    component={SelectAutocomplete}
+                    tabIndex="3"
+                  />
+                </Grid>
+              </Grid>
+            </Accordion>
+            <div className={classes.buttonWrapper}>
+              <ContinueButton type="submit" />
+            </div>
+          </Form>
+        );
+      })}
     </Formik>
   );
 };

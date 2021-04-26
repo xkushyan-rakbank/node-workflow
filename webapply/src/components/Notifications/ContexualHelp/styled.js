@@ -47,6 +47,7 @@ export const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[1],
     fontSize: 11,
     maxWidth: "232px",
+    whiteSpace: "pre-line",
     padding: "10px",
     "&::before": {
       content: "''",

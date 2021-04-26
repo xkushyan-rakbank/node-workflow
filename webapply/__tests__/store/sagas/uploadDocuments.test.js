@@ -9,7 +9,8 @@ import uploadDocumentsSaga, {
   uploadDocumentsFlowSaga,
   saveProspectAndGetProspectDocumentsSaga,
   uploadProgressWatcher,
-  createUploader
+  createUploader,
+  addMultiDocumentSaga
 } from "../../../src/store/sagas/uploadDocuments";
 import {
   SAVE_AND_RETRIEVE_DOC_UPLOADER,
@@ -25,6 +26,13 @@ import { getAuthorizationHeader, getAppConfig } from "../../../src/store/selecto
 import { downloadProspectDocument, uploadProspectDocument } from "../../../src/api/apiClient";
 import { log } from "../../../src/utils/loggger";
 import { setConfig } from "../../../src/store/actions/appConfig";
+import {
+  COMPANY_BANK_STATEMENTS_DOCTYPE,
+  COMPANY_ADDRESS_PROOF_DOCTYPE,
+  COMPANY_INVOICES_DOCTYPE,
+  PERSONAL_BANK_STATEMENTS_DOCTYPE,
+  PERSONAL_BACKGROUND_DOCTYPE
+} from "../../../src/constants";
 import {
   sendProspectToAPI,
   SEND_PROSPECT_TO_API_SUCCESS,
@@ -46,6 +54,35 @@ describe("uploadDocumentSaga test", () => {
   const fileName = "some file name";
   const error = "some error";
   const action = { type: "some action type" };
+  const documentsArr = {
+    companyDocuments: [],
+    companyBankStatements: {
+      limit: 6,
+      documents: [{ documentType: COMPANY_BANK_STATEMENTS_DOCTYPE }]
+    },
+    companyAddressProof: {
+      limit: 3,
+      documents: [{ documentType: COMPANY_ADDRESS_PROOF_DOCTYPE }]
+    },
+    companyInvoices: {
+      limit: 10,
+      documents: [{ documentType: COMPANY_INVOICES_DOCTYPE }]
+    },
+    stakeholdersDocuments: {
+      "0_stake holder": {
+        documents: [],
+        personalBankStatements: {
+          limit: 6,
+          documents: [{ documentType: PERSONAL_BANK_STATEMENTS_DOCTYPE }]
+        },
+        personalBackground: {
+          limit: 1,
+          documents: [{ documentType: PERSONAL_BACKGROUND_DOCTYPE }]
+        }
+      }
+    },
+    otherDocuments: []
+  };
   let dispatched = [];
   const state = "some state";
   const store = {
@@ -192,5 +229,105 @@ describe("uploadDocumentSaga test", () => {
     spy.mock.calls[0][0].onUploadProgress({ total: 1, loaded: 1 });
 
     spy.mockRestore();
+  });
+
+  it("add multiDocuments, docType: COMPANY_BANK_STATEMENTS ", async () => {
+    const config = {};
+    const stakeholderIndex = 0;
+    const document = { documentType: COMPANY_BANK_STATEMENTS_DOCTYPE };
+
+    set(config, "prospect.documents", documentsArr);
+    getAppConfig.mockReturnValue(config);
+
+    await runSaga(store, addMultiDocumentSaga, {
+      payload: { stakeholderIndex, document }
+    }).toPromise();
+
+    documentsArr.companyBankStatements.documents = [
+      { documentType: COMPANY_BANK_STATEMENTS_DOCTYPE },
+      { documentType: COMPANY_BANK_STATEMENTS_DOCTYPE }
+    ];
+    expect(setConfig).toBeCalledWith(config);
+    expect(dispatched).toEqual([action]);
+  });
+
+  it("add multiDocuments, docType: COMPANY_ADDRESS_PROOF ", async () => {
+    const config = {};
+    const stakeholderIndex = 0;
+    const document = { documentType: COMPANY_ADDRESS_PROOF_DOCTYPE };
+
+    set(config, "prospect.documents", documentsArr);
+    getAppConfig.mockReturnValue(config);
+
+    await runSaga(store, addMultiDocumentSaga, {
+      payload: { stakeholderIndex, document }
+    }).toPromise();
+
+    documentsArr.companyAddressProof.documents = [
+      { documentType: COMPANY_ADDRESS_PROOF_DOCTYPE },
+      { documentType: COMPANY_ADDRESS_PROOF_DOCTYPE }
+    ];
+    expect(setConfig).toBeCalledWith(config);
+    expect(dispatched).toEqual([action]);
+  });
+
+  it("add multiDocuments, docType: COMPANY_INVOICES ", async () => {
+    const config = {};
+    const stakeholderIndex = 0;
+    const document = { documentType: COMPANY_INVOICES_DOCTYPE };
+
+    set(config, "prospect.documents", documentsArr);
+    getAppConfig.mockReturnValue(config);
+
+    await runSaga(store, addMultiDocumentSaga, {
+      payload: { stakeholderIndex, document }
+    }).toPromise();
+
+    documentsArr.companyInvoices.documents = [
+      { documentType: COMPANY_INVOICES_DOCTYPE },
+      { documentType: COMPANY_INVOICES_DOCTYPE }
+    ];
+    expect(setConfig).toBeCalledWith(config);
+    expect(dispatched).toEqual([action]);
+  });
+
+  it("add multiDocuments, docType: PERSONAL_BANK_STATEMENTS ", async () => {
+    const config = {};
+    const stakeholderIndex = "0_stake holder";
+    const document = { documentType: PERSONAL_BANK_STATEMENTS_DOCTYPE };
+
+    set(config, "prospect.documents", documentsArr);
+    getAppConfig.mockReturnValue(config);
+
+    await runSaga(store, addMultiDocumentSaga, {
+      payload: { stakeholderIndex, document }
+    }).toPromise();
+
+    documentsArr.stakeholdersDocuments["0_stake holder"].personalBankStatements.documents = [
+      { documentType: PERSONAL_BANK_STATEMENTS_DOCTYPE },
+      { documentType: PERSONAL_BANK_STATEMENTS_DOCTYPE }
+    ];
+    expect(setConfig).toBeCalledWith(config);
+    expect(dispatched).toEqual([action]);
+  });
+
+  it("add multiDocuments, docType: PERSONAL_BACKGROUND ", async () => {
+    const config = {};
+    const stakeholderIndex = "0_stake holder";
+    const document = { documentType: PERSONAL_BACKGROUND_DOCTYPE };
+
+    set(config, "prospect.documents", documentsArr);
+    getAppConfig.mockReturnValue(config);
+
+    await runSaga(store, addMultiDocumentSaga, {
+      payload: { stakeholderIndex, document }
+    }).toPromise();
+
+    documentsArr.stakeholdersDocuments["0_stake holder"].personalBackground.documents = [
+      { documentType: PERSONAL_BACKGROUND_DOCTYPE },
+      { documentType: PERSONAL_BACKGROUND_DOCTYPE }
+    ];
+    expect(setConfig).toBeCalledWith(config);
+    expect(dispatched).toEqual([action]);
   });
 });

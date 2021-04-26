@@ -127,3 +127,14 @@ export const downloadProspectDocument = {
       ...headers
     })
 };
+
+// ro-assist-brd3-1
+export const createInvite = {
+  send: (data, headers) =>
+    httpClient.request({
+      url: buildURI("createInviteUri"),
+      method: "POST",
+      ...headers,
+      data
+    })
+};

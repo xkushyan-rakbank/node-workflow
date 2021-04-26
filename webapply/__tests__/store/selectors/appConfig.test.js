@@ -5,6 +5,7 @@ import {
   getDatalist,
   getProspect,
   getSignatoryModel,
+  getOrganizationInfoModel,
   getSignatories,
   getAccountInfo,
   getOrganizationInfo,
@@ -27,11 +28,13 @@ import {
   getSignatoriesCount,
   createGetAuthorityTypeDisplayText,
   getAccountCurrencies,
+  getExpressTandC,
   getPrimaryMobCountryCode,
   getRakValuePackage,
   getLeadSource,
   getExpired,
-  getDocumentUploadCnt
+  getDocumentUploadCnt,
+  getRoCode
 } from "../../../src/store/selectors/appConfig";
 
 describe("appConfig selector test", () => {
@@ -41,9 +44,10 @@ describe("appConfig selector test", () => {
   const authorityTypeDatalist = [{ value: authorityTypeValue, displayText }];
   const datalist = { authorityType: authorityTypeDatalist };
   const signatoryModel = "some signatory model";
+  const organizationInfoModel = "some organization Info model";
   const signatoryInfo = ["some signatory info"];
   const accountCurrencies = ["some currency"];
-  const accountInfo = [{ accountCurrencies }];
+  const accountInfo = [{ accountCurrencies, expressTandC: true }];
   const companyName = "some company name";
   const primaryMobCountryCode = "some code";
   const contactDetails = { primaryMobCountryCode };
@@ -76,15 +80,17 @@ describe("appConfig selector test", () => {
   };
   const authorizationToken = "some secret string";
   const expired = false;
-  const productName = "any product"
-  const leadSource = {productName: productName};
+  const productName = "any product";
+  const leadSource = { productName };
+  const roCode = "some roCode";
   const recaptchaEnable = true;
-  const login = {userName: agentName};
+  const login = { userName: agentName };
   const appConfig = {
     login,
     datalist,
     prospect,
     signatoryModel,
+    organizationInfoModel,
     signatoryInfo,
     reCaptchaSiteKey,
     servicePricingGuideUrl,
@@ -92,7 +98,8 @@ describe("appConfig selector test", () => {
     authorizationToken,
     recaptchaEnable,
     leadSource,
-    expired
+    expired,
+    roCode
   };
   const state = { appConfig };
 
@@ -132,6 +139,14 @@ describe("appConfig selector test", () => {
     expect(getSignatoryModel({ appConfig: {} })).toEqual({});
   });
 
+  it("should return signatoryModel", () => {
+    expect(getOrganizationInfoModel(state)).toBe(organizationInfoModel);
+  });
+
+  it("should return empty object when signatoryModel is not set", () => {
+    expect(getOrganizationInfoModel({ appConfig: {} })).toEqual({});
+  });
+
   it("should return signatoryInfo", () => {
     expect(getSignatories(state)).toBe(signatoryInfo);
   });
@@ -158,6 +173,14 @@ describe("appConfig selector test", () => {
 
   it("should return empty string when accountCurrencies is not set", () => {
     expect(getAccountCurrencies({ appConfig: {} })).toEqual("");
+  });
+
+  it("should return expressTandC false, if not defined", () => {
+    expect(getExpressTandC({ appConfig: {} })).toEqual(false);
+  });
+
+  it("should return expressTandC true if selected", () => {
+    expect(getExpressTandC(state)).toEqual(true);
   });
 
   it("should return organizationInfo", () => {
@@ -289,7 +312,15 @@ describe("appConfig selector test", () => {
   it("should return leadsource", () => {
     expect(getLeadSource(state)).toBe(productName);
   });
-  
+
+  it("should return roCode", () => {
+    expect(getRoCode(state)).toBe(roCode);
+  });
+
+  it("should return empty roCode when roCode Undefined", () => {
+    expect(getRoCode({ appConfig: {} })).toBe("");
+  });
+
   it("should return expired", () => {
     expect(getExpired(state)).toBe(expired);
   });
@@ -300,9 +331,7 @@ describe("appConfig selector test", () => {
 
   it("should return max document upload limitd", () => {
     let newState;
-    const companyDocuments = [
-      { DocumentUploadCnt:20, DocumentUplTotalCnt:10 }
-    ];
+    const companyDocuments = [{ DocumentUploadCnt: 20, DocumentUplTotalCnt: 10 }];
     const documents = {
       companyDocuments
     };
@@ -333,5 +362,4 @@ describe("appConfig selector test", () => {
     newState = set({}, "appConfig", newAppConfig);
     expect(getLeadSource(newState)).toBe("");
   });
-
 });

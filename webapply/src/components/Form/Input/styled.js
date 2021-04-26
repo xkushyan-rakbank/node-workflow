@@ -32,6 +32,59 @@ export const useStyles = makeStyles(theme => {
     inputGroupWrapper: {
       margin: "12px 0 20px"
     },
+    ContactNumberWrapper: {
+      display: "flex",
+      margin: "12px 0 0",
+      position: "relative",
+      "& > div": {
+        width: "auto",
+        margin: "0 !important"
+      },
+      "& div::after": {
+        opacity: 0
+      },
+      "& > div:first-child": {
+        width: "90px",
+        zIndex: 1,
+        "& > div": {
+          "@media all and (-ms-high-contrast: active), (-ms-high-contrast: none)": {
+            height: "61px !important",
+            marginTop: "-5.5px !important"
+          }
+        },
+        "& fieldset": {
+          borderRight: "1px solid #ffffff",
+          borderTopRightRadius: "0",
+          borderBottomRightRadius: "0"
+        },
+        "& label": {
+          maxWidth: "unset"
+        },
+        "& svg": {
+          right: "10px"
+        },
+        "& input": {
+          paddingLeft: 0
+        },
+        "& legend": {
+          marginLeft: 0
+        },
+        "& .MuiSelect-select.Mui-disabled": {
+          backgroundColor: "transparent"
+        }
+      },
+      "& > div:last-child": {
+        flex: 1,
+        position: "relative",
+        "& fieldset": {
+          borderTopLeftRadius: "0",
+          borderBottomLeftRadius: "0"
+        },
+        "& label": {
+          maxWidth: "unset"
+        }
+      }
+    },
     selectCombined: {
       margin: "12px 0 0",
       position: "relative",

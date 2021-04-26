@@ -1,13 +1,15 @@
 import {
   checkLoginStatus,
   getAgentName,
-  getLoginResponse
+  getLoginResponse,
+  getRoCode
 } from "../../../src/store/selectors/loginSelector";
 
 describe("loginSelector test", () => {
   const loginStatus = "some login status";
   const agentName = "some login response";
-  const loginResponse = { agentName };
+  const roCode = "some ro code";
+  const loginResponse = { agentName, roCode };
   const state = { login: { loginStatus, loginResponse } };
 
   it("should return loginStatus", () => {
@@ -24,5 +26,14 @@ describe("loginSelector test", () => {
 
   it("should return agentName", () => {
     expect(getAgentName(state)).toBe(agentName);
+  });
+
+  it("should return roCode", () => {
+    expect(getRoCode(state)).toBe(roCode);
+  });
+
+  it("return empty if no roCode", () => {
+    const loginResponse = { agentName };
+    expect(getRoCode({ login: { loginResponse } })).toEqual("");
   });
 });

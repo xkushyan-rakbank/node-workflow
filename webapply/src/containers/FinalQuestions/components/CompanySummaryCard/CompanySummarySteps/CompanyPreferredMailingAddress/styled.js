@@ -38,5 +38,17 @@ export const useStyles = makeStyles(theme => ({
       alignSelf: "flex-end",
       marginTop: "10px"
     }
+  },
+  groupLabel: {
+    marginTop: "15px",
+    marginBottom: "7px",
+    fontSize: "16px",
+    fontWeight: "400",
+    lineHeight: "1.9",
+    color: "#373737"
+  },
+  divider: {
+    marginTop: "30px",
+    borderBottom: "solid 1px rgba(230, 230, 230, 0.5)"
   }
 }));

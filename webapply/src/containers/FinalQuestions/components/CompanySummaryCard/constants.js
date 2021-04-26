@@ -32,13 +32,13 @@ export const finalQuestionsSteps = [
   },
   {
     step: STEP_4,
-    title: "Preferred mailing address",
+    title: "Addresses",
     component: CompanyPreferredMailingAddress,
     eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_MAILING_ADDRESS_CONTINUE
   },
   {
     step: STEP_5,
-    title: "Preferred contact information",
+    title: "Contact information",
     component: CompanyPreferredContactInformation,
     eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_CONTACT_CONTINUE
   }

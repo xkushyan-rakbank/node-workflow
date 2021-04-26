@@ -19,6 +19,7 @@ import {
 } from "../../../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { WEBSITE_REGEX } from "../../../../../../utils/validation";
 
 const getCompanyPreferredContactInformationSchema = () =>
   Yup.object().shape({
@@ -34,7 +35,10 @@ const getCompanyPreferredContactInformationSchema = () =>
       codeFieldName: "primaryPhoneCountryCode",
       fieldName: "Landline number",
       isLandline: true
-    })
+    }),
+    website: Yup.string()
+      .max(100, "Maximum 100 characters allowed")
+      .matches(WEBSITE_REGEX, getInvalidMessage("Entered website URL address"))
   });
 
 export const CompanyPreferredContactInformationComponent = ({
@@ -51,7 +55,8 @@ export const CompanyPreferredContactInformationComponent = ({
         primaryMobileNo: "",
         primaryEmail: "",
         primaryPhoneNo: "",
-        primaryPhoneCountryCode: UAE_CODE
+        primaryPhoneCountryCode: UAE_CODE,
+        website: ""
       }}
       onSubmit={handleContinue}
       validationSchema={getCompanyPreferredContactInformationSchema}
@@ -64,7 +69,7 @@ export const CompanyPreferredContactInformationComponent = ({
               <Field
                 name="primaryEmail"
                 path="prospect.organizationInfo.contactDetails.primaryEmail"
-                label="Primary e-mail address"
+                label="E-mail address"
                 placeholder="Primary e-mail address"
                 component={Input}
                 InputProps={{
@@ -134,6 +139,22 @@ export const CompanyPreferredContactInformationComponent = ({
               </InputGroup>
             </Grid>
           </Grid>
+          {/* SCR for RO change */}
+          <Grid item container spacing={3}>
+            <Grid item xs={12}>
+              <Field
+                name="website"
+                path="prospect.organizationInfo.contactDetails.website"
+                label="Website (optional)"
+                placeholder="www.yourcompanywebsite.com "
+                contextualHelpText="Enter your Company's website address URL"
+                component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
+          </Grid>
           {/* <div className={classes.infoTitleWrap}>
             <InfoTitle
               classes={{ wrapper: classes.infoTitle }}
@@ -149,7 +170,7 @@ export const CompanyPreferredContactInformationComponent = ({
             direction="row"
             justify="space-between"
           >
-            <InfoTitle title="We will use the information in this section to communicate with you." />
+            <InfoTitle title="We will use the information in this section to communicate with you. Please check the email address entered as your application form may be sent to this address." />
             <span className={classes.continueBtn}>
               <ContinueButton type="submit" />
             </span>

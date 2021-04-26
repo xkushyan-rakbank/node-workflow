@@ -46,7 +46,7 @@ const InlineRadioGroupBase = ({
             isDisabled && classes.disabledLabel
           )}
         >
-          <span className={classes.label}>{label}</span>
+          {label && <span className={classes.label}>{label}</span>}
           <div className={classes.inlineFormRadioWrapper}>
             {options.map(item => (
               <Radio

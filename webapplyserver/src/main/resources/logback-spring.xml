@@ -21,6 +21,12 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
+			<maskPattern>${primaryAccessCodeLog}</maskPattern>
+			<maskPattern>${eidNumberLog}</maskPattern>
+			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 	</appender>
@@ -35,6 +41,12 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
+			<maskPattern>${primaryAccessCodeLog}</maskPattern>
+			<maskPattern>${eidNumberLog}</maskPattern>
+			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -65,6 +77,12 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
+			<maskPattern>${primaryAccessCodeLog}</maskPattern>
+			<maskPattern>${eidNumberLog}</maskPattern>
+			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -95,6 +113,12 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
+			<maskPattern>${primaryAccessCodeLog}</maskPattern>
+			<maskPattern>${eidNumberLog}</maskPattern>
+			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -125,6 +149,12 @@
 			<maskPattern>${clientSecret}</maskPattern>
 			<maskPattern>${mobileMaskLog}</maskPattern>
 			<maskPattern>${fullNameMaskLog}</maskPattern>
+			<maskPattern>${licenseNumberLog}</maskPattern>
+			<maskPattern>${primaryAccessCodeLog}</maskPattern>
+			<maskPattern>${eidNumberLog}</maskPattern>
+			<maskPattern>${dateOfBirthLog}</maskPattern>
+			<maskPattern>${motherMaidenLog}</maskPattern>
+			<maskPattern>${passportLog}</maskPattern>
 			<Pattern>${outputPattern}</Pattern>
 		</layout>
 
@@ -151,5 +181,5 @@
 	<root level="info">
 		<appender-ref ref="Console" />
 	</root>
-
+ 
 </configuration>

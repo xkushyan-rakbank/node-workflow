@@ -23,7 +23,7 @@ export const CheckList = ({ signatoryInfo, companyChecks, companyInfo }) => {
           </div>
           {companyChecks.map(application => (
             <div className={classes.applicationRow} key={application.screeningType}>
-              <div className={classes.checkListData}>{application.screeningType}</div>
+              <div className={classes.checkListData}>{application.screeningLabel}</div>
               <div className={classes.checkListData}>{application.screeningStatus}</div>
               <div className={classes.checkListData}>{application.screeningReason}</div>
             </div>

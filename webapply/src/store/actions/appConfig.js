@@ -8,14 +8,17 @@ export const RESET_PROSPECT = "RESET_PROSPECT";
 export const SET_CONFIG = "SET_CONFIG";
 export const SET_PROSPECT = "SET_PROSPECT";
 export const UPDATE_PROSPECT_ID = "UPDATE_PROSPECT_ID";
+export const UPDATE_VALID_RO_CODE = "UPDATE_VALID_RO_CODE";
 export const UPDATE_VIEW_ID = "UPDATE_VIEW_ID";
 export const REMOVE_PROSPECT_ID = "REMOVE_PROSPECT_ID";
 export const SAVE_SIGNATORY_MODEL = "SAVE_SIGNATORY_MODEL";
+export const SAVE_ORGANIZATION_INFO_MODEL = "SAVE_ORGANIZATION_INFO_MODEL";
 export const SET_ACCESS_TOKEN = "SET_ACCESS_TOKEN";
 export const RESET_APPLICANT_INFO = "RESET_APPLICANT_INFO";
 export const LOAD_META_DATA = "LOAD_META_DATA";
 export const SET_PROSPECT_LEAD = "SET_PROSPECT_LEAD";
 export const SET_EXPIRED = "SET_EXPIRED";
+export const SET_RO_CODE = "SET_RO_CODE";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -56,6 +59,10 @@ export const updateProspectId = payload => {
   return { type: UPDATE_PROSPECT_ID, payload };
 };
 
+export const updateValidRoCode = payload => {
+  return { type: UPDATE_VALID_RO_CODE, payload };
+};
+
 export const removeProspectId = () => {
   return { type: REMOVE_PROSPECT_ID };
 };
@@ -68,12 +75,20 @@ export const saveSignatoryModel = payload => {
   return { type: SAVE_SIGNATORY_MODEL, payload };
 };
 
+export const saveOrganizationInfoModel = payload => {
+  return { type: SAVE_ORGANIZATION_INFO_MODEL, payload };
+};
+
 export const setAccessToken = accessToken => ({ type: SET_ACCESS_TOKEN, payload: accessToken });
 
 export const resetApplicantInfo = () => ({ type: RESET_APPLICANT_INFO });
 
 export const setProspectLead = payload => {
   return { type: SET_PROSPECT_LEAD, payload };
+};
+
+export const setRoCode = payload => {
+  return { type: SET_RO_CODE, payload };
 };
 
 export const setExpired = expired => ({ type: SET_EXPIRED, payload: expired });

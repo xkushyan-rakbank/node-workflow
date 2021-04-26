@@ -8,7 +8,11 @@ import {
   applicantInfoFormSuccess,
   applicantInfoFormFail
 } from "../../../src/store/actions/applicantInfoForm";
-import { updateProspect, updateProspectId } from "../../../src/store/actions/appConfig";
+import {
+  updateProspect,
+  updateProspectId,
+  updateValidRoCode
+} from "../../../src/store/actions/appConfig";
 import { resetInputsErrors, setInputsErrors } from "../../../src/store/actions/serverValidation";
 import { generateCodeSuccess } from "../../../src/store/actions/otp";
 import { prospect as prospectApi } from "../../../src/api/apiClient";
@@ -39,7 +43,8 @@ describe("applicantInfoForm saga test", () => {
   const payload = { someField };
   const reCaptchaToken = "some reCaptcha token";
   const prospectId = "some prospectId";
-  const data = { prospectId };
+  const validRoCode = "N";
+  const data = { prospectId, validRoCode };
   const store = {
     dispatch: action => dispatched.push(action),
     getState: () => state
@@ -88,6 +93,7 @@ describe("applicantInfoForm saga test", () => {
       updateProspect({ prospect: prospectUpdated }),
       generateCodeSuccess(),
       updateProspectId(prospectId),
+      updateValidRoCode(validRoCode),
       resetInputsErrors(),
       applicantInfoFormSuccess()
     ]);
@@ -105,6 +111,7 @@ describe("applicantInfoForm saga test", () => {
       updateProspect({ prospect: prospectUpdated }),
       generateCodeSuccess(),
       updateProspectId(prospectId),
+      updateValidRoCode(validRoCode),
       resetInputsErrors(),
       applicantInfoFormSuccess()
     ]);

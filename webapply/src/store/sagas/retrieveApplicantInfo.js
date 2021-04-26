@@ -6,15 +6,20 @@ import {
   RETRIEVE_APPLICANT_INFO,
   GET_PROSPECT_INFO_REQUEST
 } from "../actions/retrieveApplicantInfo";
-import { setConfig, loadMetaData } from "../actions/appConfig";
+import { setConfig, loadMetaData, updateProspect } from "../actions/appConfig";
 import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
-import { getAuthorizationHeader, getSignatoryModel } from "../selectors/appConfig";
+import {
+  getAuthorizationHeader,
+  getSignatoryModel,
+  getOrganizationInfoModel
+} from "../selectors/appConfig";
 import { updateStakeholdersIds } from "../actions/stakeholders";
 import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/constants";
 import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 import { COMPANY_INFO_PAGE_ID } from "../../containers/CompanyInfo/constants";
 import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constants";
+import { OUTSIDE_BASE_PATH } from "../../containers/FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -36,20 +41,98 @@ export function* retrieveApplicantInfoSaga({ payload }) {
   }
 }
 
+const concatAddressInfo = (configAddress, existAddress) => {
+  return configAddress.map((address, addressIndex) => {
+    if (address.officeAddressDifferent) {
+      return {
+        ...address,
+        addressDetails: existAddress[addressIndex]
+          ? existAddress[addressIndex].addressDetails
+          : address.addressDetails,
+        officeAddressDifferent:
+          existAddress[addressIndex] && existAddress[addressIndex].officeAddressDifferent
+            ? existAddress[addressIndex].officeAddressDifferent
+            : address.officeAddressDifferent
+      };
+    } else {
+      return {
+        ...address,
+        addressDetails: existAddress[addressIndex]
+          ? existAddress[addressIndex].addressDetails
+          : address.addressDetails
+      };
+    }
+  });
+};
+
 export function* getProspectIdInfo({ payload }) {
   try {
     const headers = yield select(getAuthorizationHeader);
+    const organizationInfoModel = yield select(getOrganizationInfoModel);
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
+    if (
+      config.prospect.organizationInfo.addressInfo[0] &&
+      !config.prospect.organizationInfo.addressInfo[0].typeOfAddress
+    ) {
+      config.prospect.organizationInfo.addressInfo = concatAddressInfo(
+        organizationInfoModel.addressInfo,
+        config.prospect.organizationInfo.addressInfo
+      );
+    }
     const freeFieldsInfo = config.prospect.freeFieldsInfo;
     const newStakeholder = yield select(getSignatoryModel);
-
     if (
       !config.prospect.signatoryInfo.length &&
       config.prospect.applicationInfo.viewId.includes(VIEW_IDS.StakeholdersInfo)
     ) {
       config.prospect.signatoryInfo = [newStakeholder];
     }
+    //ro-assist-brd1-5
+    const prospect = {};
+    try {
+      prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
+        config.prospect.organizationInfo.addressInfo[0].officeAddressDifferent === "No";
+      // eslint-disable-next-line prettier/prettier
+      if (config.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+        prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = true;
+        // eslint-disable-next-line prettier/prettier
+      } else if (config.prospect.organizationInfo.addressInfo[1].addressDetails[0].preferredAddress === "Yes") {
+        prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = false;
+      } else {
+        prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
+      }
+      config.prospect.signatoryInfo.forEach((element, index) => {
+        if (element.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = true;
+        } else if (
+          element.addressInfo[1] &&
+          element.addressInfo[1].addressDetails[0].preferredAddress === "Yes"
+        ) {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = false;
+        } else {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+        }
+        if (
+          newStakeholder.addressInfo.length >
+          config.prospect.signatoryInfo[index].addressInfo.length
+        ) {
+          config.prospect.signatoryInfo[index].addressInfo = concatAddressInfo(
+            newStakeholder.addressInfo,
+            config.prospect.signatoryInfo[index].addressInfo
+          );
+        }
+      });
+    } catch (error) {
+      prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] = false;
+      prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
+      config.prospect.signatoryInfo.forEach((element, index) => {
+        prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+      });
+      log(error);
+    }
+    //ro-assist-brd1-5
+    yield put(updateProspect(prospect));
 
     yield put(setConfig(config));
 

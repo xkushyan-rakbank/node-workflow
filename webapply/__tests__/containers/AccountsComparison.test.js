@@ -23,7 +23,8 @@ describe("AccountsComparison container tests", () => {
   const accountType = "some account type";
   const servicePricingGuideUrl = "some url";
   const setProspectLead = jest.fn();
-  const props = { servicePricingGuideUrl, setProspectLead };
+  const setRoCode = jest.fn();
+  const props = { servicePricingGuideUrl, setProspectLead, setRoCode };
   const currentSectionIndex = 1;
   const setCurrentSection = jest.fn();
 
@@ -70,5 +71,12 @@ describe("AccountsComparison container tests", () => {
       servicePricingGuideUrl,
       selectedAccount: accountType
     });
+  });
+  it("test with query params", () => {
+    const spy = jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("some value");
+    render(<ContainerWithContext {...props} />);
+    expect(useFormNavigation.mock.calls[0][0]).toEqual([true, false, [], true]);
+
+    spy.mockRestore();
   });
 });

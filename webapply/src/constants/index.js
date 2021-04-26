@@ -25,6 +25,11 @@ export const formStepper = [
   }
 ];
 
+export const agentFormStepper = [
+  { step: 1, title: "Search Applications", path: routes.searchProspect },
+  { step: 2, title: "Send Invite", path: routes.inviteCustomer }
+];
+
 export const searchProspectStepper = [
   {
     step: 1,
@@ -116,6 +121,22 @@ export const COMPANY_DOCUMENTS = "companyDocuments";
 export const STAKEHOLDER_DOCUMENTS = "stakeholdersDocuments";
 export const OTHER_DOCUMENTS = "otherDocuments";
 
+// ro-assist-brd2-1
+export const COMPANY_BANK_STATEMENTS = "companyBankStatements";
+export const COMPANY_ADDRESS_PROOF = "companyAddressProof";
+export const COMPANY_INVOICES = "companyInvoices";
+export const PERSONAL_BANK_STATEMENTS = "personalBankStatements";
+export const PERSONAL_BACKGROUND = "personalBackground";
+
+export const COMPANY_BANK_STATEMENTS_DOCTYPE = "Bank_Statements";
+export const COMPANY_ADDRESS_PROOF_DOCTYPE = "Company_Address_Proof";
+export const COMPANY_INVOICES_DOCTYPE = "Invoices_Contracts_Shipment_MOU_Custom";
+export const PERSONAL_BANK_STATEMENTS_DOCTYPE = "Personal_Bank_Statements";
+export const PERSONAL_BACKGROUND_DOCTYPE = "CV_Personal_Background";
+
+export const companyMultiDocs = [COMPANY_BANK_STATEMENTS, COMPANY_ADDRESS_PROOF, COMPANY_INVOICES];
+export const stakeholderMultiDocs = [PERSONAL_BANK_STATEMENTS, PERSONAL_BACKGROUND];
+
 /* Action Types */
 export const SAVE = "save";
 export const SUBMIT = "submit";
@@ -130,11 +151,94 @@ export const SIGNING_TRANSACTIONS_TYPE = {
   ANY: "100",
   OTHER: "000"
 };
+//ro-assist-brd1-3
+export const smeSouqLink = "https://rakbank.ae/wps/portal/business-banking/smesouk";
 
+export const applicationdedupe = [
+  {
+    screeningNotes: "DECLINE",
+    link: true,
+    buttons: [
+      {
+        external: false,
+        link: routes.accountsComparison,
+        label: "Go to home page"
+      }
+    ]
+  },
+  {
+    screeningNotes: "INELIGIBLE",
+    link: true,
+    buttons: [
+      {
+        external: false,
+        link: routes.accountsComparison,
+        label: "Go to home page"
+      }
+    ]
+  },
+  {
+    screeningNotes: "PENDING",
+    link: true,
+    buttons: [
+      {
+        external: false,
+        link: routes.comeBackLogin,
+        label: "Continue"
+      }
+    ]
+  },
+  {
+    screeningNotes: "SUCCESS",
+    link: true,
+    buttons: [
+      {
+        external: true,
+        link: smeSouqLink,
+        label: "No, thanks"
+      },
+      {
+        external: false,
+        link: routes.comeBackLogin,
+        label: "Yes"
+      }
+    ]
+  },
+  {
+    screeningNotes: "WITH_RO",
+    link: true,
+    buttons: [
+      {
+        external: true,
+        link: smeSouqLink,
+        label: "No, thanks"
+      },
+      {
+        external: false,
+        link: routes.comeBackLogin,
+        label: "Yes"
+      }
+    ]
+  }
+];
 export const screeningStatus = [
   {
     error: "Dedupe",
-    screeningType: "Dedupe Check"
+    screeningType: "Dedupe Check",
+    //ro-assist-brd2-3
+    link: true,
+    buttons: [
+      {
+        external: false,
+        link: routes.accountsComparison,
+        label: "Go to home page"
+      }
+    ]
+  },
+  {
+    //ro-assist-brd1-3
+    error: "Application Dedupe",
+    screeningType: "Application Dedupe Check"
   },
   {
     error: "Virtual Currencies",
@@ -143,7 +247,15 @@ export const screeningStatus = [
   {
     error: "not Eligible",
     screeningType: "RAK-Starter Account Validation",
-    link: true
+    link: true,
+    //ro-assist-brd2-3
+    buttons: [
+      {
+        external: false,
+        link: routes.currentAccount,
+        label: "Open Current Account"
+      }
+    ]
   },
   {
     error: "Not Registered In UAE",
@@ -217,17 +329,17 @@ export const STEP_STATUS = {
 export const NEGATIVE_LIST_CHECK = {
   screeningType: "Negative List Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Negative List"
+  screeningLabel: "Negative List Check"
 };
 export const VIRTUAL_CURRENCY_CHECK = {
   screeningType: "Virtual Currency Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Virtual Currency"
+  screeningLabel: "Virtual Currency Check"
 };
 export const COUNTRYOFINCORPORATION_CHECK = {
   screeningType: "Country Of Incorporation Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Country of Incorporation"
+  screeningLabel: "Offshore Company Check"
 };
 export const RAKSTARTER_ACCOUNT_CHECK = {
   screeningType: "RAK-Starter Account Validation",
@@ -237,26 +349,32 @@ export const RAKSTARTER_ACCOUNT_CHECK = {
 export const DEDUPE_CHECK = {
   screeningType: "Dedupe Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Dedupe"
+  screeningLabel: "Dedupe Check"
+};
+export const APPLICATION_DEDUPE_CHECK = {
+  screeningType: "Application Dedupe Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Application Dedupe Check"
 };
 export const ISSHAREHOLDERACOMPANY_CHECK = {
   screeningType: "Company is a Stakeholder Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Company is a Stakeholder"
+  screeningLabel: "Company is a Stakeholder Check"
 };
 export const BLACKLIST_CHECK = {
   screeningType: "Blacklist Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Blacklist"
+  screeningLabel: "Blacklist Check"
 };
 export const TOO_MANY_STAKEHOLDERS = {
   screeningType: "Too many Stakeholders Check",
   screeningStatus: "Not completed",
-  screeningLabel: "Too many Stakeholders"
+  screeningLabel: "Too many Stakeholders Check"
 };
 
 export const COMPANY_CHECK_NAMES = [
   DEDUPE_CHECK,
+  APPLICATION_DEDUPE_CHECK,
   BLACKLIST_CHECK,
   NEGATIVE_LIST_CHECK,
   COUNTRYOFINCORPORATION_CHECK,

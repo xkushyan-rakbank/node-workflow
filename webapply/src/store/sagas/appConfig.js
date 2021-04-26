@@ -11,7 +11,8 @@ import {
   setConfig,
   updateProspect,
   UPDATE_VIEW_ID,
-  saveSignatoryModel
+  saveSignatoryModel,
+  saveOrganizationInfoModel
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
@@ -20,7 +21,8 @@ import {
   getIsIslamicBanking,
   getAccountType,
   getProspect,
-  getLeadSource
+  getLeadSource,
+  getRoCode
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -44,6 +46,9 @@ export function* receiveAppConfigSaga() {
     const signatoryModel = newConfig.prospect
       ? cloneDeep(newConfig.prospect.signatoryInfo[0])
       : null;
+    const organizationInfoModel = newConfig.prospect
+      ? cloneDeep(newConfig.prospect.organizationInfo)
+      : null;
 
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
@@ -52,6 +57,7 @@ export function* receiveAppConfigSaga() {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }
       newConfig.prospect.applicantInfo.LeadSource = yield select(getLeadSource);
+      newConfig.prospect.applicantInfo.roCode = yield select(getRoCode);
       newConfig.prospect.applicationInfo.accountType = yield select(getAccountType);
       newConfig.prospect.applicationInfo.islamicBanking = yield select(getIsIslamicBanking);
       newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
@@ -60,6 +66,9 @@ export function* receiveAppConfigSaga() {
 
     if (signatoryModel) {
       yield put(saveSignatoryModel(signatoryModel));
+    }
+    if (organizationInfoModel) {
+      yield put(saveOrganizationInfoModel(organizationInfoModel));
     }
     yield put(receiveAppConfigSuccess(newConfig));
     yield put(sendProspectToAPISuccess());

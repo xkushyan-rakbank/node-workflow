@@ -26,7 +26,7 @@ export const signatoriesSteps = [
   },
   {
     step: STEP_4,
-    title: "Preferred mailing address",
+    title: "Addresses",
     component: SignatoryPreferredMailingAddress,
     eventName: GA_EVENTS.FINAL_QUESTION_PREFERRED_MAILING_ADDRESS_CONTINUE
   }

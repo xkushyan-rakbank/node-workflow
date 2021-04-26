@@ -13,6 +13,9 @@ import { useStyles } from "./styled";
 export const UploadDocumentsComponent = ({
   isLoadingDocuments,
   companyDocuments,
+  companyBankStatements,
+  companyAddressProof,
+  companyInvoices,
   stakeholdersDocuments,
   isDisabledNextStep,
   isLoading,
@@ -25,8 +28,11 @@ export const UploadDocumentsComponent = ({
   return (
     <>
       <h2>Upload your documents</h2>
-      <p className="formDescription">
+      <p className={classes.formDescription}>
         Remember we asked you to have the papers ready? Now it’s time to upload them.
+      </p>
+      <p className={classes.titleInfo}>
+        Supported formats are PDF, JPG and PNG with a maximum size of 5MB each.
       </p>
       {isLoadingDocuments ? (
         <DocumentsSkeleton />
@@ -34,7 +40,13 @@ export const UploadDocumentsComponent = ({
         <>
           <div className={classes.sectionContainer}>
             <SectionTitle title="Company documents" classes={{ wrapper: classes.title }} />
-            <CompanyDocuments documents={companyDocuments} companyName={companyName} />
+            <CompanyDocuments
+              documents={companyDocuments}
+              companyName={companyName}
+              companyBankStatements={companyBankStatements}
+              companyAddressProof={companyAddressProof}
+              companyInvoices={companyInvoices}
+            />
           </div>
           {stakeholdersDocuments && (
             <div className={classes.sectionContainer}>

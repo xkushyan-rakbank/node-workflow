@@ -10,7 +10,7 @@ export const trustMessageContent = {
 
 export const termsMessageContent = {
   message:
-    "It is important to read the terms and conditions as well as terms of enrollment before you proceed.",
+    "It is important to read the terms and conditions, terms of enrollment as well as sanctions undertaking before you proceed.",
   title: "",
   icon: ICONS.info
 };
@@ -53,4 +53,7 @@ if (process.env.REACT_APP_SERVER_ENV === "production") {
 export const NONE_VISITED = 0;
 export const IS_TERMS_CONDITION_VISITED = 1;
 export const IS_TERMS_ENROLLMENT_VISITED = 2;
-export const IS_ALL_LINKS_VISITED = 3;
+//ro-assist-brd3-13
+export const IS_SANCTIONS_UNDERTAKING_VISITED = 4;
+export const IS_ALL_LINKS_VISITED = 7;
+export const MAX_PROMO_CODE_LENGTH = 50;

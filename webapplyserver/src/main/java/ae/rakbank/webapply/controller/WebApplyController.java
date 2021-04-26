@@ -1,6 +1,7 @@
 package ae.rakbank.webapply.controller;
 
 import ae.rakbank.webapply.client.DehClient;
+import ae.rakbank.webapply.dto.JwtPayload;
 import ae.rakbank.webapply.services.auth.AuthorizationService;
 import ae.rakbank.webapply.services.RecaptchaService;
 import ae.rakbank.webapply.services.otp.OtpService;
@@ -18,7 +19,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,5 +125,21 @@ public class WebApplyController {
         }
 
         return response.body(dehResponse.getBody());
+    }
+    
+    //Added below method for ro-assist-brd1-1 - CreateInvite DEH call
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/agent/createInvite", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<Object> createInvite(@AuthenticationPrincipal JwtPayload jwtPayload,@RequestBody JsonNode jsonNode){
+    	 log.info("Begin createInvite() method");
+    	 log.debug(String.format("createInvite() method args, RequestBody=[%s]", jsonNode.toString()));
+
+    	 String url = dehBaseUrl + dehURIs.get("createInviteUri").asText();
+         //UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(url).buildAndExpand(segment);
+
+         ResponseEntity<Object> responseEntity = dehClient.invokeApiEndpoint(url, HttpMethod.POST, jsonNode,
+                 "createInvite()", MediaType.APPLICATION_JSON, jwtPayload.getOauthAccessToken());
+
+         return responseEntity;
     }
 }

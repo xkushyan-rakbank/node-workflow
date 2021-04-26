@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import cx from "classnames";
 
 import { LogoTypeContext } from "../../containers/FormLayout/LogoTypeProvider";
@@ -23,10 +23,16 @@ const HeaderComponent = ({ className, isOtpVerified }) => {
     logoType
   });
 
+  //ro-assist-brd3-16
+  const queryParams = useLocation().search;
+
   return (
     <>
       <header className={cx(classes.header, "small-menu-hide", className)}>
-        <Link to={routes.accountsComparison} className={cx({ [classes.disabled]: isOtpVerified })}>
+        <Link
+          to={routes.accountsComparison + queryParams}
+          className={cx({ [classes.disabled]: isOtpVerified })}
+        >
           {(() => {
             switch (logoType) {
               case LOGO_ELITE_ISLAMIC:

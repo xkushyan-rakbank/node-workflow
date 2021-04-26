@@ -4,6 +4,7 @@ import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
+import { FormNavigationAgentStep } from "../FormNavigationAgentStep";
 import { FormNavigationContext } from "./FormNavigationProvider";
 import { IslamicSwitcher } from "../IslamicSwitcher";
 import { AccountInfo } from "./AccountInfo";
@@ -37,7 +38,13 @@ export const FormNavigationComponent = () => {
     return null;
   }
 
-  const [isShowAccountInfo, isChatVisible, navigationSteps = [], isCollapsible = true] = navContext;
+  const [
+    isShowAccountInfo,
+    isChatVisible,
+    navigationSteps = [],
+    isCollapsible = true,
+    isAgentPage = false
+  ] = navContext;
 
   const activeStep = navigationSteps.find(step =>
     [step.path, step.relatedPath].some(path => pathname === path)
@@ -61,17 +68,34 @@ export const FormNavigationComponent = () => {
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (
-          <ul>
-            {navigationSteps.map(step => (
-              <FormNavigationStep
-                key={step.step}
-                title={step.title}
-                activeStep={activeStepIndex === step.step}
-                isDisplayProgress={navigationSteps.length > 1}
-                filled={activeStepIndex > step.step}
-              />
-            ))}
-          </ul>
+          <>
+            {isAgentPage ? (
+              <ul>
+                {navigationSteps.map(step => (
+                  <FormNavigationAgentStep
+                    path={step.path}
+                    key={step.step}
+                    title={step.title}
+                    activeStep={activeStepIndex === step.step}
+                    isDisplayProgress={navigationSteps.length > 1}
+                    filled={activeStepIndex > step.step}
+                  />
+                ))}
+              </ul>
+            ) : (
+              <ul>
+                {navigationSteps.map(step => (
+                  <FormNavigationStep
+                    key={step.step}
+                    title={step.title}
+                    activeStep={activeStepIndex === step.step}
+                    isDisplayProgress={navigationSteps.length > 1}
+                    filled={activeStepIndex > step.step}
+                  />
+                ))}
+              </ul>
+            )}
+          </>
         )}
         {isChatVisible && (
           <div className={classes.chatButton}>

@@ -11,7 +11,8 @@ import {
   search,
   screening,
   uploadProspectDocument,
-  downloadProspectDocument
+  downloadProspectDocument,
+  createInvite
 } from "../../src/api/apiClient";
 import { getQueryString, buildURI } from "../../src/utils/buildURI";
 
@@ -200,6 +201,19 @@ describe("api client test", () => {
         ...headers
       });
       expect(buildURI).toHaveBeenCalledWith("getDocumentByIdUri", prospectId, documentKey);
+    });
+  });
+
+  describe("createInvite test", () => {
+    it("should send request for send invite", () => {
+      const data = "some data";
+
+      expect(createInvite.send(data)).toEqual({
+        url,
+        method: "POST",
+        data
+      });
+      expect(buildURI).toHaveBeenCalledWith("createInviteUri");
     });
   });
 });

@@ -15,10 +15,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -229,6 +231,20 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     			}
     			
     			if(!isUpdated){
+    				isUpdated = setFileDetailsIntoRequest(file, docUploadedCount, fileName, fileInfoJSON,
+    						currentDate, documents,"companyBankStatements");
+    			}
+    			if(!isUpdated){
+    				isUpdated = setFileDetailsIntoRequest(file, docUploadedCount, fileName, fileInfoJSON,
+    						currentDate, documents,"companyAddressProof");
+    			}
+    			if(!isUpdated){
+    				isUpdated = setFileDetailsIntoRequest(file, docUploadedCount, fileName, fileInfoJSON,
+    						currentDate, documents,"companyInvoices");
+    			}
+    		
+    			
+    			if(!isUpdated){
     				log.info("Document not updated in the body.Checking forstakeholder documents.");
     				JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
     				if(stakeholdersDocuments !=null){
@@ -237,31 +253,44 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		             while (fieldsIterator.hasNext()) {
     		            	 log.info("stakeholder Iteration ::"+stakeHolderIteration);
     		            	 Map.Entry<String,JsonNode> field = fieldsIterator.next();
-    		            	 if(field.getValue() !=null){
-    		            		 JsonNode stakeDocuments= field.getValue().get("documents");
-    		            		 if(stakeDocuments != null && stakeDocuments.isArray()){
-    		            			 for(JsonNode objNode : stakeDocuments){
-    		            				 if(objNode != null){
-        		            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
-        		            				 log.info("Stake Documents Document Key ::"+objNode.get("documentKey").asText());
-        		     						if(stakeHolderIteration == documentIndex && fileInfoJSON.get("documentType").asText().equalsIgnoreCase(objNode.get("documentType").asText()) && fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
-        		     							log.info("Inside stake document key matching");
-        		     							((ObjectNode)objNode).put("fileName", fileName);
-        		     							((ObjectNode)objNode).put("fileSize", file.getSize());
-        		     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
-        	        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
-        	        							((ObjectNode)objNode).put("submittedDt", currentDate);
-        		     							((ObjectNode)objNode).put("uploadStatus", DEH_UPLOADED);
-        		     							isUpdated = true;
-        		     							log.info("stakeholder document updated with the documentdetails");
-        		     							break;
-        		     						}else{
-        		     							log.info("stakeholder documentkey not matching.");
-        		     						}
-    		            				 }
-    		            				 
-    		            			 }
-    		            		 }
+    		            	 if(stakeHolderIteration == documentIndex){
+    		            		 if(field.getValue() !=null){
+        		            		 JsonNode stakeDocuments= field.getValue().get("documents");
+        		            		 if(stakeDocuments != null && stakeDocuments.isArray()){
+        		            			 for(JsonNode objNode : stakeDocuments){
+        		            				 if(objNode != null){
+            		            				 ((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
+            		            				 log.info("Stake Documents Document Key ::"+objNode.get("documentKey").asText());
+            		     						if(fileInfoJSON.get("documentType").asText().equalsIgnoreCase(objNode.get("documentType").asText()) && fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+            		     							log.info("Inside stake document key matching");
+            		     							((ObjectNode)objNode).put("fileName", fileName);
+            		     							((ObjectNode)objNode).put("fileSize", file.getSize());
+            		     							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
+            	        							((ObjectNode)objNode).put("fileFormat", file.getContentType());
+            	        							((ObjectNode)objNode).put("submittedDt", currentDate);
+            		     							((ObjectNode)objNode).put("uploadStatus", DEH_UPLOADED);
+            		     							isUpdated = true;
+            		     							log.info("stakeholder document updated with the documentdetails");
+            		     							break;
+            		     						}else{
+            		     							log.info("stakeholder documentkey not matching.");
+            		     						}
+        		            				 }
+        		            				 
+        		            			 }
+        		            		 }
+        		            		 
+        		            		 if(!isUpdated){
+        		            			 isUpdated = setFileDetailsIntoRequest(file, docUploadedCount, fileName, fileInfoJSON,
+             		     						currentDate, field.getValue(),"personalBankStatements");
+        		            		 }
+        		            		 if(!isUpdated){
+        		            			 isUpdated = setFileDetailsIntoRequest(file, docUploadedCount, fileName, fileInfoJSON,
+              		     						currentDate, field.getValue(),"personalBackground"); 
+        		            		 }
+        		            		 
+        		            		
+        		            	 }
     		            	 }
     		            	 stakeHolderIteration = stakeHolderIteration+1;
     		             }
@@ -328,7 +357,97 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		}
 
     	}
+		// log.info(String.format("> Invoke API from  requestBodyJSON:[%s]", ReflectionToStringBuilder.toString(responseBody)));
 		return responseBody;
+	}
+
+	//Method to update the fileDetails for bank statements, invoices, address proof and personal background 
+	private boolean setFileDetailsIntoRequest(MultipartFile file, String docUploadedCount, String fileName, JsonNode fileInfoJSON, String currentDate, 
+			JsonNode documents, String documentID) {
+		log.info("Inside setFileDetailsIntoRequest for " + documentID);
+		boolean isUpdated = false;
+			ObjectMapper objectMapper = new ObjectMapper();
+			JsonNode companyBankStatements= documents.get(documentID);
+			if(companyBankStatements !=null){
+				log.info(documentID+" is not null" );
+				boolean isDocumentTypeFound = false;
+				if(companyBankStatements.get("limit") != null && !StringUtils.isEmpty(companyBankStatements.get("limit").asText())){
+					log.info("limit is not null" );
+					int docLimit= Integer.parseInt(companyBankStatements.get("limit").asText()) ;
+					if(docLimit > 0){
+						log.info("docLimit::"+docLimit );
+						JsonNode bnkStmntDocsArray= companyBankStatements.get("documents");
+						if(bnkStmntDocsArray != null && bnkStmntDocsArray.isArray()){
+							for(JsonNode objNode : bnkStmntDocsArray){
+								if(objNode != null){
+									((ObjectNode)objNode).put("DocumentUplTotalCnt", docUploadedCount);
+									log.info(documentID+" Document Key ::"+objNode.get("documentKey").asText());
+									if(fileInfoJSON.get("documentType").asText().equalsIgnoreCase(objNode.get("documentType").asText())){
+										isDocumentTypeFound = true;
+										if(fileInfoJSON.get("documentKey").asText().equalsIgnoreCase(objNode.get("documentKey").asText())){
+											((ObjectNode)objNode).put("fileName", fileName);
+			    							((ObjectNode)objNode).put("fileSize", file.getSize());
+			    							((ObjectNode)objNode).put("fileDescription", file.getOriginalFilename());
+			    							((ObjectNode)objNode).put("fileFormat", file.getContentType());
+			    							((ObjectNode)objNode).put("submittedDt", currentDate);
+			    							((ObjectNode)objNode).put("uploadStatus", DEH_UPLOADED);
+			    							isUpdated = true;
+			    							log.info(documentID +" updated with the documentdetails");
+			    							break;
+										}else{
+			    							log.info("Document key not matching.");
+			    						}
+									}
+								}
+								
+							}
+							//the below is for adding the additional documents into the array when add more is clicked
+							if(!isUpdated && isDocumentTypeFound){
+								log.info("Size of the "+documentID +" array::"+bnkStmntDocsArray.size());
+								if(bnkStmntDocsArray.size() > 0 && bnkStmntDocsArray.size() < docLimit){
+									ObjectNode nodeNew = objectMapper.createObjectNode();
+									((ObjectNode) nodeNew).put("DocumentUplTotalCnt", docUploadedCount);
+									((ObjectNode) nodeNew).set("DocumentUploadCnt", null);
+									((ObjectNode) nodeNew).put("avsCheck", false);
+									((ObjectNode) nodeNew).set("avsCheckDt", null);
+									((ObjectNode) nodeNew).put("documentKey", fileInfoJSON.get("documentKey").asText());
+									((ObjectNode) nodeNew).set("documentTitle", null);
+									((ObjectNode) nodeNew).put("documentType", fileInfoJSON.get("documentType").asText());
+									((ObjectNode) nodeNew).set("encryptionDetails", null);
+									((ObjectNode) nodeNew).set("fileData", null);
+									((ObjectNode) nodeNew).put("fileDescription", file.getOriginalFilename());
+									((ObjectNode) nodeNew).put("fileFormat", file.getContentType());
+									((ObjectNode) nodeNew).put("fileName", fileName);
+									((ObjectNode) nodeNew).set("filePath", null);
+									((ObjectNode) nodeNew).put("fileSize", file.getSize());
+									((ObjectNode) nodeNew).put("isEncrypted", false);
+									((ObjectNode) nodeNew).put("required", true);
+									((ObjectNode) nodeNew).set("signatoryId", null);
+									((ObjectNode) nodeNew).set("signatoryName", null);
+									((ObjectNode) nodeNew).set("submittedBy", null);
+									((ObjectNode)nodeNew).put("submittedDt", currentDate);
+									((ObjectNode) nodeNew).set("updatedBy", null);
+									((ObjectNode) nodeNew).set("updatedDt", null);
+									((ObjectNode) nodeNew).put("uploadStatus", DEH_UPLOADED);
+									((ObjectNode) nodeNew).set("url", null);
+									((ObjectNode) nodeNew).put("verified", false);
+									((ObjectNode) nodeNew).set("verifiedBy", null);
+									((ArrayNode) bnkStmntDocsArray).add(nodeNew);
+									isUpdated = true;
+									log.info("Added new document into "+documentID);
+								}else if(bnkStmntDocsArray.size() == docLimit){
+									log.info("Limit exceeded for "+documentID);
+									ApiError error =
+					                        new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, UPDATE_FAILED,"update failed");
+					                throw new ApiException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+								}
+							}
+						}
+					}
+				}
+			}
+		
+		return isUpdated;
 	}
 
     
@@ -439,6 +558,10 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     				}
     			}
     			
+    			setDocKeyInArray(documents,"companyBankStatements");
+    			setDocKeyInArray(documents,"companyAddressProof");
+    			setDocKeyInArray(documents,"companyInvoices");
+    			
     				JsonNode stakeholdersDocuments= documents.get("stakeholdersDocuments");
     				if(stakeholdersDocuments !=null){
     					 Iterator<Map.Entry<String,JsonNode>> fieldsIterator = stakeholdersDocuments.fields();
@@ -457,6 +580,8 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     		            				 
     		            			 }
     		            		 }
+    		            		 setDocKeyInArray(field.getValue(),"personalBankStatements");
+    		            		 setDocKeyInArray(field.getValue(),"personalBackground");
     		            	 }
     		             }
     				}
@@ -465,4 +590,26 @@ public class DocumentUploadServiceImpl implements DocumentUploadService {
     	}
     	return documents;
     }
+
+    //Method to add the document key in the body for bank statements,address proof,invoices.personal background
+	private void setDocKeyInArray(JsonNode documents, String docType) {
+		JsonNode mainDocumentType= documents.get(docType);
+		if(mainDocumentType != null){
+			int docLimit= Integer.parseInt(mainDocumentType.get("limit").asText());
+			if(docLimit > 0){
+				 JsonNode documentsArray= mainDocumentType.get("documents");
+				 if(documentsArray != null && documentsArray.isArray()){
+					 int docIndex = 0;
+					 for(JsonNode objNode : documentsArray){
+						 if(objNode != null){
+							 ((ObjectNode)objNode).put("documentKey", objNode.get("documentType").asText()+'-'+docIndex);
+							 log.info("Document Key Updated as::"+objNode.get("documentType").asText()+'-'+docIndex);
+							 docIndex = docIndex+1;
+						 }
+						 
+					 }
+				 }
+			}
+		}
+	}
 }

@@ -7,7 +7,7 @@ import { ApplicationOverview } from "../../src/containers/ApplicationOverview/Ap
 import { ApplicationOverviewComponent } from "../../src/containers/ApplicationOverview/components/ApplicationOverviewComponent";
 import { useAccountTypeByPathname } from "../../src/utils/useAccountTypeByPathname";
 import { useFormNavigation } from "../../src/components/FormNavigation/FormNavigationProvider";
-import { removeProspectId, setProspectLead } from "../../src/store/actions/appConfig";
+import { removeProspectId, setProspectLead, setRoCode } from "../../src/store/actions/appConfig";
 
 jest.mock("../../src/utils/useAccountTypeByPathname");
 jest.mock("../../src/components/FormNavigation/FormNavigationProvider");
@@ -23,11 +23,13 @@ describe("ApplicationOverview tests", () => {
   const store = mockStore({});
   const removeProspectIdAction = { type: "remove prospect id" };
   const setProspectLeadAction = { type: "set prospect id" };
+  const setRoCodeAction = { type: "set RoCode" };
 
   beforeAll(() => {
     ApplicationOverviewComponent.mockReturnValue(null);
     removeProspectId.mockReturnValue(removeProspectIdAction);
     setProspectLead.mockReturnValue(setProspectLeadAction);
+    setRoCode.mockReturnValue(setRoCodeAction);
 
     render(
       <Provider store={store}>
@@ -47,4 +49,16 @@ describe("ApplicationOverview tests", () => {
   // it("should dispatch removeProspectId action on mount", () => {
   //   expect(store.getActions()).toEqual([removeProspectIdAction]);
   // });
+
+  it("test with query params", () => {
+    const spy = jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("some value");
+    render(
+      <Provider store={store}>
+        <ApplicationOverview />
+      </Provider>
+    );
+    expect(useFormNavigation).toBeCalledWith([true, false]);
+
+    spy.mockRestore();
+  });
 });

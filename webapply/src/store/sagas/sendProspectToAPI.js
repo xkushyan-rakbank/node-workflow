@@ -46,7 +46,8 @@ import {
   AUTO,
   VIEW_IDS,
   STEP_STATUS,
-  AUTO_SAVE_INTERVAL
+  AUTO_SAVE_INTERVAL,
+  applicationdedupe
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
@@ -69,20 +70,29 @@ export function* setScreeningResults({ preScreening }) {
     SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
   );
 
-  const screenError = screeningStatus.find(
+  let screenError = screeningStatus.find(
     ({ screeningType }) => screeningType === (currScreeningType || {}).screeningType
   );
 
   if (screenError) {
+    //ro-assist-brd1-3
+    if (screenError.screeningType === screeningStatus[1].screeningType) {
+      let buttons = applicationdedupe.find(
+        ({ screeningNotes }) => screeningNotes === currScreeningType.screeningNotes
+      );
+      if (buttons !== undefined) {
+        screenError = { ...screenError, ...buttons };
+      }
+    }
     const accountType = yield select(getAccountType);
     const isIslamicBanking = yield select(getIsIslamicBanking);
-    const { screeningType } = screenError;
+    const { screeningType, screeningNotes } = screenError;
 
     yield put(
       setScreeningError({
         ...screenError,
         text: currScreeningType.reasonNotes,
-        icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType)
+        icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType, screeningNotes)
       })
     );
   } else {

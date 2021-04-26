@@ -92,6 +92,12 @@ describe("actions for app config", () => {
     expect(appConfig.saveSignatoryModel(payload)).toEqual(expectedAction);
   });
 
+  it("should save organization info prospectModel", () => {
+    const payload = {};
+    const expectedAction = { type: appConfig.SAVE_ORGANIZATION_INFO_MODEL, payload };
+    expect(appConfig.saveOrganizationInfoModel(payload)).toEqual(expectedAction);
+  });
+
   it("should set accessToken", () => {
     const payload = "token";
     const expectedAction = { type: appConfig.SET_ACCESS_TOKEN, payload };

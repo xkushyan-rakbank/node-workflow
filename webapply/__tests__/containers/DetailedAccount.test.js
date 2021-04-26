@@ -75,4 +75,18 @@ describe("DetailedAccount test", () => {
     expect(sendGoogleAnalyticsMetrics).toBeCalled();
     // expect(store.getActions()).toEqual([sendGoogleAnalyticsMetricsAction]);
   });
+
+  it("test with query params", () => {
+    const spy = jest.spyOn(URLSearchParams.prototype, "get").mockReturnValue("some product");
+    render(
+      <Provider store={store}>
+        <VerticalPaginationContext.Provider value={contextValue}>
+          <DetailedAccountContainer />
+        </VerticalPaginationContext.Provider>
+      </Provider>
+    );
+    expect(useFormNavigation).toBeCalledWith([true, false]);
+
+    spy.mockRestore();
+  });
 });

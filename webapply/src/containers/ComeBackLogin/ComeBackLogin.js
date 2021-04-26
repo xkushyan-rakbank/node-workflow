@@ -3,6 +3,8 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { ComeBackLoginComponent } from "./components/ComeBackLogin";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "./../../routes";
+//ro-assist header missing issue fix
+import { useLayoutParams } from "../FormLayout";
 
 export const ComeBackLoginContainer = ({
   generateOtpCode,
@@ -16,6 +18,7 @@ export const ComeBackLoginContainer = ({
 }) => {
   const pushHistory = useTrackingHistory();
   useFormNavigation([true, false]);
+  useLayoutParams();
 
   useEffect(() => {
     resetProspect();

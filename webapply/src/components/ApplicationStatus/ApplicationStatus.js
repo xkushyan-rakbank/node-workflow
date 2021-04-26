@@ -1,12 +1,32 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import Button from "@material-ui/core/Button/Button";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 import { UploadLimitComponent } from "../../containers/UploadDocuments/components/UploadLimit/UploadLimit";
 
-export const ApplicationStatus = ({ icon, text, link, screeningType = "" }) => {
+//ro-assist-brd2-3
+const accountComparisionRoute = {
+  link: routes.accountsComparison,
+  label: "See products"
+};
+export const ApplicationStatus = ({
+  icon,
+  text,
+  link,
+  screeningType = "",
+  buttons = [accountComparisionRoute]
+}) => {
   const classes = useStyles();
-
+  const history = useHistory();
+  const redirectTo = (route, external) => {
+    if (external) {
+      window.location.href = route;
+    } else {
+      history.push(route);
+      window.location.reload();
+    }
+  };
   return (
     <>
       {screeningType === "Total No of Documents uploaded check" ? (
@@ -16,10 +36,19 @@ export const ApplicationStatus = ({ icon, text, link, screeningType = "" }) => {
           <img src={icon} alt="error" />
           <div className={classes.message}>
             <p>{text}</p>
+            {/* ro-assist-brd2-3 */}
             {link && (
-              <Link to={routes.accountsComparison} className={classes.appStatusLink}>
-                See products
-              </Link>
+              <div className={classes.linkWrapper}>
+                {buttons.map((btn, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => redirectTo(btn.link, btn.external)}
+                    className={classes.appStatusLink}
+                  >
+                    {btn.label}
+                  </Button>
+                ))}
+              </div>
             )}
           </div>
         </div>

@@ -1,10 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper } from "../../constants";
 import routes from "../../routes";
+
+//ro-assist-brd3-16
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
 
 export const ApplicantInfoContainer = ({
   submit,
@@ -16,10 +23,13 @@ export const ApplicantInfoContainer = ({
   resetScreeningError,
   isConfigLoading,
   accountType,
-  isIslamicBanking
+  isIslamicBanking,
+  dataList,
+  roCode
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
+  const query = useQuery();
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(true);
 
@@ -31,6 +41,17 @@ export const ApplicantInfoContainer = ({
     resetScreeningError();
   }, [resetScreeningError]);
 
+  const findInDataList = () => {
+    const productCode = query.get("product-name");
+    const lowerCaseProductCode = productCode !== null ? productCode.toLowerCase() : "";
+    if (dataList["allianceCode"] !== undefined) {
+      return dataList["allianceCode"].find(
+        element => element.code.toLowerCase() == lowerCaseProductCode
+      );
+    } else {
+      return undefined;
+    }
+  };
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
@@ -59,6 +80,8 @@ export const ApplicantInfoContainer = ({
   return (
     <ApplicantInfoComponent
       onSubmit={onSubmit}
+      //ro-assist-brd3-16
+      partnerInfo={findInDataList()}
       isConfigLoading={isConfigLoading}
       isRecaptchaEnable={isRecaptchaEnable}
       reCaptchaSiteKey={reCaptchaSiteKey}
@@ -68,6 +91,7 @@ export const ApplicantInfoContainer = ({
       isIslamicBanking={isIslamicBanking}
       isLoading={isLoading}
       accountType={accountType}
+      roCode={roCode}
     />
   );
 };

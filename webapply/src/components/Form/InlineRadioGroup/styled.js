@@ -17,7 +17,10 @@ export const useStyles = makeStyles({
   },
   inlineFormRadioWrapper: {
     display: "flex",
-    flexShrink: 0
+    flexShrink: 0,
+    "@media (max-width: 767px)": {
+      flexShrink: 1
+    }
   },
   label: {
     marginRight: "10px"

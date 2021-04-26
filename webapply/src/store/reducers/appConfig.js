@@ -7,15 +7,18 @@ import {
   RECEIVE_APPCONFIG_SUCCESS,
   RECEIVE_APPCONFIG_FAIL,
   UPDATE_PROSPECT_ID,
+  UPDATE_VALID_RO_CODE,
   REMOVE_PROSPECT_ID,
   SET_CONFIG,
   SET_PROSPECT,
   SAVE_SIGNATORY_MODEL,
+  SAVE_ORGANIZATION_INFO_MODEL,
   SET_ACCESS_TOKEN,
   RESET_PROSPECT,
   RESET_APPLICANT_INFO,
   SET_PROSPECT_LEAD,
-  SET_EXPIRED
+  SET_EXPIRED,
+  SET_RO_CODE
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -87,6 +90,16 @@ export default handleActions(
         }
       }
     }),
+    [UPDATE_VALID_RO_CODE]: (state, action) => ({
+      ...state,
+      prospect: {
+        ...state.prospect,
+        applicantInfo: {
+          ...get(state, "prospect.applicantInfo", {}),
+          validRoCode: action.payload
+        }
+      }
+    }),
     [REMOVE_PROSPECT_ID]: state => ({
       ...state,
       prospect: {
@@ -100,6 +113,10 @@ export default handleActions(
     [SAVE_SIGNATORY_MODEL]: (state, action) => ({
       ...state,
       signatoryModel: action.payload
+    }),
+    [SAVE_ORGANIZATION_INFO_MODEL]: (state, action) => ({
+      ...state,
+      organizationInfoModel: action.payload
     }),
     [LOGOUT]: state => ({
       ...state,
@@ -139,6 +156,10 @@ export default handleActions(
     [SET_EXPIRED]: (state, action) => ({
       ...state,
       expired: action.payload
+    }),
+    [SET_RO_CODE]: (state, action) => ({
+      ...state,
+      roCode: action.payload
     })
   },
   initialState

@@ -54,5 +54,12 @@ public class RequestFactory {
         return objectMapper.createObjectNode().put("username", "theusername")
                 .put("password", "thepassword");
     }
+    
+    public static JsonNode createInviteRequest() {
+        return objectMapper.createObjectNode().put("custName", "thecustomerName")
+                .put("custEmail", "thecustEMail")
+                .put("roCode", "theRoCode")
+                .put("roAgentId", "theroAgentId");
+    }
 
 }

@@ -38,7 +38,10 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     flex: 1,
     paddingRight: 45,
-    overflow: "hidden"
+    overflow: "hidden",
+    "@media (max-width: 800px)": {
+      paddingRight: "0px"
+    }
   },
   errorReason: {
     margin: "0 0 3px 0",

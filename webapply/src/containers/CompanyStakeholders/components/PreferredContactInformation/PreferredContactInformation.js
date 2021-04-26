@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
-
-import { SubmitButton } from "./../SubmitButton/SubmitButton";
 import {
   AutoSaveField as Field,
   CustomSelect,
@@ -16,6 +14,10 @@ import {
 import { getSignatories } from "../../../../store/selectors/appConfig";
 import { MAX_EMAIL_LENGTH } from "../../../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
+import { InfoTitle } from "../../../../components/InfoTitle";
+import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
+import { useStyles } from "./styled";
+import { ContactNumberInputGroup } from "../../../../components/Form/Input/ContactNumInputGroup";
 
 const createPreferredContactInformationSchema = () =>
   Yup.object().shape({
@@ -30,6 +32,13 @@ const createPreferredContactInformationSchema = () =>
         codeFieldName: "primaryMobCountryCode",
         fieldName: "Mobile number"
       }),
+    primaryHomeNo: Yup.string()
+      .required(getRequiredMessage("Home country contact number"))
+      .phoneNo({
+        codeFieldName: "primaryHomeCountryCode",
+        fieldName: "Home country contact number"
+      }),
+    primaryHomeCountryCode: Yup.string().required(getRequiredMessage("Home Country code")),
     primaryPhoneNo: Yup.string().phoneNo({
       codeFieldName: "primaryPhoneCountryCode",
       fieldName: "Landline number",
@@ -42,99 +51,142 @@ const PreferredContactInformationStep = ({
   index,
   handleContinue,
   createFormChangeHandler
-}) => (
-  <Formik
-    initialValues={{
-      primaryEmail: "",
-      primaryMobCountryCode: "",
-      primaryMobileNo: "",
-      primaryPhoneCountryCode: "",
-      primaryPhoneNo: ""
-    }}
-    onSubmit={handleContinue}
-    validationSchema={isSignatory && createPreferredContactInformationSchema}
-    validateOnChange={false}
-  >
-    {createFormChangeHandler(() => (
-      <Form>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Field
-              name="primaryEmail"
-              path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
-              label="E-mail address"
-              placeholder="E-mail address"
-              component={Input}
-              disabled={!isSignatory}
-              InputProps={{
-                inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Grid item container spacing={3}>
-          <Grid item sm={6} xs={12}>
-            <InputGroup>
-              <LinkedField
-                name="primaryMobCountryCode"
-                linkedFieldName="primaryMobileNo"
-                path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
-                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
-                component={CustomSelect}
-                shrink={false}
-                disabled={!isSignatory}
-                datalistId="countryCode"
-                inputProps={{ tabIndex: 0 }}
-              />
+}) => {
+  const classes = useStyles();
 
-              <LinkedField
-                name="primaryMobileNo"
-                linkedFieldName="primaryMobCountryCode"
-                path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
-                linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
-                label="Mobile Number"
-                placeholder="55xxxxxxx"
+  return (
+    <Formik
+      initialValues={{
+        primaryEmail: "",
+        primaryMobCountryCode: "",
+        primaryMobileNo: "",
+        primaryPhoneCountryCode: "",
+        primaryPhoneNo: "",
+        primaryHomeNo: "",
+        primaryHomeCountryCode: ""
+      }}
+      onSubmit={handleContinue}
+      validationSchema={isSignatory && createPreferredContactInformationSchema}
+      validateOnChange={false}
+    >
+      {createFormChangeHandler(() => (
+        <Form>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Field
+                name="primaryEmail"
+                path={`prospect.signatoryInfo[${index}].contactDetails.primaryEmail`}
+                label="E-mail address"
+                placeholder="E-mail address"
                 component={Input}
                 disabled={!isSignatory}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
-                }}
-                contextualHelpText="This number will be used as primary contact for any future communication"
-              />
-            </InputGroup>
-          </Grid>
-          <Grid item sm={6} xs={12}>
-            <InputGroup>
-              <Field
-                name="primaryPhoneCountryCode"
-                path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
-                component={CustomSelect}
-                shrink={false}
-                disabled={!isSignatory}
-                datalistId="countryCode"
-                inputProps={{ tabIndex: 0 }}
-              />
-
-              <Field
-                name="primaryPhoneNo"
-                path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
-                label="Landline number (optional)"
-                placeholder="42xxxxxx"
-                component={Input}
-                disabled={!isSignatory}
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { maxLength: MAX_EMAIL_LENGTH, tabIndex: 0 }
                 }}
               />
-            </InputGroup>
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid item container spacing={3}>
+            <Grid item sm={6} xs={12}>
+              <InputGroup>
+                <LinkedField
+                  name="primaryMobCountryCode"
+                  linkedFieldName="primaryMobileNo"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                  linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                  component={CustomSelect}
+                  shrink={false}
+                  disabled={!isSignatory}
+                  datalistId="countryCode"
+                  inputProps={{ tabIndex: 0 }}
+                />
 
-        <SubmitButton />
-      </Form>
-    ))}
-  </Formik>
-);
+                <LinkedField
+                  name="primaryMobileNo"
+                  linkedFieldName="primaryMobCountryCode"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryMobileNo`}
+                  // eslint-disable-next-line max-len
+                  linkedPath={`prospect.signatoryInfo[${index}].contactDetails.primaryMobCountryCode`}
+                  label="Mobile Number"
+                  placeholder="55xxxxxxx"
+                  component={Input}
+                  disabled={!isSignatory}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                  contextualHelpText="This number will be used as primary contact for any future communication"
+                />
+              </InputGroup>
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <InputGroup>
+                <Field
+                  name="primaryPhoneCountryCode"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneCountryCode`}
+                  component={CustomSelect}
+                  shrink={false}
+                  disabled={!isSignatory}
+                  datalistId="countryCode"
+                  inputProps={{ tabIndex: 0 }}
+                />
+
+                <Field
+                  name="primaryPhoneNo"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryPhoneNo`}
+                  label="Landline number (optional)"
+                  placeholder="42xxxxxx"
+                  component={Input}
+                  disabled={!isSignatory}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                />
+              </InputGroup>
+            </Grid>
+            {/* SCR for RO change */}
+            {/* ro-assist-brd1-5 */}
+            <Grid item sm={6} xs={12}>
+              <ContactNumberInputGroup>
+                <Field
+                  name="primaryHomeCountryCode"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeCountryCode`}
+                  component={CustomSelect}
+                  shrink={false}
+                  disabled={!isSignatory}
+                  datalistId="countryCode"
+                  inputProps={{ tabIndex: 0 }}
+                />
+                <Field
+                  name="primaryHomeNo"
+                  path={`prospect.signatoryInfo[${index}].contactDetails.primaryHomeNo`}
+                  label="Home country contact number"
+                  placeholder="55xxxxxxx"
+                  component={Input}
+                  disabled={!isSignatory}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                  contextualHelpText="This number will be used as primary Home country contact for any future communication"
+                />
+              </ContactNumberInputGroup>
+            </Grid>
+          </Grid>
+          <Grid
+            className={classes.continueButtonContainer}
+            container
+            direction="row"
+            justify="space-between"
+          >
+            <InfoTitle title="We will use this mobile number and email address as the preferred mode to communicate with you" />
+            <span className={classes.continueBtn}>
+              <ContinueButton type="submit" />
+            </span>
+          </Grid>
+        </Form>
+      ))}
+    </Formik>
+  );
+};
 
 const mapStateToProps = (state, { index }) => ({
   isSignatory: get(getSignatories(state)[index], "kycDetails.isSignatory", false)

@@ -1,1 +1,3 @@
-export { CompanyPreferredMailingAddress } from "./CompanyPreferredMailingAddress";
+import { CompanyPreferredMailingAddressComponent } from "./CompanyPreferredMailingAddress";
+
+export const CompanyPreferredMailingAddress = CompanyPreferredMailingAddressComponent;

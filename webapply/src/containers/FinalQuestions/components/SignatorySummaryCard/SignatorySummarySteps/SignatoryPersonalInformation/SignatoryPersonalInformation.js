@@ -14,7 +14,11 @@ import {
   getInvalidMessage,
   getRequiredMessage
 } from "../../../../../../utils/getValidationMessage";
-import { NAME_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../../utils/validation";
+import {
+  NAME_REGEX,
+  SPECIAL_CHARACTERS_REGEX,
+  ALPHANUMERIC_REGEX
+} from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
 
@@ -35,7 +39,17 @@ export const createSignatoryPersonalInformationSchema = isSignatory =>
       then: Yup.string()
         .required(getRequiredMessage("Other"))
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
-    })
+    }),
+    //ro-assist-brd3-15
+    countryOfBirth: Yup.string().test(
+      "required",
+      getRequiredMessage("Country of Birth"),
+      value => !isSignatory || value
+    ),
+    placeOfBirth: Yup.string()
+      .test("required", getRequiredMessage("Place of Birth"), value => !isSignatory || value)
+      .max(100, "Maximum ${max} characters allowed")
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Place of Birth"))
   });
 
 export const SignatoryPersonalInformation = ({
@@ -51,7 +65,9 @@ export const SignatoryPersonalInformation = ({
       initialValues={{
         maritalStatus: "",
         mothersMaidenName: "",
-        maritalStatusOthers: ""
+        maritalStatusOthers: "",
+        countryOfBirth: "",
+        placeOfBirth: ""
       }}
       onSubmit={handleContinue}
       validationSchema={createSignatoryPersonalInformationSchema(isSignatory)}
@@ -98,6 +114,31 @@ export const SignatoryPersonalInformation = ({
                 />
               </Grid>
             )}
+            {/* //ro-assist-brd1-5 */}
+            <Grid item sm={6} xs={12}>
+              <Field
+                name="countryOfBirth"
+                path={`prospect.signatoryInfo[${index}].countryofBirth`}
+                datalistId="country"
+                label="Country of Birth"
+                isSearchable
+                component={SelectAutocomplete}
+                tabIndex="3"
+              />
+            </Grid>
+            <Grid item sm={6} xs={12}>
+              <Field
+                name="placeOfBirth"
+                path={`prospect.signatoryInfo[${index}].placeOfBirth`}
+                label={"Place of Birth"}
+                placeholder="Place of Birth"
+                component={Input}
+                contextualHelpText="City/Town of Place of Birth"
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
           </Grid>
           <div className={classes.buttonWrapper}>
             <ContinueButton type="submit" />

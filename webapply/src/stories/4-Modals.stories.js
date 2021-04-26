@@ -17,6 +17,7 @@ export default {
 export const confirmDialog = () => (
   <MuiThemeProvider theme={theme}>
     <ConfirmDialog
+      title={"Are you sure?"}
       message="test message"
       isOpen={true}
       handleClose={action("closed")}

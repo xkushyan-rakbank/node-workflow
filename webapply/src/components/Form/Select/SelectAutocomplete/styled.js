@@ -67,13 +67,14 @@ export const useStyles = makeStyles(theme => ({
     left: 0
   },
   menuItem: {
-    height: 48,
+    minHeight: 48,
     display: "flex",
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
     whiteSpace: "normal",
     lineHeight: "normal",
+    wordBreak: "break-word",
     "& .MuiCheckbox-root": {
       marginLeft: "auto"
     }
@@ -89,7 +90,7 @@ export const customStyles = {
   }),
   singleValue: provided => ({
     ...provided,
-    whiteSpace: "normal",
+    whiteSpace: "nowrap",
     padding: "2px"
   })
 };

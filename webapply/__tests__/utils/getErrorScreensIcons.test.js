@@ -30,4 +30,8 @@ describe("getErrorScreensIcons test", () => {
   it("should return elite error icon", () => {
     expect(getErrorScreensIcons(accountNames.elite)).toBe("elite");
   });
+
+  it("should return elite error icon when screening note null", () => {
+    expect(getErrorScreensIcons(accountNames.elite, true, mockScreeningType, null)).toBe("elite");
+  });
 });

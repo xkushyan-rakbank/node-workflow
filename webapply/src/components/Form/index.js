@@ -11,3 +11,4 @@ export { InlineRadioGroup } from "./InlineRadioGroup/InlineRadioGroup";
 export { SkeletonLoader } from "./SkeletonLoader";
 export { NumberFormat } from "./Input/NumberFormat";
 export { EmiratesID } from "./Input/EmiratesID";
+export { GlobalIntermediaryID } from "./Input/GlobalIntermediaryID";
