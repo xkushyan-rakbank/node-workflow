@@ -41,12 +41,11 @@ export const createSignatoryPersonalInformationSchema = isSignatory =>
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Other"))
     }),
     //ro-assist-brd3-15
-    countryOfBirth: Yup.string().test(
-      "required",
-      getRequiredMessage("Country of Birth"),
-      value => !isSignatory || value
-    ),
+    countryOfBirth: Yup.string()
+      .nullable()
+      .test("required", getRequiredMessage("Country of Birth"), value => !isSignatory || value),
     placeOfBirth: Yup.string()
+      .nullable()
       .test("required", getRequiredMessage("Place of Birth"), value => !isSignatory || value)
       .max(100, "Maximum ${max} characters allowed")
       .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Place of Birth"))
