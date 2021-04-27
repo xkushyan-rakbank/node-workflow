@@ -33,12 +33,15 @@ const createPreferredContactInformationSchema = () =>
         fieldName: "Mobile number"
       }),
     primaryHomeNo: Yup.string()
+      .nullable()
       .required(getRequiredMessage("Home country contact number"))
       .phoneNo({
         codeFieldName: "primaryHomeCountryCode",
         fieldName: "Home country contact number"
       }),
-    primaryHomeCountryCode: Yup.string().required(getRequiredMessage("Home Country code")),
+    primaryHomeCountryCode: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Home Country code")),
     primaryPhoneNo: Yup.string().phoneNo({
       codeFieldName: "primaryPhoneCountryCode",
       fieldName: "Landline number",

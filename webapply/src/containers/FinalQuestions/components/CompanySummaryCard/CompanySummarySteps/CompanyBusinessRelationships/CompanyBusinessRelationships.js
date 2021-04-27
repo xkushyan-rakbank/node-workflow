@@ -103,19 +103,24 @@ const companyBusinessRelationshipsSchema = () =>
       })
     }),
     dnfbpField: Yup.string()
+      .nullable()
       .required("Field Is your company dealing in Designated Business Categories is not filled")
       .oneOf(
         ["yes", "no"],
         "Field Is your company dealing in Designated Business Categories is not filled"
       ),
-    isCompanyUSEntity: Yup.string().required("Field Is your company a US entity is not filled"),
+    isCompanyUSEntity: Yup.string()
+      .nullable()
+      .required("Field Is your company a US entity is not filled"),
     //ro-assist-brd3-15
     isFinancialInstitution: Yup.string()
+      .nullable()
       .required("Field Is your company a Financial Instituion is not filled")
       .oneOf(["yes", "no"], "Field Is your company a Financial Instituion is not filled"),
     isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {
       is: "no",
       then: Yup.string()
+        .nullable()
         .required(
           "Field Is your company a active or passive Non-Financial Instituion is not filled"
         )
@@ -127,6 +132,7 @@ const companyBusinessRelationshipsSchema = () =>
     globalintermediaryId: Yup.string().when("isFinancialInstitution", {
       is: "yes",
       then: Yup.string()
+        .nullable()
         .required(getRequiredMessage("Global Intermediary Identification No"))
         .matches(
           GLOBAL_INTERMEDIARY_REGEX,

@@ -37,6 +37,7 @@ const getCompanyPreferredContactInformationSchema = () =>
       isLandline: true
     }),
     website: Yup.string()
+      .nullable()
       .max(100, "Maximum 100 characters allowed")
       .matches(WEBSITE_REGEX, getInvalidMessage("Entered website URL address"))
   });

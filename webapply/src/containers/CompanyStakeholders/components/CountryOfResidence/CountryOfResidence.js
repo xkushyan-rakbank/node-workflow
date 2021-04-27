@@ -37,7 +37,10 @@ const createCountryOfResidenceSchema = isSignatory =>
         .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
     }),
     isUSrelation:
-      isSignatory && Yup.boolean().required(getRequiredNotTextInputMessage("I have US relation"))
+      isSignatory &&
+      Yup.boolean()
+        .nullable()
+        .required(getRequiredNotTextInputMessage("I have US relation"))
   });
 
 const CountryOfResidenceStep = ({
