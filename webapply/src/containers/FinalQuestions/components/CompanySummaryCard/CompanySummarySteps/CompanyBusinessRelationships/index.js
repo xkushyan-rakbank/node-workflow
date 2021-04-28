@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import get from "lodash/get";
+import { isNull } from "lodash";
 
 import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
@@ -27,7 +28,10 @@ const mapStateToProps = state => ({
     initialOtherBankDetails
   ),
   dnfbpField:
-    get(getOrgKYCDetails(state), "dnfbpField", "na") != "na" ? IS_DNFBP_INFO_VISITED : NONE_VISITED
+    !isNull(get(getOrgKYCDetails(state), "dnfbpField", "na")) &&
+    get(getOrgKYCDetails(state), "dnfbpField", "na") != "na"
+      ? IS_DNFBP_INFO_VISITED
+      : NONE_VISITED
 });
 
 const mapDispatchToProps = {

@@ -15,7 +15,11 @@ import {
   SelectAutocomplete,
   InlineRadioGroup
 } from "../../../../../../components/Form";
-import { DEFAULT_SIGNATORY_COUNTRY, MAX_CITY_NAME_LENGTH } from "./constants";
+import {
+  DEFAULT_SIGNATORY_COUNTRY,
+  DEFAULT_SIGNATORY_COUNTRY_NAME,
+  MAX_CITY_NAME_LENGTH
+} from "./constants";
 import {
   MAX_STREET_NUMBER_LENGTH,
   MAX_PO_BOX_NUMBER_LENGTH,
@@ -119,7 +123,7 @@ export const SignatoryPreferredMailingAddressComponent = ({
         officeAddrsEmirateCity: "",
         officeAddrsPoBox: "",
         officeAddrsCountry: DEFAULT_SIGNATORY_COUNTRY,
-        country: DEFAULT_SIGNATORY_COUNTRY,
+        country: DEFAULT_SIGNATORY_COUNTRY_NAME,
         isResidenceOrOfficeAddress: "",
         homeCountryAddressLine1: "",
         homeCountryAddressLine2: "",
@@ -184,12 +188,10 @@ export const SignatoryPreferredMailingAddressComponent = ({
                   {/* //ro-assist-brd1-5 */}
                   <Field
                     name="country"
-                    path={`${autoSavePathBase}.country`}
                     label="Country"
                     placeholder="Country"
                     disabled
-                    datalistId="country"
-                    component={SelectAutocomplete}
+                    component={Input}
                     shrink
                     tabIndex="0"
                   />
