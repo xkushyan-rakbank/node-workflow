@@ -46,7 +46,7 @@ export const TwoSteps = () => {
       <div className={classes.note}>
         1. Not applicable to UAE nationals. 2. Memorandum of Association, Articles of Association,
         Share Certificate, Partners Agreement or Service Agreement, whichever is applicable to your
-        company. Following review of submitted documents, the bank may seek additional documents /
+        company. Following review of submitted documents, the Bank may seek additional documents /
         information.
       </div>
       <div className={classes.secondGroup}>
