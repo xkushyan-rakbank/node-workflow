@@ -10,7 +10,7 @@ import {
 
 import { useStyles } from "./styled";
 
-const { termConditionLinks, termEnrollmentLinks } = submitApplication;
+const { termConditionLinks, termEnrollmentLinks, sanctionsUndertakingLinks } = submitApplication;
 
 export const TermsAgreedLabel = ({ isIslamicBanking, setIsLinkVisited }) => {
   const classes = useStyles();
@@ -49,7 +49,7 @@ export const TermsAgreedLabel = ({ isIslamicBanking, setIsLinkVisited }) => {
       and{" "}
       <a
         className={classes.link}
-        href={termConditionLinks[typeOfAccount]}
+        href={sanctionsUndertakingLinks[typeOfAccount]}
         target="_blank"
         rel="noopener noreferrer"
         onClick={e => {
