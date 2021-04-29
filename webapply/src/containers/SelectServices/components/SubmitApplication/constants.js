@@ -30,6 +30,12 @@ export let submitApplication = {
     [ISLAMIC]:
       "https://revamp.rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES"
   },
+  sanctionsUndertakingLinks: {
+    [CONVENTIONAL]:
+      "https://revamp.rakbank.ae/wps/wcm/connect/9d065356-bf4c-4f4a-ab99-049fc2eb1a5b/QuickApply_journey_sanctions_declarations.pdf?MOD=AJPERES",
+    [ISLAMIC]:
+      "https://revamp.rakbank.ae/wps/wcm/connect/9d065356-bf4c-4f4a-ab99-049fc2eb1a5b/QuickApply_journey_sanctions_declarations.pdf?MOD=AJPERES"
+  },
   formTitle: "Submit application",
   formInfo:
     "And just like that, we have reached the end! Here’s the overview of what you’re applying for."
@@ -47,6 +53,12 @@ if (process.env.REACT_APP_SERVER_ENV === "production") {
       "https://rakbank.ae/wps/wcm/connect/b0cd7557-1926-43d7-873e-d43942313ca8/TOE+-+Conventional.pdf?MOD=AJPERES",
     [ISLAMIC]:
       "https://rakbank.ae/wps/wcm/connect/c0c9bd08-64c1-40da-af38-179f287c1c59/TOE+-+Islamic.pdf?MOD=AJPERES"
+  };
+  submitApplication.sanctionsUndertakingLinks = {
+    [CONVENTIONAL]:
+      "https://rakbank.ae/wps/wcm/connect/9d065356-bf4c-4f4a-ab99-049fc2eb1a5b/QuickApply_journey_sanctions_declarations.pdf?MOD=AJPERES",
+    [ISLAMIC]:
+      "https://rakbank.ae/wps/wcm/connect/9d065356-bf4c-4f4a-ab99-049fc2eb1a5b/QuickApply_journey_sanctions_declarations.pdf?MOD=AJPERES"
   };
 }
 
