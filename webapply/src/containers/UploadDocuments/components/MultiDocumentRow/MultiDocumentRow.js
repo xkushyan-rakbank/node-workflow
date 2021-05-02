@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
@@ -9,7 +9,11 @@ import { UPLOADED } from "../../../../constants";
 import { docUpload, addMultiDocument } from "../../../../store/actions/uploadDocuments";
 import { DocumentRow } from "../../DocumentRow";
 import { useStyles } from "../styled";
-import { log } from "../../../../utils/loggger";
+import {
+  getIsEditableStatusSearchInfo,
+  getProspectStatus
+} from "../../../../store/selectors/searchProspect";
+import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../../constants";
 
 // ro-assist-brd2-1
 export const MultiDocumentRow = ({
@@ -25,6 +29,11 @@ export const MultiDocumentRow = ({
   const [multiDoc, setMultiDoc] = useState(false);
   const [addMoreDisable, setAddMoreDisable] = useState(false);
   const [multiSelectedFile, setMultiSelectedFile] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
+  const prospectStatusInfo = useSelector(getProspectStatus);
+  const isDisabledUploadForRO =
+    isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
 
   useEffect(() => {
     if (limit > 1 && (documents.length > 1 || documents[0].uploadStatus === "Uploaded")) {
@@ -99,10 +108,11 @@ export const MultiDocumentRow = ({
     const file = inputEl.current.files[0];
 
     try {
+      setErrorMessage(null);
       documentValidationSchema.validateSync({ file }, { abortEarly: false });
       uploadMultiDocument(file);
     } catch (error) {
-      log(error.message);
+      return setErrorMessage(error.message);
     }
   }, [uploadMultiDocument]);
 
@@ -124,29 +134,32 @@ export const MultiDocumentRow = ({
           />
         ))}
       </Grid>
-      {multiDoc && (
-        <Grid item sm={3} xs={12}>
-          <input
-            className={classes.defaultInput}
-            name="file"
-            type="file"
-            onChange={fileUploadChange}
-            onClick={fileUploadClick}
-            ref={inputEl}
-            disabled={addMoreDisable}
-          />
-          <p
-            className={cx(
-              classes.ControlsBox,
-              classes.multiAddBtn,
-              addMoreDisable ? classes.disabledMultiAddBtn : ""
-            )}
-            justify="flex-end"
-            onClick={() => inputEl.current.click()}
-          >
-            Add More
-          </p>
-        </Grid>
+      {multiDoc && !isDisabledUploadForRO && (
+        <>
+          <Grid item sm={3} xs={12}>
+            <input
+              className={classes.defaultInput}
+              name="file"
+              type="file"
+              onChange={fileUploadChange}
+              onClick={fileUploadClick}
+              ref={inputEl}
+              disabled={addMoreDisable}
+            />
+            <p
+              className={cx(
+                classes.ControlsBox,
+                classes.multiAddBtn,
+                addMoreDisable ? classes.disabledMultiAddBtn : ""
+              )}
+              justify="flex-end"
+              onClick={() => inputEl.current.click()}
+            >
+              Add More
+            </p>
+          </Grid>
+          {errorMessage && <p className={classes.errorExplanation}>{errorMessage}</p>}
+        </>
       )}
     </Grid>
   );
