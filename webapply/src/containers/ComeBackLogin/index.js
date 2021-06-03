@@ -10,7 +10,7 @@ import { getReCaptchaToken } from "../../store/selectors/reCaptcha";
 const mapStateToProps = state => ({
   recaptchaToken: getReCaptchaToken(state),
   reCaptchaSiteKey: getReCaptchaSiteKey(state),
-  isRecaptchaEnable: getIsRecaptchaEnable(state),
+  isRecaptchaEnable: "N",
   isGenerating: getIsGenerating(state),
   isConfigLoading: state.appConfig.loading
 });
