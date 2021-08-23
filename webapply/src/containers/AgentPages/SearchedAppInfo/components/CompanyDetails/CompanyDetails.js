@@ -57,6 +57,18 @@ export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
       ) : (
         <div className={classes.errorMsg}>{errorMsgs.COMPANY_DETAIL_ERROR}</div>
       )}
+      <h4 className={classes.title}>{titles.PARTNER_CODE_TITLE}</h4>
+      {get(prospectOverview, "applicantInfo.allianceCode") ? (
+        <Grid container spacing={3}>
+          <Grid item md={6} sm={12}>
+            <div className={classes.companyDetails}>
+              {prospectOverview.applicantInfo.allianceCode}
+            </div>
+          </Grid>
+        </Grid>
+      ) : (
+        <div className={classes.errorMsg}>{errorMsgs.PARTNER_CODE_ERROR}</div>
+      )}
     </>
   );
 };
