@@ -19,7 +19,7 @@ import { ErrorMessage } from "../../../../components/Notifications";
 import { InfoTitle } from "../../../../components/InfoTitle";
 import { ReactComponent as ExpressLogo } from "../../../../assets/icons/ExpressServicesIcon.svg";
 
-const expressCharges = 400;
+const expressCharges = 250;
 const texts = [
   "We know time is crucial to you and that's why we offer priority service to fast track your Business Account application.",
   "Simply opt for our Express Service and get started quickly.",
