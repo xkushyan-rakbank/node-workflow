@@ -109,6 +109,7 @@ public class ConfigFactory {
         config.set("OtherConfigs", objectMapper.createObjectNode()
                 .set("local", objectMapper.createObjectNode()
                         .put("ReCaptchaEnable", "Y")
+                        .put("LemniskEnable", "Y")
                         .put("ReCaptchaSiteKey", "re-captcha-site-key")));
         config.set("BaseURLs", objectMapper.createObjectNode().set("local",
                 objectMapper.createObjectNode()
@@ -180,6 +181,7 @@ public class ConfigFactory {
                         .put("RSAPublicKeyFilename", "RSAPublicKeyFilename")
                         .put("JwtSecret", "JwtSecret")
                         .put("OtpEnabled", "OtpEnabled")
+                        .put("LemniskEnable", "LemniskEnable")
                         .put("ShouldSendErrorDebugDetails", "ShouldSendErrorDebugDetails")
                         .put("ApplicationLoggingLevel", "ApplicationLoggingLevel")
                 ));

@@ -43,6 +43,7 @@ public class ConfigService {
         boolean recaptchaEnable = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaEnable").asText("N").equals("Y");
         String recaptchaSiteKey = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("ReCaptchaSiteKey").asText();
         JsonNode baseUrls = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv());
+        boolean lemniskEnable = appConfigJSON.get("OtherConfigs").get(EnvUtil.getEnv()).get("LemniskEnable").asText("N").equals("Y");
         initStateJSON.put("reCaptchaSiteKey", recaptchaSiteKey);
         initStateJSON.set("datalist", datalist);
         initStateJSON.put("recaptchaEnable", recaptchaEnable);
@@ -52,6 +53,7 @@ public class ConfigService {
         initStateJSON.put("rakValueMaxReadMoreUrl", baseUrls.get("RAKvalueMaxReadMoreUrl").asText());
         initStateJSON.put("rakValuePlusIslamicReadMoreUrl", baseUrls.get("RAKvaluePlusIslamicReadMoreUrl").asText());
         initStateJSON.put("rakValueMaxIslamicReadMoreUrl", baseUrls.get("RAKvalueMaxIslamicReadMoreUrl").asText());
+        initStateJSON.put("lemniskEnable", lemniskEnable);
 
         String cacheKey = getCacheKey(segment, product, role, device);
         String configJSON = initStateJSON.toString();

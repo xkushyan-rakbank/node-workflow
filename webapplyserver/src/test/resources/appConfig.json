@@ -95,7 +95,8 @@
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "Y",
       "ShouldSendErrorDebugDetails": true,
-      "ApplicationLoggingLevel": "DEBUG"
+      "ApplicationLoggingLevel": "DEBUG",
+      "LemniskEnable": "Y"
     },
     "dev": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -117,7 +118,8 @@
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "N",
       "ShouldSendErrorDebugDetails": true,
-      "ApplicationLoggingLevel": "DEBUG"
+      "ApplicationLoggingLevel": "DEBUG",
+      "LemniskEnable": "Y"
     },
     "uat": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -139,7 +141,8 @@
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "Y",
       "ShouldSendErrorDebugDetails": false,
-      "ApplicationLoggingLevel": "INFO"
+      "ApplicationLoggingLevel": "INFO",
+      "LemniskEnable": "Y"
     },
     "prod": {
       "OAuthRefreshGrantType": "refresh_token",
@@ -161,7 +164,8 @@
       "JwtSecret": "KwzLmO6gTQK4HRQhyRiKQ4NoCDKHk67p",
       "OtpEnabled": "Y",
       "ShouldSendErrorDebugDetails": false,
-      "ApplicationLoggingLevel": "INFO"
+      "ApplicationLoggingLevel": "INFO",
+      "LemniskEnable": "Y"
     }
   }
 }

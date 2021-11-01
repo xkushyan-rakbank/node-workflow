@@ -152,3 +152,9 @@ export const getRoCode = state => {
 };
 
 export const getExpired = state => getAppConfig(state).expired;
+
+export const getIsLemniskEnable = state => {
+  return typeof state.appConfig.lemniskEnable !== "undefined"
+    ? state.appConfig.lemniskEnable
+    : false;
+};

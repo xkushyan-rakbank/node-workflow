@@ -25,6 +25,8 @@ const InputBase = ({
   classes: extendedClasses,
   InputProps,
   ErrorMessageComponent = ErrorMessage,
+  isLemnisk = false,
+  lemniskCall = value => {},
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -57,6 +59,11 @@ const InputBase = ({
             }
           }}
           onBlur={event => {
+            if (isLemnisk) {
+              {
+                lemniskCall(field.value);
+              }
+            }
             if (isIE) {
               setFocus(false);
             }

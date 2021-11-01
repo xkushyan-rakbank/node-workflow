@@ -5,7 +5,7 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper } from "../../constants";
+import { formStepper, CONVENTIONAL, ISLAMIC } from "../../constants";
 import routes from "../../routes";
 
 //ro-assist-brd3-16
@@ -25,7 +25,8 @@ export const ApplicantInfoContainer = ({
   accountType,
   isIslamicBanking,
   dataList,
-  roCode
+  roCode,
+  isLemniskEnable
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -55,15 +56,24 @@ export const ApplicantInfoContainer = ({
   const onSubmit = useCallback(
     values => {
       setIsLoading(true);
-      submit(values).then(
-        () =>
-          pushHistory(
-            /* istanbul ignore next */
-            process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
-            true
-          ),
-        () => setIsLoading(false)
-      );
+      submit(values)
+        .then(() => {
+          if (isLemniskEnable) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              Thankyouprd: (isIslamicBanking ? ISLAMIC : CONVENTIONAL) + " " + accountType
+            });
+          }
+        })
+        .then(
+          () =>
+            pushHistory(
+              /* istanbul ignore next */
+              process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
+              true
+            ),
+          () => setIsLoading(false)
+        );
     },
     [submit, pushHistory]
   );
@@ -92,6 +102,7 @@ export const ApplicantInfoContainer = ({
       isLoading={isLoading}
       accountType={accountType}
       roCode={roCode}
+      isLemniskEnable={isLemniskEnable}
     />
   );
 };

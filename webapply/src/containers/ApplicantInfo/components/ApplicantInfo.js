@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { Grid } from "@material-ui/core";
@@ -67,11 +67,24 @@ export const ApplicantInfoComponent = ({
   accountType,
   isLoading,
   partnerInfo,
-  roCode
+  roCode,
+  isLemniskEnable
 }) => {
   //ro-assist-brd3-16
   const allianceCodeFromQuery = partnerInfo !== undefined ? partnerInfo.code : "";
   const allianceCodeDisplyText = partnerInfo !== undefined ? partnerInfo.displayText : "";
+  const [lemniskValue, setLemniskValue] = useState(false);
+  const lemniskCall = value => {
+    if (isLemniskEnable && !lemniskValue && value) {
+      setLemniskValue(true);
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        ApplicantInfofilled: (isIslamicBanking ? ISLAMIC : CONVENTIONAL) + " " + accountType
+      });
+      window.pixel.parse(true);
+    }
+  };
+
   return (
     <>
       <h2>Let’s Start with the Basics</h2>
@@ -108,6 +121,8 @@ export const ApplicantInfoComponent = ({
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                isLemnisk={true}
+                lemniskCall={value => lemniskCall(value)}
               />
             )}
 
@@ -123,6 +138,8 @@ export const ApplicantInfoComponent = ({
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                isLemnisk={true}
+                lemniskCall={value => lemniskCall(value)}
               />
             )}
 
@@ -153,6 +170,8 @@ export const ApplicantInfoComponent = ({
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}
+                  isLemnisk={true}
+                  lemniskCall={value => lemniskCall(value)}
                 />
               </InputGroup>
             )}

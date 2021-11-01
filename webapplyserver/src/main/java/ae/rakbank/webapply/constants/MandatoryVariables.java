@@ -66,5 +66,6 @@ public class MandatoryVariables {
             "JwtSecret",
             "OtpEnabled",
             "ShouldSendErrorDebugDetails",
-            "ApplicationLoggingLevel"));
+            "ApplicationLoggingLevel",
+            "LemniskEnable"));
 }

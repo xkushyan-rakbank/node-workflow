@@ -53,6 +53,7 @@ public class ConfigServiceTest {
 
         assertNotNull(result);
         assertTrue(result.get("recaptchaEnable").asBoolean());
+        assertTrue(result.get("lemniskEnable").asBoolean());
         assertEquals("re-captcha-site-key", result.get("reCaptchaSiteKey").asText());
         assertEquals("http://TermsConditionsUrl", result.get("termsConditionsUrl").asText());
         assertEquals("http://ServicePricingGuideUrl", result.get("servicePricingGuideUrl").asText());
@@ -76,6 +77,7 @@ public class ConfigServiceTest {
 
         assertNotNull(result);
         assertTrue(result.get("recaptchaEnable").asBoolean());
+        assertTrue(result.get("lemniskEnable").asBoolean());
         assertEquals("re-captcha-site-key", result.get("reCaptchaSiteKey").asText());
         assertEquals("http://TermsConditionsUrl", result.get("termsConditionsUrl").asText());
         assertEquals("http://ServicePricingGuideUrl", result.get("servicePricingGuideUrl").asText());
