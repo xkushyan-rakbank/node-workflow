@@ -26,8 +26,8 @@ export const accountsDataRows = [
   {
     info: ["Monthly Digital ", "Banking fees"],
     starter: { text: "Zero" },
-    currentAccount: { text: "AED 25" },
-    elite: { text: "AED 25" }
+    currentAccount: { text: "AED 50" },
+    elite: { text: "AED 50" }
   },
   {
     info: ["Free Teller Transactions"],
