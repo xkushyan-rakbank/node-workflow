@@ -20,7 +20,8 @@ jobs:
     - job: Webapply
       timeoutInMinutes: 120
       pool:
-        name: Hosted macOS
+        #name: Hosted macOS
+        vmImage: 'macOS-1015'
 #      demands:
 #        - java
 #        - JDK
