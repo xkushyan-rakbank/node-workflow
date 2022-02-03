@@ -161,8 +161,6 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
     - job: WebapplyServer
-      pool:
-       name: Hosted macOS
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -282,8 +280,6 @@ jobs:
         condition: and(succeeded(),eq(variables.env_to_deploy, 'release'))
         
     - job: document_uploader
-      pool:
-       name: Hosted macOS
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -396,8 +392,6 @@ jobs:
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
        and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/release'), eq(variables['Build.SourceBranch'], 'refs/heads/develop')))
-      pool:
-       name: Hosted macOS
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
