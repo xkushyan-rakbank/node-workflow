@@ -161,6 +161,9 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
     - job: WebapplyServer
+      timeoutInMinutes: 120
+      pool:
+        vmImage: 'macOS-1015'
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -280,6 +283,9 @@ jobs:
         condition: and(succeeded(),eq(variables.env_to_deploy, 'release'))
         
     - job: document_uploader
+      timeoutInMinutes: 120
+      pool:
+        vmImage: 'macOS-1015'
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 10.x'
@@ -387,6 +393,9 @@ jobs:
           ArtifactName: 'document_uploader'
 
     - job: SonarQube
+      timeoutInMinutes: 120
+      pool:
+        vmImage: 'macOS-1015'
       dependsOn:
        - Webapply
       condition:
