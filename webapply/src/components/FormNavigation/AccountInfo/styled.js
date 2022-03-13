@@ -65,6 +65,23 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: "auto"
     }
   },
+  sectionLandingSubtitle: {
+    fontSize: "22px",
+    lineHeight: "1.5",
+    color: "#fff",
+    maxWidth: 300,
+    display: "block",
+    fontWeight: 600,
+    fontFamily: "Open Sans",
+    whiteSpace: "pre-wrap",
+    "& + button": {
+      marginTop: 60,
+      [theme.breakpoints.only("xs")]: buttonMobile
+    },
+    [theme.breakpoints.only("xs")]: {
+      marginBottom: "auto"
+    }
+  },
   sectionButton: {
     marginTop: 60,
     [theme.breakpoints.only("xs")]: buttonMobile

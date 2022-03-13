@@ -6,6 +6,7 @@ export default {
   MyApplications: `${smeBaseName}/MyApplications`,
   comeBackLoginVerification: `${smeBaseName}/ComeBackVerification`,
   comeBackLogin: `${smeBaseName}/ComeBackLogin`,
+  quickapplyLanding: `${smeBaseName}/landing`,
   accountsComparison: `${smeBaseName}/accounts`,
   applicationOverview: `${smeBaseName}/accounts/:accountType/application-overview`,
   detailedAccount: `${smeBaseName}/accounts/:accountType`,

@@ -26,6 +26,10 @@ import accountComparisonPoster from "../assets/images/videoPosters/Account compa
 import accountComparisonVideo from "../assets/videos/Accountcomparison.webm";
 import accountComparisonVideoMP4 from "../assets/videos/Accountcomparison.mp4";
 
+import landingPoster from "../assets/images/videoPosters/LandingVideo.png";
+import landingVideoWebm from "../assets/videos/LandingVideo.webm";
+import landingVideoMP4 from "../assets/videos/LandingVideo.mp4";
+
 import { accountNames } from "./index";
 
 export const videos = [
@@ -79,3 +83,11 @@ export const videos = [
     poster: accountComparisonPoster
   }
 ];
+
+export const landingVideo = {
+  accountType: accountNames.starter,
+  isIslamic: false,
+  mp4: landingVideoMP4,
+  webm: landingVideoWebm,
+  poster: landingPoster
+};

@@ -78,6 +78,7 @@ export const AccountInfo = props => {
       handleStart={handleStart}
       handleApply={handleApply}
       isHideTitleOnSmBreakpoint={isHideTitleOnSmBreakpoint}
+      pathname={pathname}
       {...props}
     />
   );

@@ -43,5 +43,7 @@ export const GA_EVENTS = {
   SELECT_SERVICE_SUBMITTED: "SelectService_Submitted",
   FORM_SUBMITTED: "FormSubmitted",
   COMEBACK_START: "ComeBackStart",
-  COMEBACK_OTP_SUBMITTED: "ComeBack_OTP_Submitted"
+  COMEBACK_OTP_SUBMITTED: "ComeBack_OTP_Submitted",
+  LANDING_PAGE_ACCOUNT_CHOSEN: "LandingPageBusinessAccountChosen",
+  LANDING_PAGE_FINANCE_CHOSEN: "LandingPageBusinessLoanChosen"
 };

@@ -26,6 +26,7 @@ import "./App.scss";
 import SessionExpiration from "./containers/Session";
 
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
+const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
 const FormConfirm = lazy(() => import("./containers/FormConfirm"));
 const UploadDocuments = lazy(() => import("./containers/UploadDocuments"));
@@ -125,8 +126,9 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 component={SubmitApplication}
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
-              <Redirect exact path="/" to={routes.accountsComparison} />
-              <Redirect exact path={`(${smeBaseName})?`} to={routes.accountsComparison} />
+              <ProtectedRoute exact path={routes.quickapplyLanding} component={QuickapplyLanding} />
+              <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
+              <Redirect exact path="/" to={routes.quickapplyLanding} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />

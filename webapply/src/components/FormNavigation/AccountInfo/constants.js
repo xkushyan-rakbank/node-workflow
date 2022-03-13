@@ -21,5 +21,8 @@ export const accountsInfo = {
   },
   comeBackVerification: {
     title: "Confirm that it's you"
+  },
+  landingPage: {
+    subtitle: "Get started with \nyour banking needs \nonline, in minutes."
   }
 };

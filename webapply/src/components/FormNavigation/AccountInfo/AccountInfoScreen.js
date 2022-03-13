@@ -2,9 +2,11 @@ import React from "react";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
+import routes from "../../../routes";
 import { ContainedButton } from "../../Buttons/ContainedButton";
 import { MobileNotification } from "../../Modals";
 import { useStyles } from "./styled";
+import { accountsInfo } from "./constants";
 
 export const AccountInfoScreen = ({
   isShowApply,
@@ -16,7 +18,8 @@ export const AccountInfoScreen = ({
   handleApply,
   title,
   subtitle,
-  isHideTitleOnSmBreakpoint
+  isHideTitleOnSmBreakpoint,
+  pathname
 }) => {
   const classes = useStyles({ isShowApply, isHideTitleOnSmBreakpoint });
 
@@ -25,6 +28,15 @@ export const AccountInfoScreen = ({
       <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
         {title}
       </Typography>
+      {pathname === routes.quickapplyLanding && (
+        <Typography
+          variant="subtitle1"
+          component="span"
+          classes={{ root: classes.sectionLandingSubtitle }}
+        >
+          {accountsInfo.landingPage.subtitle}
+        </Typography>
+      )}
       {isShowApply && (
         <>
           <Typography
