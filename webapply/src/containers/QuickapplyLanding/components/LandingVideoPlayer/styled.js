@@ -64,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
     textAlign: "center",
     [theme.breakpoints.up("sm")]: {
       left: sideNavWidthCollapsed,
-      bottom: "30%"
+      bottom: "40%"
     },
     [theme.breakpoints.up("md")]: {
       left: sideNavWidthMD,
