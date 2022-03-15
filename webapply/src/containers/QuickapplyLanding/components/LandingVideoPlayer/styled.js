@@ -17,8 +17,13 @@ export const useStyles = makeStyles(theme => ({
     minHeight: "100vh",
     zIndex: 10,
     [theme.breakpoints.only("xs")]: {
-      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 64 : 0),
-      // height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
+      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 220 : 0),
+      height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
+      maxHeight: "none"
+    },
+    [theme.breakpoints.between("ls", "sm")]: {
+      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 100 : 0),
+      height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
       maxHeight: "none"
     }
   },
@@ -30,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
     top: 0,
     minWidth: "100%",
     minHeight: "100vh",
-    overflow: "hidden",
+    //overflow: "hidden",
     [theme.breakpoints.only("xs")]: {
       left: "50%",
       top: "50%",
