@@ -2,7 +2,7 @@ import React from "react";
 import cx from "classnames";
 import Typography from "@material-ui/core/Typography";
 
-import routes from "../../../routes";
+//import routes from "../../../routes";
 import { ContainedButton } from "../../Buttons/ContainedButton";
 import { MobileNotification } from "../../Modals";
 import { useStyles } from "./styled";
@@ -25,29 +25,27 @@ export const AccountInfoScreen = ({
 
   return (
     <div className={cx(classes.contentContainer, "small-menu-hide")}>
-      {pathname === "/business" || pathname === "" ? (
-        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-          <div style={{ paddingLeft: "40px" }}>{accountsInfo.landingPage.title}</div>{" "}
-          <img
-            alt=""
-            className={cx(classes.sectionTitleImg)}
-            //classes={{ root: classes.sectionTitleImg }}
-            src={accountsInfo.landingPage.image}
-          />
-        </Typography>
-      ) : (
-        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-          {title}
-        </Typography>
-      )}
-      {pathname === routes.quickapplyLanding && (
-        <Typography
-          variant="subtitle1"
-          component="span"
-          classes={{ root: classes.sectionLandingSubtitle }}
-        >
-          {accountsInfo.landingPage.subtitle}
-        </Typography>
+      <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+        {title}
+      </Typography>
+      {(pathname === "/business" || pathname === "") && (
+        <>
+          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+            <div className={cx(classes.sectionTitleMain)}>{accountsInfo.landingPage.title}</div>{" "}
+            <img
+              alt=""
+              className={cx(classes.sectionTitleImg)}
+              src={accountsInfo.landingPage.image}
+            />
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="span"
+            classes={{ root: classes.sectionLandingSubtitle }}
+          >
+            {accountsInfo.landingPage.subtitle}
+          </Typography>
+        </>
       )}
       {isShowApply && (
         <>

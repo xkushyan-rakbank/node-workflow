@@ -48,6 +48,9 @@ export const useStyles = makeStyles(theme => ({
       lineHeight: "36px"
     }
   },
+  sectionTitleMain: {
+    paddingLeft: "40px"
+  },
   sectionTitleImg: {
     width: "328px",
     [theme.breakpoints.only("xs")]: {
