@@ -103,6 +103,10 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       marginRight: 10,
       padding: 12
+    },
+    "&:hover": {
+      backgroundColor: "#333333",
+      color: "#fff"
     }
   }
 }));
