@@ -23,6 +23,7 @@ export const accountsInfo = {
     title: "Confirm that it's you"
   },
   landingPage: {
-    subtitle: "Get started with \nyour banking needs \nonline, in minutes."
+    title: "Welcome to\n",
+    subtitle: "Get started with your \nbanking needs online,\nin minutes!"
   }
 };

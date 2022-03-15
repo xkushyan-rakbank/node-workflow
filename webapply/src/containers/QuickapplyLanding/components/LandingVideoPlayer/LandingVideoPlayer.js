@@ -54,8 +54,8 @@ export const LandingVideoPlayer = ({ video: { mp4, webm, poster }, ...rest }) =>
             }
           >
             <ExpandMoreButton
-              label="Business Loan"
-              className={classes.loanBtn}
+              label="Business Finance"
+              className={classes.accountBtn}
               style={{ backgroundColor: "#252525" }}
             />
           </div>
