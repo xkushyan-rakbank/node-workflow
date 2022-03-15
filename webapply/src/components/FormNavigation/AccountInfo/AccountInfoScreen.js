@@ -25,9 +25,21 @@ export const AccountInfoScreen = ({
 
   return (
     <div className={cx(classes.contentContainer, "small-menu-hide")}>
-      <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-        {title}
-      </Typography>
+      {pathname === "/business" || pathname === "" ? (
+        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+          <div style={{ paddingLeft: "40px" }}>{accountsInfo.landingPage.title}</div>{" "}
+          <img
+            alt=""
+            className={cx(classes.sectionTitleImg)}
+            //classes={{ root: classes.sectionTitleImg }}
+            src={accountsInfo.landingPage.image}
+          />
+        </Typography>
+      ) : (
+        <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
+          {title}
+        </Typography>
+      )}
       {pathname === routes.quickapplyLanding && (
         <Typography
           variant="subtitle1"

@@ -1,4 +1,5 @@
 import { accountNames } from "../../../constants";
+import landingQuickApply from "../../../assets/images/quick-apply.png";
 
 export const accountsInfo = {
   [accountNames.starter]: {
@@ -24,6 +25,7 @@ export const accountsInfo = {
   },
   landingPage: {
     title: "Welcome to\n",
-    subtitle: "Get started with your \nbanking needs online,\nin minutes!"
+    subtitle: "Get started with your \nbanking needs online,\nin minutes!",
+    image: landingQuickApply
   }
 };

@@ -48,6 +48,16 @@ export const useStyles = makeStyles(theme => ({
       lineHeight: "36px"
     }
   },
+  sectionTitleImg: {
+    width: "328px",
+    [theme.breakpoints.only("xs")]: {
+      width: "228px"
+    },
+    [theme.breakpoints.only("sm")]: {
+      width: "328px"
+    }
+    //paddingLeft: "10"
+  },
   sectionSubtitle: {
     fontSize: "16px",
     lineHeight: "1.5",
@@ -66,12 +76,13 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   sectionLandingSubtitle: {
-    fontSize: "22px",
+    fontSize: "24px",
     lineHeight: "1.5",
     color: "#fff",
     maxWidth: 300,
     display: "block",
     fontWeight: 600,
+    paddingLeft: "40px",
     fontFamily: "Open Sans",
     whiteSpace: "pre-wrap",
     "& + button": {
@@ -79,7 +90,8 @@ export const useStyles = makeStyles(theme => ({
       [theme.breakpoints.only("xs")]: buttonMobile
     },
     [theme.breakpoints.only("xs")]: {
-      marginBottom: "auto"
+      marginBottom: "auto",
+      fontSize: "20px"
     }
   },
   sectionButton: {
