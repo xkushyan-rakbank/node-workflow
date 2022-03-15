@@ -127,8 +127,10 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
               <ProtectedRoute exact path={routes.quickapplyLanding} component={QuickapplyLanding} />
-              <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
-              <Redirect exact path="/" to={routes.quickapplyLanding} />
+              <ProtectedRoute exact path={smeBaseName} component={QuickapplyLanding} />
+              <ProtectedRoute exact path="/"  component={QuickapplyLanding} />
+              {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
+              <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />
