@@ -27,9 +27,9 @@ jobs:
 #        - JDK
       steps:
       - task: NodeTool@0
-        displayName: 'Use Node 10.x'
+        displayName: 'Use Node 14.x'
         inputs:
-          versionSpec: 10.x
+          versionSpec: 14.x
 
       - bash: |
           echo "registry=https://pkgs.dev.azure.com/softwarelicense/505d78ca-5ab9-4415-bd14-9ad67f816ed9/_packaging/rakbank/npm/registry/" >> webapply/.npmrc
@@ -166,9 +166,9 @@ jobs:
         vmImage: 'macOS-1015'
       steps:
       - task: NodeTool@0
-        displayName: 'Use Node 10.x'
+        displayName: 'Use Node 14.x'
         inputs:
-          versionSpec: 10.x
+          versionSpec: 14.x
 
       - bash : |
           cd webapplyserver
@@ -288,9 +288,9 @@ jobs:
         vmImage: 'macOS-1015'
       steps:
       - task: NodeTool@0
-        displayName: 'Use Node 10.x'
+        displayName: 'Use Node 14.x'
         inputs:
-          versionSpec: 10.x
+          versionSpec: 14.x
 
       - bash : |
           cd document_uploader
@@ -403,9 +403,9 @@ jobs:
        and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/release'), eq(variables['Build.SourceBranch'], 'refs/heads/develop')))
       steps:
       - task: NodeTool@0
-        displayName: 'Use Node 10.x'
+        displayName: 'Use Node 14.x'
         inputs:
-          versionSpec: 10.x
+          versionSpec: 14.x
       #prepare the Sonarqube for executing the sonar 
       - task: SonarCloudPrepare@1
         inputs:
