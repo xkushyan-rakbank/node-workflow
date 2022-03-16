@@ -49,15 +49,16 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   sectionTitleMain: {
-    paddingLeft: "40px"
+    paddingLeft: "40px",
+    fontSize: "48px"
   },
   sectionTitleImg: {
-    width: "328px",
+    width: "340px",
     [theme.breakpoints.only("xs")]: {
-      width: "228px"
+      width: "328px"
     },
     [theme.breakpoints.only("sm")]: {
-      width: "328px"
+      width: "340px"
     }
     //paddingLeft: "10"
   },
@@ -79,7 +80,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   sectionLandingSubtitle: {
-    fontSize: "24px",
+    fontSize: "26px",
     lineHeight: "1.5",
     color: "#fff",
     maxWidth: 300,
