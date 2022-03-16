@@ -80,7 +80,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   sectionLandingSubtitle: {
-    fontSize: "26px",
+    fontSize: "24px",
     lineHeight: "1.5",
     color: "#fff",
     maxWidth: 300,
@@ -95,7 +95,7 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.only("xs")]: {
       marginBottom: "auto",
-      fontSize: "20px"
+      fontSize: "24px"
     }
   },
   sectionButton: {
