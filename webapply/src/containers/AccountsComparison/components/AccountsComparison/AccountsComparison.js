@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from "react";
-
+import { Helmet, HelmetProvider } from "react-helmet-async";
 import { scrollToDOMNode, VerticalPagination } from "../../../../components/VerticalPagination";
 import { BackgroundVideoPlayer } from "../../../../components/BackgroundVideoPlayer";
 import { getVideoByAccountType } from "../../../../utils/getVideoByAccountType";
@@ -27,6 +27,10 @@ export const AccountsComparisonComponent = ({
   );
 
   return (
+    <HelmetProvider>
+      <Helmet>
+        <title>{"Quick Apply | Online Application for Business Accounts | RAKBANK"}</title>
+      </Helmet>
     <div className={classes.container}>
       <VerticalPagination scrollToSection={scrollToSection}>
         <div ref={firstSection}>
@@ -72,5 +76,6 @@ export const AccountsComparisonComponent = ({
         </div>
       </VerticalPagination>
     </div>
+    </HelmetProvider>
   );
 };
