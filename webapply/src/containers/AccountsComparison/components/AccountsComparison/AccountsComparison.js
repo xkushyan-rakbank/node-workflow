@@ -27,55 +27,57 @@ export const AccountsComparisonComponent = ({
   );
 
   return (
-    <HelmetProvider>
-      <Helmet>
-        <title>{"Quick Apply | Online Application for Business Accounts | RAKBANK"}</title>
-      </Helmet>
-    <div className={classes.container}>
-      <VerticalPagination scrollToSection={scrollToSection}>
-        <div ref={firstSection}>
-          <BackgroundVideoPlayer
-            video={getVideoByAccountType()}
-            classes={{ video: classes.video }}
-            handleClick={() => setCurrentSection(1)}
-          />
-        </div>
-        <div ref={secondSection} className={classes.section}>
-          <SectionTitleWithInfo
-            title="Business accounts for every business stage"
-            info="Available in both conventional and islamic variants"
-            smallInfo
-          />
-          <AccountCard handleSetAccountType={handleSetAccountType} />
-          <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
-        </div>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>{"Quick Apply | Online Application for Business Accounts | RAKBANK"}</title>
+        </Helmet>
+      </HelmetProvider>
+      <div className={classes.container}>
+        <VerticalPagination scrollToSection={scrollToSection}>
+          <div ref={firstSection}>
+            <BackgroundVideoPlayer
+              video={getVideoByAccountType()}
+              classes={{ video: classes.video }}
+              handleClick={() => setCurrentSection(1)}
+            />
+          </div>
+          <div ref={secondSection} className={classes.section}>
+            <SectionTitleWithInfo
+              title="Business accounts for every business stage"
+              info="Available in both conventional and islamic variants"
+              smallInfo
+            />
+            <AccountCard handleSetAccountType={handleSetAccountType} />
+            <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
+          </div>
 
-        <div ref={tableRef} className={classes.section}>
-          <SectionTitleWithInfo
-            title="Compare the accounts"
-            info="Our three business accounts, side by side"
-            smallInfo
-          />
-          <TableCompare selectedAccount={selectedAccount} />
-          <InfoNote
-            text={
-              <>
-                Note: 5% VAT will be levied on all charges applicable to business customers. To see
-                our detailed Service & Price Guide click{" "}
-                <a
-                  className={classes.externalLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={servicePricingGuideUrl}
-                >
-                  here
-                </a>
-              </>
-            }
-          />
-        </div>
-      </VerticalPagination>
-    </div>
-    </HelmetProvider>
+          <div ref={tableRef} className={classes.section}>
+            <SectionTitleWithInfo
+              title="Compare the accounts"
+              info="Our three business accounts, side by side"
+              smallInfo
+            />
+            <TableCompare selectedAccount={selectedAccount} />
+            <InfoNote
+              text={
+                <>
+                  Note: 5% VAT will be levied on all charges applicable to business customers. To see
+                  our detailed Service & Price Guide click{" "}
+                  <a
+                    className={classes.externalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={servicePricingGuideUrl}
+                  >
+                    here
+                  </a>
+                </>
+              }
+            />
+          </div>
+        </VerticalPagination>
+      </div>
+    </>
   );
 };

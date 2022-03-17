@@ -14,12 +14,14 @@ export const QuickapplyLandingComponent = () => {
   }, []);
 
   return (
-    <HelmetProvider>
-      <Helmet>
-        <title>
-          {"Quick Apply | Online Application for Business Accounts and Finance | RAKBANK"}
-        </title>
-      </Helmet>
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>
+            {"Quick Apply | Online Application for Business Accounts and Finance | RAKBANK"}
+          </title>
+        </Helmet>
+      </HelmetProvider>
       <div className={classes.container}>
         <div className={classes.paginationWrapper}>
           <div className={classes.childWrapper}>
@@ -27,6 +29,6 @@ export const QuickapplyLandingComponent = () => {
           </div>
         </div>
       </div>
-    </HelmetProvider>
+    </>
   );
 };
