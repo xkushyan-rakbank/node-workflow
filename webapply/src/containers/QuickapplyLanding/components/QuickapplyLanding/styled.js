@@ -45,7 +45,7 @@ export const useStyles = makeStyles(theme => ({
   video: {
     [theme.breakpoints.up("sm")]: {
       bottom: 0,
-      top: "auto"
+      top: 0
     }
   }
 }));

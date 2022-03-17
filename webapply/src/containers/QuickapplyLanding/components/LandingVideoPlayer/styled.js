@@ -17,12 +17,12 @@ export const useStyles = makeStyles(theme => ({
     minHeight: "100vh",
     zIndex: 10,
     [theme.breakpoints.only("xs")]: {
-      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 220 : 0),
+      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 280 : 0),
       height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
       maxHeight: "none"
     },
     [theme.breakpoints.between("ls", "sm")]: {
-      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 100 : 0),
+      top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 260 : 0),
       height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
       maxHeight: "none"
     }
