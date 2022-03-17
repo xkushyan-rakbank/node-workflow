@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { LandingVideoPlayer } from "../LandingVideoPlayer/LandingVideoPlayer";
 import { landingVideo } from "../../../../constants/videos";
 import { useStyles } from "./styled";
@@ -8,6 +8,10 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 export const QuickapplyLandingComponent = () => {
   const classes = useStyles();
   const { setCurrentSection } = useContext(VerticalPaginationContext);
+
+  useEffect(() => {
+    setCurrentSection(1);
+  }, []);
 
   return (
     <HelmetProvider>
