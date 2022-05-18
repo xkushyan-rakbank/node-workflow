@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import routes, { smeBaseName } from "../../../../routes";
@@ -16,11 +16,16 @@ export const LandingVideoPlayer = ({ video: { mp4, webm, poster }, ...rest }) =>
   const isMobileNotificationActive = useContext(MobileNotificationContext);
   const classes = useStyles({ isMobileNotificationActive, ...rest });
 
+  const queryParams = useLocation().search;
+
   const redirectInToFinance = url => {
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_FINANCE_CHOSEN));
-    window.location.href = url;
+    if (queryParams) {
+      window.location.href = url + queryParams;
+    } else {
+      window.location.href = url;
+    }
   };
-
   return createPortal(
     <div className={classes.container}>
       <video
@@ -44,7 +49,7 @@ export const LandingVideoPlayer = ({ video: { mp4, webm, poster }, ...rest }) =>
             onClick={() =>
               dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN))
             }
-            to={routes.accountsComparison}
+            to={queryParams ? routes.accountsComparison + queryParams : routes.accountsComparison}
           >
             <ExpandMoreButton label="Business Account" className={classes.accountBtn} />
           </Link>
