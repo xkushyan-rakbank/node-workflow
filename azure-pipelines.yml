@@ -20,17 +20,12 @@ jobs:
     - job: Webapply
       timeoutInMinutes: 120
       pool:
-        #name: Hosted macOS
         vmImage: 'macOS-1015'
-#      demands:
-#        - java
-#        - JDK
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 14.x'
         inputs:
           versionSpec: 14.x
-
       - bash: |
           echo "registry=https://pkgs.dev.azure.com/softwarelicense/505d78ca-5ab9-4415-bd14-9ad67f816ed9/_packaging/rakbank/npm/registry/" >> webapply/.npmrc
           echo "always-auth=true" >> webapply/.npmrc
