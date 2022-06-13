@@ -10,7 +10,7 @@ pr:
     include:
       - develop
       - release
-      
+
 trigger:
   - develop
   - release
@@ -20,7 +20,7 @@ jobs:
     - job: Webapply
       timeoutInMinutes: 120
       pool:
-        vmImage: 'macOS-1015'
+        vmImage: 'macOS-10.15'
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 14.x'
