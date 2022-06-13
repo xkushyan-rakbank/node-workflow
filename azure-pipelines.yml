@@ -10,7 +10,7 @@ pr:
     include:
       - develop
       - release
-#trigger: none
+      
 trigger:
   - develop
   - release
