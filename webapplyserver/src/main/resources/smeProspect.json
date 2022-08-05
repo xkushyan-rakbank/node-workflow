@@ -258,6 +258,7 @@
 			"mothersMaidenName": "",
 			"numberOfDependants": 0,
 			"highestEducationAttained": "",
+			"isShareholderACompany": false,
 			"employmentStatus": "",
 			"kycVerified": false,
 			"kycDetails": {
@@ -292,6 +293,15 @@
 				"qualification": "",
 				"experienceInYrs": "",
 				"sourceOfWealth": []
+			},
+			"signatoryCompanyInfo": {
+				"companyName": "",
+				"countryOfIncorporation": "AE",
+				"hasDiplomaticPassport": false,
+				"hasProminentPosition": false,
+				"isMemberofRulingFamily": false,
+				"tradeLicenseNo": "",
+				"dateOfIncorporation": ""
 			},
 			"contactDetails": {
 				"primaryMobileNo": "",
