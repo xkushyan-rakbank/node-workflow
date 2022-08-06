@@ -267,6 +267,7 @@
 				"isSignatory": false,
 				"isShareholder": "",
 				"shareHoldingPercentage": "",
+				"isShareholderACompany": false,
 				"dateOfBirth": "",
 				"dualCitizenship": "",
 				"dualCitizenshipCountry": [
