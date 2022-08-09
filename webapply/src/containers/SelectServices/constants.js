@@ -93,3 +93,5 @@ export const DATA_CURRENCIES = [
 ];
 
 export const SELECT_SERVICES_PAGE_ID = "selectServices";
+
+export const ACCOUNTSIGNTYPE = "102";

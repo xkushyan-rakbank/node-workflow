@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-
+import React, { useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper, SAVE } from "../../constants";
@@ -8,11 +8,18 @@ import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 
-import { servicesSteps, SELECT_SERVICES_PAGE_ID, STEP_4 } from "./constants";
+import { servicesSteps, SELECT_SERVICES_PAGE_ID, STEP_4, ACCOUNTSIGNTYPE } from "./constants";
 import { SelectServices } from "./components/SelectServices";
 
-export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectToAPI }) => {
+export const SelectServicesPage = ({
+  accountType,
+  rakValuePackage,
+  signatoriesDetails,
+  sendProspectToAPI,
+  updateProspect
+}) => {
   const pushHistory = useTrackingHistory();
+  const dispatch = useDispatch();
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
   useViewId(true);
@@ -30,6 +37,18 @@ export const SelectServicesPage = ({ accountType, rakValuePackage, sendProspectT
   );
 
   const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
+
+  useEffect(() => {
+    signatoriesDetails &&
+      signatoriesDetails.length === 1 &&
+      signatoriesDetails[0].accountSigningInfo.accountSigningType === "" &&
+      dispatch(
+        updateProspect({
+          "prospect.signatoryInfo[0].accountSigningInfo.accountSigningType": ACCOUNTSIGNTYPE,
+          "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn": ""
+        })
+      );
+  }, []);
 
   const handleClickNextStep = useCallback(() => {
     if (isSubmitOnClickNextStepButton) {
