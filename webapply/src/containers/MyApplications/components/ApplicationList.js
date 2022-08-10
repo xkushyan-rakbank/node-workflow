@@ -9,7 +9,6 @@ import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingProspectId }) => {
   const classes = useStyles();
-
   return applicantInfo.map(app => (
     <div className={classes.wrapper} key={app.prospectId}>
       <div className={classes.applicationRow}>
@@ -17,6 +16,12 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
           <div className={classes.companyName}>{app.organizationInfo.companyName}</div>
           <div className={classes.listAccount}>
             {getTitleForAccountType(app.applicationInfo.accountType)}
+          </div>
+          <div className={classes.listAccount}>
+            {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}
+          </div>
+          <div className={classes.listAccount}>
+            {app.applicationInfo.roLandlineNo ? app.applicationInfo.roLandlineNo : ""}
           </div>
         </div>
         {app.status
