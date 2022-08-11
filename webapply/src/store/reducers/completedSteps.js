@@ -3,7 +3,8 @@ import {
   SET_STEP_STATUS,
   SET_INITIAL_STEPS,
   REMOVE_SIGNATORY,
-  SET_STEPS_STATUS
+  SET_STEPS_STATUS,
+  RESET_STEPS
 } from "../actions/completedSteps";
 import { LOAD_META_DATA } from "../actions/appConfig";
 import { log } from "../../utils/loggger";
@@ -17,6 +18,16 @@ export const setStepsStatus = (state, steps, status) =>
       : item
   );
 
+export const setNewSteps = (state, steps, flowId) => {
+  let updatedState = state.filter(step => step.flowId !== flowId);
+  updatedState.map(item =>
+    steps.map(
+      (step, index) =>
+        item.flowId === step.flowId && item.step === step.step && steps.splice(index, 1)
+    )
+  );
+  return [...updatedState];
+};
 const completedSteps = handleActions(
   {
     [LOAD_META_DATA]: (state, { payload: json }) => {
@@ -45,6 +56,7 @@ const completedSteps = handleActions(
       );
       return [...state, ...steps];
     },
+    [RESET_STEPS]: (state, { payload: { steps, flowId } }) => setNewSteps(state, steps, flowId),
     [REMOVE_SIGNATORY]: (state, { payload: { signatoryId } }) =>
       state.filter(step => !step.flowId.includes(signatoryId))
   },

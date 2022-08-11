@@ -10,6 +10,7 @@ import { createGetAuthorityTypeDisplayText } from "../../store/selectors/appConf
 export const FilledStakeholderCard = ({
   authorityType,
   index,
+  stakeholder,
   kycDetails: { shareHoldingPercentage },
   isEditDisabled,
   stakeholderId
@@ -34,6 +35,8 @@ export const FilledStakeholderCard = ({
       shareHoldingPercentage={shareHoldingPercentage}
       authorityTypeDisplayText={authorityTypeDisplayText}
       index={index}
+      isShareholderACompany={stakeholder.kycDetails.isShareholderACompany}
+      signatoryCompanyInfo={stakeholder.signatoryCompanyInfo}
     />
   );
 };

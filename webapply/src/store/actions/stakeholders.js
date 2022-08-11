@@ -6,6 +6,7 @@ export const DELETE_STAKEHOLDER = "DELETE_STAKEHOLDER";
 
 export const CHANGE_EDITABLE_STAKEHOLDER = "CHANGE_EDITABLE_STAKEHOLDER";
 export const UPDATE_STAKEHOLDERS_IDS = "UPDATE_STAKEHOLDERS_IDS";
+export const RESET_STAKEHOLDER_INFO = "RESET_STAKEHOLDER_INFO";
 
 export const createNewStakeholder = () => {
   const action = { type: CREATE_NEW_STAKEHOLDER };
@@ -24,4 +25,8 @@ export const changeEditableStakeholder = stakeholderId => {
 
 export const updateStakeholdersIds = stakeholdersIds => {
   return { type: UPDATE_STAKEHOLDERS_IDS, payload: stakeholdersIds };
+};
+
+export const resetStakeholderInfo = stakeholderIndex => {
+  return { type: RESET_STAKEHOLDER_INFO, payload: stakeholderIndex };
 };

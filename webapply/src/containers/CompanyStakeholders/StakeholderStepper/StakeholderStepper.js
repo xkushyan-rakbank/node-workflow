@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { CONTINUE, SAVE } from "../../../constants";
 import { stakeHoldersSteps, STEP_6 } from "../constants";
 import { COMPANY_STAKEHOLDER_ID } from "../constants";
@@ -15,9 +15,11 @@ export const StakeholderStepperContainer = ({
   stakeholder: {
     id: stakeholderId,
     fullName,
+    accountSigningInfo: { authorityType },
     kycDetails,
-    accountSigningInfo: { authorityType }
+    signatoryCompanyInfo
   },
+  stakeholder,
   orderIndex,
   deleteStakeholder,
   sendProspectToAPI,
@@ -31,11 +33,22 @@ export const StakeholderStepperContainer = ({
     availableSteps,
     handleSetStep,
     handleSetNextStep,
-    createFormChangeHandler
-  ] = useStep(`${COMPANY_STAKEHOLDER_ID}${stakeholderId}`, stakeHoldersSteps);
+    createFormChangeHandler,
+    resetStakeholderSteps
+  ] = useStep(
+    `${COMPANY_STAKEHOLDER_ID}${stakeholderId}`,
+    stakeHoldersSteps[kycDetails.isShareholderACompany]
+  );
+  const isShareholderACompanyRef = useRef(kycDetails.isShareholderACompany);
+
+  useEffect(() => {
+    if (isShareholderACompanyRef.current !== kycDetails.isShareholderACompany) {
+      resetStakeholderSteps();
+      isShareholderACompanyRef.current = kycDetails.isShareholderACompany;
+    }
+  }, [kycDetails.isShareholderACompany]);
 
   const isEditInProgress = editableStakeholder === stakeholderId;
-
   const handleContinue = event => () => {
     sendProspectToAPI(CONTINUE, event, SAVE, {
       activeStep,
@@ -69,17 +82,22 @@ export const StakeholderStepperContainer = ({
   }, [stakeholderId, isDisplayConfirmation, setIsDisplayConfirmation, deleteStakeholder]);
 
   if (isShowSuccessFilled) {
-    return <SuccessFilledStakeholder name={fullName} />;
+    return (
+      <SuccessFilledStakeholder
+        name={kycDetails.isShareholderACompany ? signatoryCompanyInfo.companyName : fullName}
+      />
+    );
   }
 
   if (!isEditInProgress) {
     return (
       <FilledStakeholderCard
-        authorityType={authorityType}
+        authorityTypeValue={authorityType}
         index={orderIndex}
         kycDetails={kycDetails}
-        isEditDisabled={editableStakeholder !== null}
+        isEditDisabled={false}
         stakeholderId={stakeholderId}
+        stakeholder={stakeholder}
       />
     );
   }
@@ -90,9 +108,10 @@ export const StakeholderStepperContainer = ({
       cancelEditHandler={cancelEditHandler}
       deleteHandler={deleteHandler}
       stakeholderId={stakeholderId}
+      stakeholder={stakeholder}
       isDisplayConfirmation={isDisplayConfirmation}
     >
-      {stakeHoldersSteps.map(item => (
+      {stakeHoldersSteps[kycDetails.isShareholderACompany].map(item => (
         <StepComponent
           index={orderIndex}
           id={stakeholderId}
@@ -106,7 +125,10 @@ export const StakeholderStepperContainer = ({
           clickHandler={createSetStepHandler(item.step)}
           handleContinue={handleContinue(item.eventName)}
           createFormChangeHandler={createFormChangeHandler}
+          isShareholderACompany={kycDetails.isShareholderACompany}
           stepForm={item.component}
+          stakeholder={stakeholder}
+          step={item.step}
         />
       ))}
     </CompanyStakeholderCard>

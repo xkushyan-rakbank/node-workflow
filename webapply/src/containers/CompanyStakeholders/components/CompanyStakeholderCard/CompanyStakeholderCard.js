@@ -17,7 +17,9 @@ export const CompanyStakeholderCardComponent = ({
   isDisplayConfirmation,
   deleteHandler,
   isAllStepsCompleted,
-  index
+  index,
+  isShareholderACompany = false,
+  signatoryCompanyInfo = {}
 }) => {
   const classes = useStyles();
 
@@ -29,11 +31,18 @@ export const CompanyStakeholderCardComponent = ({
           lastName={lastName}
           index={index}
           isEmptyAvatar={!firstName}
+          isShareholderACompany={isShareholderACompany}
+          signatoryCompanyInfo={signatoryCompanyInfo}
         />
 
         <div className={classes.userInfo}>
           <div className={classes.nameField}>
-            {[firstName, middleName, lastName].filter(item => item).join(" ") || "New Stakeholder"}
+            {isShareholderACompany
+              ? signatoryCompanyInfo.companyName || "New Stakeholder"
+              : [firstName, middleName, lastName].filter(item => item).join(" ") ||
+                "New Stakeholder"}
+            {/* {[firstName, middleName, lastName].filter(item => item).join(" ")
+           // || "New Stakeholder"} */}
           </div>
           {(!isAllStepsCompleted || isStatusLoading) && <StatusLoader loading={isStatusLoading} />}
           {isAllStepsCompleted && (

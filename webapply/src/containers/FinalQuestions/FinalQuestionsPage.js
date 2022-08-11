@@ -26,7 +26,6 @@ export const FinalQuestionsPage = ({ signatories, sendProspectToAPI }) => {
 
   const isCompanyStepsCompleted = checkAllStepsCompleted(companySteps);
   const isAllStepsCompleted = checkAllStepsCompleted(signatoriesSteps) && isCompanyStepsCompleted;
-
   const goToUploadDocument = useCallback(() => {
     setIsLoading(true);
     return sendProspectToAPI(NEXT).then(
@@ -48,10 +47,13 @@ export const FinalQuestionsPage = ({ signatories, sendProspectToAPI }) => {
   const handleClickStartHere = useCallback(() => {
     setIsCompanyExpanded(true);
   }, [setIsCompanyExpanded]);
+  const filterSignatories = signatories => {
+    return signatories.filter(el => el.kycDetails.isShareholderACompany === false);
+  };
 
   return (
     <FinalQuestions
-      signatories={signatories}
+      signatories={filterSignatories(signatories)}
       signatoriesSteps={signatoriesSteps}
       isLoading={isLoading}
       isAllStepsCompleted={isAllStepsCompleted}

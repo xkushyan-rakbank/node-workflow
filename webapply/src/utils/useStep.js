@@ -4,7 +4,7 @@ import { getIn } from "formik";
 import isEqual from "lodash/isEqual";
 
 import { FormikEffect } from "../components/Form/FormikEffect";
-import { setStepStatus, setInitialSteps } from "../store/actions/completedSteps";
+import { setStepStatus, setInitialSteps, resetSteps } from "../store/actions/completedSteps";
 import { getCompletedSteps } from "../store/selectors/completedSteps";
 import { STEP_STATUS } from "../constants";
 
@@ -12,7 +12,18 @@ export const useStep = (flowId, steps) => {
   const [activeStep, setActiveStep] = useState(steps[0].step);
   const dispatch = useDispatch();
   const availableSteps = useSelector(getCompletedSteps).filter(item => item.flowId === flowId);
-
+  const resetStakeholderSteps = useCallback(() => {
+    dispatch(
+      resetSteps(
+        flowId,
+        steps.map(step => ({
+          flowId,
+          step: step.step,
+          status: STEP_STATUS.NOT_AVAILABLE
+        }))
+      )
+    );
+  }, [dispatch, flowId, steps]);
   useEffect(() => {
     if (!availableSteps.length) {
       dispatch(
@@ -37,7 +48,6 @@ export const useStep = (flowId, steps) => {
     },
     [steps, dispatch, flowId]
   );
-
   const handleSetStep = useCallback(
     nextStep => {
       if (
@@ -80,5 +90,12 @@ export const useStep = (flowId, steps) => {
     </>
   );
 
-  return [activeStep, availableSteps, handleSetStep, handleSetNextStep, createFormChangeHandler];
+  return [
+    activeStep,
+    availableSteps,
+    handleSetStep,
+    handleSetNextStep,
+    createFormChangeHandler,
+    resetStakeholderSteps
+  ];
 };

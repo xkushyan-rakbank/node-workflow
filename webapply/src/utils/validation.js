@@ -13,6 +13,7 @@ export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;
 export const NAME_REGEX = /^([a-zA-Z ])+$/;
 export const NUMBER_REGEX = /^[0-9]*$/;
 export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9-])*$/;
+export const ALPHANUMERIC_ONLY_REGEX = /^([a-zA-Z0-9])*$/;
 
 export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;

@@ -56,7 +56,6 @@ export function* signatoryStepsSaga({ payload }) {
       );
       return findStep && findStep.status === STEP_STATUS.COMPLETED;
     });
-
     if (steps.length) {
       yield put(setStepsStatus(steps, STEP_STATUS.AVAILABLE));
     }

@@ -12,17 +12,28 @@ export const FilledStakeholderCardComponent = ({
   authorityTypeDisplayText,
   shareHoldingPercentage,
   editStakeholder,
-  isEditDisabled
+  isEditDisabled,
+  isShareholderACompany = false,
+  signatoryCompanyInfo
 }) => {
   const classes = useStyles();
-
   return (
     <div className={classes.wrapper}>
       <div className={classes.contentWrapper}>
-        <Avatar firstName={firstName} lastName={lastName} index={index} />
+        <Avatar
+          firstName={firstName}
+          lastName={lastName}
+          index={index}
+          signatoryCompanyInfo={signatoryCompanyInfo}
+          isShareholderACompany={isShareholderACompany}
+        />
 
         <div className={classes.userInfo}>
-          <div className={classes.nameField}>{`${firstName} ${middleName} ${lastName}`}</div>
+          <div className={classes.nameField}>
+            {isShareholderACompany
+              ? `${signatoryCompanyInfo.companyName}`
+              : `${firstName} ${middleName} ${lastName}`}
+          </div>
           {authorityTypeDisplayText && (
             <div className={classes.signatoryField}>{authorityTypeDisplayText}</div>
           )}

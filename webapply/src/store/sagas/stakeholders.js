@@ -7,7 +7,8 @@ import {
   CREATE_NEW_STAKEHOLDER,
   DELETE_STAKEHOLDER,
   changeEditableStakeholder,
-  updateStakeholdersIds
+  updateStakeholdersIds,
+  RESET_STAKEHOLDER_INFO
 } from "../actions/stakeholders";
 import { removeSignatory } from "../actions/completedSteps";
 import { updateProspect } from "../actions/appConfig";
@@ -46,9 +47,25 @@ export function* deleteStakeholderSaga({ payload: stakeholderId }) {
   yield put(changeEditableStakeholder(null));
 }
 
+export function* resetStakeholderSaga({ payload: staekholderIndex }) {
+  const stakeholders = cloneDeep(yield select(getSignatories));
+  const newStakeholder = yield select(getSignatoryModel);
+
+  const resetedStakeholder = {
+    ...newStakeholder,
+    signatoryId: stakeholders[staekholderIndex].signatoryId,
+    stakeholdersDocuments: stakeholders[staekholderIndex].stakeholdersDocuments,
+    addressInfo: stakeholders[staekholderIndex].addressInfo
+  };
+  yield put(
+    updateProspect({ [`prospect.signatoryInfo[${staekholderIndex}]`]: resetedStakeholder })
+  );
+}
+
 export default function* stakeholderSaga() {
   yield all([
     takeEvery(CREATE_NEW_STAKEHOLDER, createNewStakeholderSaga),
-    takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga)
+    takeEvery(DELETE_STAKEHOLDER, deleteStakeholderSaga),
+    takeEvery(RESET_STAKEHOLDER_INFO, resetStakeholderSaga)
   ]);
 }

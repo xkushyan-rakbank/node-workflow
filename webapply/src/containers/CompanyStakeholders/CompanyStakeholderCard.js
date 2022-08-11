@@ -9,6 +9,7 @@ import { createGetIsStakeholderStepsCompleted } from "../../store/selectors/comp
 
 export const CompanyStakeholderCard = ({
   stakeholderId,
+  stakeholder,
   index,
   cancelEditHandler,
   deleteHandler,
@@ -34,6 +35,8 @@ export const CompanyStakeholderCard = ({
       stakeholdersCount={signatoriesCount}
       isAllStepsCompleted={isAllStepsCompleted}
       index={index}
+      isShareholderACompany={stakeholder.kycDetails.isShareholderACompany}
+      signatoryCompanyInfo={stakeholder.signatoryCompanyInfo}
     >
       {children}
     </CompanyStakeholderCardComponent>
