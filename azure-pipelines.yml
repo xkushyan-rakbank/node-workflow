@@ -41,6 +41,7 @@ jobs:
         #condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
       - bash : |
           cd webapply
+          npm cache clean
           npm install --verbose
           npm run build
         env:
