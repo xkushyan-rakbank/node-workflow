@@ -6,8 +6,8 @@
 		"mobileNo": "",
 		"applyOnbehalf": false,
 		"LeadSource": "Direct",
-        "roCode": "",
-        "allianceCode": ""
+		"roCode": "",
+		"allianceCode": ""
 	},
 	"generalInfo": {
 		"prospectId": "",
@@ -39,7 +39,7 @@
 		"tncAgreed": false,
 		"declaration": false,
 		"sanctionUndertaking": false,
-        "promoCode": ""
+		"promoCode": ""
 	},
 	"accountInfo": [
 		{
@@ -57,7 +57,7 @@
 			"receiveInterest": false,
 			"deliverByCourier": false,
 			"expressTandC": false,
-            "express": false
+			"express": false
 		}
 	],
 	"organizationInfo": {
@@ -142,8 +142,8 @@
 			{
 				"primaryMobileNo": "",
 				"primaryMobCountryCode": "971",
-                "TxnReconfirmingfullname": "",
-                "primaryPhoneNo": "",
+				"TxnReconfirmingfullname": "",
+				"primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "971"
 			}
 		]
@@ -217,13 +217,12 @@
 		],
 		"isShareholderACompany": false,
 		"isDontHaveSuppliersYet": false,
-  		"isDontTradeGoodsYet": false,
-  		"dnfbpField":"na",
-  		"isCompanyUSEntity" : "",
-  		"isFinancialInstitution" : "na",
-  		"isNonFinancialInstitution" : "na",
-  		"globalintermediaryId" : ""
-  		
+		"isDontTradeGoodsYet": false,
+		"dnfbpField": "na",
+		"isCompanyUSEntity": "",
+		"isFinancialInstitution": "na",
+		"isNonFinancialInstitution": "na",
+		"globalintermediaryId": ""
 	},
 	"signatoryInfo": [
 		{
@@ -253,7 +252,7 @@
 			"maritalStatus": "",
 			"maritalStatusOthers": "",
 			"countryofBirth": "",
-            "placeOfBirth": "",
+			"placeOfBirth": "",
 			"occupation": "",
 			"mothersMaidenName": "",
 			"numberOfDependants": 0,
@@ -309,7 +308,7 @@
 				"primaryEmail": "",
 				"primaryPhoneNo": "",
 				"primaryPhoneCountryCode": "971",
-				"primaryHomeNo" : "",
+				"primaryHomeNo": "",
 				"primaryHomeCountryCode": "",
 				"fax": "",
 				"faxCountryCode": "",
@@ -350,7 +349,7 @@
 						}
 					]
 				},
-					{
+				{
 					"typeOfAddress": "OFFICE",
 					"addressDetails": [
 						{
@@ -365,7 +364,8 @@
 							"country": "AE"
 						}
 					]
-				},	{
+				},
+				{
 					"typeOfAddress": "Home",
 					"addressDetails": [
 						{
@@ -419,6 +419,47 @@
 		"reasonCode": "",
 		"reasonStatus": ""
 	},
+	"kycAnnexure": {
+		"workItemNumber": "",
+		"companyName": "",
+		"signatoryName": "",
+		"businessModel": "",
+		"education": "",
+		"experienceInYrs": "",
+		"isUltimateBeneficiary": "yes",
+		"bankDetails": [
+		  {
+			"bankName": "",
+			"isStatementAvailable": "",
+			"bankStatementRemark": "",
+			"bankStatementFrom": "",
+			"bankStatementTo": ""
+		  }
+		],
+		"antiMoneyLaundering": "yes",
+		"poaCountry": [
+		  ""
+		],
+		"riskIndustries": [
+		  ""
+		],
+		"clientDealingCountry": [
+		  ""
+		],
+		"audioVideoKycVerification": "NA",
+		"signatoryEIDinfo": "yes",
+		"signatoryEIDinfoRemarks": "",
+		"goAmlRegistration": "NA",
+		"goAmlRegistrationNumber": "",
+		"goAmlIndustry": [
+		],
+		"roName": "",
+		"roEmployeeId": "",
+		"kycVerificationDate": "",
+		"kycVerificationTime": "",
+		"kycVerificationLocation": "",
+		"kycVerificationotherLocation": ""
+	  },
 	"freeFieldsInfo": {
 		"freeField1": "",
 		"freeField2": "",
