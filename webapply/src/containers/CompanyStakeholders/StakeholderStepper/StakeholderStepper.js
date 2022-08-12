@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { CONTINUE, SAVE } from "../../../constants";
-import { stakeHoldersSteps, STEP_6 } from "../constants";
+import { stakeHoldersSteps, STEP_6, STEP_1 } from "../constants";
 import { COMPANY_STAKEHOLDER_ID } from "../constants";
 import { STEP_STATUS } from "../../../constants";
 import { useStep } from "../../../utils/useStep";
@@ -56,6 +56,12 @@ export const StakeholderStepperContainer = ({
     }).then(
       () => {
         if (activeStep === STEP_6) {
+          setIsShowSuccessFilled(true);
+          setTimeout(() => {
+            setIsShowSuccessFilled(false);
+            changeEditableStakeholder(null);
+          }, timeInterval);
+        } else if (activeStep === STEP_1 && kycDetails.isShareholderACompany) {
           setIsShowSuccessFilled(true);
           setTimeout(() => {
             setIsShowSuccessFilled(false);
