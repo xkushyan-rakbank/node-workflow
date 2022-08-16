@@ -135,11 +135,7 @@ export const NationalityStep = ({
                               .slice(1),
                             [`${kycDetailsPath}.dualCitizenship`]: !!passportIndex
                           })}
-                          disabled={isAdditionalCitizenshipDisabled(
-                            values,
-                            passportIndex,
-                            errors
-                          )}
+                          disabled={isAdditionalCitizenshipDisabled(values, passportIndex, errors)}
                           inputProps={{ tabIndex: 2 * passportIndex + 2 }}
                         />
                       )}

@@ -16,22 +16,28 @@ export const SelectServicesPage = ({
   rakValuePackage,
   signatoriesDetails,
   sendProspectToAPI,
-  updateProspect
+  updateProspect,
+  isComeFromROScreens,
+  topCustomers,
+  otherBankDetails,
+  datalist,
+  getKycAnnexureBankDetails,
+  getKycAnnexureDetails
 }) => {
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
   useViewId(true);
-
+  const isComeFromROScreensCheck =
+    isComeFromROScreens && isComeFromROScreens === true ? isComeFromROScreens : false;
   const [
     activeStep,
     availableSteps,
     handleSetStep,
     handleSetNextStep,
     createFormChangeHandler
-  ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps);
-
+  ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps[isComeFromROScreensCheck]);
   const isAllStepsCompleted = !availableSteps.some(
     step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED
   );
@@ -48,6 +54,49 @@ export const SelectServicesPage = ({
           "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn": ""
         })
       );
+  }, []);
+
+  useEffect(() => {
+    const signatoriesIsShareholder = signatoriesDetails.filter(
+      signatory => signatory.kycDetails.isShareholder === true
+    );
+    const shareholderNationalities = signatoriesIsShareholder.map(
+      signatory => signatory.kycDetails.nationality
+    );
+    const signatoriesName = signatoriesDetails.map(signatory => signatory.fullName);
+    const poaCountry = [];
+    datalist.poaNationality.map(item => {
+      if (shareholderNationalities.includes(item.value)) {
+        poaCountry.push(item.value);
+      }
+    });
+    const listOfCountries = [];
+    var topCustomersCountries = [];
+    topCustomersCountries = topCustomers && topCustomers.map(item => item.country);
+    datalist.clientDealingCountry.map(item => {
+      if (topCustomersCountries.includes(item.value)) {
+        listOfCountries.push(item.value);
+      }
+    });
+    var bankNames = [];
+    const bankDetails = [];
+    bankNames = otherBankDetails && otherBankDetails.map(item => item.bankName);
+    var kycBankDetails = getKycAnnexureBankDetails;
+    kycBankDetails =
+      bankNames.length > 0 &&
+      bankNames.map((item, index) => {
+        kycBankDetails = { ...kycBankDetails[index], bankName: item };
+        bankDetails.push(kycBankDetails);
+        return bankDetails;
+      });
+    dispatch(
+      updateProspect({
+        "prospect.kycAnnexure.signatoryName": signatoriesName.join(","),
+        "prospect.kycAnnexure.poaCountry": poaCountry,
+        "prospect.kycAnnexure.clientDealingCountry": listOfCountries,
+        "prospect.kycAnnexure.bankDetails": bankDetails
+      })
+    );
   }, []);
 
   const handleClickNextStep = useCallback(() => {
@@ -97,6 +146,7 @@ export const SelectServicesPage = ({
       handleContinue={handleContinue}
       handleClickNextStep={handleClickNextStep}
       createFormChangeHandler={createFormChangeHandler}
+      isComeFromROScreensCheck={isComeFromROScreensCheck}
       createSetStepHandler={createSetStepHandler}
     />
   );

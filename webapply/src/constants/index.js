@@ -293,7 +293,7 @@ export const screeningStatusDefault = {
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";
-
+export const DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm";
 export const BYTES_IN_MEGABYTE = 1048576;
 
 export const VIEW_IDS = {

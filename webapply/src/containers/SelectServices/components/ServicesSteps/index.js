@@ -12,12 +12,13 @@ export const ServicesSteps = ({
   clickHandler,
   handleContinue,
   createFormChangeHandler,
+  isComeFromROScreensCheck,
   isSubmit,
   completedSteps
 }) => {
   const classes = useStyles();
 
-  return servicesSteps.map(
+  return servicesSteps[isComeFromROScreensCheck].map(
     ({ component: Component, ...stepData }) =>
       Component && (
         <div key={stepData.step}>

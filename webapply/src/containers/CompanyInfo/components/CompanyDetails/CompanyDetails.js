@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Grid from "@material-ui/core/Grid";
@@ -16,6 +17,7 @@ import {
   SPECIAL_CHARACTERS_REGEX,
   checkIsTrimmed
 } from "../../../../utils/validation";
+import { updateProspect } from "../../../../store/actions/appConfig";
 import { MAX_COMPANY_NAME_LENGTH, MAX_REGISTRATION_NUMBER_LENGTH } from "../../constants";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { useStyles } from "../styled";
@@ -47,8 +49,17 @@ const companyDetailsSchema = () =>
     companyCategory: Yup.string().required(getRequiredMessage("Company category"))
   });
 
-export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
+export const CompanyDetails = ({ handleContinue, createFormChangeHandler, companyName }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    companyName !== "" &&
+      dispatch(
+        updateProspect({
+          "prospect.kycAnnexure.companyName": companyName
+        })
+      );
+  }, [companyName]);
 
   return (
     <Formik
@@ -57,7 +68,7 @@ export const CompanyDetails = ({ handleContinue, createFormChangeHandler }) => {
       validateOnChange={false}
       onSubmit={handleContinue}
     >
-      {createFormChangeHandler(() => (
+      {createFormChangeHandler(values => (
         <Form>
           <Grid container spacing={3}>
             <Grid item sm={6} xs={12}>

@@ -6,12 +6,14 @@ import { ValueAddedServices } from "./components/ValueAddedServices";
 import { GA_EVENTS } from "../../utils/ga";
 import { SIGNING_TRANSACTIONS_TYPE } from "../../constants";
 import { ExpressServices } from "./components/Express";
+import { KycAnnexure } from "./components/KycAnnexure";
 
 export const STEP_1 = 1;
 export const STEP_2 = 2;
 export const STEP_3 = 3;
 export const STEP_4 = 4;
 export const STEP_5 = 5;
+export const STEP_6 = 6;
 
 export const INITIAL_INDEX = 0;
 
@@ -22,44 +24,136 @@ export const signingInfo = {
 };
 
 //ro-assist-brd3-17
-export const servicesSteps = [
-  {
-    step: STEP_1,
-    title: "Express Service (for AED Accounts only*)",
-    component: ExpressServices,
-    icon: ICONS.bolt,
-    eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
-  },
-  {
-    step: STEP_2,
-    title: "Account details",
-    component: AccountDetails,
-    icon: ICONS.accountDetails,
-    eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
-  },
-  {
-    step: STEP_3,
-    title: "Signing preferences",
-    component: SigningPreferences,
-    icon: ICONS.signingPreferences,
-    eventName: GA_EVENTS.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
-  },
-  {
-    step: STEP_4,
-    title: "Channels",
-    component: Channels,
-    icon: ICONS.channels,
-    titleInfo: "",
-    eventName: GA_EVENTS.SELECT_SERVICE_CHANNELS_CONTINUE
-  },
-  {
-    step: STEP_5,
-    title: "Value added services",
-    component: ValueAddedServices,
-    icon: ICONS.valueAddedServices,
-    eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
-  }
-];
+export const servicesSteps = {
+  true: [
+    {
+      step: STEP_1,
+      title: "Express Service (for AED Accounts only*)",
+      component: ExpressServices,
+      icon: ICONS.bolt,
+      eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+    },
+    {
+      step: STEP_2,
+      title: "Account details",
+      component: AccountDetails,
+      icon: ICONS.accountDetails,
+      eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+    },
+    {
+      step: STEP_3,
+      title: "Signing preferences",
+      component: SigningPreferences,
+      icon: ICONS.signingPreferences,
+      eventName: GA_EVENTS.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
+    },
+    {
+      step: STEP_4,
+      title: "Channels",
+      component: Channels,
+      icon: ICONS.channels,
+      titleInfo: "",
+      eventName: GA_EVENTS.SELECT_SERVICE_CHANNELS_CONTINUE
+    },
+    {
+      step: STEP_5,
+      title: "KYC Annexure",
+      component: KycAnnexure,
+      icon: ICONS.signingPreferences,
+      eventName: GA_EVENTS.SELECT_SERVICE_KYC_ANNEXURE_CONTINUE
+    },
+    {
+      step: STEP_6,
+      title: "Value added services",
+      component: ValueAddedServices,
+      icon: ICONS.valueAddedServices,
+      eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+    }
+  ],
+  false: [
+    {
+      step: STEP_1,
+      title: "Express Service (for AED Accounts only*)",
+      component: ExpressServices,
+      icon: ICONS.bolt,
+      eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+    },
+    {
+      step: STEP_2,
+      title: "Account details",
+      component: AccountDetails,
+      icon: ICONS.accountDetails,
+      eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+    },
+    {
+      step: STEP_3,
+      title: "Signing preferences",
+      component: SigningPreferences,
+      icon: ICONS.signingPreferences,
+      eventName: GA_EVENTS.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
+    },
+    {
+      step: STEP_4,
+      title: "Channels",
+      component: Channels,
+      icon: ICONS.channels,
+      titleInfo: "",
+      eventName: GA_EVENTS.SELECT_SERVICE_CHANNELS_CONTINUE
+    },
+    {
+      step: STEP_5,
+      title: "Value added services",
+      component: ValueAddedServices,
+      icon: ICONS.valueAddedServices,
+      eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+    }
+  ]
+};
+// export const servicesSteps = [
+//   {
+//     step: STEP_1,
+//     title: "Express Service (for AED Accounts only*)",
+//     component: ExpressServices,
+//     icon: ICONS.bolt,
+//     eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+//   },
+//   {
+//     step: STEP_2,
+//     title: "Account details",
+//     component: AccountDetails,
+//     icon: ICONS.accountDetails,
+//     eventName: GA_EVENTS.SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE
+//   },
+//   {
+//     step: STEP_3,
+//     title: "Signing preferences",
+//     component: SigningPreferences,
+//     icon: ICONS.signingPreferences,
+//     eventName: GA_EVENTS.SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE
+//   },
+//   {
+//     step: STEP_4,
+//     title: "Channels",
+//     component: Channels,
+//     icon: ICONS.channels,
+//     titleInfo: "",
+//     eventName: GA_EVENTS.SELECT_SERVICE_CHANNELS_CONTINUE
+//   },
+//   {
+//     step: STEP_5,
+//     title: "KYC Annexure",
+//     component: KycAnnexure,
+//     icon: ICONS.signingPreferences,
+//     eventName: GA_EVENTS.SELECT_SERVICE_KYC_ANNEXURE_CONTINUE
+//   },
+//   {
+//     step: STEP_6,
+//     title: "Value added services",
+//     component: ValueAddedServices,
+//     icon: ICONS.valueAddedServices,
+//     eventName: GA_EVENTS.SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE
+//   }
+// ];
 
 export const DATA_CURRENCIES = [
   {
@@ -95,3 +189,18 @@ export const DATA_CURRENCIES = [
 export const SELECT_SERVICES_PAGE_ID = "selectServices";
 
 export const ACCOUNTSIGNTYPE = "102";
+
+export const MAX_COMPANY_NAME_LENGTH = 50;
+export const MAX_BANK_NAME_LENGTH = 50;
+
+export const initialOtherBankDetails = [{ bankName: "" }];
+export const initialTopCustomers = [{ name: "", country: "" }];
+export const initialBankDetails = [
+  {
+    bankName: "",
+    isStatementAvailable: "yes",
+    bankStatementRemark: "",
+    bankStatementFrom: "",
+    bankStatementTo: ""
+  }
+];

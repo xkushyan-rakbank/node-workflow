@@ -1,7 +1,11 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getOrgKYCDetails, getIsIslamicBanking } from "../../store/selectors/appConfig";
+import {
+  getOrgKYCDetails,
+  getIsIslamicBanking,
+  getDatalist
+} from "../../store/selectors/appConfig";
 import { updateProspect } from "../../store/actions/appConfig";
 
 import { Industry as IndustryStep } from "./components/Industry";
@@ -10,6 +14,7 @@ export const Industry = props => {
   const orgDetails = useSelector(getOrgKYCDetails) || {};
   const industries = orgDetails.industryMultiSelect || [];
   const isIslamicBanking = useSelector(getIsIslamicBanking);
+  const datalist = useSelector(getDatalist);
   const dispatch = useDispatch();
 
   const updateIndustry = useCallback(
@@ -28,6 +33,7 @@ export const Industry = props => {
     <IndustryStep
       industries={industries}
       datalistId={datalistId}
+      datalist={datalist}
       updateIndustry={updateIndustry}
       {...props}
     />

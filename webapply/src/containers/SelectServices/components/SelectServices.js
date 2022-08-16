@@ -17,7 +17,8 @@ export const SelectServices = ({
   handleContinue,
   handleClickNextStep,
   createFormChangeHandler,
-  createSetStepHandler
+  createSetStepHandler,
+  isComeFromROScreensCheck
 }) => {
   const classes = useStyles();
 
@@ -33,6 +34,7 @@ export const SelectServices = ({
         completedSteps={availableSteps}
         clickHandler={createSetStepHandler}
         handleContinue={handleContinue}
+        isComeFromROScreensCheck={isComeFromROScreensCheck}
         createFormChangeHandler={createFormChangeHandler}
       />
 

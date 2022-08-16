@@ -61,6 +61,7 @@ export const CompanyInfo = ({
             handleClick={createSetStepHandler(item.step)}
             handleContinue={handleContinue(item.eventName)}
             createFormChangeHandler={createFormChangeHandler}
+            companyName={companyName}
             stepForm={item.component}
           />
         ))}

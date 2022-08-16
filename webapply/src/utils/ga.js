@@ -39,6 +39,7 @@ export const GA_EVENTS = {
   SELECT_SERVICE_ACCOUNT_DETAILS_CONTINUE: "SelectService_AccountDetails_Continue",
   SELECT_SERVICE_SIGNING_PREFERENCE_CONTINUE: "SelectService_SigningPreference_Continue",
   SELECT_SERVICE_CHANNELS_CONTINUE: "SelectService_Channels_Continue",
+  SELECT_SERVICE_KYC_ANNEXURE_CONTINUE: "SelectService_Kyc_Annexure_Continue",
   SELECT_SERVICE_KEEP_PLUS_UPGRADE_CONTINUE: "SelectService_KeepPlus_Upgrade_Continue",
   SELECT_SERVICE_SUBMITTED: "SelectService_Submitted",
   FORM_SUBMITTED: "FormSubmitted",

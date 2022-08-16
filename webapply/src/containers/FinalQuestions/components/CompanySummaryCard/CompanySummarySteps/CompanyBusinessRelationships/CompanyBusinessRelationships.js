@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import uniqueId from "lodash/uniqueId";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -27,7 +28,7 @@ import {
   MAX_BANK_NAME_LENGTH,
   MAX_COMPANY_NAME_LENGTH,
   IS_DNFBP_INFO_VISITED,
-  NONE_VISITED,
+  //NONE_VISITED,
   dnfbpInfoContent,
   usEntity,
   financialInstitution,
@@ -149,7 +150,8 @@ export const CompanyBusinessRelationshipsComponent = ({
   topOriginGoodsCountries,
   otherBankDetails,
   updateProspect,
-  dnfbpField
+  dnfbpField,
+  datalist
 }) => {
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
@@ -157,6 +159,23 @@ export const CompanyBusinessRelationshipsComponent = ({
 
   const [isLinkVisited, setIsLinkVisited] = useState(dnfbpField);
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  var listOfCountries = [];
+  var topCustomersCountries = [];
+  topCustomersCountries = topCustomers && topCustomers.map(item => item.country);
+  useEffect(() => {
+    datalist &&
+      datalist.clientDealingCountry.map(item => {
+        if (topCustomersCountries.includes(item.value)) {
+          listOfCountries.push(item.value);
+        }
+      });
+    dispatch(
+      updateProspect({
+        "prospect.kycAnnexure.clientDealingCountry": listOfCountries
+      })
+    );
+  }, []);
 
   const handleTooltipClose = () => {
     setOpen(false);

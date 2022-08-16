@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import { Formik, Form } from "formik";
@@ -46,6 +47,7 @@ import {
   ALPHANUMERIC_ONLY_REGEX
 } from "../../../../utils/validation";
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
 import { resetStakeholderInfo } from "../../../../store/actions/stakeholders";
 import { getPercentageWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholders";
 
@@ -184,10 +186,20 @@ export const PersonalInformationStep = ({
   resetStakeholderInfo,
   totalPercentageWithoutCurrentStakeholder,
   signatoryProminentPosition,
-  signatoryTlnumber
+  signatoryTlnumber,
+  isShareholderACompany
 }) => {
   const classes = useStyles();
   const personalInfoRef = useRef();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    isShareholderACompany &&
+      dispatch(
+        updateProspect({
+          "prospect.kycAnnexure.isUltimateBeneficiary": "yes"
+        })
+      );
+  }, [isShareholderACompany]);
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
@@ -535,6 +547,7 @@ const mapStateToProps = (state, { index }) => ({
     "signatoryCompanyInfo.hasProminentPosition",
     ""
   ),
+  isShareholderACompany: get(getSignatories(state)[index], "kycDetails.isShareholderACompany", ""),
   signatoryTlnumber: get(getSignatories(state)[index], "signatoryCompanyInfo.tradeLicenseNo", "")
 });
 

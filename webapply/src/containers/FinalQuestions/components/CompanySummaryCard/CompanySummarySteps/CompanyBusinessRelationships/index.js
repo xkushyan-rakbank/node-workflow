@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import get from "lodash/get";
 import { isNull } from "lodash";
 
-import { getOrgKYCDetails } from "../../../../../../store/selectors/appConfig";
+import { getOrgKYCDetails, getDatalist } from "../../../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { CompanyBusinessRelationshipsComponent } from "./CompanyBusinessRelationships";
 import {
@@ -17,6 +17,7 @@ import {
 const mapStateToProps = state => ({
   topCustomers: get(getOrgKYCDetails(state), "topCustomers", initialTopCustomers),
   topSuppliers: get(getOrgKYCDetails(state), "topSuppliers", initialTopSuppliers),
+  datalist: getDatalist(state),
   topOriginGoodsCountries: get(
     getOrgKYCDetails(state),
     "topOriginGoodsCountries",

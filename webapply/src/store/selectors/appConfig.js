@@ -34,6 +34,8 @@ export const getExpressTandC = state => get(getAccountInfo(state)[0], "expressTa
 
 export const getOrganizationInfo = state => getProspect(state).organizationInfo || {};
 
+export const getKycAnnexureDetails = state => getProspect(state).KycAnnexure || {};
+
 export const getPrimaryMobCountryCode = state =>
   get(getOrganizationInfo(state), "contactDetails.primaryMobCountryCode", "");
 

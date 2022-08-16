@@ -1,10 +1,11 @@
 import { connect } from "react-redux";
 
-import { getOrganizationInfo } from "../../../../../../store/selectors/appConfig";
+import { getOrganizationInfo, getSignatories } from "../../../../../../store/selectors/appConfig";
 import { SignatoryEmploymentDetailsComponent } from "./SignatoryEmploymentDetails";
 
 const mapStateToProps = state => ({
-  companyName: getOrganizationInfo(state).companyName
+  companyName: getOrganizationInfo(state).companyName,
+  signatoryInfo: getSignatories(state)
 });
 
 export const SignatoryEmploymentDetails = connect(mapStateToProps)(
