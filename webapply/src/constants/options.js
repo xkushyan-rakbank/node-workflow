@@ -43,8 +43,8 @@ export const YesNoNaList = [
   {
     code: "Na",
     key: "Na",
-    value: "Na",
-    label: "Na"
+    value: "NA",
+    label: "NA"
   }
 ];
 export const MEETINGCONDUCTEDLIST = [
@@ -61,9 +61,9 @@ export const MEETINGCONDUCTEDLIST = [
     label: "RAK Bank Premises "
   },
   {
-    code: "Others",
-    key: "Others",
-    value: "Others",
+    code: "others",
+    key: "others",
+    value: "others",
     label: "Others"
   }
 ];

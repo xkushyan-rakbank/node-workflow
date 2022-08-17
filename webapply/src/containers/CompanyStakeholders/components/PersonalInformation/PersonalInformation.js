@@ -44,9 +44,9 @@ import {
   SPECIAL_CHARACTERS_REGEX,
   checkIsTrimmed,
   //ALPHANUMERIC_REGEX,
-  ALPHANUMERIC_ONLY_REGEX
+  LICENSE_NUMBER_REGEX
 } from "../../../../utils/validation";
-import { getSignatories } from "../../../../store/selectors/appConfig";
+import { getSignatories, getKycAnnexureDetails } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { resetStakeholderInfo } from "../../../../store/actions/stakeholders";
 import { getPercentageWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholders";
@@ -139,7 +139,7 @@ const personalInformationSchema = totalPercentageWithoutCurrentStakeholder =>
       is: isShareholderACompany => isShareholderACompany,
       then: Yup.string()
         .required(getRequiredMessage("TL Number"))
-        .matches(ALPHANUMERIC_ONLY_REGEX, getInvalidMessage("TL Number"))
+        .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("TL Number"))
     }),
     country: Yup.string().when("isShareholderACompany", {
       is: isShareholderACompany => isShareholderACompany,
@@ -187,7 +187,8 @@ export const PersonalInformationStep = ({
   totalPercentageWithoutCurrentStakeholder,
   signatoryProminentPosition,
   signatoryTlnumber,
-  isShareholderACompany
+  isShareholderACompany,
+  kycAnnexureDetails
 }) => {
   const classes = useStyles();
   const personalInfoRef = useRef();
@@ -196,7 +197,10 @@ export const PersonalInformationStep = ({
     isShareholderACompany &&
       dispatch(
         updateProspect({
-          "prospect.kycAnnexure.isUltimateBeneficiary": "yes"
+          "prospect.kycAnnexure.isUltimateBeneficiary":
+            kycAnnexureDetails && kycAnnexureDetails.isUltimateBeneficiary === "yes"
+              ? "yes"
+              : kycAnnexureDetails.isUltimateBeneficiary
         })
       );
   }, [isShareholderACompany]);
@@ -548,7 +552,8 @@ const mapStateToProps = (state, { index }) => ({
     ""
   ),
   isShareholderACompany: get(getSignatories(state)[index], "kycDetails.isShareholderACompany", ""),
-  signatoryTlnumber: get(getSignatories(state)[index], "signatoryCompanyInfo.tradeLicenseNo", "")
+  signatoryTlnumber: get(getSignatories(state)[index], "signatoryCompanyInfo.tradeLicenseNo", ""),
+  kycAnnexureDetails: getKycAnnexureDetails(state)
 });
 
 const mapDispatchToProps = {

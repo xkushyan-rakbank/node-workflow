@@ -20,7 +20,9 @@ export const TableComponent = ({ data, datalist }) => {
             {datalist.map((item, index) => (
               <TableRow key={index}>
                 <TableCell align="center">{item.displayText}</TableCell>
-                <TableCell align="center">{data.includes(item.value) ? "Yes" : "No"}</TableCell>
+                <TableCell align="center">
+                  {data && data.includes(item.value) ? "Yes" : "No"}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

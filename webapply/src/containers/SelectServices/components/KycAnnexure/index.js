@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
   isExpress: get(getAccountInfo(state)[0], "express", ""),
   organizationInfo: getOrganizationInfo(state),
   kycAnnexureDetails: getKycAnnexureDetails(state),
+  kycAnnexureBankDetails: get(getKycAnnexureDetails(state), "bankDetails"),
   datalist: getDatalist(state)
 });
 

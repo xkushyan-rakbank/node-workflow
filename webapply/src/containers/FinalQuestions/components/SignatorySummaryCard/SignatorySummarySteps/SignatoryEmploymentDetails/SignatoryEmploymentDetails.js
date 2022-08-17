@@ -76,7 +76,8 @@ export const SignatoryEmploymentDetailsComponent = ({
   handleContinue,
   createFormChangeHandler,
   isSignatory,
-  signatoryInfo
+  signatoryInfo,
+  kycAnnexureDetails
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -84,9 +85,14 @@ export const SignatoryEmploymentDetailsComponent = ({
     isSignatory &&
       dispatch(
         updateProspect({
-          "prospect.kycAnnexure.education": signatoryInfo[index].kycDetails.qualification,
+          "prospect.kycAnnexure.education":
+            kycAnnexureDetails.education === ""
+              ? signatoryInfo[index].kycDetails.qualification
+              : kycAnnexureDetails.education,
           "prospect.kycAnnexure.experienceInYrs":
-            signatoryInfo[index].employmentDetails.totalExperienceYrs
+            kycAnnexureDetails.experienceInYrs === ""
+              ? signatoryInfo[index].employmentDetails.totalExperienceYrs
+              : kycAnnexureDetails.experienceInYrs
         })
       );
   }, [

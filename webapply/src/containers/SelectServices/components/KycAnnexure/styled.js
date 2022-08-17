@@ -3,7 +3,7 @@ import { checkBrowserIsIE } from "../../../../utils/checkBrowserIsIE";
 
 const isIE = checkBrowserIsIE();
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   buttonWrapper: {
     width: "100%",
     display: "flex",
@@ -21,6 +21,22 @@ export const useStyles = makeStyles({
   },
   radioButtonRoot: {
     width: "calc(50% - 20px)"
+  },
+  confirmingTransaction: {
+    position: "relative",
+    "& + $confirmingTransaction": {
+      paddingTop: "10px",
+      marginTop: "10px",
+      borderTop: "1px solid #e6e6e680",
+      "& $deleteContact": {
+        top: "22px"
+      },
+      [theme.breakpoints.only("xs")]: {
+        "& $deleteContact": {
+          top: "unset"
+        }
+      }
+    }
   },
   tableContainer: {
     maxHeight: isIE ? "725px" : "720.8px",
@@ -60,4 +76,4 @@ export const useStyles = makeStyles({
       // }
     }
   }
-});
+}));

@@ -12,6 +12,7 @@ import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAP
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicesPage } from "./SelectServicesPage";
 import { getAccountType, getDatalist } from "../../store/selectors/appConfig";
+import { getAgentName, getAgentId } from "../../store/selectors/loginSelector";
 
 const mapStateToProps = state => ({
   accountType: getAccountType(state),
@@ -21,8 +22,10 @@ const mapStateToProps = state => ({
   datalist: getDatalist(state),
   topCustomers: get(getOrgKYCDetails(state), "topCustomers"),
   otherBankDetails: get(getOrgKYCDetails(state), "otherBankingRelationshipsInfo.otherBankDetails"),
-  getKycAnnexureDetails: getKycAnnexureDetails(state),
-  getKycAnnexureBankDetails: get(getKycAnnexureDetails(state), "bankDetails", initialBankDetails)
+  kycAnnexureDetails: getKycAnnexureDetails(state),
+  getKycAnnexureBankDetails: get(getKycAnnexureDetails(state), "bankDetails", initialBankDetails),
+  roAgentName: getAgentName(state),
+  roagentId: getAgentId(state)
 });
 
 const mapDispatchToProps = { sendProspectToAPI: sendProspectToAPIPromisify, updateProspect };

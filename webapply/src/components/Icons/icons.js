@@ -25,6 +25,7 @@ import { ReactComponent as Error } from "../../assets/images/error.svg";
 import { ReactComponent as File } from "../../assets/icons/file.svg";
 import { ReactComponent as MinimizeChat } from "../../assets/icons/chat-minimize.svg";
 import { ReactComponent as Bolt } from "../../assets/icons/bolt.svg";
+import { ReactComponent as KycAnnexure } from "../../assets/icons/kyc_annexure.svg";
 
 export const iconComponents = {
   done: Done,
@@ -53,7 +54,8 @@ export const iconComponents = {
   error: Error,
   file: File,
   minimizeChat: MinimizeChat,
-  bolt: Bolt
+  bolt: Bolt,
+  kycAnnexure: KycAnnexure
 };
 
 export const ICONS = {
@@ -83,5 +85,6 @@ export const ICONS = {
   error: "error",
   file: "file",
   minimizeChat: "minimizeChat",
-  bolt: "bolt"
+  bolt: "bolt",
+  kycAnnexure: "kycAnnexure"
 };

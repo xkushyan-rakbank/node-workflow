@@ -26,7 +26,8 @@ export const CompanyInfo = ({
   handleClickNextStep,
   handleContinue,
   createFormChangeHandler,
-  createSetStepHandler
+  createSetStepHandler,
+  kycAnnexureDetails
 }) => {
   const classes = useStyles();
 
@@ -62,6 +63,7 @@ export const CompanyInfo = ({
             handleContinue={handleContinue(item.eventName)}
             createFormChangeHandler={createFormChangeHandler}
             companyName={companyName}
+            kycAnnexureDetails={kycAnnexureDetails}
             stepForm={item.component}
           />
         ))}

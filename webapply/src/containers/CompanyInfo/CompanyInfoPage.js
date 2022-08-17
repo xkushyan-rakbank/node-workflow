@@ -16,12 +16,12 @@ export const CompanyInfoPage = ({
   isSendingProspect,
   fullName,
   companyName,
-  isComeFromROScreens
+  isComeFromROScreens,
+  kycAnnexureDetails
 }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
   useViewId(true);
-
   const pushHistory = useTrackingHistory();
   const [
     activeStep,
@@ -66,6 +66,7 @@ export const CompanyInfoPage = ({
       handleClickNextStep={handleClickNextStep}
       handleContinue={handleContinue}
       createFormChangeHandler={createFormChangeHandler}
+      kycAnnexureDetails={kycAnnexureDetails}
       createSetStepHandler={createSetStepHandler}
     />
   );

@@ -49,14 +49,21 @@ const companyDetailsSchema = () =>
     companyCategory: Yup.string().required(getRequiredMessage("Company category"))
   });
 
-export const CompanyDetails = ({ handleContinue, createFormChangeHandler, companyName }) => {
+export const CompanyDetails = ({
+  handleContinue,
+  createFormChangeHandler,
+  companyName,
+  kycAnnexureDetails
+}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
-    companyName !== "" &&
+    companyName &&
+      companyName !== "" &&
       dispatch(
         updateProspect({
-          "prospect.kycAnnexure.companyName": companyName
+          "prospect.kycAnnexure.companyName":
+            kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName
         })
       );
   }, [companyName]);

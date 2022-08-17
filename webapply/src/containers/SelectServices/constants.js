@@ -59,7 +59,7 @@ export const servicesSteps = {
       step: STEP_5,
       title: "KYC Annexure",
       component: KycAnnexure,
-      icon: ICONS.signingPreferences,
+      icon: ICONS.kycAnnexure,
       eventName: GA_EVENTS.SELECT_SERVICE_KYC_ANNEXURE_CONTINUE
     },
     {
@@ -192,6 +192,12 @@ export const ACCOUNTSIGNTYPE = "102";
 
 export const MAX_COMPANY_NAME_LENGTH = 50;
 export const MAX_BANK_NAME_LENGTH = 50;
+export const RO_DATA_LENGTH = 80;
+export const GOAMLREGISTRATION_REMARK_LENGTH = 20;
+export const EXPERIENCE_BUSINESS_MODAL_LENGTH = 5000;
+export const KYCVERIFICATION_LENGTH = 50;
+export const SIGNATORY_EID_INFO_LENGTH = 50;
+export const RO_NAME_LENGTH = 50;
 
 export const initialOtherBankDetails = [{ bankName: "" }];
 export const initialTopCustomers = [{ name: "", country: "" }];
