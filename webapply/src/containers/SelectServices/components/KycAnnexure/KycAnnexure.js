@@ -49,6 +49,7 @@ import { useStyles } from "./styled";
 export const kycAnnexureDetailsSchema = () =>
   Yup.object({
     companyName: Yup.string()
+      // .nullable()
       .required(getRequiredMessage("Company name"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
@@ -64,8 +65,11 @@ export const kycAnnexureDetailsSchema = () =>
       .nullable()
       .required(getRequiredMessage("Business Modal"))
       .max(EXPERIENCE_BUSINESS_MODAL_LENGTH, "Maximum ${max} characters allowed"),
-    education: Yup.string().required(getRequiredMessage("Education")),
+    education: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Education")),
     experienceInYrs: Yup.string()
+      .nullable()
       .required(getRequiredMessage("Corporate Experience"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
@@ -102,8 +106,8 @@ export const kycAnnexureDetailsSchema = () =>
       .nullable()
       .required(getRequiredMessage(" Ro Name"))
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Ro Name"))
-      .max(RO_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .test("space validation", getInvalidMessage("Ro Name"), checkIsTrimmed),
+      .max(RO_NAME_LENGTH, "Maximum ${max} characters allowed"),
+    //.test("space validation", getInvalidMessage("Ro Name"), checkIsTrimmed),
     signatoryEIDinfo: Yup.string()
       .nullable()
       .required(getRequiredMessage("EID of all signatories pinged to EIDA and successful")),
@@ -342,7 +346,7 @@ export const KycAnnexureComponent = ({
               />
             </Grid>
             <Divider />
-            <Subtitle title="" classes={{ wrapper: classes.subtitleBranch }} />
+            <Subtitle title="Bank Accounts Details" classes={{ wrapper: classes.subtitleBranch }} />
             <Grid container>
               {/* <Grid md={6} xs={12}> */}
               <Field
@@ -357,92 +361,94 @@ export const KycAnnexureComponent = ({
               />
               {/* </Grid> */}
             </Grid>
-            <FieldArray name="bankDetails">
-              {arrayHelpers => (
-                <>
-                  {values.bankDetails.map((_, index) => {
-                    // eslint-disable-next-line max-len
-                    const prospectPath = `prospect.kycAnnexure.bankDetails[${index}]`;
+            {values.antiMoneyLaundering === "yes" && (
+              <FieldArray name="bankDetails">
+                {arrayHelpers => (
+                  <>
+                    {values.bankDetails.map((_, index) => {
+                      // eslint-disable-next-line max-len
+                      const prospectPath = `prospect.kycAnnexure.bankDetails[${index}]`;
 
-                    return (
-                      <Grid
-                        containerkey={index}
-                        item
-                        // xs={isMaxAddedSignatories ? 11 : 12}
-                        sm={11}
-                        xs={12}
-                        key={index}
-                        className={classes.confirmingTransaction}
-                      >
-                        <Grid container spacing={3}>
-                          <Grid item md={6} xs={12}>
-                            <Field
-                              name={`bankDetails[${index}].bankName`}
-                              label="Name of the Bank"
-                              path={`${prospectPath}.bankName`}
-                              component={Input}
-                              InputProps={{
-                                inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
-                              }}
-                            />
+                      return (
+                        <Grid
+                          containerkey={index}
+                          item
+                          // xs={isMaxAddedSignatories ? 11 : 12}
+                          sm={11}
+                          xs={12}
+                          key={index}
+                          className={classes.confirmingTransaction}
+                        >
+                          <Grid container spacing={3}>
+                            <Grid item md={6} xs={12}>
+                              <Field
+                                name={`bankDetails[${index}].bankName`}
+                                label="Name of the Bank"
+                                path={`${prospectPath}.bankName`}
+                                component={Input}
+                                InputProps={{
+                                  inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
+                                }}
+                              />
+                            </Grid>
+                            <Grid item md={6} xs={12}>
+                              <Field
+                                name={`bankDetails[${index}].isStatementAvailable`}
+                                component={InlineRadioGroup}
+                                path={`${prospectPath}.isStatementAvailable`}
+                                options={YesNoList}
+                                label="Bank statement Available"
+                                InputProps={{
+                                  inputProps: { tabIndex: 0 }
+                                }}
+                              />
+                            </Grid>
                           </Grid>
-                          <Grid item md={6} xs={12}>
-                            <Field
-                              name={`bankDetails[${index}].isStatementAvailable`}
-                              component={InlineRadioGroup}
-                              path={`${prospectPath}.isStatementAvailable`}
-                              options={YesNoList}
-                              label="Bank statement Available"
-                              InputProps={{
-                                inputProps: { tabIndex: 0 }
-                              }}
-                            />
+                          <Grid container spacing={3}>
+                            <Grid item md={6} xs={12}>
+                              <Field
+                                name={`bankDetails[${index}].bankStatementFrom`}
+                                label="Statement available from"
+                                path={`${prospectPath}.bankStatementFrom`}
+                                component={DatePicker}
+                                changeProspect={changeDateProspectHandler}
+                                maxDate={new Date()}
+                              />
+                            </Grid>
+                            <Grid item md={6} xs={12}>
+                              <Field
+                                name={`bankDetails[${index}].bankStatementTo`}
+                                label="Statement available to"
+                                path={`${prospectPath}.bankStatementTo`}
+                                component={DatePicker}
+                                changeProspect={changeDateProspectHandler}
+                                maxDate={new Date()}
+                              />
+                            </Grid>
+                          </Grid>
+                          <Grid container spacing={3}>
+                            <Grid item md={6} xs={12}>
+                              <Field
+                                name={`bankDetails[${index}].bankStatementRemark`}
+                                label="Remarks/ Observations (if any)"
+                                path={`${prospectPath}.bankStatementRemark`}
+                                component={Input}
+                                InputProps={{
+                                  inputProps: {
+                                    maxLength: GOAMLREGISTRATION_REMARK_LENGTH,
+                                    tabIndex: 0
+                                  }
+                                }}
+                              />
+                            </Grid>
                           </Grid>
                         </Grid>
-                        <Grid container spacing={3}>
-                          <Grid item md={6} xs={12}>
-                            <Field
-                              name={`bankDetails[${index}].bankStatementFrom`}
-                              label="Statement available from"
-                              path={`${prospectPath}.bankStatementFrom`}
-                              component={DatePicker}
-                              changeProspect={changeDateProspectHandler}
-                              maxDate={new Date()}
-                            />
-                          </Grid>
-                          <Grid item md={6} xs={12}>
-                            <Field
-                              name={`bankDetails[${index}].bankStatementTo`}
-                              label="Statement available to"
-                              path={`${prospectPath}.bankStatementTo`}
-                              component={DatePicker}
-                              changeProspect={changeDateProspectHandler}
-                              maxDate={new Date()}
-                            />
-                          </Grid>
-                        </Grid>
-                        <Grid container spacing={3}>
-                          <Grid item md={6} xs={12}>
-                            <Field
-                              name={`bankDetails[${index}].bankStatementRemark`}
-                              label="Remarks/ Observations (if any)"
-                              path={`${prospectPath}.bankStatementRemark`}
-                              component={Input}
-                              InputProps={{
-                                inputProps: {
-                                  maxLength: GOAMLREGISTRATION_REMARK_LENGTH,
-                                  tabIndex: 0
-                                }
-                              }}
-                            />
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    );
-                  })}
-                </>
-              )}
-            </FieldArray>
+                      );
+                    })}
+                  </>
+                )}
+              </FieldArray>
+            )}
             <Divider />
             <Subtitle
               title="Did the Company have any Shareholder or POA holder from the following nationality in last 2 years (please refers past 2 years MOA and confirm, includes exited, silent partners also)? "

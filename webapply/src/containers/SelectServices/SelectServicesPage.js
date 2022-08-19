@@ -38,7 +38,7 @@ export const SelectServicesPage = ({
   useLayoutParams(true, true);
   useViewId(true);
   const isComeFromROScreensCheck =
-    isComeFromROScreens && isComeFromROScreens === true ? isComeFromROScreens : false;
+    isComeFromROScreens && isComeFromROScreens === true ? isComeFromROScreens : true;
   const [
     activeStep,
     availableSteps,
@@ -90,39 +90,52 @@ export const SelectServicesPage = ({
       });
     const bankDetails = [];
     var bankNames = [];
-    var result;
     bankNames = otherBankDetails && otherBankDetails.map(item => item.bankName);
+    bankNames = bankNames.filter(item => item);
     if (bankNames && bankNames.length > 0) {
-      bankNames.map((value, index) => {
-        result = initialBankDetails.map(item => ({
-          ...item,
+      const newData = [];
+      bankNames.map((item, index) =>
+        newData.push({
           bankName:
-            getKycAnnexureBankDetails[index] && getKycAnnexureBankDetails.bankName === ""
-              ? value
+            getKycAnnexureBankDetails[index] === undefined
+              ? item
+              : getKycAnnexureBankDetails[index].bankName === ""
+              ? item
               : getKycAnnexureBankDetails[index].bankName,
+
           isStatementAvailable:
-            getKycAnnexureBankDetails[index] &&
-            getKycAnnexureBankDetails.isStatementAvailable === ""
+            getKycAnnexureBankDetails[index] === undefined
+              ? "yes"
+              : getKycAnnexureBankDetails[index].isStatementAvailable === ""
               ? "yes"
               : getKycAnnexureBankDetails[index].isStatementAvailable,
           bankStatementRemark:
-            getKycAnnexureBankDetails[index] && getKycAnnexureBankDetails.bankStatementRemark === ""
+            getKycAnnexureBankDetails[index] === undefined
+              ? ""
+              : getKycAnnexureBankDetails[index].bankStatementRemark === ""
               ? ""
               : getKycAnnexureBankDetails[index].bankStatementRemark,
+
           bankStatementFrom:
-            getKycAnnexureBankDetails[index] && getKycAnnexureBankDetails.bankStatementFrom === ""
+            getKycAnnexureBankDetails[index] === undefined
+              ? ""
+              : getKycAnnexureBankDetails[index].bankStatementFrom === ""
               ? ""
               : getKycAnnexureBankDetails[index].bankStatementFrom,
+
           bankStatementTo:
-            getKycAnnexureBankDetails[index] && getKycAnnexureBankDetails.bankStatementTo === ""
+            getKycAnnexureBankDetails[index] === undefined
+              ? ""
+              : getKycAnnexureBankDetails[index].bankStatementTo === ""
               ? ""
               : getKycAnnexureBankDetails[index].bankStatementTo
-        }));
-        bankDetails.push(...result);
-        return bankDetails;
-      });
+        })
+      );
+      bankDetails.push(...newData);
     } else {
-      return bankDetails.push(getKycAnnexureBankDetails);
+      getKycAnnexureBankDetails.length === 0
+        ? bankDetails.push(...initialBankDetails)
+        : bankDetails.push(...getKycAnnexureBankDetails);
     }
     dispatch(
       updateProspect({

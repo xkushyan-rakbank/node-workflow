@@ -27,7 +27,8 @@ export const useStyles = makeStyles(theme => ({
     "& + $confirmingTransaction": {
       paddingTop: "10px",
       marginTop: "10px",
-      borderTop: "1px solid #e6e6e680",
+      //borderTop: "1px solid #e6e6e680",#829ee5;
+      borderTop: "1px solid #829ee5",
       "& $deleteContact": {
         top: "22px"
       },
