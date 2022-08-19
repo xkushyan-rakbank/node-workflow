@@ -37,15 +37,13 @@ export const SelectServicesPage = ({
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
   useViewId(true);
-  const isComeFromROScreensCheck =
-    isComeFromROScreens && isComeFromROScreens === true ? isComeFromROScreens : true;
   const [
     activeStep,
     availableSteps,
     handleSetStep,
     handleSetNextStep,
     createFormChangeHandler
-  ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps[isComeFromROScreensCheck]);
+  ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps[isComeFromROScreens]);
   const isAllStepsCompleted = !availableSteps.some(
     step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED
   );
@@ -195,7 +193,7 @@ export const SelectServicesPage = ({
       handleContinue={handleContinue}
       handleClickNextStep={handleClickNextStep}
       createFormChangeHandler={createFormChangeHandler}
-      isComeFromROScreensCheck={isComeFromROScreensCheck}
+      isComeFromROScreensCheck={isComeFromROScreens}
       createSetStepHandler={createSetStepHandler}
       bankDetails={getKycAnnexureBankDetails}
     />

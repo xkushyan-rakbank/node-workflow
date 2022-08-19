@@ -32,7 +32,7 @@ export const getOverviewOrganizationInfo = state =>
 export const getOverviewApplicationInfo = state => getProspectOverview(state).applicationInfo || {};
 
 export const getIsEditableStatusSearchInfo = state =>
-  getSearchProspect(state).isApplyEditApplication;
+  getSearchProspect(state).isApplyEditApplication || false;
 
 export const getIsLoadingSearchProspects = state => getSearchProspect(state).isSearchLoading;
 
