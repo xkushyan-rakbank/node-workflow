@@ -50,8 +50,12 @@ export const SelectServicesPage = ({
   const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
 
   useEffect(() => {
+    var isSignatoryDetail = [];
+    isSignatoryDetail =
+      signatoriesDetails &&
+      signatoriesDetails.filter(signatory => signatory.kycDetails.isSignatory === true);
     signatoriesDetails &&
-      signatoriesDetails.length === 1 &&
+      isSignatoryDetail.length === 1 &&
       signatoriesDetails[0].accountSigningInfo.accountSigningType === "" &&
       dispatch(
         updateProspect({
