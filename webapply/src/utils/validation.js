@@ -7,7 +7,7 @@ import { UAE_CODE } from "../constants";
 export const SPECIAL_CHARACTERS_REGEX = /^([a-zA-Z0-9.@#%*()/ -])*$/;
 export const TOTAL_EXPERIENCE_YRS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
 export const REMARK_RESON_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
-export const LICENSE_NUMBER_REGEX = /^([a-zA-Z0-9.@#%*()/-\s].|[\\/] )*$/;
+export const LICENSE_NUMBER_REGEX = /^([a-zA-Z0-9.@#%*()/-\s\\])*$/;
 export const REGISTRATION_NUMBER_REGEX = /^([a-zA-Z0-9.@#%*()/-])*$/;
 export const USER_NAME_REGEX = /^([a-zA-Z0-9.]){1,65}$/;
 export const PASSWORD_REGEX = /^([a-zA-Z0-9#@_]){1,30}$/;

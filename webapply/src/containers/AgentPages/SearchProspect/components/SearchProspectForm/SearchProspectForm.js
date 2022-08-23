@@ -11,7 +11,11 @@ import {
   AutoSaveField as Field,
   LinkedField
 } from "../../../../../components/Form";
-import { NAME_REGEX, ALPHANUMERIC_REGEX } from "../../../../../utils/validation";
+import {
+  NAME_REGEX,
+  ALPHANUMERIC_REGEX,
+  LICENSE_NUMBER_REGEX
+} from "../../../../../utils/validation";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../../constants";
 import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
@@ -27,7 +31,7 @@ const searchProspectSchema = Yup.object({
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("RAKtrack Lead Reference Number")),
   tradeLicenseNo: Yup.string()
     .max(20, "Maximum 20 characters allowed")
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Trade License Number"))
+    .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("Trade License Number"))
 });
 
 const initialValues = {
