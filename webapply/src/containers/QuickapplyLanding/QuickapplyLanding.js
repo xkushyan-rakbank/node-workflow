@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 import { VerticalPaginationContext } from "../../components/VerticalPagination";
 import { useLayoutParams, useLogoType } from "../FormLayout";
@@ -12,5 +13,18 @@ export const QuickapplyLandingContainer = () => {
   useLayoutParams(false, false, true);
   useLogoType(LOGO_STANDART);
 
-  return <QuickapplyLandingComponent setCurrentSection={setCurrentSection} />;
+  return (
+    <>
+      <HelmetProvider>
+        <Helmet>
+          <title>
+            {
+              "Quick Apply | Online Application for Business Accounts and Business Finance | RAKBANK"
+            }
+          </title>
+        </Helmet>
+      </HelmetProvider>
+      <QuickapplyLandingComponent setCurrentSection={setCurrentSection} />
+    </>
+  );
 };
