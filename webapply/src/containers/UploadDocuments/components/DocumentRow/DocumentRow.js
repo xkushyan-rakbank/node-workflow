@@ -21,6 +21,7 @@ export const DocumentRowComponent = ({
   cancelHandler,
   isUploadError,
   uploadDocument,
+  required = false,
   document,
   docRemoveWarning = true,
   infoMessage = "",
@@ -89,7 +90,8 @@ export const DocumentRowComponent = ({
               } else if (isUploaded && document.fileDescription) {
                 return document.fileDescription;
               } else {
-                return document.documentTitle;
+                const requiredLabel = required ? " * " : "";
+                return requiredLabel + document.documentTitle;
               }
             })()}
 

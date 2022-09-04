@@ -55,7 +55,7 @@ export const DocumentRow = ({
   const [selectedFile, setSelectedFile] = useState(null);
   const isDisabledUploadForRO =
     isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
-  const { documentKey, documentType = "" } = document;
+  const { documentKey, documentType = "", required } = document;
   const isUploaded = document.uploadStatus === UPLOADED;
 
   // ro-assist-brd2-1
@@ -205,6 +205,7 @@ export const DocumentRow = ({
       cancelHandler={fileUploadCancel}
       document={document}
       docRemoveWarning={docRemoveWarning}
+      required={required}
       infoMessage={infoMessage}
       multiDoc={multiDoc}
     />

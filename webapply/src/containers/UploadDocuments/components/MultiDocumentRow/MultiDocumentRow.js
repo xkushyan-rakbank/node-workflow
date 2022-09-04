@@ -34,7 +34,6 @@ export const MultiDocumentRow = ({
   const prospectStatusInfo = useSelector(getProspectStatus);
   const isDisabledUploadForRO =
     isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
-
   useEffect(() => {
     if (limit > 1 && (documents.length > 1 || documents[0].uploadStatus === "Uploaded")) {
       setMultiDoc(true);
@@ -130,6 +129,7 @@ export const MultiDocumentRow = ({
             docRemoveWarning={!multiDoc}
             multiDoc={true}
             uploadMultiDocument={(file, document) => uploadMultiDocument(file, document)}
+            required={document.required}
             multiSelectedFile={multiSelectedFile}
           />
         ))}
