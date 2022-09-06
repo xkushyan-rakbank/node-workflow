@@ -16,6 +16,7 @@ import {
   AutoSaveField as Field,
   LinkedField
 } from "../../../../components/Form";
+import { ACCOUNTSIGNTYPE } from "../../constants";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
 import { Divider } from "../Divider";
 import { AddButton } from "../../../../components/Buttons/AddButton";
@@ -81,9 +82,11 @@ export const SigningPreferencesComponent = ({
   goToNext,
   createFormChangeHandler,
   updateProspect,
-  organizationInfo
+  organizationInfo,
+  isSignatory
 }) => {
   const classes = useStyles();
+  console.log("isSignatory", isSignatory);
   return (
     <Formik
       initialValues={{
@@ -141,6 +144,14 @@ export const SigningPreferencesComponent = ({
                   return prospect;
                 }}
                 component={CheckboxGroup}
+                disabled={true}
+                filterOptions={options => {
+                  if (isSignatory) {
+                    return options;
+                  } else {
+                    return options.filter(item => item.value !== ACCOUNTSIGNTYPE);
+                  }
+                }}
                 classes={{ root: classes.radioButtonRoot }}
                 textArea={
                   accountSigningType === SIGNING_TRANSACTIONS_TYPE.OTHER && (
