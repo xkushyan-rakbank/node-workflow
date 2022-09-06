@@ -19,7 +19,7 @@ export const SelectServices = ({
   createFormChangeHandler,
   createSetStepHandler,
   isComeFromROScreensCheck,
-  isSignatory
+  singleSignatory
 }) => {
   const classes = useStyles();
   return (
@@ -36,7 +36,7 @@ export const SelectServices = ({
         handleContinue={handleContinue}
         isComeFromROScreensCheck={isComeFromROScreensCheck}
         createFormChangeHandler={createFormChangeHandler}
-        isSignatory={isSignatory}
+        singleSignatory={singleSignatory}
       />
 
       <div className={classes.linkContainer}>

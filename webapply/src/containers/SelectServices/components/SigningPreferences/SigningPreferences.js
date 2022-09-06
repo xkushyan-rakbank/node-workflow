@@ -83,7 +83,7 @@ export const SigningPreferencesComponent = ({
   createFormChangeHandler,
   updateProspect,
   organizationInfo,
-  isSignatory
+  singleSignatory
 }) => {
   const classes = useStyles();
   return (
@@ -144,7 +144,7 @@ export const SigningPreferencesComponent = ({
                 }}
                 component={CheckboxGroup}
                 filterOptions={options => {
-                  if (isSignatory) {
+                  if (singleSignatory) {
                     return options;
                   } else {
                     return options.filter(item => item.value !== ACCOUNTSIGNTYPE);

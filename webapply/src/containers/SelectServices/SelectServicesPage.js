@@ -36,7 +36,7 @@ export const SelectServicesPage = ({
   const dispatch = useDispatch();
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
-  const [isSignatory, setIsSignatory] = useState(false);
+  const [singleSignatory, setSingleSignatory] = useState(false);
   useViewId(true);
   const [
     activeStep,
@@ -65,9 +65,9 @@ export const SelectServicesPage = ({
           "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn": ""
         })
       );
-      setIsSignatory(true);
+      setSingleSignatory(true);
     } else if (signatoriesDetails && isSignatoryDetail.length === 1) {
-      setIsSignatory(true);
+      setSingleSignatory(true);
     }
   }, []);
 
@@ -206,7 +206,7 @@ export const SelectServicesPage = ({
       isComeFromROScreensCheck={isComeFromROScreens}
       createSetStepHandler={createSetStepHandler}
       bankDetails={getKycAnnexureBankDetails}
-      isSignatory={isSignatory}
+      singleSignatory={singleSignatory}
     />
   );
 };

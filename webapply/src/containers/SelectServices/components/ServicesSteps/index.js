@@ -15,7 +15,7 @@ export const ServicesSteps = ({
   isComeFromROScreensCheck,
   isSubmit,
   completedSteps,
-  isSignatory
+  singleSignatory
 }) => {
   const classes = useStyles();
 
@@ -44,7 +44,7 @@ export const ServicesSteps = ({
                   goToNext={() => handleContinue(stepData.eventName)}
                   createFormChangeHandler={createFormChangeHandler}
                   activeStep={activeStep}
-                  isSignatory={isSignatory}
+                  singleSignatory={singleSignatory}
                 />
               </div>
             )}
