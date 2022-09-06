@@ -93,13 +93,13 @@ export const kycAnnexureDetailsSchema = () =>
           .max(GOAMLREGISTRATION_REMARK_LENGTH, "Maximum ${max} characters allowed")
           .matches(REGISTRATION_NUMBER_REGEX, getInvalidMessage("Registration Number"))
       }),
-    kycVerificationDate: Yup.string()
+    kycVerificationDate: Yup.date()
       .nullable()
       .required(getRequiredMessage("Date of kyc verification"))
       .min(new Date(1900, 0, 1), getMinDateMessage("Date of kyc verification"))
       .max(new Date(), getInvalidMessage("Date of kyc verification"))
       .typeError(getInvalidMessage("Date of kyc verification")),
-    kycVerificationTime: Yup.string()
+    kycVerificationTime: Yup.date()
       .nullable()
       .required(getRequiredMessage("Time Of Kyc Verification")),
     roName: Yup.string()
@@ -138,34 +138,40 @@ export const kycAnnexureDetailsSchema = () =>
           .max(SIGNATORY_EID_INFO_LENGTH, "Maximum ${max} characters allowed")
           .matches(REMARK_RESON_REGEX, getInvalidMessage("Reason"))
       }),
-    bankDetails: Yup.array().of(
-      Yup.object().shape({
-        bankName: Yup.string()
-          .required(getRequiredMessage("Name of the Bank"))
-          .max(MAX_BANK_NAME_LENGTH, "Maximum ${max} characters allowed")
-          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Bank name")),
-        bankStatementTo: Yup.string()
-          .nullable()
-          .required(getRequiredMessage("Bank statement to date"))
-          .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement to date"))
-          .max(new Date(), getInvalidMessage("Bank statement to date"))
-          .typeError(getInvalidMessage("Bank statement to date")),
-        bankStatementFrom: Yup.string()
-          .nullable()
-          .required(getRequiredMessage("Bank statement from date"))
-          .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement from date"))
-          .max(new Date(), getInvalidMessage("Bank statement from date"))
-          .typeError(getInvalidMessage("Bank statement from date")),
-        bankStatementRemark: Yup.string()
-          .nullable()
-          .required(getRequiredMessage("Remarks/ Observations (if any)"))
-          .max(GOAMLREGISTRATION_REMARK_LENGTH, "Maximum ${max} characters allowed")
-          .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Remarks/ Observations (if any)")),
-        isStatementAvailable: Yup.string()
-          .nullable()
-          .required(getRequiredMessage("Bank statement Available"))
-      })
-    )
+    bankDetails: Yup.array().when("antiMoneyLaundering", {
+      is: "yes",
+      then: Yup.array().of(
+        Yup.object().shape({
+          bankName: Yup.string()
+            .required(getRequiredMessage("Name of the Bank"))
+            .max(MAX_BANK_NAME_LENGTH, "Maximum ${max} characters allowed")
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Bank name")),
+          bankStatementTo: Yup.date()
+            .nullable()
+            .required(getRequiredMessage("Bank statement to date"))
+            .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement to date"))
+            .max(new Date(), getInvalidMessage("Bank statement to date"))
+            .typeError(getInvalidMessage("Bank statement to date")),
+          bankStatementFrom: Yup.date()
+            .nullable()
+            .required(getRequiredMessage("Bank statement from date"))
+            .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement from date"))
+            .max(new Date(), getInvalidMessage("Bank statement from date"))
+            .typeError(getInvalidMessage("Bank statement from date")),
+          bankStatementRemark: Yup.string()
+            .nullable()
+            .required(getRequiredMessage("Remarks/ Observations (if any)"))
+            .max(GOAMLREGISTRATION_REMARK_LENGTH, "Maximum ${max} characters allowed")
+            .matches(
+              TOTAL_EXPERIENCE_YRS_REGEX,
+              getInvalidMessage("Remarks/ Observations (if any)")
+            ),
+          isStatementAvailable: Yup.string()
+            .nullable()
+            .required(getRequiredMessage("Bank statement Available"))
+        })
+      )
+    })
   });
 
 export const KycAnnexureComponent = ({

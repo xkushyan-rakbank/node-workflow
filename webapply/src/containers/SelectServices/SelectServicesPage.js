@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
@@ -36,6 +36,7 @@ export const SelectServicesPage = ({
   const dispatch = useDispatch();
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(true, true);
+  const [singleSignatory, setSingleSignatory] = useState(false);
   useViewId(true);
   const [
     activeStep,
@@ -48,21 +49,26 @@ export const SelectServicesPage = ({
     step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED
   );
   const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
-
   useEffect(() => {
     var isSignatoryDetail = [];
     isSignatoryDetail =
       signatoriesDetails &&
       signatoriesDetails.filter(signatory => signatory.kycDetails.isSignatory === true);
-    signatoriesDetails &&
+    if (
+      signatoriesDetails &&
       isSignatoryDetail.length === 1 &&
-      signatoriesDetails[0].accountSigningInfo.accountSigningType === "" &&
+      signatoriesDetails[0].accountSigningInfo.accountSigningType === ""
+    ) {
       dispatch(
         updateProspect({
           "prospect.signatoryInfo[0].accountSigningInfo.accountSigningType": ACCOUNTSIGNTYPE,
           "prospect.signatoryInfo[0].accountSigningInfo.accountSigningInstn": ""
         })
       );
+      setSingleSignatory(true);
+    } else if (signatoriesDetails && isSignatoryDetail.length === 1) {
+      setSingleSignatory(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -200,6 +206,7 @@ export const SelectServicesPage = ({
       isComeFromROScreensCheck={isComeFromROScreens}
       createSetStepHandler={createSetStepHandler}
       bankDetails={getKycAnnexureBankDetails}
+      singleSignatory={singleSignatory}
     />
   );
 };
