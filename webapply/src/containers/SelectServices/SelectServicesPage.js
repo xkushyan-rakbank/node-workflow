@@ -66,6 +66,8 @@ export const SelectServicesPage = ({
         })
       );
       setIsSignatory(true);
+    } else if (signatoriesDetails && isSignatoryDetail.length === 1) {
+      setIsSignatory(true);
     }
   }, []);
 

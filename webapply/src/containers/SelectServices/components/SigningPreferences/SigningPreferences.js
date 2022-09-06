@@ -86,7 +86,6 @@ export const SigningPreferencesComponent = ({
   isSignatory
 }) => {
   const classes = useStyles();
-  console.log("isSignatory", isSignatory);
   return (
     <Formik
       initialValues={{
@@ -144,7 +143,6 @@ export const SigningPreferencesComponent = ({
                   return prospect;
                 }}
                 component={CheckboxGroup}
-                disabled={true}
                 filterOptions={options => {
                   if (isSignatory) {
                     return options;
