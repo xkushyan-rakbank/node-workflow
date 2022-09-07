@@ -5,7 +5,8 @@ import {
   getRakValuePackage,
   getSignatories,
   getOrgKYCDetails,
-  getKycAnnexureDetails
+  getKycAnnexureDetails,
+  getCompanyBankStatements
 } from "../../store/selectors/appConfig";
 import { initialBankDetails } from "./constants";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
   topCustomers: get(getOrgKYCDetails(state), "topCustomers"),
   otherBankDetails: get(getOrgKYCDetails(state), "otherBankingRelationshipsInfo.otherBankDetails"),
   kycAnnexureDetails: getKycAnnexureDetails(state),
+  companyBankStatements: getCompanyBankStatements(state),
   getKycAnnexureBankDetails: get(getKycAnnexureDetails(state), "bankDetails", initialBankDetails),
   roAgentName: getAgentName(state),
   roagentId: getAgentId(state)
