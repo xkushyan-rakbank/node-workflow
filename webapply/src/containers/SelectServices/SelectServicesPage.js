@@ -2,7 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
-import { accountNames, CONTINUE, NEXT, STEP_STATUS, formStepper, SAVE } from "../../constants";
+import {
+  accountNames,
+  CONTINUE,
+  NEXT,
+  STEP_STATUS,
+  formStepper,
+  SAVE,
+  UPLOADED,
+  COMPANY_BANK_STATEMENTS_DOCTYPE
+} from "../../constants";
 import { useViewId } from "../../utils/useViewId";
 import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
@@ -30,7 +39,8 @@ export const SelectServicesPage = ({
   kycAnnexureDetails,
   getKycAnnexureBankDetails,
   roAgentName,
-  roagentId
+  roagentId,
+  companyBankStatements
 }) => {
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
@@ -96,6 +106,15 @@ export const SelectServicesPage = ({
           listOfCountries.push(item.value);
         }
       });
+    var companyBankStatementsArray = [];
+    companyBankStatementsArray =
+      companyBankStatements &&
+      companyBankStatements.documents.filter(
+        document =>
+          document.documentType === COMPANY_BANK_STATEMENTS_DOCTYPE &&
+          document.uploadStatus === UPLOADED
+      );
+    const isStatementAvailableCheck = companyBankStatementsArray.length > 0 ? "yes" : "";
     const bankDetails = [];
     var bankNames = [];
     bankNames = otherBankDetails && otherBankDetails.map(item => item.bankName);
@@ -113,9 +132,9 @@ export const SelectServicesPage = ({
 
           isStatementAvailable:
             getKycAnnexureBankDetails[index] === undefined
-              ? "yes"
+              ? isStatementAvailableCheck
               : getKycAnnexureBankDetails[index].isStatementAvailable === ""
-              ? "yes"
+              ? isStatementAvailableCheck
               : getKycAnnexureBankDetails[index].isStatementAvailable,
           bankStatementRemark:
             getKycAnnexureBankDetails[index] === undefined
