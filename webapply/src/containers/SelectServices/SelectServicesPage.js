@@ -37,6 +37,7 @@ export const SelectServicesPage = ({
   otherBankDetails,
   datalist,
   kycAnnexureDetails,
+  companyName,
   getKycAnnexureBankDetails,
   roAgentName,
   roagentId,
@@ -80,7 +81,6 @@ export const SelectServicesPage = ({
       setSingleSignatory(true);
     }
   }, []);
-
   useEffect(() => {
     const signatoriesIsShareholder =
       signatoriesDetails &&
@@ -171,7 +171,9 @@ export const SelectServicesPage = ({
         "prospect.kycAnnexure.clientDealingCountry": listOfCountries,
         "prospect.kycAnnexure.bankDetails": bankDetails,
         "prospect.kycAnnexure.roName": roAgentName && roAgentName,
-        "prospect.kycAnnexure.roEmployeeId": roagentId && roagentId
+        "prospect.kycAnnexure.roEmployeeId": roagentId && roagentId,
+        "prospect.kycAnnexure.companyName":
+          kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName
       })
     );
   }, [updateProspect]);

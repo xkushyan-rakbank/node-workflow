@@ -371,6 +371,11 @@ export const TOO_MANY_STAKEHOLDERS = {
   screeningStatus: "Not completed",
   screeningLabel: "Too many Stakeholders Check"
 };
+export const COMPANY_FIRCO_CHECK = {
+  screeningType: "Company Firco Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Company Firco Check"
+};
 
 export const COMPANY_CHECK_NAMES = [
   DEDUPE_CHECK,
@@ -381,7 +386,8 @@ export const COMPANY_CHECK_NAMES = [
   VIRTUAL_CURRENCY_CHECK,
   RAKSTARTER_ACCOUNT_CHECK,
   ISSHAREHOLDERACOMPANY_CHECK,
-  TOO_MANY_STAKEHOLDERS
+  TOO_MANY_STAKEHOLDERS,
+  COMPANY_FIRCO_CHECK
 ];
 
 export const RAKSTARTER_ROUTE_PARAM = "rakstarter";
