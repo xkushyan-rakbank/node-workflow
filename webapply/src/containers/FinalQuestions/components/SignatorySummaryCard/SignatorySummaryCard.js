@@ -16,6 +16,7 @@ import { createGetAuthorityTypeDisplayText } from "../../../../store/selectors/a
 export const SignatorySummaryCardComponent = ({
   sendProspectToAPI,
   index,
+  sIndex,
   signatory,
   signatory: { fullName } = {},
   expandedSignatoryIndex,
@@ -65,6 +66,7 @@ export const SignatorySummaryCardComponent = ({
       <div className={cx({ hidden: expandedSignatoryIndex !== index })}>
         <FinalQuestionStepComponent
           index={index}
+          sIndex={sIndex}
           stepsArray={signatoriesSteps}
           handleFinalStepContinue={handleFinalStepContinue}
           sendProspectToAPI={sendProspectToAPI}

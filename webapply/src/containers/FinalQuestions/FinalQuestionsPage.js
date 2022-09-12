@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-
 import { FinalQuestions } from "./components/FinalQuestions";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
@@ -48,9 +47,14 @@ export const FinalQuestionsPage = ({ signatories, sendProspectToAPI }) => {
     setIsCompanyExpanded(true);
   }, [setIsCompanyExpanded]);
   const filterSignatories = signatories => {
-    return signatories.filter(el => el.kycDetails.isShareholderACompany === false);
+    let signatoriesArray =
+      signatories &&
+      signatories.map((item, index) => ({
+        ...item,
+        id: index
+      }));
+    return signatoriesArray.filter(el => el.kycDetails.isShareholderACompany === false);
   };
-
   return (
     <FinalQuestions
       signatories={filterSignatories(signatories)}

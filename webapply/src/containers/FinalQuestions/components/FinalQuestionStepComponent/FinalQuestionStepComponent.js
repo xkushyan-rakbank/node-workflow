@@ -6,6 +6,7 @@ import { CONTINUE, STEP_STATUS, SAVE } from "../../../../constants";
 
 export const FinalQuestionStepComponent = ({
   index = null,
+  sIndex,
   handleFinalStepContinue,
   sendProspectToAPI,
   stepsArray,
@@ -48,7 +49,7 @@ export const FinalQuestionStepComponent = ({
 
   return stepsArray.map(item => (
     <StepComponent
-      index={index}
+      index={sIndex}
       page={page}
       key={item.step}
       steps={stepsArray}

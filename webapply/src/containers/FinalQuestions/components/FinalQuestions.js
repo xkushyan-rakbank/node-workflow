@@ -25,7 +25,6 @@ export const FinalQuestions = ({
   handleFinalStepContinue
 }) => {
   const classes = useStyles();
-
   return (
     <>
       <h2>Final questions</h2>
@@ -55,6 +54,7 @@ export const FinalQuestions = ({
             expandedSignatoryIndex={expandedSignatoryIndex}
             signatory={item}
             index={index}
+            sIndex={item.id}
             setExpandedSignatoryIndex={setExpandedSignatoryIndex}
             handleFinalStepContinue={handleFinalStepContinue}
             allSignatoriesSteps={signatoriesSteps}
