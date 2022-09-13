@@ -342,7 +342,7 @@ export const PersonalInformationStep = ({
                       name="country"
                       path={`prospect.signatoryInfo[${index}].signatoryCompanyInfo.countryOfIncorporation`}
                       label="Country of Incorporation"
-                      datalistId="country"
+                      datalistId="countryOfIncorporation"
                       component={SelectAutocomplete}
                       InputProps={{
                         inputProps: { maxLength: 30, tabIndex: 0 }

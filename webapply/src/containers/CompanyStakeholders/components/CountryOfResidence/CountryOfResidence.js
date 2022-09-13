@@ -78,7 +78,7 @@ const CountryOfResidenceStep = ({
                   label="Country of residence"
                   component={SelectAutocomplete}
                   disabled={isSignatory}
-                  datalistId="country"
+                  datalistId="countryOfIncorporation"
                   shrink
                   tabIndex="0"
                   changeProspect={(prospect, value) => {

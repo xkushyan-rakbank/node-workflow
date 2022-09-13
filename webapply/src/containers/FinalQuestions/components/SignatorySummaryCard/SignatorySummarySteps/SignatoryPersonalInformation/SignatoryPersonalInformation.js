@@ -118,7 +118,7 @@ export const SignatoryPersonalInformation = ({
               <Field
                 name="countryOfBirth"
                 path={`prospect.signatoryInfo[${index}].countryofBirth`}
-                datalistId="country"
+                datalistId="countryOfIncorporation"
                 label="Country of Birth"
                 isSearchable
                 component={SelectAutocomplete}
