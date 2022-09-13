@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import React, { useRef } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import { Formik, Form } from "formik";
@@ -46,8 +45,7 @@ import {
   //ALPHANUMERIC_REGEX,
   LICENSE_NUMBER_REGEX
 } from "../../../../utils/validation";
-import { getSignatories, getKycAnnexureDetails } from "../../../../store/selectors/appConfig";
-import { updateProspect } from "../../../../store/actions/appConfig";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 import { resetStakeholderInfo } from "../../../../store/actions/stakeholders";
 import { getPercentageWithoutCurrentStakeholder } from "../../../../store/selectors/stakeholders";
 
@@ -187,23 +185,10 @@ export const PersonalInformationStep = ({
   totalPercentageWithoutCurrentStakeholder,
   signatoryProminentPosition,
   signatoryTlnumber,
-  isShareholderACompany,
-  kycAnnexureDetails
+  isShareholderACompany
 }) => {
   const classes = useStyles();
   const personalInfoRef = useRef();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    isShareholderACompany &&
-      dispatch(
-        updateProspect({
-          "prospect.kycAnnexure.isUltimateBeneficiary":
-            kycAnnexureDetails && kycAnnexureDetails.isUltimateBeneficiary === "yes"
-              ? "yes"
-              : kycAnnexureDetails.isUltimateBeneficiary
-        })
-      );
-  }, [isShareholderACompany]);
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
@@ -552,8 +537,7 @@ const mapStateToProps = (state, { index }) => ({
     ""
   ),
   isShareholderACompany: get(getSignatories(state)[index], "kycDetails.isShareholderACompany", ""),
-  signatoryTlnumber: get(getSignatories(state)[index], "signatoryCompanyInfo.tradeLicenseNo", ""),
-  kycAnnexureDetails: getKycAnnexureDetails(state)
+  signatoryTlnumber: get(getSignatories(state)[index], "signatoryCompanyInfo.tradeLicenseNo", "")
 });
 
 const mapDispatchToProps = {
