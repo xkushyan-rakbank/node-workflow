@@ -159,7 +159,7 @@ jobs:
     - job: WebapplyServer
       timeoutInMinutes: 120
       pool:
-        vmImage: 'macOS-1015'
+        vmImage: 'macos-latest'
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 14.x'
@@ -281,7 +281,7 @@ jobs:
     - job: document_uploader
       timeoutInMinutes: 120
       pool:
-        vmImage: 'macOS-1015'
+        vmImage: 'macos-latest'
       steps:
       - task: NodeTool@0
         displayName: 'Use Node 14.x'
