@@ -148,16 +148,24 @@ export const kycAnnexureDetailsSchema = () =>
             .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Bank name")),
           bankStatementTo: Yup.date()
             .nullable()
-            .required(getRequiredMessage("Bank statement to date"))
-            .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement to date"))
-            .max(new Date(), getInvalidMessage("Bank statement to date"))
-            .typeError(getInvalidMessage("Bank statement to date")),
+            .when("isStatementAvailable", {
+              is: "yes",
+              then: Yup.date()
+                .required(getRequiredMessage("Bank statement to date"))
+                .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement to date"))
+                .max(new Date(), getInvalidMessage("Bank statement to date"))
+                .typeError(getInvalidMessage("Bank statement to date"))
+            }),
           bankStatementFrom: Yup.date()
             .nullable()
-            .required(getRequiredMessage("Bank statement from date"))
-            .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement from date"))
-            .max(new Date(), getInvalidMessage("Bank statement from date"))
-            .typeError(getInvalidMessage("Bank statement from date")),
+            .when("isStatementAvailable", {
+              is: "yes",
+              then: Yup.date()
+                .required(getRequiredMessage("Bank statement from date"))
+                .min(new Date(1900, 0, 1), getMinDateMessage("Bank statement from date"))
+                .max(new Date(), getInvalidMessage("Bank statement from date"))
+                .typeError(getInvalidMessage("Bank statement from date"))
+            }),
           bankStatementRemark: Yup.string()
             .nullable()
             .required(getRequiredMessage("Remarks/ Observations (if any)"))
