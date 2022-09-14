@@ -82,6 +82,11 @@ export const SelectServicesPage = ({
     }
   }, []);
   useEffect(() => {
+    var shareholderACompany = [];
+    shareholderACompany =
+      signatoriesDetails &&
+      signatoriesDetails.filter(signatory => signatory.kycDetails.isShareholderACompany === true);
+    const isShareholderACompany = shareholderACompany.length > 0 ? "yes" : "";
     const signatoriesIsShareholder =
       signatoriesDetails &&
       signatoriesDetails.filter(signatory => signatory.kycDetails.isShareholder === true);
@@ -173,7 +178,11 @@ export const SelectServicesPage = ({
         "prospect.kycAnnexure.roName": roAgentName && roAgentName,
         "prospect.kycAnnexure.roEmployeeId": roagentId && roagentId,
         "prospect.kycAnnexure.companyName":
-          kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName
+          kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName,
+        "prospect.kycAnnexure.isUltimateBeneficiary":
+          kycAnnexureDetails.isUltimateBeneficiary === ""
+            ? isShareholderACompany
+            : kycAnnexureDetails.isUltimateBeneficiary
       })
     );
   }, [updateProspect]);
