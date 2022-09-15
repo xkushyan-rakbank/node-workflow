@@ -422,10 +422,18 @@
 	"kycAnnexure": {
 		"workItemNumber": "",
 		"companyName": "",
+		"skillBasedCategory": [
+			""
+		],
 		"signatoryName": "",
+		"signatoryDetails":[
+			{
+			"signatoryName": "",
+			"education": "",
+			"backgroundInfo": ""
+			}
+		],
 		"businessModel": "",
-		"education": "",
-		"experienceInYrs": "",
 		"isUltimateBeneficiary": "",
 		"bankDetails": [
 		  {
@@ -453,6 +461,7 @@
 		"goAmlRegistrationNumber": "",
 		"goAmlIndustry": [
 		],
+		"noticeToCounterfeit": "",
 		"roName": "",
 		"roEmployeeId": "",
 		"kycVerificationDate": "",
