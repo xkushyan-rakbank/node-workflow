@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
@@ -27,7 +26,6 @@ import {
   getRequiredMessage,
   getInvalidMessage
 } from "../../../../../../utils/getValidationMessage";
-import { updateProspect } from "../../../../../../store/actions/appConfig";
 import { useStyles } from "./styled";
 
 export const createSignatoryEmploymentDetailsSchema = isSignatory =>
@@ -80,26 +78,6 @@ export const SignatoryEmploymentDetailsComponent = ({
   kycAnnexureDetails
 }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    isSignatory &&
-      dispatch(
-        updateProspect({
-          "prospect.kycAnnexure.education":
-            kycAnnexureDetails.education === ""
-              ? signatoryInfo[index].kycDetails.qualification
-              : kycAnnexureDetails.education,
-          "prospect.kycAnnexure.experienceInYrs":
-            kycAnnexureDetails.experienceInYrs === ""
-              ? signatoryInfo[index].employmentDetails.totalExperienceYrs
-              : kycAnnexureDetails.experienceInYrs
-        })
-      );
-  }, [
-    signatoryInfo[index].kycDetails.totalExperienceYrs,
-    signatoryInfo[index].employmentDetails.qualification
-  ]);
-
   const basePath = `prospect.signatoryInfo[${index}]`;
 
   return (

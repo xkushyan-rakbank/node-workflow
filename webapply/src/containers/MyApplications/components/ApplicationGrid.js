@@ -28,6 +28,9 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
           {app.applicationInfo.roLandlineNo ? app.applicationInfo.roLandlineNo : ""}
         </Typography>
+        <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
+          {app.applicationInfo.roMobileNo ? app.applicationInfo.roMobileNo : ""}
+        </Typography>
         {app.status
           ? [
               <div key="status" className={classes.status}>

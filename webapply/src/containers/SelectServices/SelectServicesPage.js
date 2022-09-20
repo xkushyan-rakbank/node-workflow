@@ -60,8 +60,8 @@ export const SelectServicesPage = ({
     step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED
   );
   const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
+  var isSignatoryDetail = [];
   useEffect(() => {
-    var isSignatoryDetail = [];
     isSignatoryDetail =
       signatoriesDetails &&
       signatoriesDetails.filter(signatory => signatory.kycDetails.isSignatory === true);
@@ -120,11 +120,13 @@ export const SelectServicesPage = ({
           document.uploadStatus === UPLOADED
       );
     const isStatementAvailableCheck = companyBankStatementsArray.length > 0 ? "yes" : "";
+    var antiMoneyLaunderingCheck = "no";
     const bankDetails = [];
     var bankNames = [];
     bankNames = otherBankDetails && otherBankDetails.map(item => item.bankName);
     bankNames = bankNames.filter(item => item);
     if (bankNames && bankNames.length > 0) {
+      antiMoneyLaunderingCheck = "yes";
       const newData = [];
       bankNames.map((item, index) =>
         newData.push({
@@ -133,14 +135,14 @@ export const SelectServicesPage = ({
               ? item
               : getKycAnnexureBankDetails[index].bankName === ""
               ? item
-              : getKycAnnexureBankDetails[index].bankName,
+              : item,
 
           isStatementAvailable:
             getKycAnnexureBankDetails[index] === undefined
               ? isStatementAvailableCheck
               : getKycAnnexureBankDetails[index].isStatementAvailable === ""
               ? isStatementAvailableCheck
-              : getKycAnnexureBankDetails[index].isStatementAvailable,
+              : isStatementAvailableCheck,
           bankStatementRemark:
             getKycAnnexureBankDetails[index] === undefined
               ? ""
@@ -169,6 +171,19 @@ export const SelectServicesPage = ({
         ? bankDetails.push(...initialBankDetails)
         : bankDetails.push(...getKycAnnexureBankDetails);
     }
+    const kycSignatory = [];
+    const kycSignatoryData = [];
+    if (isSignatoryDetail && isSignatoryDetail.length > 0) {
+      isSignatoryDetail.map((item, index) =>
+        kycSignatoryData.push({
+          signatoryName: item.fullName,
+          education: item.kycDetails.qualification,
+          backgroundInfo: item.employmentDetails.totalExperienceYrs
+        })
+      );
+      kycSignatory.push(...kycSignatoryData);
+    }
+
     dispatch(
       updateProspect({
         "prospect.kycAnnexure.signatoryName": signatoriesName && signatoriesName.join(","),
@@ -177,12 +192,10 @@ export const SelectServicesPage = ({
         "prospect.kycAnnexure.bankDetails": bankDetails,
         "prospect.kycAnnexure.roName": roAgentName && roAgentName,
         "prospect.kycAnnexure.roEmployeeId": roagentId && roagentId,
-        "prospect.kycAnnexure.companyName":
-          kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName,
-        "prospect.kycAnnexure.isUltimateBeneficiary":
-          kycAnnexureDetails.isUltimateBeneficiary === ""
-            ? isShareholderACompany
-            : kycAnnexureDetails.isUltimateBeneficiary
+        "prospect.kycAnnexure.companyName": companyName,
+        "prospect.kycAnnexure.isUltimateBeneficiary": isShareholderACompany,
+        "prospect.kycAnnexure.signatoryDetails": kycSignatory,
+        "prospect.kycAnnexure.antiMoneyLaundering": antiMoneyLaunderingCheck
       })
     );
   }, [updateProspect]);

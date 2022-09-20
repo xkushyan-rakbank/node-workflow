@@ -55,6 +55,9 @@ export const kycAnnexureDetailsSchema = () =>
       .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name"))
       .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
+    skillBasedCategory: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Skill based category")),
     signatoryName: Yup.string()
       .nullable()
       .required(getRequiredMessage("Signatory name"))
@@ -64,20 +67,11 @@ export const kycAnnexureDetailsSchema = () =>
     businessModel: Yup.string()
       .nullable()
       .required(getRequiredMessage("Business Modal"))
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Business Modal"))
       .max(EXPERIENCE_BUSINESS_MODAL_LENGTH, "Maximum ${max} characters allowed"),
-    education: Yup.string()
-      .nullable()
-      .required(getRequiredMessage("Education")),
-    experienceInYrs: Yup.string()
-      .nullable()
-      .required(getRequiredMessage("Corporate Experience"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
-      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Corporate Experience")),
     antiMoneyLaundering: Yup.string().nullable(),
-    isUltimateBeneficiary: Yup.string()
-      .nullable()
-      .required(getRequiredMessage("Is this an Ultimate Beneficiary Ownership company ")),
+    isUltimateBeneficiary: Yup.string().nullable(),
+    //.required(getRequiredMessage("Is this an Ultimate Beneficiary Ownership company ")),
     audioVideoKycVerification: Yup.string()
       .nullable()
       .required(
@@ -168,18 +162,43 @@ export const kycAnnexureDetailsSchema = () =>
             }),
           bankStatementRemark: Yup.string()
             .nullable()
-            .required(getRequiredMessage("Remarks/ Observations (if any)"))
-            .max(GOAMLREGISTRATION_REMARK_LENGTH, "Maximum ${max} characters allowed")
-            .matches(
-              TOTAL_EXPERIENCE_YRS_REGEX,
-              getInvalidMessage("Remarks/ Observations (if any)")
-            ),
+            .when("isStatementAvailable", {
+              is: "yes" || "no",
+              then: Yup.string()
+                .required(getRequiredMessage("Remarks/ Observations (if any)"))
+                .max(GOAMLREGISTRATION_REMARK_LENGTH, "Maximum ${max} characters allowed")
+                .matches(
+                  TOTAL_EXPERIENCE_YRS_REGEX,
+                  getInvalidMessage("Remarks/ Observations (if any)")
+                )
+            }),
           isStatementAvailable: Yup.string()
             .nullable()
             .required(getRequiredMessage("Bank statement Available"))
         })
       )
-    })
+    }),
+    signatoryDetails: Yup.array().of(
+      Yup.object().shape({
+        signatoryName: Yup.string()
+          .nullable()
+          .required(getRequiredMessage("Signatory name"))
+          // eslint-disable-next-line no-template-curly-in-string
+          .matches(NAME_REGEX_SIGNATORY, getInvalidMessage("Signatory name")),
+        education: Yup.string()
+          .nullable()
+          .required(getRequiredMessage("Education")),
+        backgroundInfo: Yup.string()
+          .nullable()
+          .required(getRequiredMessage("Corporate Experience"))
+          // eslint-disable-next-line no-template-curly-in-string
+          .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
+          .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Corporate Experience"))
+      })
+    ),
+    noticeToCounterfeit: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Did you notice counterfeit product at this time of visit"))
   });
 
 export const KycAnnexureComponent = ({
@@ -199,20 +218,21 @@ export const KycAnnexureComponent = ({
     <Formik
       initialValues={{
         companyName: "",
+        skillBasedCategory: [],
         cifNumber: "",
         signatoryName: "",
         workItemNo: "",
-        education: "",
         businessModel: "",
-        experienceInYrs: "",
         isUltimateBeneficiary: "",
         antiMoneyLaundering: "",
         bankDetails: kycAnnexureBankDetails ? kycAnnexureBankDetails : initialBankDetails,
+        signatoryDetails: kycAnnexureDetails.signatoryDetails,
         audioVideoKycVerification: "",
         signatoryEIDinfo: "yes",
         signatoryEIDinfoRemarks: "",
         goAmlRegistration: "NA",
         goAmlRegistrationNumber: "",
+        noticeToCounterfeit: "",
         roName: "",
         roEmployeeId: "",
         kycVerificationDate: "",
@@ -237,6 +257,7 @@ export const KycAnnexureComponent = ({
                 name="companyName"
                 label="Company Name"
                 path="prospect.kycAnnexure.companyName"
+                disabled
                 contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 50 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
                 infoTitle="These details should be the same as in your Trade License"
                 component={Input}
@@ -245,6 +266,26 @@ export const KycAnnexureComponent = ({
                 }}
               />
             </Grid>
+            <Grid item md={6} xs={12}>
+              <Field
+                name="skillBasedCategory"
+                path={`prospect.kycAnnexure.skillBasedCategory[${0}]`}
+                datalistId="skillBasedCategory"
+                label={"Skill based category"}
+                isSearchable
+                component={SelectAutocomplete}
+                changeProspect={(prospect, value) => {
+                  return {
+                    ...prospect,
+                    [`prospect.kycAnnexure.skillBasedCategory[${0}]`]: value
+                  };
+                }}
+                shrink={true}
+                tabIndex="0"
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={3}>
             <Grid item sm={6} xs={12}>
               <Field
                 name="cifNumber"
@@ -254,8 +295,6 @@ export const KycAnnexureComponent = ({
                 component={Input}
               />
             </Grid>
-          </Grid>
-          <Grid container spacing={3}>
             <Grid item sm={6} xs={12}>
               <Field
                 name="workItemNo"
@@ -265,18 +304,19 @@ export const KycAnnexureComponent = ({
                 component={Input}
               />
             </Grid>
-            <Grid item sm={6} xs={12}>
-              <Field
-                name="signatoryName"
-                label="Signatory"
-                path="prospect.kycAnnexure.signatoryName"
-                infoTitle="Name of the signatory"
-                component={Input}
-                InputProps={{
-                  inputProps: { maxLength: 300, tabIndex: 0 }
-                }}
-              />
-            </Grid>
+          </Grid>
+          <Grid xs={12}>
+            <Field
+              name="signatoryName"
+              label="Signatory"
+              path="prospect.kycAnnexure.signatoryName"
+              infoTitle="Name of the signatory"
+              disabled
+              component={Input}
+              InputProps={{
+                inputProps: { maxLength: 300, tabIndex: 0 }
+              }}
+            />
           </Grid>
           <Grid xs={12}>
             <Field
@@ -292,73 +332,112 @@ export const KycAnnexureComponent = ({
               }}
             />
           </Grid>
-          <>
-            <Divider />
-            <Subtitle
-              title="Background of the Shareholder (please incorporate only details that are not in KYC)"
-              classes={{ wrapper: classes.subtitleBranch }}
+          <Divider />
+          <Subtitle
+            title="Background of the Signatory (please incorporate only details that are not in KYC)"
+            classes={{ wrapper: classes.subtitleBranch }}
+          />
+          <FieldArray name="signatoryDetails">
+            {arrayHelpers => (
+              <>
+                {values.signatoryDetails.map((_, index) => {
+                  // eslint-disable-next-line max-len
+                  const prospectPath = `prospect.kycAnnexure.signatoryDetails[${index}]`;
+
+                  return (
+                    <Grid
+                      containerkey={index}
+                      item
+                      // xs={isMaxAddedSignatories ? 11 : 12}
+                      sm={11}
+                      xs={12}
+                      key={index}
+                      className={classes.confirmingTransaction}
+                    >
+                      <Grid container spacing={3}>
+                        <Grid item md={6} xs={12}>
+                          <Field
+                            name={`signatoryDetails[${index}].signatoryName`}
+                            label="Name of the signatory"
+                            path={`${prospectPath}.signatoryName`}
+                            infoTitle="Name of the signatory"
+                            component={Input}
+                            disabled
+                            InputProps={{
+                              inputProps: { maxLength: 300, tabIndex: 0 }
+                            }}
+                          />
+                        </Grid>
+                        <Grid item md={6} xs={12}>
+                          <Field
+                            name={`signatoryDetails[${index}].education`}
+                            path={`${prospectPath}.education`}
+                            datalistId="qualification"
+                            label={"Education"}
+                            disabled
+                            isSearchable
+                            component={SelectAutocomplete}
+                            tabIndex="0"
+                          />
+                        </Grid>
+                      </Grid>
+                      <Grid xs={12}>
+                        {/* //ro-assist-brd1-5 */}
+                        <Field
+                          name={`signatoryDetails[${index}].backgroundInfo`}
+                          path={`${prospectPath}.backgroundInfo`}
+                          label={"Corporate Experience"}
+                          placeholder="Work Experience"
+                          component={Input}
+                          disabled
+                          multiline
+                          rows="4"
+                          InputProps={{
+                            inputProps: { maxLength: MAX_EXPERIENCE_YEARS_LENGTH, tabIndex: 0 }
+                          }}
+                          contextualHelpText={
+                            <>
+                              <b>
+                                {"<"}Please DON{"'"}T use ENTER key in this field{">"}
+                              </b>
+                              <br />
+                              <br />
+                              Starting with the most recent enter jobwise list of experience:
+                              <br />
+                              From Month-Year, To Month-Year, Company Name, Company Country,
+                              Position & Employment Type (Salaried / Self Employed)
+                              <br />
+                              <br />
+                              Example
+                              <br />
+                              APR-16 to TodaysDate, Reliance Biz, UAE, Proprietor, Self-Employed
+                              <br />
+                              AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
+                            </>
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                  );
+                })}
+              </>
+            )}
+          </FieldArray>
+          <Divider />
+          <Grid container>
+            <Field
+              name="isUltimateBeneficiary"
+              component={InlineRadioGroup}
+              path="prospect.kycAnnexure.isUltimateBeneficiary"
+              options={YesNoList}
+              label="Is this an Ultimate Beneficiary Ownership company? "
+              disabled
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
             />
-            <Grid container spacing={3}>
-              <Grid item md={6} xs={12}>
-                <Field
-                  name="education"
-                  path="prospect.kycAnnexure.education"
-                  datalistId="qualification"
-                  label={"Education"}
-                  isSearchable
-                  component={SelectAutocomplete}
-                  tabIndex="0"
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                {/* //ro-assist-brd1-5 */}
-                <Field
-                  name="isUltimateBeneficiary"
-                  component={InlineRadioGroup}
-                  path="prospect.kycAnnexure.isUltimateBeneficiary"
-                  options={YesNoList}
-                  label="Is this an Ultimate Beneficiary Ownership company? "
-                  InputProps={{
-                    inputProps: { tabIndex: 0 }
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <Grid xs={12}>
-              {/* //ro-assist-brd1-5 */}
-              <Field
-                name="experienceInYrs"
-                path="prospect.kycAnnexure.experienceInYrs"
-                label={"Corporate Experience"}
-                placeholder="Work Experience"
-                component={Input}
-                multiline
-                rows="4"
-                InputProps={{
-                  inputProps: { maxLength: MAX_EXPERIENCE_YEARS_LENGTH, tabIndex: 0 }
-                }}
-                contextualHelpText={
-                  <>
-                    <b>
-                      {"<"}Please DON{"'"}T use ENTER key in this field{">"}
-                    </b>
-                    <br />
-                    <br />
-                    Starting with the most recent enter jobwise list of experience:
-                    <br />
-                    From Month-Year, To Month-Year, Company Name, Company Country, Position &
-                    Employment Type (Salaried / Self Employed)
-                    <br />
-                    <br />
-                    Example
-                    <br />
-                    APR-16 to TodaysDate, Reliance Biz, UAE, Proprietor, Self-Employed
-                    <br />
-                    AUG-13 to MAR-16, TCS, India, Marketing Manager, Salaried
-                  </>
-                }
-              />
-            </Grid>
+          </Grid>
+          <>
             <Divider />
             <Subtitle title="Bank Accounts Details" classes={{ wrapper: classes.subtitleBranch }} />
             <Grid container>
@@ -368,6 +447,7 @@ export const KycAnnexureComponent = ({
                 component={InlineRadioGroup}
                 path="prospect.kycAnnexure.antiMoneyLaundering"
                 options={YesNoList}
+                disabled
                 label="Any additional information available on company’s bank accounts maintained within/outside UAE ? "
                 InputProps={{
                   inputProps: { tabIndex: 0 }
@@ -400,6 +480,7 @@ export const KycAnnexureComponent = ({
                                 label="Name of the Bank"
                                 path={`${prospectPath}.bankName`}
                                 component={Input}
+                                disabled
                                 InputProps={{
                                   inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
                                 }}
@@ -410,6 +491,7 @@ export const KycAnnexureComponent = ({
                                 name={`bankDetails[${index}].isStatementAvailable`}
                                 component={InlineRadioGroup}
                                 path={`${prospectPath}.isStatementAvailable`}
+                                disabled
                                 options={YesNoList}
                                 label="Bank statement Available"
                                 InputProps={{
@@ -651,6 +733,18 @@ export const KycAnnexureComponent = ({
                 </Grid>
               </Grid>
             )}
+            <Grid container>
+              <Field
+                name="noticeToCounterfeit"
+                component={InlineRadioGroup}
+                path="prospect.kycAnnexure.noticeToCounterfeit"
+                options={YesNoList}
+                label="Did you notice counterfeit product at this time of visit(application where meeting at business premises)"
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
             {/* <p>
               {`I ${values.roName !== "" ? "..............." : values.roName}, EMP -${
                 values.roEmployeeId !== "" ? "..............." : values.roEmployeeId
