@@ -218,7 +218,7 @@ export const KycAnnexureComponent = ({
     <Formik
       initialValues={{
         companyName: "",
-        skillBasedCategory: [],
+        skillBasedCategory: "",
         cifNumber: "",
         signatoryName: "",
         workItemNo: "",
@@ -269,18 +269,11 @@ export const KycAnnexureComponent = ({
             <Grid item md={6} xs={12}>
               <Field
                 name="skillBasedCategory"
-                path={`prospect.kycAnnexure.skillBasedCategory[${0}]`}
+                path={"prospect.kycAnnexure.skillBasedCategory"}
                 datalistId="skillBasedCategory"
                 label={"Skill based category"}
                 isSearchable
                 component={SelectAutocomplete}
-                changeProspect={(prospect, value) => {
-                  return {
-                    ...prospect,
-                    [`prospect.kycAnnexure.skillBasedCategory[${0}]`]: value
-                  };
-                }}
-                shrink={true}
                 tabIndex="0"
               />
             </Grid>

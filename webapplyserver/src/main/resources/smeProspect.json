@@ -422,9 +422,7 @@
 	"kycAnnexure": {
 		"workItemNumber": "",
 		"companyName": "",
-		"skillBasedCategory": [
-			""
-		],
+		"skillBasedCategory": "",
 		"signatoryName": "",
 		"signatoryDetails":[
 			{
