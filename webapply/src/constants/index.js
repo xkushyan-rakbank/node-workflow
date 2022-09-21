@@ -376,6 +376,11 @@ export const COMPANY_FIRCO_CHECK = {
   screeningStatus: "Not completed",
   screeningLabel: "Company Firco Check"
 };
+export const SIGNATORY_FIRCO_CHECK = {
+  screeningType: "Signatory Firco Check",
+  screeningStatus: "Not completed",
+  screeningLabel: "Signatory Firco Check"
+};
 
 export const COMPANY_CHECK_NAMES = [
   DEDUPE_CHECK,
@@ -387,7 +392,8 @@ export const COMPANY_CHECK_NAMES = [
   RAKSTARTER_ACCOUNT_CHECK,
   ISSHAREHOLDERACOMPANY_CHECK,
   TOO_MANY_STAKEHOLDERS,
-  COMPANY_FIRCO_CHECK
+  COMPANY_FIRCO_CHECK,
+  SIGNATORY_FIRCO_CHECK
 ];
 
 export const RAKSTARTER_ROUTE_PARAM = "rakstarter";

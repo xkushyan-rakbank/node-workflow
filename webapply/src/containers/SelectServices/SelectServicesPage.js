@@ -94,7 +94,7 @@ export const SelectServicesPage = ({
       signatoriesIsShareholder &&
       signatoriesIsShareholder.map(signatory => signatory.kycDetails.nationality);
     const signatoriesName =
-      signatoriesDetails && signatoriesDetails.map(signatory => signatory.fullName);
+      isSignatoryDetail && isSignatoryDetail.map(signatory => signatory.fullName);
     const poaCountry = [];
     datalist &&
       datalist.poaNationality.map(item => {

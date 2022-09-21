@@ -22,7 +22,7 @@ export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
 export const MIN_NON_UAE_PHONE_LENGTH = 4;
 export const MAX_NON_UAE_PHONE_LENGTH = 10;
 export const MAX_NAME_IN_BUSINESS_LENGTH = 19;
-export const MAX_EXPERIENCE_YEARS_LENGTH = 255;
+export const MAX_EXPERIENCE_YEARS_LENGTH = 5000;
 export const MAX_SOURCE_OF_FUNDS_OTHERS_LENGTH = 50;
 
 export const EMIRATES_ID_REGEX = /^784\d{12}$/;

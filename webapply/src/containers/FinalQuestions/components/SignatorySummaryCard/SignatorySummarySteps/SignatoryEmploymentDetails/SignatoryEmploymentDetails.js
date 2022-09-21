@@ -184,7 +184,7 @@ export const SignatoryEmploymentDetailsComponent = ({
               <Field
                 name="totalExperienceYrs"
                 path={`${basePath}.employmentDetails.totalExperienceYrs`}
-                label={`Background information of the signatory (Maximum 255 characters)${
+                label={`Background information of the signatory (Maximum 5000 characters)${
                   !isSignatory ? " (optional)" : ""
                 }`}
                 placeholder="Work Experience"
