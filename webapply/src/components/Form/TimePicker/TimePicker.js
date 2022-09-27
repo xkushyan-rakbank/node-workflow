@@ -17,7 +17,7 @@ const TimePickerBase = ({
   disabled,
   infoTitle,
   placeholder = "__:__",
-  format = "HH:mm",
+  format = "hh:mm a",
   InputProps,
   form: { errors, touched, setFieldValue },
   timePickerProps = {},
@@ -38,7 +38,7 @@ const TimePickerBase = ({
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <StyledKeyboardTimePicker
             autoOk
-            ampm={false}
+            ampm={true}
             autoComplete="off"
             label={label}
             disabled={disabled}
