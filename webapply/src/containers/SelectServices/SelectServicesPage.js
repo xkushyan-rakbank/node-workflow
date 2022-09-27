@@ -86,7 +86,7 @@ export const SelectServicesPage = ({
     shareholderACompany =
       signatoriesDetails &&
       signatoriesDetails.filter(signatory => signatory.kycDetails.isShareholderACompany === true);
-    const isShareholderACompany = shareholderACompany.length > 0 ? "yes" : "";
+    const isShareholderACompany = shareholderACompany.length > 0 ? "yes" : "no";
     const signatoriesIsShareholder =
       signatoriesDetails &&
       signatoriesDetails.filter(signatory => signatory.kycDetails.isShareholder === true);
@@ -119,7 +119,7 @@ export const SelectServicesPage = ({
           document.documentType === COMPANY_BANK_STATEMENTS_DOCTYPE &&
           document.uploadStatus === UPLOADED
       );
-    const isStatementAvailableCheck = companyBankStatementsArray.length > 0 ? "yes" : "";
+    const isStatementAvailableCheck = companyBankStatementsArray.length > 0 ? "yes" : "no";
     var antiMoneyLaunderingCheck = "no";
     const bankDetails = [];
     var bankNames = [];
