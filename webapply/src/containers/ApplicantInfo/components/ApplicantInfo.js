@@ -68,7 +68,8 @@ export const ApplicantInfoComponent = ({
   isLoading,
   partnerInfo,
   roCode,
-  isLemniskEnable
+  isLemniskEnable,
+  isDisableNextstep
 }) => {
   //ro-assist-brd3-16
   const allianceCodeFromQuery = partnerInfo !== undefined ? partnerInfo.code : "";
@@ -255,7 +256,8 @@ export const ApplicantInfoComponent = ({
                     !values.fullName ||
                     !values.email ||
                     !values.mobileNo ||
-                    (!reCaptchaToken && isRecaptchaEnable)
+                    (!reCaptchaToken && isRecaptchaEnable) ||
+                    !isDisableNextstep
                   }
                   isDisplayLoader={isLoading}
                   justify="flex-end"

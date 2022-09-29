@@ -136,6 +136,20 @@ export const PERSONAL_BACKGROUND_DOCTYPE = "CV_Personal_Background";
 
 export const companyMultiDocs = [COMPANY_BANK_STATEMENTS, COMPANY_ADDRESS_PROOF, COMPANY_INVOICES];
 export const stakeholderMultiDocs = [PERSONAL_BANK_STATEMENTS, PERSONAL_BACKGROUND];
+export const CREAT_PROSPECT_KEYS = [
+  "applicantInfo",
+  "generalInfo",
+  "applicationInfo",
+  "accountInfo",
+  "organizationInfo",
+  "orgKYCDetails",
+  "signatoryInfo",
+  "channelServicesInfo",
+  "documents",
+  "prospectStatusInfo",
+  "kycAnnexure",
+  "freeFieldsInfo"
+];
 
 /* Action Types */
 export const SAVE = "save";

@@ -5,7 +5,7 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper, CONVENTIONAL, ISLAMIC } from "../../constants";
+import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS } from "../../constants";
 import routes from "../../routes";
 
 //ro-assist-brd3-16
@@ -26,7 +26,8 @@ export const ApplicantInfoContainer = ({
   isIslamicBanking,
   dataList,
   roCode,
-  isLemniskEnable
+  isLemniskEnable,
+  prospect
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const pushHistory = useTrackingHistory();
@@ -43,6 +44,7 @@ export const ApplicantInfoContainer = ({
   }, [resetScreeningError]);
 
   const findInDataList = () => {
+    dataListCheck();
     const productCode = query.get("product-name");
     const lowerCaseProductCode = productCode !== null ? productCode.toLowerCase() : "";
     if (dataList["allianceCode"] !== undefined) {
@@ -52,6 +54,25 @@ export const ApplicantInfoContainer = ({
     } else {
       return undefined;
     }
+  };
+  const dataListCheck = () => {
+    var keys = prospect ? Object.keys(prospect) : [];
+    const areEqual = (array1, array2) => {
+      if (array1.length === array2.length) {
+        return array1.every((element, index) => {
+          if (element === array2[index]) {
+            return true;
+          }
+
+          return false;
+        });
+      }
+
+      return false;
+    };
+    const isDisableNextstep =
+      dataList && Object.keys(dataList).length > 0 && areEqual(keys, CREAT_PROSPECT_KEYS);
+    return isDisableNextstep;
   };
   const onSubmit = useCallback(
     values => {
@@ -96,6 +117,7 @@ export const ApplicantInfoContainer = ({
       isRecaptchaEnable={isRecaptchaEnable}
       reCaptchaSiteKey={reCaptchaSiteKey}
       reCaptchaToken={reCaptchaToken}
+      isDisableNextstep={dataListCheck()}
       handleReCaptchaVerify={handleReCaptchaVerify}
       handleVerifiedFailed={handleVerifiedFailed}
       isIslamicBanking={isIslamicBanking}
