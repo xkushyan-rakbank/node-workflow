@@ -17,7 +17,7 @@ import {
 import {
   NAME_REGEX,
   SPECIAL_CHARACTERS_REGEX,
-  ALPHANUMERIC_REGEX
+  PLACE_BIRTH_ALPHANUMERIC_REGEX
 } from "../../../../../../utils/validation";
 
 import { useStyles } from "./styled";
@@ -48,7 +48,7 @@ export const createSignatoryPersonalInformationSchema = isSignatory =>
       .nullable()
       .test("required", getRequiredMessage("Place of Birth"), value => !isSignatory || value)
       .max(100, "Maximum ${max} characters allowed")
-      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Place of Birth"))
+      .matches(PLACE_BIRTH_ALPHANUMERIC_REGEX, getInvalidMessage("Place of Birth"))
   });
 
 export const SignatoryPersonalInformation = ({
