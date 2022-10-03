@@ -52,7 +52,8 @@ export const MultiDocumentRow = ({
       let newDocument = {};
       let documentIndex = 0;
       if (stakeholderIndex) {
-        documentIndex = parseInt(stakeholderIndex.charAt(0));
+        const docSplit = stakeholderIndex.split("_");
+        documentIndex = docSplit[0] ? parseInt(docSplit[0]) : 0;
       }
       if (document) {
         newDocument = document ? cloneDeep(document) : [];
