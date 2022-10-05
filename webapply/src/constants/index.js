@@ -391,9 +391,9 @@ export const COMPANY_FIRCO_CHECK = {
   screeningLabel: "Company Firco Check"
 };
 export const SIGNATORY_FIRCO_CHECK = {
-  screeningType: "Signatory Firco Check",
+  screeningType: "Signatory Firco Checks",
   screeningStatus: "Not completed",
-  screeningLabel: "Signatory Firco Check"
+  screeningLabel: "Signatory Firco Checks"
 };
 
 export const COMPANY_CHECK_NAMES = [

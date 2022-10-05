@@ -17,6 +17,7 @@ import {
   MAX_BANK_NAME_LENGTH,
   RO_DATA_LENGTH,
   GOAMLREGISTRATION_REMARK_LENGTH,
+  BANKSTATEMENT_REMARK_LENGTH,
   EXPERIENCE_BUSINESS_MODAL_LENGTH,
   KYCVERIFICATION_LENGTH,
   SIGNATORY_EID_INFO_LENGTH,
@@ -166,7 +167,7 @@ export const kycAnnexureDetailsSchema = () =>
               is: "yes" || "no",
               then: Yup.string()
                 .required(getRequiredMessage("Remarks/ Observations (if any)"))
-                .max(GOAMLREGISTRATION_REMARK_LENGTH, "Maximum ${max} characters allowed")
+                .max(BANKSTATEMENT_REMARK_LENGTH, "Maximum ${max} characters allowed")
                 .matches(
                   TOTAL_EXPERIENCE_YRS_REGEX,
                   getInvalidMessage("Remarks/ Observations (if any)")
