@@ -654,7 +654,7 @@ export const KycAnnexureComponent = ({
                 component={InlineRadioGroup}
                 path="prospect.kycAnnexure.noticeToCounterfeit"
                 options={YesNoList}
-                label="Did you notice counterfeit product at this time of visit(application where meeting at business premises)"
+                label="Did you notice counterfeit products at the time of visit(applicable where meeting at business premises)"
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
