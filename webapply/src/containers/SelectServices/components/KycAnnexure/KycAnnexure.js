@@ -516,21 +516,21 @@ export const KycAnnexureComponent = ({
                               />
                             </Grid>
                           </Grid>
-                          <Grid container spacing={3}>
-                            <Grid item md={6} xs={12}>
-                              <Field
-                                name={`bankDetails[${index}].bankStatementRemark`}
-                                label="Remarks/ Observations (if any)"
-                                path={`${prospectPath}.bankStatementRemark`}
-                                component={Input}
-                                InputProps={{
-                                  inputProps: {
-                                    maxLength: GOAMLREGISTRATION_REMARK_LENGTH,
-                                    tabIndex: 0
-                                  }
-                                }}
-                              />
-                            </Grid>
+                          <Grid container>
+                            <Field
+                              name={`bankDetails[${index}].bankStatementRemark`}
+                              label="Remarks/ Observations (if any)"
+                              path={`${prospectPath}.bankStatementRemark`}
+                              component={Input}
+                              multiline
+                              rows="4"
+                              InputProps={{
+                                inputProps: {
+                                  maxLength: BANKSTATEMENT_REMARK_LENGTH,
+                                  tabIndex: 0
+                                }
+                              }}
+                            />
                           </Grid>
                         </Grid>
                       );
@@ -648,6 +648,18 @@ export const KycAnnexureComponent = ({
               </Grid>
             </Grid>
             <Divider />
+            <Grid container>
+              <Field
+                name="noticeToCounterfeit"
+                component={InlineRadioGroup}
+                path="prospect.kycAnnexure.noticeToCounterfeit"
+                options={YesNoList}
+                label="Did you notice counterfeit product at this time of visit(application where meeting at business premises)"
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+              />
+            </Grid>
             <Subtitle
               title="MANDATORY CONFIRMATION"
               classes={{ wrapper: classes.subtitleBranch }}
@@ -727,18 +739,6 @@ export const KycAnnexureComponent = ({
                 </Grid>
               </Grid>
             )}
-            <Grid container>
-              <Field
-                name="noticeToCounterfeit"
-                component={InlineRadioGroup}
-                path="prospect.kycAnnexure.noticeToCounterfeit"
-                options={YesNoList}
-                label="Did you notice counterfeit product at this time of visit(application where meeting at business premises)"
-                InputProps={{
-                  inputProps: { tabIndex: 0 }
-                }}
-              />
-            </Grid>
             {/* <p>
               {`I ${values.roName !== "" ? "..............." : values.roName}, EMP -${
                 values.roEmployeeId !== "" ? "..............." : values.roEmployeeId
