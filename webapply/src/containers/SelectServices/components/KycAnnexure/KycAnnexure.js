@@ -68,11 +68,12 @@ export const kycAnnexureDetailsSchema = () =>
     businessModel: Yup.string()
       .nullable()
       .required(getRequiredMessage("Business Modal"))
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Business Modal"))
+      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Business Modal"))
       .max(EXPERIENCE_BUSINESS_MODAL_LENGTH, "Maximum ${max} characters allowed"),
     antiMoneyLaundering: Yup.string().nullable(),
-    isUltimateBeneficiary: Yup.string().nullable(),
-    //.required(getRequiredMessage("Is this an Ultimate Beneficiary Ownership company ")),
+    isUltimateBeneficiary: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Is this an Ultimate Beneficiary Ownership company ")),
     audioVideoKycVerification: Yup.string()
       .nullable()
       .required(
@@ -131,7 +132,7 @@ export const kycAnnexureDetailsSchema = () =>
         then: Yup.string()
           .required(getRequiredMessage("Reason"))
           .max(SIGNATORY_EID_INFO_LENGTH, "Maximum ${max} characters allowed")
-          .matches(REMARK_RESON_REGEX, getInvalidMessage("Reason"))
+          .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Reason"))
       }),
     bankDetails: Yup.array().when("antiMoneyLaundering", {
       is: "yes",
@@ -258,7 +259,6 @@ export const KycAnnexureComponent = ({
                 name="companyName"
                 label="Company Name"
                 path="prospect.kycAnnexure.companyName"
-                disabled
                 contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 50 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
                 infoTitle="These details should be the same as in your Trade License"
                 component={Input}
@@ -305,7 +305,6 @@ export const KycAnnexureComponent = ({
               label="Signatory"
               path="prospect.kycAnnexure.signatoryName"
               infoTitle="Name of the signatory"
-              disabled
               component={Input}
               InputProps={{
                 inputProps: { maxLength: 300, tabIndex: 0 }
@@ -356,7 +355,6 @@ export const KycAnnexureComponent = ({
                             path={`${prospectPath}.signatoryName`}
                             infoTitle="Name of the signatory"
                             component={Input}
-                            disabled
                             InputProps={{
                               inputProps: { maxLength: 300, tabIndex: 0 }
                             }}
@@ -368,7 +366,6 @@ export const KycAnnexureComponent = ({
                             path={`${prospectPath}.education`}
                             datalistId="qualification"
                             label={"Education"}
-                            disabled
                             isSearchable
                             component={SelectAutocomplete}
                             tabIndex="0"
@@ -383,7 +380,6 @@ export const KycAnnexureComponent = ({
                           label={"Corporate Experience"}
                           placeholder="Work Experience"
                           component={Input}
-                          disabled
                           multiline
                           rows="4"
                           InputProps={{
@@ -425,7 +421,6 @@ export const KycAnnexureComponent = ({
               path="prospect.kycAnnexure.isUltimateBeneficiary"
               options={YesNoList}
               label="Is this an Ultimate Beneficiary Ownership company? "
-              disabled
               InputProps={{
                 inputProps: { tabIndex: 0 }
               }}
@@ -441,7 +436,6 @@ export const KycAnnexureComponent = ({
                 component={InlineRadioGroup}
                 path="prospect.kycAnnexure.antiMoneyLaundering"
                 options={YesNoList}
-                disabled
                 label="Any additional information available on company’s bank accounts maintained within/outside UAE ? "
                 InputProps={{
                   inputProps: { tabIndex: 0 }
@@ -474,7 +468,6 @@ export const KycAnnexureComponent = ({
                                 label="Name of the Bank"
                                 path={`${prospectPath}.bankName`}
                                 component={Input}
-                                disabled
                                 InputProps={{
                                   inputProps: { maxLength: MAX_BANK_NAME_LENGTH, tabIndex: 0 }
                                 }}
@@ -485,7 +478,6 @@ export const KycAnnexureComponent = ({
                                 name={`bankDetails[${index}].isStatementAvailable`}
                                 component={InlineRadioGroup}
                                 path={`${prospectPath}.isStatementAvailable`}
-                                disabled
                                 options={YesNoList}
                                 label="Bank statement Available"
                                 InputProps={{
@@ -604,12 +596,14 @@ export const KycAnnexureComponent = ({
               />
             </Grid>
             {values.signatoryEIDinfo === "no" && (
-              <Grid item md={6} xs={12}>
+              <Grid container>
                 <Field
                   name="signatoryEIDinfoRemarks"
                   label="Reason"
                   path="prospect.kycAnnexure.signatoryEIDinfoRemarks"
                   component={Input}
+                  multiline
+                  rows="3"
                   InputProps={{
                     inputProps: { maxLength: SIGNATORY_EID_INFO_LENGTH, tabIndex: 0 }
                   }}
@@ -654,7 +648,7 @@ export const KycAnnexureComponent = ({
                 component={InlineRadioGroup}
                 path="prospect.kycAnnexure.noticeToCounterfeit"
                 options={YesNoList}
-                label="Did you notice counterfeit product at this time of visit(application where meeting at business premises)"
+                label="Did you notice counterfeit products at the time of visit(applicable where meeting at business premises)"
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}

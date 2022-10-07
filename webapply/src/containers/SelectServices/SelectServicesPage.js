@@ -38,6 +38,7 @@ export const SelectServicesPage = ({
   datalist,
   kycAnnexureDetails,
   companyName,
+  orgDetails,
   getKycAnnexureBankDetails,
   roAgentName,
   roagentId,
@@ -61,6 +62,7 @@ export const SelectServicesPage = ({
   );
   const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
   var isSignatoryDetail = [];
+  const industries = orgDetails.industryMultiSelect || [];
   useEffect(() => {
     isSignatoryDetail =
       signatoriesDetails &&
@@ -95,6 +97,20 @@ export const SelectServicesPage = ({
       signatoriesIsShareholder.map(signatory => signatory.kycDetails.nationality);
     const signatoriesName =
       isSignatoryDetail && isSignatoryDetail.map(signatory => signatory.fullName);
+    const riskIndustries = [];
+    const goAmlIndustry = [];
+    datalist &&
+      datalist.industryRiskCategory.map(item => {
+        if (industries[0].subCategory.includes(item.value)) {
+          riskIndustries.push(item.value);
+        }
+      });
+    datalist &&
+      datalist.goAmlIndustry.map(item => {
+        if (industries[0].subCategory.includes(item.value)) {
+          goAmlIndustry.push(item.value);
+        }
+      });
     const poaCountry = [];
     datalist &&
       datalist.poaNationality.map(item => {
@@ -135,14 +151,14 @@ export const SelectServicesPage = ({
               ? item
               : getKycAnnexureBankDetails[index].bankName === ""
               ? item
-              : item,
+              : getKycAnnexureBankDetails[index].bankName,
 
           isStatementAvailable:
             getKycAnnexureBankDetails[index] === undefined
               ? isStatementAvailableCheck
               : getKycAnnexureBankDetails[index].isStatementAvailable === ""
               ? isStatementAvailableCheck
-              : isStatementAvailableCheck,
+              : getKycAnnexureBankDetails[index].isStatementAvailable,
           bankStatementRemark:
             getKycAnnexureBankDetails[index] === undefined
               ? ""
@@ -192,10 +208,16 @@ export const SelectServicesPage = ({
         "prospect.kycAnnexure.bankDetails": bankDetails,
         "prospect.kycAnnexure.roName": roAgentName && roAgentName,
         "prospect.kycAnnexure.roEmployeeId": roagentId && roagentId,
-        "prospect.kycAnnexure.companyName": companyName,
-        "prospect.kycAnnexure.isUltimateBeneficiary": isShareholderACompany,
+        "prospect.kycAnnexure.companyName":
+          kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName,
+        "prospect.kycAnnexure.isUltimateBeneficiary":
+          kycAnnexureDetails.isUltimateBeneficiary === ""
+            ? isShareholderACompany
+            : kycAnnexureDetails.isUltimateBeneficiary,
         "prospect.kycAnnexure.signatoryDetails": kycSignatory,
-        "prospect.kycAnnexure.antiMoneyLaundering": antiMoneyLaunderingCheck
+        "prospect.kycAnnexure.antiMoneyLaundering": antiMoneyLaunderingCheck,
+        "prospect.kycAnnexure.riskIndustries": riskIndustries,
+        "prospect.kycAnnexure.goAmlIndustry": goAmlIndustry
       })
     );
   }, [updateProspect]);
