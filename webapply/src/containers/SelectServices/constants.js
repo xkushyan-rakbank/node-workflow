@@ -197,7 +197,7 @@ export const GOAMLREGISTRATION_REMARK_LENGTH = 20;
 export const BANKSTATEMENT_REMARK_LENGTH = 250;
 export const EXPERIENCE_BUSINESS_MODAL_LENGTH = 5000;
 export const KYCVERIFICATION_LENGTH = 50;
-export const SIGNATORY_EID_INFO_LENGTH = 50;
+export const SIGNATORY_EID_INFO_LENGTH = 250;
 export const RO_NAME_LENGTH = 50;
 
 export const initialOtherBankDetails = [{ bankName: "" }];

@@ -27,6 +27,7 @@ const mapStateToProps = state => ({
   kycAnnexureDetails: getKycAnnexureDetails(state),
   companyBankStatements: getCompanyBankStatements(state),
   companyName: getCompanyName(state),
+  orgDetails: getOrgKYCDetails(state),
   getKycAnnexureBankDetails: get(getKycAnnexureDetails(state), "bankDetails", initialBankDetails),
   roAgentName: getAgentName(state),
   roagentId: getAgentId(state)
