@@ -130,7 +130,6 @@ export const SelectServicesPage = ({
           shareholderNationalities &&
           shareholderNationalities.includes(item.value)
         ) {
-          console.log("hit inside poa");
           poaCountry.push(item.value);
         }
       });
