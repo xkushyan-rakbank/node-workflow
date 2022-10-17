@@ -88,7 +88,15 @@ export const DocumentRowComponent = ({
               } else if (isUploaded && selectedFile && !multiDoc) {
                 return selectedFile.name;
               } else if (isUploaded && document.fileDescription) {
-                return document.fileDescription;
+                return (
+                  <span>
+                    {document.documentTitle && document.documentTitle === ""
+                      ? ""
+                      : document.documentTitle.slice(document.documentTitle.indexOf(" "))}{" "}
+                    <br />
+                    {document.fileDescription}
+                  </span>
+                );
               } else {
                 const requiredLabel = required ? " * " : "";
                 return requiredLabel + document.documentTitle;
