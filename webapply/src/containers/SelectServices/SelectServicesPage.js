@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import _ from "lodash";
+import { isEmpty, without } from "lodash";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import {
@@ -99,13 +99,13 @@ export const SelectServicesPage = ({
       signatoriesIsShareholder.map(signatory => signatory.kycDetails.nationality);
     const signatoriesName =
       isSignatoryDetail && isSignatoryDetail.map(signatory => signatory.fullName);
-    const riskIndustries = _.without([...kycAnnexureDetails.riskIndustries], "");
-    const goAmlIndustry = _.without([...kycAnnexureDetails.goAmlIndustry], "");
+    const riskIndustries = without([...kycAnnexureDetails.riskIndustries], "");
+    const goAmlIndustry = without([...kycAnnexureDetails.goAmlIndustry], "");
     datalist &&
       datalist.industryRiskCategory.map(item => {
         if (
           !prospectData.riskIndustries &&
-          _.isEmpty(riskIndustries) &&
+          isEmpty(riskIndustries) &&
           industries[0].subCategory.includes(item.value)
         ) {
           riskIndustries.push(item.value);
@@ -115,32 +115,32 @@ export const SelectServicesPage = ({
       datalist.goAmlIndustry.map(item => {
         if (
           !prospectData.goAmlIndustry &&
-          _.isEmpty(goAmlIndustry) &&
+          isEmpty(goAmlIndustry) &&
           industries[0].subCategory.includes(item.value)
         ) {
           goAmlIndustry.push(item.value);
         }
       });
-    const poaCountry = _.without([...kycAnnexureDetails.poaCountry], "");
+    const poaCountry = without([...kycAnnexureDetails.poaCountry], "");
     datalist &&
       datalist.poaNationality.map(item => {
         if (
           !prospectData.poaCountry &&
-          _.isEmpty(poaCountry) &&
+          isEmpty(poaCountry) &&
           shareholderNationalities &&
           shareholderNationalities.includes(item.value)
         ) {
           poaCountry.push(item.value);
         }
       });
-    const listOfCountries = _.without([...kycAnnexureDetails.clientDealingCountry], "");
+    const listOfCountries = without([...kycAnnexureDetails.clientDealingCountry], "");
     var topCustomersCountries = [];
     topCustomersCountries = topCustomers && topCustomers.map(item => item.country);
     datalist &&
       datalist.clientDealingCountry.map(item => {
         if (
           !prospectData.clientDealingCountry &&
-          _.isEmpty(listOfCountries) &&
+          isEmpty(listOfCountries) &&
           topCustomersCountries.includes(item.value)
         ) {
           listOfCountries.push(item.value);
