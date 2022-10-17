@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { Formik, FieldArray, Form, getIn } from "formik";
 import * as Yup from "yup";
 import uniqueId from "lodash/uniqueId";
@@ -11,7 +10,6 @@ import { LinkButton } from "../../../../components/Buttons/LinkButton";
 import { MAX_INDUSTRIES_LENGTH } from "../../constants";
 
 import { AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
-import { updateProspect } from "../../../../store/actions/appConfig";
 import { getRequiredMessage } from "../../../../utils/getValidationMessage";
 import { AddButton } from "../../../../components/Buttons/AddButton";
 import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
@@ -38,35 +36,11 @@ const industrySchema = Yup.object().shape({
 export const Industry = ({
   handleContinue,
   industries,
-  datalist,
   datalistId,
   updateIndustry,
   createFormChangeHandler
 }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const riskIndustries = [];
-    const goAmlIndustry = [];
-    datalist &&
-      datalist.industryRiskCategory.map(item => {
-        if (industries[0].subCategory.includes(item.value)) {
-          riskIndustries.push(item.value);
-        }
-      });
-    datalist &&
-      datalist.goAmlIndustry.map(item => {
-        if (industries[0].subCategory.includes(item.value)) {
-          goAmlIndustry.push(item.value);
-        }
-      });
-    dispatch(
-      updateProspect({
-        "prospect.kycAnnexure.riskIndustries": riskIndustries,
-        "prospect.kycAnnexure.goAmlIndustry": goAmlIndustry
-      })
-    );
-  }, [updateIndustry]);
   const addIndustryHandler = arrayHelper => () => {
     arrayHelper.push({ ...initialIndustry, id: uniqueId() });
   };

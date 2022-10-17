@@ -18,7 +18,8 @@ import {
   RESET_APPLICANT_INFO,
   SET_PROSPECT_LEAD,
   SET_EXPIRED,
-  SET_RO_CODE
+  SET_RO_CODE,
+  INITIAL_CHECK
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -30,6 +31,12 @@ export const initialState = {
     applicationInfo: {
       islamicBanking: false
     }
+  },
+  initialProspectTableCheck: {
+    poaCountry: false,
+    riskIndustries: false,
+    clientDealingCountry: false,
+    goAmlIndustry: false
   },
   dataList: {},
   error: "",
@@ -117,6 +124,10 @@ export default handleActions(
     [SAVE_ORGANIZATION_INFO_MODEL]: (state, action) => ({
       ...state,
       organizationInfoModel: action.payload
+    }),
+    [INITIAL_CHECK]: (state, action) => ({
+      ...state,
+      initialProspectTableCheck: { ...state.initialProspectTableCheck, ...action.payload }
     }),
     [LOGOUT]: state => ({
       ...state,

@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useCallback } from "react";
 import uniqueId from "lodash/uniqueId";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
@@ -159,23 +158,6 @@ export const CompanyBusinessRelationshipsComponent = ({
 
   const [isLinkVisited, setIsLinkVisited] = useState(dnfbpField);
   const [open, setOpen] = React.useState(false);
-  const dispatch = useDispatch();
-  var listOfCountries = [];
-  var topCustomersCountries = [];
-  topCustomersCountries = topCustomers && topCustomers.map(item => item.country);
-  useEffect(() => {
-    datalist &&
-      datalist.clientDealingCountry.map(item => {
-        if (topCustomersCountries.includes(item.value)) {
-          listOfCountries.push(item.value);
-        }
-      });
-    dispatch(
-      updateProspect({
-        "prospect.kycAnnexure.clientDealingCountry": listOfCountries
-      })
-    );
-  }, []);
 
   const handleTooltipClose = () => {
     setOpen(false);

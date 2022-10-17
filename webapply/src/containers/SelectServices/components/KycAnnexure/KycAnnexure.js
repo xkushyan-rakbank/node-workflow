@@ -536,7 +536,11 @@ export const KycAnnexureComponent = ({
               title="Did the Company have any Shareholder or POA holder from the following nationality in last 2 years (please refers past 2 years MOA and confirm, includes exited, silent partners also)? "
               classes={{ wrapper: classes.subtitleBranch }}
             />
-            <TableComponent data={values.poaCountry} datalist={datalist.poaNationality} />
+            <TableComponent
+              data={values.poaCountry}
+              datalist={datalist.poaNationality}
+              content={"poaCountry"}
+            />
             <Divider />
             <Subtitle
               title="Does the client belong to any of the below Industries as per industry risk category?"
@@ -547,6 +551,7 @@ export const KycAnnexureComponent = ({
                 <TableComponent
                   data={values.riskIndustries}
                   datalist={datalist.industryRiskCategory}
+                  content={"riskIndustries"}
                 />
               </Grid>
             </Grid>
@@ -560,6 +565,7 @@ export const KycAnnexureComponent = ({
                 <TableComponent
                   data={values.clientDealingCountry}
                   datalist={datalist.clientDealingCountry}
+                  content={"clientDealingCountry"}
                 />
               </Grid>
             </Grid>
@@ -638,7 +644,11 @@ export const KycAnnexureComponent = ({
             )}
             <Grid container spacing={3}>
               <Grid item sm={6} xs={12}>
-                <TableComponent data={values.goAmlIndustry} datalist={datalist.goAmlIndustry} />
+                <TableComponent
+                  data={values.goAmlIndustry}
+                  datalist={datalist.goAmlIndustry}
+                  content={"goAmlIndustry"}
+                />
               </Grid>
             </Grid>
             <Divider />

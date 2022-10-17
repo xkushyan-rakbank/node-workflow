@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { isEmpty, without } from "lodash";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import {
@@ -42,7 +43,8 @@ export const SelectServicesPage = ({
   getKycAnnexureBankDetails,
   roAgentName,
   roagentId,
-  companyBankStatements
+  companyBankStatements,
+  prospectData
 }) => {
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
@@ -97,33 +99,50 @@ export const SelectServicesPage = ({
       signatoriesIsShareholder.map(signatory => signatory.kycDetails.nationality);
     const signatoriesName =
       isSignatoryDetail && isSignatoryDetail.map(signatory => signatory.fullName);
-    const riskIndustries = [];
-    const goAmlIndustry = [];
+    const riskIndustries = without([...kycAnnexureDetails.riskIndustries], "");
+    const goAmlIndustry = without([...kycAnnexureDetails.goAmlIndustry], "");
     datalist &&
       datalist.industryRiskCategory.map(item => {
-        if (industries[0].subCategory.includes(item.value)) {
+        if (
+          !prospectData.riskIndustries &&
+          isEmpty(riskIndustries) &&
+          industries[0].subCategory.includes(item.value)
+        ) {
           riskIndustries.push(item.value);
         }
       });
     datalist &&
       datalist.goAmlIndustry.map(item => {
-        if (industries[0].subCategory.includes(item.value)) {
+        if (
+          !prospectData.goAmlIndustry &&
+          isEmpty(goAmlIndustry) &&
+          industries[0].subCategory.includes(item.value)
+        ) {
           goAmlIndustry.push(item.value);
         }
       });
-    const poaCountry = [];
+    const poaCountry = without([...kycAnnexureDetails.poaCountry], "");
     datalist &&
       datalist.poaNationality.map(item => {
-        if (shareholderNationalities && shareholderNationalities.includes(item.value)) {
+        if (
+          !prospectData.poaCountry &&
+          isEmpty(poaCountry) &&
+          shareholderNationalities &&
+          shareholderNationalities.includes(item.value)
+        ) {
           poaCountry.push(item.value);
         }
       });
-    const listOfCountries = [];
+    const listOfCountries = without([...kycAnnexureDetails.clientDealingCountry], "");
     var topCustomersCountries = [];
     topCustomersCountries = topCustomers && topCustomers.map(item => item.country);
     datalist &&
       datalist.clientDealingCountry.map(item => {
-        if (topCustomersCountries.includes(item.value)) {
+        if (
+          !prospectData.clientDealingCountry &&
+          isEmpty(listOfCountries) &&
+          topCustomersCountries.includes(item.value)
+        ) {
           listOfCountries.push(item.value);
         }
       });
@@ -183,9 +202,9 @@ export const SelectServicesPage = ({
       );
       bankDetails.push(...newData);
     } else {
-      getKycAnnexureBankDetails.length === 0
-        ? bankDetails.push(...initialBankDetails)
-        : bankDetails.push(...getKycAnnexureBankDetails);
+      getKycAnnexureBankDetails?.length === 0
+        ? initialBankDetails && bankDetails.push(...initialBankDetails)
+        : getKycAnnexureBankDetails && bankDetails.push(...getKycAnnexureBankDetails);
     }
     const kycSignatory = [];
     const kycSignatoryData = [];

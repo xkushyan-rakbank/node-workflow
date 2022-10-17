@@ -1,4 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import InputBase from "@material-ui/core/InputBase";
 import { checkBrowserIsIE } from "../../../../utils/checkBrowserIsIE";
 
 const isIE = checkBrowserIsIE();
@@ -40,7 +41,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   tableContainer: {
-    maxHeight: isIE ? "725px" : "720.8px",
+    maxHeight: isIE ? "725px" : "750px",
     width: "500px",
     overflowX: "hidden"
   },
@@ -78,3 +79,16 @@ export const useStyles = makeStyles(theme => ({
     }
   }
 }));
+
+export const BootstrapInput = withStyles(theme => ({
+  root: {
+    width: "100%"
+  },
+  input: {
+    borderRadius: 4,
+    width: "100%",
+    position: "relative",
+    fontSize: 14,
+    textAlign: "left"
+  }
+}))(InputBase);

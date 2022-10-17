@@ -19,6 +19,7 @@ export const LOAD_META_DATA = "LOAD_META_DATA";
 export const SET_PROSPECT_LEAD = "SET_PROSPECT_LEAD";
 export const SET_EXPIRED = "SET_EXPIRED";
 export const SET_RO_CODE = "SET_RO_CODE";
+export const INITIAL_CHECK = "INITIAL_CHECK";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -45,6 +46,10 @@ export const updateProspect = (payload, gaEvent = null) => {
 
 export const setConfig = payload => {
   return { type: SET_CONFIG, payload };
+};
+
+export const setInitialCheck = payload => {
+  return { type: INITIAL_CHECK, payload };
 };
 
 export const setProspect = payload => {
