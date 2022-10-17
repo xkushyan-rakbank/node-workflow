@@ -46,12 +46,11 @@ export const TableComponent = ({ data, datalist, content }) => {
   }, [data]);
 
   useEffect(() => {
-    __data[content].length > 0 &&
-      dispatch(
-        updateProspect({
-          [`prospect.kycAnnexure.${content}`]: __data[content]
-        })
-      );
+    dispatch(
+      updateProspect({
+        [`prospect.kycAnnexure.${content}`]: __data[content]
+      })
+    );
   }, [__data]);
 
   const handleChange = (e, item) => {

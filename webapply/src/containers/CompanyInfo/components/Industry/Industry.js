@@ -36,7 +36,6 @@ const industrySchema = Yup.object().shape({
 export const Industry = ({
   handleContinue,
   industries,
-  datalist,
   datalistId,
   updateIndustry,
   createFormChangeHandler
