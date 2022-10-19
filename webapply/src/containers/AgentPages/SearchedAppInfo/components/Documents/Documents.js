@@ -4,13 +4,12 @@ import cx from "classnames";
 
 import { Avatar } from "../../../../../components/Avatar/Avatar";
 import { LinkButton } from "../../../../../components/Buttons/LinkButton";
-import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
+import { titles, errorMsgs, STATUS_NOT_ELIGIBLE, UPLOAD } from "./constants";
 
 import { useStyles } from "./styled";
 
 export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
   const classes = useStyles();
-  console.log("docs", docs, get(docs));
   const headingClassName = cx(classes.checkListData, classes.heading);
   //ro-assist-brd3-1
   const listDocuments = (docs, classes, downloadDocument, docType) => {
@@ -19,10 +18,9 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
         <div className={classes.checkListData}>
           {STATUS_NOT_ELIGIBLE.includes(application.uploadStatus)
             ? application.documentTitle
-            : application.documentTitle.slice(application.documentTitle.indexOf(" "))}{" "}
+            : application.documentTitle.replace(UPLOAD, "")}
           <br />
           {application.fileDescription}
-          {/* {application.fileDescription || application.documentTitle} */}
         </div>
         <div className={classes.checkListData}>{application.uploadStatus}</div>
         {!STATUS_NOT_ELIGIBLE.includes(application.uploadStatus) && (

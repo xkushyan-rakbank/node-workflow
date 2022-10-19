@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import cx from "classnames";
-import { BYTES_IN_MEGABYTE } from "../../../../constants";
+import { BYTES_IN_MEGABYTE, UPLOAD } from "../../../../constants";
 import { DocumentUploadError } from "../../../../components/DocumentUploadError/DocumentUploadError";
 import { documentValidationSchema } from "../../../../utils/validation";
 import { Icon, ICONS } from "../../../../components/Icons";
@@ -92,7 +92,7 @@ export const DocumentRowComponent = ({
                   <span>
                     {document.documentTitle && document.documentTitle === ""
                       ? ""
-                      : document.documentTitle.slice(document.documentTitle.indexOf(" "))}{" "}
+                      : document.documentTitle.replace(UPLOAD, "")}{" "}
                     <br />
                     {document.fileDescription}
                   </span>
