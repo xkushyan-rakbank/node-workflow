@@ -14,3 +14,4 @@ export const titles = {
 };
 
 export const STATUS_NOT_ELIGIBLE = ["NotUploaded", "Quarantined"];
+export const UPLOAD = "Upload ";

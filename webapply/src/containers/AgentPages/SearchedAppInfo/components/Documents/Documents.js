@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { Avatar } from "../../../../../components/Avatar/Avatar";
 import { LinkButton } from "../../../../../components/Buttons/LinkButton";
-import { titles, errorMsgs, STATUS_NOT_ELIGIBLE } from "./constants";
+import { titles, errorMsgs, STATUS_NOT_ELIGIBLE, UPLOAD } from "./constants";
 
 import { useStyles } from "./styled";
 
@@ -16,7 +16,11 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
     return get(docs, docType, []).map((application, index) => (
       <div className={classes.applicationRow} key={index}>
         <div className={classes.checkListData}>
-          {application.fileDescription || application.documentTitle}
+          {STATUS_NOT_ELIGIBLE.includes(application.uploadStatus)
+            ? application.documentTitle
+            : application.documentTitle.replace(UPLOAD, "")}
+          <br />
+          {application.fileDescription}
         </div>
         <div className={classes.checkListData}>{application.uploadStatus}</div>
         {!STATUS_NOT_ELIGIBLE.includes(application.uploadStatus) && (
