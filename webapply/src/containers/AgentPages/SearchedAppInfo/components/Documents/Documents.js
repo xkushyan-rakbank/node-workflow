@@ -10,13 +10,19 @@ import { useStyles } from "./styled";
 
 export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
   const classes = useStyles();
+  console.log("docs", docs, get(docs));
   const headingClassName = cx(classes.checkListData, classes.heading);
   //ro-assist-brd3-1
   const listDocuments = (docs, classes, downloadDocument, docType) => {
     return get(docs, docType, []).map((application, index) => (
       <div className={classes.applicationRow} key={index}>
         <div className={classes.checkListData}>
-          {application.fileDescription || application.documentTitle}
+          {STATUS_NOT_ELIGIBLE.includes(application.uploadStatus)
+            ? application.documentTitle
+            : application.documentTitle.slice(application.documentTitle.indexOf(" "))}{" "}
+          <br />
+          {application.fileDescription}
+          {/* {application.fileDescription || application.documentTitle} */}
         </div>
         <div className={classes.checkListData}>{application.uploadStatus}</div>
         {!STATUS_NOT_ELIGIBLE.includes(application.uploadStatus) && (
