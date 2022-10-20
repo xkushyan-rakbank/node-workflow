@@ -31,6 +31,7 @@ import {
   SPECIAL_CHARACTERS_REGEX,
   NAME_REGEX_SIGNATORY,
   TOTAL_EXPERIENCE_YRS_REGEX,
+  TOTAL_CORPORATE_EXPERIENCE_YRS_REGEX,
   REGISTRATION_NUMBER_REGEX,
   MAX_EXPERIENCE_YEARS_LENGTH,
   ALPHANUMERIC_ONLY_REGEX,
@@ -195,7 +196,7 @@ export const kycAnnexureDetailsSchema = () =>
           .required(getRequiredMessage("Corporate Experience"))
           // eslint-disable-next-line no-template-curly-in-string
           .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
-          .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Corporate Experience"))
+          .matches(TOTAL_CORPORATE_EXPERIENCE_YRS_REGEX, getInvalidMessage("Corporate Experience"))
       })
     ),
     noticeToCounterfeit: Yup.string()

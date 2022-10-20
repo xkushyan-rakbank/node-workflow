@@ -20,7 +20,7 @@ import {
 import {
   MAX_EXPERIENCE_YEARS_LENGTH,
   SPECIAL_CHARACTERS_REGEX,
-  TOTAL_EXPERIENCE_YRS_REGEX
+  TOTAL_CORPORATE_EXPERIENCE_YRS_REGEX
 } from "../../../../../../utils/validation";
 import {
   getRequiredMessage,
@@ -49,7 +49,7 @@ export const createSignatoryEmploymentDetailsSchema = isSignatory =>
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_EXPERIENCE_YEARS_LENGTH, "Maximum ${max} characters allowed")
       .matches(
-        TOTAL_EXPERIENCE_YRS_REGEX,
+        TOTAL_CORPORATE_EXPERIENCE_YRS_REGEX,
         getInvalidMessage("Background information of the signatory")
       ),
     otherEmploymentType: Yup.string().when("employmentType", {
