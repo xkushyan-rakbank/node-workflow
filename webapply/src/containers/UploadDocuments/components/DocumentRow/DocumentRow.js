@@ -86,7 +86,16 @@ export const DocumentRowComponent = ({
               if (isUploading) {
                 return `Uploading ${document.documentTitle}`;
               } else if (isUploaded && selectedFile && !multiDoc) {
-                return selectedFile.name;
+                //return selectedFile.name;
+                return (
+                  <span>
+                    {document.documentTitle && document.documentTitle === ""
+                      ? ""
+                      : document.documentTitle.replace(UPLOAD, "")}{" "}
+                    <br />
+                    {selectedFile.name}
+                  </span>
+                );
               } else if (isUploaded && document.fileDescription) {
                 return (
                   <span>
