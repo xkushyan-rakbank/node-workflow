@@ -1,6 +1,7 @@
 export const LIST_VIEW = "list";
 
 export const GRID_VIEW = "grid";
+export const RO_LABEL = "The contact details of your sales officer";
 
 export const notCtaStatuses = {
   Assessing: "We will call you soon",
