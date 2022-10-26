@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { ctaStatuses, notCtaStatuses } from "../constants";
+import { ctaStatuses, notCtaStatuses, RO_LABEL } from "../constants";
 import { getTitleForAccountType } from "../utils";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
@@ -16,6 +16,13 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
           <div className={classes.companyName}>{app.organizationInfo.companyName}</div>
           <div className={classes.listAccount}>
             {getTitleForAccountType(app.applicationInfo.accountType)}
+          </div>
+          <div className={classes.listAccount}>
+            {app.applicationInfo.roEmail ||
+            app.applicationInfo.roLandlineNo ||
+            app.applicationInfo.roMobileNo
+              ? RO_LABEL
+              : ""}
           </div>
           <div className={classes.listAccount}>
             {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}

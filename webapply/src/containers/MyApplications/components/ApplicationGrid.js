@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
-import { ctaStatuses, notCtaStatuses } from "../constants";
+import { ctaStatuses, notCtaStatuses, RO_LABEL } from "../constants";
 import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 
 import { useStyles } from "./styled";
@@ -21,6 +21,13 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
           {app.applicationInfo.accountType}
+        </Typography>
+        <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
+          {app.applicationInfo.roEmail ||
+          app.applicationInfo.roLandlineNo ||
+          app.applicationInfo.roMobileNo
+            ? RO_LABEL
+            : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
           {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}
