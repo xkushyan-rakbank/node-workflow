@@ -23,6 +23,7 @@ export const SubmitApplicationComponent = ({
   sendProspectToAPI,
   updateViewId,
   currentProspectStatus,
+  currentProspectStatusReason,
   isAgent
 }) => {
   useViewId(true);
@@ -33,8 +34,10 @@ export const SubmitApplicationComponent = ({
   useEffect(() => {
     !isAgent && NotificationsManager.add(trustMessageContent);
   }, [isAgent]);
-
-  const isROSubmit = isAgent && currentProspectStatus === PROSPECT_STATUSES.ASSESSING;
+  const isROSubmit =
+    isAgent &&
+    (currentProspectStatus === PROSPECT_STATUSES.ASSESSING ||
+      currentProspectStatusReason === PROSPECT_STATUSES.ASSESSING);
   const pathname = isROSubmit ? routes.ApplicationSubmitted : routes.SubmitApplication;
 
   const handleSubmit = useCallback(() => {

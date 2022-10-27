@@ -44,6 +44,9 @@ export const getSearchResultById = state => {
 
 export const getProspectStatus = state => get(getSearchResultById(state), "status.statusNotes");
 
+export const getProspectStatusReason = state =>
+  get(getSearchResultById(state), "status.statusReason");
+
 export const getSearchResultsStatuses = createSelector(
   getSearchResults,
   searchResults =>
