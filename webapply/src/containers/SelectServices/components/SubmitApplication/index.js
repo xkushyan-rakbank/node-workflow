@@ -8,7 +8,10 @@ import {
   getSignatories,
   getOrganizationInfo
 } from "../../../../store/selectors/appConfig";
-import { getProspectStatus } from "../../../../store/selectors/searchProspect";
+import {
+  getProspectStatus,
+  getProspectStatusReason
+} from "../../../../store/selectors/searchProspect";
 import { checkLoginStatus } from "../../../../store/selectors/loginSelector";
 import { sendProspectToAPIPromisify } from "../../../../store/actions/sendProspectToAPI";
 import { updateViewId } from "../../../../store/actions/appConfig";
@@ -20,6 +23,7 @@ const mapStateToProps = state => ({
   signatoryInfo: getSignatories(state),
   organizationInfo: getOrganizationInfo(state),
   currentProspectStatus: getProspectStatus(state),
+  currentProspectStatusReason: getProspectStatusReason(state),
   isAgent: checkLoginStatus(state)
 });
 
