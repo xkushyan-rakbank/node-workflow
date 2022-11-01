@@ -58,12 +58,10 @@ export const ChannelsComponent = ({
   selectedCurrency
 }) => {
   const classes = useStyles();
-  const isSingleStakeholder = stakeholders && stakeholders.length === 1 ? true : false;
   const isChequeBookApplied = checkIsChequeBookApplied(primaryMobCountryCode, selectedCurrency);
   const isDebitCardApplied = checkIsDebitCardApplied(
     stakeholders[0].accountSigningInfo,
-    selectedCurrency,
-    isSingleStakeholder
+    selectedCurrency
   );
 
   useEffect(() => {
