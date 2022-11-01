@@ -3,10 +3,10 @@
 import * as Yup from "yup";
 import { getInvalidMessage } from "./getValidationMessage";
 import { UAE_CODE } from "../constants";
-// "Allowed Special Characters" based on swagger 0.0.21
+// "Allowed Special Characters" based on swagger 0.0.21(?=.*[\w\d]).+
 export const SPECIAL_CHARACTERS_REGEX = /^([a-zA-Z0-9.@#%*()/ -])*$/;
-export const TOTAL_EXPERIENCE_YRS_REGEX = /^((?=.*[\w\d]).+[a-zA-Z0-9\n.,@#% *()/ -])*$/;
-export const TOTAL_CORPORATE_EXPERIENCE_YRS_REGEX = /^((?=.*[\w\d]).+[a-zA-Z0-9\n.,@#% *()/ -:])*$/;
+export const TOTAL_EXPERIENCE_YRS_REGEX = /^([a-zA-Z0-9\n.,@#% *()/ -])*$/;
+export const TOTAL_CORPORATE_EXPERIENCE_YRS_REGEX = /^([a-zA-Z0-9\n.,@#% *()/ -:])*$/;
 export const REMARK_RESON_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
 export const LICENSE_NUMBER_REGEX = /^((?=.*[\w\d]).+[a-zA-Z0-9.@#%*()/-\s\\])*$/;
 export const REGISTRATION_NUMBER_REGEX = /^([a-zA-Z0-9.@#%*()/-])*$/;

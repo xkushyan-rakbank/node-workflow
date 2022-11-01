@@ -4,4 +4,6 @@ export const checkIsChequeBookApplied = (primaryMobCountryCode, { isSelectedLoca
   isSelectedLocalCurrency && primaryMobCountryCode === UAE_CODE;
 
 export const checkIsDebitCardApplied = ({ accountSigningType }, { isSelectedLocalCurrency }) =>
-  accountSigningType === SIGNING_TRANSACTIONS_TYPE.ANY && isSelectedLocalCurrency;
+  (accountSigningType === SIGNING_TRANSACTIONS_TYPE.ANY ||
+    accountSigningType === SIGNING_TRANSACTIONS_TYPE.SINGLY) &&
+  isSelectedLocalCurrency;

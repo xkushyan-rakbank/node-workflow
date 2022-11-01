@@ -58,7 +58,6 @@ export const ChannelsComponent = ({
   selectedCurrency
 }) => {
   const classes = useStyles();
-
   const isChequeBookApplied = checkIsChequeBookApplied(primaryMobCountryCode, selectedCurrency);
   const isDebitCardApplied = checkIsDebitCardApplied(
     stakeholders[0].accountSigningInfo,

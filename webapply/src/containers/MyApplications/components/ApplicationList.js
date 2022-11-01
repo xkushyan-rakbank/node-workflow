@@ -25,6 +25,9 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
               : ""}
           </div>
           <div className={classes.listAccount}>
+            {app.applicationInfo.roName ? app.applicationInfo.roName : ""}
+          </div>
+          <div className={classes.listAccount}>
             {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}
           </div>
           <div className={classes.listAccount}>

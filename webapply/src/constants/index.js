@@ -163,7 +163,8 @@ export const NEXT = "next";
 export const SIGNING_TRANSACTIONS_TYPE = {
   ALL: "101",
   ANY: "100",
-  OTHER: "000"
+  OTHER: "000",
+  SINGLY: "102"
 };
 //ro-assist-brd1-3
 export const smeSouqLink = "https://rakbank.ae/wps/portal/business-banking/smesouk";
