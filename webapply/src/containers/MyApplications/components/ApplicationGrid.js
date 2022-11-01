@@ -30,6 +30,9 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
             : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
+          {app.applicationInfo.roName ? app.applicationInfo.roName : ""}
+        </Typography>
+        <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
           {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
