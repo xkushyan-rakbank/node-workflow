@@ -75,19 +75,20 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
                 docs,
                 classes,
                 downloadDocument,
-                `stakeholdersDocuments[${index}_${user.fullName}].documents`
+                `stakeholdersDocuments['${index}_${user.fullName}'].documents`
               )}
               {listDocuments(
                 docs,
                 classes,
                 downloadDocument,
-                `stakeholdersDocuments[${index}_${user.fullName}].personalBankStatements.documents`
+                // eslint-disable-next-line max-len
+                `stakeholdersDocuments['${index}_${user.fullName}'].personalBankStatements.documents`
               )}
               {listDocuments(
                 docs,
                 classes,
                 downloadDocument,
-                `stakeholdersDocuments[${index}_${user.fullName}].personalBackground.documents`
+                `stakeholdersDocuments['${index}_${user.fullName}'].personalBackground.documents`
               )}
             </div>
           </div>

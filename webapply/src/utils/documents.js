@@ -31,20 +31,20 @@ export const concatStakeholdersDocs = (
       acc[signatoryId] = {
         documents: documents.map(
           document =>
-            get(uploadedDocs, `${signatoryId}.documents`, []).find(
+            get(uploadedDocs, `['${signatoryId}'].documents`, []).find(
               uploadedDoc =>
                 uploadedDoc.documentKey === document.documentKey &&
                 uploadedDoc.documentTitle === document.documentTitle
             ) || document
         ),
         personalBankStatements: {
-          documents: (get(uploadedDocs, `${signatoryId}.personalBankStatements.documents`, [])
+          documents: (get(uploadedDocs, `['${signatoryId}'].personalBankStatements.documents`, [])
             .length > personalBankStatements.documents.length
-            ? get(uploadedDocs, `${signatoryId}.personalBankStatements.documents`, [])
+            ? get(uploadedDocs, `['${signatoryId}'].personalBankStatements.documents`, [])
             : personalBankStatements.documents
           ).map(document => {
             return (
-              get(uploadedDocs, `${signatoryId}.personalBankStatements.documents`, []).find(
+              get(uploadedDocs, `['${signatoryId}'].personalBankStatements.documents`, []).find(
                 uploadedDoc =>
                   uploadedDoc.documentKey === document.documentKey &&
                   uploadedDoc.documentTitle === document.documentTitle
@@ -54,13 +54,13 @@ export const concatStakeholdersDocs = (
           limit: personalBankStatements.limit
         },
         personalBackground: {
-          documents: (get(uploadedDocs, `${signatoryId}.personalBackground.documents`, []).length >
-          personalBackground.documents.length
-            ? get(uploadedDocs, `${signatoryId}.personalBackground.documents`, [])
+          documents: (get(uploadedDocs, `['${signatoryId}'].personalBackground.documents`, [])
+            .length > personalBackground.documents.length
+            ? get(uploadedDocs, `['${signatoryId}'].personalBackground.documents`, [])
             : personalBackground.documents
           ).map(document => {
             return (
-              get(uploadedDocs, `${signatoryId}.personalBackground.documents`, []).find(
+              get(uploadedDocs, `['${signatoryId}'].personalBackground.documents`, []).find(
                 uploadedDoc =>
                   uploadedDoc.documentKey === document.documentKey &&
                   uploadedDoc.documentTitle === document.documentTitle
