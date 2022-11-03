@@ -211,3 +211,11 @@ export const initialBankDetails = [
     bankStatementTo: ""
   }
 ];
+
+export const initialsignatoryDetails = [
+  {
+    signatoryName: "",
+    education: "",
+    backgroundInfo: ""
+  }
+];
