@@ -23,7 +23,8 @@ import {
   SELECT_SERVICES_PAGE_ID,
   STEP_4,
   ACCOUNTSIGNTYPE,
-  initialBankDetails
+  initialBankDetails,
+  STEP_6
 } from "./constants";
 import { SelectServices } from "./components/SelectServices";
 
@@ -41,6 +42,7 @@ export const SelectServicesPage = ({
   companyName,
   orgDetails,
   getKycAnnexureBankDetails,
+  getKycAnnexuresignatoryDetails,
   roAgentName,
   roagentId,
   companyBankStatements,
@@ -59,10 +61,12 @@ export const SelectServicesPage = ({
     handleSetNextStep,
     createFormChangeHandler
   ] = useStep(SELECT_SERVICES_PAGE_ID, servicesSteps[isComeFromROScreens]);
-  const isAllStepsCompleted = !availableSteps.some(
-    step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED
-  );
-  const isSubmitOnClickNextStepButton = activeStep !== STEP_4;
+  const isAllStepsCompleted = isComeFromROScreens
+    ? !availableSteps.some(step => step.step < STEP_6 && step.status !== STEP_STATUS.COMPLETED)
+    : !availableSteps.some(step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED);
+  const isSubmitOnClickNextStepButton = isComeFromROScreens
+    ? activeStep !== STEP_6
+    : activeStep !== STEP_4;
   var isSignatoryDetail = [];
   const industries = orgDetails.industryMultiSelect || [];
   useEffect(() => {
@@ -202,7 +206,7 @@ export const SelectServicesPage = ({
       );
       bankDetails.push(...newData);
     } else {
-      getKycAnnexureBankDetails?.length === 0
+      getKycAnnexureBankDetails && getKycAnnexureBankDetails.length === 0
         ? initialBankDetails && bankDetails.push(...initialBankDetails)
         : getKycAnnexureBankDetails && bankDetails.push(...getKycAnnexureBankDetails);
     }
@@ -211,9 +215,24 @@ export const SelectServicesPage = ({
     if (isSignatoryDetail && isSignatoryDetail.length > 0) {
       isSignatoryDetail.map((item, index) =>
         kycSignatoryData.push({
-          signatoryName: item.fullName,
-          education: item.kycDetails.qualification,
-          backgroundInfo: item.employmentDetails.totalExperienceYrs
+          signatoryName:
+            getKycAnnexuresignatoryDetails[index] === undefined
+              ? item.fullName
+              : getKycAnnexuresignatoryDetails[index].signatoryName === ""
+              ? item.fullName
+              : getKycAnnexuresignatoryDetails[index].signatoryName,
+          education:
+            getKycAnnexuresignatoryDetails[index] === undefined
+              ? item.kycDetails.qualification
+              : getKycAnnexuresignatoryDetails[index].education === ""
+              ? item.kycDetails.qualification
+              : getKycAnnexuresignatoryDetails[index].education,
+          backgroundInfo:
+            getKycAnnexuresignatoryDetails[index] === undefined
+              ? item.employmentDetails.totalExperienceYrs
+              : getKycAnnexuresignatoryDetails[index].backgroundInfo === ""
+              ? item.employmentDetails.totalExperienceYrs
+              : getKycAnnexuresignatoryDetails[index].backgroundInfo
         })
       );
       kycSignatory.push(...kycSignatoryData);
@@ -221,7 +240,10 @@ export const SelectServicesPage = ({
 
     dispatch(
       updateProspect({
-        "prospect.kycAnnexure.signatoryName": signatoriesName && signatoriesName.join(","),
+        "prospect.kycAnnexure.signatoryName":
+          kycAnnexureDetails.signatoryName === ""
+            ? signatoriesName && signatoriesName.join(",")
+            : kycAnnexureDetails.signatoryName,
         "prospect.kycAnnexure.poaCountry": poaCountry,
         "prospect.kycAnnexure.clientDealingCountry": listOfCountries,
         "prospect.kycAnnexure.bankDetails": bankDetails,

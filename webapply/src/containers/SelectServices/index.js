@@ -9,7 +9,7 @@ import {
   getCompanyBankStatements,
   getCompanyName
 } from "../../store/selectors/appConfig";
-import { initialBankDetails } from "./constants";
+import { initialBankDetails, initialsignatoryDetails } from "./constants";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicesPage } from "./SelectServicesPage";
@@ -33,6 +33,11 @@ const mapStateToProps = state => ({
   companyName: getCompanyName(state),
   orgDetails: getOrgKYCDetails(state),
   getKycAnnexureBankDetails: get(getKycAnnexureDetails(state), "bankDetails", initialBankDetails),
+  getKycAnnexuresignatoryDetails: get(
+    getKycAnnexureDetails(state),
+    "signatoryDetails",
+    initialsignatoryDetails
+  ),
   roAgentName: getAgentName(state),
   roagentId: getAgentId(state),
   prospectData: getInitialProspectTableCheck(state)
