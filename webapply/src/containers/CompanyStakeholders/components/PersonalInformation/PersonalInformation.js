@@ -199,14 +199,16 @@ export const PersonalInformationStep = ({
       hasDiplomaticPassport = "",
       isMemberofRulingFamily = ""
     } = signatoryCompanyInfo;
-    if (hasProminentPosition || hasDiplomaticPassport || isMemberofRulingFamily) {
-      updateProspect({
-        [`prospect.signatoryInfo[${index}].kycDetails.isPEP`]: true
-      });
-    } else {
-      updateProspect({
-        [`prospect.signatoryInfo[${index}].kycDetails.isPEP`]: false
-      });
+    if (isShareholderACompany) {
+      if (hasProminentPosition || hasDiplomaticPassport || isMemberofRulingFamily) {
+        updateProspect({
+          [`prospect.signatoryInfo[${index}].kycDetails.isPEP`]: true
+        });
+      } else {
+        updateProspect({
+          [`prospect.signatoryInfo[${index}].kycDetails.isPEP`]: false
+        });
+      }
     }
   }, [
     signatoryCompanyInfo.hasProminentPosition,
