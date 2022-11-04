@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import get from "lodash/get";
 import { Formik, Form } from "formik";
@@ -12,6 +12,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import { checkFullNameLength } from "./utils";
 import { InfoTitle } from "../../../../components/InfoTitle";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
 import {
   CustomSelect,
@@ -185,10 +186,33 @@ export const PersonalInformationStep = ({
   totalPercentageWithoutCurrentStakeholder,
   signatoryProminentPosition,
   signatoryTlnumber,
-  isShareholderACompany
+  isShareholderACompany,
+  updateProspect,
+  signatoryCompanyInfo
 }) => {
   const classes = useStyles();
   const personalInfoRef = useRef();
+
+  useEffect(() => {
+    const {
+      hasProminentPosition = "",
+      hasDiplomaticPassport = "",
+      isMemberofRulingFamily = ""
+    } = signatoryCompanyInfo;
+    if (hasProminentPosition || hasDiplomaticPassport || isMemberofRulingFamily) {
+      updateProspect({
+        [`prospect.signatoryInfo[${index}].kycDetails.isPEP`]: true
+      });
+    } else {
+      updateProspect({
+        [`prospect.signatoryInfo[${index}].kycDetails.isPEP`]: false
+      });
+    }
+  }, [
+    signatoryCompanyInfo.hasProminentPosition,
+    signatoryCompanyInfo.hasDiplomaticPassport,
+    signatoryCompanyInfo.isMemberofRulingFamily
+  ]);
 
   const createChangeProspectHandler = values => prospect => ({
     ...prospect,
@@ -536,12 +560,14 @@ const mapStateToProps = (state, { index }) => ({
     "signatoryCompanyInfo.hasProminentPosition",
     ""
   ),
+  signatoryCompanyInfo: get(getSignatories(state)[index], "signatoryCompanyInfo", ""),
   isShareholderACompany: get(getSignatories(state)[index], "kycDetails.isShareholderACompany", ""),
   signatoryTlnumber: get(getSignatories(state)[index], "signatoryCompanyInfo.tradeLicenseNo", "")
 });
 
 const mapDispatchToProps = {
-  resetStakeholderInfo
+  resetStakeholderInfo,
+  updateProspect
 };
 
 export const PersonalInformation = connect(
