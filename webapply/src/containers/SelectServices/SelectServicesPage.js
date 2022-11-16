@@ -103,8 +103,13 @@ export const SelectServicesPage = ({
       signatoriesIsShareholder.map(signatory => signatory.kycDetails.nationality);
     const signatoriesName =
       isSignatoryDetail && isSignatoryDetail.map(signatory => signatory.fullName);
-    const riskIndustries = without([...kycAnnexureDetails.riskIndustries], "");
-    const goAmlIndustry = without([...kycAnnexureDetails.goAmlIndustry], "");
+    const riskIndustries = kycAnnexureDetails.riskIndustries
+      ? without([...kycAnnexureDetails.riskIndustries], "")
+      : [];
+    //const riskIndustries = without([...kycAnnexureDetails.riskIndustries], "");
+    const goAmlIndustry = kycAnnexureDetails.goAmlIndustry
+      ? without([...kycAnnexureDetails.goAmlIndustry], "")
+      : [];
     datalist &&
       datalist.industryRiskCategory.map(item => {
         if (
@@ -125,7 +130,9 @@ export const SelectServicesPage = ({
           goAmlIndustry.push(item.value);
         }
       });
-    const poaCountry = without([...kycAnnexureDetails.poaCountry], "");
+    const poaCountry = kycAnnexureDetails.poaCountry
+      ? without([...kycAnnexureDetails.poaCountry], "")
+      : [];
     datalist &&
       datalist.poaNationality.map(item => {
         if (
@@ -137,7 +144,9 @@ export const SelectServicesPage = ({
           poaCountry.push(item.value);
         }
       });
-    const listOfCountries = without([...kycAnnexureDetails.clientDealingCountry], "");
+    const listOfCountries = kycAnnexureDetails.clientDealingCountry
+      ? without([...kycAnnexureDetails.clientDealingCountry], "")
+      : [];
     var topCustomersCountries = [];
     topCustomersCountries = topCustomers && topCustomers.map(item => item.country);
     datalist &&
@@ -237,11 +246,10 @@ export const SelectServicesPage = ({
       );
       kycSignatory.push(...kycSignatoryData);
     }
-
     dispatch(
       updateProspect({
         "prospect.kycAnnexure.signatoryName":
-          kycAnnexureDetails.signatoryName === ""
+          kycAnnexureDetails.signatoryName === undefined || kycAnnexureDetails.signatoryName === ""
             ? signatoriesName && signatoriesName.join(",")
             : kycAnnexureDetails.signatoryName,
         "prospect.kycAnnexure.poaCountry": poaCountry,
@@ -250,15 +258,22 @@ export const SelectServicesPage = ({
         "prospect.kycAnnexure.roName": roAgentName && roAgentName,
         "prospect.kycAnnexure.roEmployeeId": roagentId && roagentId,
         "prospect.kycAnnexure.companyName":
-          kycAnnexureDetails.companyName === "" ? companyName : kycAnnexureDetails.companyName,
+          kycAnnexureDetails.companyName === undefined || kycAnnexureDetails.companyName === ""
+            ? companyName
+            : kycAnnexureDetails.companyName,
         "prospect.kycAnnexure.isUltimateBeneficiary":
+          kycAnnexureDetails.isUltimateBeneficiary === undefined ||
           kycAnnexureDetails.isUltimateBeneficiary === ""
             ? isShareholderACompany
             : kycAnnexureDetails.isUltimateBeneficiary,
         "prospect.kycAnnexure.signatoryDetails": kycSignatory,
         "prospect.kycAnnexure.antiMoneyLaundering": antiMoneyLaunderingCheck,
         "prospect.kycAnnexure.riskIndustries": riskIndustries,
-        "prospect.kycAnnexure.goAmlIndustry": goAmlIndustry
+        "prospect.kycAnnexure.goAmlIndustry": goAmlIndustry,
+        "prospect.kycAnnexure.audioVideoKycVerification":
+          kycAnnexureDetails.audioVideoKycVerification === undefined
+            ? "NA"
+            : kycAnnexureDetails.audioVideoKycVerification
       })
     );
   }, [updateProspect]);
