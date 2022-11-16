@@ -211,9 +211,9 @@ export const PersonalInformationStep = ({
       }
     }
   }, [
-    signatoryCompanyInfo.hasProminentPosition,
-    signatoryCompanyInfo.hasDiplomaticPassport,
-    signatoryCompanyInfo.isMemberofRulingFamily
+    signatoryCompanyInfo.hasProminentPosition && signatoryCompanyInfo.hasProminentPosition,
+    signatoryCompanyInfo.hasDiplomaticPassport && signatoryCompanyInfo.hasDiplomaticPassport,
+    signatoryCompanyInfo.sMemberofRulingFamily && signatoryCompanyInfo.sMemberofRulingFamily
   ]);
 
   const createChangeProspectHandler = values => prospect => ({
