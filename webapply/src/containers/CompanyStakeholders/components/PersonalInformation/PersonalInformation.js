@@ -194,11 +194,18 @@ export const PersonalInformationStep = ({
   const personalInfoRef = useRef();
 
   useEffect(() => {
-    const {
-      hasProminentPosition = "",
-      hasDiplomaticPassport = "",
-      isMemberofRulingFamily = ""
-    } = signatoryCompanyInfo;
+    const hasProminentPosition =
+      signatoryCompanyInfo && signatoryCompanyInfo.hasProminentPosition
+        ? signatoryCompanyInfo.hasProminentPosition
+        : "";
+    const hasDiplomaticPassport =
+      signatoryCompanyInfo && signatoryCompanyInfo.hasDiplomaticPassport
+        ? signatoryCompanyInfo.hasDiplomaticPassport
+        : "";
+    const isMemberofRulingFamily =
+      signatoryCompanyInfo && signatoryCompanyInfo.isMemberofRulingFamily
+        ? signatoryCompanyInfo.isMemberofRulingFamily
+        : "";
     if (isShareholderACompany) {
       if (hasProminentPosition || hasDiplomaticPassport || isMemberofRulingFamily) {
         updateProspect({
@@ -211,9 +218,15 @@ export const PersonalInformationStep = ({
       }
     }
   }, [
-    signatoryCompanyInfo.hasProminentPosition && signatoryCompanyInfo.hasProminentPosition,
-    signatoryCompanyInfo.hasDiplomaticPassport && signatoryCompanyInfo.hasDiplomaticPassport,
-    signatoryCompanyInfo.sMemberofRulingFamily && signatoryCompanyInfo.sMemberofRulingFamily
+    signatoryCompanyInfo &&
+      signatoryCompanyInfo.hasProminentPosition &&
+      signatoryCompanyInfo.hasProminentPosition,
+    signatoryCompanyInfo &&
+      signatoryCompanyInfo.hasDiplomaticPassport &&
+      signatoryCompanyInfo.hasDiplomaticPassport,
+    signatoryCompanyInfo &&
+      signatoryCompanyInfo.sMemberofRulingFamily &&
+      signatoryCompanyInfo.sMemberofRulingFamily
   ]);
 
   const createChangeProspectHandler = values => prospect => ({
