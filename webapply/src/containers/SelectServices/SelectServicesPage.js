@@ -67,9 +67,9 @@ export const SelectServicesPage = ({
     ? !availableSteps.some(step => step.step < STEP_6 && step.status !== STEP_STATUS.COMPLETED)
     : !availableSteps.some(step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED);
 
-  var allStepExpectKyc = isComeFromROScreens ? availableSteps.filter(item => item.step !== 5) : [];
+  var allStepExceptKyc = isComeFromROScreens ? availableSteps.filter(item => item.step !== 5) : [];
   var allStepsCompleted = isComeFromROScreens
-    ? allStepExpectKyc.filter(step => step.status === STEP_STATUS.COMPLETED)
+    ? allStepExceptKyc.filter(step => step.status === STEP_STATUS.COMPLETED)
     : [];
 
   const isSubmitOnClickNextStepButton = isComeFromROScreens
