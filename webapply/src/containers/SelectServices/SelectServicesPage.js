@@ -16,6 +16,7 @@ import {
 import { useViewId } from "../../utils/useViewId";
 import { useStep } from "../../utils/useStep";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { setKycInitialEditCheck } from "../../store/actions/appConfig";
 import routes from "../../routes";
 
 import {
@@ -46,7 +47,8 @@ export const SelectServicesPage = ({
   roAgentName,
   roagentId,
   companyBankStatements,
-  prospectData
+  prospectData,
+  isKycInitailEdit
 }) => {
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
@@ -64,12 +66,33 @@ export const SelectServicesPage = ({
   const isAllStepsCompleted = isComeFromROScreens
     ? !availableSteps.some(step => step.step < STEP_6 && step.status !== STEP_STATUS.COMPLETED)
     : !availableSteps.some(step => step.step < STEP_4 && step.status !== STEP_STATUS.COMPLETED);
+
+  var allStepExpectKyc = isComeFromROScreens ? availableSteps.filter(item => item.step !== 5) : [];
+  var allStepsCompleted = isComeFromROScreens
+    ? allStepExpectKyc.filter(step => step.status === STEP_STATUS.COMPLETED)
+    : [];
+
   const isSubmitOnClickNextStepButton = isComeFromROScreens
     ? activeStep !== STEP_6
     : activeStep !== STEP_4;
   var isSignatoryDetail = [];
   const industries = orgDetails.industryMultiSelect || [];
+  const isKycMandatoryFieldEmpty =
+    kycAnnexureDetails &&
+    kycAnnexureDetails.skillBasedCategory &&
+    kycAnnexureDetails.skillBasedCategory !== "" &&
+    kycAnnexureDetails.businessModel &&
+    kycAnnexureDetails.businessModel !== "" &&
+    kycAnnexureDetails.kycVerificationDate &&
+    kycAnnexureDetails.kycVerificationDate !== "" &&
+    kycAnnexureDetails.kycVerificationTime &&
+    kycAnnexureDetails.kycVerificationTime !== "";
   useEffect(() => {
+    isComeFromROScreens &&
+      allStepsCompleted.length === 4 &&
+      !isKycInitailEdit &&
+      !isKycMandatoryFieldEmpty &&
+      handleSetNextStep(5);
     isSignatoryDetail =
       signatoriesDetails &&
       signatoriesDetails.filter(signatory => signatory.kycDetails.isSignatory === true);
@@ -301,7 +324,15 @@ export const SelectServicesPage = ({
       sendProspectToAPI(CONTINUE, event, SAVE, {
         activeStep,
         flowId: SELECT_SERVICES_PAGE_ID
-      }).then(() => handleSetNextStep(activeStep), () => {}),
+      }).then(
+        () => {
+          if (activeStep === 5 && isComeFromROScreens) {
+            dispatch(setKycInitialEditCheck(true));
+          }
+          handleSetNextStep(activeStep);
+        },
+        () => {}
+      ),
     [sendProspectToAPI, activeStep, handleSetNextStep]
   );
 
@@ -312,8 +343,11 @@ export const SelectServicesPage = ({
     [handleSetStep]
   );
 
-  const isNextButtonDisabled =
-    !isAllStepsCompleted || (accountType === accountNames.starter && !rakValuePackage);
+  const isNextButtonDisabled = isComeFromROScreens
+    ? !isAllStepsCompleted ||
+      (accountType === accountNames.starter && !rakValuePackage) ||
+      !isKycMandatoryFieldEmpty
+    : !isAllStepsCompleted || (accountType === accountNames.starter && !rakValuePackage);
 
   return (
     <SelectServices

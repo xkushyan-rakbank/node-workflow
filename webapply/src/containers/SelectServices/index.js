@@ -16,7 +16,8 @@ import { SelectServicesPage } from "./SelectServicesPage";
 import {
   getAccountType,
   getDatalist,
-  getInitialProspectTableCheck
+  getInitialProspectTableCheck,
+  getInitialKycEditCheck
 } from "../../store/selectors/appConfig";
 import { getAgentName, getAgentId } from "../../store/selectors/loginSelector";
 
@@ -40,7 +41,8 @@ const mapStateToProps = state => ({
   ),
   roAgentName: getAgentName(state),
   roagentId: getAgentId(state),
-  prospectData: getInitialProspectTableCheck(state)
+  prospectData: getInitialProspectTableCheck(state),
+  isKycInitailEdit: getInitialKycEditCheck(state)
 });
 
 const mapDispatchToProps = { sendProspectToAPI: sendProspectToAPIPromisify, updateProspect };
