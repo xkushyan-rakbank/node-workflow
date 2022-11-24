@@ -19,7 +19,8 @@ import {
   SET_PROSPECT_LEAD,
   SET_EXPIRED,
   SET_RO_CODE,
-  INITIAL_CHECK
+  INITIAL_CHECK,
+  KYC_INITIAL_EDIT_CHECK
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -32,6 +33,7 @@ export const initialState = {
       islamicBanking: false
     }
   },
+  iskycInitialEdit: false,
   initialProspectTableCheck: {
     poaCountry: false,
     riskIndustries: false,
@@ -128,6 +130,10 @@ export default handleActions(
     [INITIAL_CHECK]: (state, action) => ({
       ...state,
       initialProspectTableCheck: { ...state.initialProspectTableCheck, ...action.payload }
+    }),
+    [KYC_INITIAL_EDIT_CHECK]: (state, action) => ({
+      ...state,
+      iskycInitialEdit: action.payload
     }),
     [LOGOUT]: state => ({
       ...state,

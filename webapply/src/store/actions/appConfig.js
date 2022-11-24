@@ -20,6 +20,7 @@ export const SET_PROSPECT_LEAD = "SET_PROSPECT_LEAD";
 export const SET_EXPIRED = "SET_EXPIRED";
 export const SET_RO_CODE = "SET_RO_CODE";
 export const INITIAL_CHECK = "INITIAL_CHECK";
+export const KYC_INITIAL_EDIT_CHECK = "KYC_INITIAL_EDIT_CHECK";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -97,3 +98,7 @@ export const setRoCode = payload => {
 };
 
 export const setExpired = expired => ({ type: SET_EXPIRED, payload: expired });
+
+export const setKycInitialEditCheck = payload => {
+  return { type: KYC_INITIAL_EDIT_CHECK, payload };
+};

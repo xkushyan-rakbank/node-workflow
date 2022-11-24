@@ -26,6 +26,8 @@ export const getInitialProspectTableCheck = state => getAppConfig(state).initial
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
 
+export const getInitialKycEditCheck = state => getAppConfig(state).iskycInitialEdit;
+
 export const getSignatoriesCount = state => getSignatories(state).length;
 
 export const getAccountInfo = state => getProspect(state).accountInfo || [];
