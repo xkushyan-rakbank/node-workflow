@@ -20,6 +20,7 @@ import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../.
 import { COMPANY_INFO_PAGE_ID } from "../../containers/CompanyInfo/constants";
 import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constants";
 import { OUTSIDE_BASE_PATH } from "../../containers/FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
+import { signatoryCompanyInfo, kycAnnexure } from "../../constants/prospectPatches";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -94,10 +95,14 @@ export function* getProspectIdInfo({ payload }) {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
         config.prospect.organizationInfo.addressInfo[0].officeAddressDifferent === "No";
       // eslint-disable-next-line prettier/prettier
-      if (config.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+      if (
+        config.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress === "Yes"
+      ) {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = true;
         // eslint-disable-next-line prettier/prettier
-      } else if (config.prospect.organizationInfo.addressInfo[1].addressDetails[0].preferredAddress === "Yes") {
+      } else if (
+        config.prospect.organizationInfo.addressInfo[1].addressDetails[0].preferredAddress === "Yes"
+      ) {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = false;
       } else {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
@@ -122,7 +127,16 @@ export function* getProspectIdInfo({ payload }) {
             config.prospect.signatoryInfo[index].addressInfo
           );
         }
+        if (!element.kycDetails?.isShareholderACompany) {
+          config.prospect.signatoryInfo[index].kycDetails.isShareholderACompany = false;
+        }
+        if (!element?.signatoryCompanyInfo) {
+          config.prospect.signatoryInfo[index].signatoryCompanyInfo = signatoryCompanyInfo;
+        }
       });
+      if (!config.prospect?.kycAnnexure) {
+        config.prospect.kycAnnexure = kycAnnexure;
+      }
     } catch (error) {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] = false;
       prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
