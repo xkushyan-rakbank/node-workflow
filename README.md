@@ -47,3 +47,14 @@ bash$ git clone git@ssh.dev.azure.com:v3/softwarelicense/Onboarding/Onboarding
 // cd Onboarding
 
 basgh$ git pull
+
+# Webappl - Production Releases Checklist
+- master tag is created
+- PR is merged to master (Sharaf + Rayees)
+- PR review for develop & release (Rayees / Raj)
+- All release doc to be reviewed
+    - Sanity scope
+    - Regression scope
+    - Followup
+
+
