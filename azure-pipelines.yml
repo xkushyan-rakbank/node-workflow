@@ -19,6 +19,7 @@ trigger:
 jobs:
     - job: Webapply
       timeoutInMinutes: 120
+      condition: and(succeeded(),eq(variables.Webapply, 'True'))
       pool:
         vmImage: 'macos-latest'
       steps:
@@ -33,12 +34,41 @@ jobs:
 
       - task: npmAuthenticate@0
         inputs:
-          workingFile: 'webapply/.npmrc'          
+          workingFile: 'webapply/.npmrc'   
+
+      - bash: |
+           echo "##vso[task.setvariable variable=env_to_deploy;]develop"
+           echo "##vso[task.setvariable variable=PkgBuild;]True"
+        displayName: 'Building Develop Package'
+        enabled: true
+        #condition: contains(variables['build.sourceBranch'], 'develop')
+        condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'refs/heads/release'),ne(variables['Build.SourceBranch'], 'refs/heads/replica'), ne(variables['Build.SourceBranch'], 'refs/heads/master')))
+
+      - bash: |
+           echo "##vso[task.setvariable variable=env_to_deploy;]release"
+           echo "##vso[task.setvariable variable=PkgBuild;]True"
+        displayName: 'Building release Package'
+        enabled: true
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/release'))
+
+      - bash: |
+           echo "##vso[task.setvariable variable=env_to_deploy;]replica"
+           echo "##vso[task.setvariable variable=PkgBuild;]True"
+        displayName: 'Building replica Package'
+        enabled: true
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/replica'))
+
+      - bash: |
+           echo "##vso[task.setvariable variable=env_to_deploy;]prod"
+           echo "##vso[task.setvariable variable=PkgBuild;]True"
+        displayName: 'Building Production Package'
+        enabled: true
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/master'))
 
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(env_to_deploy)
-        displayName: 'Set Endpoint and Recaptcha status in .env.production file'
-        #condition: and(succeeded(),eq(variables.Dev_Build, 'True'))
+        displayName: 'Set $(env_to_deploy) Endpoint and Recaptcha status in .env.production file'
+        condition: and(succeeded(),eq(variables.PkgBuild, 'True'))
       - bash : |
           cd webapply
           npm cache clean
@@ -85,7 +115,7 @@ jobs:
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to Dev'
-        condition: and(succeeded(),eq(variables.env_to_deploy, 'develop'))
+        #condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -102,7 +132,7 @@ jobs:
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to UAT'
-        condition: and(succeeded(),eq(variables.env_to_deploy, 'release'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/release'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -117,7 +147,7 @@ jobs:
           collectBuildInfo: true
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to replica'
-        condition: and(succeeded(),eq(variables.env_to_deploy, 'replica'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/replica'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -133,7 +163,7 @@ jobs:
 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to PROD'
-        condition: and(succeeded(),eq(variables.env_to_deploy, 'prod'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -156,8 +186,10 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapply'
           ArtifactName: 'Webapply'
+
     - job: WebapplyServer
       timeoutInMinutes: 120
+      condition: and(succeeded(),eq(variables.WebapplyServer, 'True'))
       pool:
         vmImage: 'macos-latest'
       steps:
@@ -280,6 +312,7 @@ jobs:
         
     - job: document_uploader
       timeoutInMinutes: 120
+      condition: and(succeeded(),eq(variables.Document_Uploader, 'True'))
       pool:
         vmImage: 'macos-latest'
       steps:
