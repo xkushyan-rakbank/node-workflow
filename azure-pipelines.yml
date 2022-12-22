@@ -42,28 +42,28 @@ jobs:
         displayName: 'Building Develop Package'
         enabled: true
         #condition: contains(variables['build.sourceBranch'], 'develop')
-        condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'release'),ne(variables['Build.SourceBranch'], 'replica'), ne(variables['Build.SourceBranch'], 'master')))
+        condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'refs/heads/release'),ne(variables['Build.SourceBranch'], 'refs/heads/replica'), ne(variables['Build.SourceBranch'], 'refs/heads/master')))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]release"
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building release Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'release'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/release'))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]replica"
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building replica Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'replica'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/replica'))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]prod"
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building Production Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'master'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/master'))
 
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(env_to_deploy)
@@ -115,7 +115,7 @@ jobs:
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to Dev'
-        #condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'develop'))
+        #condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -132,7 +132,7 @@ jobs:
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to UAT'
-        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'release'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/release'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -147,7 +147,7 @@ jobs:
           collectBuildInfo: true
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to replica'
-        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'replica'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/replica'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -163,7 +163,7 @@ jobs:
 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to PROD'
-        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'prod'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/master'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
