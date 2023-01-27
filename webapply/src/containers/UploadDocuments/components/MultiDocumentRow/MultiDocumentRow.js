@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
@@ -9,11 +9,11 @@ import { UPLOADED } from "../../../../constants";
 import { docUpload, addMultiDocument } from "../../../../store/actions/uploadDocuments";
 import { DocumentRow } from "../../DocumentRow";
 import { useStyles } from "../styled";
-import {
-  getIsEditableStatusSearchInfo,
-  getProspectStatus
-} from "../../../../store/selectors/searchProspect";
-import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../../constants";
+// import {
+//   getIsEditableStatusSearchInfo,
+//   getProspectStatus
+// } from "../../../../store/selectors/searchProspect";
+// import { DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS } from "../../constants";
 
 // ro-assist-brd2-1
 export const MultiDocumentRow = ({
@@ -30,10 +30,10 @@ export const MultiDocumentRow = ({
   const [addMoreDisable, setAddMoreDisable] = useState(false);
   const [multiSelectedFile, setMultiSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
-  const prospectStatusInfo = useSelector(getProspectStatus);
-  const isDisabledUploadForRO =
-    isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
+  // const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
+  // const prospectStatusInfo = useSelector(getProspectStatus);
+  const isDisabledUploadForRO = false;
+  //isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
   useEffect(() => {
     if (limit > 1 && (documents.length > 1 || documents[0].uploadStatus === "Uploaded")) {
       setMultiDoc(true);
@@ -62,6 +62,7 @@ export const MultiDocumentRow = ({
         newDocument.documentKey = newDocument.documentType + "-" + documents.length;
         newDocument.required = false;
         newDocument.uploadStatus = "NotUploaded";
+        newDocument.isSingleDocUpdated = false;
         newDocument.fileName = null;
         newDocument.fileSize = file.size;
         newDocument.fileFormat = file.type;
@@ -79,6 +80,7 @@ export const MultiDocumentRow = ({
       const fileInfo = JSON.stringify({ documentKey, documentType, documentIndex });
       const docProps = {
         uploadStatus: UPLOADED,
+        isSingleDocUpdated: true,
         fileSize: file.size,
         submittedDt: file.lastModifiedDate,
         fileFormat: file.type
@@ -96,7 +98,8 @@ export const MultiDocumentRow = ({
           documentKey,
           index,
           userFileName: file.name,
-          stakeholderIndex
+          stakeholderIndex,
+          isDocUpdate: true
         })
       );
     },
