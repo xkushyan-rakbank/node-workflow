@@ -126,7 +126,6 @@ function* getProspectDocumentsSaga() {
     existDocuments &&
     existDocuments.companyDocuments.length > 0 &&
     existDocuments.stakeholdersDocuments;
-
   try {
     const { data } = yield call(getProspectDocuments.retriveDocuments, prospectID, headers);
     const appConfig = cloneDeep(yield select(getAppConfig));
@@ -141,6 +140,7 @@ function* getProspectDocumentsSaga() {
       personalBankStatements: appendMultiDocumentKey(stakeHolder.personalBankStatements),
       personalBackground: appendMultiDocumentKey(stakeHolder.personalBackground)
     }));
+
     const companyDocuments = concatCompanyDocs(
       isDocsUploaded ? existDocuments.companyDocuments : [],
       companyDocs
@@ -178,7 +178,9 @@ function* getProspectDocumentsSaga() {
       organizationInfo,
       orgKYCDetails
     );
+
     const otherDocuments = existDocuments.otherDocuments || [];
+    const isCompanyDocUpdate = existDocuments.isCompanyDocUpdate;
 
     appConfig.prospect.documents = {
       companyDocuments,
@@ -186,6 +188,7 @@ function* getProspectDocumentsSaga() {
       companyAddressProof,
       companyInvoices,
       stakeholdersDocuments,
+      isCompanyDocUpdate,
       otherDocuments
     };
     yield put(updateProspect(appConfig));
@@ -203,7 +206,8 @@ function* uploadDocumentsBgSync({
   docOwner,
   documentKey,
   stakeholderIndex,
-  userFileName
+  userFileName,
+  isDocUpdate
 }) {
   const source = CancelToken.source();
 
@@ -226,7 +230,12 @@ function* uploadDocumentsBgSync({
     const docUploadedCount = get(response, "data.docUploadedCount", 0);
     const additionalProps = { ...docProps, fileName, fileDescription: userFileName };
 
-    if (docOwner === COMPANY_DOCUMENTS || docOwner === OTHER_DOCUMENTS) {
+    if (docOwner === COMPANY_DOCUMENTS) {
+      documents[docOwner] = documents[docOwner].map(
+        createDocumentMapper(documentKey, additionalProps)
+      );
+      documents.isCompanyDocUpdate = isDocUpdate;
+    } else if (docOwner === OTHER_DOCUMENTS) {
       documents[docOwner] = documents[docOwner].map(
         createDocumentMapper(documentKey, additionalProps)
       );
@@ -234,6 +243,7 @@ function* uploadDocumentsBgSync({
       documents[docOwner].documents = documents[docOwner].documents.map(
         createDocumentMapper(documentKey, additionalProps)
       );
+      documents[docOwner].isDocUpdate = isDocUpdate;
     } else {
       if (stakeholderMultiDocs.includes(docOwner)) {
         const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][
@@ -243,12 +253,14 @@ function* uploadDocumentsBgSync({
         documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][
           docOwner
         ].documents = stakeholdersDocuments;
+        documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex][docOwner].isDocUpdate = isDocUpdate;
       } else {
         const stakeholdersDocuments = documents[STAKEHOLDER_DOCUMENTS][
           stakeholderIndex
         ].documents.map(createDocumentMapper(documentKey, additionalProps));
 
         documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].documents = stakeholdersDocuments;
+        documents[STAKEHOLDER_DOCUMENTS][stakeholderIndex].isDocUpdate = isDocUpdate;
       }
     }
 
