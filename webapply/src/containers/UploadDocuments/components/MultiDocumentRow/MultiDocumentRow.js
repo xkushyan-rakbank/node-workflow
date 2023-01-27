@@ -62,6 +62,7 @@ export const MultiDocumentRow = ({
         newDocument.documentKey = newDocument.documentType + "-" + documents.length;
         newDocument.required = false;
         newDocument.uploadStatus = "NotUploaded";
+        newDocument.isSingleDocUpdated = false;
         newDocument.fileName = null;
         newDocument.fileSize = file.size;
         newDocument.fileFormat = file.type;
@@ -79,6 +80,7 @@ export const MultiDocumentRow = ({
       const fileInfo = JSON.stringify({ documentKey, documentType, documentIndex });
       const docProps = {
         uploadStatus: UPLOADED,
+        isSingleDocUpdated: true,
         fileSize: file.size,
         submittedDt: file.lastModifiedDate,
         fileFormat: file.type
@@ -96,7 +98,8 @@ export const MultiDocumentRow = ({
           documentKey,
           index,
           userFileName: file.name,
-          stakeholderIndex
+          stakeholderIndex,
+          isDocUpdate: true
         })
       );
     },

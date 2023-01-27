@@ -27,7 +27,10 @@ export const concatStakeholdersDocs = (
   orgKYCDetails = []
 ) => {
   const stakeholdersDocuments = Object.entries(neededDocs || {}).reduce(
-    (acc, [signatoryId, { documents, personalBankStatements, personalBackground }]) => {
+    (
+      acc,
+      [signatoryId, { documents, isDocUpdate, personalBankStatements, personalBackground }]
+    ) => {
       acc[signatoryId] = {
         documents: documents.map(
           document =>
@@ -37,6 +40,7 @@ export const concatStakeholdersDocs = (
                 uploadedDoc.documentTitle === document.documentTitle
             ) || document
         ),
+        isDocUpdate,
         personalBankStatements: {
           documents: (get(uploadedDocs, `['${signatoryId}'].personalBankStatements.documents`, [])
             .length > personalBankStatements.documents.length
@@ -51,6 +55,7 @@ export const concatStakeholdersDocs = (
               ) || document
             );
           }),
+          isDocUpdate: personalBankStatements.isDocUpdate,
           limit: personalBankStatements.limit
         },
         personalBackground: {
@@ -67,6 +72,7 @@ export const concatStakeholdersDocs = (
               ) || document
             );
           }),
+          isDocUpdate: personalBackground.isDocUpdate,
           limit: personalBackground.limit
         }
       };
@@ -74,7 +80,6 @@ export const concatStakeholdersDocs = (
     },
     {}
   );
-
   const newStakeDocs = mapValues(stakeholdersDocuments, stakeHolder => {
     return {
       ...stakeHolder,
