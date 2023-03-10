@@ -155,7 +155,6 @@ export const CompanyBusinessRelationshipsComponent = ({
   const classes = useStyles();
   const basisPath = "prospect.orgKYCDetails";
   const bankFieldPath = "otherBankingRelationshipsInfo.otherBankDetails";
-
   const [isLinkVisited, setIsLinkVisited] = useState(dnfbpField);
   const [open, setOpen] = React.useState(false);
 
@@ -254,7 +253,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   <h4 className={classes.groupLabel}>Top customers</h4>
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topCustomers.map((item, index) => (
-                      <React.Fragment key={item.id}>
+                      <React.Fragment key={index}>
                         <Grid item sm={isTopCustomers ? 5 : 6} xs={12}>
                           <Field
                             name={`topCustomers[${index}].name`}
@@ -356,7 +355,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   />
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topSuppliers.map((item, index) => (
-                      <React.Fragment key={item.id}>
+                      <React.Fragment key={index}>
                         <Grid item sm={isTopSuppliers ? 5 : 6} xs={12}>
                           <Field
                             name={`topSuppliers[${index}].name`}
@@ -460,7 +459,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                   />
                   <Grid container spacing={3} className={classes.flexContainer}>
                     {values.topOriginGoodsCountries.map((item, index) => (
-                      <React.Fragment key={item.id}>
+                      <React.Fragment key={index}>
                         <Grid
                           item
                           sm={isTopOriginGoodsCountries ? 10 : 12}
@@ -546,7 +545,7 @@ export const CompanyBusinessRelationshipsComponent = ({
                       <Grid container spacing={3} className={classes.flexContainer}>
                         {values.otherBankingRelationshipsInfo.otherBankDetails.map(
                           (item, index) => (
-                            <React.Fragment key={item.id}>
+                            <React.Fragment key={index}>
                               <Grid
                                 item
                                 sm={isOtherBankingRelationshipsInfo ? 10 : 12}
