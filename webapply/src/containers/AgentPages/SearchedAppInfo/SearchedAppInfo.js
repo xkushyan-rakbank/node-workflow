@@ -7,13 +7,7 @@ import { useLayoutParams } from "../../FormLayout";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
 
-import {
-  searchedAppInfoSteps,
-  STEP_1,
-  STATUS_LOCKED,
-  STATUS_FORCE_STOP,
-  INELIGIBLE
-} from "./constants";
+import { searchedAppInfoSteps, STEP_1, STATUS_LOCKED, STATUS_FORCE_STOP } from "./constants";
 
 export const SearchedAppInfoContainer = ({
   searchResults,
@@ -75,12 +69,10 @@ export const SearchedAppInfoContainer = ({
 
   const searchResult = searchResults.find(item => item.prospectId === match.params.id);
   const isDisabled =
-    get(searchResult, "status.statusNotes") === INELIGIBLE
-      ? false
-      : get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
-        get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
-          APP_STOP_SCREEN_RESULT ||
-        get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
+    get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
+    get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
+      APP_STOP_SCREEN_RESULT ||
+    get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
 
   return (

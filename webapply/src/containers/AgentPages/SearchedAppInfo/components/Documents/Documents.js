@@ -18,7 +18,10 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
         <div className={classes.checkListData}>
           {STATUS_NOT_ELIGIBLE.includes(application.uploadStatus)
             ? application.documentTitle
-            : application.documentTitle.replace(UPLOAD, "")}
+            : application.documentTitle && application.documentTitle !== ""
+            ? application.documentTitle.replace(UPLOAD, "") + " "
+            : ""}
+
           <br />
           {application.fileDescription}
         </div>
