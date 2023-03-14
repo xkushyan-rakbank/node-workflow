@@ -89,9 +89,9 @@ export const DocumentRowComponent = ({
                 //return selectedFile.name;
                 return (
                   <span>
-                    {document.documentTitle && document.documentTitle === ""
-                      ? ""
-                      : document.documentTitle.replace(UPLOAD, "")}{" "}
+                    {document.documentTitle && document.documentTitle !== ""
+                      ? document.documentTitle.replace(UPLOAD, "") + " "
+                      : ""}
                     <br />
                     {selectedFile.name}
                   </span>
@@ -99,9 +99,9 @@ export const DocumentRowComponent = ({
               } else if (isUploaded && document.fileDescription) {
                 return (
                   <span>
-                    {document.documentTitle && document.documentTitle === ""
-                      ? ""
-                      : document.documentTitle.replace(UPLOAD, "")}{" "}
+                    {document.documentTitle && document.documentTitle !== ""
+                      ? document.documentTitle.replace(UPLOAD, "") + " "
+                      : ""}
                     <br />
                     {document.fileDescription}
                   </span>
