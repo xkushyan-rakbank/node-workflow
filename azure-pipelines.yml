@@ -10,10 +10,11 @@ pr:
     include:
       - develop
       - release
-
-trigger:
-  - develop
-  - release
+trigger: 
+  branches:
+    include: 
+    - develop
+    - release
 #  - releases/*
 
 jobs:
