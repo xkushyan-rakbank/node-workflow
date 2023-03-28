@@ -28,26 +28,27 @@ export const TwoSteps = () => {
 
         <div className={classes.cardsWrapper}>
           <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
-            <IconCardItem horizontal text="Trade License">
+            <IconCardItem horizontal text="Valid trade licence and constitutional documents ¹">
               <License alt="trade-license" />
             </IconCardItem>
-            <IconCardItem horizontal text="Passport / visa¹ of all signatories">
+            <IconCardItem
+              horizontal
+              text="Passports and Emirates IDs of signatories and stakeholders ²"
+            >
               <Passport alt="passport-visa" />
             </IconCardItem>
-            <IconCardItem horizontal text="Emirates ID of all signatories">
+            <IconCardItem horizontal text="Proof of address (operation location)">
               <EmirateId alt="emirates-id" />
             </IconCardItem>
-            <IconCardItem horizontal text="Other company documents²">
+            <IconCardItem horizontal text="Proof of income for stakeholders">
               <CompanyDocuments alt="company-documents" />
             </IconCardItem>
           </IconCardsContainer>
         </div>
       </div>
       <div className={classes.note}>
-        1. Not applicable to UAE nationals. 2. Memorandum of Association, Articles of Association,
-        Share Certificate, Partners Agreement or Service Agreement, whichever is applicable to your
-        company. Following review of submitted documents, the Bank may seek additional documents /
-        information.
+        1. Memorandum of Association / Articles of Association / Partners Agreement / Service
+        Agreement / Share Certificate 2. Emirates ID not required for non-resident stakeholders
       </div>
       <div className={classes.secondGroup}>
         <div className={classes.secondGroupText}>
