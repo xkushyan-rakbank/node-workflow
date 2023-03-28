@@ -10,9 +10,8 @@ pr:
     include:
       - develop
       - release
+
 trigger: 
-  branches:
-    include: 
     - develop
     - release
 #  - releases/*
