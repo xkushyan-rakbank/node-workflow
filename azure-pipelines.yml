@@ -120,7 +120,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/develop/$(Build.BuildNumber)/webapply/"
+                    "target": "onboarding/DigitalBank/develop/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
@@ -137,7 +137,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/release/$(Build.BuildNumber)/webapply/"
+                    "target": "onboarding/DigitalBank/release/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
@@ -152,7 +152,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/replica/$(Build.BuildNumber)/webapply/"
+                    "target": "onboarding/DigitalBank/replica/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
@@ -168,7 +168,7 @@ jobs:
               "files": [
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
-                    "target": "onboarding/master/$(Build.BuildNumber)/webapply/"
+                    "target": "onboarding/DigitalBank/master/$(Build.BuildNumber)/webapply/"
                 }
               ]
             }
