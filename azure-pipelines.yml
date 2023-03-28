@@ -11,8 +11,6 @@ pr:
       - bbg2.0/develop
 
 trigger:
-branches:
-  include:
   - bbg2.0/develop
 
 jobs:
