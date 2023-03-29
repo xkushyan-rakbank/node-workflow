@@ -5,6 +5,9 @@
 
 name: $(BuildID)_$(Date:yyyyMMdd)$(Rev:.rr)
 
+resources:
+- repo: self
+
 pr:
   branches:
     include:
