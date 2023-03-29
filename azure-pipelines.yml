@@ -15,6 +15,7 @@ pr:
       - release
 
 trigger:
+  branches:
     include:
       - develop
       - release
