@@ -5,7 +5,7 @@ import { configureStore } from "./configureStore";
 
 if (process.env.NODE_ENV !== "test") {
   /* eslint-disable */
-  history = createBrowserHistory({process.env.REACT_APP_CONTEXT_PATH || '/'});
+  history = createBrowserHistory({ basename: process.env.REACT_APP_CONTEXT_PATH || '/' });
   store = configureStore(initialState, history).store;
   persistor = persistStore(store);
   /* eslint-enable */
