@@ -3,6 +3,7 @@ VAR_env_to_deploy=$1 # Create variable, equal to first script parameter
 if [ "$VAR_env_to_deploy" == "develop" ]; # Check if parameter is empty - set default value
 then
     echo 'PUBLIC_URL=https://quickapplydev.rakbank.ae/digitalbank' > webapply/.env.production
+    echo 'REACT_APP_CONTEXT_PATH=/digitalbank' >> webapply/.env.production
     echo 'REACT_APP_PUBLIC_URL=https://quickapplydev.rakbank.ae/digitalbank' >> webapply/.env.production
     echo 'REACT_APP_API_PATH=https://quickapplydev.rakbank.ae' >> webapply/.env.production
     echo 'REACT_APP_OTP_ENABLE=N' >> webapply/.env.production
