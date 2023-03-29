@@ -11,25 +11,14 @@ pr:
       - develop
       - release
 
-#trigger:
-#  include:
-#    - develop
-#    - release
-#  - releases/*
-#  exclude:
-#    - bbg2.0/* 
-
 trigger:
-  branches:
-    include:
+  include:
     - develop
     - release
-  paths:
-    include:
-    - develop/*
-    - release/*
-    exclude:
-    - bbg2.0/*
+#  - releases/*
+  exclude:
+    - bbg2.0/* 
+
 
 jobs:
     - job: Webapply
