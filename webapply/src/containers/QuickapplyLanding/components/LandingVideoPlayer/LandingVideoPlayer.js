@@ -55,7 +55,7 @@ export const LandingVideoPlayer = ({ video: { mp4, webm, poster }, ...rest }) =>
           </Link>
           <div
             onClick={() =>
-              redirectInToFinance(process.env.REACT_APP_API_PATH + smeBaseName + "/finances")
+              redirectInToFinance(smeBaseName + "/finances")
             }
           >
             <ExpandMoreButton
