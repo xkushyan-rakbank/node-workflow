@@ -11,7 +11,8 @@ pr:
       - bbg2.0/develop
 
 trigger:
-  - bbg2.0/develop
+  include:
+    - bbg2.0/develop
 
 jobs:
     - job: Webapply
