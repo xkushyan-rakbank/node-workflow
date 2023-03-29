@@ -12,13 +12,9 @@ pr:
       - release
 
 trigger:
-  include:
     - develop
     - release
 #  - releases/*
-  exclude:
-    - bbg2.0/* 
-
 
 jobs:
     - job: Webapply
