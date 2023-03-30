@@ -10,7 +10,8 @@
       "RAKvaluePlusIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-baniking/accounts/other-services/rakvaluesme",
       "RAKvalueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-baniking/accounts/other-services/rakvaluesme",
       "TermsConditionsUrl": "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
-      "ServicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA"
+      "ServicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA",
+      "KycBaseUrl": "https://conv.rakbankonline.ae/api-dev/rakbank-kyc"
     },
     "dev": {
       "WebApplyBaseUrl": "http://conv.rakbankonline.ae/quickapply",
@@ -22,7 +23,8 @@
       "RAKvaluePlusIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-baniking/accounts/other-services/rakvaluesme",
       "RAKvalueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-baniking/accounts/other-services/rakvaluesme",
       "TermsConditionsUrl": "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
-      "ServicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA"
+      "ServicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA",
+	  "KycBaseUrl": "https://conv.rakbankonline.ae/api-dev/rakbank-kyc"      
     },
     "uat": {
       "WebApplyBaseUrl": "https://quickapplyuat.rakbank.ae",
@@ -67,6 +69,18 @@
   },
   "OAuthURIs": {
     "generateTokenUri": "/oauth/token"
+  },
+  "KycURIs": {
+  	"generateAppTokenUri" :"/app/token",
+  	"generateUserTokenUri" :"/user/token",
+  	"initKycTransactionUri": "/efr/transactions"
+  },
+  "KycConfigs": {
+    "local": {
+      "OAuthClientId": "deh",
+      "OAuthClientSecret": "654321",
+      "DehHostId": "DEH"
+    }
   },
   "ReCaptchaURIs": {
     "siteVerifyUri": "/recaptcha/api/siteverify"

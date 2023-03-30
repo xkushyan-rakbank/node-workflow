@@ -20,6 +20,10 @@
 .env.production.local
 .idea/
 /.vscode
+.settings
+.classpath
+.project
+.factorypath
 
 npm-debug.log*
 yarn-debug.log*
