@@ -4,7 +4,6 @@ import Typography from "@material-ui/core/Typography";
 
 //import routes from "../../../routes";
 import { ContainedButton } from "../../Buttons/ContainedButton";
-import { MobileNotification } from "../../Modals";
 import { useStyles } from "./styled";
 import { accountsInfo } from "./constants";
 
@@ -19,7 +18,8 @@ export const AccountInfoScreen = ({
   title,
   subtitle,
   isHideTitleOnSmBreakpoint,
-  pathname
+  pathname,
+  showSubTitle
 }) => {
   const classes = useStyles({ isShowApply, isHideTitleOnSmBreakpoint });
 
@@ -47,8 +47,9 @@ export const AccountInfoScreen = ({
           </Typography>
         </>
       )}
-      {isShowApply && (
-        <>
+
+      <>
+        {(isShowApply || showSubTitle) && (
           <Typography
             variant="subtitle1"
             component="span"
@@ -56,14 +57,17 @@ export const AccountInfoScreen = ({
           >
             {subtitle}
           </Typography>
+        )}
+        {isShowApply && (
           <ContainedButton
             withRightArrow
             justify="flex-start"
             label="Apply now"
             handleClick={handleApply}
           />
-        </>
-      )}
+        )}
+      </>
+
       {isShowCheck && !isApplyEditApplication && (
         <ContainedButton
           withRightArrow

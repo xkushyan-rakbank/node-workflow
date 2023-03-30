@@ -2,10 +2,17 @@ import get from "lodash/get";
 
 import routes from "../../../routes";
 import { accountsInfo } from "./constants";
-import { applicationOverviewRoutes, detailedAccountRoutes } from "../../../constants";
+import {
+  applicationOverviewRoutes,
+  detailedAccountRoutes,
+  personaSelectionRoutes
+} from "../../../constants";
 
 export const getTitleByPathname = (pathname, accountType) => {
   if (detailedAccountRoutes.includes(pathname))
+    return get(accountsInfo, [accountType, "title"], "");
+
+  if (personaSelectionRoutes.includes(pathname))
     return get(accountsInfo, [accountType, "title"], "");
 
   if (applicationOverviewRoutes.includes(pathname))

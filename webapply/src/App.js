@@ -46,6 +46,7 @@ const SubmitApplication = lazy(() =>
   import("./containers/SelectServices/components/SubmitApplication")
 );
 const Agents = lazy(() => import("./containers/AgentPages"));
+const PersonaSelection = lazy(() => import("./containers/PersonaSelection"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -113,6 +114,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.detailedAccount}
                 component={DetailedAccount}
               />
+              <AccountTypeProtectedRoute
+                exact
+                path={routes.personaSelection}
+                component={PersonaSelection}
+              />
               <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
               <OTPGeneratedProtectedRoute
                 exact
@@ -128,7 +134,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <ProtectedRoute path={agentBaseName} component={Agents} />
               <ProtectedRoute exact path={routes.quickapplyLanding} component={QuickapplyLanding} />
               <ProtectedRoute exact path={smeBaseName} component={QuickapplyLanding} />
-              <ProtectedRoute exact path="/"  component={QuickapplyLanding} />
+              <ProtectedRoute exact path="/" component={QuickapplyLanding} />
               {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
               <Route path="*" component={NotFoundPage} />

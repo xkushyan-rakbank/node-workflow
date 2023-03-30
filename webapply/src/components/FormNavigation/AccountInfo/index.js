@@ -17,7 +17,9 @@ import {
   applicationOverviewRoutes,
   detailedAccountRoutes,
   ISLAMIC,
-  CONVENTIONAL
+  CONVENTIONAL,
+  personaSelectionRoutesMap,
+  personaSelectionRoutes
 } from "../../../constants";
 
 export const AccountInfo = props => {
@@ -38,7 +40,7 @@ export const AccountInfo = props => {
 
   const handleStart = useCallback(() => {
     dispatch(resetApplicantInfo());
-    goto(routes.applicantInfo);
+    goto(personaSelectionRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]);
   }, [dispatch, pushHistory]);
 
   //ro-assist-brd3-16
@@ -77,6 +79,7 @@ export const AccountInfo = props => {
       handleCheckStatus={handleCheckStatus}
       handleStart={handleStart}
       handleApply={handleApply}
+      showSubTitle={accountType && personaSelectionRoutes.includes(pathname)}
       isHideTitleOnSmBreakpoint={isHideTitleOnSmBreakpoint}
       pathname={pathname}
       {...props}

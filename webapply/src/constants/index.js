@@ -491,6 +491,30 @@ export const applicationOverviewRoutes = [
   `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`
 ];
 
+export const personaSelectionRoutesMap = {
+  [accountNames.starter]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/persona-selection`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}/persona-selection`
+  },
+  [accountNames.currentAccount]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}/persona-selection`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/persona-selection`
+  },
+  [accountNames.elite]: {
+    [CONVENTIONAL]: `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/persona-selection`,
+    [ISLAMIC]: `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/persona-selection`
+  }
+};
+
+export const personaSelectionRoutes = [
+  `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/persona-selection`
+];
+
 export const DEFAULT_REFERRAL_NAME = "Direct";
 export const USER_IDLE_TIMEOUT = (process.env.REACT_APP_SESSION_TIMEOUT - 1) * 60 * 1000;
 export const EXPIRY_INTERVAL = 60;

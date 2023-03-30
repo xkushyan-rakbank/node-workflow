@@ -31,6 +31,10 @@ const aplicantInfoSchema = Yup.object({
     .required(getRequiredMessage("Your Name"))
     .max(79, "Maximum 79 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Your Name")),
+  companyFullName: Yup.string()
+    .required(getRequiredMessage("Full Company Name"))
+    .max(79, "Maximum 79 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Full Company Name")),
   email: Yup.string()
     .required(getRequiredMessage("Your E-mail Address"))
     .max(50, "Maximum 50 characters allowed")
@@ -97,6 +101,7 @@ export const ApplicantInfoComponent = ({
       <Formik
         initialValues={{
           fullName: "",
+          companyFullName: "",
           email: "",
           countryCode: UAE_CODE,
           mobileNo: "",
@@ -118,6 +123,22 @@ export const ApplicantInfoComponent = ({
                 path="prospect.applicantInfo.fullName"
                 label="Your Name"
                 placeholder="Your Name"
+                component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0 }
+                }}
+                isLemnisk={true}
+                lemniskCall={value => lemniskCall(value)}
+              />
+            )}
+            {isConfigLoading ? (
+              <SkeletonLoader />
+            ) : (
+              <Field
+                name="companyFullName"
+                path=""
+                label="Full Company Name"
+                placeholder="Full Company Name"
                 component={Input}
                 InputProps={{
                   inputProps: { tabIndex: 0 }
