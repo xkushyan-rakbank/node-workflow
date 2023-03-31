@@ -2,13 +2,15 @@
   "prospect": {
     "applicantInfo": {
       "fullName": "",
+      "companyFullName": "",
       "email": "",
       "countryCode": "971",
       "mobileNo": "",
       "applyOnbehalf": false,
       "LeadSource": "Direct",
       "roCode": "",
-      "allianceCode": ""
+      "allianceCode": "",
+      "validRoCode": ""
     },
     "generalInfo": {
       "prospectId": "",

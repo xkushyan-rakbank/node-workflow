@@ -136,7 +136,7 @@ export const ApplicantInfoComponent = ({
             ) : (
               <Field
                 name="companyFullName"
-                path=""
+                path="prospect.applicantInfo.companyFullName"
                 label="Full Company Name"
                 placeholder="Full Company Name"
                 component={Input}
