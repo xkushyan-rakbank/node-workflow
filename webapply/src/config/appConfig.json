@@ -1,0 +1,473 @@
+{
+  "prospect": {
+    "applicantInfo": {
+      "fullName": "",
+      "email": "",
+      "countryCode": "971",
+      "mobileNo": "",
+      "applyOnbehalf": false,
+      "LeadSource": "Direct",
+      "roCode": "",
+      "allianceCode": ""
+    },
+    "generalInfo": {
+      "prospectId": "",
+      "cifId": "",
+      "customerType": "",
+      "dsaId": "",
+      "groupId": "",
+      "groupName": "",
+      "rmCode": "",
+      "accountManagerId": "",
+      "isPoliticallyExposed": ""
+    },
+    "applicationInfo": {
+      "viewId": "",
+      "islamicBanking": false,
+      "accountType": "",
+      "rakValuePackage": "",
+      "leadNumber": "",
+      "riskScore": "",
+      "srNumber": "",
+      "channelId": "",
+      "channelType": "",
+      "createdDate": "",
+      "lastModifiedDate": "",
+      "createdBy": "",
+      "lastModifiedBy": "",
+      "actionType": "",
+      "saveType": "",
+      "tncAgreed": false,
+      "declaration": false,
+      "sanctionUndertaking": false,
+      "promoCode": ""
+    },
+    "accountInfo": [
+      {
+        "branchId": "",
+        "accountType": "",
+        "accountSubType": "",
+        "accountNo": "",
+        "accountCurrencies": [],
+        "accountCurrency": "",
+        "accountPurpose": "",
+        "debitCardApplied": false,
+        "chequeBookApplied": false,
+        "eStatements": true,
+        "mailStatements": false,
+        "receiveInterest": false,
+        "deliverByCourier": false,
+        "expressTandC": false,
+        "express": false
+      }
+    ],
+    "organizationInfo": {
+      "screeningInfo": {
+        "statusOverAll": "",
+        "screeningResults": []
+      },
+      "branchCity": "",
+      "branchID": "",
+      "countryOfIncorporation": "AE",
+      "companyName": "",
+      "shortName": "",
+      "dateOfIncorporation": "",
+      "numberOfEmployees": 0,
+      "licenseType": "",
+      "licenseTypeOther": "",
+      "licenseIssuingAuthority": "",
+      "licenseNumber": "",
+      "licenseIssueDate": "",
+      "licenseExpiryDate": "",
+      "vatRegistrationNumber": "",
+      "addressInfo": [
+        {
+          "typeOfAddress": "Registered",
+          "officeAddressDifferent": "Yes",
+          "addressDetails": [
+            {
+              "addressFieldDesc": "",
+              "preferredAddress": "",
+              "addressLine1": "",
+              "addressLine2": "",
+              "addressLine3": "",
+              "addressLine4": "",
+              "poBox": "",
+              "emirateCity": "",
+              "country": "AE",
+              "typeOfSpaceOccupied": {
+                "spaceType": "",
+                "others": ""
+              }
+            }
+          ]
+        },
+        {
+          "typeOfAddress": "OFFICE",
+          "officeAddressDifferent": "Yes",
+          "addressDetails": [
+            {
+              "addressFieldDesc": "",
+              "preferredAddress": "",
+              "addressLine1": "",
+              "addressLine2": "",
+              "addressLine3": "",
+              "addressLine4": "",
+              "poBox": "",
+              "emirateCity": "",
+              "country": "AE",
+              "typeOfSpaceOccupied": {
+                "spaceType": "",
+                "others": ""
+              }
+            }
+          ]
+        }
+      ],
+      "contactDetails": {
+        "primaryMobileNo": "",
+        "primaryMobCountryCode": "971",
+        "primaryEmail": "",
+        "primaryPhoneNo": "",
+        "primaryPhoneCountryCode": "971",
+        "fax": "",
+        "faxCountryCode": "",
+        "secondaryPhoneNo": "",
+        "secondaryPhoneCountryCode": "",
+        "secondaryMobileNo": "",
+        "secondaryMobileCountryCode": "",
+        "secondaryEmail": "",
+        "website": ""
+      },
+      "contactDetailsForTxnReconfirming": [
+        {
+          "primaryMobileNo": "",
+          "primaryMobCountryCode": "971",
+          "TxnReconfirmingfullname": "",
+          "primaryPhoneNo": "",
+          "primaryPhoneCountryCode": "971"
+        }
+      ]
+    },
+    "orgKYCDetails": {
+      "businessUnit": "",
+      "constitutionType": "",
+      "companyCategory": "",
+      "annualFinTurnoverAmtInAED": "",
+      "yearsInBusiness": 0,
+      "topCustomers": [
+        {
+          "name": "",
+          "country": ""
+        }
+      ],
+      "topSuppliers": [
+        {
+          "name": "",
+          "country": ""
+        }
+      ],
+      "topOriginGoodsCountries": [""],
+      "industryMultiSelect": [
+        {
+          "industry": [""],
+          "subCategory": [""]
+        }
+      ],
+      "anticipatedTransactionsDetails": {
+        "totalMonthlyCashCreditsAED": {
+          "amountInFigures": "",
+          "inPercent": 0
+        },
+        "totalMonthlyNonCashCreditsAED": {
+          "amountInFigures": "",
+          "inPercent": 0
+        },
+        "totalMonthlyCreditsAED": "",
+        "maxAmtSingleTxnCashAED": "",
+        "maxAmtSingleTxnNonCashAED": ""
+      },
+      "otherBankingRelationshipsInfo": {
+        "otherBankingRelationshipsExist": false,
+        "otherBankDetails": [
+          {
+            "bankName": ""
+          }
+        ]
+      },
+      "otherEntitiesInUAE": false,
+      "entitiesInUAE": [
+        {
+          "companyName": "",
+          "emirate": "",
+          "tradeLicenseNo": ""
+        }
+      ],
+      "otherEntitiesOutsideUAE": false,
+      "entitiesOutsideUAE": [
+        {
+          "companyName": "",
+          "country": ""
+        }
+      ],
+      "isShareholderACompany": false,
+      "isDontHaveSuppliersYet": false,
+      "isDontTradeGoodsYet": false,
+      "dnfbpField": "na",
+      "isCompanyUSEntity": "",
+      "isFinancialInstitution": "na",
+      "isNonFinancialInstitution": "na",
+      "globalintermediaryId": ""
+    },
+    "signatoryInfo": [
+      {
+        "screeningInfo": {
+          "statusOverAll": "",
+          "screeningResults": [
+            {
+              "screeningType": "",
+              "screeningStatus": "",
+              "screeningFlag": "",
+              "screeningNotes": "",
+              "screeningReason": "",
+              "reasonNotes": "",
+              "reasonCode": "",
+              "reasonStatus": ""
+            }
+          ]
+        },
+        "salutation": "MR.",
+        "signatoryId": "",
+        "firstName": "",
+        "middleName": "",
+        "lastName": "",
+        "shortName": "",
+        "fullName": "",
+        "gender": "MR.",
+        "maritalStatus": "",
+        "maritalStatusOthers": "",
+        "countryofBirth": "",
+        "placeOfBirth": "",
+        "occupation": "",
+        "mothersMaidenName": "",
+        "numberOfDependants": 0,
+        "highestEducationAttained": "",
+        "employmentStatus": "",
+        "kycVerified": false,
+        "kycDetails": {
+          "salutation": "",
+          "shareholderPOASignatoryName": "",
+          "isSignatory": false,
+          "isShareholder": "",
+          "shareHoldingPercentage": "",
+          "isShareholderACompany": false,
+          "dateOfBirth": "",
+          "dualCitizenship": "",
+          "dualCitizenshipCountry": [""],
+          "residenceCountry": "AE",
+          "isUAEResident": true,
+          "passportDetails": [
+            {
+              "passportNumber": "",
+              "passportExpiryDate": "",
+              "country": "",
+              "diplomatPassport": false,
+              "hasAnotherCitizenship": false
+            }
+          ],
+          "emirateIdDetails": {
+            "eidNumber": "784",
+            "eidExpiryDt": ""
+          },
+          "selfGovtPosition": "",
+          "relativeGovtPosition": "",
+          "isPEP": "",
+          "qualification": "",
+          "experienceInYrs": "",
+          "sourceOfWealth": []
+        },
+        "signatoryCompanyInfo": {
+          "companyName": "",
+          "countryOfIncorporation": "AE",
+          "hasDiplomaticPassport": false,
+          "hasProminentPosition": false,
+          "isMemberofRulingFamily": false,
+          "tradeLicenseNo": "",
+          "dateOfIncorporation": ""
+        },
+        "contactDetails": {
+          "primaryMobileNo": "",
+          "primaryMobCountryCode": "971",
+          "primaryEmail": "",
+          "primaryPhoneNo": "",
+          "primaryPhoneCountryCode": "971",
+          "primaryHomeNo": "",
+          "primaryHomeCountryCode": "",
+          "fax": "",
+          "faxCountryCode": "",
+          "secondaryPhoneNo": "",
+          "secondaryPhoneCountryCode": "",
+          "secondaryMobileNo": "",
+          "secondaryMobileCountryCode": "",
+          "secondaryEmail": "",
+          "website": ""
+        },
+        "employmentDetails": {
+          "employmentType": "",
+          "otherEmploymentType": "",
+          "designation": "",
+          "empNo": "",
+          "department": "",
+          "employerName": "",
+          "occupation": "",
+          "totalExperienceYrs": "",
+          "employmentStartDate": "",
+          "isPersonWorkAtCompany": false
+        },
+        "sameAsCompanyAddress": false,
+        "addressInfo": [
+          {
+            "typeOfAddress": "RESIDENCE",
+            "addressDetails": [
+              {
+                "addressFieldDesc": "",
+                "preferredAddress": "",
+                "addressLine1": "",
+                "addressLine2": "",
+                "addressLine3": "",
+                "addressLine4": "",
+                "poBox": "",
+                "emirateCity": "",
+                "country": "AE"
+              }
+            ]
+          },
+          {
+            "typeOfAddress": "OFFICE",
+            "addressDetails": [
+              {
+                "addressFieldDesc": "",
+                "preferredAddress": "",
+                "addressLine1": "",
+                "addressLine2": "",
+                "addressLine3": "",
+                "addressLine4": "",
+                "poBox": "",
+                "emirateCity": "",
+                "country": "AE"
+              }
+            ]
+          },
+          {
+            "typeOfAddress": "Home",
+            "addressDetails": [
+              {
+                "addressFieldDesc": "",
+                "preferredAddress": "",
+                "addressLine1": "",
+                "addressLine2": "",
+                "addressLine3": "",
+                "addressLine4": "",
+                "poBox": "",
+                "emirateCity": "",
+                "country": ""
+              }
+            ]
+          }
+        ],
+        "accountSigningInfo": {
+          "accountSigningType": "",
+          "accountSigningInstn": "",
+          "authorityType": ""
+        },
+        "debitCardInfo": {
+          "issueDebitCard": false,
+          "authSignatoryDetails": {
+            "fullNameOnPassport": "",
+            "nameOnDebitCard": ""
+          }
+        },
+        "isUSrelation": ""
+      }
+    ],
+    "channelServicesInfo": {
+      "mobileInstructions": false,
+      "marketingSMS": true,
+      "doNotDisturbHours": "",
+      "weeklyBalanceNotification": "",
+      "monthlyBalanceNotification": 0
+    },
+    "documents": {
+      "companyDocuments": [],
+      "stakeholdersDocuments": null
+    },
+    "prospectStatusInfo": {
+      "statusType": "",
+      "statusCode": "",
+      "statusFlag": "",
+      "statusNotes": "",
+      "statusReason": "",
+      "statusOverAll": "",
+      "reasonNotes": "",
+      "reasonCode": "",
+      "reasonStatus": ""
+    },
+    "kycAnnexure": {
+      "workItemNumber": "",
+      "companyName": "",
+      "skillBasedCategory": "",
+      "signatoryName": "",
+      "signatoryDetails": [
+        {
+          "signatoryName": "",
+          "education": "",
+          "backgroundInfo": ""
+        }
+      ],
+      "businessModel": "",
+      "isUltimateBeneficiary": "",
+      "bankDetails": [
+        {
+          "bankName": "",
+          "isStatementAvailable": "",
+          "bankStatementRemark": "",
+          "bankStatementFrom": "",
+          "bankStatementTo": ""
+        }
+      ],
+      "antiMoneyLaundering": "yes",
+      "poaCountry": [""],
+      "riskIndustries": [""],
+      "clientDealingCountry": [""],
+      "audioVideoKycVerification": "NA",
+      "signatoryEIDinfo": "yes",
+      "signatoryEIDinfoRemarks": "",
+      "goAmlRegistration": "NA",
+      "goAmlRegistrationNumber": "",
+      "goAmlIndustry": [],
+      "noticeToCounterfeit": "",
+      "roName": "",
+      "roEmployeeId": "",
+      "kycVerificationDate": "",
+      "kycVerificationTime": "",
+      "kycVerificationLocation": "",
+      "kycVerificationotherLocation": ""
+    },
+    "freeFieldsInfo": {
+      "freeField1": "",
+      "freeField2": "",
+      "freeField3": "",
+      "freeField4": "",
+      "freeField5": ""
+    }
+  },
+  "reCaptchaSiteKey": "6Lfmr78UAAAAAInMv7VFRHt3Ppe52o6AYbKVsY8o",
+  "recaptchaEnable": false,
+  "termsConditionsUrl": "https://rakbank.ae/wps/wcm/connect/3f9d99b1-d7a2-4634-82b5-08f03e734295/%28A%29%2BJ00781%2BRAK%2B%2BDebit%2BCard%2B-%2BBusiness%2BA4-T%26C-New%2BGuide-EN%26AR%28withe%2Bout%2Bc....pdf?MOD=AJPERES&CVID=lTLVCHV",
+  "servicePricingGuideUrl": "https://revamp.rakbank.ae/wps/wcm/connect/24fe8e8e-fc35-4967-8dd3-8935c64f085e/RAK%2BS%26P%2B-CC-Account%2BServices%2BBusiness%2B%26%2BRemittances-Web%2BEN-01....pdf?MOD=AJPERES&CVID=mI8CAQA",
+  "rakValuePlusReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-banking/accounts/other-services/rakvaluesme",
+  "rakValueMaxReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-banking/accounts/other-services/rakvaluesme",
+  "rakValuePlusIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-banking/accounts/other-services/rakvaluesme",
+  "rakValueMaxIslamicReadMoreUrl": "https://revamp.rakbank.ae/wps/portal/business-banking/accounts/other-services/rakvaluesme",
+  "lemniskEnable": true
+}

@@ -28,19 +28,19 @@ export const TwoSteps = () => {
 
         <div className={classes.cardsWrapper}>
           <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
-            <IconCardItem horizontal text="Valid trade licence and constitutional documents ¹">
+            <IconCardItem horizontal text="Valid Trade Licence and Constitutional documents ¹">
               <License alt="trade-license" />
             </IconCardItem>
             <IconCardItem
               horizontal
-              text="Passports and Emirates IDs of signatories and stakeholders ²"
+              text="Passport and Emirates ID of Shareholders and Signatories ²"
             >
               <Passport alt="passport-visa" />
             </IconCardItem>
-            <IconCardItem horizontal text="Proof of address (operation location)">
+            <IconCardItem horizontal text="Proof of address of operating location">
               <EmirateId alt="emirates-id" />
             </IconCardItem>
-            <IconCardItem horizontal text="Proof of income for stakeholders">
+            <IconCardItem horizontal text="Proof of Income for Shareholders">
               <CompanyDocuments alt="company-documents" />
             </IconCardItem>
           </IconCardsContainer>
@@ -48,7 +48,7 @@ export const TwoSteps = () => {
       </div>
       <div className={classes.note}>
         1. Memorandum of Association / Articles of Association / Partners Agreement / Service
-        Agreement / Share Certificate 2. Emirates ID not required for non-resident stakeholders
+        Agreement / Share Certificate 2. Emirates ID not required for non-residence shareholder
       </div>
       <div className={classes.secondGroup}>
         <div className={classes.secondGroupText}>

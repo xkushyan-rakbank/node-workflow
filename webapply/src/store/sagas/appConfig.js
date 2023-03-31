@@ -26,6 +26,13 @@ import {
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
+import appConfig from "../../config/appConfig.json";
+
+const populateAppConfig = configApiResponse => ({
+  ...appConfig,
+  ...configApiResponse
+});
+
 export function* receiveAppConfigSaga() {
   try {
     const accountType = yield select(getAccountType);
@@ -42,7 +49,7 @@ export function* receiveAppConfigSaga() {
       }
     }
 
-    const newConfig = response.data;
+    const newConfig = populateAppConfig(response.data);
     const signatoryModel = newConfig.prospect
       ? cloneDeep(newConfig.prospect.signatoryInfo[0])
       : null;
