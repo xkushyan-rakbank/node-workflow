@@ -1,3 +1,2 @@
-import { FormConfirmPage } from "./FormConfirmPage";
-
-export default FormConfirmPage;
+export { default as FormEmailConfirmPage } from "./FormConfirmEmailPage";
+export { default as FormConfirmMobilePage } from "./FormConfirmMobilePage";

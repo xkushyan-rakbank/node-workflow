@@ -1,6 +1,11 @@
 import routes, { smeBaseName } from "../routes";
 import callbackRegular from "./../assets/gif/callback_regular.gif";
 
+export const OtpChannel = {
+  Sms: "sms",
+  Email: "email"
+};
+
 export const authorityType = [
   { value: "AuthorityType1", label: "AuthorityType1" },
   { value: "AuthorityType2", label: "AuthorityType2" }

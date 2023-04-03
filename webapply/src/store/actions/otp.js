@@ -8,6 +8,7 @@ export const GENERATE_CODE_SUCCESS = "OTP/GENERATE_CODE_SUCCESS";
 export const VERIFY_CODE_SUCCESS = "OTP/VERIFY_CODE_SUCCESS";
 export const VERIFY_CODE_FAILED = "OTP/VERIFY_CODE_FAILED";
 export const VERIFY_CLEAR_ERROR = "VERIFY_CLEAR_ERROR";
+export const RESET_OTP = "RESET_OTP";
 
 export const generateOtpCode = payload => ({
   type: GENERATE_OTP_CODE,
@@ -48,6 +49,10 @@ export const verifyCodeFailed = () => ({
 
 export const verifyClearError = () => ({
   type: VERIFY_CLEAR_ERROR
+});
+
+export const smsOtpVerified = () => ({
+  type: RESET_OTP
 });
 
 export const generateOtpCodePromisify = payload => ({

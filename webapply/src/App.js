@@ -25,10 +25,11 @@ import { theme } from "./theme";
 import "./App.scss";
 import SessionExpiration from "./containers/Session";
 
+import { FormEmailConfirmPage, FormConfirmMobilePage } from "./containers/FormConfirm";
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
-const FormConfirm = lazy(() => import("./containers/FormConfirm"));
+
 const UploadDocuments = lazy(() => import("./containers/UploadDocuments"));
 const ReUploadDocuments = lazy(() => import("./containers/ReUploadDocuments"));
 const ApplicantInfo = lazy(() => import("./containers/ApplicantInfo"));
@@ -77,7 +78,16 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 component={AccountsComparison}
               />
               <ProtectedRoute exact path={routes.applicantInfo} component={ApplicantInfo} />
-              <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
+              <ProspectProtectedRoute
+                exact
+                path={routes.verifyEmailOtp}
+                component={FormEmailConfirmPage}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.verifyMobileOtp}
+                component={FormConfirmMobilePage}
+              />
               <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
               <ProspectProtectedRoute
                 exact

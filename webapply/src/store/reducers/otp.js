@@ -6,7 +6,8 @@ import {
   GENERATE_CODE_SUCCESS,
   VERIFY_CODE_SUCCESS,
   VERIFY_CODE_FAILED,
-  VERIFY_CLEAR_ERROR
+  VERIFY_CLEAR_ERROR,
+  RESET_OTP
 } from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 import { handleActions, composeActions } from "../../utils/redux-utils";
@@ -67,6 +68,9 @@ export default handleActions(
       verificationError: false,
       isPending: false,
       attempts: 0
+    }),
+    [RESET_OTP]: () => ({
+      ...initialState
     }),
     [VERIFY_CODE_FAILED]: state => ({
       ...state,

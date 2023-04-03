@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { generateOtpCode, verifyOtp, verifyClearError } from "../../store/actions/otp";
+import {
+  generateOtpCode,
+  verifyOtp,
+  verifyClearError,
+  smsOtpVerified
+} from "../../store/actions/otp";
 import { getOtp } from "../../store/selectors/otp";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 import { MAX_ATTEMPT_ALLOWED } from "./constants";
 import { Form } from "./components/Form";
+import { OtpChannel } from "../../constants";
 
-export const Otp = ({ redirectRoute }) => {
+export const Otp = ({ redirectRoute, otpType }) => {
   const dispatch = useDispatch();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = useSelector(getOtp);
   const applicantInfo = useSelector(getApplicantInfo);
@@ -27,6 +33,9 @@ export const Otp = ({ redirectRoute }) => {
 
   useEffect(() => {
     if (isVerified) {
+      if (otpType === OtpChannel.Sms) {
+        dispatch(smsOtpVerified());
+      }
       pushHistory(redirectRoute, true);
     }
   }, [isVerified, pushHistory, redirectRoute]);
@@ -56,6 +65,7 @@ export const Otp = ({ redirectRoute }) => {
 
   return (
     <Form
+      otpType={otpType}
       applicantInfo={applicantInfo}
       attempts={attempts}
       loginAttempt={loginAttempt}

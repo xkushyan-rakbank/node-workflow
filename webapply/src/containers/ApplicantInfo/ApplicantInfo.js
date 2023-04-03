@@ -5,7 +5,7 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS } from "../../constants";
+import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE } from "../../constants";
 import routes from "../../routes";
 
 //ro-assist-brd3-16
@@ -90,7 +90,11 @@ export const ApplicantInfoContainer = ({
           () =>
             pushHistory(
               /* istanbul ignore next */
-              process.env.REACT_APP_OTP_ENABLE === "N" ? routes.companyInfo : routes.verifyOtp,
+              process.env.REACT_APP_OTP_ENABLE === "N"
+                ? routes.companyInfo
+                : values.countryCode === UAE_CODE
+                ? routes.verifyMobileOtp
+                : routes.verifyEmailOtp,
               true
             ),
           () => setIsLoading(false)
