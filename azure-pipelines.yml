@@ -46,7 +46,7 @@ jobs:
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building release Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/release'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/bbg2.0/release'))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]replica"
