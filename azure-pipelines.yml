@@ -129,7 +129,7 @@ jobs:
 # below is used for the publishing the artifacts to the jfrog artifactory 
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to UAT'
-        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/release'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/bbg2.0/release'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
