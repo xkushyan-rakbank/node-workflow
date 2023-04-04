@@ -39,7 +39,7 @@ jobs:
         displayName: 'Building Develop Package'
         enabled: true
         #condition: contains(variables['build.sourceBranch'], 'develop')
-        condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'refs/heads/release'),ne(variables['Build.SourceBranch'], 'refs/heads/replica'), ne(variables['Build.SourceBranch'], 'refs/heads/master')))
+        condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'refs/heads/bbg2.0/release'),ne(variables['Build.SourceBranch'], 'refs/heads/replica'), ne(variables['Build.SourceBranch'], 'refs/heads/master')))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]release"
