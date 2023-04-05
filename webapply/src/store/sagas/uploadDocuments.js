@@ -154,6 +154,10 @@ function* getProspectDocumentsSaga() {
       organizationInfo,
       orgKYCDetails
     );
+    companyBankStatements.isDocUpdate =
+      isDocsUploaded && existDocuments.companyBankStatements
+        ? existDocuments.companyBankStatements.isDocUpdate
+        : companyBankStatements.isDocUpdate;
     companyAddressProof.documents = concatCompanyDocs(
       isDocsUploaded && existDocuments.companyAddressProof
         ? existDocuments.companyAddressProof.documents
@@ -163,6 +167,10 @@ function* getProspectDocumentsSaga() {
       organizationInfo,
       orgKYCDetails
     );
+    companyAddressProof.isDocUpdate =
+      isDocsUploaded && existDocuments.companyAddressProof
+        ? existDocuments.companyAddressProof.isDocUpdate
+        : companyAddressProof.isDocUpdate;
     companyInvoices.documents = concatCompanyDocs(
       isDocsUploaded && existDocuments.companyInvoices
         ? existDocuments.companyInvoices.documents
@@ -172,6 +180,10 @@ function* getProspectDocumentsSaga() {
       organizationInfo,
       orgKYCDetails
     );
+    companyInvoices.isDocUpdate =
+      isDocsUploaded && existDocuments.companyInvoices
+        ? existDocuments.companyInvoices.isDocUpdate
+        : companyInvoices.isDocUpdate;
     const stakeholdersDocuments = concatStakeholdersDocs(
       stakeHoldersDocs,
       isDocsUploaded ? existDocuments.stakeholdersDocuments : {},
