@@ -18,8 +18,7 @@ trigger:
   branches:
     include:
       - develop
-      - release
-#  - releases/*        
+      - release     
     exclude:
       - bbg2.0/develop    
 
