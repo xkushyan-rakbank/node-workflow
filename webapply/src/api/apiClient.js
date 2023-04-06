@@ -1,17 +1,15 @@
 import httpClient, { uploadClient } from "./axiosConfig";
-import { buildURI, getQueryString } from "./../utils/buildURI";
+import { buildURI } from "./../utils/buildURI";
 
 export const OTP_ACTION_GENERATE = "generate";
 export const OTP_ACTION_VERIFY = "verify";
 export const SEGMENT = "sme";
 
 export const config = {
-  load: (product, segment = SEGMENT) => {
-    const query = getQueryString(product, segment);
-
+  load: () => {
     return httpClient.request({
       method: "GET",
-      url: `webapply/api/v1/config${query}`
+      url: "onboarding/config/accounts"
     });
   }
 };
@@ -57,12 +55,12 @@ export const otp = {
 };
 
 export const prospect = {
-  create: (data, headers) =>
+  create: ({ applicantInfo }, headers) =>
     httpClient.request({
       url: buildURI("createProspectUri"),
       method: "POST",
       ...headers,
-      data
+      data: { applicantInfo }
     }),
   update: (prospectId, data, headers) =>
     httpClient.request({

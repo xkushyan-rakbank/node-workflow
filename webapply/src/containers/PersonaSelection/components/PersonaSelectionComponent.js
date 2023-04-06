@@ -18,7 +18,7 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
               <div
                 key={persona.key}
                 className={classes.roleSelectionButton}
-                onClick={() => handleNavigation(persona.url, persona.urlType)}
+                onClick={() => handleNavigation(persona, persona.urlType)}
               >
                 <div className={classes.avatar} />
                 <div className={classes.buttonText}>

@@ -129,6 +129,7 @@ export const ApplicantInfoContainer = ({
       accountType={accountType}
       roCode={roCode}
       isLemniskEnable={isLemniskEnable}
+      persona={prospect.applicantInfo.persona}
     />
   );
 };

@@ -10,7 +10,8 @@
       "LeadSource": "Direct",
       "roCode": "",
       "allianceCode": "",
-      "validRoCode": ""
+      "validRoCode": "",
+      "persona": ""
     },
     "generalInfo": {
       "prospectId": "",
