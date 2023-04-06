@@ -17,7 +17,7 @@ import { SubmitButton } from "../../../components/Buttons/SubmitButton";
 import { ErrorBoundaryForReCaptcha } from "../../../components/ReCaptcha/ErrorBoundaryForReCaptcha";
 import { ReCaptcha } from "../../../components/ReCaptcha/ReCaptcha";
 
-import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC, UAE_CODE } from "../../../constants";
+import { CONVENTIONAL, ISLAMIC, personaSelectionRoutesMap, UAE_CODE } from "../../../constants";
 import {
   getInvalidMessage,
   getRequiredMessage,
@@ -73,7 +73,8 @@ export const ApplicantInfoComponent = ({
   partnerInfo,
   roCode,
   isLemniskEnable,
-  isDisableNextstep
+  isDisableNextstep,
+  persona
 }) => {
   //ro-assist-brd3-16
   const allianceCodeFromQuery = partnerInfo !== undefined ? partnerInfo.code : "";
@@ -107,7 +108,8 @@ export const ApplicantInfoComponent = ({
           mobileNo: "",
           roCode: "",
           allianceCode: allianceCodeFromQuery,
-          allianceCodeFromDataList: allianceCodeDisplyText
+          allianceCodeFromDataList: allianceCodeDisplyText,
+          persona
         }}
         validationSchema={aplicantInfoSchema}
         validateOnChange={false}
@@ -267,7 +269,7 @@ export const ApplicantInfoComponent = ({
               <div className="linkContainer">
                 <BackLink
                   path={
-                    applicationOverviewRoutesMap[accountType][
+                    personaSelectionRoutesMap[accountType][
                       isIslamicBanking ? ISLAMIC : CONVENTIONAL
                     ]
                   }

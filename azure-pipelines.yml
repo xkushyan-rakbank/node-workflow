@@ -11,7 +11,11 @@ pr:
       - bbg2.0/develop
 
 trigger:
-- bbg2.0/develop
+  branches:
+    include:
+      - bbg2.0/develop
+    exclude:
+      - develop
 
 jobs:
     - job: Webapply
@@ -109,7 +113,7 @@ jobs:
           rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapply/'
           archiveFile: '$(Build.ArtifactStagingDirectory)/webapply/webapply.zip'
 
-# below is used for the publishing the artifacts to the jfrog artifactory 
+# below is used for the publishing the artifacts to the jfrog artifactory  
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to Dev'
         #condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/develop'))

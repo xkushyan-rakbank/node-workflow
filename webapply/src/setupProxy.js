@@ -34,4 +34,11 @@ module.exports = function(app) {
       secure: false
     })
   );
+  app.use(
+    "/onboarding",
+    proxy({
+      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      changeOrigin: true
+    })
+  );
 };

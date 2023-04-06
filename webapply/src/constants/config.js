@@ -2,19 +2,25 @@ import { UAE_CODE } from ".";
 
 export const endpoints = {
   baseUrl: "http://conv.rakbankonline.ae/quickapply",
-  appConfigUri: "/webapply/api/v1/config",
-  createProspectUri: "/webapply/api/v1/usertypes/:userType/prospects",
-  getProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/:prospectId",
-  updateProspectUri: "/webapply/api/v1/usertypes/sme/prospects/:prospectId",
-  getProspectDocumentsUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  appConfigUri: "/onboarding/config/accounts",
+  createProspectUri: "/onboarding/products/accounts/prospects",
+  getProspectUri: "/onboarding/products/accounts/prospects/:prospectId",
+  updateProspectUri: "/onboarding/products/accounts/prospects/:prospectId",
+  getProspectDocumentsUri: "/onboarding/products/accounts/prospects/:prospectId/documents",
+  /**TODO: To be pointing 2.0 api */
   uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  /**TODO: To be pointing 2.0 api */
   reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
-  searchProspectUri: "/webapply/api/v1/usertypes/:userType/prospects/search",
+  searchProspectUri: "/onboarding/products/accounts/prospects/search",
+  /**TODO: To be pointing 2.0 exp-api */
   getDocumentByIdUri: "/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
-  screenProspectUri: "/webapply/api/v1//prospects/:prospectId/screening",
-  otpUri: "/webapply/api/v1/otp",
+  screenProspectUri: "/onboarding/products/accounts/prospects/:prospectId/screening",
+  otpUri: "/onboarding/accounts/otp",
+  /**TODO: To be pointing 2.0 exp-api */
   authenticateUserUri: "/webapply/api/v1/users/authenticate",
+  /**TODO: To be pointing 2.0 exp-api */
   docUploaderUri: "/api/v1/banks/RAK/prospects/:prospectId/documents",
+  /**TODO: To be pointing 2.0 exp-api */
   createInviteUri: "/webapply/api/v1/agent/createInvite"
 };
 

@@ -16,7 +16,7 @@ import {
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
-import { accountNames, UAE_CODE, UAE, UAE_CURRENCY, AUTO } from "../../constants";
+import { UAE_CODE, UAE, UAE_CURRENCY, AUTO } from "../../constants";
 import {
   getIsIslamicBanking,
   getAccountType,
@@ -35,19 +35,8 @@ const populateAppConfig = configApiResponse => ({
 
 export function* receiveAppConfigSaga() {
   try {
-    const accountType = yield select(getAccountType);
     let response = null;
-
-    if (accountType) {
-      response = yield call(config.load, accountType);
-    } else {
-      /* istanbul ignore if  */
-      if (process.env.NODE_ENV === "development") {
-        response = yield call(config.load, accountNames.starter);
-      } else {
-        response = yield call(config.load, null);
-      }
-    }
+    response = yield call(config.load);
 
     const newConfig = populateAppConfig(response.data);
     const signatoryModel = newConfig.prospect
