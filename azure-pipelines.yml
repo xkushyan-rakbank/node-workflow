@@ -8,14 +8,14 @@ name: $(BuildID)_$(Date:yyyyMMdd)$(Rev:.rr)
 pr:
   branches:
     include:
-    - bbg2.0/develop
+      - bbg2.0/develop
 
 trigger:
   branches:
     include:
-    - bbg2.0/develop
+      - bbg2.0/develop
     exclude:
-    - develop
+      - develop
 
 jobs:
     - job: Webapply
