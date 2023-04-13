@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import { ErrorMessage, ContexualHelp } from "./../../Notifications";
 import { InfoTitle } from "../../InfoTitle";
+import { FieldDescription } from "../../FieldDescription";
 import { checkBrowserIsIE } from "../../../utils/checkBrowserIsIE";
 import { areEqualFieldProps } from "../utils";
 
@@ -27,6 +28,7 @@ const InputBase = ({
   ErrorMessageComponent = ErrorMessage,
   isLemnisk = false,
   lemniskCall = value => {},
+  fieldDescription,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -75,9 +77,17 @@ const InputBase = ({
         <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
-      {isError && <ErrorMessageComponent error={errorMessage} />}
-
       {infoTitle && <InfoTitle title={infoTitle} />}
+
+      {fieldDescription && (
+        <FieldDescription
+          title={fieldDescription}
+          fieldValueLength={field.value.trim().length}
+          fieldMaxLength={InputProps.inputProps.maxLength}
+        />
+      )}
+
+      {isError && <ErrorMessageComponent error={errorMessage} />}
     </FormControl>
   );
 };

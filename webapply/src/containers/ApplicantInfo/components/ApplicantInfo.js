@@ -29,20 +29,20 @@ import { InfoCard } from "./InfoCard";
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required(getRequiredMessage("Your Name"))
-    .max(79, "Maximum 79 characters allowed")
+    .max(100, "Maximum 100 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Your Name")),
   companyFullName: Yup.string()
-    .required(getRequiredMessage("Full Company Name"))
-    .max(79, "Maximum 79 characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("Full Company Name")),
+    .required(getRequiredMessage("Company's full name"))
+    .max(255, "Maximum 255 characters allowed")
+    .matches(NAME_REGEX, getInvalidMessage("Company's full name")),
   email: Yup.string()
-    .required(getRequiredMessage("Your E-mail Address"))
+    .required(getRequiredMessage("Email"))
     .max(50, "Maximum 50 characters allowed")
-    .email(getInvalidMessage("Your E-mail Address")),
+    .email(getInvalidMessage("Email")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
-    .required(getRequiredMessage("Your Mobile Number"))
-    .phoneNo({ codeFieldName: "countryCode", fieldName: "Your Mobile Number" }),
+    .required(getRequiredMessage("Mobile Number"))
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number" }),
   roCode: Yup.string()
     .max(6, "Maximum 6 characters allowed")
     .matches(NUMBER_REGEX, getROInvalidMessage),
@@ -93,10 +93,9 @@ export const ApplicantInfoComponent = ({
 
   return (
     <>
-      <h2>Let’s Start with the Basics</h2>
+      <h2>Let's kick things off with an intro</h2>
       <p className="formDescription">
-        First things first, you need a login, so you can come back to the application in case you
-        cannot complete it in one go.
+        Give us a few details so we can keep track of your application
       </p>
 
       <Formik
@@ -127,10 +126,11 @@ export const ApplicantInfoComponent = ({
                 placeholder="Your Name"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 100 }
                 }}
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
+                fieldDescription="Enter your full name as shown on your passport."
               />
             )}
             {isConfigLoading ? (
@@ -139,14 +139,15 @@ export const ApplicantInfoComponent = ({
               <Field
                 name="companyFullName"
                 path="prospect.applicantInfo.companyFullName"
-                label="Full Company Name"
-                placeholder="Full Company Name"
+                label="Company’s full name"
+                placeholder="Company’s full name"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 255 }
                 }}
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
+                fieldDescription="This should be the same as shown on your trade licence."
               />
             )}
 
@@ -156,7 +157,7 @@ export const ApplicantInfoComponent = ({
               <Field
                 name="email"
                 path="prospect.applicantInfo.email"
-                label="Your E-mail Address"
+                label="Email"
                 placeholder="Email"
                 component={Input}
                 InputProps={{
@@ -164,6 +165,9 @@ export const ApplicantInfoComponent = ({
                 }}
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
+                fieldDescription={
+                  "This email will be used to open the account.\n We'll send a one-time password (OTP) to it for verification."
+                }
               />
             )}
 
@@ -187,7 +191,7 @@ export const ApplicantInfoComponent = ({
                   linkedFieldName="countryCode"
                   path="prospect.applicantInfo.mobileNo"
                   linkedPath="prospect.applicantInfo.countryCode"
-                  label="Your Mobile Number"
+                  label="Mobile Number"
                   placeholder="Mobile Number"
                   component={Input}
                   contextualHelpText="This number should be unique for a Company"
@@ -196,6 +200,9 @@ export const ApplicantInfoComponent = ({
                   }}
                   isLemnisk={true}
                   lemniskCall={value => lemniskCall(value)}
+                  fieldDescription={
+                    "This number will be used to open the account.\nWe'll send a one-time password (OTP) to it for verification."
+                  }
                 />
               </InputGroup>
             )}
@@ -270,7 +277,7 @@ export const ApplicantInfoComponent = ({
                 <BackLink
                   path={
                     personaSelectionRoutesMap[accountType][
-                      isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                    isIslamicBanking ? ISLAMIC : CONVENTIONAL
                     ]
                   }
                 />
