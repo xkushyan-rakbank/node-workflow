@@ -11,7 +11,6 @@ import { Input } from "../Input";
 import { MAX_NUMBER_VALIDATION_ERRORS, MAX_ATTEMPT_ALLOWED } from "../../constants";
 
 import { useStyles } from "./styled";
-import { OtpChannel } from "../../../../constants/index";
 
 export const Form = ({
   applicantInfo,
@@ -25,7 +24,9 @@ export const Form = ({
   setCode,
   submitForm,
   handleSendNewCodeLinkClick,
-  otpType,
+  changeText,
+  info,
+  title,
   classes: extendedClasses
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -38,10 +39,9 @@ export const Form = ({
     <div className={classes.centeredContainer}>
       <SectionTitleWithInfo
         className={classes.title}
-        title={`We have sent you a verification code on your ${
-          otpType === OtpChannel.Sms ? "mobile number" : "e-mail address"
-        }`}
-        info="Please enter the six digits below, to confirm this is you"
+        title={title}
+        info={info}
+        changeText={changeText}
       />
 
       <Formik initialValues={code} onSubmit={submitForm}>
@@ -66,14 +66,14 @@ export const Form = ({
               )}
 
               <span>
-                Didn’t get the code?{" "}
+                {/* OTP expires in 3:00 mins */}
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
                     [classes.linkDisabled]: hasMaxAttemptsError
                   })}
                 >
-                  Send a new code
+                  Resent OTP
                 </span>
               </span>
             </div>

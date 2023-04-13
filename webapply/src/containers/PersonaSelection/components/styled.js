@@ -61,6 +61,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   avatar: {
+    minWidth: "56px",
     width: "56px",
     height: "53px",
     [theme.breakpoints.only("xs")]: {

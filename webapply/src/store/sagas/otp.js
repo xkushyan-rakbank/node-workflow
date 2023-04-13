@@ -26,7 +26,7 @@ export function* generateOtp(action) {
   }
 }
 
-export function* verifyOtp({ payload: otpToken }) {
+export function* verifyOtp({ payload: { code, mode } }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     const applicantInfo = yield select(getApplicantInfo);
@@ -37,7 +37,8 @@ export function* verifyOtp({ payload: otpToken }) {
       prospectId,
       mobileNo: applicantInfo.mobileNo,
       countryCode: applicantInfo.countryCode,
-      otpToken
+      otpToken: code,
+      mode
     };
     const { data } = yield call(otp.verify, payload, headers);
     if (data.verified) {

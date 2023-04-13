@@ -18,10 +18,12 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between"
   },
   link: {
-    textDecoration: "underline",
     cursor: "pointer",
     opacity: 1,
-    visibility: "visible"
+    visibility: "visible",
+    float: "right",
+    marginRight: "45px",
+    color: "#8D0C10"
   },
   linkDisabled: {
     opacity: "0.5",
