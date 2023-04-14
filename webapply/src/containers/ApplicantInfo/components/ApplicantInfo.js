@@ -93,11 +93,10 @@ export const ApplicantInfoComponent = ({
 
   return (
     <>
-      <h2>Let's kick things off with an intro</h2>
+      <h2>Let&apos; kick things off with an intro</h2>
       <p className="formDescription">
         Give us a few details so we can keep track of your application
       </p>
-
       <Formik
         initialValues={{
           fullName: "",
@@ -277,7 +276,7 @@ export const ApplicantInfoComponent = ({
                 <BackLink
                   path={
                     personaSelectionRoutesMap[accountType][
-                    isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                      isIslamicBanking ? ISLAMIC : CONVENTIONAL
                     ]
                   }
                 />

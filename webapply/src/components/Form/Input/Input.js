@@ -79,14 +79,7 @@ const InputBase = ({
         <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
-      {infoTitle && (
-        <InfoTitle
-          title={infoTitle}
-          showCharLength={showCharLength}
-          charLength={field.value.length}
-          totalLength={totalLength}
-        />
-      )}
+      {infoTitle && <InfoTitle title={infoTitle} />}
 
       {fieldDescription && (
         <FieldDescription

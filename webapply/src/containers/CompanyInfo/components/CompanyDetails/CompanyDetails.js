@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import { Input, AutoSaveField as Field } from "../../../../components/Form";
+import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
 
 import {
   NUMBER_REGEX,
@@ -56,10 +56,8 @@ export const CompanyDetails = ({ handleContinue }) => {
           label="Company’s full name"
           path="prospect.organizationInfo.companyName"
           contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 50 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
-          infoTitle="This should be the same as shown on your trade licence.                            "
+          fieldDescription="This should be the same as shown on your trade licence.                            "
           component={Input}
-          showCharLength={true}
-          totalLength={MAX_COMPANY_FULL_NAME_LENGTH}
           InputProps={{
             inputProps: { maxLength: MAX_COMPANY_FULL_NAME_LENGTH, tabIndex: 0 }
           }}
@@ -68,23 +66,21 @@ export const CompanyDetails = ({ handleContinue }) => {
           name="companyShortName"
           label="Shortened company name"
           path="prospect.organizationInfo.shortName"
-          infoTitle="To keep things simple, we'll use this shortened name for the account and chequebook.                     "
+          fieldDescription="To keep things simple, we'll use this shortened name for the account and chequebook.                     "
           component={Input}
-          showCharLength={true}
-          totalLength={MAX_COMPANY_SHORT_NAME_LENGTH}
           InputProps={{
             inputProps: { maxLength: MAX_COMPANY_SHORT_NAME_LENGTH, tabIndex: 0 }
           }}
         />
-        {/* <Field
+        <Field
           name="companyCategory"
           label="Company category"
-          path="prospect.organizationInfo.licenseIssuingAuthority"
-          datalistId="licenseIssuingAuthority"
+          path="prospect.organizationInfo.companyCategory"
+          datalistId="companyCategory"
           isSearchable
           component={SelectAutocomplete}
           tabIndex="0"
-        /> */}
+        />
       </Form>
     </Formik>
   );

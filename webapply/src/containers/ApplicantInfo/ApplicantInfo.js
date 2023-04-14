@@ -6,7 +6,14 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE } from "../../constants";
+import {
+  formStepper,
+  CONVENTIONAL,
+  ISLAMIC,
+  CREAT_PROSPECT_KEYS,
+  UAE_CODE,
+  Personas
+} from "../../constants";
 import routes from "../../routes";
 import { updateProspect } from "../../store/actions/appConfig";
 
@@ -91,11 +98,16 @@ export const ApplicantInfoContainer = ({
         })
         .then(
           () => {
+            const { companyFullName, persona } = values;
+            const selectedPersona = Personas[persona];
             dispatch(
               updateProspect({
-                "prospect.organizationInfo.companyName": values.companyFullName,
+                "prospect.organizationInfo.companyName": companyFullName,
                 "prospect.organizationInfo.shortName":
-                  values.companyFullName.length < 50 ? values.companyFullName : ""
+                  companyFullName.length < 50 ? companyFullName : "",
+                "prospect.organizationInfo.companyCategory": selectedPersona?.companyCategoryCode
+                  ? selectedPersona.companyCategoryCode
+                  : ""
               })
             );
             pushHistory(

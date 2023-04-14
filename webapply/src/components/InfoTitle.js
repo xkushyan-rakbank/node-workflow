@@ -48,11 +48,6 @@ const InfoTitleBase = ({
   return (
     <div className={classes.wrapper}>
       <div>{title}</div>
-      {showCharLength && (
-        <div>
-          {charLength}/{totalLength}
-        </div>
-      )}
     </div>
   );
 };
