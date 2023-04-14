@@ -12,7 +12,7 @@ import PersonaSelectionComponent from "./components/PersonaSelectionComponent";
 const Personas = {
   SOLE: {
     key: "SOLE",
-    title: "I’m a Sole Proprietor",
+    title: "I’m a sole proprietor",
     subTitle: "I own this business",
     url: routes.applicantInfo,
     urlType: "2.0",
@@ -20,7 +20,7 @@ const Personas = {
   },
   SLLC: {
     key: "SLLC",
-    title: "I’m a Sole Proprietor with an LLC",
+    title: "I am sole proprietor with an LLC",
     subTitle: "I do business as a limited liability company (LLC)",
     url: routes.applicantInfo,
     urlType: "2.0",

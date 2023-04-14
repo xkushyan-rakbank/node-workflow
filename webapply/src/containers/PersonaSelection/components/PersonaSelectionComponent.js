@@ -1,5 +1,6 @@
 import React from "react";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
+import { ReactComponent as NavigationLeft } from "../../../assets/icons/blackNavigationLeftArrow.svg";
 import { useStyles } from "./styled";
 
 export default function RoleSelectionComponent({ handleNavigation, personas }) {
@@ -20,11 +21,11 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
                 className={classes.roleSelectionButton}
                 onClick={() => handleNavigation(persona, persona.urlType)}
               >
-                <div className={classes.avatar} />
                 <div className={classes.buttonText}>
                   <div className={classes.title}>{persona.title}</div>
                   <span className={classes.subTitle}> {persona.subTitle}</span>
                 </div>
+                <NavigationLeft key="navigationArrowLeft" alt="blackArrowLeft" />
               </div>
             );
           })}
