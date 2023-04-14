@@ -7,7 +7,7 @@ import {
 import { updateProspectId, updateProspect, updateValidRoCode } from "../actions/appConfig";
 import { resetInputsErrors, setInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
-import { prospect as prospectApi } from "../../api/apiClient";
+import { otp, prospect as prospectApi } from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import {
   getApplicationInfo,
@@ -15,7 +15,7 @@ import {
   getIsRecaptchaEnable
 } from "./../selectors/appConfig";
 import { FieldsValidationError } from "../../api/serverErrors";
-import { NEXT, SAVE } from "../../constants";
+import { NEXT, SAVE, UAE_CODE } from "../../constants";
 import { getProspect } from "../selectors/appConfig";
 import { getReCaptchaToken } from "../selectors/reCaptcha";
 import { getLeadSource } from "../selectors/appConfig";
@@ -52,7 +52,19 @@ export function* applicantInfoFormSaga({ payload }) {
       data: { prospectId, validRoCode }
     } = yield call(prospectApi.create, sendingData, headers);
 
-    yield put(generateCodeSuccess());
+    if (prospectId) {
+      const otpGenerationPayload = {
+        email: payload.email,
+        countryCode: payload.countryCode,
+        mobileNo: payload.mobileNo,
+        action: "generate",
+        mode: payload.countryCode === UAE_CODE ? "sms" : "email",
+        prospectId
+      };
+      yield call(otp.generate, { ...otpGenerationPayload }, headers);
+      yield put(generateCodeSuccess());
+    }
+
     yield put(updateProspectId(prospectId));
     yield put(
       updateValidRoCode(

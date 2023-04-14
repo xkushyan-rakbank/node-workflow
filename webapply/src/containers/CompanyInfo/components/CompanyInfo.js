@@ -1,73 +1,38 @@
 import React from "react";
-import cx from "classnames";
 
-import { BackLink } from "../../../components/Buttons/BackLink";
-import { FormCard } from "../../../components/FormCard/FormCard";
-import { StepComponent } from "../../../components/StepComponent/StepComponent";
-import StatusLoader from "../../../components/StatusLoader";
-import { NextStepButton } from "../../../components/Buttons/NextStepButton";
-import { STEP_STATUS } from "../../../constants";
+import { Divider } from "@material-ui/core";
+
 import routes from "../../../routes";
-
-import { companyInfoSteps, STEP_1 } from "../constants";
 import { useStyles } from "./styled";
 
-import companyInfoIcon from "../../../assets/icons/companyInfo.svg";
+import { BackLink } from "../../../components/Buttons/BackLink";
+import { NextStepButton } from "../../../components/Buttons/NextStepButton";
+import { DocumentUpload } from "./DocumentUpload";
+import { SectionTitle } from "../../../components/SectionTitle";
+import { CompanyDetails } from "./CompanyDetails";
 
 export const CompanyInfo = ({
-  fullName,
-  companyName,
-  activeStep,
-  availableSteps,
-  isSendingProspect,
   isComeFromROScreens,
   isAllStepsCompleted,
   isLoading,
-  handleClickNextStep,
-  handleContinue,
-  createFormChangeHandler,
-  createSetStepHandler,
-  kycAnnexureDetails
+  handleClickNextStep
 }) => {
   const classes = useStyles();
 
   return (
     <>
-      <h2 className={classes.pageTitle}>Tell Us about Your Company</h2>
-      <p className={classes.username}>Welcome, {fullName}!</p>
-      <p className={cx(classes.sectionTitleIndent, classes.username)}>
-        Now that we know each other, we want to know a bit more about your company.
-      </p>
-
-      <FormCard
-        content={
-          <>
-            <div className={classes.title}>
-              {activeStep !== STEP_1 ? companyName : "Company Name"}
-            </div>
-            {isSendingProspect && <StatusLoader />}
-          </>
-        }
-        defaultAvatarIcon={companyInfoIcon}
-      >
-        {companyInfoSteps.map(item => (
-          <StepComponent
-            key={item.step}
-            title={item.title}
-            subTitle={item.infoTitle}
-            isActiveStep={activeStep === item.step}
-            isFilled={availableSteps.some(
-              step => step.step === item.step && step.status === STEP_STATUS.COMPLETED
-            )}
-            handleClick={createSetStepHandler(item.step)}
-            handleContinue={handleContinue(item.eventName)}
-            createFormChangeHandler={createFormChangeHandler}
-            companyName={companyName}
-            kycAnnexureDetails={kycAnnexureDetails}
-            stepForm={item.component}
-          />
-        ))}
-      </FormCard>
+      <h2 className={classes.pageTitle}>Tell us about your company</h2>
+      <p className={classes.subTitle}>This will help us get your account set up properly</p>
+      <div>
+        <SectionTitle title={"Upload company documents"} classes={{ wrapper: classes.title }} />
+        <DocumentUpload />
+      </div>
+      <Divider className={classes.divider} />
+      <div>
+        <SectionTitle title={"Company details"} classes={{ wrapper: classes.title }} />
+        <CompanyDetails />
+      </div>
+      <Divider className={classes.divider} />
 
       <div className="linkContainer">
         {isComeFromROScreens && <BackLink path={routes.searchProspect} />}

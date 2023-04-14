@@ -15,7 +15,7 @@ import { MAX_ATTEMPT_ALLOWED } from "./constants";
 import { Form } from "./components/Form";
 import { OtpChannel } from "../../constants";
 
-export const Otp = ({ redirectRoute, otpType }) => {
+export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   const dispatch = useDispatch();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = useSelector(getOtp);
   const applicantInfo = useSelector(getApplicantInfo);
@@ -35,6 +35,10 @@ export const Otp = ({ redirectRoute, otpType }) => {
     if (isVerified) {
       if (otpType === OtpChannel.Sms) {
         dispatch(smsOtpVerified());
+        const otpData = { ...applicantInfo };
+        otpData.action = "generate";
+        otpData.mode = OtpChannel.Email;
+        dispatch(generateOtpCode(otpData));
       }
       pushHistory(redirectRoute, true);
     }
@@ -55,17 +59,24 @@ export const Otp = ({ redirectRoute, otpType }) => {
       if (loginAttempt < MAX_ATTEMPT_ALLOWED) {
         const otpData = { ...applicantInfo };
         otpData.action = "resend";
+        otpData.mode = otpType;
         dispatch(generateOtpCode(otpData));
       }
       setLoginAttempt(loginAttempt + 1);
     }
   }, [isGenerating, loginAttempt, dispatch, applicantInfo, resetOtpForm]);
 
-  const submitForm = useCallback(() => dispatch(verifyOtp(code.join(""))), [dispatch, code]);
+  const submitForm = useCallback(
+    () => dispatch(verifyOtp({ code: code.join(""), mode: otpType })),
+    [dispatch, code]
+  );
 
   return (
     <Form
+      info={info}
+      title={title}
       otpType={otpType}
+      changeText={changeText}
       applicantInfo={applicantInfo}
       attempts={attempts}
       loginAttempt={loginAttempt}

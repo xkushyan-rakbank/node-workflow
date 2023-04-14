@@ -16,13 +16,14 @@ export const generateOtpCode = payload => ({
     email: payload.email,
     countryCode: payload.countryCode,
     mobileNo: payload.mobileNo,
-    action: payload.action
+    action: payload.action,
+    mode: payload.mode
   }
 });
 
-export const verifyOtp = code => ({
+export const verifyOtp = data => ({
   type: VERIFY_OTP,
-  payload: code
+  payload: data
 });
 
 export const setOtpPendingRequest = payload => ({
@@ -63,6 +64,7 @@ export const generateOtpCodePromisify = payload => ({
     email: payload.email,
     countryCode: payload.countryCode,
     mobileNo: payload.mobileNo,
-    action: payload.action
+    action: payload.action,
+    mode: payload.mode
   }
 });

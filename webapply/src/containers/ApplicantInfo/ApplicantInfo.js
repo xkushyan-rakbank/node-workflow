@@ -1,12 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE } from "../../constants";
+import {
+  formStepper,
+  CONVENTIONAL,
+  ISLAMIC,
+  CREAT_PROSPECT_KEYS,
+  UAE_CODE,
+  Personas
+} from "../../constants";
 import routes from "../../routes";
+import { updateProspect } from "../../store/actions/appConfig";
 
 //ro-assist-brd3-16
 const useQuery = () => {
@@ -30,6 +39,7 @@ export const ApplicantInfoContainer = ({
   prospect
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
   const query = useQuery();
   useFormNavigation([false, false, formStepper]);
@@ -87,7 +97,19 @@ export const ApplicantInfoContainer = ({
           }
         })
         .then(
-          () =>
+          () => {
+            const { companyFullName, persona } = values;
+            const selectedPersona = Personas[persona];
+            dispatch(
+              updateProspect({
+                "prospect.organizationInfo.companyName": companyFullName,
+                "prospect.organizationInfo.shortName":
+                  companyFullName.length < 50 ? companyFullName : "",
+                "prospect.organizationInfo.companyCategory": selectedPersona?.companyCategoryCode
+                  ? selectedPersona.companyCategoryCode
+                  : ""
+              })
+            );
             pushHistory(
               /* istanbul ignore next */
               process.env.REACT_APP_OTP_ENABLE === "N"
@@ -96,7 +118,8 @@ export const ApplicantInfoContainer = ({
                 ? routes.verifyMobileOtp
                 : routes.verifyEmailOtp,
               true
-            ),
+            );
+          },
           () => setIsLoading(false)
         );
     },

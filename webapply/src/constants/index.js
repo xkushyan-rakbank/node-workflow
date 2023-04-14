@@ -334,6 +334,37 @@ export const ACTION_TYPES = {
   submit: "submit"
 };
 
+export const Personas = {
+  SOLE: {
+    key: "SOLE",
+    title: "I’m a sole proprietor",
+    subTitle: "I own this business",
+    url: routes.applicantInfo,
+    urlType: "2.0",
+    companyCategoryCode: "1_SP",
+    order: 1
+  },
+  SLLC: {
+    key: "SLLC",
+    title: "I am sole proprietor with an LLC",
+    subTitle: "I do business as a limited liability company (LLC)",
+    url: routes.applicantInfo,
+    urlType: "2.0",
+    companyCategoryCode: "2_SPLL",
+    order: 2
+  },
+  NOTA: {
+    key: "NOTA",
+    title: "None of the above",
+    subTitle:
+      "I'm a partner in the business, have Power of Attorney, or am applying on behalf of someone else.",
+    url: process.env.REACT_APP_BAU_URL || "/",
+    urlType: "bau",
+    companyCategoryCode: "3_OTHER",
+    order: 3
+  }
+};
+
 export const SOLE_PROPRIETOR = "1";
 
 export const FINAL_QUESTIONS_COMPANY_ID = "finalQuestionsCompany";

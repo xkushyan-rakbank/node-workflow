@@ -6,7 +6,8 @@ import { Icon, ICONS } from "./Icons";
 const useStyles = makeStyles({
   wrapper: {
     display: "flex",
-    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-between",
     fontSize: "12px",
     fontWeight: "normal",
     lineHeight: 1.33,
@@ -35,11 +36,17 @@ IconStyled.defaultProps = {
   alt: "info icon"
 };
 
-const InfoTitleBase = ({ title, iconName = ICONS.info, ...props }) => {
+const InfoTitleBase = ({
+  title,
+  showCharLength,
+  charLength,
+  totalLength,
+  iconName = ICONS.info,
+  ...props
+}) => {
   const classes = useStyles(props);
   return (
     <div className={classes.wrapper}>
-      <IconStyled name={iconName} />
       <div>{title}</div>
     </div>
   );

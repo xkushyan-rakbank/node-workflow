@@ -21,28 +21,30 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   roleSelectionButton: {
-    height: "97px",
+    boxSizing: "border-box",
     [theme.breakpoints.up("sm")]: {
       width: contentWidth
     },
-    border: "1px solid #E6E6E6",
+    border: "1px solid #CCCCCC",
+    background: "#FFFFFF",
     borderRadius: "10px",
-    boxSizing: "border-box",
-    marginTop: "30px",
+    marginTop: "24px",
     display: "flex",
     flexDirection: "row",
-    padding: "20px",
+    padding: "24px",
     alignItems: "center",
+    justifyContent: "space-between",
     cursor: "pointer",
-    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     "&:hover": {
-      boxShadow: "0px 4px 20px 0px rgba(235, 21, 29, 0.2)"
+      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
     }
   },
   buttonText: {
     display: "flex",
     flexDirection: "column",
-    marginLeft: 40
+    [theme.breakpoints.up("sm")]: {
+      width: 450
+    }
   },
   title: {
     fontSize: 20,
@@ -59,17 +61,6 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       fontSize: 10
     }
-  },
-  avatar: {
-    width: "56px",
-    height: "53px",
-    [theme.breakpoints.only("xs")]: {
-      width: 20,
-      height: 20,
-      minWidth: 20
-    },
-    background: "#C4C4C4",
-    borderRadius: "25px"
   },
   btnContainer: {
     marginTop: "60px"
