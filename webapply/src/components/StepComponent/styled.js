@@ -14,11 +14,6 @@ export const useStyles = makeStyles({
       width: "4px"
     }
   },
-  stepTitleWrapper: {
-    padding: "13px 20px",
-    borderTop: "1px solid rgba(230, 230, 230, 0.5)",
-    cursor: "pointer"
-  },
   linkTitle: {
     padding: 0
   },
@@ -38,5 +33,8 @@ export const useStyles = makeStyles({
   },
   formWrapper: {
     padding: "0 20px"
+  },
+  divider: {
+    borderTop: "1px solid rgba(230, 230, 230, 0.5)"
   }
 });

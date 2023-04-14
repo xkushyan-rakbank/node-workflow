@@ -1,1 +1,0 @@
-export { Industry } from "./Industry";

@@ -27,6 +27,8 @@ const InputBase = ({
   InputProps,
   ErrorMessageComponent = ErrorMessage,
   isLemnisk = false,
+  totalLength,
+  showCharLength = false,
   lemniskCall = value => {},
   fieldDescription,
   ...props
@@ -77,7 +79,14 @@ const InputBase = ({
         <mark className={classes.iePlaceholder}>{placeholder}</mark>
       )}
 
-      {infoTitle && <InfoTitle title={infoTitle} />}
+      {infoTitle && (
+        <InfoTitle
+          title={infoTitle}
+          showCharLength={showCharLength}
+          charLength={field.value.length}
+          totalLength={totalLength}
+        />
+      )}
 
       {fieldDescription && (
         <FieldDescription
