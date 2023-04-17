@@ -73,7 +73,7 @@ export const Form = ({
                     [classes.linkDisabled]: hasMaxAttemptsError
                   })}
                 >
-                  Resent OTP
+                  Resend OTP
                 </span>
               </span>
             </div>
