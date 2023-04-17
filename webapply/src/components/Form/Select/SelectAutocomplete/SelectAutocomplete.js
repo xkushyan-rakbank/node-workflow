@@ -7,6 +7,7 @@ import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
 import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
 import { areEqualFieldProps } from "../../utils";
 import { useStyles, customStyles } from "./styled";
+import { InfoTitle } from "../../../InfoTitle";
 
 const components = {
   Control,
@@ -22,6 +23,7 @@ const SelectAutocompleteBase = ({
   label,
   shrink,
   options,
+  infoTitle,
   field: { onBlur, ...field },
   form: { errors, touched, setFieldValue, setFieldTouched },
   multiple = false,
@@ -90,6 +92,7 @@ const SelectAutocompleteBase = ({
           getOptionLabel={extractLabel}
         />
       </ContexualHelp>
+      {infoTitle && <InfoTitle title={infoTitle} />}
       {isError && <ErrorMessage error={errorMessage} />}
     </FormControl>
   );
