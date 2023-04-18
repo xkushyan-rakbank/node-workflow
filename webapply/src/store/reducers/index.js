@@ -14,6 +14,7 @@ import uploadDocuments from "./uploadDocuments";
 import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
 import agentFeatures from "./agentFeatures";
+import inputFieldBehaviours from "./inputFieldBehaviours";
 
 const reducers = history =>
   combineReducers({
@@ -31,7 +32,8 @@ const reducers = history =>
     uploadDocuments,
     completedSteps,
     accountNumbers,
-    agentFeatures
+    agentFeatures,
+    inputFieldBehaviours
   });
 
 export default reducers;

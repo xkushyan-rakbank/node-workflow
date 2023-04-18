@@ -12,6 +12,7 @@ import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
 import completedSteps from "./completedSteps";
 import agentFeatures from "./agentFeatures";
+import decisionsSaga from "./decisions";
 
 export default function*() {
   yield all([
@@ -26,6 +27,7 @@ export default function*() {
     fork(stakeholders),
     fork(completedSteps),
     fork(screenProspect),
-    fork(agentFeatures)
+    fork(agentFeatures),
+    fork(decisionsSaga)
   ]);
 }

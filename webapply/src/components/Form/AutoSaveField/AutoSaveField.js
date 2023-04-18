@@ -8,6 +8,7 @@ import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
 import { getDatalist } from "../../../store/selectors/appConfig";
 import { OthersOption } from "../../../constants/options";
+import useDecisions from "../../../utils/useDecisions";
 
 export const AutoSaveField = ({
   name,
@@ -39,7 +40,7 @@ export const AutoSaveField = ({
     !isLoadDefaultValueFromStore
   );
   const timer = useRef(null);
-
+  const { visible, enabled, makeDecisions } = useDecisions(path);
   useEffect(() => {
     if (!isLoadedDefaultValueFromStore && path) {
       const value = get(appConfig, path);
@@ -98,5 +99,15 @@ export const AutoSaveField = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path, datalistId, filterOptions, filterOptionsDeps]);
 
-  return <Field name={name} options={options} {...rest} />;
+  const handleChange = async e => {
+    const value = datalistId ? e : e.target.value;
+    setFieldValue(name, value);
+    makeDecisions && makeDecisions(value);
+  };
+
+  return (
+    visible && (
+      <Field onChange={handleChange} disabled={!enabled} name={name} options={options} {...rest} />
+    )
+  );
 };
