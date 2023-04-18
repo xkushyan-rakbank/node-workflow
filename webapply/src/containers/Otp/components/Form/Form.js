@@ -82,7 +82,7 @@ export const Form = ({
               <SubmitButton
                 disabled={!isValid || isPending || isGenerating}
                 justify="flex-end"
-                label={isPending ? "Verify..." : "Next Step"}
+                label={"Next"}
                 submitButtonClassName={classes.submitButton}
               />
             </div>

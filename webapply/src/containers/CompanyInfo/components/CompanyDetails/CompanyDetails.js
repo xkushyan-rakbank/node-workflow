@@ -19,7 +19,7 @@ export const CompanyDetails = () => {
         }}
       />
       <Field
-        name="companyShortName"
+        name="shortName"
         label="Shortened company name"
         path="prospect.organizationInfo.shortName"
         fieldDescription="To keep things simple, we'll use this shortened name for the account and chequebook.                     "

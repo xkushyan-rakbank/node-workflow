@@ -25,6 +25,7 @@ import {
 } from "../../../utils/getValidationMessage";
 import { NAME_REGEX, NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
+import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -32,9 +33,9 @@ const aplicantInfoSchema = Yup.object({
     .max(100, "Maximum 100 characters allowed")
     .matches(NAME_REGEX, getInvalidMessage("Your Name")),
   companyFullName: Yup.string()
-    .required(getRequiredMessage("Company's full name"))
-    .max(255, "Maximum 255 characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("Company's full name")),
+    .required(getRequiredMessage("Company’s full name"))
+    // eslint-disable-next-line no-template-curly-in-string
+    .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
   email: Yup.string()
     .required(getRequiredMessage("Email"))
     .max(50, "Maximum 50 characters allowed")
@@ -290,7 +291,7 @@ export const ApplicantInfoComponent = ({
                   }
                   isDisplayLoader={isLoading}
                   justify="flex-end"
-                  label="Next Step"
+                  label="Next"
                 />
               </div>
             </Grid>

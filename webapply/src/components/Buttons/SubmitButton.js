@@ -9,7 +9,6 @@ export const ButtonWrapper = styled(Grid)({
 });
 
 export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
-  width: "192px",
   fontWeight: 600,
   letterSpacing: "normal",
 
