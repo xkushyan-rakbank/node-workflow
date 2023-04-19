@@ -29,9 +29,9 @@ import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
-    .required(getRequiredMessage("Your Name"))
+    .required("Please enter your name")
     .max(100, "Maximum 100 characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("Your Name")),
+    .matches(NAME_REGEX, "Please remove any special character from your name"),
   companyFullName: Yup.string()
     .required(getRequiredMessage("Company’s full name"))
     // eslint-disable-next-line no-template-curly-in-string
@@ -39,11 +39,11 @@ const aplicantInfoSchema = Yup.object({
   email: Yup.string()
     .required(getRequiredMessage("Email"))
     .max(50, "Maximum 50 characters allowed")
-    .email(getInvalidMessage("Email")),
+    .email("Please enter a valid email address without any special characters"),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Mobile Number"))
-    .phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number" }),
+    .phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number", message: "Please enter a valid mobile number" }),
   roCode: Yup.string()
     .max(6, "Maximum 6 characters allowed")
     .matches(NUMBER_REGEX, getROInvalidMessage),

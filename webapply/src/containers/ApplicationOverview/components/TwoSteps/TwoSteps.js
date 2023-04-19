@@ -12,9 +12,10 @@ export const TwoSteps = () => {
   const {
     overview,
     license: License,
-    emiratesId: EmirateId,
+    passport: Passport,
     companyDocuments: CompanyDocuments,
-    passport: Passport
+
+    emiratesId: EmirateId
   } = useIconsByAccount();
 
   return (
@@ -22,33 +23,33 @@ export const TwoSteps = () => {
       {/* //ro-assist header missing issue fix --- removed manual call */}
       <div className={classes.firstGroup}>
         <SectionTitleWithInfo
-          title="Have these ready"
-          info="Before we start, make sure you have these documents at hand"
+          title="Documents"
+          info="Have these documents ready before we get started"
         />
 
         <div className={classes.cardsWrapper}>
           <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
-            <IconCardItem horizontal text="Valid Trade Licence and Constitutional documents ¹">
+            <IconCardItem horizontal text="Valid trade licence and constitutional documents ¹">
               <License alt="trade-license" />
             </IconCardItem>
             <IconCardItem
               horizontal
-              text="Passport and Emirates ID of Shareholders and Signatories ²"
+              text="Passports and Emirates IDs of signatories and stakeholders ²"
             >
-              <Passport alt="passport-visa" />
-            </IconCardItem>
-            <IconCardItem horizontal text="Proof of address of operating location">
               <EmirateId alt="emirates-id" />
             </IconCardItem>
-            <IconCardItem horizontal text="Proof of Income for Shareholders">
+            <IconCardItem horizontal text="Proof of address (operation location)">
+              <Passport alt="passport-visa" />
+            </IconCardItem>
+            <IconCardItem horizontal text="Proof of income for stakeholders">
               <CompanyDocuments alt="company-documents" />
             </IconCardItem>
           </IconCardsContainer>
         </div>
       </div>
       <div className={classes.note}>
-        1. Memorandum of Association / Articles of Association / Partners Agreement / Service
-        Agreement / Share Certificate 2. Emirates ID not required for non-residence shareholder
+        ¹ Memorandum of Association / Articles of Association / Partners Agreement / Service Agreement / Share Certificate<br />
+        ² Emirates ID not required for non-resident stakeholders
       </div>
       <div className={classes.secondGroup}>
         <div className={classes.secondGroupText}>

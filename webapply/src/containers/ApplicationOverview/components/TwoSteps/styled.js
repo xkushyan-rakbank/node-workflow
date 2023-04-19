@@ -45,7 +45,7 @@ export const useStyles = makeStyles(theme => ({
   note: {
     marginBottom: "60px",
     fontSize: "12px",
-    textAlign: "center",
+    textAlign: "left",
     color: "#888888",
     [theme.breakpoints.only("xs")]: {
       marginBottom: "15px"
