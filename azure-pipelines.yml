@@ -42,29 +42,29 @@ jobs:
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building Develop Package'
         enabled: true
-        #condition: contains(variables['build.sourceBranch'], 'develop')
-        condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'refs/heads/release'),ne(variables['Build.SourceBranch'], 'refs/heads/replica'), ne(variables['Build.SourceBranch'], 'refs/heads/master')))
+        condition: contains(variables['build.sourceBranch'], 'refs/heads/bbg2.0/develop')
+        #condition: and(succeeded(), or(ne(variables['Build.SourceBranch'], 'refs/heads/release'),ne(variables['Build.SourceBranch'], 'refs/heads/replica'), ne(variables['Build.SourceBranch'], 'refs/heads/master')))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]release"
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building release Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/release'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/bbg2.0/release'))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]replica"
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building replica Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/replica'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/bbg2.0/replica'))
 
       - bash: |
            echo "##vso[task.setvariable variable=env_to_deploy;]prod"
            echo "##vso[task.setvariable variable=PkgBuild;]True"
         displayName: 'Building Production Package'
         enabled: true
-        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/master'))
+        condition: and(succeeded(),eq(variables['build.sourceBranch'], 'refs/heads/bbg2.0/master'))
 
       - bash: |
           sh set-endpoint-and-recaptcha.sh $(env_to_deploy)
