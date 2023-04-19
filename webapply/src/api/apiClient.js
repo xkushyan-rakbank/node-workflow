@@ -136,3 +136,13 @@ export const createInvite = {
       data
     })
 };
+
+export const decisions = {
+  make: (prospectId, data, headers) =>
+    httpClient.request({
+      url: buildURI("prospectDecisions", prospectId),
+      method: "POST",
+      ...headers,
+      data
+    })
+};

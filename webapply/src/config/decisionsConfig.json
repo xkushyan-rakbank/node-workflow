@@ -1,0 +1,17 @@
+{
+    "decisionTriggerFields": {
+        "prospect.organizationInfo.companyName": {
+            "dependantFields": ["prospect.organizationInfo.companyCategory"]
+        },
+        "organizationInfo.companyCategory": {
+            "dependantFields": []
+        },
+        "organizationInfo.": {
+            "dependantFields": []
+        }
+    },
+    "decisionDrivenFields": {
+        "prospect.organizationInfo.companyName": {"showByDefault": true},
+        "prospect.organizationInfo.shortName": {"showByDefault": true}
+    }
+}

@@ -41,7 +41,7 @@ export const CompanyInfo = ({
 
   const initialValues = {
     companyName: "",
-    companyShortName: "",
+    shortName: "",
     companyCategory: "",
     industries:
       get(industries, "[0].industry[0].length", 0) > 0
@@ -64,7 +64,7 @@ export const CompanyInfo = ({
         .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name"))
         .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
-      companyShortName: Yup.string()
+      shortName: Yup.string()
         .required(getRequiredMessage("Company short name"))
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_COMPANY_SHORT_NAME_LENGTH, "Maximum ${max} characters allowed")
@@ -115,7 +115,7 @@ export const CompanyInfo = ({
               {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
               <NextStepButton
                 justify="flex-end"
-                label="Next Step"
+                label="Next"
                 disabled={!isAllStepsCompleted}
                 isDisplayLoader={isLoading}
                 handleClick={handleClickNextStep}
