@@ -29,7 +29,7 @@ import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
-    .required(getRequiredMessage("Your Name"))
+    .required("Please enter your name")
     .max(100, "Maximum 100 characters allowed")
     .matches(NAME_REGEX, "Please remove any special character from your name"),
   companyFullName: Yup.string()

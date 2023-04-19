@@ -44,18 +44,19 @@ export const addPhoneNoValidationToYup = () => {
   Yup.addMethod(Yup.string, "phoneNo", function({
     fieldName = "Mobile Number",
     codeFieldName = "countryCode",
-    isLandline = false
+    isLandline = false,
+    message
   }) {
     return this.when(codeFieldName, {
       is: countryCode => countryCode === UAE_CODE,
       then: Yup.string().matches(
         isLandline ? UAE_LANDLINE_PHONE_REGEX : UAE_MOBILE_PHONE_REGEX,
-        getInvalidMessage(fieldName)
+        message || getInvalidMessage(fieldName),
       ),
       otherwise: Yup.string()
-        .matches(NUMBER_REGEX, getInvalidMessage(fieldName))
-        .min(MIN_NON_UAE_PHONE_LENGTH, getInvalidMessage(fieldName))
-        .max(MAX_NON_UAE_PHONE_LENGTH, getInvalidMessage(fieldName))
+        .matches(NUMBER_REGEX, message || getInvalidMessage(fieldName))
+        .min(MIN_NON_UAE_PHONE_LENGTH, message || getInvalidMessage(fieldName))
+        .max(MAX_NON_UAE_PHONE_LENGTH, message || getInvalidMessage(fieldName))
     });
   });
 };
