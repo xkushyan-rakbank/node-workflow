@@ -43,6 +43,8 @@ export const CompanyInfo = ({
     companyName: "",
     shortName: "",
     companyCategory: "",
+    tradeLicenseOrCOI: "",
+    moa: "",
     industries:
       get(industries, "[0].industry[0].length", 0) > 0
         ? industries[0].industry.map((item, index) => ({
@@ -91,14 +93,14 @@ export const CompanyInfo = ({
         validationSchema={companyDetailsSchema}
         validateOnChange={false}
       >
-        {({ values }) => (
+        {props => (
           <Form>
             <div>
               <SectionTitle
                 title={"Upload company documents"}
                 classes={{ wrapper: classes.title }}
               />
-              <DocumentUpload />
+              <DocumentUpload {...props} />
             </div>
             <Divider className={classes.divider} />
             <div>
@@ -108,7 +110,7 @@ export const CompanyInfo = ({
             <Divider className={classes.divider} />
             <div>
               <SectionTitle title={"Industry"} classes={{ wrapper: classes.title }} />
-              <Industry values={values} datalistId={datalistId} />
+              <Industry datalistId={datalistId} {...props} />
             </div>
             <Divider className={classes.divider} />
             <div className="linkContainer">

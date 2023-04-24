@@ -555,3 +555,18 @@ export const DEFAULT_REFERRAL_NAME = "Direct";
 export const USER_IDLE_TIMEOUT = (process.env.REACT_APP_SESSION_TIMEOUT - 1) * 60 * 1000;
 export const EXPIRY_INTERVAL = 60;
 export const UPLOAD = "Upload ";
+
+export const MOA_ACCEPTED_FILE_TYPES = {
+  "image/png": [".png"],
+  "image/jpeg": [".jpeg"],
+  "application/pdf": ["application/pdf"]
+};
+
+export const TL_ACCEPTED_FILE_TYPES = {
+  "image/png": [".png"],
+  "image/jpeg": [".jpeg"],
+  "application/pdf": ["application/pdf"]
+};
+
+export const MOA_FILE_SIZE = { minSize: "10240", maxSize: "5242880" };
+export const TL_COI_FILE_SIZE = { minSize: "10240", maxSize: "5242880" };

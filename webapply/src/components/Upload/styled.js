@@ -10,7 +10,7 @@ export const useStyles = makeStyles(theme => ({
     borderadius: "10px",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: "5px"
+    cursor: "pointer"
   },
   actionButton: {
     width: "105px",
@@ -39,5 +39,23 @@ export const useStyles = makeStyles(theme => ({
   subcontent: {
     fontSize: "12px",
     color: "#757575"
+  },
+  row: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  success: {
+    color: "#157947",
+    fontWeight: 500
+  },
+  error: {
+    color: "#8D0C10"
+  },
+  fieldDescription: {
+    fontSize: "12px",
+    fontWeight: "400",
+    color: "#757575",
+    marginBottom: "8px"
   }
 }));
