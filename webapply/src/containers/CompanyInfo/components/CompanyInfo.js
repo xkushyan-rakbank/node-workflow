@@ -21,8 +21,8 @@ import { Industry } from "./Industry";
 import { getIsIslamicBanking, getOrgKYCDetails } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
-import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../utils/validation";
-import { MAX_COMPANY_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
+import { checkIsTrimmed } from "../../../utils/validation";
+import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
 
 export const CompanyInfo = ({
   isComeFromROScreens,
@@ -63,15 +63,12 @@ export const CompanyInfo = ({
       companyName: Yup.string()
         .required(getRequiredMessage("Company name"))
         // eslint-disable-next-line no-template-curly-in-string
-        .max(MAX_COMPANY_NAME_LENGTH, "Maximum ${max} characters allowed")
-        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company name"))
-        .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
+        .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
       shortName: Yup.string()
         .required(getRequiredMessage("Company short name"))
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_COMPANY_SHORT_NAME_LENGTH, "Maximum ${max} characters allowed")
-        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Company short name"))
-        .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
+        .test("space validation", getInvalidMessage("Company short name"), checkIsTrimmed),
       companyCategory: Yup.string().required(getRequiredMessage("Company category")),
       industries: Yup.array().of(
         Yup.object().shape({
