@@ -15,7 +15,7 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-const InputBase = ({ onChange, code }, ref) => {
+const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
   const classes = useStyles();
 
   useImperativeHandle(ref, () => ({
@@ -27,7 +27,7 @@ const InputBase = ({ onChange, code }, ref) => {
   const handleChange = useCallback(
     event => {
       const { value, name } = event.target;
-      if (!value || isNumeric(value)) {
+      if (!value || (isNumeric(value) && value < 10)) {
         const newCodeIndex = parseInt(name, 10);
         const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
 
@@ -63,7 +63,7 @@ const InputBase = ({ onChange, code }, ref) => {
     <Grid key={index} className={classes.squareInput}>
       <TextField
         autoFocus={index === 0}
-        type="text"
+        type="number"
         name={`${index}`}
         variant="outlined"
         inputProps={{ maxLength: 1, ref: bindNodeRef(index) }}

@@ -1,34 +1,56 @@
-import React from "react";
-import { Button } from "@material-ui/core";
-import { useStyles } from "./styled";
-import { ReactComponent as FileIcon } from "../../../../assets/icons/fileUpload.svg";
+import React, { useCallback } from "react";
+import { Field } from "formik";
 
-export const DocumentUpload = () => {
-  const classes = useStyles();
+import { Upload } from "../../../../components/Upload";
+import {
+  MOA_ACCEPTED_FILE_TYPES,
+  MOA_FILE_SIZE,
+  TL_ACCEPTED_FILE_TYPES,
+  TL_COI_FILE_SIZE
+} from "../../../../constants";
+
+export const DocumentUpload = ({ values, setFieldValue }) => {
+  const handleDropFile = useCallback((acceptedFiles, name) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      setFieldValue(
+        name,
+        Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })
+      );
+    }
+  }, []);
+
   return (
     <>
-      <div className={classes.uplaodContainer}>
-        <div className={classes.main}>
-          <FileIcon className={classes.fileIcon} height="44" width="40" alt="companyIconSvg" />
-          <div className={classes.contentContainer}>
-            <div className={classes.content}>
-              Drag and drop file here or upload from your computer
-            </div>
-            <div className={classes.subcontent}>
-              Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum
-            </div>
-          </div>
-        </div>
-
-        <Button
-          color="primary"
-          variant="contained"
-          component="label"
-          className={classes.actionButton}
-        >
-          Upload
-          <input type="file" hidden />
-        </Button>
+      <Field
+        name="tradeLicenseOrCOI"
+        path="prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
+        type="file"
+        fieldDescription="Trade licence/Certificate of Incorporation"
+        helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
+        accept={TL_ACCEPTED_FILE_TYPES}
+        fileSize={TL_COI_FILE_SIZE}
+        onDrop={acceptedFile => handleDropFile(acceptedFile, "tradeLicenseOrCOI")}
+        file={values.tradeLicenseOrCOI}
+        onDelete={() => setFieldValue("tradeLicenseOrCOI", "")}
+        component={Upload}
+      />
+      <div style={{ marginTop: "21px" }}>
+        <Field
+          name="moa"
+          path="prospect.prospectDocuments.companyDocument.moa"
+          fieldDescription="Memorandum of Association / Articles of Association / Partners Agreement / Service Agreement / Share Certificate"
+          helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
+          type="file"
+          accept={MOA_ACCEPTED_FILE_TYPES}
+          fileSize={MOA_FILE_SIZE}
+          onDrop={acceptedFile => handleDropFile(acceptedFile, "moa")}
+          file={values.moa}
+          onDelete={() => setFieldValue("moa", "")}
+          component={Upload}
+        />
       </div>
     </>
   );

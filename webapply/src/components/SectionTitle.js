@@ -14,12 +14,12 @@ const useStyles = makeStyles({
   }
 });
 
-export const SectionTitle = ({ title, subTitle, ...props }) => {
+export const SectionTitle = ({ title, subTitle, scrollIntoView = false, ...props }) => {
   const classes = useStyles(props);
   const sectionTitleRef = useRef();
 
   useEffect(() => {
-    sectionTitleRef.current.scrollIntoView();
+    scrollIntoView && sectionTitleRef.current.scrollIntoView();
   }, []);
 
   return (
