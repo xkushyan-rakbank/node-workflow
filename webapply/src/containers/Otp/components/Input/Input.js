@@ -15,7 +15,7 @@ const bindNodeRef = index => node => {
   inputRefs[index] = node;
 };
 
-const InputBase = ({ onChange, code }, ref) => {
+const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
   const classes = useStyles();
 
   useImperativeHandle(ref, () => ({
@@ -66,7 +66,7 @@ const InputBase = ({ onChange, code }, ref) => {
         type="text"
         name={`${index}`}
         variant="outlined"
-        inputProps={{ maxLength: 1, ref: bindNodeRef(index) }}
+        inputProps={{ maxLength: 1, ref: bindNodeRef(index), ...inputProps }}
         onFocus={handleInputFocus}
         onChange={handleChange}
         onKeyUp={handleKeyUp}
