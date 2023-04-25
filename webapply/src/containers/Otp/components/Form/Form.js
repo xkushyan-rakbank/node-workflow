@@ -49,7 +49,12 @@ export const Form = ({
           <FormikForm className={classes.form}>
             <div>
               <Grid container item xs={12} direction="row" justify="flex-start">
-                <Input code={code} onChange={setCode} ref={otpRef} />
+                <Input
+                  code={code}
+                  onChange={setCode}
+                  ref={otpRef}
+                  inputProps={{ type: "number" }}
+                />
               </Grid>
 
               {!hasMaxAttemptsError && verificationError && (
