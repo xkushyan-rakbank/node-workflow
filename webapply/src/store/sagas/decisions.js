@@ -36,7 +36,7 @@ export function* makeDecisions({ payload }) {
     const headers = yield select(getAuthorizationHeader);
     const { onValuesChanged, inputFields: decision_input } = payload;
     //api call
-    const response = yield call(decisionsAPIClient.make, prospectId, { decision_input }, headers);
+    const response = yield call(decisionsAPIClient.make, prospectId, decision_input, headers);
     let { decision_output: rulesOutput } = response.data;
 
     const changedFieldValues = {};

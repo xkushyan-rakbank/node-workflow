@@ -46,7 +46,7 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
         dispatch(
           triggerDecisions({
             onValuesChanged: changedValues => {
-              console.log(changedValues);
+              // console.log(changedValues);
             },
             inputFields: {
               decision_input: [
