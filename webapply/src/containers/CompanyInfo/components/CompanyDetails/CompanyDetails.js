@@ -21,7 +21,7 @@ export const CompanyDetails = ({ setFieldValue }) => {
     setLoadedPersona(applicantInfo.persona);
   }, []);
 
-  function makeDecisionCall(value) {
+  function triggerDecisionsForCompanyCategory(value) {
     dispatch(
       triggerDecisions({
         onValuesChanged: changedValues => {},
@@ -42,7 +42,7 @@ export const CompanyDetails = ({ setFieldValue }) => {
     if (loadedPersona === "SOLE") {
       if (value.trim().match(REGEX_LLC_PATTERN)) {
         setFieldValue("companyCategory", "2_SPLL");
-        makeDecisionCall("2_SPLL");
+        triggerDecisionsForCompanyCategory("2_SPLL");
         dispatch(
           updateProspect({
             "prospect.organizationInfo.companyCategory": "SLLC"
@@ -50,7 +50,7 @@ export const CompanyDetails = ({ setFieldValue }) => {
         );
       } else {
         setFieldValue("companyCategory", "1_SP");
-        makeDecisionCall("1_SP");
+        triggerDecisionsForCompanyCategory("1_SP");
         dispatch(
           updateProspect({
             "prospect.organizationInfo.companyCategory": "SOLE"
@@ -66,7 +66,6 @@ export const CompanyDetails = ({ setFieldValue }) => {
         name="companyName"
         label="Company’s full name"
         path="prospect.organizationInfo.companyName"
-        contextualHelpText="The company name given here will appear in all Bank records including Cheque Books. If the Company's name in Trade License is more than 50 characters long (including space), then an abbreviation can be used. Example If the company name is 'Airlift Global Automation and Heavy Equipment Rental LLC', mention the company name as 'Airlift Global Automation H E R'"
         fieldDescription="This should be the same as shown on your trade licence.                            "
         component={Input}
         onBlur={handleBlur}
