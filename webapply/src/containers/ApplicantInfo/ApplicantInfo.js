@@ -104,7 +104,7 @@ export const ApplicantInfoContainer = ({
               updateProspect({
                 "prospect.organizationInfo.companyName": companyFullName,
                 "prospect.organizationInfo.shortName":
-                  companyFullName.length <= 50 ? companyFullName : "",
+                  companyFullName.length <= 50 ? companyFullName.trim() : "",
                 "prospect.organizationInfo.companyCategory": selectedPersona?.companyCategoryCode
                   ? selectedPersona.companyCategoryCode
                   : ""
