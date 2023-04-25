@@ -1,17 +1,19 @@
 {
     "decisionTriggerFields": {
-        "prospect.organizationInfo.companyName": {
-            "dependantFields": ["prospect.organizationInfo.companyCategory"]
-        },
-        "organizationInfo.companyCategory": {
+        "prospect.applicantInfo.persona":{
             "dependantFields": []
         },
-        "organizationInfo.": {
+        "prospect.organizationInfo.companyCategory": {
+            "dependantFields": []
+        },
+        "prospect.organizationInfo.licenseIssuingAuthority": {
             "dependantFields": []
         }
     },
     "decisionDrivenFields": {
-        "prospect.organizationInfo.companyName": {"showByDefault": true},
-        "prospect.organizationInfo.shortName": {"showByDefault": true}
+        "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": {"showByDefault": true},
+        "prospect.organizationInfo.countryOfIncorporation": {"showByDefault": true},
+        "prospect.organizationInfo.licenseOrCOIExpiryDate": {"showByDefault": true},
+        "prospect.prospectDocuments.companyDocument.moa": {"showByDefault": false}
     }
 }

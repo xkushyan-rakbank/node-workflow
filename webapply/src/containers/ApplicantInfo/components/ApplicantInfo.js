@@ -43,7 +43,11 @@ const aplicantInfoSchema = Yup.object({
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Mobile Number"))
-    .phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number", message: "Please enter a valid mobile number" }),
+    .phoneNo({
+      codeFieldName: "countryCode",
+      fieldName: "Mobile Number",
+      message: "Please enter a valid mobile number"
+    }),
   roCode: Yup.string()
     .max(6, "Maximum 6 characters allowed")
     .matches(NUMBER_REGEX, getROInvalidMessage),

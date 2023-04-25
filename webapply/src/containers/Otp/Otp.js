@@ -14,6 +14,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { MAX_ATTEMPT_ALLOWED } from "./constants";
 import { Form } from "./components/Form";
 import { OtpChannel } from "../../constants";
+import { triggerDecisions } from "../../store/actions/decisions";
 
 export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
     otpRef.current.resetFocus();
   }, [setCode]);
 
+  //if user is verified
   useEffect(() => {
     if (isVerified) {
       if (otpType === OtpChannel.Sms) {
@@ -40,6 +42,24 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
         otpData.mode = OtpChannel.Email;
         dispatch(generateOtpCode(otpData));
       }
+      if (otpType === OtpChannel.Email) {
+        dispatch(
+          triggerDecisions({
+            onValuesChanged: changedValues => {
+              console.log(changedValues);
+            },
+            inputFields: {
+              decision_input: [
+                {
+                  input_key: "prospect.applicantInfo.persona",
+                  input_value: applicantInfo.persona
+                }
+              ]
+            }
+          })
+        );
+      }
+
       pushHistory(redirectRoute, true);
     }
   }, [isVerified, pushHistory, redirectRoute]);
