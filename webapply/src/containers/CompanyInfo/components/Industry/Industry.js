@@ -36,12 +36,6 @@ export const Industry = ({ datalistId, values }) => {
                   }}
                   shrink={true}
                   tabIndex="0"
-                  contextualHelpText={
-                    <>
-                      This should be selected as per the most relevant business / commercial /
-                      licensed activity mentioned in the trade license
-                    </>
-                  }
                   infoTitle="This should be the same as shown on your trade licence."
                 />
                 <Field
@@ -82,12 +76,6 @@ export const Industry = ({ datalistId, values }) => {
                   }}
                   disabled={!item.industry}
                   tabIndex="0"
-                  contextualHelpText={
-                    <>
-                      This should be selected as per the most relevant business / commercial /
-                      licensed activity mentioned in the trade license
-                    </>
-                  }
                   infoTitle="This should accurately reflect the products or services you deal in. If there isn't an exact match, select the next closest one."
                 />
               </React.Fragment>
