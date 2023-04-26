@@ -115,6 +115,7 @@ export const CompanyInfo = ({
               <SectionTitle title={"Industry"} classes={{ wrapper: classes.title }} />
               <Industry datalistId={datalistId} {...props} />
             </div>
+            <Divider className={classes.divider} />
             <div>
               <SectionTitle
                 title={"Trade licence information"}
@@ -122,7 +123,6 @@ export const CompanyInfo = ({
               />
               <TradeLicenceInformation {...props} />
             </div>
-            <Divider className={classes.divider} />
             <div className="linkContainer">
               {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
               <NextStepButton
