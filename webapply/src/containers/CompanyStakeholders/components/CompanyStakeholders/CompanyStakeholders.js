@@ -10,6 +10,8 @@ import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/Uplo
 import { useStyles } from "./styled";
 
 export const CompanyStakeholdersComponent = ({
+  fullName,
+  companyCategory,
   goToFinalQuestions,
   isLoading,
   isDisableNextStep
@@ -40,7 +42,7 @@ export const CompanyStakeholdersComponent = ({
 
       <div className={classes.horizontalLine} />
 
-      <StakeholdersDetail name={"Anand Sharma"} />
+      <StakeholdersDetail name={fullName} companyCategory={companyCategory}/>
 
       <div className={classes.uploadComponent}>
         <UploadFileWrapper

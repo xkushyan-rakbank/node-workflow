@@ -18,9 +18,12 @@ import {
   deleteStakeholder
 } from "../../store/actions/stakeholders";
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+import { getApplicantFullName, getOrganizationInfo } from "../../store/selectors/appConfig";
 import { CompanyStakeholdersContainer } from "./CompanyStakeholders";
 
 const mapStateToProps = state => ({
+  fullName: getApplicantFullName(state),
+  companyCategory: getOrganizationInfo(state).companyCategory,
   isSendingProspect: getIsSendingProspect(state),
   stakeholdersIds: getStakeholdersIds(state),
   stakeholders: getStakeholders(state),
