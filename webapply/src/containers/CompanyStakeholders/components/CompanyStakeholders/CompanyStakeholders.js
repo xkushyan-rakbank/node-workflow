@@ -1,31 +1,73 @@
 import React from "react";
-import { ContexualHelp, ErrorMessage } from "../../../../components/Notifications";
-import { Icon, ICONS } from "../../../../components/Icons";
-import { StakeholderStepper } from "../../StakeholderStepper";
-import { AddStakeholderButton } from "../AddStakeholderButton/AddStakeholderButton";
+import { Button } from "@material-ui/core";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
-
+import StakeholdersDetail from "./StakeholdersDetail";
+import { ReactComponent as VerifyMobileIcon } from "../../../../assets/icons/Vector.svg";
+import { FaceRecognition } from "../../../../components/FaceRecognition/FaceRecognition";
+import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/UploadFileWrapper";
 import { useStyles } from "./styled";
 
 export const CompanyStakeholdersComponent = ({
-  stakeholders,
-  editableStakeholder,
-  handleDeleteStakeholder,
-  isSendingProspect,
-  addNewStakeholder,
-  percentage,
   goToFinalQuestions,
   isLoading,
-  isDisableNextStep,
-  isSignatoryErrorDisplayed,
-  isLowPercentageErrorDisplayed
+  isDisableNextStep
 }) => {
   const classes = useStyles();
   return (
     <>
-      <h2>Add your company’s stakeholders</h2>
+      <h3 className={classes.mainTitle}>Now let's talk about you</h3>
+      <p className={classes.subTitle}>We have to verify your identity to check it's really you</p>
+      <div className={classes.verifyMobileWrapper}>
+        <div className={classes.descriptionWrapper}>
+          <VerifyMobileIcon
+            alt="Continue verification on mobile"
+            className={classes.verifyMobileIcon}
+          />
+          <div>
+            <h6>Continue verification on mobile browser</h6>
+            <p>
+              You can do this if you have documents on your phone or want to use your phone's camera
+              to scan your face.
+            </p>
+          </div>
+        </div>
+        <Button variant="outlined" className={classes.continueBtn}>Continue on mobile</Button>
+      </div>
+
+      <div className={classes.horizontalLine} />
+
+      <StakeholdersDetail name={"Anand Sharma"} />
+
+      <div className={classes.uploadComponent}>
+        <UploadFileWrapper
+          fieldDescription="Emirates ID (both sides)"
+          helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
+        />
+      </div>
+
+      <div className={classes.uploadComponent}>
+        <UploadFileWrapper
+          fieldDescription="Passport (photo page)"
+          helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
+          isStepActive={false}
+          disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
+        />
+      </div>
+
+      <div className={classes.uploadComponent}>
+        <FaceRecognition
+          fieldDescription="Scan your face"
+          helperText="Confirm that your face and photo match via your camera."
+          isStepActive={false}
+          disabledReason={
+            "You'll be able to do this step after uploading your Emirates ID and passport."
+          }
+        />
+      </div>
+
+      {/* <h2>Add your company’s stakeholders</h2>
       <p className="formDescription">
         Now we need to know about the key people in your company. This includes shareholders,
         partners, signatories/Power of Attorney. Check our guide below to see which one applies to
@@ -77,7 +119,7 @@ export const CompanyStakeholdersComponent = ({
           error={`Shareholders ${percentage}% is less than 100%, either add a new stakeholder
           or edit the shareholding % for the added stakeholders.`}
         />
-      )}
+      )} */}
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
 
@@ -85,7 +127,7 @@ export const CompanyStakeholdersComponent = ({
           handleClick={goToFinalQuestions}
           isDisplayLoader={isLoading}
           disabled={isDisableNextStep}
-          label="Next Step"
+          label="Next"
           justify="flex-end"
         />
       </div>
