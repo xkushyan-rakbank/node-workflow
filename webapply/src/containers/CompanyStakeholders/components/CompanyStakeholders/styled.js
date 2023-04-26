@@ -7,7 +7,8 @@ export const useStyles = makeStyles({
     lineHeight: "36px",
     fontWeight: 500,
     margin: 0,
-    marginBottom: "8px"
+    marginBottom: "8px",
+    marginTop: "25px"
   },
   subTitle: {
     fontWeight: 400,

@@ -20,7 +20,7 @@ export const UploadFileWrapper = ({
       {!isStepActive && <div className={classes.disabledReason}>{disabledReason}</div>}
       <div className={cx(classes.uplaodContainer, !isStepActive ? classes.disableUpload : "")}>
         <div className={classes.contentContainer}>
-          <FileIcon className={classes.fileUploadIcon}  alt="companyIconSvg" />
+          <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
           <div style={{ marginLeft: "20px" }}>
             <div className={classes.content}>
               Drag and drop file here or upload from your computer

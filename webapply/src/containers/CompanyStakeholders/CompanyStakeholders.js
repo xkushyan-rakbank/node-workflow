@@ -30,7 +30,7 @@ export const CompanyStakeholdersContainer = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
-  useLayoutParams(true, true);
+  useLayoutParams(false, true);
   useViewId(true);
 
   useEffect(() => {
