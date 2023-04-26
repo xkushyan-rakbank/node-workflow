@@ -21,11 +21,12 @@ const DatePickerBase = ({
   placeholder = "__/__/____",
   format = "dd/MM/yyyy",
   minDate = new Date(1900, 0, 1),
-  maxDate = new Date(),
+  maxDate = "",
   form: { errors, touched, setFieldValue },
   datePickerProps = {},
   contextualHelpText,
   contextualHelpProps = {},
+  disableFuture = false,
   onChange = value => setFieldValue(field.name, value)
 }) => {
   const errorMessage = getIn(errors, field.name);
@@ -43,7 +44,7 @@ const DatePickerBase = ({
             minDate={minDate}
             maxDate={maxDate}
             disabled={disabled}
-            disableFuture
+            disableFuture={disableFuture}
             margin="normal"
             format={format}
             inputVariant="outlined"
