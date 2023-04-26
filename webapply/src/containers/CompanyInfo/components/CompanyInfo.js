@@ -108,7 +108,7 @@ export const CompanyInfo = ({
             <Divider className={classes.divider} />
             <div>
               <SectionTitle title={"Company details"} classes={{ wrapper: classes.title }} />
-              <CompanyDetails />
+              <CompanyDetails {...props} />
             </div>
             <Divider className={classes.divider} />
             <div>

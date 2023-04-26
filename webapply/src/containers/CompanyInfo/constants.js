@@ -18,3 +18,4 @@ export const blackListedAuthoritiesForUAE = {
   OS: { code: "OS", displayText: "Overseas", key: "OS", subGroup: null, value: "OS" },
   RAKE: { code: "RAKE", displayText: "RAKICC", key: "RAKE", subGroup: null, value: "RAKE" }
 };
+export const REGEX_LLC_PATTERN = /(?:Limited Liability Company)|((?:LLC)|(?:llc)|(?:L L C))$/i;

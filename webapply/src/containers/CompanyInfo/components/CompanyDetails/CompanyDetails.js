@@ -1,10 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
+import {
+  MAX_COMPANY_FULL_NAME_LENGTH,
+  MAX_COMPANY_SHORT_NAME_LENGTH,
+  REGEX_LLC_PATTERN
+} from "../../constants";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { triggerDecisions } from "../../../../store/actions/decisions";
+import { getApplicantInfo } from "../../../../store/selectors/appConfig";
 
-import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../../constants";
+export const CompanyDetails = ({ setFieldValue }) => {
+  const dispatch = useDispatch();
+  const applicantInfo = useSelector(getApplicantInfo);
 
-export const CompanyDetails = () => {
+  const [loadedPersona, setLoadedPersona] = useState(null);
+
+  useEffect(() => {
+    setLoadedPersona(applicantInfo.persona);
+  }, []);
+
+  function triggerDecisionsForCompanyCategory(value) {
+    dispatch(
+      triggerDecisions({
+        onValuesChanged: changedValues => {},
+        inputFields: {
+          decision_input: [
+            {
+              input_key: "prospect.organizationInfo.companyCategory",
+              input_value: value
+            }
+          ]
+        }
+      })
+    );
+  }
+
+  function handleBlur(ev) {
+    const { value } = ev.target;
+    if (loadedPersona === "SOLE") {
+      if (value.trim().match(REGEX_LLC_PATTERN)) {
+        setFieldValue("companyCategory", "2_SPLL");
+        triggerDecisionsForCompanyCategory("2_SPLL");
+        dispatch(
+          updateProspect({
+            "prospect.organizationInfo.companyCategory": "SLLC"
+          })
+        );
+      } else {
+        setFieldValue("companyCategory", "1_SP");
+        triggerDecisionsForCompanyCategory("1_SP");
+        dispatch(
+          updateProspect({
+            "prospect.organizationInfo.companyCategory": "SOLE"
+          })
+        );
+      }
+    }
+  }
+
   return (
     <>
       <Field
@@ -13,8 +68,10 @@ export const CompanyDetails = () => {
         path="prospect.organizationInfo.companyName"
         fieldDescription="This should be the same as shown on your trade licence."
         component={Input}
+        onBlur={handleBlur}
         InputProps={{
-          inputProps: { maxLength: MAX_COMPANY_FULL_NAME_LENGTH, tabIndex: 0 }
+          inputProps: { maxLength: MAX_COMPANY_FULL_NAME_LENGTH, tabIndex: 0 },
+          onBlur: handleBlur
         }}
       />
       <Field
