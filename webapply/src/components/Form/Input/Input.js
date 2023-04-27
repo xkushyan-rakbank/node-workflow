@@ -84,7 +84,7 @@ const InputBase = ({
       {fieldDescription && (
         <FieldDescription
           title={fieldDescription}
-          fieldValueLength={typeof field.value === "string" ? field.value.trim().length : 0}
+          fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
           fieldMaxLength={InputProps.inputProps.maxLength}
         />
       )}
