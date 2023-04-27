@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
@@ -23,7 +23,7 @@ import { getIsIslamicBanking, getOrgKYCDetails } from "../../../store/selectors/
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { checkIsTrimmed } from "../../../utils/validation";
 import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
-import { uploadDocuments } from "../../../store/actions/uploadDocuments";
+import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uploadDocuments";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 
 export const CompanyInfo = ({
@@ -42,6 +42,10 @@ export const CompanyInfo = ({
   const industries = orgDetails.industryMultiSelect || [];
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
+
+  useEffect(() => {
+    dispatch(initDocumentUpload());
+  }, []);
 
   const initialValues = {
     companyName: "",

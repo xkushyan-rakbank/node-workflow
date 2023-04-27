@@ -30,8 +30,9 @@ import {
   getDocumentUploadCnt,
   getOrganizationInfo,
   getOrgKYCDetails,
-  getDocumentUplaoderAuthToken,
-  getDocumentsList
+  getDocumentsList,
+  getDocumentUplaoderjwtToken,
+  getDocuploaderHeader
 } from "../selectors/appConfig";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
@@ -51,7 +52,8 @@ import {
   saveDocumentUplaodAuthToken,
   saveDocumentList,
   UPLOAD_DOCUMENTS,
-  documentsUploadCompleted
+  documentsUploadCompleted,
+  GET_DOCUMENTS_LIST
 } from "../actions/uploadDocuments";
 import {
   SEND_PROSPECT_TO_API_FAIL,
@@ -409,11 +411,19 @@ export function* addMultiDocumentSaga({ payload }) {
 
 export function* initDocumentUpload() {
   try {
-    const prospectId = yield select(getProspectId);
+    // const prospectId = yield select(getProspectId);
     const headers = yield select(getAuthorizationHeader);
     const token = yield call(documents.requestClientToken, headers);
     yield put(saveDocumentUplaodAuthToken(token.data));
+  } catch (error) {
+    log(error);
+  }
+}
 
+export function* getDocumentList() {
+  try {
+    const prospectId = yield select(getProspectId);
+    const headers = yield select(getAuthorizationHeader);
     const documentList = yield call(documents.getDocumentList, prospectId, headers);
     yield put(saveDocumentList(documentList.data));
   } catch (error) {
@@ -424,28 +434,29 @@ export function* initDocumentUpload() {
 export function* uploadDocuments({ payload }) {
   try {
     const prospectId = yield select(getProspectId);
-    const headers = yield select(getAuthorizationHeader);
-    const token = yield select(getDocumentUplaoderAuthToken);
+    const headers = yield select(getDocuploaderHeader);
+    const token = yield select(getDocumentUplaoderjwtToken);
     const documentList = yield select(getDocumentsList);
     // find the respective document section from documentList
     const documentSection = documentList[payload.documentSection];
     const promiseArray = [];
 
     //returns a promiseArray with uplaod docuemnts
-    documentSection.forEach(doc => {
-      let fieldData = payload.docs[doc.documentTitle];
-      if (fieldData) {
+    Object.keys(payload.docs).forEach(docPath => {
+      const docItem = documentSection.find(doc => doc.documentTitle === docPath);
+      const fieldData = payload.docs[docPath];
+      if (fieldData.name) {
         promiseArray.push(
           new Promise((resolve, reject) => {
             let generateName = [
               BBG_COMPANY_INFO_MODULEID,
               prospectId,
-              doc.documentType,
+              docItem.documentType,
               fieldData.name
             ];
             const fileData = {
               documentType: fieldData.type,
-              documentTitle: doc.documentTitle,
+              documentTitle: docItem.documentTitle,
               fileName: generateName.join("_"),
               fileFormat: fieldData.type,
               fileSize: fieldData.size,
@@ -473,6 +484,7 @@ export default function* uploadDocumentsSaga() {
     takeLatest(DOWNLOAD_DOCUMENT_FILE, downloadDocumentFileSaga),
     takeEvery(ADD_MULTI_DOCUMENT, addMultiDocumentSaga),
     takeEvery(INIT_DOCUMENT_UPLOAD, initDocumentUpload),
+    takeEvery(GET_DOCUMENTS_LIST, getDocumentList),
     takeEvery(UPLOAD_DOCUMENTS, uploadDocuments)
   ]);
 }

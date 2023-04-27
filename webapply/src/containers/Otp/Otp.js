@@ -15,7 +15,7 @@ import { MAX_ATTEMPT_ALLOWED } from "./constants";
 import { Form } from "./components/Form";
 import { OtpChannel } from "../../constants";
 import { triggerDecisions } from "../../store/actions/decisions";
-import { initDocumentUpload } from "../../store/actions/uploadDocuments";
+import { getDocumentsList } from "../../store/actions/uploadDocuments";
 
 export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
         );
 
         //document upload init
-        dispatch(initDocumentUpload());
+        dispatch(getDocumentsList());
       }
 
       pushHistory(redirectRoute, true);
