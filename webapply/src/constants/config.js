@@ -8,9 +8,9 @@ export const endpoints = {
   updateProspectUri: "/onboarding/products/accounts/prospects/:prospectId",
   getProspectDocumentsUri: "/onboarding/products/accounts/prospects/:prospectId/documents",
   /**TODO: To be pointing 2.0 api */
-  uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  uploadDocumentUri: "/rest/v1/banks/RAK/prospectId/:prospectId/documents",
   /**TODO: To be pointing 2.0 api */
-  reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  reuploadDocumentUri: "/rest/v1/banks/RAK/prospectId/:prospectId/documents",
   searchProspectUri: "/onboarding/products/accounts/prospects/search",
   /**TODO: To be pointing 2.0 exp-api */
   getDocumentByIdUri: "/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
@@ -22,7 +22,9 @@ export const endpoints = {
   docUploaderUri: "/api/v1/banks/RAK/prospects/:prospectId/documents",
   /**TODO: To be pointing 2.0 exp-api */
   createInviteUri: "/webapply/api/v1/agent/createInvite",
-  prospectDecisions: "/onboarding/products/accounts/prospects/:prospectId/decisions"
+  prospectDecisions: "/onboarding/products/accounts/prospects/:prospectId/decisions",
+  //document upload DEH
+  documentUploaderToken: "/onboarding/oauth/token"
 };
 
 export const prospect = {

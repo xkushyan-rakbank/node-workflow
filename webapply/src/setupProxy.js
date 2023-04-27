@@ -41,4 +41,11 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    "/documentUploader",
+    proxy({
+      target: "https://uatrmtc.rakbankonline.ae",
+      changeOrigin: true
+    })
+  );
 };

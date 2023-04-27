@@ -146,3 +146,34 @@ export const decisions = {
       data
     })
 };
+
+export const documents = {
+  requestClientToken: headers =>
+    httpClient.request({
+      url: buildURI("documentUploaderToken"),
+      method: "POST",
+      ...headers
+    }),
+  getDocumentList: (prospectId, headers) =>
+    httpClient.request({
+      url: buildURI("getProspectDocumentsUri", prospectId),
+      method: "GET",
+      ...headers
+    }),
+  upload: (fileData, jwtToken, prospectId, headers) => {
+    const data = new FormData();
+    data.append("documentType", fileData.documentType);
+    data.append("documentTitle", fileData.documentTitle);
+    data.append("fileName", fileData.fileName);
+    data.append("fileFormat", fileData.fileFormat);
+    data.append("fileSize", fileData.fileSize);
+    data.append("jwt", jwtToken);
+    data.append("uploadfile", fileData.file);
+    return uploadClient.request({
+      url: buildURI("uploadDocumentUri", prospectId),
+      method: "POST",
+      ...headers,
+      data
+    });
+  }
+};
