@@ -13,6 +13,8 @@ import { formStepper, NEXT } from "../../constants";
 import { useLayoutParams } from "../FormLayout";
 
 export const CompanyStakeholdersContainer = ({
+  fullName,
+  companyCategory,
   deleteStakeholder: deleteHandler,
   changeEditableStakeholder,
   createNewStakeholder,
@@ -30,7 +32,7 @@ export const CompanyStakeholdersContainer = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
-  useLayoutParams(true, true);
+  useLayoutParams(false, true);
   useViewId(true);
 
   useEffect(() => {
@@ -80,6 +82,8 @@ export const CompanyStakeholdersContainer = ({
   return (
     <StakeholdersNameProvider>
       <CompanyStakeholdersComponent
+        fullName={fullName}
+        companyCategory={companyCategory}
         stakeholders={stakeholders}
         handleDeleteStakeholder={handleDeleteStakeholder}
         isSendingProspect={isSendingProspect}

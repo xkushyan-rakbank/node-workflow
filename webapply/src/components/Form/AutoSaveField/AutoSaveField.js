@@ -100,7 +100,8 @@ export const AutoSaveField = ({
   }, [path, datalistId, filterOptions, filterOptionsDeps]);
 
   const handleChange = async e => {
-    const value = datalistId ? e : e.target.value;
+    const fieldValue = e?.target?.value;
+    const value = fieldValue === null || fieldValue === undefined ? e : fieldValue;
     setFieldValue(name, value);
     makeDecisions && makeDecisions(value);
   };

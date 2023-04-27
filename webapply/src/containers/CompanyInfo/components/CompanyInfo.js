@@ -24,6 +24,7 @@ import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidat
 import { checkIsTrimmed } from "../../../utils/validation";
 import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
 import { uploadDocuments } from "../../../store/actions/uploadDocuments";
+import { TradeLicenceInformation } from "./TradeLicenceInformation";
 
 export const CompanyInfo = ({
   isComeFromROScreens,
@@ -48,6 +49,11 @@ export const CompanyInfo = ({
     companyCategory: "",
     tradeLicenseOrCOI: "",
     moa: "",
+    licenseIssuingAuthority: "",
+    countryOfIncorporation: "",
+    licenseOrCOINumber: "",
+    licenseOrCOIExpiryDate: "",
+    dateOfIncorporation: "",
     industries:
       get(industries, "[0].industry[0].length", 0) > 0
         ? industries[0].industry.map((item, index) => ({
@@ -127,6 +133,13 @@ export const CompanyInfo = ({
               <Industry datalistId={datalistId} {...props} />
             </div>
             <Divider className={classes.divider} />
+            <div>
+              <SectionTitle
+                title={"Trade licence information"}
+                classes={{ wrapper: classes.title }}
+              />
+              <TradeLicenceInformation {...props} />
+            </div>
             <div className="linkContainer">
               {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
               <NextStepButton
