@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
@@ -6,7 +6,7 @@ import uniqueId from "lodash/uniqueId";
 
 import { Divider } from "@material-ui/core";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import routes from "../../../routes";
 import { useStyles } from "./styled";
@@ -23,6 +23,7 @@ import { getIsIslamicBanking, getOrgKYCDetails } from "../../../store/selectors/
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { checkIsTrimmed } from "../../../utils/validation";
 import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
+import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uploadDocuments";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 
 export const CompanyInfo = ({
@@ -31,6 +32,8 @@ export const CompanyInfo = ({
   isLoading,
   handleClickNextStep
 }) => {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
@@ -39,6 +42,10 @@ export const CompanyInfo = ({
   const industries = orgDetails.industryMultiSelect || [];
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
+
+  useEffect(() => {
+    dispatch(initDocumentUpload());
+  }, []);
 
   const initialValues = {
     companyName: "",
@@ -87,6 +94,20 @@ export const CompanyInfo = ({
       )
     });
 
+  const handleClick = values => {
+    dispatch(
+      uploadDocuments({
+        docs: {
+          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": values.tradeLicenseOrCOI,
+          "prospect.prospectDocuments.companyDocument.moa": values.moa
+        },
+        documentSection: "companyDocuments"
+      })
+    );
+    // // dispatch(uploadDocument())
+    // handleClickNextStep();
+  };
+
   return (
     <>
       <h2 className={classes.pageTitle}>Tell us about your company</h2>
@@ -128,9 +149,9 @@ export const CompanyInfo = ({
               <NextStepButton
                 justify="flex-end"
                 label="Next"
-                disabled={!isAllStepsCompleted}
+                disabled={false}
                 isDisplayLoader={isLoading}
-                handleClick={handleClickNextStep}
+                handleClick={() => handleClick(props.values)}
               />
             </div>
           </Form>
