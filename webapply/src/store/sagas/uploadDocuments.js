@@ -439,36 +439,43 @@ export function* uploadDocuments({ payload }) {
     const documentList = yield select(getDocumentsList);
     // find the respective document section from documentList
     const documentSection = documentList[payload.documentSection];
-    const promiseArray = [];
-
-    //returns a promiseArray with uplaod docuemnts
-    Object.keys(payload.docs).forEach(docPath => {
+    const uploadedDocuments = [];
+    for (let docPath in payload.docs) {
       const docItem = documentSection.find(doc => doc.documentTitle === docPath);
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
-        promiseArray.push(
-          new Promise((resolve, reject) => {
-            let generateName = [
-              BBG_COMPANY_INFO_MODULEID,
-              prospectId,
-              docItem.documentType,
-              fieldData.name
-            ];
-            const fileData = {
-              documentType: fieldData.type,
-              documentTitle: docItem.documentTitle,
-              fileName: generateName.join("_"),
-              fileFormat: fieldData.type,
-              fileSize: fieldData.size,
-              file: fieldData
-            };
-            documents.upload(fileData, token, prospectId, headers);
-          })
-        );
+        let generateName = [
+          BBG_COMPANY_INFO_MODULEID,
+          prospectId,
+          docItem.documentType,
+          fieldData.name
+        ];
+        const fileData = {
+          documentType: fieldData.type,
+          documentTitle: docItem.documentTitle,
+          fileName: generateName.join("_"),
+          fileFormat: fieldData.type,
+          fileSize: fieldData.size,
+          file: fieldData
+        };
+        //await documents.upload(fileData, token, prospectId, headers);
+        const response = yield call(documents.upload, fileData, token, prospectId, headers);
+        uploadedDocuments.push({
+          documentKey: docItem.documentTitle,
+          documentType: fieldData.type,
+          fileFormat: fieldData.type,
+          fileName: response.data.fileName,
+          fileDescription: fieldData.name,
+          submittedDate: new Date().toISOString()
+        });
       }
-    });
-    yield Promise.all(promiseArray);
+    }
+    yield put(
+      updateProspect({ [`prospect.documents.${payload.documentSection}`]: uploadedDocuments })
+    );
+
     yield put(documentsUploadCompleted(true));
+    // yield Promise.all(promiseArray);
   } catch (error) {
     log(error);
   }
