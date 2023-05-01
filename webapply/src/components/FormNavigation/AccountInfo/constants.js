@@ -9,7 +9,7 @@ export const accountsInfo = {
   },
   [accountNames.currentAccount]: {
     title: "Business Current Account",
-    subtitle: "Our most flexible account for growing businesses.",
+    subtitle: "Earn up to 1.5% bonus interest on your monthly account balance. Conditions apply.",
     islamicSubtitle: "Our most flexible account for growing businesses."
   },
   [accountNames.elite]: {

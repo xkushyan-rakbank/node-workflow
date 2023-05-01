@@ -1,9 +1,12 @@
 # Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
+# Add steps that build, run tests, deploy, and more :
 # https://aka.ms/yaml
 
 name: $(BuildID)_$(Date:yyyyMMdd)$(Rev:.rr)
+
+resources:
+- repo: self
 
 pr:
   branches:
@@ -12,9 +15,13 @@ pr:
       - release
 
 trigger:
-  - develop
-  - release
-#  - releases/*
+  branches:
+    include:
+      - develop
+      - release     
+    exclude:
+      - bbg2.0/develop    
+
 
 jobs:
     - job: Webapply
