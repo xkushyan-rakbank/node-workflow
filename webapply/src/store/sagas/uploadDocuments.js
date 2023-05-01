@@ -52,7 +52,6 @@ import {
   saveDocumentUplaodAuthToken,
   saveDocumentList,
   UPLOAD_DOCUMENTS,
-  documentsUploadCompleted,
   GET_DOCUMENTS_LIST
 } from "../actions/uploadDocuments";
 import {
@@ -473,8 +472,9 @@ export function* uploadDocuments({ payload }) {
     yield put(
       updateProspect({ [`prospect.documents.${payload.documentSection}`]: uploadedDocuments })
     );
+    payload.onSuccess();
 
-    yield put(documentsUploadCompleted(true));
+    // yield put(documentsUploadCompleted(true));
     // yield Promise.all(promiseArray);
   } catch (error) {
     log(error);

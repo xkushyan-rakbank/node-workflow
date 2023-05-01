@@ -3,11 +3,13 @@ import { useDropzone } from "react-dropzone";
 import { Button } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import cx from "classnames";
+import { getIn } from "formik";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
 import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
 import useDecisions from "../../utils/useDecisions";
+import { ErrorMessage } from "./../Notifications";
 
 export const Upload = ({
   accept,
@@ -17,6 +19,9 @@ export const Upload = ({
   fieldDescription,
   helperText,
   path,
+  form: { errors, touched },
+  field: { onBlur, ...field },
+  ErrorMessageComponent = ErrorMessage,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
@@ -30,6 +35,8 @@ export const Upload = ({
   });
   const hasFile = !!file;
   const { visible } = useDecisions(path);
+  const errorMessage = getIn(errors, field.name);
+  const isError = errorMessage && getIn(touched, field.name);
 
   return (
     visible && (
@@ -100,6 +107,7 @@ export const Upload = ({
             </Button>
           )}
         </div>
+        {isError && <ErrorMessageComponent error={errorMessage} />}
       </Fragment>
     )
   );
