@@ -40,9 +40,7 @@ export const concatStakeholdersDocs = (
                 uploadedDoc.documentTitle === document.documentTitle
             ) || document
         ),
-        isDocUpdate: get(uploadedDocs, `['${signatoryId}']`, {})
-          ? get(uploadedDocs, `['${signatoryId}'].isDocUpdate`, false)
-          : isDocUpdate,
+        isDocUpdate,
         personalBankStatements: {
           documents: (get(uploadedDocs, `['${signatoryId}'].personalBankStatements.documents`, [])
             .length > personalBankStatements.documents.length
@@ -57,9 +55,7 @@ export const concatStakeholdersDocs = (
               ) || document
             );
           }),
-          isDocUpdate: get(uploadedDocs, `['${signatoryId}'].personalBankStatements`, {})
-            ? get(uploadedDocs, `['${signatoryId}'].personalBankStatements.isDocUpdate`, false)
-            : personalBankStatements.isDocUpdate,
+          isDocUpdate: personalBankStatements.isDocUpdate,
           limit: personalBankStatements.limit
         },
         personalBackground: {
@@ -76,9 +72,7 @@ export const concatStakeholdersDocs = (
               ) || document
             );
           }),
-          isDocUpdate: get(uploadedDocs, `['${signatoryId}'].personalBackground`, {})
-            ? get(uploadedDocs, `['${signatoryId}'].personalBackground.isDocUpdate`, false)
-            : personalBackground.isDocUpdate,
+          isDocUpdate: personalBackground.isDocUpdate,
           limit: personalBackground.limit
         }
       };
