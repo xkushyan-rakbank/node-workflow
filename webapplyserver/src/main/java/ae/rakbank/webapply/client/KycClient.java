@@ -41,9 +41,11 @@ public class KycClient {
 	@PostConstruct
 	public void init() {
 		JsonNode appConfigJSON = fileUtil.getAppConfigJSON();
-		kycUri = appConfigJSON.get("KycURIs");
-		kycBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("KycBaseUrl").asText();
-		kycConfigs = appConfigJSON.get("KycConfigs").get(EnvUtil.getEnv());
+		if(appConfigJSON.has("KycURIs") && appConfigJSON.has("KycConfigs")) {
+			kycUri = appConfigJSON.get("KycURIs");
+			kycBaseUrl = appConfigJSON.get("BaseURLs").get(EnvUtil.getEnv()).get("KycBaseUrl").asText();
+			kycConfigs = appConfigJSON.get("KycConfigs").get(EnvUtil.getEnv());
+		}
 	}
 
 	public JsonNode generateAppToken() {
