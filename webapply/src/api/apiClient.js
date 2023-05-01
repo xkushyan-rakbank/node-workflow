@@ -65,7 +65,7 @@ export const prospect = {
   update: (prospectId, data, headers) =>
     httpClient.request({
       url: buildURI("updateProspectUri", prospectId),
-      method: "PUT",
+      method: "PATCH",
       ...headers,
       data
     }),

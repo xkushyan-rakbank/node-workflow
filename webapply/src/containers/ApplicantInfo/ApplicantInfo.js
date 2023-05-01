@@ -102,7 +102,7 @@ export const ApplicantInfoContainer = ({
             const selectedPersona = Personas[persona];
             dispatch(
               updateProspect({
-                "prospect.organizationInfo.companyName": companyFullName,
+                "prospect.organizationInfo.companyName": companyFullName.trim(),
                 "prospect.organizationInfo.shortName":
                   companyFullName.length <= 50 ? companyFullName.trim() : "",
                 "prospect.organizationInfo.companyCategory": selectedPersona?.companyCategoryCode

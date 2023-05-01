@@ -3,11 +3,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
 import uniqueId from "lodash/uniqueId";
-
 import { Divider } from "@material-ui/core";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import routes from "../../../routes";
 import { useStyles } from "./styled";
 
@@ -25,6 +22,8 @@ import { checkIsTrimmed } from "../../../utils/validation";
 import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
 import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uploadDocuments";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
+import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
+import useDynamicValidation from "../../../utils/useDynamicValidation";
 
 export const CompanyInfo = ({
   isComeFromROScreens,
@@ -33,6 +32,7 @@ export const CompanyInfo = ({
   handleClickNextStep
 }) => {
   const dispatch = useDispatch();
+  const conditionalSchema = useDynamicValidation();
 
   const classes = useStyles();
 
@@ -71,41 +71,71 @@ export const CompanyInfo = ({
           }))
   };
 
-  const companyDetailsSchema = () =>
-    Yup.object({
-      companyName: Yup.string()
-        .required(getRequiredMessage("Company name"))
-        // eslint-disable-next-line no-template-curly-in-string
-        .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
-      shortName: Yup.string()
-        .required(getRequiredMessage("Company short name"))
-        // eslint-disable-next-line no-template-curly-in-string
-        .max(MAX_COMPANY_SHORT_NAME_LENGTH, "Maximum ${max} characters allowed")
-        .test("space validation", getInvalidMessage("Company short name"), checkIsTrimmed),
-      companyCategory: Yup.string().required(getRequiredMessage("Company category")),
-      industries: Yup.array().of(
-        Yup.object().shape({
-          industry: Yup.string().required(getRequiredMessage("Industry")),
-          subCategory: Yup.string().when("industry", {
-            is: industry => !!industry,
-            then: Yup.string().required(getRequiredMessage("Sub-category"))
-          })
+  const companyInfoSchema = {
+    companyName: Yup.string()
+      .required(getRequiredMessage("Company name"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
+    shortName: Yup.string()
+      .required(getRequiredMessage("Company short name"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_COMPANY_SHORT_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .test("space validation", getInvalidMessage("Company short name"), checkIsTrimmed),
+    companyCategory: Yup.string().required(getRequiredMessage("Company category")),
+    industries: Yup.array().of(
+      Yup.object().shape({
+        industry: Yup.string().required(getRequiredMessage("Industry")),
+        subCategory: Yup.string().when("industry", {
+          is: industry => !!industry,
+          then: Yup.string().required(getRequiredMessage("Sub-category"))
         })
-      )
-    });
+      })
+    ),
+    moa: Yup.mixed()
+      .test("required", getRequiredMessage("MOA"), file => {
+        if (file) return true;
+        return false;
+      })
+      .test("fileSize", "The file is too large", file => {
+        return file && file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize;
+      }),
+    licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
+    countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
+    licenseOrCOINumber: Yup.string().required(getRequiredMessage("license Or COINumber")),
+    licenseOrCOIExpiryDate: Yup.date().required(getRequiredMessage("license Or COI ExpiryDate")),
+    dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
+    tradeLicenseOrCOI: Yup.mixed()
+      .test("required", getRequiredMessage("trade License Or COI"), file => {
+        if (file) return true;
+        return false;
+      })
+      .test("fileSize", "The file is too large", file => {
+        return (
+          file && file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize
+        );
+      })
+  };
 
-  const handleClick = values => {
+  function onUploadSuccess(props) {
+    props.handleSubmit();
+  }
+
+  const handleClick = props => {
+    if (!props.isValid) {
+      props.handleSubmit();
+      return;
+    }
     dispatch(
       uploadDocuments({
         docs: {
-          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": values.tradeLicenseOrCOI,
-          "prospect.prospectDocuments.companyDocument.moa": values.moa
+          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI":
+            props.values.tradeLicenseOrCOI,
+          "prospect.prospectDocuments.companyDocument.moa": props.values.moa
         },
-        documentSection: "companyDocuments"
+        documentSection: "companyDocuments",
+        onSuccess: () => onUploadSuccess(props)
       })
     );
-    // // dispatch(uploadDocument())
-    // handleClickNextStep();
   };
 
   return (
@@ -114,8 +144,9 @@ export const CompanyInfo = ({
       <p className={classes.subTitle}>This will help us get your account set up properly</p>
       <Formik
         initialValues={initialValues}
-        validationSchema={companyDetailsSchema}
-        validateOnChange={false}
+        validationSchema={conditionalSchema(companyInfoSchema)}
+        validateOnChange={true}
+        onSubmit={handleClickNextStep}
       >
         {props => (
           <Form>
@@ -149,9 +180,9 @@ export const CompanyInfo = ({
               <NextStepButton
                 justify="flex-end"
                 label="Next"
-                disabled={false}
+                disabled={!(props.isValid && props.dirty)}
                 isDisplayLoader={isLoading}
-                handleClick={() => handleClick(props.values)}
+                handleClick={() => handleClick(props)}
               />
             </div>
           </Form>

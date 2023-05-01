@@ -381,3 +381,8 @@ export const prospect = {
     freeField5: ""
   }
 };
+
+// each page based payload has to be added based no the viewId
+export const pageProspectPaylodMap = {
+  "/CompanyInfo": ["applicantInfo", "organizationInfo", "applicationInfo", "documents"]
+};

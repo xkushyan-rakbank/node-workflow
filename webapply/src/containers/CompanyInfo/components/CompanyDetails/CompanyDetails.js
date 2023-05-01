@@ -68,7 +68,7 @@ export const CompanyDetails = ({ setFieldValue }) => {
         path="prospect.organizationInfo.companyName"
         fieldDescription="This should be the same as shown on your trade licence."
         component={Input}
-        onBlur={handleBlur}
+        // onBlur={handleBlur}
         InputProps={{
           inputProps: { maxLength: MAX_COMPANY_FULL_NAME_LENGTH, tabIndex: 0 },
           onBlur: handleBlur

@@ -30,7 +30,8 @@ import {
   getAuthorizationHeader,
   getAccountType,
   getIsIslamicBanking,
-  getAuthToken
+  getAuthToken,
+  getApplicationInfo
 } from "../selectors/appConfig";
 import { getCompletedSteps } from "../selectors/completedSteps";
 import { getScreeningError } from "../selectors/sendProspectToAPI";
@@ -52,6 +53,7 @@ import {
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
+import { pageProspectPaylodMap } from "../../constants/config";
 
 export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
@@ -149,6 +151,9 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     const prospectId = yield select(getProspectId);
     const headers = yield select(getAuthorizationHeader);
     const completedSteps = yield select(getCompletedSteps);
+    const applicationInfo = yield select(getApplicationInfo);
+
+    const viewId = applicationInfo.viewId;
 
     const newCompletedSteps = step
       ? completedSteps.map(completedStep => {
@@ -165,8 +170,16 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
       ...(newProspect.freeFieldsInfo || {}),
       freeField5: JSON.stringify({ completedSteps: newCompletedSteps })
     };
+    const payloadKeys = pageProspectPaylodMap[viewId];
+    const createProspectPayload = {};
 
-    const { data } = yield call(prospect.update, prospectId, newProspect, headers);
+    payloadKeys &&
+      payloadKeys.forEach(key => {
+        if (newProspect[key]) {
+          createProspectPayload[key] = newProspect[key];
+        }
+      });
+    const { data } = yield call(prospect.update, prospectId, createProspectPayload, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {
       yield put(updateAccountNumbers(data.accountInfo));
