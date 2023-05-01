@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles/index";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   mainTitle: {
     fontSize: "28px",
     color: "#1F1F1F",
@@ -119,5 +119,17 @@ export const useStyles = makeStyles({
   },
   uploadComponent: {
     marginTop: "24px"
+  },
+  ocrScannerMainContainer: {
+    backgroundColor: "#282c34",
+    minHeight: "100vh",
+    [theme.breakpoints.only("xs")]: {
+      minHeight: "calc(100vh - 10px)"
+    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white"
   }
-});
+}));

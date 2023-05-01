@@ -10,6 +10,7 @@ export const UploadFileWrapper = ({
   helperText,
   isStepActive = true,
   disabledReason,
+  handleScan,
   ...props
 }) => {
   const classes = useStyles();
@@ -35,6 +36,7 @@ export const UploadFileWrapper = ({
             variant="contained"
             className={classes.actionButton}
             disabled={!isStepActive}
+            onClick={handleScan}
           >
             Scan
           </Button>

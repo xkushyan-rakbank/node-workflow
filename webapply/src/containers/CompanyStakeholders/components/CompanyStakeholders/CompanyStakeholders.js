@@ -1,13 +1,24 @@
-import React from "react";
-import { Button } from "@material-ui/core";
-import { BackLink } from "../../../../components/Buttons/BackLink";
-import routes from "../../../../routes";
-import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
-import StakeholdersDetail from "./StakeholdersDetail";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button, Modal } from "@material-ui/core";
+
 import { ReactComponent as VerifyMobileIcon } from "../../../../assets/icons/verify_mobile.svg";
+import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { FaceRecognition } from "../../../../components/FaceRecognition/FaceRecognition";
 import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/UploadFileWrapper";
+import StakeholdersDetail from "./StakeholdersDetail";
+import { BackLink } from "../../../../components/Buttons/BackLink";
+import routes from "../../../../routes";
+import { removeEncodingPrefix } from "../../../../utils/ocr";
+
+import { getSdkConfig } from "../../../../store/selectors/sdkConfig";
+import { createSdkCofig } from "../../../../store/actions/sdkConfig";
+import { getKyc, getTransactionId } from "../../../../store/selectors/kyc";
+import { analyseOcr } from "../../../../store/actions/kyc";
+
 import { useStyles } from "./styled";
+import { OCRScanner } from "./OCRScanner";
+import { OverlayLoader } from "../../../../components/Loader";
 
 export const CompanyStakeholdersComponent = ({
   fullName,
@@ -16,7 +27,65 @@ export const CompanyStakeholdersComponent = ({
   isLoading,
   isDisableNextStep
 }) => {
+  const { sdkConfig } = useSelector(getSdkConfig);
+  const { loading } = useSelector(getKyc);
+  const transactionId = useSelector(getTransactionId);
+
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const [openEidScanner, setOpenEidScanner] = useState(false);
+  const [openPassportScanner, setOpenPassportScanner] = useState(false);
+
+  useEffect(() => {
+    if (transactionId !== "") {
+      dispatch(createSdkCofig());
+    }
+  }, [transactionId]);
+
+  const onScanEid = () => {
+    setOpenEidScanner(true);
+  };
+
+  const onScanPassport = () => {
+    setOpenPassportScanner(true);
+  };
+
+  const analyzeData = async data => {
+    if (data.images.length == 2) {
+      const ocrData = {
+        docFront: removeEncodingPrefix(data.images[0]),
+        docBack: removeEncodingPrefix(data.images[1])
+      };
+      dispatch(
+        analyseOcr({
+          ocrData,
+          documentType: "id"
+        })
+      );
+    } else if (data.images.length == 1) {
+      const ocrData = {
+        docFront: removeEncodingPrefix(data.images[0])
+      };
+      dispatch(
+        analyseOcr({
+          ocrData,
+          documentType: "passport"
+        })
+      );
+    }
+  };
+
+  const onEidScanData = async data => {
+    setOpenEidScanner(false);
+    const ocrAnalysisData = await analyzeData(data);
+    console.log("ocrAnalysisData", ocrAnalysisData);
+  };
+
+  const onPassportScanData = async data => {
+    setOpenPassportScanner(false);
+  };
+
   return (
     <>
       <h3 className={classes.mainTitle}>Now let's talk about you</h3>
@@ -42,12 +111,13 @@ export const CompanyStakeholdersComponent = ({
 
       <div className={classes.horizontalLine} />
 
-      <StakeholdersDetail name={fullName} companyCategory={companyCategory}/>
+      <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
 
       <div className={classes.uploadComponent}>
         <UploadFileWrapper
           fieldDescription="Emirates ID (both sides)"
           helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
+          handleScan={onScanEid}
         />
       </div>
 
@@ -57,6 +127,7 @@ export const CompanyStakeholdersComponent = ({
           helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
           isStepActive={false}
           disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
+          handleScan={onScanPassport}
         />
       </div>
 
@@ -82,6 +153,27 @@ export const CompanyStakeholdersComponent = ({
           justify="flex-end"
         />
       </div>
+      <Modal open={openEidScanner}>
+        <OCRScanner
+          scanType={1}
+          sdkConfig={sdkConfig}
+          onScanData={onEidScanData}
+          onClose={() => setOpenEidScanner(false)}
+        />
+      </Modal>
+      <Modal open={openPassportScanner}>
+        <OCRScanner
+          scanType={2}
+          sdkConfig={sdkConfig}
+          onScanData={onPassportScanData}
+          onClose={() => setOpenPassportScanner(false)}
+        />
+      </Modal>
+
+      <OverlayLoader
+        open={loading}
+        text={"Scanning your documents....this might take a few moments"}
+      />
     </>
   );
 };

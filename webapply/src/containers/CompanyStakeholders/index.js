@@ -20,6 +20,7 @@ import {
 import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
 import { getApplicantFullName, getOrganizationInfo } from "../../store/selectors/appConfig";
 import { CompanyStakeholdersContainer } from "./CompanyStakeholders";
+import { createKycTransaction } from "../../store/actions/kyc";
 
 const mapStateToProps = state => ({
   fullName: getApplicantFullName(state),
@@ -38,6 +39,7 @@ const mapDispatchToProps = {
   deleteStakeholder,
   createNewStakeholder,
   changeEditableStakeholder,
+  createKycTransaction,
   sendProspectToAPI: sendProspectToAPIPromisify
 };
 

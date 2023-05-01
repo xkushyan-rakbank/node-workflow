@@ -570,3 +570,6 @@ export const TL_ACCEPTED_FILE_TYPES = {
 
 export const MOA_FILE_SIZE = { minSize: "10240", maxSize: "5242880" };
 export const TL_COI_FILE_SIZE = { minSize: "10240", maxSize: "5242880" };
+
+export const DOC_TYPE_EID = "id";
+export const DOC_TYPE_PASSPORT = "passport";

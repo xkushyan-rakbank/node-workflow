@@ -13,6 +13,8 @@ import screenProspect from "./screenProspect";
 import completedSteps from "./completedSteps";
 import agentFeatures from "./agentFeatures";
 import decisionsSaga from "./decisions";
+import kycSaga from "./kyc";
+import sdkConfigSaga from "./sdkConfig";
 
 export default function*() {
   yield all([
@@ -28,6 +30,8 @@ export default function*() {
     fork(completedSteps),
     fork(screenProspect),
     fork(agentFeatures),
-    fork(decisionsSaga)
+    fork(decisionsSaga),
+    fork(kycSaga),
+    fork(sdkConfigSaga)
   ]);
 }

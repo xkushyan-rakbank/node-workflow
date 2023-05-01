@@ -22,7 +22,8 @@ export const endpoints = {
   docUploaderUri: "/api/v1/banks/RAK/prospects/:prospectId/documents",
   /**TODO: To be pointing 2.0 exp-api */
   createInviteUri: "/webapply/api/v1/agent/createInvite",
-  prospectDecisions: "/onboarding/products/accounts/prospects/:prospectId/decisions"
+  prospectDecisions: "/onboarding/products/accounts/prospects/:prospectId/decisions",
+  createKYCTransactionUri: "/webapply/products/sme/kyc-transactions"
 };
 
 export const prospect = {
