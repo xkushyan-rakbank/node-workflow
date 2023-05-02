@@ -84,5 +84,10 @@ export const useStyles = makeStyles(theme => ({
       height: "44px",
       width: "40px"
     }
+  },
+  successText: {
+    color: "#157947",
+    fontWeight: 500,
+    marginLeft: "5px"
   }
 }));

@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
+import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
 
 export const UploadFileWrapper = ({
   fieldDescription,
@@ -11,6 +12,10 @@ export const UploadFileWrapper = ({
   isStepActive = true,
   disabledReason,
   handleScan,
+  uploadedContent = "",
+  isSuccess = false,
+  successText = "",
+  handleRemove,
   ...props
 }) => {
   const classes = useStyles();
@@ -24,30 +29,54 @@ export const UploadFileWrapper = ({
           <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
           <div style={{ marginLeft: "20px" }}>
             <div className={classes.content}>
-              Drag and drop file here or upload from your computer
+              {uploadedContent
+                ? uploadedContent
+                : "Drag and drop file here or upload from your computer"}
             </div>
-            <div className={classes.subcontent}>{helperText}</div>
+            {isSuccess ? (
+              <div className={cx(classes.subcontent, classes.successText)}>
+                <SuccessIcon />
+                {successText}
+              </div>
+            ) : (
+              <div className={classes.subcontent}>{helperText}</div>
+            )}
           </div>
         </div>
 
         <div className={classes.btnWrapper}>
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.actionButton}
-            disabled={!isStepActive}
-            onClick={handleScan}
-          >
-            Scan
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.actionButton}
-            disabled={!isStepActive}
-          >
-            Upload
-          </Button>
+          {isSuccess ? (
+            <Button
+              color="primary"
+              variant="outlined"
+              className={cx(classes.actionButton, classes.btnRemove)}
+              disabled={!isStepActive}
+              onClick={handleRemove}
+            >
+              Remove
+            </Button>
+          ) : (
+            <>
+              {" "}
+              <Button
+                color="primary"
+                variant="contained"
+                className={classes.actionButton}
+                disabled={!isStepActive}
+                onClick={handleScan}
+              >
+                Scan
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                className={classes.actionButton}
+                disabled={!isStepActive}
+              >
+                Upload
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </Fragment>

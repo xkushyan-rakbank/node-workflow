@@ -4,13 +4,15 @@ import {
   KycTransactionSuccess,
   CREATE_KYC_TRANSACTION,
   ANALYSE_OCR,
-  analyseOcrFail,
-  analyseOcrSuccess
+  analyseOcrSuccessEid,
+  analyseOcrSuccessPassport,
+  analyseOcrFail
 } from "../actions/kyc";
 import { getAuthorizationHeader, getProspectId } from "../selectors/appConfig";
 import { analyzeOcrData, createKYCTransaction } from "../../api/apiClient";
 import { getKyc } from "../selectors/kyc";
 import { log } from "../../utils/loggger";
+import { DOC_TYPE_EID } from "../../constants";
 
 export function* createKycTransactionSaga() {
   try {
@@ -37,7 +39,11 @@ export function* analyseOcrDataSaga({ payload }) {
       headers,
       documentType
     );
-    yield put(analyseOcrSuccess(response));
+    if (documentType === DOC_TYPE_EID) {
+      yield put(analyseOcrSuccessEid(response));
+    } else {
+      yield put(analyseOcrSuccessPassport(response));
+    }
   } catch (error) {
     log(error);
     yield put(analyseOcrFail(error));
