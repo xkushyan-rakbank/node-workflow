@@ -16,7 +16,7 @@ import {
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
-import { UAE_CODE, UAE, UAE_CURRENCY, AUTO } from "../../constants";
+import { UAE_CODE, UAE_CURRENCY, AUTO } from "../../constants";
 import {
   getIsIslamicBanking,
   getAccountType,
@@ -56,8 +56,6 @@ export function* receiveAppConfigSaga() {
       newConfig.prospect.applicantInfo.roCode = yield select(getRoCode);
       newConfig.prospect.applicationInfo.accountType = yield select(getAccountType);
       newConfig.prospect.applicationInfo.islamicBanking = yield select(getIsIslamicBanking);
-      newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].country = UAE;
-      newConfig.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress = "Y";
     }
 
     if (signatoryModel) {

@@ -15,7 +15,7 @@ import { SectionTitle } from "../../../components/SectionTitle";
 import { CompanyDetails } from "./CompanyDetails";
 import { Industry } from "./Industry";
 
-import { getIsIslamicBanking, getOrgKYCDetails } from "../../../store/selectors/appConfig";
+import { getIsIslamicBanking, getOrganizationInfo, getOrgKYCDetails } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { checkIsTrimmed } from "../../../utils/validation";
@@ -38,7 +38,7 @@ export const CompanyInfo = ({
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
 
-  const orgDetails = useSelector(getOrgKYCDetails) || {};
+  const orgDetails = useSelector(getOrganizationInfo) || {};
   const industries = orgDetails.industryMultiSelect || [];
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
@@ -103,7 +103,7 @@ export const CompanyInfo = ({
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
     licenseOrCOINumber: Yup.string()
       .required(getRequiredMessage("license Or COINumber"))
-      .matches(/^[a-zA-Z0-9.#/-]+$/, {
+      .matches(/^[a-zA-Z0-9=./-]+$/, {
         message: "Invalid Format"
       }),
     licenseOrCOIExpiryDate: Yup.date().required(getRequiredMessage("license Or COI ExpiryDate")),
