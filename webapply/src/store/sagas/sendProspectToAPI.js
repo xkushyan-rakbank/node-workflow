@@ -179,6 +179,9 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
           createProspectPayload[key] = newProspect[key];
         }
       });
+    createProspectPayload["viewId"] = viewId;
+    createProspectPayload["actionType"] = actionType;
+    createProspectPayload["saveType"] = saveType;
     const { data } = yield call(prospect.update, prospectId, createProspectPayload, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {

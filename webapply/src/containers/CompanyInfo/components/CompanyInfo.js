@@ -121,20 +121,15 @@ export const CompanyInfo = ({
   };
 
   function onUploadSuccess(props) {
-    props.handleSubmit();
+    handleClickNextStep();
   }
 
   const handleClick = props => {
-    if (!props.isValid) {
-      props.handleSubmit();
-      return;
-    }
     dispatch(
       uploadDocuments({
         docs: {
-          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI":
-            props.values.tradeLicenseOrCOI,
-          "prospect.prospectDocuments.companyDocument.moa": props.values.moa
+          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": props.tradeLicenseOrCOI,
+          "prospect.prospectDocuments.companyDocument.moa": props.moa
         },
         documentSection: "companyDocuments",
         onSuccess: () => onUploadSuccess(props)
@@ -150,7 +145,7 @@ export const CompanyInfo = ({
         initialValues={initialValues}
         validationSchema={conditionalSchema(companyInfoSchema)}
         validateOnChange={true}
-        onSubmit={handleClickNextStep}
+        onSubmit={handleClick}
       >
         {props => (
           <Form>
@@ -186,7 +181,7 @@ export const CompanyInfo = ({
                 label="Next"
                 disabled={!(props.isValid && props.dirty)}
                 isDisplayLoader={isLoading}
-                handleClick={() => handleClick(props)}
+                // handleClick={() => handleClick(props)}
               />
             </div>
           </Form>
