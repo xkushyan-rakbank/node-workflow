@@ -1,19 +1,34 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
-  uplaodContainer: {
+  documentContainer: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     padding: "24px",
     border: "1px dashed #86868B",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     borderRadius: "10px",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    cursor: "pointer",
     "@media (max-width: 425px)": {
       flexDirection: "column"
     }
+  },
+  uploadContainer: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  previewContainer: {
+    width: "100%",
+    borderTop: "1px solid #E6E6E6",
+    paddingTop: "16px",
+    marginTop: "16px",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    color: "#8D0C10"
   },
   btnWrapper: {
     display: "flex",
@@ -29,7 +44,9 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     fontWeight: 500,
     padding: 20,
-    letterSpacing: "normal",
+    letterSpacing: "normal"
+  },
+  btnScanUpload: {
     background: "#1F1F1F",
     color: "#FFFFFF",
     "&:disabled": {
@@ -42,6 +59,10 @@ export const useStyles = makeStyles(theme => ({
     "@media (max-width: 372px)": {
       marginLeft: 0
     }
+  },
+  btnRemove: {
+    background: "#FFFFFF",
+    color: "#1F1F1F"
   },
   contentContainer: {
     display: "flex",
@@ -84,5 +105,11 @@ export const useStyles = makeStyles(theme => ({
       height: "44px",
       width: "40px"
     }
+  },
+  success: {
+    fontWeight: 500,
+    fontSize: "12px",
+    lineHeight: "16px",
+    color: "#157947"
   }
 }));

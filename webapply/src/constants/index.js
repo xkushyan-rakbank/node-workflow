@@ -572,3 +572,13 @@ export const MOA_FILE_SIZE = { minSize: "9500", maxSize: "5242880" };
 export const TL_COI_FILE_SIZE = { minSize: "9500", maxSize: "5242880" };
 
 export const BBG_COMPANY_INFO_MODULEID = "SMA";
+
+export const DOC_TYPE_EID = "id";
+export const DOC_TYPE_PASSPORT = "passport";
+
+export const EID_PASSPORT_ACCEPTED_FILE_TYPES = {
+  "image/png": [".png"],
+  "image/jpeg": [".jpeg"],
+  "application/pdf": [".pdf"]
+};
+export const EID_PASSPORT_FILE_SIZE = { minSize: "15360", maxSize: "5242880" };

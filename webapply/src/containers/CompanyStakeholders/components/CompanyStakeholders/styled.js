@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles/index";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles(theme => ({
   mainTitle: {
     fontSize: "28px",
     color: "#1F1F1F",
@@ -119,5 +119,70 @@ export const useStyles = makeStyles({
   },
   uploadComponent: {
     marginTop: "24px"
+  },
+  ocrScannerMainContainer: {
+    backgroundColor: "#282c34",
+    minHeight: "100vh",
+    [theme.breakpoints.only("xs")]: {
+      minHeight: "calc(100vh - 10px)"
+    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "white"
+  },
+  paper: {
+    position: "absolute",
+    backgroundColor: "#FFFFFF",
+    width: "710px",
+    borderRadius: "20px",
+    textAlign: "left",
+    padding: "40px"
+  },
+  uploadModalErrorWrapper: {
+    display: "flex",
+    alignItems: "center",
+    padding: "16px 38px",
+    marginTop: "8px",
+    marginBottom: "24px",
+    color: "#8D0C10",
+    background: "#FDE7E8",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    borderRadius: "10px",
+  },
+  errorIcon: {
+    width: "13px",
+    height: "13px",
+    marginRight: "8px"
+  },
+  uploadModalCloseIcon: {
+    position: "absolute",
+    right: "18px",
+    top: "20px",
+    width: "16px",
+    height: "16px",
+    fill: "#525252"
+  },
+  uploadModalTitle: {
+    margin: "0px",
+    marginBottom: "24px"
+  },
+  uploadModalSaveBtn: {
+    marginTop: "40px",
+    padding: "20px 40px",
+    fontWeight: 400,
+    fontSize: "24px",
+    lineHeight: "32px",
+    color: "#FFFFFF",
+    background: "#1F1F1F",
+    borderRadius: "100px",
+    textTransform: "capitalize",
+    "&:disabled": {
+      color: "#FFFFFF",
+      background: "#ADADAD"
+    }
   }
-});
+}));
