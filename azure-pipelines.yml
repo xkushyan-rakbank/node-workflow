@@ -191,17 +191,17 @@ jobs:
     - job: SonarQube
       timeoutInMinutes: 120
       pool:
-        vmImage: 'macOS-1015'
+        vmImage: 'ubuntu-latest'
       dependsOn:
        - Webapply
       condition:
        #and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))  
-       and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/release'), eq(variables['Build.SourceBranch'], 'refs/heads/develop')))
+       and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/bbg2.0/release'), eq(variables['Build.SourceBranch'], 'refs/heads/bbg2.0/develop')))
       steps:
       - task: NodeTool@0
-        displayName: 'Use Node 14.x'
+        displayName: 'Use Node 16.x'
         inputs:
-          versionSpec: 14.x
+          versionSpec: 16.x
       #prepare the Sonarqube for executing the sonar 
       - task: SonarCloudPrepare@1
         inputs:
