@@ -101,7 +101,11 @@ export const CompanyInfo = ({
       }),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
-    licenseOrCOINumber: Yup.string().required(getRequiredMessage("license Or COINumber")),
+    licenseOrCOINumber: Yup.string()
+      .required(getRequiredMessage("license Or COINumber"))
+      .matches(/^[a-zA-Z0-9.#-/]+$/, {
+        message: "Invalid Format"
+      }),
     licenseOrCOIExpiryDate: Yup.date().required(getRequiredMessage("license Or COI ExpiryDate")),
     dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
