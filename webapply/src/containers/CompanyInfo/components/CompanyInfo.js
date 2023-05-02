@@ -103,7 +103,7 @@ export const CompanyInfo = ({
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
     licenseOrCOINumber: Yup.string()
       .required(getRequiredMessage("license Or COINumber"))
-      .matches(/^[a-zA-Z0-9.#-/]+$/, {
+      .matches(/^[a-zA-Z0-9.#/-]+$/, {
         message: "Invalid Format"
       }),
     licenseOrCOIExpiryDate: Yup.date().required(getRequiredMessage("license Or COI ExpiryDate")),
