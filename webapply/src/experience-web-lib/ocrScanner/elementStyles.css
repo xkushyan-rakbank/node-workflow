@@ -1,12 +1,15 @@
 .ocr-elements-hidden {
-    display: none !important;
+  display: none !important;
+}
+.hidden {
+  display: none;
 }
 
 .ocr-elements-close-icon {
   box-sizing: border-box;
   position: relative;
   display: block;
-  transform: scale(var(--ggs,1));
+  transform: scale(var(--ggs, 1));
   width: 36px;
   height: 36px;
   border: 2px solid transparent;
@@ -25,185 +28,185 @@
   transform: rotate(45deg);
   border-radius: 5px;
   top: 15px;
-  left: 1px
+  left: 1px;
 }
 .ocr-elements-close-icon::after {
-  transform: rotate(-45deg)
+  transform: rotate(-45deg);
 }
 
 /*OCR SDK STYLES**************/
 @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
   }
-  #main {
-    /*  position: absolute;*/
-    top: 30px;
-    margin: auto;
-    left: 0;
-    right: 0;
-    z-index: 99;
-
-    /* display: none; */
+  100% {
+    transform: rotate(360deg);
   }
-  #message-html {
-    /* display: none; */
+}
+#main {
+  /*  position: absolute;*/
+  top: 30px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  z-index: 99;
 
-    margin: auto;
+  /* display: none; */
+}
+#message-html {
+  /* display: none; */
 
-    width: 90%;
-    max-width: 450px;
-    padding: 5px;
-    /* margin-left: -10px; */
-    text-align: center;
-    font: normal normal normal 21px/21px Segoe UI;
-    line-height: 36px;
+  margin: auto;
 
+  width: 90%;
+  max-width: 450px;
+  padding: 5px;
+  /* margin-left: -10px; */
+  text-align: center;
+  font: normal normal normal 21px/21px Segoe UI;
+  line-height: 36px;
+
+  opacity: 1;
+}
+
+.bottom-message {
+  /* font-size: 18px; */
+  font-weight: normal;
+  text-align: center;
+  /* position: absolute; */
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  /* background: rgba(0, 0, 0, 0.7); */
+  /* padding: 5px; */
+  max-width: 700px;
+  border-radius: 6px;
+  z-index: 99999;
+  margin-top: 5px;
+}
+.error-message {
+  /* font-size: 18px; */
+  font-weight: normal;
+  text-align: center;
+  /* position: absolute; */
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  margin-top: 5px;
+  /* background: rgba(0, 0, 0, 0.7); */
+  /* padding: 5px; */
+  max-width: 700px;
+  border-radius: 6px;
+  z-index: 99999;
+}
+#sub-title {
+  text-align: center;
+  font: normal normal normal 17px/21px Segoe UI;
+}
+#title {
+  text-align: center;
+  font: normal normal normal 17px/21px Segoe UI;
+  padding: 5px;
+}
+
+#video {
+  border-radius: 10px;
+  /* border: none !important; */
+}
+.canvas-wrapper {
+  position: relative;
+  background: #000;
+  border-radius: 15px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  /* overflow: hidden; */
+  padding-bottom: 0;
+  width: 344px;
+  margin: auto;
+}
+.canvas-wrapper video {
+  border: 0 !important;
+  border-radius: 10px;
+  border-radius: 0;
+  height: 100%;
+  margin-bottom: 0;
+  max-height: 50vh;
+  width: 100%;
+}
+@-webkit-keyframes blink {
+  0% {
     opacity: 1;
   }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+#place-holder-image img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 68px;
+  max-width: 120px;
+  border-radius: 6px;
+  -webkit-animation: blink 1s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation: blink 1s;
+  -moz-animation-iteration-count: infinite;
+  -o-animation: blink 1s;
+  -o-animation-iteration-count: infinite;
+}
+#passport-placeholder img {
+  max-width: 85px !important;
 
-  .bottom-message {
-    /* font-size: 18px; */
-    font-weight: normal;
-    text-align: center;
-    /* position: absolute; */
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    /* background: rgba(0, 0, 0, 0.7); */
-    /* padding: 5px; */
-    max-width: 700px;
-    border-radius: 6px;
-    z-index: 99999;
-    margin-top: 5px;
-  }
-  .error-message {
-    /* font-size: 18px; */
-    font-weight: normal;
-    text-align: center;
-    /* position: absolute; */
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    margin-top: 5px;
-    /* background: rgba(0, 0, 0, 0.7); */
-    /* padding: 5px; */
-    max-width: 700px;
-    border-radius: 6px;
-    z-index: 99999;
-  }
-  #sub-title {
-    text-align: center;
-    font: normal normal normal 17px/21px Segoe UI;
-  }
-  #title {
-    text-align: center;
-    font: normal normal normal 17px/21px Segoe UI;
-    padding: 5px;
-  }
+  /* margin-top: -90px; */
+}
+.placeholder-container {
+  /* display: none; */
+}
 
-  #video {
-    border-radius: 10px;
-    /* border: none !important; */
-  }
-  .canvas-wrapper {
-    position: relative;
-    background: #000;
-    border-radius: 15px;
-    height: -webkit-fit-content;
-    height: -moz-fit-content;
-    height: fit-content;
-    /* overflow: hidden; */
-    padding-bottom: 0;
-    width: 344px;
-    margin: auto;
-  }
-  .canvas-wrapper video {
-    border: 0 !important;
-    border-radius: 10px;
-    border-radius: 0;
-    height: 100%;
-    margin-bottom: 0;
-    max-height: 50vh;
-    width: 100%;
-  }
-  @-webkit-keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    49% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @-moz-keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    49% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @-o-keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    49% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  #place-holder-image img {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    height: 68px;
-    max-width: 120px;
-    border-radius: 6px;
-    -webkit-animation: blink 1s;
-    -webkit-animation-iteration-count: infinite;
-    -moz-animation: blink 1s;
-    -moz-animation-iteration-count: infinite;
-    -o-animation: blink 1s;
-    -o-animation-iteration-count: infinite;
-  }
-  #passport-placeholder img {
-    max-width: 85px !important;
+#initializeMessage {
+  margin: 20px auto;
+  text-align: center;
+}
 
-    /* margin-top: -90px; */
-  }
-  .placeholder-container {
-    /* display: none; */
-  }
-
-  #initializeMessage {
-    margin: 20px auto;
-    text-align: center;
-  }
-
-  /* END - OCR SDK STYLES**************/
+/* END - OCR SDK STYLES**************/

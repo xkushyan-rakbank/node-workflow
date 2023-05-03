@@ -15,7 +15,7 @@ import { SectionTitle } from "../../../components/SectionTitle";
 import { CompanyDetails } from "./CompanyDetails";
 import { Industry } from "./Industry";
 
-import { getIsIslamicBanking, getOrgKYCDetails } from "../../../store/selectors/appConfig";
+import { getIsIslamicBanking, getOrganizationInfo, getOrgKYCDetails } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { checkIsTrimmed } from "../../../utils/validation";
@@ -38,7 +38,7 @@ export const CompanyInfo = ({
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
 
-  const orgDetails = useSelector(getOrgKYCDetails) || {};
+  const orgDetails = useSelector(getOrganizationInfo) || {};
   const industries = orgDetails.industryMultiSelect || [];
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
@@ -101,7 +101,11 @@ export const CompanyInfo = ({
       }),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
-    licenseOrCOINumber: Yup.string().required(getRequiredMessage("license Or COINumber")),
+    licenseOrCOINumber: Yup.string()
+      .required(getRequiredMessage("license Or COINumber"))
+      .matches(/^[a-zA-Z0-9=./-]+$/, {
+        message: "Invalid Format"
+      }),
     licenseOrCOIExpiryDate: Yup.date().required(getRequiredMessage("license Or COI ExpiryDate")),
     dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
@@ -117,20 +121,15 @@ export const CompanyInfo = ({
   };
 
   function onUploadSuccess(props) {
-    props.handleSubmit();
+    handleClickNextStep();
   }
 
   const handleClick = props => {
-    if (!props.isValid) {
-      props.handleSubmit();
-      return;
-    }
     dispatch(
       uploadDocuments({
         docs: {
-          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI":
-            props.values.tradeLicenseOrCOI,
-          "prospect.prospectDocuments.companyDocument.moa": props.values.moa
+          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": props.tradeLicenseOrCOI,
+          "prospect.prospectDocuments.companyDocument.moa": props.moa
         },
         documentSection: "companyDocuments",
         onSuccess: () => onUploadSuccess(props)
@@ -146,7 +145,7 @@ export const CompanyInfo = ({
         initialValues={initialValues}
         validationSchema={conditionalSchema(companyInfoSchema)}
         validateOnChange={true}
-        onSubmit={handleClickNextStep}
+        onSubmit={handleClick}
       >
         {props => (
           <Form>
@@ -182,7 +181,7 @@ export const CompanyInfo = ({
                 label="Next"
                 disabled={!(props.isValid && props.dirty)}
                 isDisplayLoader={isLoading}
-                handleClick={() => handleClick(props)}
+                // handleClick={() => handleClick(props)}
               />
             </div>
           </Form>

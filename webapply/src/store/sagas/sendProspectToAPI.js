@@ -146,6 +146,34 @@ export function* prospectAutoSave() {
   }
 }
 
+const getRequestPayloadForNode = (key, prospect) => {
+  let nodePayload;
+  switch (key) {
+    case "organizationInfo": {
+      //transforming the proscpect industryMultiSelect to industry & industryAndSubCategory
+      const { industryMultiSelect, ...rest } = prospect[key];
+      const { industry, subCategory } = industryMultiSelect.reduce(
+        (industryAndSubCategory, item) => {
+          item.industry?.length && industryAndSubCategory.industry.push(item.industry[0]);
+          item.subCategory?.length && industryAndSubCategory.subCategory.push(item.subCategory[0]);
+          return industryAndSubCategory;
+        },
+        { industry: [], subCategory: [] }
+      );
+      nodePayload = { ...rest, industry, subCategory };
+      break;
+    }
+    case "applicationInfo": {
+      const { accountType, rakValuePackage } = prospect[key];
+      nodePayload = { accountType, rakValuePackage };
+      break;
+    }
+    default:
+      nodePayload = prospect[key];
+  }
+  return nodePayload;
+};
+
 export function* sendProspectToAPI({ payload: { newProspect, saveType, actionType, step } }) {
   try {
     const prospectId = yield select(getProspectId);
@@ -176,9 +204,12 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     payloadKeys &&
       payloadKeys.forEach(key => {
         if (newProspect[key]) {
-          createProspectPayload[key] = newProspect[key];
+          createProspectPayload[key] = getRequestPayloadForNode(key, newProspect);
         }
       });
+    createProspectPayload["viewId"] = viewId;
+    createProspectPayload["actionType"] = actionType;
+    createProspectPayload["saveType"] = saveType;
     const { data } = yield call(prospect.update, prospectId, createProspectPayload, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {

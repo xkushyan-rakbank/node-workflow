@@ -42,25 +42,18 @@ module.exports = function(app) {
     })
   );
   app.use(
-    "/documentUploader",
-    proxy({
-      target: "https://uatrmtc.rakbankonline.ae",
-      changeOrigin: true
-    })
-  );
-  app.use(
-    "/documentUploader",
-    proxy({
-      target: "https://uatrmtc.rakbankonline.ae",
-      changeOrigin: true
-    })
-  );
-  app.use(
     "/rakbank-kyc",
     proxy({
       target: "https://quickapplydev.rakbank.ae/digitalbank",
       changeOrigin: true,
       secure: false
+    })
+  );
+  app.use(
+    "/documentUploader",
+    proxy({
+      target: "https://uatrmtc.rakbankonline.ae",
+      changeOrigin: true
     })
   );
 };

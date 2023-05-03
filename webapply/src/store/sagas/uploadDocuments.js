@@ -465,7 +465,7 @@ export function* uploadDocuments({ payload }) {
           fileFormat: fieldData.type,
           fileName: response.data.fileName,
           fileDescription: fieldData.name,
-          submittedDate: new Date().toISOString()
+          submittedDt: new Date().toISOString()
         });
       }
     }

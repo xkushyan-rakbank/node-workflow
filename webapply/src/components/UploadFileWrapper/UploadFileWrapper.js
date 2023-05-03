@@ -19,6 +19,7 @@ export const UploadFileWrapper = ({
   successText,
   handleRemove,
   showPreview,
+  hasError = false,
   ...props
 }) => {
   const classes = useStyles();

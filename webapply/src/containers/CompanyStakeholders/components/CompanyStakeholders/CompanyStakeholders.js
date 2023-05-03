@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "@material-ui/core";
 import { Form, Formik } from "formik";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isEmpty } from "lodash";
 
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
@@ -32,7 +33,7 @@ export const CompanyStakeholdersComponent = ({
   isDisableNextStep
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
-  const { loading, analysedEidData, analysedPassportData } = useSelector(getKyc);
+  const { loading, analysedEidData, analysedPassportData, error } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
   const classes = useStyles();
@@ -55,7 +56,7 @@ export const CompanyStakeholdersComponent = ({
   const [passportFile, setPassportFile] = useState({});
 
   useEffect(() => {
-    if (transactionId !== "") {
+    if (transactionId) {
       dispatch(createSdkCofig());
     }
   }, [transactionId]);
@@ -100,10 +101,9 @@ export const CompanyStakeholdersComponent = ({
       const ocrData = {
         docFront: removeEncodingPrefix(data.images[0])
       };
-      setPassportFile({
-        link: data.images[0],
-        name: nameOfUploadedFile.passport
-      });
+      const passport = await fetch(data.images[0]).then(res => res.blob());
+      setPassportFile({ ...passport, name: "Passport.jpg" });
+
       dispatch(
         analyseOcr({
           ocrData,
@@ -120,6 +120,7 @@ export const CompanyStakeholdersComponent = ({
 
   const onPassportScanData = async data => {
     setOpenPassportScanner(false);
+    await analyzeData(data);
   };
 
   const onRemoveOcrData = type => {
@@ -182,6 +183,7 @@ export const CompanyStakeholdersComponent = ({
                 data={passportFile}
               />
             </div>
+            
             <div className={classes.uploadComponent}>
               <FaceRecognition
                 fieldDescription="Scan your face"
