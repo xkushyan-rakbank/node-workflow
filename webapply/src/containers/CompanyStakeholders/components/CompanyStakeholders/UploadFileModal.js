@@ -7,7 +7,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Button } from "@material-ui/core";
 import { Field } from "formik";
 import cx from "classnames";
-import { isEmpty } from "lodash";
 
 import { useStyles } from "./styled";
 import { Upload } from "../../../../components/Upload";
@@ -38,7 +37,6 @@ export const UploadFileModal = ({
   handleClose,
   setEidDetails,
   setPassportDetails
-  // saveUploadData
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -139,23 +137,6 @@ export const UploadFileModal = ({
 
   const passEmiratesIDData = async () => {
     await analyzeData();
-
-    // const data = {
-    //   images: []
-    // };
-    // const uploadFileName = {};
-    // if (typeOfUpload === DOC_TYPE_EID) {
-    //   data.images.push(values.emiratesIDFront);
-    //   data.images.push(values.emiratesIDBack);
-    //   uploadFileName.front = uploadedFileName.emiratesIDFront;
-    //   uploadFileName.back = uploadedFileName.emiratesIDBack;
-    // } else {
-    //   data.images.push(values.passport);
-    //   uploadFileName.passport = uploadedFileName.passport;
-    // }
-    // console.log("uploadFileName--", uploadFileName);
-    // saveUploadData(data, uploadFileName, typeOfUpload);
-    // handleClose();
   };
 
   const isSaveDisabled = () => {
@@ -190,7 +171,7 @@ export const UploadFileModal = ({
             {error && (
               <div className={classes.uploadModalErrorWrapper}>
                 <ErrorOutlineIcon className={classes.errorIcon} />
-                {error.message}
+                {error}
               </div>
             )}
             {typeOfUpload === DOC_TYPE_EID && (

@@ -14,7 +14,9 @@ export const initialState = {
   KycTransactionResponse: {},
   analysedPassportData: {},
   analysedEidData: {},
-  error: ""
+  error: "",
+  analysedEidDataStatus: "",
+  analysedPassportDataStatus: ""
 };
 
 export default handleActions(
@@ -32,29 +34,37 @@ export default handleActions(
       ...state,
       loading: false,
       error: "",
+      analysedPassportDataStatus: "success",
       analysedPassportData: payload
     }),
     [ANALYSE_OCR_SUCCESS_EID]: (state, { payload }) => ({
       ...state,
       loading: false,
       error: "",
+      analysedEidDataStatus: "success",
       analysedEidData: payload
     }),
     [ANALYSE_OCR_FAIL]: (state, action) => ({
       ...state,
       loading: false,
+      analysedPassportData: {},
+      analysedEidData: {},
+      analysedEidDataStatus: "failed",
+      analysedPassportDataStatus: "failed",
       error: action.payload
     }),
     [REMOVE_EID_OCR_DATA]: (state, action) => ({
       ...state,
       loading: false,
       analysedEidData: {},
+      analysedEidDataStatus: "",
       error: ""
     }),
     [REMOVE_PASSPORT_OCR_DATA]: (state, action) => ({
       ...state,
       loading: false,
       analysedPassportData: {},
+      analysedPassportDataStatus: "",
       error: ""
     })
   },

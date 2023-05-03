@@ -83,11 +83,13 @@ export const CompanyStakeholdersComponent = ({
       setEidFile({
         docFront: {
           ...docFront,
-          name: nameOfUploadedFile ? nameOfUploadedFile.front : "Emirates_front.jpg"
+          name: nameOfUploadedFile ? nameOfUploadedFile.front : "Emirates_front.jpg",
+          link: data.images[0]
         },
         docBack: {
           ...docBack,
-          name: nameOfUploadedFile ? nameOfUploadedFile.back : "Emirates_back.jpg"
+          name: nameOfUploadedFile ? nameOfUploadedFile.back : "Emirates_back.jpg",
+          link: data.images[1]
         }
       });
 
@@ -102,7 +104,7 @@ export const CompanyStakeholdersComponent = ({
         docFront: removeEncodingPrefix(data.images[0])
       };
       const passport = await fetch(data.images[0]).then(res => res.blob());
-      setPassportFile({ ...passport, name: "Passport.jpg" });
+      setPassportFile({ ...passport, name: "Passport.jpg", link: data.images[0] });
 
       dispatch(
         analyseOcr({
@@ -183,7 +185,13 @@ export const CompanyStakeholdersComponent = ({
                 data={passportFile}
               />
             </div>
-            
+            {error && (
+              <div className={classes.uploadModalErrorWrapper}>
+                <ErrorOutlineIcon className={classes.errorIcon} />
+                {error}
+              </div>
+            )}
+
             <div className={classes.uploadComponent}>
               <FaceRecognition
                 fieldDescription="Scan your face"
@@ -239,7 +247,6 @@ export const CompanyStakeholdersComponent = ({
                   setActionType("Uploaded");
                 }}
                 setPassportDetails={data => setPassportFile(data)}
-                // saveUploadData={onSaveUploadDataFromModal}
               />
             )}
           </Form>

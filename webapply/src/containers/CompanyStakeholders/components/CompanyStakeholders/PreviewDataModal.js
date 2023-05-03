@@ -65,7 +65,7 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
                   [classes.bgColor]: !previewData.docBack.link
                 })}
                 style={{
-                  backgroundImage: `url(${previewData.docBack.link})`
+                  backgroundImage: `url(${previewData?.link})`
                 }}
               />
             </div>
