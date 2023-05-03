@@ -84,7 +84,7 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "8px"
   },
   disableUpload: {
-    PointerEvent: "none",
+    pointerEvents: "none",
     cursor: "no-drop",
     opacity: "0.5"
   },
@@ -106,7 +106,7 @@ export const useStyles = makeStyles(theme => ({
       width: "40px"
     }
   },
-  success: {
+  successText: {
     fontWeight: 500,
     fontSize: "12px",
     lineHeight: "16px",

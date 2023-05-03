@@ -22,6 +22,7 @@ export const Upload = ({
   form: { errors, touched },
   field: { onBlur, ...field },
   ErrorMessageComponent = ErrorMessage,
+  showUploadSuccessIcon = true,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
@@ -50,10 +51,14 @@ export const Upload = ({
                 <div>
                   <input {...getInputProps()} />
                   <div className={classes.content}>
-                    Drag and drop file here or upload from your computer
+                    {/* Drag and drop file here or upload from your computer */}
+                    {showUploadSuccessIcon}
+                    {props.content
+                      ? props.content
+                      : "Drag and drop file here or upload from your computer"}
                   </div>
 
-                  {hasFile ? (
+                  {hasFile && showUploadSuccessIcon ? (
                     <div className={classes.row}>
                       <Check size="14px" className={classes.success} />
                       <div

@@ -7,6 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Button } from "@material-ui/core";
 import { Field } from "formik";
 import cx from "classnames";
+import { isEmpty } from "lodash";
 
 import { useStyles } from "./styled";
 import { Upload } from "../../../../components/Upload";
@@ -17,11 +18,10 @@ import {
   DOC_TYPE_PASSPORT
 } from "../../../../constants";
 
-import { analyseOcr } from "../../../../store/actions/kyc";
-// import { OverlayLoader } from "../../../../components/Loader";
-// import { getKyc, getKycError } from "../../../../store/selectors/kyc";
-
-const supportedFileDesc = "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum";
+import { analyseOcr, removeEidOcrData, removePassportOcrData } from "../../../../store/actions/kyc";
+import { OverlayLoader } from "../../../../components/Loader";
+import { getKyc } from "../../../../store/selectors/kyc";
+import { removeEncodingPrefix } from "../../../../utils/ocr";
 
 function getModalStyle() {
   return {
@@ -31,11 +31,18 @@ function getModalStyle() {
   };
 }
 
-export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) => {
-  // const { loading, analysedEidData, error } = useSelector(getKyc);
-  // const { errorUploading } = useSelector(getKycError);
-  const dispatch = useDispatch();
+export const UploadFileModal = ({
+  isOpen,
+  typeOfUpload,
+  title,
+  handleClose,
+  setEidDetails,
+  setPassportDetails
+  // saveUploadData
+}) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const { loading, error, analysedEidDataStatus, analysedPassportDataStatus } = useSelector(getKyc);
 
   const [modalStyle] = useState(getModalStyle);
   const [values, setFieldValue] = useState({
@@ -52,10 +59,9 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
   const analyzeData = () => {
     if (typeOfUpload === DOC_TYPE_EID) {
       const ocrData = {
-        docFront: values.emiratesIDFront.split(",")[1],
-        docBack: values.emiratesIDBack.split(",")[1]
+        docFront: removeEncodingPrefix(values.emiratesIDFront),
+        docBack: removeEncodingPrefix(values.emiratesIDBack)
       };
-      console.log("ocrData--", ocrData);
       dispatch(
         analyseOcr({
           ocrData,
@@ -63,9 +69,10 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
         })
       );
     }
+
     if (typeOfUpload === DOC_TYPE_PASSPORT) {
       const ocrData = {
-        docFront: values.passport.split(",")[1]
+        docFront: removeEncodingPrefix(values.passport)
       };
       dispatch(
         analyseOcr({
@@ -98,17 +105,60 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
       ...prev,
       [field]: value
     }));
+    setUploadedFileName(prev => ({
+      ...prev,
+      [field]: value
+    }));
+    if (typeOfUpload === DOC_TYPE_EID) {
+      dispatch(removeEidOcrData());
+    } else {
+      dispatch(removePassportOcrData());
+    }
+  };
+
+  const sendUploadedData = () => {
+    if (typeOfUpload === DOC_TYPE_EID) {
+      setEidDetails({
+        front: {
+          name: uploadedFileName.emiratesIDFront,
+          link: values.emiratesIDFront
+        },
+        back: {
+          name: uploadedFileName.emiratesIDBack,
+          link: values.emiratesIDBack
+        }
+      });
+    } else {
+      setPassportDetails({
+        name: uploadedFileName.passport,
+        link: values.passport
+      });
+    }
+    handleClose();
   };
 
   const passEmiratesIDData = async () => {
-    console.log("click passEmiratesIDData");
-    const ocrAnalysisData = await analyzeData();
-    console.log("ocrAnalysisData--", ocrAnalysisData);
+    await analyzeData();
+
+    // const data = {
+    //   images: []
+    // };
+    // const uploadFileName = {};
+    // if (typeOfUpload === DOC_TYPE_EID) {
+    //   data.images.push(values.emiratesIDFront);
+    //   data.images.push(values.emiratesIDBack);
+    //   uploadFileName.front = uploadedFileName.emiratesIDFront;
+    //   uploadFileName.back = uploadedFileName.emiratesIDBack;
+    // } else {
+    //   data.images.push(values.passport);
+    //   uploadFileName.passport = uploadedFileName.passport;
+    // }
+    // console.log("uploadFileName--", uploadFileName);
+    // saveUploadData(data, uploadFileName, typeOfUpload);
     // handleClose();
   };
 
   const isSaveDisabled = () => {
-    console.log("values.emiratesIDFront.length ", values.emiratesIDFront.length);
     return typeOfUpload === DOC_TYPE_EID
       ? values.emiratesIDFront.length > 0 && values.emiratesIDBack.length > 0
       : values.passport.length > 0;
@@ -118,82 +168,102 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
     isSaveDisabled();
   }, [values]);
 
+  useEffect(() => {
+    if (analysedEidDataStatus === "success" && typeOfUpload === DOC_TYPE_EID) {
+      sendUploadedData();
+    }
+  }, [analysedEidDataStatus]);
+
+  useEffect(() => {
+    if (analysedPassportDataStatus === "success") {
+      sendUploadedData();
+    }
+  }, [analysedPassportDataStatus]);
+
   return (
     <>
-      {/* {!loading && ( */}
-      <Modal open={isOpen}>
-        <div style={modalStyle} className={classes.paper}>
-          <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
-          <h2 className={classes.uploadModalTitle}>{title}</h2>
-          <div className={classes.uploadModalErrorWrapper}>
-            <ErrorOutlineIcon className={classes.errorIcon} />
-            Your Emirates ID has expired. Please re-upload or re-scan a valid ID.
-          </div>
-          {typeOfUpload === DOC_TYPE_EID && (
-            <>
-              <Field
-                name="eid_front"
-                fieldDescription="Front side"
-                helperText={"Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."}
-                maxFiles={1}
-                accept={EID_PASSPORT_ACCEPTED_FILE_TYPES}
-                fileSize={EID_PASSPORT_FILE_SIZE}
-                onDrop={acceptedFile => handleDropFile(acceptedFile, "emiratesIDFront")}
-                isInsideForm={false}
-                file={values.emiratesIDFront}
-                onDelete={() => removeValue("emiratesIDFront", "")}
-                component={Upload}
-              />
-              <div style={{ marginTop: "24px" }}>
+      {!loading && (
+        <Modal open={isOpen}>
+          <div style={modalStyle} className={classes.paper}>
+            <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
+            <h2 className={classes.uploadModalTitle}>{title}</h2>
+            {error && (
+              <div className={classes.uploadModalErrorWrapper}>
+                <ErrorOutlineIcon className={classes.errorIcon} />
+                {error.message}
+              </div>
+            )}
+            {typeOfUpload === DOC_TYPE_EID && (
+              <>
                 <Field
-                  name="eid_back"
-                  fieldDescription="Back side"
+                  name="eid_front"
+                  fieldDescription="Front side"
                   helperText={"Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."}
                   maxFiles={1}
                   accept={EID_PASSPORT_ACCEPTED_FILE_TYPES}
                   fileSize={EID_PASSPORT_FILE_SIZE}
-                  onDrop={acceptedFile => handleDropFile(acceptedFile, "emiratesIDBack")}
+                  onDrop={acceptedFile => handleDropFile(acceptedFile, "emiratesIDFront")}
                   isInsideForm={false}
-                  file={values.emiratesIDBack}
-                  onDelete={() => removeValue("emiratesIDBack", "")}
+                  file={values.emiratesIDFront}
+                  onDelete={() => removeValue("emiratesIDFront", "")}
+                  content={uploadedFileName.emiratesIDFront}
+                  showUploadSuccessIcon={false}
                   component={Upload}
                 />
-              </div>
-            </>
-          )}
-          {typeOfUpload === DOC_TYPE_PASSPORT && (
-            <Field
-              name="passport"
-              fieldDescription="Photo page"
-              helperText={"Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."}
-              maxFiles={1}
-              accept={EID_PASSPORT_ACCEPTED_FILE_TYPES}
-              fileSize={EID_PASSPORT_FILE_SIZE}
-              onDrop={acceptedFile => handleDropFile(acceptedFile, "passport")}
-              isInsideForm={false}
-              file={values && values.passport}
-              onDelete={() => removeValue("passport", "")}
-              component={Upload}
-            />
-          )}
-          <Button
-            color="primary"
-            variant="contained"
-            className={cx(classes.uploadModalSaveBtn, classes.uploadBtnContained)}
-            disabled={!isSaveDisabled()}
-            onClick={() => {
-              passEmiratesIDData();
-            }}
-          >
-            Save
-          </Button>
-        </div>
-      </Modal>
-      {/* )} */}
-      {/* <OverlayLoader
+                <div style={{ marginTop: "24px" }}>
+                  <Field
+                    name="eid_back"
+                    fieldDescription="Back side"
+                    helperText={"Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."}
+                    maxFiles={1}
+                    accept={EID_PASSPORT_ACCEPTED_FILE_TYPES}
+                    fileSize={EID_PASSPORT_FILE_SIZE}
+                    onDrop={acceptedFile => handleDropFile(acceptedFile, "emiratesIDBack")}
+                    isInsideForm={false}
+                    file={values.emiratesIDBack}
+                    content={uploadedFileName.emiratesIDBack}
+                    showUploadSuccessIcon={false}
+                    onDelete={() => removeValue("emiratesIDBack", "")}
+                    component={Upload}
+                  />
+                </div>
+              </>
+            )}
+            {typeOfUpload === DOC_TYPE_PASSPORT && (
+              <Field
+                name="passport"
+                fieldDescription="Photo page"
+                helperText={"Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."}
+                maxFiles={1}
+                accept={EID_PASSPORT_ACCEPTED_FILE_TYPES}
+                fileSize={EID_PASSPORT_FILE_SIZE}
+                onDrop={acceptedFile => handleDropFile(acceptedFile, "passport")}
+                isInsideForm={false}
+                file={values && values.passport}
+                content={uploadedFileName.passport}
+                showUploadSuccessIcon={false}
+                onDelete={() => removeValue("passport", "")}
+                component={Upload}
+              />
+            )}
+            <Button
+              color="primary"
+              variant="contained"
+              className={cx(classes.uploadModalSaveBtn, classes.uploadBtnContained)}
+              disabled={!isSaveDisabled()}
+              onClick={() => {
+                passEmiratesIDData();
+              }}
+            >
+              Save
+            </Button>
+          </div>
+        </Modal>
+      )}
+      <OverlayLoader
         open={loading}
-        text={"Scanning your documents....this might take a few moments"}
-      /> */}
+        text={"Uploading your documents....this might take a few moments"}
+      />
     </>
   );
 };

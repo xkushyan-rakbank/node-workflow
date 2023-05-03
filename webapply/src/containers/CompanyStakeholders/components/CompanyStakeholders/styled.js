@@ -151,7 +151,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: "20px",
-    borderRadius: "10px",
+    borderRadius: "10px"
   },
   errorIcon: {
     width: "13px",
@@ -164,7 +164,8 @@ export const useStyles = makeStyles(theme => ({
     top: "20px",
     width: "16px",
     height: "16px",
-    fill: "#525252"
+    fill: "#525252",
+    PointerEvent: "cursor"
   },
   uploadModalTitle: {
     margin: "0px",
@@ -184,5 +185,39 @@ export const useStyles = makeStyles(theme => ({
       color: "#FFFFFF",
       background: "#ADADAD"
     }
+  },
+  previewModalImageWrapper: {
+    height: "580px",
+    overflow: "auto"
+  },
+  previewImg: {
+    width: "100%",
+    height: "400px",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "contain"
+  },
+  bgColor: {
+    background: "#D9D9D9"
+  },
+  previewModalTitle: {
+    color: "#1F1F1F",
+    fontWeight: 500,
+    fontSize: "28px",
+    lineHeight: "36px",
+    margin: "0px",
+    textAlign: "left"
+  },
+  previewModalSubtitle: {
+    margin: "0px",
+    marginTop: "8px",
+    fontSize: "20px",
+    fontWeight: "400",
+    lineHeight: "28px",
+    textAlign: "left",
+    color: "#757575"
+  },
+  previewImgWrapper: {
+    marginTop: "24px"
   }
 }));

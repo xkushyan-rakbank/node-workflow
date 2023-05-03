@@ -581,4 +581,4 @@ export const EID_PASSPORT_ACCEPTED_FILE_TYPES = {
   "image/jpeg": [".jpeg"],
   "application/pdf": [".pdf"]
 };
-export const EID_PASSPORT_FILE_SIZE = { minSize: "15360", maxSize: "5242880" };
+export const EID_PASSPORT_FILE_SIZE = { minSize: "10000", maxSize: "5242880" };
