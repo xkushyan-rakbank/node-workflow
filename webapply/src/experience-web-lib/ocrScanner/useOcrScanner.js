@@ -8,6 +8,7 @@ const useOcrScanner = options => {
   const [ocrScanResult, setOcrScanResult] = useState();
   const [isProcessing, setIsProcessing] = useState(false);
   const [scanInProgess, setScanInprogress] = useState(false);
+  const [scanType, setScanType] = useState();
 
   const {
     initializeOCRScanSdk,
@@ -42,6 +43,7 @@ const useOcrScanner = options => {
 
   const startOcrScan = ({ scanType, onScanData, onClose }) => {
     resetState();
+    setScanType(scanType);
     return startSdkOcrScan({ ...ocrScanOptions({ scanType, onScanData, onClose }), scanType });
   };
 
@@ -62,7 +64,8 @@ const useOcrScanner = options => {
   const elementsProps = {
     isOcrScannerReady: isOcrSdkReady,
     scanInProgess,
-    stopOcrScan
+    stopOcrScan,
+    scanType
   };
 
   return {

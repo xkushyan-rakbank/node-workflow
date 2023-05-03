@@ -66,7 +66,7 @@ export function* analyseOcrDataSaga({ payload }) {
       if (nationalityAsInEid !== nationality || firstWordOfEidName !== firstWordOfPassportName) {
         yield put(analyseOcrFail(DOC_MISMATCH));
       } else if (daysToExpiry <= 10) {
-        put(analyseOcrFail(PASSPORT_EXPIRY));
+        yield put(analyseOcrFail(PASSPORT_EXPIRY));
       } else {
         yield put(analyseOcrSuccessPassport(response));
       }
