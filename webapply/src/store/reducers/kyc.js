@@ -31,27 +31,31 @@ export default handleActions(
     [ANALYSE_OCR_SUCCESS_PASSPORT]: (state, { payload }) => ({
       ...state,
       loading: false,
+      error: "",
       analysedPassportData: payload
     }),
     [ANALYSE_OCR_SUCCESS_EID]: (state, { payload }) => ({
       ...state,
       loading: false,
+      error: "",
       analysedEidData: payload
     }),
     [ANALYSE_OCR_FAIL]: (state, action) => ({
       ...state,
       loading: false,
-      error: action.payload || "error"
+      error: action.payload
     }),
     [REMOVE_EID_OCR_DATA]: (state, action) => ({
       ...state,
       loading: false,
-      analysedEidData: {}
+      analysedEidData: {},
+      error: ""
     }),
     [REMOVE_PASSPORT_OCR_DATA]: (state, action) => ({
       ...state,
       loading: false,
-      analysedPassportData: {}
+      analysedPassportData: {},
+      error: ""
     })
   },
   initialState

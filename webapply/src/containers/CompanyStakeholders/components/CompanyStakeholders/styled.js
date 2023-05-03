@@ -131,5 +131,23 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center",
     color: "white"
+  },
+  uploadModalErrorWrapper: {
+    display: "flex",
+    alignItems: "center",
+    padding: "16px 38px",
+    marginTop: "8px",
+    marginBottom: "24px",
+    color: "#8D0C10",
+    background: "#FDE7E8",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    borderRadius: "10px"
+  },
+  errorIcon: {
+    width: "13px",
+    height: "13px",
+    marginRight: "8px"
   }
 }));

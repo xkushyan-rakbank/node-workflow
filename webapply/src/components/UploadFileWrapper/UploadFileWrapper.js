@@ -16,6 +16,7 @@ export const UploadFileWrapper = ({
   isSuccess = false,
   successText = "",
   handleRemove,
+  hasError = false,
   ...props
 }) => {
   const classes = useStyles();
@@ -29,7 +30,7 @@ export const UploadFileWrapper = ({
           <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
           <div style={{ marginLeft: "20px" }}>
             <div className={classes.content}>
-              {uploadedContent
+              {uploadedContent && isSuccess
                 ? uploadedContent
                 : "Drag and drop file here or upload from your computer"}
             </div>
@@ -45,7 +46,7 @@ export const UploadFileWrapper = ({
         </div>
 
         <div className={classes.btnWrapper}>
-          {isSuccess ? (
+          {isSuccess || hasError ? (
             <Button
               color="primary"
               variant="outlined"

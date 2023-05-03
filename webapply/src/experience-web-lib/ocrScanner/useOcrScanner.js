@@ -20,6 +20,7 @@ const useOcrScanner = options => {
   const ocrScanOptions = ({ scanType, onScanData, onClose } = {}) => ({
     scanType,
     async on_result(scanResult) {
+      stopOcrScan();
       setScanInprogress(false);
       setIsProcessing(true);
       setOcrScanResult(scanResult);

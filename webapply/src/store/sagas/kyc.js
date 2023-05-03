@@ -12,7 +12,16 @@ import { getAuthorizationHeader, getProspectId } from "../selectors/appConfig";
 import { analyzeOcrData, createKYCTransaction } from "../../api/apiClient";
 import { getKyc } from "../selectors/kyc";
 import { log } from "../../utils/loggger";
-import { DOC_TYPE_EID } from "../../constants";
+import {
+  DOC_TYPE_EID,
+  DOC_TYPE_PASSPORT,
+  EID_EXPIRY,
+  ERROR_MESSAGES,
+  DOC_MISMATCH,
+  PASSPORT_EXPIRY
+} from "../../constants";
+import { getOcrFieldValueBySource } from "../../utils/ocr";
+import { NotificationsManager } from "../../components/Notification";
 
 export function* createKycTransactionSaga() {
   try {
@@ -26,11 +35,10 @@ export function* createKycTransactionSaga() {
 }
 
 export function* analyseOcrDataSaga({ payload }) {
+  const { ocrData, documentType } = payload;
   try {
-    const { KycTransactionResponse } = yield select(getKyc);
+    const { KycTransactionResponse, analysedEidData } = yield select(getKyc);
     const headers = { headers: { Authorization: `Bearer ${KycTransactionResponse.kycUserToken}` } };
-
-    const { ocrData, documentType } = payload;
 
     const response = yield call(
       analyzeOcrData.send,
@@ -39,14 +47,43 @@ export function* analyseOcrDataSaga({ payload }) {
       headers,
       documentType
     );
+    const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry, "mrz");
+    const nationality = getOcrFieldValueBySource(response?.nationalityIso2, "mrz");
+    const firstName = getOcrFieldValueBySource(response?.firstName, "mrz");
+
     if (documentType === DOC_TYPE_EID) {
-      yield put(analyseOcrSuccessEid(response));
-    } else {
-      yield put(analyseOcrSuccessPassport(response));
+      daysToExpiry <= 10
+        ? put(analyseOcrFail(EID_EXPIRY))
+        : yield put(analyseOcrSuccessEid(response));
+    }
+    if (documentType === DOC_TYPE_PASSPORT) {
+      const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2, "mrz");
+      const firstNameAsInEid = getOcrFieldValueBySource(analysedEidData?.firstName, "mrz");
+
+      const firstWordOfEidName = firstNameAsInEid?.split(" ")[0];
+      const firstWordOfPassportName = firstName?.split(" ")[0];
+
+      if (nationalityAsInEid !== nationality || firstWordOfEidName !== firstWordOfPassportName) {
+        yield put(analyseOcrFail(DOC_MISMATCH));
+      } else if (daysToExpiry <= 10) {
+        put(analyseOcrFail(PASSPORT_EXPIRY));
+      } else {
+        yield put(analyseOcrSuccessPassport(response));
+      }
     }
   } catch (error) {
-    log(error);
-    yield put(analyseOcrFail(error));
+    const notificationOptions = {};
+
+    const message =
+      ERROR_MESSAGES[(error?.response?.data?.errorCode)] &&
+      ERROR_MESSAGES[(error?.response?.data?.errorCode)];
+
+    if (message) {
+      yield put(analyseOcrFail(message));
+    } else {
+      NotificationsManager.add(notificationOptions);
+      yield put(analyseOcrFail());
+    }
   }
 }
 

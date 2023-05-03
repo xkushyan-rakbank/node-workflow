@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal } from "@material-ui/core";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isEmpty } from "lodash";
 
 import { ReactComponent as VerifyMobileIcon } from "../../../../assets/icons/verify_mobile.svg";
@@ -30,7 +31,7 @@ export const CompanyStakeholdersComponent = ({
   isDisableNextStep
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
-  const { loading, analysedEidData } = useSelector(getKyc);
+  const { loading, analysedEidData, analysedPassportData, error } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
   const classes = useStyles();
@@ -40,9 +41,10 @@ export const CompanyStakeholdersComponent = ({
   const [openPassportScanner, setOpenPassportScanner] = useState(false);
 
   const [eidFile, setEidFile] = useState({ docFront: "", docBack: "" });
+  const [passportFile, setPassportFile] = useState({});
 
   useEffect(() => {
-    if (transactionId !== "") {
+    if (transactionId) {
       dispatch(createSdkCofig());
     }
   }, [transactionId]);
@@ -79,6 +81,9 @@ export const CompanyStakeholdersComponent = ({
       const ocrData = {
         docFront: removeEncodingPrefix(data.images[0])
       };
+      const passport = await fetch(data.images[0]).then(res => res.blob());
+      setPassportFile({ ...passport, name: "Passport.jpg" });
+
       dispatch(
         analyseOcr({
           ocrData,
@@ -90,13 +95,12 @@ export const CompanyStakeholdersComponent = ({
 
   const onEidScanData = async data => {
     setOpenEidScanner(false);
-    const ocrAnalysisData = await analyzeData(data);
-    console.log("data>>> passport", data);
-    console.log("ocrAnalysisData", ocrAnalysisData);
+    await analyzeData(data);
   };
 
   const onPassportScanData = async data => {
     setOpenPassportScanner(false);
+    await analyzeData(data);
   };
 
   const onRemoveOcrData = type => {
@@ -141,6 +145,7 @@ export const CompanyStakeholdersComponent = ({
             eidFile?.docFront?.name ? `${eidFile.docFront.name} | ${eidFile.docBack.name}` : ""
           }
           successText={"Successfully scanned"}
+          hasError={error.length > 0 ? true : false}
           handleScan={onScanEid}
           isSuccess={isEmpty(analysedEidData) ? false : true}
           handleRemove={() => onRemoveOcrData(DOC_TYPE_EID)}
@@ -151,11 +156,22 @@ export const CompanyStakeholdersComponent = ({
         <UploadFileWrapper
           fieldDescription="Passport (photo page)"
           helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
-          isStepActive={false}
+          uploadedContent={passportFile ? passportFile.name : ""}
+          successText={"Successfully scanned"}
+          hasError={error.length > 0 ? true : false}
+          isStepActive={isEmpty(analysedEidData) ? false : true}
           disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
           handleScan={onScanPassport}
+          isSuccess={isEmpty(analysedPassportData) ? false : true}
+          handleRemove={() => onRemoveOcrData(DOC_TYPE_PASSPORT)}
         />
       </div>
+      {error && (
+        <div className={classes.uploadModalErrorWrapper}>
+          <ErrorOutlineIcon className={classes.errorIcon} />
+          {error}
+        </div>
+      )}
 
       <div className={classes.uploadComponent}>
         <FaceRecognition

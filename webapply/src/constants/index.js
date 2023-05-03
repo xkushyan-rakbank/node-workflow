@@ -82,12 +82,27 @@ const NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD = "I001F/12000";
 const ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS = "EXP101";
 const COMMON_SERVER_ERROR = "INV0001";
 
+const IDNUMBER_UNAVAILABLE = "001";
+const INVALID_IDNUMBER = "002";
+const EXPIRED_EID = "003";
+const EXPIRED_PASSPORT = "004";
+const PASSPORT_NUMBER_UNAVAILABLE = "018";
+const PASSPORT_ISSUING_COUNTRY_UNAVAILABLE = "019";
+const PASSPORT_DOCTYPE_UNAVAILABLE = "020";
+
 const RO_STOP =
   "We noticed that your application is incomplete. Not to worry, our team is already working on it.";
 const EXIST = "We already have your application. Not to worry, our team is already working on it.";
 const INVALID_ID = "Invalid Prospect ID";
 const COMMON_ERROR =
   "We already have your application. Not to worry, our team is already working on it.";
+const INVALID_DOCUMENT = "Invalid Document Error";
+
+export const EID_EXPIRY =
+  "Your Emirates ID has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed Emirated ID";
+export const PASSPORT_EXPIRY =
+  "Your passport has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed passport";
+export const DOC_MISMATCH = "Your emirates ID and passport do not match";
 
 export const PROSPECT_STATUSES = {
   ASSESSING: "Assessing",
@@ -104,7 +119,14 @@ export const ERROR_MESSAGES = {
   [HAPPENED_WHILE_PERFORMING_AUDIT_WHILE_UPDATE_PROSPECT]: COMMON_ERROR,
   [NO_RECORDS_FETCHED_WHILE_RETRIEVING_CORD]: COMMON_ERROR,
   [ERROR_OCCURRED_WHILE_PERFORMING_VALIDATION_CHECKS]: COMMON_ERROR,
-  [COMMON_SERVER_ERROR]: COMMON_ERROR
+  [COMMON_SERVER_ERROR]: COMMON_ERROR,
+  [IDNUMBER_UNAVAILABLE]: INVALID_DOCUMENT,
+  [INVALID_IDNUMBER]: INVALID_DOCUMENT,
+  [PASSPORT_NUMBER_UNAVAILABLE]: INVALID_DOCUMENT,
+  [PASSPORT_ISSUING_COUNTRY_UNAVAILABLE]: INVALID_DOCUMENT,
+  [PASSPORT_DOCTYPE_UNAVAILABLE]: INVALID_DOCUMENT,
+  [EXPIRED_EID]: EID_EXPIRY,
+  [EXPIRED_PASSPORT]: PASSPORT_EXPIRY
 };
 
 export const APP_STOP_SCREEN_RESULT = "stop";
