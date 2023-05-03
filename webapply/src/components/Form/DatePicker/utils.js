@@ -2,7 +2,7 @@ import DateFnsUtils from "@date-io/date-fns";
 
 export class LocalizedUtils extends DateFnsUtils {
   getWeekdays() {
-    return ["M", "T", "W", "T", "F", "S", "S"];
+    return ["S", "M", "T", "W", "T", "F", "S"];
   }
 }
 

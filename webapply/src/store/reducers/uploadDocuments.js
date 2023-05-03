@@ -5,14 +5,20 @@ import {
   GET_PROSPECT_DOCUMENTS_SUCCESS,
   RETRIEVE_DOC_UPLOADER,
   GET_PROSPECT_DOCUMENTS_FAIL,
-  SAVE_AND_RETRIEVE_DOC_UPLOADER
+  SAVE_AND_RETRIEVE_DOC_UPLOADER,
+  SAVE_DOCUMENT_UPLOAD_AUTH_TOKEN,
+  SAVE_DOCUMENT_LIST,
+  DOCUMENTS_UPLOAD_COMPLETED
 } from "../actions/uploadDocuments";
 import { handleActions, composeActions } from "../../utils/redux-utils";
 
 export const initialState = {
   progress: {},
   uploadErrors: {},
-  isLoading: true
+  isLoading: true,
+  authToken: null,
+  documentList: [],
+  documentUploadCompleted: false
 };
 
 export default handleActions(
@@ -40,6 +46,18 @@ export default handleActions(
     [GET_PROSPECT_DOCUMENTS_FAIL]: state => ({
       ...state,
       isLoading: true
+    }),
+    [SAVE_DOCUMENT_UPLOAD_AUTH_TOKEN]: (state, { payload }) => ({
+      ...state,
+      authToken: payload
+    }),
+    [SAVE_DOCUMENT_LIST]: (state, { payload }) => ({
+      ...state,
+      documentList: payload
+    }),
+    [DOCUMENTS_UPLOAD_COMPLETED]: (state, { payload }) => ({
+      ...state,
+      documentUploadCompleted: payload
     })
   },
   initialState

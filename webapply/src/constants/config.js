@@ -8,9 +8,9 @@ export const endpoints = {
   updateProspectUri: "/onboarding/products/accounts/prospects/:prospectId",
   getProspectDocumentsUri: "/onboarding/products/accounts/prospects/:prospectId/documents",
   /**TODO: To be pointing 2.0 api */
-  uploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  uploadDocumentUri: "/rest/v1/banks/RAK/prospectId/:prospectId/documents",
   /**TODO: To be pointing 2.0 api */
-  reuploadDocumentUri: "/webapply/api/v1/prospects/:prospectId/documents",
+  reuploadDocumentUri: "/rest/v1/banks/RAK/prospectId/:prospectId/documents",
   searchProspectUri: "/onboarding/products/accounts/prospects/search",
   /**TODO: To be pointing 2.0 exp-api */
   getDocumentByIdUri: "/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
@@ -23,7 +23,9 @@ export const endpoints = {
   /**TODO: To be pointing 2.0 exp-api */
   createInviteUri: "/webapply/api/v1/agent/createInvite",
   prospectDecisions: "/onboarding/products/accounts/prospects/:prospectId/decisions",
-  createKYCTransactionUri: "/webapply/products/sme/kyc-transactions"
+  createKYCTransactionUri: "/webapply/products/sme/kyc-transactions",
+  //document upload DEH
+  documentUploaderToken: "/onboarding/oauth/token"
 };
 
 export const prospect = {
@@ -379,4 +381,9 @@ export const prospect = {
     freeField4: "",
     freeField5: ""
   }
+};
+
+// each page based payload has to be added based no the viewId
+export const pageProspectPaylodMap = {
+  "/CompanyInfo": ["applicantInfo", "organizationInfo", "applicationInfo", "documents"]
 };

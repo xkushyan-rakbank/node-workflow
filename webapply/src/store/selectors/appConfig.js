@@ -6,6 +6,8 @@ export const getAgentName = state => state.appConfig.login.userName;
 
 export const getAppConfig = state => state.appConfig || {};
 
+export const getUploadDocuments = state => state.uploadDocuments || {};
+
 export const getDatalist = state => getAppConfig(state).datalist || {};
 
 export const getSignatoryModel = state => getAppConfig(state).signatoryModel || {};
@@ -79,6 +81,14 @@ export const getCompanyAddressProof = state => getDocuments(state).companyAddres
 
 export const getCompanyInvoices = state => getDocuments(state).companyInvoices || [];
 
+export const getDocumentUplaoderjwtToken = state =>
+  getUploadDocuments(state).authToken?.jwtToken || null;
+
+export const getDocumentUplaoderAuthToken = state =>
+  getUploadDocuments(state).authToken?.token || null;
+
+export const getDocumentsList = state => getUploadDocuments(state).documentList || null;
+
 export const getDocumentUploadCnt = state => {
   const companyDocuments = getCompanyDocuments(state);
   let DocumentUploadCnt = 0;
@@ -137,6 +147,14 @@ export const getAuthorizationHeader = state => {
 
   return {
     headers: authToken ? { Authorization: `Bearer ${authToken}` } : {}
+  };
+};
+
+export const getDocuploaderHeader = state => {
+  const authToken = getDocumentUplaoderAuthToken(state);
+
+  return {
+    headers: authToken ? { Authorization: `${authToken}` } : {}
   };
 };
 

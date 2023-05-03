@@ -65,91 +65,18 @@
       }
     ],
     "organizationInfo": {
-      "screeningInfo": {
-        "statusOverAll": "",
-        "screeningResults": []
-      },
-      "branchCity": "",
-      "branchID": "",
       "countryOfIncorporation": "AE",
       "companyName": "",
       "shortName": "",
       "companyCategory": "",
       "dateOfIncorporation": "",
-      "numberOfEmployees": 0,
-      "licenseType": "",
-      "licenseTypeOther": "",
       "licenseIssuingAuthority": "",
-      "licenseNumber": "",
-      "licenseIssueDate": "",
-      "licenseExpiryDate": "",
-      "vatRegistrationNumber": "",
-      "addressInfo": [
+      "licenseOrCOINumber": "",
+      "licenseOrCOIExpiryDate": "",
+      "industryMultiSelect": [
         {
-          "typeOfAddress": "Registered",
-          "officeAddressDifferent": "Yes",
-          "addressDetails": [
-            {
-              "addressFieldDesc": "",
-              "preferredAddress": "",
-              "addressLine1": "",
-              "addressLine2": "",
-              "addressLine3": "",
-              "addressLine4": "",
-              "poBox": "",
-              "emirateCity": "",
-              "country": "AE",
-              "typeOfSpaceOccupied": {
-                "spaceType": "",
-                "others": ""
-              }
-            }
-          ]
-        },
-        {
-          "typeOfAddress": "OFFICE",
-          "officeAddressDifferent": "Yes",
-          "addressDetails": [
-            {
-              "addressFieldDesc": "",
-              "preferredAddress": "",
-              "addressLine1": "",
-              "addressLine2": "",
-              "addressLine3": "",
-              "addressLine4": "",
-              "poBox": "",
-              "emirateCity": "",
-              "country": "AE",
-              "typeOfSpaceOccupied": {
-                "spaceType": "",
-                "others": ""
-              }
-            }
-          ]
-        }
-      ],
-      "contactDetails": {
-        "primaryMobileNo": "",
-        "primaryMobCountryCode": "971",
-        "primaryEmail": "",
-        "primaryPhoneNo": "",
-        "primaryPhoneCountryCode": "971",
-        "fax": "",
-        "faxCountryCode": "",
-        "secondaryPhoneNo": "",
-        "secondaryPhoneCountryCode": "",
-        "secondaryMobileNo": "",
-        "secondaryMobileCountryCode": "",
-        "secondaryEmail": "",
-        "website": ""
-      },
-      "contactDetailsForTxnReconfirming": [
-        {
-          "primaryMobileNo": "",
-          "primaryMobCountryCode": "971",
-          "TxnReconfirmingfullname": "",
-          "primaryPhoneNo": "",
-          "primaryPhoneCountryCode": "971"
+          "industry": [""],
+          "subCategory": [""]
         }
       ]
     },
@@ -172,12 +99,6 @@
         }
       ],
       "topOriginGoodsCountries": [""],
-      "industryMultiSelect": [
-        {
-          "industry": [""],
-          "subCategory": [""]
-        }
-      ],
       "anticipatedTransactionsDetails": {
         "totalMonthlyCashCreditsAED": {
           "amountInFigures": "",

@@ -10,6 +10,12 @@ export const GET_PROSPECT_DOCUMENTS_SUCCESS = "GET_PROSPECT_DOCUMENTS_SUCCESS";
 export const GET_PROSPECT_DOCUMENTS_FAIL = "GET_PROSPECT_DOCUMENTS_FAIL";
 export const DOWNLOAD_DOCUMENT_FILE = "DOWNLOAD_DOCUMENT_FILE";
 export const ADD_MULTI_DOCUMENT = "ADD_MULTI_DOCUMENT";
+export const INIT_DOCUMENT_UPLOAD = "INIT_DOCUMENT_UPLOAD";
+export const SAVE_DOCUMENT_UPLOAD_AUTH_TOKEN = "SAVE_DOCUMENT_UPLOAD_AUTH_TOKEN";
+export const GET_DOCUMENTS_LIST = "GET_DOCUMENTS_LIST";
+export const SAVE_DOCUMENT_LIST = "SAVE_DOCUMENT_LIST";
+export const UPLOAD_DOCUMENTS = "UPLOAD_DOCUMENTS";
+export const DOCUMENTS_UPLOAD_COMPLETED = "DOCUMENTS_UPLOAD_COMPLETED";
 
 export const saveAndRetrieveDocDetails = () => ({
   type: SAVE_AND_RETRIEVE_DOC_UPLOADER
@@ -43,3 +49,22 @@ export const deleteOtherDocument = index => ({ type: DELETE_OTHER_DOCUMENT, payl
 
 // ro-assist-brd2-1
 export const addMultiDocument = document => ({ type: ADD_MULTI_DOCUMENT, payload: document });
+
+//documentUpload DEH
+export const initDocumentUpload = () => ({ type: INIT_DOCUMENT_UPLOAD });
+
+export const saveDocumentUplaodAuthToken = payload => ({
+  type: SAVE_DOCUMENT_UPLOAD_AUTH_TOKEN,
+  payload
+});
+
+export const getDocumentsList = () => ({ type: GET_DOCUMENTS_LIST });
+
+export const saveDocumentList = payload => ({ type: SAVE_DOCUMENT_LIST, payload });
+
+export const uploadDocuments = payload => ({ type: UPLOAD_DOCUMENTS, payload });
+
+export const documentsUploadCompleted = payload => ({
+  type: DOCUMENTS_UPLOAD_COMPLETED,
+  payload
+});

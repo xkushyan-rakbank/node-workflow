@@ -11,9 +11,9 @@ export const Industry = ({ datalistId, values }) => {
         render={arrayHelper =>
           values?.industries.map((item, industryIndex) => {
             // eslint-disable-next-line max-len
-            const currentIndustry = `prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`;
+            const currentIndustry = `prospect.organizationInfo.industryMultiSelect[0].industry[${industryIndex}]`;
             // eslint-disable-next-line max-len
-            const currentSubCategory = `prospect.orgKYCDetails.industryMultiSelect[0].subCategory[${industryIndex}]`;
+            const currentSubCategory = `prospect.organizationInfo.industryMultiSelect[0].subCategory[${industryIndex}]`;
 
             return (
               <React.Fragment key={item.id}>
@@ -31,7 +31,7 @@ export const Industry = ({ datalistId, values }) => {
                     return {
                       ...prospect,
                       // eslint-disable-next-line max-len
-                      [`prospect.orgKYCDetails.industryMultiSelect[0].industry[${industryIndex}]`]: value
+                      [`prospect.organizationInfo.industryMultiSelect[0].industry[${industryIndex}]`]: value
                     };
                   }}
                   shrink={true}
