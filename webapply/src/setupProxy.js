@@ -37,7 +37,7 @@ module.exports = function(app) {
   app.use(
     "/onboarding",
     proxy({
-      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      target: "https://quickapplyuat.rakbank.ae/digitalbank",
       changeOrigin: true
     })
   );
@@ -46,6 +46,21 @@ module.exports = function(app) {
     proxy({
       target: "https://uatrmtc.rakbankonline.ae",
       changeOrigin: true
+    })
+  );
+  app.use(
+    "/documentUploader",
+    proxy({
+      target: "https://uatrmtc.rakbankonline.ae",
+      changeOrigin: true
+    })
+  );
+  app.use(
+    "/rakbank-kyc",
+    proxy({
+      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      changeOrigin: true,
+      secure: false
     })
   );
 };

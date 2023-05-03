@@ -8,6 +8,16 @@ import routes from "../../../../routes";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { FaceRecognition } from "../../../../components/FaceRecognition/FaceRecognition";
 import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/UploadFileWrapper";
+import StakeholdersDetail from "./StakeholdersDetail";
+import { BackLink } from "../../../../components/Buttons/BackLink";
+import routes from "../../../../routes";
+import { removeEncodingPrefix } from "../../../../utils/ocr";
+
+import { getSdkConfig } from "../../../../store/selectors/sdkConfig";
+import { createSdkCofig } from "../../../../store/actions/sdkConfig";
+import { getKyc, getTransactionId } from "../../../../store/selectors/kyc";
+import { analyseOcr, removeEidOcrData, removePassportOcrData } from "../../../../store/actions/kyc";
+
 // import { OverlayLoader } from "../../../../components/Loader";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 
@@ -18,6 +28,9 @@ import { ScanViaMobile } from "./MobileScan";
 import { DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
 
 import { useStyles } from "./styled";
+import { OCRScanner } from "./OCRScanner";
+import { OverlayLoader } from "../../../../components/Loader";
+import { DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
 
 export const CompanyStakeholdersComponent = ({
   fullName,
@@ -26,17 +39,11 @@ export const CompanyStakeholdersComponent = ({
   isLoading,
   isDisableNextStep
 }) => {
+  const { sdkConfig } = useSelector(getSdkConfig);
+  const { loading, analysedEidData } = useSelector(getKyc);
+  const transactionId = useSelector(getTransactionId);
+
   const classes = useStyles();
-  const [openDocUpload, setOpenDocUpload] = useState(false);
-  const [docUploadType, setDocUploadType] = useState(null);
-
-  const openDocUploadModal = type => {
-    console.log("openUploadModal", type);
-    setOpenDocUpload(true);
-    setDocUploadType(type);
-  };
-
-  let modalTitle = docUploadType === DOC_TYPE_EID ? "Upload Emirates ID" : "Upload passport";
   return (
     <>
       <h3 className={classes.mainTitle}>Now let&apos;s talk about you</h3>
@@ -50,27 +57,23 @@ export const CompanyStakeholdersComponent = ({
 
             <div className={classes.horizontalLine} />
 
-            <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
+      <StakeholdersDetail name={fullName} companyCategory={companyCategory}/>
 
-            <div className={classes.uploadComponent}>
-              <UploadFileWrapper
-                fieldDescription="Emirates ID (both sides)"
-                helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                // handleScan={onScanEid}
-                handleUpload={() => openDocUploadModal(DOC_TYPE_EID)}
-              />
-            </div>
+      <div className={classes.uploadComponent}>
+        <UploadFileWrapper
+          fieldDescription="Emirates ID (both sides)"
+          helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
+        />
+      </div>
 
-            <div className={classes.uploadComponent}>
-              <UploadFileWrapper
-                fieldDescription="Passport (photo page)"
-                helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
-                isStepActive={false}
-                disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
-                // handleScan={onScanPassport}
-                handleUpload={() => openDocUploadModal(DOC_TYPE_PASSPORT)}
-              />
-            </div>
+      <div className={classes.uploadComponent}>
+        <UploadFileWrapper
+          fieldDescription="Passport (photo page)"
+          helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
+          isStepActive={false}
+          disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
+        />
+      </div>
 
             <div className={classes.uploadComponent}>
               <FaceRecognition
@@ -86,28 +89,14 @@ export const CompanyStakeholdersComponent = ({
             <div className="linkContainer">
               <BackLink path={routes.companyInfo} />
 
-              <NextStepButton
-                handleClick={goToFinalQuestions}
-                isDisplayLoader={isLoading}
-                disabled={isDisableNextStep}
-                label="Next"
-                justify="flex-end"
-              />
-            </div>
-
-            {openDocUpload && (
-              <UploadFileModal
-                isOpen={openDocUpload}
-                typeOfUpload={docUploadType}
-                title={modalTitle}
-                handleClose={() => setOpenDocUpload(false)}
-                // checkOCRScan={handleOCRScanning}
-                // setEidDetails={data => setEIDFile(data)}
-              />
-            )}
-          </Form>
-        )}
-      </Formik>
+        <NextStepButton
+          handleClick={goToFinalQuestions}
+          isDisplayLoader={isLoading}
+          disabled={isDisableNextStep}
+          label="Next"
+          justify="flex-end"
+        />
+      </div>
     </>
   );
 };

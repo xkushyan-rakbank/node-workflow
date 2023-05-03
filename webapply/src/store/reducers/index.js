@@ -15,6 +15,8 @@ import completedSteps from "./completedSteps";
 import accountNumbers from "./accountNumbers";
 import agentFeatures from "./agentFeatures";
 import inputFieldBehaviours from "./inputFieldBehaviours";
+import kyc from "./kyc";
+import sdkConfig from "./sdkConfig";
 
 const reducers = history =>
   combineReducers({
@@ -33,7 +35,9 @@ const reducers = history =>
     completedSteps,
     accountNumbers,
     agentFeatures,
-    inputFieldBehaviours
+    inputFieldBehaviours,
+    kyc,
+    sdkConfig
   });
 
 export default reducers;
