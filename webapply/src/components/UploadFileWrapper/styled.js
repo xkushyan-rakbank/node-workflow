@@ -32,6 +32,9 @@ export const useStyles = makeStyles(theme => ({
   },
   btnWrapper: {
     display: "flex",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column"
+    },
     "@media (max-width: 425px)": {
       marginTop: "20px"
     }
@@ -54,7 +57,11 @@ export const useStyles = makeStyles(theme => ({
       backgroundColor: "#1F1F1F !important"
     },
     "&:first-child": {
-      marginRight: "8px"
+      marginRight: "8px",
+      [theme.breakpoints.down("xs")]: {
+        marginRight: "0px",
+        marginBottom: "8px"
+      }
     },
     "@media (max-width: 372px)": {
       marginLeft: 0

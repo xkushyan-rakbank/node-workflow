@@ -23,7 +23,7 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
 
   return (
     <Modal open={isOpen}>
-      <div style={modalStyle} className={cx(classes.paper, classes.previewModal)}>
+      <div style={modalStyle} className={classes.paper}>
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
         <h2 className={classes.previewModalTitle}>Review your {title}</h2>
         <p className={classes.previewModalSubtitle}>

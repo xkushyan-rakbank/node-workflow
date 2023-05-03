@@ -138,7 +138,10 @@ export const useStyles = makeStyles(theme => ({
     width: "710px",
     borderRadius: "20px",
     textAlign: "left",
-    padding: "40px"
+    padding: "40px",
+    [theme.breakpoints.down("md")]: {
+      width: "70%"
+    }
   },
   uploadModalErrorWrapper: {
     display: "flex",
