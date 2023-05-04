@@ -212,6 +212,7 @@ export const useStyles = makeStyles(theme => ({
   previewModalSubtitle: {
     margin: "0px",
     marginTop: "8px",
+    marginBottom: "8px",
     fontSize: "20px",
     fontWeight: "400",
     lineHeight: "28px",

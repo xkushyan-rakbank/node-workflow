@@ -43,7 +43,7 @@ export const UploadFileWrapper = ({
                 {isSuccess ? (
                   <div className={cx(classes.subcontent, classes.successText)}>
                     <SuccessIcon />
-                    &nbsp;{successText}
+                    &nbsp;&nbsp;{successText}
                   </div>
                 ) : (
                   <div className={classes.subcontent}>{helperText}</div>
