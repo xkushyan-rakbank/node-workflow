@@ -17,9 +17,9 @@ import { CompanyDetails } from "./CompanyDetails";
 import { Industry } from "./Industry";
 
 import {
+  getCompanyDocuments,
   getIsIslamicBanking,
-  getOrganizationInfo,
-  getOrgKYCDetails
+  getOrganizationInfo
 } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
@@ -29,6 +29,11 @@ import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uplo
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
+
+const CompanyDocumentKeys = {
+  Moa: "prospect.prospectDocuments.companyDocument.moa",
+  TradeLicenseOrCOI: "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
+};
 
 export const CompanyInfo = ({
   isComeFromROScreens,
@@ -49,6 +54,12 @@ export const CompanyInfo = ({
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
+  const companyDocuments = useSelector(getCompanyDocuments) || [];
+  const tradeLicenseOrCOI = companyDocuments.some(
+    doc => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI
+  );
+  const moa = companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.Moa);
+
   useEffect(() => {
     dispatch(initDocumentUpload());
   }, []);
@@ -57,8 +68,8 @@ export const CompanyInfo = ({
     companyName: "",
     shortName: "",
     companyCategory: "",
-    tradeLicenseOrCOI: "",
-    moa: "",
+    tradeLicenseOrCOI,
+    moa,
     licenseIssuingAuthority: "",
     countryOfIncorporation: "",
     licenseOrCOINumber: "",
@@ -103,7 +114,11 @@ export const CompanyInfo = ({
         return false;
       })
       .test("fileSize", "The file is too large", file => {
-        return file && file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize;
+        return (
+          file &&
+          (file === true ||
+            (file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize))
+        );
       }),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
@@ -123,7 +138,9 @@ export const CompanyInfo = ({
       })
       .test("fileSize", "The file is too large", file => {
         return (
-          file && file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize
+          file &&
+          (file === true ||
+            (file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize))
         );
       })
   };
