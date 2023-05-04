@@ -34,7 +34,8 @@ export const CompanyInfo = ({
   isComeFromROScreens,
   isAllStepsCompleted,
   isLoading,
-  handleClickNextStep
+  handleClickNextStep,
+  showLoading
 }) => {
   const dispatch = useDispatch();
   const conditionalSchema = useDynamicValidation();
@@ -113,7 +114,7 @@ export const CompanyInfo = ({
       }),
     licenseOrCOIExpiryDate: Yup.date()
       .required(getRequiredMessage("License or COI expiry date"))
-      .min(addDays(new Date(), 10), getInvalidMessage("License or COI expiry date")),
+      .min(addDays(new Date(), 9), getInvalidMessage("License or COI expiry date")),
     dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
       .test("required", getRequiredMessage("trade License Or COI"), file => {
@@ -132,6 +133,7 @@ export const CompanyInfo = ({
   }
 
   const handleClick = props => {
+    showLoading(true);
     dispatch(
       uploadDocuments({
         docs: {
@@ -139,7 +141,8 @@ export const CompanyInfo = ({
           "prospect.prospectDocuments.companyDocument.moa": props.moa
         },
         documentSection: "companyDocuments",
-        onSuccess: () => onUploadSuccess(props)
+        onSuccess: () => onUploadSuccess(props),
+        onFailure: () => showLoading(false)
       })
     );
   };

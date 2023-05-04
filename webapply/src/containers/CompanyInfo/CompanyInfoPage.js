@@ -43,6 +43,7 @@ export const CompanyInfoPage = ({
       isComeFromROScreens={isComeFromROScreens}
       isLoading={isLoading}
       handleClickNextStep={handleClickNextStep}
+      showLoading={data => setIsLoading(data)}
     />
   );
 };
