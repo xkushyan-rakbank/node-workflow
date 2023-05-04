@@ -198,9 +198,7 @@ export const useStyles = makeStyles(theme => ({
     height: "400px",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    backgroundSize: "contain"
-  },
-  bgColor: {
+    backgroundSize: "contain",
     background: "#D9D9D9"
   },
   previewModalTitle: {

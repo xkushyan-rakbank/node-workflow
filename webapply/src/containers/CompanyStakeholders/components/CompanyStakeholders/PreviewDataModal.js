@@ -36,7 +36,7 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
               <div className={classes.previewImgWrapper}>
                 <p className={classes.previewModalSubtitle}>Front</p>
                 <div
-                  className={cx(classes.previewImg, classes.bgColor)}
+                  className={classes.previewImg}
                   style={{
                     backgroundImage: `url(${previewData.docFront.link})`
                   }}
@@ -45,7 +45,7 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
               <div className={classes.previewImgWrapper}>
                 <p className={classes.previewModalSubtitle}>Back</p>
                 <div
-                  className={cx(classes.previewImg, classes.bgColor)}
+                  className={classes.previewImg}
                   style={{
                     backgroundImage: `url(${previewData.docBack.link})`
                   }}
@@ -57,7 +57,7 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
             <div className={classes.previewImgWrapper}>
               <p className={classes.previewModalSubtitle}>Photo page</p>
               <div
-                className={cx(classes.previewImg, classes.bgColor)}
+                className={classes.previewImg}
                 style={{
                   backgroundImage: `url(${previewData.link})`
                 }}
