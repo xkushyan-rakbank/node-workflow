@@ -25,7 +25,8 @@ export const CompanyStakeholdersContainer = ({
   isAllStakeholdersStepsCompleted,
   isAnyStakeholderStepsCompleted,
   isSendingProspect,
-  editableStakeholder
+  editableStakeholder,
+  createKycTransaction
 }) => {
   const pushHistory = useTrackingHistory();
 
@@ -34,6 +35,10 @@ export const CompanyStakeholdersContainer = ({
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   useViewId(true);
+
+  useEffect(() => {
+    createKycTransaction();
+  }, []);
 
   useEffect(() => {
     if (!stakeholders.length) {

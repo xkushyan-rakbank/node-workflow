@@ -191,4 +191,21 @@ apiClient.interceptors.response.use(
   }
 );
 
+const kycTransactionAPIClient = {};
+
+export const configureKYCTransactionAPIClient = (transactionId, kycAccessToken) => {
+  kycTransactionAPIClient[transactionId] = axios.create({
+    baseURL: process.env.REACT_APP_RAKBANK_KYC_API_PATH,
+    headers: {
+      Authorization: `Bearer ${kycAccessToken}`
+    },
+    timeout: 30000 // 30 seconds
+  });
+  return kycTransactionAPIClient[transactionId];
+};
+
+export const getKYCTransactionAPIClientInstance = transactionId => {
+  return kycTransactionAPIClient[transactionId];
+};
+
 export default apiClient;

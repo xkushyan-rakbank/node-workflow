@@ -37,8 +37,16 @@ module.exports = function(app) {
   app.use(
     "/onboarding",
     proxy({
-      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      target: "https://quickapplyuat.rakbank.ae/digitalbank",
       changeOrigin: true
+    })
+  );
+  app.use(
+    "/rakbank-kyc",
+    proxy({
+      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      changeOrigin: true,
+      secure: false
     })
   );
   app.use(

@@ -1,4 +1,8 @@
-import httpClient, { uploadClient } from "./axiosConfig";
+import httpClient, {
+  configureKYCTransactionAPIClient,
+  getKYCTransactionAPIClientInstance,
+  uploadClient
+} from "./axiosConfig";
 import { buildURI } from "./../utils/buildURI";
 
 export const OTP_ACTION_GENERATE = "generate";
@@ -145,6 +149,60 @@ export const decisions = {
       ...headers,
       data
     })
+};
+
+export const createKYCTransaction = {
+  send: (prospectId, headers) =>
+    httpClient
+      .request({
+        url: buildURI("createKYCTransactionUri"), //webapply/products/sme/kyc-transactions
+        method: "POST",
+        ...headers,
+        data: { prospectId }
+      })
+      .then(response => {
+        const {
+          data: { kycUserToken, kycTransactionId }
+        } = response;
+        configureKYCTransactionAPIClient(kycTransactionId, kycUserToken);
+        return response;
+      })
+};
+
+export const getSdkConfiguration = {
+  get: transactionId => {
+    const kycTransactionClient = getKYCTransactionAPIClientInstance(transactionId);
+    return kycTransactionClient
+      .request({
+        url: "efr/sdk-configuration",
+        method: "GET"
+      })
+      .then(response => {
+        console.log("response", response);
+        return response.data.data;
+      });
+  }
+};
+
+export const analyzeOcrData = {
+  send: async (transactionId, ocrData, headers, documentType) => {
+    const kycTransactionClient = await getKYCTransactionAPIClientInstance(transactionId);
+    return kycTransactionClient
+      .request({
+        url: "/efr/transactions/" + transactionId + "/ocr", //webapply/products/sme/kyc-transactions
+        method: "POST",
+        data: {
+          bundleId: "com.rak",
+          document: ocrData.docFront,
+          documentBack: ocrData.docBack,
+          documentType
+        },
+        ...headers
+      })
+      .then(response => {
+        return response.data;
+      });
+  }
 };
 
 export const documents = {
