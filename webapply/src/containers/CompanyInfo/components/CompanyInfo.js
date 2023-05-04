@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
@@ -17,9 +17,9 @@ import { CompanyDetails } from "./CompanyDetails";
 import { Industry } from "./Industry";
 
 import {
+  getCompanyDocuments,
   getIsIslamicBanking,
-  getOrganizationInfo,
-  getOrgKYCDetails
+  getOrganizationInfo
 } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
@@ -30,11 +30,17 @@ import { TradeLicenceInformation } from "./TradeLicenceInformation";
 import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
 
+const CompanyDocumentKeys = {
+  Moa: "prospect.prospectDocuments.companyDocument.moa",
+  TradeLicenseOrCOI: "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
+};
+
 export const CompanyInfo = ({
   isComeFromROScreens,
   isAllStepsCompleted,
   isLoading,
-  handleClickNextStep
+  handleClickNextStep,
+  showLoading
 }) => {
   const dispatch = useDispatch();
   const conditionalSchema = useDynamicValidation();
@@ -48,6 +54,16 @@ export const CompanyInfo = ({
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
+  const companyDocuments = useSelector(getCompanyDocuments) || [];
+  const tradeLicenseOrCOI = useMemo(
+    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI),
+    [companyDocuments]
+  );
+  const moa = useMemo(
+    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.Moa),
+    [companyDocuments]
+  );
+
   useEffect(() => {
     dispatch(initDocumentUpload());
   }, []);
@@ -56,8 +72,8 @@ export const CompanyInfo = ({
     companyName: "",
     shortName: "",
     companyCategory: "",
-    tradeLicenseOrCOI: "",
-    moa: "",
+    tradeLicenseOrCOI,
+    moa,
     licenseIssuingAuthority: "",
     countryOfIncorporation: "",
     licenseOrCOINumber: "",
@@ -102,7 +118,11 @@ export const CompanyInfo = ({
         return false;
       })
       .test("fileSize", "The file is too large", file => {
-        return file && file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize;
+        return (
+          file &&
+          (file === true ||
+            (file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize))
+        );
       }),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
@@ -113,7 +133,7 @@ export const CompanyInfo = ({
       }),
     licenseOrCOIExpiryDate: Yup.date()
       .required(getRequiredMessage("License or COI expiry date"))
-      .min(addDays(new Date(), 10), getInvalidMessage("License or COI expiry date")),
+      .min(addDays(new Date(), 9), getInvalidMessage("License or COI expiry date")),
     dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
       .test("required", getRequiredMessage("trade License Or COI"), file => {
@@ -122,7 +142,9 @@ export const CompanyInfo = ({
       })
       .test("fileSize", "The file is too large", file => {
         return (
-          file && file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize
+          file &&
+          (file === true ||
+            (file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize))
         );
       })
   };
@@ -132,6 +154,7 @@ export const CompanyInfo = ({
   }
 
   const handleClick = props => {
+    showLoading(true);
     dispatch(
       uploadDocuments({
         docs: {
@@ -139,7 +162,8 @@ export const CompanyInfo = ({
           "prospect.prospectDocuments.companyDocument.moa": props.moa
         },
         documentSection: "companyDocuments",
-        onSuccess: () => onUploadSuccess(props)
+        onSuccess: () => onUploadSuccess(props),
+        onFailure: () => showLoading(false)
       })
     );
   };
