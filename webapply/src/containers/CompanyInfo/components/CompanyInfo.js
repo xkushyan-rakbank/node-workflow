@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
@@ -55,10 +55,14 @@ export const CompanyInfo = ({
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   const companyDocuments = useSelector(getCompanyDocuments) || [];
-  const tradeLicenseOrCOI = companyDocuments.some(
-    doc => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI
+  const tradeLicenseOrCOI = useMemo(
+    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI),
+    [companyDocuments]
   );
-  const moa = companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.Moa);
+  const moa = useMemo(
+    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.Moa),
+    [companyDocuments]
+  );
 
   useEffect(() => {
     dispatch(initDocumentUpload());
