@@ -49,7 +49,6 @@ export function* analyseOcrDataSaga({ payload }) {
     );
     const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry, "mrz");
     const nationality = getOcrFieldValueBySource(response?.nationalityIso2, "mrz");
-    const firstName = getOcrFieldValueBySource(response?.firstName, "mrz");
 
     if (documentType === DOC_TYPE_EID) {
       daysToExpiry <= 10
@@ -58,12 +57,7 @@ export function* analyseOcrDataSaga({ payload }) {
     }
     if (documentType === DOC_TYPE_PASSPORT) {
       const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2, "mrz");
-      const firstNameAsInEid = getOcrFieldValueBySource(analysedEidData?.firstName, "mrz");
-
-      const firstWordOfEidName = firstNameAsInEid?.split(" ")[0];
-      const firstWordOfPassportName = firstName?.split(" ")[0];
-
-      if (nationalityAsInEid !== nationality || firstWordOfEidName !== firstWordOfPassportName) {
+      if (nationalityAsInEid !== nationality) {
         yield put(analyseOcrFail(DOC_MISMATCH));
       } else if (daysToExpiry <= 10) {
         yield put(analyseOcrFail(PASSPORT_EXPIRY));
