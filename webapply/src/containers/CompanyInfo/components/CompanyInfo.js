@@ -5,6 +5,7 @@ import get from "lodash/get";
 import uniqueId from "lodash/uniqueId";
 import { Divider } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
+import { addDays } from "date-fns";
 import routes from "../../../routes";
 import { useStyles } from "./styled";
 
@@ -15,7 +16,11 @@ import { SectionTitle } from "../../../components/SectionTitle";
 import { CompanyDetails } from "./CompanyDetails";
 import { Industry } from "./Industry";
 
-import { getIsIslamicBanking, getOrganizationInfo, getOrgKYCDetails } from "../../../store/selectors/appConfig";
+import {
+  getIsIslamicBanking,
+  getOrganizationInfo,
+  getOrgKYCDetails
+} from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { checkIsTrimmed } from "../../../utils/validation";
@@ -106,7 +111,9 @@ export const CompanyInfo = ({
       .matches(/^[a-zA-Z0-9=./-]+$/, {
         message: "Invalid Format"
       }),
-    licenseOrCOIExpiryDate: Yup.date().required(getRequiredMessage("license Or COI ExpiryDate")),
+    licenseOrCOIExpiryDate: Yup.date()
+      .required(getRequiredMessage("License or COI expiry date"))
+      .min(addDays(new Date(), 10), getInvalidMessage("License or COI expiry date")),
     dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
       .test("required", getRequiredMessage("trade License Or COI"), file => {
