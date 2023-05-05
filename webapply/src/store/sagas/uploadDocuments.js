@@ -479,6 +479,7 @@ export function* uploadDocuments({ payload }) {
     // yield put(documentsUploadCompleted(true));
     // yield Promise.all(promiseArray);
   } catch (error) {
+    payload.onFailure();
     log(error);
   }
 }
