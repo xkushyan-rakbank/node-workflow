@@ -16,7 +16,7 @@ then
     echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
     echo 'REACT_APP_RECAPTCHA_ENABLE=N' >> webapply/.env.production
     echo 'REACT_APP_ENCRYPTION_ENABLE=N' >> webapply/.env.production
-    echo 'REACT_APP_RAKBANK_KYC_API_PATH=https://quickapplyuat.rakbank.ae/digitalbank/rakbank-kyc' >> webapply/.env.production
+    echo 'REACT_APP_RAKBANK_KYC_API_PATH=https://quickapplydev.rakbank.ae/digitalbank/rakbank-kyc' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "release" ];
     then
 		echo 'PUBLIC_URL=https://quickapplyuat.rakbank.ae/digitalbank' > webapply/.env.production
