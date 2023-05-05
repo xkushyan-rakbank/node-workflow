@@ -101,5 +101,14 @@ export const useStyles = makeStyles(theme => ({
   sectionButton: {
     marginTop: 60,
     [theme.breakpoints.only("xs")]: buttonMobile
+  },
+  info: {
+    "& a": {
+      color: "#fff",
+      textDecoration: "underline",
+      "&:hover": {
+        textDecoration: "none"
+      }
+    }
   }
 }));

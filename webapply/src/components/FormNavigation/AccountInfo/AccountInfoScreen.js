@@ -54,7 +54,11 @@ export const AccountInfoScreen = ({
             component="span"
             classes={{ root: classes.sectionSubtitle }}
           >
-            {subtitle}
+            {title === "Business Current Account" ? (
+              <div className={cx(classes.info)} dangerouslySetInnerHTML={{ __html: subtitle }} />
+            ) : (
+              subtitle
+            )}
           </Typography>
           <ContainedButton
             withRightArrow
