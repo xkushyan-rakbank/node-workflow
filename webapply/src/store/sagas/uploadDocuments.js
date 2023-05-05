@@ -469,9 +469,11 @@ export function* uploadDocuments({ payload }) {
         });
       }
     }
-    yield put(
-      updateProspect({ [`prospect.documents.${payload.documentSection}`]: uploadedDocuments })
-    );
+    if (uploadedDocuments.length) {
+      yield put(
+        updateProspect({ [`prospect.documents.${payload.documentSection}`]: uploadedDocuments })
+      );
+    }
     payload.onSuccess();
 
     // yield put(documentsUploadCompleted(true));
