@@ -75,6 +75,14 @@ jobs:
           npm cache clean
           npm install --verbose
           npm run build
+          cd ./build
+          echo "############### Before ############### "
+          cat index.html
+          touch copy.html
+          awk '{gsub("</body>", "<script type=\"text/javascript\">console.log(\"Build Version:\" $(Build.BuildId)</script></body>"); print}' index.html > copy.html
+          cp copy.html index.html
+          echo "############### After ############### "
+          cat index.html
         env:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
