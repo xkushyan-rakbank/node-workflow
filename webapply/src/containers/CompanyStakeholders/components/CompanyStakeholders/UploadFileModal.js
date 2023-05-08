@@ -85,7 +85,7 @@ export const UploadFileModal = ({
     const file = acceptedFiles[0];
     setUploadedFileName(prev => ({
       ...prev,
-      [name]: file.name
+      [name]: file?.name
     }));
 
     let reader = new FileReader();
