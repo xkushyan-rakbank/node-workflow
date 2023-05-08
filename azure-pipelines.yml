@@ -147,6 +147,18 @@ jobs:
           rootFolderOrFile: '$(Build.ArtifactStagingDirectory)/webapply/'
           archiveFile: '$(Build.ArtifactStagingDirectory)/webapply/webapply.zip'
 
+      - task: CopyFiles@2
+        displayName: 'Stage Artifacts'
+        inputs:
+          SourceFolder: releasenote/
+          TargetFolder: '$(build.artifactstagingdirectory)/releasenote'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Build Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/releasenote'
+          ArtifactName: 'ReleaseNote'
+
 # below is used for the publishing the artifacts to the jfrog artifactory  
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to Dev'
