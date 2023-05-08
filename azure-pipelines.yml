@@ -17,6 +17,9 @@ trigger:
     exclude:
       - develop
 
+variables:
+  - group: 'onboarding_variables'
+
 jobs:
     - job: Webapply
       timeoutInMinutes: 120
@@ -87,6 +90,29 @@ jobs:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
         enabled: true
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            username='$(username)'
+            pat='$(pr_pat_token)'
+            Projectname=Onboarding
+            repo_name=Onboarding
+            branchname='$(Build.SourceBranch)'
+
+            mkdir releasenote
+            PRID=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests?searchCriteria.status=completed&searchCriteria.targetRefName=$branchname&api-version=6.1" | jq -r '.value[].pullRequestId' | head -1)
+            echo "making the change logs for the pull request id : $PRID"
+            TitleName=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID?api-version=6.1" | jq -r '.title')
+            DATE=$(date +"%d/%m/%Y") > releasenote/release.txt
+            echo "$DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
+            echo "==================================" >> releasenote/release.txt
+            echo "Pull Request : $TitleName" >> releasenote/release.txt
+            curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[] | [ .comment ] | @tsv' >> releasenote/release.txt
+            cat releasenote/release.txt
+        displayName: 'Change_log Genaration'
+
       - bash : |
           cd webapply
           #npm install redux-mock-store --save-dev
