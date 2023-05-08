@@ -108,7 +108,7 @@ jobs:
             DATE=$(date +"%d/%m/%Y") > releasenote/release.txt
             echo "$DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
             echo "==================================" >> releasenote/release.txt
-            echo "Pull Request : $TitleName" >> releasenote/release.txt
+            echo "$TitleName" >> releasenote/release.txt
             curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[] | [ .comment ] | @tsv' >> releasenote/release.txt
             cat releasenote/release.txt
         displayName: 'Change_log Genaration'
