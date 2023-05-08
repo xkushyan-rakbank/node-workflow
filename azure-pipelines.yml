@@ -109,7 +109,7 @@ jobs:
             echo "$DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
             echo "==================================" >> releasenote/release.txt
             echo "$TitleName" >> releasenote/release.txt
-            curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[] | [ .comment ] | @tsv' >> releasenote/release.txt
+            curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[] | [ .comment ] | awk '{print NR ". " $0}' >> releasenote/release.txt
             cat releasenote/release.txt
         displayName: 'Change_log Genaration'
 
