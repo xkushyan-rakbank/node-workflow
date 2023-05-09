@@ -22,6 +22,7 @@ import { endpoints } from "../constants/config";
 
 const SYM_KEY_HEADER = "x-sym-key";
 const REQUEST_ID_HEADER = "x-request-id";
+const TRANSACTION_ID_HEADER = "X-Trxn-Id";
 const ENCRYPT_METHODS = ["post", "put"];
 const ENCRYPTION_ENABLE = process.env.REACT_APP_ENCRYPTION_ENABLE || "N";
 const rsaPublicKey = process.env.REACT_APP_RSA_PUBLIC_KEY;
@@ -43,7 +44,8 @@ apiClient.interceptors.request.use(config => {
       ...config.headers,
       "Cache-Control": "no-cache, no-store",
       Pragma: "no-cache",
-      [REQUEST_ID_HEADER]: nanoid()
+      [REQUEST_ID_HEADER]: nanoid(),
+      [TRANSACTION_ID_HEADER]: crypto.randomUUID()
     }
   };
 });
