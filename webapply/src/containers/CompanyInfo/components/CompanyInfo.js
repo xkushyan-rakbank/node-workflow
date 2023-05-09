@@ -127,16 +127,21 @@ export const CompanyInfo = ({
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
     licenseOrCOINumber: Yup.string()
-      .required(getRequiredMessage("license Or COINumber"))
+      .required(getRequiredMessage("License Or COINumber"))
       .matches(/^[a-zA-Z0-9=./-]+$/, {
         message: "Invalid Format"
       }),
     licenseOrCOIExpiryDate: Yup.date()
-      .required(getRequiredMessage("License or COI expiry date"))
-      .min(addDays(new Date(), 9), getInvalidMessage("License or COI expiry date")),
-    dateOfIncorporation: Yup.date().required(getRequiredMessage("date Of Incorporation")),
+      .nullable()
+      .min(addDays(new Date(), 9), getInvalidMessage("License or COI expiry date"))
+      .typeError(getInvalidMessage("License or COI expiry date"))
+      .required(getRequiredMessage("License or COI expiry date")),
+    dateOfIncorporation: Yup.date()
+      .nullable()
+      .typeError(getInvalidMessage("Date Of Incorporation"))
+      .required(getRequiredMessage("Date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
-      .test("required", getRequiredMessage("trade License Or COI"), file => {
+      .test("required", getRequiredMessage("Trade License Or COI"), file => {
         if (file) return true;
         return false;
       })
