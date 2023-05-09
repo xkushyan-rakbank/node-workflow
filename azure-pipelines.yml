@@ -109,7 +109,24 @@ jobs:
             echo "$DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
             echo "==================================" >> releasenote/release.txt
             echo "$TitleName" >> releasenote/release.txt
-            curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[]' | [ .comment ] | awk '{print NR ". " $0}' >> releasenote/release.txt
+            #curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[] | .comment' | awk '{print NR ". " $0}' >> releasenote/release.txt
+            response=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1")
+            fix=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("fix:")) | .comment' | awk '{print NR ". " substr($0, 6)}')
+            break_change=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("BreakChange:")) | .comment' | awk '{print NR ". " substr($0, 14)}')
+            feat=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("feat:")) | .comment' | awk '{print NR ". " substr($0, 7)}')
+            changes=$(echo "$response" | jq -r '.value[] | select((.comment | startswith("fix:")) or (.comment | startswith("BreakChange:")) or (.comment | startswith("feat:")) | not) | .comment' | awk '{print NR ". " $0}')
+            if [[ -n "$fix" ]]; then
+                echo -e "fix:\n\n$fix\n"
+            fi
+            if [[ -n "$break_change" ]]; then
+                echo -e "BreakChange:\n\n$break_change\n"
+            fi
+            if [[ -n "$feat" ]]; then
+                echo -e "feat:\n\n$feat\n"
+            fi
+            if [[ -n "$Other Minor Changes" ]]; then
+                echo -e "Changes:\n\n$changes\n"
+            fi
             cat releasenote/release.txt
         displayName: 'Change_log Genaration'
 
