@@ -73,6 +73,45 @@ jobs:
           sh set-endpoint-and-recaptcha.sh $(env_to_deploy)
         displayName: 'Set $(env_to_deploy) Endpoint and Recaptcha status in .env.production file'
         condition: and(succeeded(),eq(variables.PkgBuild, 'True'))
+
+      - task: Bash@3
+        inputs:
+          targetType: 'inline'
+          script: |
+            username='$(username)'
+            pat='$(pr_pat_token)'
+            Projectname=Onboarding
+            repo_name=Onboarding
+            branchname='$(Build.SourceBranch)'
+
+            mkdir releasenote
+            PRID=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests?searchCriteria.status=completed&searchCriteria.targetRefName=$branchname&api-version=6.1" | jq -r '.value[].pullRequestId' | head -1)
+            echo "Making the change logs for the pull request id : $PRID"
+            TitleName=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID?api-version=6.1" | jq -r '.title')
+            DATE=$(date +"%d/%m/%Y") > releasenote/release.txt
+            echo "$DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
+            echo "==================================" >> releasenote/release.txt
+            echo "$TitleName" >> releasenote/release.txt
+            response=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1")
+            fix=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("fix:")) | .comment' | awk '{print NR ". " substr($0, 6)}')
+            break_change=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("BreakChange:")) | .comment' | awk '{print NR ". " substr($0, 14)}')
+            feat=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("feat:")) | .comment' | awk '{print NR ". " substr($0, 7)}')
+            changes=$(echo "$response" | jq -r '.value[] | select((.comment | startswith("fix:")) or (.comment | startswith("BreakChange:")) or (.comment | startswith("feat:")) | not) | .comment' | awk '{print NR ". " $0}')
+            if [[ -n "$fix" ]]; then
+                echo -e "fix:\n\n$fix\n"
+            fi
+            if [[ -n "$break_change" ]]; then
+                echo -e "BreakChange:\n\n$break_change\n" >> releasenote/release.txt
+            fi
+            if [[ -n "$feat" ]]; then
+                echo -e "feat:\n\n$feat\n" >> releasenote/release.txt
+            fi
+            if [[ -n "$Other Minor Changes" ]]; then
+                echo -e "Changes:\n\n$changes\n" >> releasenote/release.txt
+            fi
+            cat releasenote/release.txt
+        displayName: 'Change_log Genaration'
+        
       - bash : |
           cd webapply
           npm cache clean
@@ -90,45 +129,6 @@ jobs:
           REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY: $(REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY)
         displayName: 'Buildling webapply Application'
         enabled: true
-
-      - task: Bash@3
-        inputs:
-          targetType: 'inline'
-          script: |
-            username='$(username)'
-            pat='$(pr_pat_token)'
-            Projectname=Onboarding
-            repo_name=Onboarding
-            branchname='$(Build.SourceBranch)'
-
-            mkdir releasenote
-            PRID=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests?searchCriteria.status=completed&searchCriteria.targetRefName=$branchname&api-version=6.1" | jq -r '.value[].pullRequestId' | head -1)
-            echo "making the change logs for the pull request id : $PRID"
-            TitleName=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID?api-version=6.1" | jq -r '.title')
-            DATE=$(date +"%d/%m/%Y") > releasenote/release.txt
-            echo "$DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
-            echo "==================================" >> releasenote/release.txt
-            echo "$TitleName" >> releasenote/release.txt
-            #curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1" | jq -r '.value[] | .comment' | awk '{print NR ". " $0}' >> releasenote/release.txt
-            response=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1")
-            fix=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("fix:")) | .comment' | awk '{print NR ". " substr($0, 6)}')
-            break_change=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("BreakChange:")) | .comment' | awk '{print NR ". " substr($0, 14)}')
-            feat=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("feat:")) | .comment' | awk '{print NR ". " substr($0, 7)}')
-            changes=$(echo "$response" | jq -r '.value[] | select((.comment | startswith("fix:")) or (.comment | startswith("BreakChange:")) or (.comment | startswith("feat:")) | not) | .comment' | awk '{print NR ". " $0}')
-            if [[ -n "$fix" ]]; then
-                echo -e "fix:\n\n$fix\n"
-            fi
-            if [[ -n "$break_change" ]]; then
-                echo -e "BreakChange:\n\n$break_change\n"
-            fi
-            if [[ -n "$feat" ]]; then
-                echo -e "feat:\n\n$feat\n"
-            fi
-            if [[ -n "$Other Minor Changes" ]]; then
-                echo -e "Changes:\n\n$changes\n"
-            fi
-            cat releasenote/release.txt
-        displayName: 'Change_log Genaration'
 
       - bash : |
           cd webapply
