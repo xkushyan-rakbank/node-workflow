@@ -14,7 +14,8 @@
   height: 36px;
   border: 2px solid transparent;
   border-radius: 40px;
-  left: calc(50% - 18px);
+  right: 0px;
+  width: auto;
 }
 .ocr-elements-close-icon::after,
 .ocr-elements-close-icon::before {
@@ -28,7 +29,7 @@
   transform: rotate(45deg);
   border-radius: 5px;
   top: 15px;
-  left: 1px;
+  right: 0px;
 }
 .ocr-elements-close-icon::after {
   transform: rotate(-45deg);

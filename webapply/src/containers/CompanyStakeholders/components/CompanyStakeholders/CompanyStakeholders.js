@@ -42,6 +42,7 @@ export const CompanyStakeholdersComponent = ({
   const [actionType, setActionType] = useState(null);
 
   const openDocUploadModal = type => {
+    onRemoveOcrData(type);
     setOpenDocUpload(true);
     setDocUploadType(type);
   };
@@ -62,11 +63,13 @@ export const CompanyStakeholdersComponent = ({
   }, [transactionId]);
 
   const onScanEid = () => {
+    onRemoveOcrData(DOC_TYPE_EID);
     setOpenEidScanner(true);
     setActionType("Scanned");
   };
 
   const onScanPassport = () => {
+    onRemoveOcrData(DOC_TYPE_PASSPORT);
     setOpenPassportScanner(true);
     setActionType("Scanned");
   };
@@ -167,6 +170,12 @@ export const CompanyStakeholdersComponent = ({
                 data={eidFile}
               />
             </div>
+            {isEmpty(analysedEidData) && error && (
+              <div className={classes.uploadModalErrorWrapper}>
+                <ErrorOutlineIcon className={classes.errorIcon} />
+                {error}
+              </div>
+            )}
 
             <div className={classes.uploadComponent}>
               <UploadFileWrapper
@@ -185,7 +194,7 @@ export const CompanyStakeholdersComponent = ({
                 data={passportFile}
               />
             </div>
-            {error && (
+            {!isEmpty(analysedEidData) && error && (
               <div className={classes.uploadModalErrorWrapper}>
                 <ErrorOutlineIcon className={classes.errorIcon} />
                 {error}

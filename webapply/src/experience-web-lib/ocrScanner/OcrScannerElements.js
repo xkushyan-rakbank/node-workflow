@@ -15,12 +15,12 @@ const OcrScannerElements = ({
   return (
     isOcrScannerReady && (
       <div className="App">
+        <i className="ocr-elements-close-icon" onClick={stopOcrScan} />
         <div id="sub-title"></div>
         <div id="title"></div>
         <div id="message-html"></div>
         <div id="processing"></div>
         <div id="main" className={elementsClassName}>
-          <i className="ocr-elements-close-icon" onClick={stopOcrScan} />
           <div className="container">
             <div className="canvas-wrapper" id="canvas-wrapper">
               <video id="video"></video>

@@ -47,8 +47,6 @@ export default handleActions(
     [ANALYSE_OCR_FAIL]: (state, action) => ({
       ...state,
       loading: false,
-      analysedPassportData: {},
-      analysedEidData: {},
       analysedEidDataStatus: "failed",
       analysedPassportDataStatus: "failed",
       error: action.payload
