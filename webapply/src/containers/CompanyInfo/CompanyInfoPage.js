@@ -8,6 +8,7 @@ import { useLayoutParams } from "../FormLayout";
 import { NEXT, formStepper } from "../../constants";
 import routes from "../../routes";
 import { CompanyInfo } from "./components/CompanyInfo";
+import { OverlayLoader } from "../../components/Loader";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -36,14 +37,17 @@ export const CompanyInfoPage = ({
   }, [pushHistory, sendProspectToAPI]);
 
   return (
-    <CompanyInfo
-      fullName={fullName}
-      companyName={companyName}
-      isSendingProspect={isSendingProspect}
-      isComeFromROScreens={isComeFromROScreens}
-      isLoading={isLoading}
-      handleClickNextStep={handleClickNextStep}
-      showLoading={data => setIsLoading(data)}
-    />
+    <>
+      <CompanyInfo
+        fullName={fullName}
+        companyName={companyName}
+        isSendingProspect={isSendingProspect}
+        isComeFromROScreens={isComeFromROScreens}
+        isLoading={isLoading}
+        handleClickNextStep={handleClickNextStep}
+        showLoading={data => setIsLoading(data)}
+      />
+      <OverlayLoader open={isLoading} text={"Please wait while we are saving your data..."} />
+    </>
   );
 };
