@@ -48,7 +48,8 @@ import {
   VIEW_IDS,
   STEP_STATUS,
   AUTO_SAVE_INTERVAL,
-  applicationdedupe
+  applicationdedupe,
+  AUTO_SAVE_DISABLED_VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
@@ -59,7 +60,12 @@ export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
   while (true) {
     const actions = yield flush(chan);
-    if (actions.length) {
+    const newProspect = yield select(getProspect);
+    const viewId = newProspect?.applicationInfo?.viewId;
+    if (
+      actions.length &&
+      !(AUTO_SAVE_DISABLED_VIEW_IDS.includes(viewId) && actions[0]?.payload?.saveType === "auto")
+    ) {
       const action = actions.find(act => act.payload.saveType === CONTINUE) || actions[0];
       yield call(sendProspectToAPI, action);
     }
@@ -206,9 +212,11 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
           createProspectPayload[key] = getRequestPayloadForNode(key, newProspect);
         }
       });
+
     createProspectPayload["viewId"] = viewId;
     createProspectPayload["actionType"] = actionType;
     createProspectPayload["saveType"] = saveType;
+
     const { data } = yield call(prospect.update, prospectId, createProspectPayload, headers);
 
     if (data.accountInfo && Array.isArray(data.accountInfo)) {
