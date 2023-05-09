@@ -9,6 +9,13 @@ export const REMOVE_PASSPORT_OCR_DATA = "REMOVE_PASSPORT_OCR_DATA";
 export const REMOVE_EID_OCR_DATA = "REMOVE_EID_OCR_DATA";
 
 export const ANALYSE_OCR_FAIL = "ANALYSE_OCR_FAIL";
+export const CREATE_FACE_SCAN_KEY = "CREATE_FACE_SCAN_KEY";
+export const CREATE_FACE_SCAN_KEY_SUCCESS = "CREATE_FACE_SCAN_KEY_SUCCESS";
+export const CHECK_FACE_LIVELINESS = "CHECK_FACE_LIVELINESS";
+export const CREATE_FACE_LIVELINESS_FEEDBACK = "CREATE_FACE_LIVELINESS_FEEDBACK";
+export const SET_LIVELINESS_DATA = "SET_LIVELINESS_DATA";
+export const VALIDATE_IDENTITY_SUCCESS = "VALIDATE_IDENTITY_SUCCESS";
+export const VALIDATE_IDENTITY_FAIL = "VALIDATE_IDENTITY_FAIL";
 
 export const createKycTransaction = () => ({
   type: CREATE_KYC_TRANSACTION
@@ -44,4 +51,32 @@ export const removeEidOcrData = () => ({
 
 export const analyseOcrFail = payload => {
   return { type: ANALYSE_OCR_FAIL, payload };
+};
+
+export const createFaceScanKey = () => ({
+  type: CREATE_FACE_SCAN_KEY
+});
+
+export const createFaceScanKeySuccess = response => {
+  return { type: CREATE_FACE_SCAN_KEY_SUCCESS, payload: response };
+};
+
+export const checkFaceLiveliness = response => {
+  return { type: CHECK_FACE_LIVELINESS, payload: response };
+};
+
+export const saveFaceLivelinessFeedback = response => {
+  return { type: CREATE_FACE_LIVELINESS_FEEDBACK, payload: response };
+};
+
+export const setLivelinessData = response => {
+  return { type: SET_LIVELINESS_DATA, payload: response };
+};
+
+export const validateIdentitySuccess = () => {
+  return { type: VALIDATE_IDENTITY_SUCCESS };
+};
+
+export const validateIdentityFail = response => {
+  return { type: VALIDATE_IDENTITY_FAIL, payload: response };
 };

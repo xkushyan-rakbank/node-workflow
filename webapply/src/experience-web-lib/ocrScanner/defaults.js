@@ -1,12 +1,12 @@
 export const defaultLocaleMessages = {
-  sub_title_eid_front: `Scan your EID(front)`,
-  title_eid_front: `Help us make sure it's you`,
-  sub_title_eid_back: `Scan your EID(back)`,
-  title_eid_back: `FLIP IT! FLIP IT! GOOD!`,
-  sub_title_passport: `Scan your Passport`,
-  title_passport: `Help us make sure it's you`,
-  sub_title_visa: `Scan your VISA`,
-  title_visa: `Help us make sure it's you`,
+  sub_title_eid_front: "Scan your EID(front)",
+  title_eid_front: "Help us make sure it's you",
+  sub_title_eid_back: "Scan your EID(back)",
+  title_eid_back: "FLIP IT! FLIP IT! GOOD!",
+  sub_title_passport: "Scan your Passport",
+  title_passport: "Help us make sure it's you",
+  sub_title_visa: "Scan your VISA",
+  title_visa: "Help us make sure it's you",
   top_instruction_message_passport: "Show us the picture side of your Passport",
   top_instruction_message_eid_front: "Show us the picture side of your EID",
   top_instruction_message_eid_back: "Show us the opposite side of your EID",
@@ -25,5 +25,7 @@ export const defaultLocaleMessages = {
   document_center_instruction: "Please Centre your document",
   document_closer_instruction: "Place the document closer to the camera",
   document_tooclose_instruction: "Document too close!",
-  document_good_position: "Good Position. Please wait!.",
+  document_good_position: "Good Position. Please wait!."
 };
+
+export const defaultLivenessCheckList = ["CLOSE_EYES_AND_OPEN"];

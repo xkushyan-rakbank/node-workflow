@@ -73,5 +73,33 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px",
     lineHeight: "16px",
     color: "#757575"
+  },
+  uploadModalErrorWrapper: {
+    display: "flex",
+    alignItems: "center",
+    padding: "16px 38px",
+    marginTop: "8px",
+    marginBottom: "24px",
+    color: "#8D0C10",
+    background: "#FDE7E8",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    borderRadius: "10px"
+  },
+  errorIcon: {
+    width: "13px",
+    height: "13px",
+    marginRight: "8px"
+  },
+  completedWrapper: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "32px",
+    minWidth: "98px",
+    background: "#ECF9F2",
+    borderRadius: "10px",
+    fontSize: "12px"
   }
 }));

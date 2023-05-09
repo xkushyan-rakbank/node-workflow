@@ -5,7 +5,13 @@ import {
   ANALYSE_OCR,
   ANALYSE_OCR_FAIL,
   REMOVE_EID_OCR_DATA,
-  REMOVE_PASSPORT_OCR_DATA
+  REMOVE_PASSPORT_OCR_DATA,
+  CREATE_FACE_SCAN_KEY_SUCCESS,
+  CREATE_FACE_LIVELINESS_FEEDBACK,
+  CHECK_FACE_LIVELINESS,
+  SET_LIVELINESS_DATA,
+  VALIDATE_IDENTITY_SUCCESS,
+  VALIDATE_IDENTITY_FAIL
 } from "../actions/kyc";
 import { handleActions } from "../../utils/redux-utils";
 
@@ -16,7 +22,10 @@ export const initialState = {
   analysedEidData: {},
   error: "",
   analysedEidDataStatus: "",
-  analysedPassportDataStatus: ""
+  analysedPassportDataStatus: "",
+  livelinessData: {},
+  identityValidation: null,
+  faceScanSuccess: false
 };
 
 export default handleActions(
@@ -64,6 +73,33 @@ export default handleActions(
       analysedPassportData: {},
       analysedPassportDataStatus: "",
       error: ""
+    }),
+    [CREATE_FACE_SCAN_KEY_SUCCESS]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      faceScanKey: payload
+    }),
+    [CHECK_FACE_LIVELINESS]: state => ({
+      ...state,
+      loading: true
+    }),
+    [CREATE_FACE_LIVELINESS_FEEDBACK]: (state, { payload }) => ({
+      ...state,
+      faceLivelinessFeedback: payload
+    }),
+    [SET_LIVELINESS_DATA]: (state, { payload }) => ({
+      ...state,
+      livelinessData: payload
+    }),
+    [VALIDATE_IDENTITY_SUCCESS]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      faceScanSuccess: true
+    }),
+    [VALIDATE_IDENTITY_FAIL]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      identityValidation: payload
     })
   },
   initialState

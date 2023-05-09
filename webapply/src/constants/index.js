@@ -99,10 +99,11 @@ const COMMON_ERROR =
 const INVALID_DOCUMENT = "Invalid Document Error";
 
 export const EID_EXPIRY =
-  "Your Emirates ID has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed Emirated ID";
+  "Your Emirates ID has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed Emirates ID";
 export const PASSPORT_EXPIRY =
   "Your passport has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed passport";
 export const DOC_MISMATCH = "Your emirates ID and passport do not match";
+export const IDENTITY_VERIFICATION_FAIL = "Verification failed";
 
 export const PROSPECT_STATUSES = {
   ASSESSING: "Assessing",

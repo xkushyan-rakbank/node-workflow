@@ -6,11 +6,18 @@ import {
   ANALYSE_OCR,
   analyseOcrSuccessEid,
   analyseOcrSuccessPassport,
-  analyseOcrFail
+  analyseOcrFail,
+  CREATE_FACE_SCAN_KEY,
+  CHECK_FACE_LIVELINESS,
+  saveFaceLivelinessFeedback,
+  createFaceScanKeySuccess,
+  SET_LIVELINESS_DATA,
+  validateIdentitySuccess,
+  validateIdentityFail
 } from "../actions/kyc";
 import { getAuthorizationHeader, getProspectId } from "../selectors/appConfig";
 import { analyzeOcrData, createKYCTransaction } from "../../api/apiClient";
-import { getKyc } from "../selectors/kyc";
+import { getKyc, getLivelinessData, getTransactionId } from "../selectors/kyc";
 import { log } from "../../utils/loggger";
 import {
   DOC_TYPE_EID,
@@ -81,9 +88,50 @@ export function* analyseOcrDataSaga({ payload }) {
   }
 }
 
+export function* createFaceScanSaga() {
+  try {
+    const transactionId = yield select(getTransactionId);
+    const response = yield call(analyzeOcrData.getFaceScanKey, transactionId);
+    yield put(createFaceScanKeySuccess(response));
+  } catch (error) {
+    log(error);
+  }
+}
+
+export function* checkFaceLiveliness({ payload }) {
+  try {
+    const transactionId = yield select(getTransactionId);
+    const response = yield call(analyzeOcrData.postFaceLiveliness, transactionId, payload);
+    yield put(saveFaceLivelinessFeedback(response.data));
+  } catch (error) {
+    log(error);
+  }
+}
+
+export function* setLivelinessData({ payload }) {
+  try {
+    const livelinessData = yield select(getLivelinessData);
+    const transactionId = yield select(getTransactionId);
+    yield call(
+      analyzeOcrData.validateAndConfirmIdentity,
+      transactionId,
+      livelinessData.data,
+      livelinessData.datahash
+    );
+    yield put(validateIdentitySuccess());
+  } catch (error) {
+    let message = error?.response?.data?.message;
+    yield put(validateIdentityFail(message));
+    log(error);
+  }
+}
+
 export default function* KycTransactionSaga() {
   yield all([
     takeLatest(CREATE_KYC_TRANSACTION, createKycTransactionSaga),
-    takeLatest(ANALYSE_OCR, analyseOcrDataSaga)
+    takeLatest(ANALYSE_OCR, analyseOcrDataSaga),
+    takeLatest(CREATE_FACE_SCAN_KEY, createFaceScanSaga),
+    takeLatest(CHECK_FACE_LIVELINESS, checkFaceLiveliness),
+    takeLatest(SET_LIVELINESS_DATA, setLivelinessData)
   ]);
 }

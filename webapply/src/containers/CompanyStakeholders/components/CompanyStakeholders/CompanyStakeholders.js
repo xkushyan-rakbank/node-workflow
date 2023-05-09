@@ -16,7 +16,12 @@ import { removeEncodingPrefix } from "../../../../utils/ocr";
 import { getSdkConfig } from "../../../../store/selectors/sdkConfig";
 import { createSdkCofig } from "../../../../store/actions/sdkConfig";
 import { getKyc, getTransactionId } from "../../../../store/selectors/kyc";
-import { analyseOcr, removeEidOcrData, removePassportOcrData } from "../../../../store/actions/kyc";
+import {
+  analyseOcr,
+  createFaceScanKey,
+  removeEidOcrData,
+  removePassportOcrData
+} from "../../../../store/actions/kyc";
 
 import { useStyles } from "./styled";
 import { OCRScanner } from "./OCRScanner";
@@ -33,7 +38,15 @@ export const CompanyStakeholdersComponent = ({
   isDisableNextStep
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
-  const { loading, analysedEidData, analysedPassportData, error } = useSelector(getKyc);
+  const {
+    loading,
+    analysedEidData,
+    analysedPassportData,
+    error,
+    faceScanKey,
+    faceLivelinessFeedback,
+    faceScanSuccess
+  } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
   const classes = useStyles();
@@ -59,6 +72,7 @@ export const CompanyStakeholdersComponent = ({
   useEffect(() => {
     if (transactionId) {
       dispatch(createSdkCofig());
+      dispatch(createFaceScanKey());
     }
   }, [transactionId]);
 
@@ -135,9 +149,7 @@ export const CompanyStakeholdersComponent = ({
     dispatch(removePassportOcrData());
   };
 
-  // const onSaveUploadDataFromModal = async (files, fileName, docType) => {
-  //   await analyzeData(files, fileName);
-  // };
+  //TODO: handle NEXT button disable for multiple stakeholder.
 
   return (
     <>
@@ -209,15 +221,21 @@ export const CompanyStakeholdersComponent = ({
                 disabledReason={
                   "You'll be able to do this step after uploading your Emirates ID and passport."
                 }
+                livenessData={faceLivelinessFeedback}
+                transactionId={transactionId}
+                dispatch={dispatch}
+                tempKey={faceScanKey}
+                sdkConfig={sdkConfig}
               />
             </div>
             <div className="linkContainer">
               <BackLink path={routes.companyInfo} />
-
               <NextStepButton
                 handleClick={goToFinalQuestions}
                 isDisplayLoader={isLoading}
-                disabled={isDisableNextStep}
+                disabled={
+                  !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && faceScanSuccess)
+                }
                 label="Next"
                 justify="flex-end"
               />
