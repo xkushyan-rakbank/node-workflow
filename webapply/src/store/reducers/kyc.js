@@ -65,14 +65,16 @@ export default handleActions(
       loading: false,
       analysedEidData: {},
       analysedEidDataStatus: "",
-      error: ""
+      error: "",
+      identityValidation: null
     }),
     [REMOVE_PASSPORT_OCR_DATA]: (state, action) => ({
       ...state,
       loading: false,
       analysedPassportData: {},
       analysedPassportDataStatus: "",
-      error: ""
+      error: "",
+      identityValidation: null
     }),
     [CREATE_FACE_SCAN_KEY_SUCCESS]: (state, { payload }) => ({
       ...state,

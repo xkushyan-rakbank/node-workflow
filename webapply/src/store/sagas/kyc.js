@@ -25,9 +25,10 @@ import {
   EID_EXPIRY,
   ERROR_MESSAGES,
   DOC_MISMATCH,
-  PASSPORT_EXPIRY
+  PASSPORT_EXPIRY,
+  INVALID_DOCUMENT
 } from "../../constants";
-import { getOcrFieldValueBySource } from "../../utils/ocr";
+import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
 
 export function* createKycTransactionSaga() {
@@ -54,12 +55,19 @@ export function* analyseOcrDataSaga({ payload }) {
       headers,
       documentType
     );
-    const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry, "mrz");
+    const isDocumentValid = documentType === DOC_TYPE_EID ? checkDocumentValid(response) : true;
+
+    if (!response || !isDocumentValid) {
+      yield put(analyseOcrFail(INVALID_DOCUMENT));
+      return;
+    }
+
+    const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry, "visual");
     const nationality = getOcrFieldValueBySource(response?.nationalityIso2, "mrz");
 
     if (documentType === DOC_TYPE_EID) {
-      daysToExpiry <= 10
-        ? put(analyseOcrFail(EID_EXPIRY))
+      parseInt(daysToExpiry) <= 10
+        ? yield put(analyseOcrFail(EID_EXPIRY))
         : yield put(analyseOcrSuccessEid(response));
     }
     if (documentType === DOC_TYPE_PASSPORT) {

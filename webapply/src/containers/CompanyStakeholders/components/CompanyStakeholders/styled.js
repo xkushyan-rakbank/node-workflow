@@ -201,6 +201,11 @@ export const useStyles = makeStyles(theme => ({
     backgroundSize: "contain",
     background: "#D9D9D9"
   },
+  previewPDF: {
+    backgroundColor: "#D9D9D9",
+    width: "100%",
+    height: "100%"
+  },
   previewModalTitle: {
     color: "#1F1F1F",
     fontWeight: 500,

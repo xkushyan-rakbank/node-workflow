@@ -96,7 +96,7 @@ const EXIST = "We already have your application. Not to worry, our team is alrea
 const INVALID_ID = "Invalid Prospect ID";
 const COMMON_ERROR =
   "We already have your application. Not to worry, our team is already working on it.";
-const INVALID_DOCUMENT = "Invalid Document Error";
+export const INVALID_DOCUMENT = "Invalid Document Error";
 
 export const EID_EXPIRY =
   "Your Emirates ID has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed Emirates ID";
