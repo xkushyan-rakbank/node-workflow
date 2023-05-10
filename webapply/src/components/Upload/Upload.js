@@ -23,12 +23,14 @@ export const Upload = ({
   field: { onBlur, ...field },
   ErrorMessageComponent = ErrorMessage,
   showUploadSuccessIcon = true,
+  selectMultipleFiles = false,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
   const classes = useStyles();
 
   const { isDragActive, fileRejections, getRootProps, getInputProps } = useDropzone({
+    multiple: selectMultipleFiles,
     accept,
     maxSize,
     minSize,
