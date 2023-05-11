@@ -16,7 +16,7 @@ export const accountsInfo = {
   },
   [accountNames.currentAccount]: {
     title: "Business Current Account",
-    subtitle: `Earn up to 1.5% bonus interest on your monthly account balance. <a href="${conditionLink}" target="${blank}">Conditions apply</a>.`,
+    subtitle: `Earn up to 1.5% p.a. bonus interest on your monthly account balance. <a href="${conditionLink}" target="${blank}">Conditions apply</a>.`,
     islamicSubtitle: "Our most flexible account for growing businesses."
   },
   [accountNames.elite]: {
