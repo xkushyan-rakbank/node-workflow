@@ -190,7 +190,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   previewModalImageWrapper: {
-    height: "580px",
+    height: "min(580px, 60vw)",
     overflow: "auto"
   },
   previewImg: {
