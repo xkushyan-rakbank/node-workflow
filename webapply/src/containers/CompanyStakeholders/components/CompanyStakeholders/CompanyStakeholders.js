@@ -38,6 +38,7 @@ export const CompanyStakeholdersComponent = ({
   isDisableNextStep
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
+
   const {
     loading,
     analysedEidData,

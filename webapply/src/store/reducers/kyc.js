@@ -66,7 +66,8 @@ export default handleActions(
       analysedEidData: {},
       analysedEidDataStatus: "",
       error: "",
-      identityValidation: null
+      identityValidation: null,
+      faceScanSuccess: false
     }),
     [REMOVE_PASSPORT_OCR_DATA]: (state, action) => ({
       ...state,
@@ -74,7 +75,8 @@ export default handleActions(
       analysedPassportData: {},
       analysedPassportDataStatus: "",
       error: "",
-      identityValidation: null
+      identityValidation: null,
+      faceScanSuccess: false
     }),
     [CREATE_FACE_SCAN_KEY_SUCCESS]: (state, { payload }) => ({
       ...state,
@@ -83,7 +85,8 @@ export default handleActions(
     }),
     [CHECK_FACE_LIVELINESS]: state => ({
       ...state,
-      loading: true
+      loading: true,
+      identityValidation: null
     }),
     [CREATE_FACE_LIVELINESS_FEEDBACK]: (state, { payload }) => ({
       ...state,
