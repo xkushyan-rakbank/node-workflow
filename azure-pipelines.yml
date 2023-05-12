@@ -190,7 +190,11 @@ jobs:
                 {
                     "pattern": "$(Build.ArtifactStagingDirectory)/webapply/*.zip",
                     "target": "onboarding/DigitalBank/develop/$(Build.BuildNumber)/webapply/"
-                }
+                },
+                {
+                    "pattern": "$(Build.ArtifactStagingDirectory)/releasenote/",
+                    "target": "onboarding/DigitalBank/develop/$(Build.BuildNumber)/webapply/"
+                }                
               ]
             }
           collectBuildInfo: true
