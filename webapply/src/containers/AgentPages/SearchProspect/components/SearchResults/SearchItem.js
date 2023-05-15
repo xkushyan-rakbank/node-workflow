@@ -4,16 +4,20 @@ import { Link } from "react-router-dom";
 import cx from "classnames";
 
 import routes from "../../../../../routes";
-
+import { BAU_PROSPECT_VERSION } from "../../../../../constants"
 import { useStyles } from "./styled";
 
 export const SearchItem = ({ application }) => {
   const classes = useStyles();
-
+  const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
   return (
     <Link
       className={cx(classes.applicationRow)}
-      to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
+      to={
+        prospectVersion === BAU_PROSPECT_VERSION
+          ? process.env.REACT_APP_BAU_URL + generatePath(routes.SearchedAppInfo, { id: application.prospectId })
+          : generatePath(routes.SearchedAppInfo, { id: application.prospectId })
+      }
     >
       <div className={classes.column}>
         <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
