@@ -190,12 +190,12 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   previewModalImageWrapper: {
-    height: "min(580px, 60vw)",
+    height: "min(580px, 70vh)",
     overflow: "auto"
   },
   previewImg: {
     width: "100%",
-    height: "400px",
+    height: "min(400px, 50vh)",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "contain",
