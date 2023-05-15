@@ -187,7 +187,7 @@ export const SUBMIT = "submit";
 export const AUTO = "auto";
 export const CONTINUE = "continue";
 export const NEXT = "next";
-
+export const BAU_PROSPECT_VERSION = "v1";
 export const SIGNING_TRANSACTIONS_TYPE = {
   ALL: "101",
   ANY: "100",
