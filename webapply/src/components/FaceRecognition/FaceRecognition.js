@@ -136,10 +136,9 @@ export const FaceRecognition = ({
   }
 
   useEffect(() => {
-    if (!faceLivelinessFeedback) {
-      return;
+    if (faceLivelinessFeedback) {
+      executeFeedback(faceLivelinessFeedback);
     }
-    executeFeedback(faceLivelinessFeedback);
   }, [faceLivelinessFeedback]);
 
   useEffect(() => {

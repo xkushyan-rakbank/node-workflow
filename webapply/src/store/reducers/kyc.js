@@ -21,6 +21,7 @@ import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   loading: false,
+  transactionId: null,
   KycTransactionResponse: {},
   analysedPassportData: {},
   analysedEidData: {},
@@ -30,6 +31,7 @@ export const initialState = {
   livelinessData: {},
   identityValidation: null,
   faceScanSuccess: false,
+  faceLivelinessFeedback: null,
   kycUploadedDocs: {
     eidFront: {},
     eidBack: {},
@@ -135,7 +137,8 @@ export default handleActions(
     [VALIDATE_IDENTITY_FAIL]: (state, { payload }) => ({
       ...state,
       loading: false,
-      identityValidation: payload
+      identityValidation: payload,
+      faceLivelinessFeedback: null
     }),
     [EID_PREVIEW_DATA]: (state, { payload }) => ({
       ...state,

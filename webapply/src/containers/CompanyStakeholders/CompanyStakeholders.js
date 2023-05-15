@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import {
   StakeholdersNameManager,
@@ -11,6 +12,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { formStepper, NEXT } from "../../constants";
 import { useLayoutParams } from "../FormLayout";
+import { getTransactionId } from "../../store/selectors/kyc";
 
 export const CompanyStakeholdersContainer = ({
   fullName,
@@ -29,6 +31,7 @@ export const CompanyStakeholdersContainer = ({
   createKycTransaction
 }) => {
   const pushHistory = useTrackingHistory();
+  const transactionId = useSelector(getTransactionId);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,7 +40,9 @@ export const CompanyStakeholdersContainer = ({
   useViewId(true);
 
   useEffect(() => {
-    createKycTransaction();
+    if (!transactionId) {
+      createKycTransaction();
+    }
   }, []);
 
   useEffect(() => {
