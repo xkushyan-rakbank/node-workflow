@@ -17,6 +17,11 @@ export const SET_LIVELINESS_DATA = "SET_LIVELINESS_DATA";
 export const VALIDATE_IDENTITY_SUCCESS = "VALIDATE_IDENTITY_SUCCESS";
 export const VALIDATE_IDENTITY_FAIL = "VALIDATE_IDENTITY_FAIL";
 
+export const EID_PREVIEW_DATA = "EID_PREVIEW_DATA";
+export const PASSPORT_PREVIEW_DATA = "PASSPORT_PREVIEW_DATA";
+export const SET_EID_ACTION_TYPE = "SET_EID_ACTION_TYPE";
+export const SET_PASSPORT_ACTION_TYPE = "SET_PASSPORT_ACTION_TYPE";
+
 export const createKycTransaction = () => ({
   type: CREATE_KYC_TRANSACTION
 });
@@ -79,4 +84,20 @@ export const validateIdentitySuccess = () => {
 
 export const validateIdentityFail = response => {
   return { type: VALIDATE_IDENTITY_FAIL, payload: response };
+};
+
+export const setEidPreviewData = response => {
+  return { type: EID_PREVIEW_DATA, payload: response };
+};
+
+export const setPassportPreviewData = response => {
+  return { type: PASSPORT_PREVIEW_DATA, payload: response };
+};
+
+export const setEidActionType = response => {
+  return { type: SET_EID_ACTION_TYPE, payload: response };
+};
+
+export const setPassportActionType = response => {
+  return { type: SET_PASSPORT_ACTION_TYPE, payload: response };
 };

@@ -20,7 +20,11 @@ import {
   analyseOcr,
   createFaceScanKey,
   removeEidOcrData,
-  removePassportOcrData
+  removePassportOcrData,
+  setEidPreviewData,
+  setPassportPreviewData,
+  setEidActionType,
+  setPassportActionType
 } from "../../../../store/actions/kyc";
 
 import { useStyles } from "./styled";
@@ -46,14 +50,15 @@ export const CompanyStakeholdersComponent = ({
     error,
     faceScanKey,
     faceLivelinessFeedback,
-    faceScanSuccess
+    faceScanSuccess,
+    kycUploadedDocs,
+    actionType
   } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
   const classes = useStyles();
   const [openDocUpload, setOpenDocUpload] = useState(false);
   const [docUploadType, setDocUploadType] = useState(null);
-  const [actionType, setActionType] = useState(null);
 
   const openDocUploadModal = type => {
     onRemoveOcrData(type);
@@ -67,8 +72,6 @@ export const CompanyStakeholdersComponent = ({
   const [openEidScanner, setOpenEidScanner] = useState(false);
   const [openPassportScanner, setOpenPassportScanner] = useState(false);
 
-  const [eidFile, setEidFile] = useState({ docFront: "", docBack: "" });
-  const [passportFile, setPassportFile] = useState({});
 
   useEffect(() => {
     if (transactionId) {
@@ -80,16 +83,16 @@ export const CompanyStakeholdersComponent = ({
   const onScanEid = () => {
     onRemoveOcrData(DOC_TYPE_EID);
     setOpenEidScanner(true);
-    setActionType("Scanned");
+    dispatch(setEidActionType("Scanned"));
   };
 
   const onScanPassport = () => {
     onRemoveOcrData(DOC_TYPE_PASSPORT);
     setOpenPassportScanner(true);
-    setActionType("Scanned");
+    dispatch(setPassportActionType("Scanned"));
   };
 
-  const analyzeData = async (data, nameOfUploadedFile) => {
+  const analyzeData = async data => {
     if (data.images.length == 2) {
       const ocrData = {
         docFront: removeEncodingPrefix(data.images[0]),
@@ -98,18 +101,20 @@ export const CompanyStakeholdersComponent = ({
       const docFront = await fetch(data.images[0]).then(res => res.blob());
       const docBack = await fetch(data.images[1]).then(res => res.blob());
 
-      setEidFile({
-        docFront: {
-          ...docFront,
-          name: nameOfUploadedFile ? nameOfUploadedFile.front : "Emirates_front.jpg",
-          link: data.images[0]
-        },
-        docBack: {
-          ...docBack,
-          name: nameOfUploadedFile ? nameOfUploadedFile.back : "Emirates_back.jpg",
-          link: data.images[1]
-        }
-      });
+      dispatch(
+        setEidPreviewData({
+          front: {
+            ...docFront,
+            name: "Emirates_front.jpg",
+            link: data.images[0]
+          },
+          back: {
+            ...docBack,
+            name: "Emirates_back.jpg",
+            link: data.images[1]
+          }
+        })
+      );
 
       dispatch(
         analyseOcr({
@@ -122,7 +127,7 @@ export const CompanyStakeholdersComponent = ({
         docFront: removeEncodingPrefix(data.images[0])
       };
       const passport = await fetch(data.images[0]).then(res => res.blob());
-      setPassportFile({ ...passport, name: "Passport.jpg", link: data.images[0] });
+      dispatch(setPassportPreviewData({ ...passport, name: "Passport.jpg", link: data.images[0] }));
 
       dispatch(
         analyseOcr({
@@ -169,18 +174,17 @@ export const CompanyStakeholdersComponent = ({
                 fieldDescription="Emirates ID (both sides)"
                 helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
                 uploadedContent={
-                  !isEmpty(analysedEidData) && eidFile?.docFront?.name
-                    ? `${eidFile.docFront.name} | ${eidFile.docBack.name}`
+                  !isEmpty(analysedEidData) && !isEmpty(kycUploadedDocs.eidFront)
+                    ? `${kycUploadedDocs.eidFront.name} | ${kycUploadedDocs.eidBack.name}`
                     : ""
                 }
-                successText={`Succcesfully ${actionType}`}
+                successText={`Succcesfully ${actionType?.eid}`}
                 handleScan={onScanEid}
                 isSuccess={isEmpty(analysedEidData) ? false : true}
                 handleRemove={() => onRemoveOcrData(DOC_TYPE_EID)}
                 handleUpload={() => openDocUploadModal(DOC_TYPE_EID)}
                 showPreview={!isEmpty(analysedEidData)}
                 type={DOC_TYPE_EID}
-                data={eidFile}
               />
             </div>
             {isEmpty(analysedEidData) && error && (
@@ -194,9 +198,13 @@ export const CompanyStakeholdersComponent = ({
               <UploadFileWrapper
                 fieldDescription="Passport (photo page)"
                 helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
-                uploadedContent={!isEmpty(analysedPassportData) ? `${passportFile.name}` : ""}
+                uploadedContent={
+                  !isEmpty(analysedPassportData) && !isEmpty(kycUploadedDocs.passport)
+                    ? `${kycUploadedDocs?.passport?.name}`
+                    : ""
+                }
                 isSuccess={isEmpty(analysedPassportData) ? false : true}
-                successText={`Succcesfully ${actionType}`}
+                successText={`Succcesfully ${actionType?.passport}`}
                 isStepActive={!isEmpty(analysedEidData)}
                 disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
                 showPreview={!isEmpty(analysedPassportData)}
@@ -204,7 +212,6 @@ export const CompanyStakeholdersComponent = ({
                 handleRemove={() => onRemoveOcrData(DOC_TYPE_PASSPORT)}
                 handleUpload={() => openDocUploadModal(DOC_TYPE_PASSPORT)}
                 type={DOC_TYPE_PASSPORT}
-                data={passportFile}
               />
             </div>
             {!isEmpty(analysedEidData) && error && (
@@ -267,15 +274,7 @@ export const CompanyStakeholdersComponent = ({
                 typeOfUpload={docUploadType}
                 title={modalTitle}
                 handleClose={() => setOpenDocUpload(false)}
-                setEidDetails={data => {
-                  setEidFile({
-                    docFront: data.front,
-                    docBack: data.back
-                  });
-                  setActionType("Uploaded");
-                }}
-                setPassportDetails={data => setPassportFile(data)}
-              />
+             />
             )}
           </Form>
         )}

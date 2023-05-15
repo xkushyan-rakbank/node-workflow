@@ -216,7 +216,6 @@ export const CompanyInfo = ({
                 justify="flex-end"
                 label="Next"
                 disabled={!(props.isValid && props.dirty)}
-                isDisplayLoader={isLoading}
                 // handleClick={() => handleClick(props)}
               />
             </div>

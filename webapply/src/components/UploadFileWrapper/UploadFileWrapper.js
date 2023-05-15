@@ -99,7 +99,6 @@ export const UploadFileWrapper = ({
           isOpen={showPreviewModal}
           handleClose={() => setShowPreviewModal(false)}
           type={props.type}
-          previewData={props.data}
         />
       )}
     </>

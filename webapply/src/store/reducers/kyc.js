@@ -11,7 +11,11 @@ import {
   CHECK_FACE_LIVELINESS,
   SET_LIVELINESS_DATA,
   VALIDATE_IDENTITY_SUCCESS,
-  VALIDATE_IDENTITY_FAIL
+  VALIDATE_IDENTITY_FAIL,
+  EID_PREVIEW_DATA,
+  PASSPORT_PREVIEW_DATA,
+  SET_EID_ACTION_TYPE,
+  SET_PASSPORT_ACTION_TYPE
 } from "../actions/kyc";
 import { handleActions } from "../../utils/redux-utils";
 
@@ -25,7 +29,16 @@ export const initialState = {
   analysedPassportDataStatus: "",
   livelinessData: {},
   identityValidation: null,
-  faceScanSuccess: false
+  faceScanSuccess: false,
+  kycUploadedDocs: {
+    eidFront: {},
+    eidBack: {},
+    passport: {}
+  },
+  actionType: {
+    eid: "",
+    passport: ""
+  }
 };
 
 export default handleActions(
@@ -67,7 +80,17 @@ export default handleActions(
       analysedEidDataStatus: "",
       error: "",
       identityValidation: null,
-      faceScanSuccess: false
+      faceScanSuccess: false,
+      kycUploadedDocs: {
+        eidFront: {},
+        eidBack: {},
+        passport: {}
+      },
+      actionType: {
+        ...state.actionType,
+        eid: {},
+        passport: {}
+      }
     }),
     [REMOVE_PASSPORT_OCR_DATA]: (state, action) => ({
       ...state,
@@ -76,7 +99,15 @@ export default handleActions(
       analysedPassportDataStatus: "",
       error: "",
       identityValidation: null,
-      faceScanSuccess: false
+      faceScanSuccess: false,
+      kycUploadedDocs: {
+        ...state.kycUploadedDocs,
+        passport: {}
+      },
+      actionType: {
+        ...state.actionType,
+        passport: {}
+      }
     }),
     [CREATE_FACE_SCAN_KEY_SUCCESS]: (state, { payload }) => ({
       ...state,
@@ -105,6 +136,28 @@ export default handleActions(
       ...state,
       loading: false,
       identityValidation: payload
+    }),
+    [EID_PREVIEW_DATA]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      kycUploadedDocs: {
+        ...state.kycUploadedDocs,
+        eidFront: payload.front,
+        eidBack: payload.back
+      }
+    }),
+    [PASSPORT_PREVIEW_DATA]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      kycUploadedDocs: { ...state.kycUploadedDocs, passport: payload }
+    }),
+    [SET_EID_ACTION_TYPE]: (state, { payload }) => ({
+      ...state,
+      actionType: { ...state.actionType, eid: payload }
+    }),
+    [SET_PASSPORT_ACTION_TYPE]: (state, { payload }) => ({
+      ...state,
+      actionType: { ...state.actionType, passport: payload }
     })
   },
   initialState

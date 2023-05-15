@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 
 import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { useStyles } from "./styled";
 import { DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
+import { getKyc } from "../../../../store/selectors/kyc";
 
 function getModalStyle() {
   return {
@@ -17,6 +19,7 @@ function getModalStyle() {
 
 export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => {
   const classes = useStyles();
+  const { kycUploadedDocs } = useSelector(getKyc);
   const [modalStyle] = useState(getModalStyle);
 
   const title = type === "id" ? "Emirates ID" : "passport photo page";
@@ -57,18 +60,18 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
             <>
               <div className={classes.previewImgWrapper}>
                 <p className={classes.previewModalSubtitle}>Front</p>
-                {context(previewData?.docFront?.link)}
+                {context(kycUploadedDocs?.eidFront?.link)}
               </div>
               <div className={classes.previewImgWrapper}>
                 <p className={classes.previewModalSubtitle}>Back</p>
-                {context(previewData?.docBack?.link)}
+                {context(kycUploadedDocs?.eidBack?.link)}
               </div>
             </>
           )}
           {type === DOC_TYPE_PASSPORT && (
             <div className={classes.previewImgWrapper}>
               <p className={classes.previewModalSubtitle}>Photo page</p>
-              {context(previewData?.link)}
+              {context(kycUploadedDocs?.passport?.link)}
             </div>
           )}
         </div>

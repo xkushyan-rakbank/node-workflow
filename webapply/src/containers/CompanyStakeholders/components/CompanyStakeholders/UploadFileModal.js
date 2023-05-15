@@ -17,7 +17,15 @@ import {
   DOC_TYPE_PASSPORT
 } from "../../../../constants";
 
-import { analyseOcr, removeEidOcrData, removePassportOcrData } from "../../../../store/actions/kyc";
+import {
+  analyseOcr,
+  removeEidOcrData,
+  removePassportOcrData,
+  setEidPreviewData,
+  setPassportPreviewData,
+  setEidActionType,
+  setPassportActionType
+} from "../../../../store/actions/kyc";
 import { OverlayLoader } from "../../../../components/Loader";
 import { getKyc } from "../../../../store/selectors/kyc";
 import { removeEncodingPrefix } from "../../../../utils/ocr";
@@ -30,14 +38,7 @@ function getModalStyle() {
   };
 }
 
-export const UploadFileModal = ({
-  isOpen,
-  typeOfUpload,
-  title,
-  handleClose,
-  setEidDetails,
-  setPassportDetails
-}) => {
+export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { loading, error, analysedEidDataStatus, analysedPassportDataStatus } = useSelector(getKyc);
@@ -116,21 +117,27 @@ export const UploadFileModal = ({
 
   const sendUploadedData = () => {
     if (typeOfUpload === DOC_TYPE_EID) {
-      setEidDetails({
-        front: {
-          name: uploadedFileName.emiratesIDFront,
-          link: values.emiratesIDFront
-        },
-        back: {
-          name: uploadedFileName.emiratesIDBack,
-          link: values.emiratesIDBack
-        }
-      });
+      dispatch(
+        setEidPreviewData({
+          front: {
+            name: uploadedFileName.emiratesIDFront,
+            link: values.emiratesIDFront
+          },
+          back: {
+            name: uploadedFileName.emiratesIDBack,
+            link: values.emiratesIDBack
+          }
+        })
+      );
+      dispatch(setEidActionType("Uploaded"));
     } else {
-      setPassportDetails({
-        name: uploadedFileName.passport,
-        link: values.passport
-      });
+      dispatch(
+        setPassportPreviewData({
+          name: uploadedFileName.passport,
+          link: values.passport
+        })
+      );
+      dispatch(setPassportActionType("Uploaded"));
     }
     handleClose();
   };
