@@ -132,7 +132,8 @@ export default handleActions(
     [VALIDATE_IDENTITY_SUCCESS]: (state, { payload }) => ({
       ...state,
       loading: false,
-      faceScanSuccess: true
+      faceScanSuccess: true,
+      faceLivelinessFeedback: null
     }),
     [VALIDATE_IDENTITY_FAIL]: (state, { payload }) => ({
       ...state,
