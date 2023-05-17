@@ -13,9 +13,19 @@ import {
   createFaceScanKeySuccess,
   SET_LIVELINESS_DATA,
   validateIdentitySuccess,
-  validateIdentityFail
+  validateIdentityFail,
+  validateEntityConfirmSuccess,
+  validateEntityConfirmFail,
+  ENTITY_CONFIRMATION,
+  saveFaceLivelinessFeedbackError,
+  notifyHostSuccess,
+  notifyHostError
 } from "../actions/kyc";
-import { getAuthorizationHeader, getProspectId } from "../selectors/appConfig";
+import {
+  getAuthorizationHeader,
+  getCompanyTradeLicenseNumber,
+  getProspectId
+} from "../selectors/appConfig";
 import { analyzeOcrData, createKYCTransaction } from "../../api/apiClient";
 import { getKyc, getLivelinessData, getTransactionId } from "../selectors/kyc";
 import { log } from "../../utils/loggger";
@@ -30,12 +40,15 @@ import {
 } from "../../constants";
 import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
+import { resetFormStep } from "../actions/sendProspectToAPI";
+import { updateProspect } from "../actions/appConfig";
 
 export function* createKycTransactionSaga() {
   try {
     const headers = yield select(getAuthorizationHeader);
     const prospectId = yield select(getProspectId);
-    const response = yield call(createKYCTransaction.send, prospectId, headers);
+    const individualId = "SID1";
+    const response = yield call(createKYCTransaction.send, prospectId, individualId, headers);
     yield put(KycTransactionSuccess(response.data));
   } catch (error) {
     log(error);
@@ -112,7 +125,62 @@ export function* checkFaceLiveliness({ payload }) {
     const response = yield call(analyzeOcrData.postFaceLiveliness, transactionId, payload);
     yield put(saveFaceLivelinessFeedback(response.data));
   } catch (error) {
+    const notificationOptions = { title: "Oops", message: error.message };
+    NotificationsManager.add(notificationOptions);
+    yield put(saveFaceLivelinessFeedbackError());
     log(error);
+  }
+}
+
+export function* notifyHost() {
+  try {
+    const transactionId = yield select(getTransactionId);
+    const notifyHostResponse = yield call(analyzeOcrData.notifyHost, transactionId);
+    yield put(notifyHostSuccess(notifyHostResponse));
+    const {
+      signatoryInfo,
+      documents: { stakeholdersDocuments }
+    } = notifyHostResponse;
+    yield put(
+      updateProspect({
+        "prospect.signatoryInfo": signatoryInfo,
+        "prospect.documents.stakeholdersDocuments": stakeholdersDocuments
+      })
+    );
+  } catch (error) {
+    let message = error?.response?.data?.message;
+    yield put(notifyHostError(message));
+    log(error);
+  }
+}
+
+export function* entityConfirmation() {
+  try {
+    const tradeLicenseNumber = yield select(getCompanyTradeLicenseNumber);
+    const livelinessData = yield select(getLivelinessData);
+    const transactionId = yield select(getTransactionId);
+    yield put(resetFormStep(true));
+    const entityConfirmResponse = yield call(
+      analyzeOcrData.entityConfirmation,
+      transactionId,
+      livelinessData.data,
+      livelinessData.datahash,
+      tradeLicenseNumber
+    );
+    yield call(notifyHost);
+    yield put(validateEntityConfirmSuccess(entityConfirmResponse));
+  } catch (error) {
+    let message = error?.response?.data?.message;
+    if (error?.response?.status === 403) {
+      yield call(notifyHost);
+      yield put(validateEntityConfirmSuccess(error?.response?.data));
+    } else {
+      yield put(validateEntityConfirmFail(message));
+      yield put(notifyHostError(message));
+      log(error);
+    }
+  } finally {
+    yield put(resetFormStep(false));
   }
 }
 
@@ -140,6 +208,7 @@ export default function* KycTransactionSaga() {
     takeLatest(ANALYSE_OCR, analyseOcrDataSaga),
     takeLatest(CREATE_FACE_SCAN_KEY, createFaceScanSaga),
     takeLatest(CHECK_FACE_LIVELINESS, checkFaceLiveliness),
-    takeLatest(SET_LIVELINESS_DATA, setLivelinessData)
+    takeLatest(SET_LIVELINESS_DATA, setLivelinessData),
+    takeLatest(ENTITY_CONFIRMATION, entityConfirmation)
   ]);
 }

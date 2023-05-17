@@ -15,7 +15,13 @@ import {
   EID_PREVIEW_DATA,
   PASSPORT_PREVIEW_DATA,
   SET_EID_ACTION_TYPE,
-  SET_PASSPORT_ACTION_TYPE
+  SET_PASSPORT_ACTION_TYPE,
+  VALIDATE_CONFIRM_ENTITY_SUCCESS,
+  VALIDATE_CONFIRM_ENTITY_FAIL,
+  ENTITY_CONFIRMATION,
+  CREATE_FACE_LIVELINESS_FEEDBACK_ERROR,
+  NOTIFY_HOST_SUCCESS,
+  NOTIFY_HOST_ERROR
 } from "../actions/kyc";
 import { handleActions } from "../../utils/redux-utils";
 
@@ -40,7 +46,11 @@ export const initialState = {
   actionType: {
     eid: "",
     passport: ""
-  }
+  },
+  confirmEntity: false,
+  confirmEntityError: null,
+  notifyHostError: null,
+  notifyHostSuccess: false
 };
 
 export default handleActions(
@@ -82,6 +92,7 @@ export default handleActions(
       analysedEidDataStatus: "",
       error: "",
       identityValidation: null,
+      confirmEntityError: null,
       faceScanSuccess: false,
       kycUploadedDocs: {
         eidFront: {},
@@ -101,6 +112,7 @@ export default handleActions(
       analysedPassportDataStatus: "",
       error: "",
       identityValidation: null,
+      confirmEntityError: null,
       faceScanSuccess: false,
       kycUploadedDocs: {
         ...state.kycUploadedDocs,
@@ -119,11 +131,16 @@ export default handleActions(
     [CHECK_FACE_LIVELINESS]: state => ({
       ...state,
       loading: true,
-      identityValidation: null
+      identityValidation: null,
+      confirmEntityError: null
     }),
     [CREATE_FACE_LIVELINESS_FEEDBACK]: (state, { payload }) => ({
       ...state,
       faceLivelinessFeedback: payload
+    }),
+    [CREATE_FACE_LIVELINESS_FEEDBACK_ERROR]: state => ({
+      ...state,
+      loading: false
     }),
     [SET_LIVELINESS_DATA]: (state, { payload }) => ({
       ...state,
@@ -162,6 +179,31 @@ export default handleActions(
     [SET_PASSPORT_ACTION_TYPE]: (state, { payload }) => ({
       ...state,
       actionType: { ...state.actionType, passport: payload }
+    }),
+    [ENTITY_CONFIRMATION]: (state, { payload }) => ({
+      ...state,
+      loading: true,
+      confirmEntityError: null
+    }),
+    [VALIDATE_CONFIRM_ENTITY_SUCCESS]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      confirmEntity: true
+    }),
+    [VALIDATE_CONFIRM_ENTITY_FAIL]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      confirmEntityError: payload
+    }),
+    [NOTIFY_HOST_SUCCESS]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      notifyHostSuccess: payload
+    }),
+    [NOTIFY_HOST_ERROR]: (state, { payload }) => ({
+      ...state,
+      loading: false,
+      notifyHostError: payload
     })
   },
   initialState

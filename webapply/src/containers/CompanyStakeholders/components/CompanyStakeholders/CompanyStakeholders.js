@@ -37,7 +37,8 @@ export const CompanyStakeholdersComponent = ({
   fullName,
   companyCategory,
   handleClickNextStep,
-  isDisableNextStep
+  isDisableNextStep,
+  isLoading
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
 
@@ -50,7 +51,8 @@ export const CompanyStakeholdersComponent = ({
     faceLivelinessFeedback,
     faceScanSuccess,
     kycUploadedDocs,
-    actionType
+    actionType,
+    confirmEntityError
   } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
@@ -230,13 +232,25 @@ export const CompanyStakeholdersComponent = ({
           sdkConfig={sdkConfig}
         />
       </div>
+
+      {confirmEntityError && (
+        <div className={classes.uploadModalErrorWrapper}>
+          <ErrorOutlineIcon className={classes.errorIcon} />
+          {confirmEntityError}
+        </div>
+      )}
+
       <div className="linkContainer">
         <BackLink path={routes.companyInfo} />
         <NextStepButton
+          type="button"
           handleClick={handleClickNextStep}
+          isDisplayLoader={isLoading}
+          disabled={
+            !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && faceScanSuccess)
+          }
           label="Next"
           justify="flex-end"
-          disabled={isDisableNextStep}
         />
       </div>
       <Modal open={openEidScanner}>

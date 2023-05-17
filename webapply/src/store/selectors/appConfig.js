@@ -47,6 +47,8 @@ export const getPrimaryMobCountryCode = state =>
 
 export const getCompanyName = state => getOrganizationInfo(state).companyName;
 
+export const getCompanyTradeLicenseNumber = state => getOrganizationInfo(state).licenseOrCOINumber;
+
 export const getOrgKYCDetails = state => getProspect(state).orgKYCDetails || {};
 
 export const getGeneralInfo = state => getProspect(state).generalInfo || {};

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -28,10 +28,12 @@ export const CompanyStakeholdersContainer = ({
   isAnyStakeholderStepsCompleted,
   isSendingProspect,
   editableStakeholder,
-  createKycTransaction
+  createKycTransaction,
+  entityConfirmation
 }) => {
   const pushHistory = useTrackingHistory();
   const transactionId = useSelector(getTransactionId);
+  const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
@@ -69,8 +71,18 @@ export const CompanyStakeholdersContainer = ({
     stakeholders.length > 0 && isAnyStakeholderStepsCompleted && !hasSignatories;
 
   const handleClickNextStep = useCallback(() => {
-    pushHistory(routes.stakeholdersPreview, true);
-  }, [pushHistory]);
+    setIsLoading(true);
+
+    return entityConfirmation().then(
+      isScreeningError => {
+        pushHistory(routes.stakeholdersPreview, true);
+      },
+      () => {
+        setIsLoading(false);
+        // pushHistory(routes.stakeholdersPreview, true);
+      }
+    );
+  }, [entityConfirmation, pushHistory]);
 
   const handleDeleteStakeholder = useCallback(
     id => {
@@ -91,6 +103,7 @@ export const CompanyStakeholdersContainer = ({
         isSendingProspect={isSendingProspect}
         addNewStakeholder={createNewStakeholder}
         percentage={percentage}
+        isLoading={isLoading}
         isDisableNextStep={isDisableNextStep}
         isSignatoryErrorDisplayed={isSignatoryErrorDisplayed}
         isLowPercentageErrorDisplayed={isLowPercentageErrorDisplayed}

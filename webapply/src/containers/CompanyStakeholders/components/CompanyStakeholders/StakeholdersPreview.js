@@ -4,9 +4,7 @@ import { Grid } from "@material-ui/core";
 import { format, isValid } from "date-fns";
 import cx from "classnames";
 
-import routes from "../../../../routes";
 import { useStyles } from "./styled";
-import { BackLink } from "../../../../components/Buttons/BackLink";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { DATE_FORMAT } from "../../../../constants";
 import {
@@ -148,7 +146,6 @@ export const StakeholdersPreview = ({ values }) => {
               </Grid>
             </Grid>
             <div className="linkContainer">
-              <BackLink path={routes.stakeholdersInfo} />
               <NextStepButton label="Next" justify="flex-end" disabled={true} />
             </div>
           </Form>

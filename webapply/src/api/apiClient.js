@@ -152,13 +152,13 @@ export const decisions = {
 };
 
 export const createKYCTransaction = {
-  send: (prospectId, headers) =>
+  send: (prospectId, individualId, headers) =>
     httpClient
       .request({
         url: buildURI("createKYCTransactionUri"), //webapply/products/sme/kyc-transactions
         method: "POST",
         ...headers,
-        data: { prospectId }
+        data: { prospectId, individualId }
       })
       .then(response => {
         const {
@@ -242,6 +242,33 @@ export const analyzeOcrData = {
           }
         }
       )
+      .then(function(response) {
+        return response.data;
+      });
+  },
+  entityConfirmation: (transactionId, faceData, imageHash, tradeLicenseNumber) => {
+    const kycTransactionClient = getKYCTransactionAPIClientInstance(transactionId);
+    return kycTransactionClient
+      .post(
+        "efr/transactions/" + transactionId + "/confirm-entity",
+        {
+          tradeLicenseNumber
+        },
+        {
+          headers: {
+            "X-Recaptcha-Token":
+              "03AGdBq25uLcqQmoufID-aCqfzV_wEOYl63bo92SDoA6R8NGE-FFkhlREI28Akm04ryxnbY29ydjyYumT5xBqllUXODFW_GSlSOhJZd43CjLhyBlsVDk1GzHs_aFeYfwvBRkkRgMqW-CLJ9VCOLgqyYy7KDhcmkg-Ox0gPIjgD8KGIBWbhekzGIiuawj_XD4cEkzEAJy5F_rtFzUt_C48HgptUfLq5CWjyPGxWBqWSWyXaKEuTHKTl1LGoCG0CF8yL6PG0Gtqi7KRk2i1K7LTw7UxOYu9GcxIj2qfsMj2ya_NdYQAdmIrlq4LjYOP49nKp5EbXzhDG0JQH6Pb8kFCt_S2MCI3u86Zyu4zqZv1ZturlDajTKoze7MaQUjCbXHTiqMsUcUCnq22LeLzHTcZ_FcEsAVbjsUZSM0gQk8q4M7uBNzQdF9ZO9Vi5y40fBtkJCiObo2sh82yL07tfuXpQpN7JYBqXEKGEOA"
+          }
+        }
+      )
+      .then(function(response) {
+        return response.data;
+      });
+  },
+  notifyHost: transactionId => {
+    const kycTransactionClient = getKYCTransactionAPIClientInstance(transactionId);
+    return kycTransactionClient
+      .patch("v3/efr/transactions/" + transactionId + "/notify-host", {})
       .then(function(response) {
         return response.data;
       });
