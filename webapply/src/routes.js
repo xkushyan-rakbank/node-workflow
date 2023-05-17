@@ -15,6 +15,7 @@ export default {
   verifyEmailOtp: `${smeBaseName}/VerifyEmailOTP`,
   companyInfo: `${smeBaseName}/CompanyInfo`,
   stakeholdersInfo: `${smeBaseName}/StakeholdersInfo`,
+  stakeholdersPreview: `${smeBaseName}/StakeholdersInfo/Preview`,
   finalQuestions: `${smeBaseName}/FinalQuestions`,
   uploadDocuments: `${smeBaseName}/UploadDocuments`,
   reUploadDocuments: `${smeBaseName}/ReUploadDocuments`,

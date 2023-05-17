@@ -19,7 +19,7 @@ export const useStyles = makeStyles(theme => {
   return {
     textField: {
       "& fieldset": {
-        borderRadius: "8px ",
+        borderRadius: "12px ",
         border: "solid 1px rgba(194, 194, 194, 0.56)"
       },
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
@@ -27,7 +27,9 @@ export const useStyles = makeStyles(theme => {
       }
     },
     disabled: {
-      backgroundColor: "rgba(242, 242, 242, 0.5)"
+      "& fieldset": {
+        backgroundColor: "rgba(242, 242, 242, 0.5)"
+      }
     },
     inputGroupWrapper: {
       margin: "12px 0 20px"

@@ -3,6 +3,8 @@ import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
+import { ReactComponent as CalenderIcon } from "../../../assets/icons/calendar.svg";
+
 const keyboardDatePickerTheme = createMuiTheme({
   overrides: {
     MuiPopover: {
@@ -53,7 +55,10 @@ const keyboardDatePickerTheme = createMuiTheme({
     },
     MuiInputBase: {
       root: {
-        height: 56
+        height: 56,
+        "&.Mui-disabled": {
+          backgroundColor: "rgba(242, 242, 242, 0.5)"
+        }
       }
     },
     MuiIconButton: {
@@ -70,8 +75,7 @@ const keyboardDatePickerTheme = createMuiTheme({
         marginLeft: -8,
         padding: "5px 8px 3px 3px",
         height: "100%",
-        maxHeight: "none",
-        borderRight: "1px solid rgba(194, 194, 194, 0.56)"
+        maxHeight: "none"
       }
     },
     MuiInputLabel: {
@@ -108,12 +112,17 @@ const keyboardDatePickerTheme = createMuiTheme({
         fontSize: "12px",
         fontWeight: "600"
       }
+    },
+    MuiOutlinedInput: {
+      root: {
+        borderRadius: "12px"
+      }
     }
   }
 });
 
 export const StyledKeyboardDatePicker = props => (
   <ThemeProvider theme={keyboardDatePickerTheme}>
-    <KeyboardDatePicker {...props} />
+    <KeyboardDatePicker keyboardIcon={<CalenderIcon />} {...props} />
   </ThemeProvider>
 );

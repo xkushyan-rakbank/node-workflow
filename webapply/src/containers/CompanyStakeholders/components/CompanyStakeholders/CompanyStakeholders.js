@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "@material-ui/core";
-import { Form, Formik } from "formik";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isEmpty } from "lodash";
 
@@ -37,8 +36,7 @@ import { ScanViaMobile } from "./MobileScan";
 export const CompanyStakeholdersComponent = ({
   fullName,
   companyCategory,
-  goToFinalQuestions,
-  isLoading,
+  handleClickNextStep,
   isDisableNextStep
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
@@ -71,7 +69,6 @@ export const CompanyStakeholdersComponent = ({
 
   const [openEidScanner, setOpenEidScanner] = useState(false);
   const [openPassportScanner, setOpenPassportScanner] = useState(false);
-
 
   useEffect(() => {
     if (transactionId) {
@@ -163,122 +160,113 @@ export const CompanyStakeholdersComponent = ({
       <p className={classes.subTitle}>
         We have to verify your identity to check it&apos;s really you
       </p>
-      <Formik>
-        {props => (
-          <Form>
-            <ScanViaMobile />
-            <div className={classes.horizontalLine} />
-            <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
-            <div className={classes.uploadComponent}>
-              <UploadFileWrapper
-                fieldDescription="Emirates ID (both sides)"
-                helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                uploadedContent={
-                  !isEmpty(analysedEidData) && !isEmpty(kycUploadedDocs.eidFront)
-                    ? `${kycUploadedDocs.eidFront.name} | ${kycUploadedDocs.eidBack.name}`
-                    : ""
-                }
-                successText={`Succcesfully ${actionType?.eid}`}
-                handleScan={onScanEid}
-                isSuccess={isEmpty(analysedEidData) ? false : true}
-                handleRemove={() => onRemoveOcrData(DOC_TYPE_EID)}
-                handleUpload={() => openDocUploadModal(DOC_TYPE_EID)}
-                showPreview={!isEmpty(analysedEidData)}
-                type={DOC_TYPE_EID}
-              />
-            </div>
-            {isEmpty(analysedEidData) && error && (
-              <div className={classes.uploadModalErrorWrapper}>
-                <ErrorOutlineIcon className={classes.errorIcon} />
-                {error}
-              </div>
-            )}
+      <ScanViaMobile />
+      <div className={classes.horizontalLine} />
+      <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
+      <div className={classes.uploadComponent}>
+        <UploadFileWrapper
+          fieldDescription="Emirates ID (both sides)"
+          helperText="Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
+          uploadedContent={
+            !isEmpty(analysedEidData) && !isEmpty(kycUploadedDocs.eidFront)
+              ? `${kycUploadedDocs.eidFront.name} | ${kycUploadedDocs.eidBack.name}`
+              : ""
+          }
+          successText={`Succcesfully ${actionType?.eid}`}
+          handleScan={onScanEid}
+          isSuccess={isEmpty(analysedEidData) ? false : true}
+          handleRemove={() => onRemoveOcrData(DOC_TYPE_EID)}
+          handleUpload={() => openDocUploadModal(DOC_TYPE_EID)}
+          showPreview={!isEmpty(analysedEidData)}
+          type={DOC_TYPE_EID}
+        />
+      </div>
+      {isEmpty(analysedEidData) && error && (
+        <div className={classes.uploadModalErrorWrapper}>
+          <ErrorOutlineIcon className={classes.errorIcon} />
+          {error}
+        </div>
+      )}
 
-            <div className={classes.uploadComponent}>
-              <UploadFileWrapper
-                fieldDescription="Passport (photo page)"
-                helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
-                uploadedContent={
-                  !isEmpty(analysedPassportData) && !isEmpty(kycUploadedDocs.passport)
-                    ? `${kycUploadedDocs?.passport?.name}`
-                    : ""
-                }
-                isSuccess={isEmpty(analysedPassportData) ? false : true}
-                successText={`Succcesfully ${actionType?.passport}`}
-                isStepActive={!isEmpty(analysedEidData)}
-                disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
-                showPreview={!isEmpty(analysedPassportData)}
-                handleScan={onScanPassport}
-                handleRemove={() => onRemoveOcrData(DOC_TYPE_PASSPORT)}
-                handleUpload={() => openDocUploadModal(DOC_TYPE_PASSPORT)}
-                type={DOC_TYPE_PASSPORT}
-              />
-            </div>
-            {!isEmpty(analysedEidData) && error && (
-              <div className={classes.uploadModalErrorWrapper}>
-                <ErrorOutlineIcon className={classes.errorIcon} />
-                {error}
-              </div>
-            )}
+      <div className={classes.uploadComponent}>
+        <UploadFileWrapper
+          fieldDescription="Passport (photo page)"
+          helperText="Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min."
+          uploadedContent={
+            !isEmpty(analysedPassportData) && !isEmpty(kycUploadedDocs.passport)
+              ? `${kycUploadedDocs?.passport?.name}`
+              : ""
+          }
+          isSuccess={isEmpty(analysedPassportData) ? false : true}
+          successText={`Succcesfully ${actionType?.passport}`}
+          isStepActive={!isEmpty(analysedEidData)}
+          disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
+          showPreview={!isEmpty(analysedPassportData)}
+          handleScan={onScanPassport}
+          handleRemove={() => onRemoveOcrData(DOC_TYPE_PASSPORT)}
+          handleUpload={() => openDocUploadModal(DOC_TYPE_PASSPORT)}
+          type={DOC_TYPE_PASSPORT}
+        />
+      </div>
+      {!isEmpty(analysedEidData) && error && (
+        <div className={classes.uploadModalErrorWrapper}>
+          <ErrorOutlineIcon className={classes.errorIcon} />
+          {error}
+        </div>
+      )}
 
-            <div className={classes.uploadComponent}>
-              <FaceRecognition
-                fieldDescription="Scan your face"
-                helperText="Confirm that your face and photo match via your camera."
-                isStepActive={!isEmpty(analysedEidData) && !isEmpty(analysedPassportData)}
-                disabledReason={
-                  "You'll be able to do this step after uploading your Emirates ID and passport."
-                }
-                livenessData={faceLivelinessFeedback}
-                transactionId={transactionId}
-                dispatch={dispatch}
-                tempKey={faceScanKey}
-                sdkConfig={sdkConfig}
-              />
-            </div>
-            <div className="linkContainer">
-              <BackLink path={routes.companyInfo} />
-              <NextStepButton
-                handleClick={goToFinalQuestions}
-                isDisplayLoader={isLoading}
-                disabled={
-                  !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && faceScanSuccess)
-                }
-                label="Next"
-                justify="flex-end"
-              />
-            </div>
-            <Modal open={openEidScanner}>
-              <OCRScanner
-                scanType={1}
-                sdkConfig={sdkConfig}
-                onScanData={onEidScanData}
-                onClose={() => setOpenEidScanner(false)}
-              />
-            </Modal>
-            <Modal open={openPassportScanner}>
-              <OCRScanner
-                scanType={2}
-                sdkConfig={sdkConfig}
-                onScanData={onPassportScanData}
-                onClose={() => setOpenPassportScanner(false)}
-              />
-            </Modal>
-            <OverlayLoader
-              open={loading}
-              text={"Scanning your documents....this might take a few moments"}
-            />
-            {openDocUpload && (
-              <UploadFileModal
-                isOpen={openDocUpload}
-                typeOfUpload={docUploadType}
-                title={modalTitle}
-                handleClose={() => setOpenDocUpload(false)}
-             />
-            )}
-          </Form>
-        )}
-      </Formik>
+      <div className={classes.uploadComponent}>
+        <FaceRecognition
+          fieldDescription="Scan your face"
+          helperText="Confirm that your face and photo match via your camera."
+          isStepActive={!isEmpty(analysedEidData) && !isEmpty(analysedPassportData)}
+          disabledReason={
+            "You'll be able to do this step after uploading your Emirates ID and passport."
+          }
+          livenessData={faceLivelinessFeedback}
+          transactionId={transactionId}
+          dispatch={dispatch}
+          tempKey={faceScanKey}
+          sdkConfig={sdkConfig}
+        />
+      </div>
+      <div className="linkContainer">
+        <BackLink path={routes.companyInfo} />
+        <NextStepButton
+          handleClick={handleClickNextStep}
+          label="Next"
+          justify="flex-end"
+          disabled={isDisableNextStep}
+        />
+      </div>
+      <Modal open={openEidScanner}>
+        <OCRScanner
+          scanType={1}
+          sdkConfig={sdkConfig}
+          onScanData={onEidScanData}
+          onClose={() => setOpenEidScanner(false)}
+        />
+      </Modal>
+      <Modal open={openPassportScanner}>
+        <OCRScanner
+          scanType={2}
+          sdkConfig={sdkConfig}
+          onScanData={onPassportScanData}
+          onClose={() => setOpenPassportScanner(false)}
+        />
+      </Modal>
+      <OverlayLoader
+        open={loading}
+        text={"Scanning your documents....this might take a few moments"}
+      />
+      {openDocUpload && (
+        <UploadFileModal
+          isOpen={openDocUpload}
+          typeOfUpload={docUploadType}
+          title={modalTitle}
+          handleClose={() => setOpenDocUpload(false)}
+        />
+      )}
     </>
   );
 };

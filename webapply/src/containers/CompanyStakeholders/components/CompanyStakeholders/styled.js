@@ -226,5 +226,8 @@ export const useStyles = makeStyles(theme => ({
   },
   previewImgWrapper: {
     marginTop: "24px"
+  },
+  "mb-40": {
+    marginBottom: "40px"
   }
 }));

@@ -27,7 +27,8 @@ const DatePickerBase = ({
   contextualHelpText,
   contextualHelpProps = {},
   disableFuture = false,
-  onChange = value => setFieldValue(field.name, value)
+  onChange = value => setFieldValue(field.name, value),
+  inputAdornmentPosition = "start"
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -59,7 +60,7 @@ const DatePickerBase = ({
             }}
             {...field}
             {...datePickerProps}
-            InputAdornmentProps={{ position: "start" }}
+            InputAdornmentProps={{ position: inputAdornmentPosition }}
             value={field.value || null}
             ToolbarComponent={PickerToolbar}
             views={["date"]}

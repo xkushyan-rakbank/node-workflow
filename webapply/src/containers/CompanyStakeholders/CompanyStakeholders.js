@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import {
@@ -10,7 +10,7 @@ import { CompanyStakeholdersComponent } from "./components/CompanyStakeholders/C
 import { useViewId } from "../../utils/useViewId";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper, NEXT } from "../../constants";
+import { formStepper } from "../../constants";
 import { useLayoutParams } from "../FormLayout";
 import { getTransactionId } from "../../store/selectors/kyc";
 
@@ -32,8 +32,6 @@ export const CompanyStakeholdersContainer = ({
 }) => {
   const pushHistory = useTrackingHistory();
   const transactionId = useSelector(getTransactionId);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
@@ -70,15 +68,9 @@ export const CompanyStakeholdersContainer = ({
   const isSignatoryErrorDisplayed =
     stakeholders.length > 0 && isAnyStakeholderStepsCompleted && !hasSignatories;
 
-  const goToFinalQuestions = useCallback(() => {
-    setIsLoading(true);
-    sendProspectToAPI(NEXT).then(
-      isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.finalQuestions, true);
-      },
-      () => setIsLoading(false)
-    );
-  }, [pushHistory, sendProspectToAPI]);
+  const handleClickNextStep = useCallback(() => {
+    pushHistory(routes.stakeholdersPreview, true);
+  }, [pushHistory]);
 
   const handleDeleteStakeholder = useCallback(
     id => {
@@ -99,12 +91,11 @@ export const CompanyStakeholdersContainer = ({
         isSendingProspect={isSendingProspect}
         addNewStakeholder={createNewStakeholder}
         percentage={percentage}
-        goToFinalQuestions={goToFinalQuestions}
-        isLoading={isLoading}
         isDisableNextStep={isDisableNextStep}
         isSignatoryErrorDisplayed={isSignatoryErrorDisplayed}
         isLowPercentageErrorDisplayed={isLowPercentageErrorDisplayed}
         editableStakeholder={editableStakeholder}
+        handleClickNextStep={handleClickNextStep}
       />
     </StakeholdersNameProvider>
   );

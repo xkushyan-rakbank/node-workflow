@@ -19,7 +19,12 @@ export const formStepper = [
     relatedPath: routes.verifyOtp
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
-  { step: 3, title: "Company Stakeholders", path: routes.stakeholdersInfo },
+  {
+    step: 3,
+    title: "Company Stakeholders",
+    path: routes.stakeholdersInfo,
+    relatedPath: routes.stakeholdersPreview
+  },
   { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
   {

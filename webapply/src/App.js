@@ -26,6 +26,7 @@ import "./App.scss";
 import SessionExpiration from "./containers/Session";
 
 import { FormEmailConfirmPage, FormConfirmMobilePage } from "./containers/FormConfirm";
+import { StakeholdersPreview } from "./containers/CompanyStakeholders/components/CompanyStakeholders/StakeholdersPreview";
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -93,6 +94,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.stakeholdersInfo}
                 component={CompanyStakeholders}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.stakeholdersPreview}
+                component={StakeholdersPreview}
               />
               <ProspectProtectedRoute
                 exact
