@@ -112,11 +112,6 @@ const keyboardDatePickerTheme = createMuiTheme({
         fontSize: "12px",
         fontWeight: "600"
       }
-    },
-    MuiOutlinedInput: {
-      root: {
-        borderRadius: "12px"
-      }
     }
   }
 });

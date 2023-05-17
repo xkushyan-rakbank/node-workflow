@@ -19,7 +19,7 @@ export const useStyles = makeStyles(theme => {
   return {
     textField: {
       "& fieldset": {
-        borderRadius: "12px ",
+        borderRadius: "8px ",
         border: "solid 1px rgba(194, 194, 194, 0.56)"
       },
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {

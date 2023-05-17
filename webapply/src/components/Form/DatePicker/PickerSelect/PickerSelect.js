@@ -12,14 +12,14 @@ import { useStyles } from "./styled";
 const StyledSelect = withStyles({
   root: {
     width: "110px",
-    borderRadius: "12px",
+    borderRadius: "4px",
     backgroundColor: "#fff",
     maxWidth: "120px",
     padding: "7px 27px 7px 15px",
     fontSize: "12px",
     boxSizing: "border-box",
     "&:focus": {
-      borderRadius: "12px"
+      borderRadius: "4px"
     }
   },
   select: {
