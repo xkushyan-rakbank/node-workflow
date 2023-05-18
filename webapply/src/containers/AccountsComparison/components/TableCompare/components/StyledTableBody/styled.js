@@ -153,5 +153,16 @@ export const useStyles = makeStyles(theme => ({
   },
   relative: {
     position: "relative"
+  },
+  continueButtonRoot: {
+    fontSize: "14px!important",
+    fontFamily: "Open Sans",
+    "& span": {
+      fontSize: "14px",
+      textAlign: "center"
+    }
+  },
+  labelStyle: {
+    textAlign: "center"
   }
 }));

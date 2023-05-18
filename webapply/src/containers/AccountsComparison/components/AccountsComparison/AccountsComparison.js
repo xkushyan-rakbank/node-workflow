@@ -13,7 +13,8 @@ export const AccountsComparisonComponent = ({
   handleSetAccountType,
   selectedAccount,
   servicePricingGuideUrl,
-  setCurrentSection
+  setCurrentSection,
+  handleApply
 }) => {
   const classes = useStyles();
 
@@ -48,7 +49,7 @@ export const AccountsComparisonComponent = ({
               info="Available in both conventional and islamic variants"
               smallInfo
             />
-            <AccountCard handleSetAccountType={handleSetAccountType} />
+            <AccountCard handleSetAccountType={handleSetAccountType} handleApply={handleApply} />
             <InfoNote text="Companies older than 12 months are not eligible for the RAKstarter account" />
           </div>
 
@@ -58,12 +59,12 @@ export const AccountsComparisonComponent = ({
               info="Our three business accounts, side by side"
               smallInfo
             />
-            <TableCompare selectedAccount={selectedAccount} />
+            <TableCompare selectedAccount={selectedAccount} handleApply={handleApply} />
             <InfoNote
               text={
                 <>
-                  Note: 5% VAT will be levied on all charges applicable to business customers. To see
-                  our detailed Service & Price Guide click{" "}
+                  Note: 5% VAT will be levied on all charges applicable to business customers. To
+                  see our detailed Service & Price Guide click{" "}
                   <a
                     className={classes.externalLink}
                     target="_blank"

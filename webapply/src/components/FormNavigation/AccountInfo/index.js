@@ -57,6 +57,14 @@ export const AccountInfo = props => {
     goto(applicationOverviewRoutesMap[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL]);
   }, [accountType, isIslamicBanking]);
 
+  const handleGoToAccountOptions = useCallback(() => {
+    pushHistory({
+      pathname: routes.accountsComparison,
+      state: {
+        applicationOverviewFlow: true
+      }
+    });
+  }, [pushHistory]);
   const isHideTitleOnSmBreakpoint = [
     routes.comeBackLogin,
     routes.comeBackLoginVerification,
@@ -79,6 +87,7 @@ export const AccountInfo = props => {
       handleApply={handleApply}
       isHideTitleOnSmBreakpoint={isHideTitleOnSmBreakpoint}
       pathname={pathname}
+      handleGoToAccountOptions={handleGoToAccountOptions}
       {...props}
     />
   );

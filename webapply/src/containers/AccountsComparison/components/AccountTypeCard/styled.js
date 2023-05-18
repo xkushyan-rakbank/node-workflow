@@ -65,6 +65,12 @@ export const useStyles = makeStyles(theme => ({
       marginTop: "10px"
     }
   },
+  buttonDivider: {
+    margin: "30px auto 0",
+    [portraitOrientationQueryIPads]: {
+      marginTop: "10px"
+    }
+  },
   differences: {
     margin: "28px 0 0 0",
     paddingLeft: "30px",
