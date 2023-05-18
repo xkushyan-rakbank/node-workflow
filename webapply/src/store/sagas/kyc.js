@@ -177,7 +177,9 @@ export function* entityConfirmation() {
       yield call(notifyHost);
       yield put(validateEntityConfirmSuccess(error?.response?.data));
     } else {
-      yield put(validateEntityConfirmFail(message));
+      yield put(validateEntityConfirmFail(null));
+      const notificationOptions = { title: "Oops", message };
+      NotificationsManager.add(notificationOptions);
       yield put(notifyHostError(message));
       log(error);
     }
