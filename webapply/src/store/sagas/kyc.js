@@ -149,6 +149,8 @@ export function* notifyHost() {
     );
   } catch (error) {
     let message = error?.response?.data?.message;
+    const notificationOptions = { title: "Oops", message: error.message };
+    NotificationsManager.add(notificationOptions);
     yield put(notifyHostError(message));
     log(error);
   }
