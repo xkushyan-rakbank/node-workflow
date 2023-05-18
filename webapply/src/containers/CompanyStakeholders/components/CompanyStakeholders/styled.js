@@ -229,5 +229,17 @@ export const useStyles = makeStyles(theme => ({
   },
   "mb-40": {
     marginBottom: "40px"
+  },
+  completedScanInfoWrapper: {
+    background: "#ECF9F2",
+    fontWeight: 500,
+    fontSize: "14px",
+    color: "#157947",
+    padding: "16px",
+    borderRadius: "10px",
+    marginTop: "35px",
+    "& span": {
+      marginLeft: "10px"
+    }
   }
 }));

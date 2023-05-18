@@ -7,6 +7,7 @@ import cx from "classnames";
 import { useStyles } from "./styled";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { DATE_FORMAT } from "../../../../constants";
+import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import {
   Input,
   AutoSaveField as Field,
@@ -32,6 +33,10 @@ export const StakeholdersPreview = ({ values }) => {
 
   return (
     <>
+      <div className={classes.completedScanInfoWrapper}>
+        <SuccessIcon />
+        <span>Scanning successfully completed</span>
+      </div>
       <h3 className={classes.mainTitle}>Did we get everything?</h3>
       <p className={cx(classes.subTitle, classes["mb-40"])}>
         Take a minute to review the details we pulled from your documents
