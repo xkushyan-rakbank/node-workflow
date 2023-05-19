@@ -16,6 +16,7 @@ export default {
   companyInfo: `${smeBaseName}/CompanyInfo`,
   stakeholdersInfo: `${smeBaseName}/StakeholdersInfo`,
   stakeholdersPreview: `${smeBaseName}/StakeholdersInfo/Preview`,
+  StakeholderTermsAndConditions: `${smeBaseName}/StakeholdersInfo/terms-and-conditions`,
   finalQuestions: `${smeBaseName}/FinalQuestions`,
   uploadDocuments: `${smeBaseName}/UploadDocuments`,
   reUploadDocuments: `${smeBaseName}/ReUploadDocuments`,

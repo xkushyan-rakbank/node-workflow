@@ -241,5 +241,96 @@ export const useStyles = makeStyles(theme => ({
     "& span": {
       marginLeft: "10px"
     }
+  },
+  kfsSubTitle: {
+    fontWeight: 400,
+    fontSize: "20px",
+    color: "#757575",
+    margin: 0,
+    marginBottom: "40px"
+  },
+  descriptionContent: {
+    background: "#FFFFFF",
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "column",
+    padding: "24px",
+    marginBottom: "20px",
+    border: "1px solid #E6E6E6"
+  },
+  kfsDescriptionContent: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: "8px"
+  },
+  readBtn: {
+    height: "40px",
+    width: "124px",
+    borderRadius: "21px",
+    border: "1px solid #1F1F1F",
+    background: "transparent",
+    fontSize: "14px",
+    fontWeight: 600,
+    lineHeight: "22px",
+    letterSpacing: "0px",
+    color: "#1F1F1F",
+    textTransform: "none",
+    padding: "9px 24px",
+    marginTop: "20px"
+  },
+  readAcceptBtn: {
+    height: "40px",
+    width: "206px",
+    borderRadius: "21px",
+    background: "#1F1F1F",
+    fontSize: "14px",
+    fontWeight: 600,
+    lineHeight: "22px",
+    letterSpacing: "0px",
+    color: "#FFFFFF",
+    textTransform: "none",
+    padding: "9px 24px",
+    marginTop: "20px"
+  },
+  completedWrapper: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "32px",
+    minWidth: "98px",
+    background: "#ECF9F2",
+    borderRadius: "10px",
+    fontSize: "12px",
+    color: "#157947"
+  },
+  notAcceptWrapper: {
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "32px",
+    minWidth: "98px",
+    background: "#FDE7E8",
+    borderRadius: "10px",
+    fontSize: "12px",
+    color: "#8D0C10"
+  },
+  kfsTitle: {
+    margin: "0px",
+    fontWeight: "500",
+    fontSize: "16px",
+    lineHeight: "24px",
+    color: "#1F1F1F"
+  },
+  authorisationsList: {
+    paddingLeft: "24px",
+    fontWeight: "400",
+    fontSize: "14px",
+    margin: "0px",
+    color: "#757575",
+    "& li": {
+      marginBottom: "4px"
+    }
   }
 }));
