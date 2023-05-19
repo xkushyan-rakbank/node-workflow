@@ -6,13 +6,19 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import { LinkedButton } from "../../../../../../components/Buttons/LinkedButton";
+import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { accountsDataRows, accountTypes } from "../../constants";
 import { COMPARED_ACCOUNTS_TYPES } from "./constants";
 
 import { useStyles, BootstrapInput } from "./styled";
 
-export const StyledTableBodyMobileComponent = ({ selectedAccount, handleSelectAccount }) => {
+export const StyledTableBodyMobileComponent = ({
+  selectedAccount,
+  handleSelectAccount,
+  showPromptDialog,
+  handleClose
+}) => {
   const classes = useStyles();
   const [mobileAccounts, setMobileAccounts] = useState(COMPARED_ACCOUNTS_TYPES.starter);
 
@@ -72,6 +78,12 @@ export const StyledTableBodyMobileComponent = ({ selectedAccount, handleSelectAc
             <LinkedButton
               label="Read more"
               onClick={handleSelectAccount(accountTypes[mobileAccount].accountName)}
+            />
+            <ContinueButton
+              handleClick={() => showPromptDialog(accountTypes[mobileAccount].accountName)}
+              label="Apply now"
+              handleClose={handleClose}
+              classes={{ buttonStyle: classes.continueButtonRoot }}
             />
           </TableCell>
         ))}

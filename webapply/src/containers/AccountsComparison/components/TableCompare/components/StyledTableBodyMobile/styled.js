@@ -87,6 +87,14 @@ export const useStyles = makeStyles(theme => ({
   },
   relative: {
     position: "relative"
+  },
+  continueButtonRoot: {
+    fontSize: "14px",
+    fontFamily: "Open Sans",
+    "& span": {
+      fontSize: "14px",
+      textAlign: "center"
+    }
   }
 }));
 

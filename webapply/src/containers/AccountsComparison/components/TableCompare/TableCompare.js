@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -12,17 +13,19 @@ import { useWindowSize } from "../../../../utils/useWindowSize";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { accountNames, CONVENTIONAL, detailedAccountRoutesMap } from "../../../../constants";
 import { sizes, accountTypes, RAK_STARTER_CONFIRM_MESSAGE } from "./constants";
+import { DialogPrompt } from "../../DialogPrompt";
 
 import { useStyles } from "./styled";
 import { ConfirmDialog } from "../../../../components/Modals";
 
 const { INITIAL_OFFSET, OFFSET } = sizes;
 
-export const TableCompareComponent = ({ selectedAccount }) => {
+export const TableCompareComponent = ({ selectedAccount, handleApply }) => {
   const queryParams = useLocation().search;
   const pushHistory = useTrackingHistory();
   const [offset, setOffset] = useState(INITIAL_OFFSET);
   const [selectedCurrentColumn, setSelectedCurrentColumn] = useState(null);
+  const [selectedAccountType, setSelectedAccountType] = useState({});
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
   const [width] = useWindowSize();
   const dispatch = useDispatch();
@@ -32,6 +35,9 @@ export const TableCompareComponent = ({ selectedAccount }) => {
   const CurrentAccount = useRef(null);
   const RAKElite = useRef(null);
   const refs = [RAKstarter, CurrentAccount, RAKElite];
+
+  const [openModal, setOpenModal] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
 
   const handleHighlightSelectedAccount = useCallback(
     position => {
@@ -49,7 +55,6 @@ export const TableCompareComponent = ({ selectedAccount }) => {
     },
     [setOffset, setSelectedCurrentColumn]
   );
-
   useEffect(() => {
     const timer = setTimeout(() => handleHighlightSelectedAccount(selectedCurrentColumn), 4);
     return () => clearTimeout(timer);
@@ -58,7 +63,6 @@ export const TableCompareComponent = ({ selectedAccount }) => {
 
   useEffect(() => {
     const { position } = Object.values(accountTypes).find(item => item.name === selectedAccount);
-
     handleHighlightSelectedAccount(position);
   }, [selectedAccount, handleHighlightSelectedAccount]);
 
@@ -105,6 +109,22 @@ export const TableCompareComponent = ({ selectedAccount }) => {
     handleHighlightSelectedAccount(parseInt(order, 10));
   };
 
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+  const showPromptDialog = accountName => {
+    setSelectedAccountType(accountName);
+    setShowDialog(true);
+  };
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+    setOpenModal(false);
+  };
+  const handleConfirm = () => {
+    setShowDialog(false);
+    handleApply(selectedAccountType);
+  };
+
   return (
     <Paper classes={{ root: classes.paperRoot }}>
       <div>
@@ -122,15 +142,25 @@ export const TableCompareComponent = ({ selectedAccount }) => {
               selectedCurrentColumn={selectedCurrentColumn}
               handleHover={handleHover}
               handleSelectAccount={handleSelectAccount}
+              showPromptDialog={showPromptDialog}
+              handleClose={handleClose}
               refs={refs}
             />
           </Table>
         </div>
+        <DialogPrompt
+          openModal={showDialog}
+          handleClose={handleCloseDialog}
+          accountType={selectedAccountType}
+          handleConfirm={handleConfirm}
+        />
         <div className={classes.tableMobileContainer}>
           <Table classes={{ root: classes.tableRoot }}>
             <StyledTableBodyMobile
               handleSelectAccount={handleSelectAccount}
               selectedAccount={selectedAccount}
+              showPromptDialog={showPromptDialog}
+              handleClose={handleClose}
             />
           </Table>
         </div>

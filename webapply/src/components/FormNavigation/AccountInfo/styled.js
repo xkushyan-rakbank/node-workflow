@@ -110,5 +110,10 @@ export const useStyles = makeStyles(theme => ({
         textDecoration: "none"
       }
     }
+  },
+  backlinkOption: {
+    backgroundColor: "transparent !important",
+    color: "#fff !important",
+    marginTop: 20
   }
 }));
