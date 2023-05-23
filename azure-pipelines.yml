@@ -98,16 +98,16 @@ jobs:
             feat=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("feat:")) | .comment' | awk '{print NR ". " substr($0, 7)}')
             changes=$(echo "$response" | jq -r '.value[] | select((.comment | startswith("fix:")) or (.comment | startswith("BreakChange:")) or (.comment | startswith("feat:")) | not) | .comment' | awk '{print NR ". " $0}')
             if [[ -n "$fix" ]]; then
-              echo -e "fix:\n\n$fix\n" >> releasenote/release.txt
+              echo -e "+ **fix:** \n\n$fix\n" >> releasenote/release.txt
             fi
             if [[ -n "$break_change" ]]; then
-              echo -e "BreakChange:\n\n$break_change\n" >> releasenote/release.txt
+              echo -e "+ **BreakChange:** \n\n$break_change\n" >> releasenote/release.txt
             fi
             if [[ -n "$feat" ]]; then
-              echo -e "feat:\n\n$feat\n" >> releasenote/release.txt
+              echo -e "+ **feat:** \n\n$feat\n" >> releasenote/release.txt
             fi
             if [[ -n "$changes" ]]; then
-              echo -e "Changes:\n\n$changes\n" >> releasenote/release.txt
+              echo -e "+ **Changes:** \n\n$changes\n" >> releasenote/release.txt
             fi            
             echo "================Final Release/change log is : ============"      
             cat releasenote/release.txt
