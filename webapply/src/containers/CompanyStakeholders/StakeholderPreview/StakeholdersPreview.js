@@ -1,23 +1,35 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Form, Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import { format, isValid } from "date-fns";
 import cx from "classnames";
 
-import { useStyles } from "./styled";
-import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
-import { DATE_FORMAT } from "../../../../constants";
-import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
+import { useStyles } from "../components/CompanyStakeholders/styled";
+import { useTrackingHistory } from "../../../utils/useTrackingHistory";
+import { NextStepButton } from "../../../components/Buttons/NextStepButton";
+import { DATE_FORMAT, NEXT, formStepper } from "../../../constants";
+import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import {
   Input,
   AutoSaveField as Field,
   DatePicker,
   EmiratesID,
   SelectAutocomplete
-} from "../../../../components/Form";
+} from "../../../components/Form";
+import routes from "../../../routes";
+import { OverlayLoader } from "../../../components/Loader";
+import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../FormLayout";
+import { useViewId } from "../../../utils/useViewId";
 
-export const StakeholdersPreview = ({ values }) => {
+export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
+  useFormNavigation([false, true, formStepper]);
+  useLayoutParams(false, true);
+  useViewId(true);
+
+  const [isLoading, setIsLoading] = useState(false);
   const initialValues = {
     fullName: "",
     nationality: "",
@@ -30,6 +42,17 @@ export const StakeholdersPreview = ({ values }) => {
 
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
+
+  const handleClickStakeholderPreviewNextStep = useCallback(() => {
+    setIsLoading(true);
+
+    return sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.StakeholderTermsAndConditions, true);
+      },
+      () => setIsLoading(false)
+    );
+  }, [pushHistory, sendProspectToAPI]);
 
   return (
     <>
@@ -151,11 +174,16 @@ export const StakeholdersPreview = ({ values }) => {
               </Grid>
             </Grid>
             <div className="linkContainer">
-              <NextStepButton label="Next" justify="flex-end" disabled={true} />
+              <NextStepButton
+                label="Next"
+                justify="flex-end"
+                onClick={() => handleClickStakeholderPreviewNextStep()}
+              />
             </div>
           </Form>
         )}
       </Formik>
+      <OverlayLoader open={isLoading} text={"Don't go anywhere...this will just take a minute!"} />
     </>
   );
 };

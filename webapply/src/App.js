@@ -26,7 +26,7 @@ import "./App.scss";
 import SessionExpiration from "./containers/Session";
 
 import { FormEmailConfirmPage, FormConfirmMobilePage } from "./containers/FormConfirm";
-import { StakeholdersPreview } from "./containers/CompanyStakeholders/components/CompanyStakeholders/StakeholdersPreview";
+import { StakeholderPreview } from "./containers/CompanyStakeholders/StakeholderPreview";
 import { StakeholderTermsAndConditions } from "./containers/CompanyStakeholders/components/CompanyStakeholders/StakeholderTermsAndConditions";
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
@@ -99,9 +99,9 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <ProspectProtectedRoute
                 exact
                 path={routes.stakeholdersPreview}
-                component={StakeholdersPreview}
+                component={StakeholderPreview}
               />
-               <ProspectProtectedRoute
+              <ProspectProtectedRoute
                 exact
                 path={routes.StakeholderTermsAndConditions}
                 component={StakeholderTermsAndConditions}
