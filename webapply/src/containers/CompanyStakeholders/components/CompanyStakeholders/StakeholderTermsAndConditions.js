@@ -6,12 +6,21 @@ import { StakeholderKfs } from "./StakeholderKfs";
 import routes from "../../../../routes";
 import { StakeholderAuthorisations } from "./StakeholderAuthorisations";
 import { TermsAndConditions } from "./TermsAndConditions";
+import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
+import { useLayoutParams } from "../../../FormLayout";
+import { useViewId } from "../../../../utils/useViewId";
+import { formStepper } from "../../../../constants";
+
 export const StakeholderTermsAndConditions = () => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
   const goToAdditional = useCallback(() => {
     pushHistory(routes.additionalInfoComponent, true);
   }, [pushHistory]);
+  useFormNavigation([false, true, formStepper]);
+  useLayoutParams(false, true);
+  useViewId(true);
+
   return (
     <>
       <h3 className={classes.mainTitle}>Time for the small print</h3>

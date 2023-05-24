@@ -307,7 +307,10 @@ export const useStyles = makeStyles(theme => ({
     color: "#FFFFFF",
     textTransform: "none",
     padding: "9px 24px",
-    marginTop: "20px"
+    marginTop: "20px",
+    "&:hover": {
+      color: "#000"
+    }
   },
   completedWrapper: {
     display: "flex",
