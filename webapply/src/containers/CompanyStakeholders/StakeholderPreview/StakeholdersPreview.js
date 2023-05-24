@@ -79,7 +79,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 100 }
                   }}
-                  showCounter={true}
                   disabled={true}
                   className="testingClass"
                 />

@@ -135,7 +135,6 @@ export const ApplicantInfoComponent = ({
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
                 fieldDescription="Enter your full name as shown on your passport."
-                showCounter={true}
               />
             )}
             {isConfigLoading ? (
@@ -153,7 +152,6 @@ export const ApplicantInfoComponent = ({
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
                 fieldDescription="This should be the same as shown on your trade licence."
-                showCounter={true}
               />
             )}
 
