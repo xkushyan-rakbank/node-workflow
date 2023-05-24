@@ -50,7 +50,7 @@ export const TradeLicenceInformation = ({ values }) => {
         name="licenseOrCOINumber"
         label="TL number/Certificate of Incorporation number"
         path="prospect.organizationInfo.licenseOrCOINumber"
-        fieldDescription="Special characters allowed - / . = ."
+        fieldDescription="Special characters allowed (- / . Space)"
         component={Input}
         InputProps={{
           inputProps: { maxLength: MAX_LICENSE_NUMBER_LENGTH, tabIndex: 0 }
