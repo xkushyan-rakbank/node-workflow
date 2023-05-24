@@ -25,10 +25,11 @@ export const formStepper = [
     path: routes.stakeholdersInfo,
     relatedPath: [routes.stakeholdersPreview, routes.StakeholderTermsAndConditions]
   },
-  { step: 4, title: "Final Questions", path: routes.finalQuestions },
-  { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
+  { step: 4, title: "Additional", path: routes.additionalInfoComponent },
+  { step: 5, title: "Final Questions", path: routes.finalQuestions },
+  { step: 6, title: "Upload Documents", path: routes.uploadDocuments },
   {
-    step: 6,
+    step: 7,
     title: "Select Services",
     path: routes.selectServices,
     relatedPath: [routes.SubmitApplication]

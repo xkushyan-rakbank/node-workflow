@@ -39,6 +39,7 @@ const DetailedAccount = lazy(() => import("./containers/DetailedAccount"));
 const CompanyInfo = lazy(() => import("./containers/CompanyInfo"));
 const CompanyStakeholders = lazy(() => import("./containers/CompanyStakeholders"));
 const FinalQuestions = lazy(() => import("./containers/FinalQuestions"));
+const AdditionalInfoComponent = lazy(() => import("./containers/Additional"));
 const SelectServices = lazy(() => import("./containers/SelectServices"));
 const ApplicationOverview = lazy(() => import("./containers/ApplicationOverview"));
 const ComeBackLogin = lazy(() => import("./containers/ComeBackLogin"));
@@ -110,6 +111,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.finalQuestions}
                 component={FinalQuestions}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.additionalInfoComponent}
+                component={AdditionalInfoComponent}
               />
               <ProspectProtectedRoute
                 exact
