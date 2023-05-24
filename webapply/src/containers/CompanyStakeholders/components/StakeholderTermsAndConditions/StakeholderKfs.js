@@ -2,10 +2,24 @@ import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
+import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 
 export const StakeholderKfs = () => {
   const classes = useStyles();
   const [isAccepted, setIsAccepted] = useState(false);
+  const [openKfsDialog, setKfsDialog] = useState(false);
+
+  const openKFSModal = () => {
+    setKfsDialog(true);
+  };
+
+  const handleClose = () => {
+    setKfsDialog(false);
+  };
+
+  const handleAccept = () => {
+    setIsAccepted(true);
+  };
 
   return (
     <>
@@ -24,7 +38,7 @@ export const StakeholderKfs = () => {
           )}
         </div>
         {!isAccepted ? (
-          <Button variant="outlined" className={classes.readAcceptBtn}>
+          <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
             Read and Accept
           </Button>
         ) : (
@@ -33,6 +47,11 @@ export const StakeholderKfs = () => {
           </Button>
         )}
       </div>
+      <TermsAndConditionsDialog
+        open={openKfsDialog}
+        handleClose={handleClose}
+        handleAccept={handleAccept}
+      />
     </>
   );
 };

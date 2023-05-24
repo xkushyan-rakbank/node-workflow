@@ -1,5 +1,5 @@
 import React, { useEffect, Suspense, lazy } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -27,7 +27,7 @@ import SessionExpiration from "./containers/Session";
 
 import { FormEmailConfirmPage, FormConfirmMobilePage } from "./containers/FormConfirm";
 import { StakeholderPreview } from "./containers/CompanyStakeholders/StakeholderPreview";
-import { StakeholderTermsAndConditions } from "./containers/CompanyStakeholders/components/CompanyStakeholders/StakeholderTermsAndConditions";
+import { StakeholderTermsAndConditions } from "./containers/CompanyStakeholders/components/StakeholderTermsAndConditions/StakeholderTermsAndConditions";
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -91,7 +91,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.verifyMobileOtp}
                 component={FormConfirmMobilePage}
               />
-              <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
+              <ProspectProtectedRoute exact path={routes.companyInfo} component={StakeholderTermsAndConditions} />
               <ProspectProtectedRoute
                 exact
                 path={routes.stakeholdersInfo}

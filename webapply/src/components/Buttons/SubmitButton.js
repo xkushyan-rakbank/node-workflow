@@ -7,7 +7,7 @@ import { ContainedButton } from "./ContainedButton";
 export const ButtonWrapper = styled(Grid)({
   margin: "42px 0 0"
 });
-
+//using this button in KFS Dialog
 export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
   fontWeight: 600,
   letterSpacing: "normal",

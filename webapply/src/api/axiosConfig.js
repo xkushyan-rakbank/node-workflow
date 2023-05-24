@@ -37,6 +37,10 @@ const apiClient = axios.create({
   baseURL: process.env.REACT_APP_API_PATH || "http://conv.rakbankonline.ae/quickapply"
 });
 
+export const wcmClient = axios.create({
+  baseURL: process.env.REACT_APP_WCM_PATH || "https://revamp.rakbank.ae/wcmapi"
+});
+
 apiClient.interceptors.request.use(config => {
   return {
     ...config,

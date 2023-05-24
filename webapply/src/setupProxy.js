@@ -37,7 +37,7 @@ module.exports = function(app) {
   app.use(
     "/onboarding",
     proxy({
-      target: "https://quickapplyuat.rakbank.ae/digitalbank",
+      target: "https://quickapplydev.rakbank.ae/digitalbank",
       changeOrigin: true
     })
   );
@@ -56,4 +56,21 @@ module.exports = function(app) {
       changeOrigin: true
     })
   );
+  app.use(
+    "/wcmapi",
+    proxy({
+      target: "https://revamp.rakbank.ae/wcmapi",
+      changeOrigin: true
+    })
+  );
+  // app.use(
+  //   "/business",
+  //   proxy({
+  //     target: "http://localhost:3000",
+  //     changeOrigin: false,
+  //     pathRewrite: {
+  //       '^/business' : '/'
+  //     }
+  //   })
+  // );
 };
