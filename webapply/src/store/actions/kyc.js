@@ -21,7 +21,7 @@ export const VALIDATE_IDENTITY_SUCCESS = "VALIDATE_IDENTITY_SUCCESS";
 export const VALIDATE_IDENTITY_FAIL = "VALIDATE_IDENTITY_FAIL";
 export const VALIDATE_CONFIRM_ENTITY_SUCCESS = "VALIDATE_CONFIRM_ENTITY_SUCCESS";
 export const VALIDATE_CONFIRM_ENTITY_FAIL = "VALIDATE_CONFIRM_ENTITY_FAIL";
-export const ENTITY_CONFIRMATION = "ENTITY_CONFIRMATION";
+export const NOTIFY_HOST = "NOTIFY_HOST";
 
 export const EID_PREVIEW_DATA = "EID_PREVIEW_DATA";
 export const PASSPORT_PREVIEW_DATA = "PASSPORT_PREVIEW_DATA";
@@ -115,22 +115,22 @@ export const setPassportActionType = response => {
   return { type: SET_PASSPORT_ACTION_TYPE, payload: response };
 };
 
-export const entityConfirmationPromisify = () => ({
-  type: ENTITY_CONFIRMATION,
-  [WAIT_FOR_ACTION]: NOTIFY_HOST_SUCCESS,
-  [ERROR_ACTION]: NOTIFY_HOST_ERROR
-});
-
-export const entityConfirmation = () => {
-  return { type: ENTITY_CONFIRMATION };
-};
-
 export const validateEntityConfirmSuccess = response => {
   return { type: VALIDATE_CONFIRM_ENTITY_SUCCESS, payload: response };
 };
 
 export const validateEntityConfirmFail = response => {
   return { type: VALIDATE_CONFIRM_ENTITY_FAIL, payload: response };
+};
+
+export const notifyHostPromisify = () => ({
+  type: NOTIFY_HOST,
+  [WAIT_FOR_ACTION]: NOTIFY_HOST_SUCCESS,
+  [ERROR_ACTION]: NOTIFY_HOST_ERROR
+});
+
+export const notifyHost = () => {
+  return { type: NOTIFY_HOST };
 };
 
 export const notifyHostSuccess = response => {

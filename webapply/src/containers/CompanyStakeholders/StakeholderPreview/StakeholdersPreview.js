@@ -21,6 +21,7 @@ import { OverlayLoader } from "../../../components/Loader";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../FormLayout";
 import { useViewId } from "../../../utils/useViewId";
+import { BackLink } from "../../../components/Buttons/BackLink";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -174,6 +175,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
               </Grid>
             </Grid>
             <div className="linkContainer">
+              <BackLink path={routes.stakeholdersInfo} />
               <NextStepButton
                 label="Next"
                 justify="flex-end"

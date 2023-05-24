@@ -16,10 +16,10 @@ import {
   validateIdentityFail,
   validateEntityConfirmSuccess,
   validateEntityConfirmFail,
-  ENTITY_CONFIRMATION,
   saveFaceLivelinessFeedbackError,
   notifyHostSuccess,
-  notifyHostError
+  notifyHostError,
+  NOTIFY_HOST
 } from "../actions/kyc";
 import {
   getAuthorizationHeader,
@@ -169,18 +169,15 @@ export function* entityConfirmation() {
       livelinessData.datahash,
       tradeLicenseNumber
     );
-    yield call(notifyHost);
     yield put(validateEntityConfirmSuccess(entityConfirmResponse));
   } catch (error) {
     let message = error?.response?.data?.message;
     if (error?.response?.status === 403) {
-      yield call(notifyHost);
       yield put(validateEntityConfirmSuccess(error?.response?.data));
     } else {
       yield put(validateEntityConfirmFail(null));
       const notificationOptions = { title: "Oops", message };
       NotificationsManager.add(notificationOptions);
-      yield put(notifyHostError(message));
       log(error);
     }
   } finally {
@@ -199,6 +196,7 @@ export function* setLivelinessData({ payload }) {
       livelinessData.datahash
     );
     yield put(validateIdentitySuccess());
+    yield call(entityConfirmation);
   } catch (error) {
     let message = error?.response?.data?.message;
     yield put(validateIdentityFail(message));
@@ -213,6 +211,6 @@ export default function* KycTransactionSaga() {
     takeLatest(CREATE_FACE_SCAN_KEY, createFaceScanSaga),
     takeLatest(CHECK_FACE_LIVELINESS, checkFaceLiveliness),
     takeLatest(SET_LIVELINESS_DATA, setLivelinessData),
-    takeLatest(ENTITY_CONFIRMATION, entityConfirmation)
+    takeLatest(NOTIFY_HOST, notifyHost)
   ]);
 }

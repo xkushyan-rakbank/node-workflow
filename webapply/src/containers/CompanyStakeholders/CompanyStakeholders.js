@@ -29,7 +29,7 @@ export const CompanyStakeholdersContainer = ({
   isSendingProspect,
   editableStakeholder,
   createKycTransaction,
-  entityConfirmation
+  notifyHost
 }) => {
   const pushHistory = useTrackingHistory();
   const transactionId = useSelector(getTransactionId);
@@ -73,7 +73,7 @@ export const CompanyStakeholdersContainer = ({
   const handleClickNextStep = useCallback(() => {
     setIsLoading(true);
 
-    return entityConfirmation().then(
+    return notifyHost().then(
       isScreeningError => {
         pushHistory(routes.stakeholdersPreview, true);
       },
@@ -82,7 +82,7 @@ export const CompanyStakeholdersContainer = ({
         // pushHistory(routes.stakeholdersPreview, true);
       }
     );
-  }, [entityConfirmation, pushHistory]);
+  }, [notifyHost, pushHistory]);
 
   const handleDeleteStakeholder = useCallback(
     id => {

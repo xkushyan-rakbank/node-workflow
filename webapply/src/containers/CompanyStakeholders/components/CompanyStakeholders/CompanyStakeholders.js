@@ -49,7 +49,7 @@ export const CompanyStakeholdersComponent = ({
     error,
     faceScanKey,
     faceLivelinessFeedback,
-    faceScanSuccess,
+    confirmEntity,
     kycUploadedDocs,
     actionType,
     confirmEntityError
@@ -246,9 +246,7 @@ export const CompanyStakeholdersComponent = ({
           type="button"
           handleClick={handleClickNextStep}
           isDisplayLoader={isLoading}
-          disabled={
-            !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && faceScanSuccess)
-          }
+          disabled={!(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity)}
           label="Next"
           justify="flex-end"
         />

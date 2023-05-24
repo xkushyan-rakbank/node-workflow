@@ -124,7 +124,7 @@ export const FaceRecognition = ({
     localizedMessagesLiveness,
     livenessChecklist
   });
-  const { identityValidation, faceLivelinessFeedback, faceScanSuccess } = useSelector(getKyc);
+  const { identityValidation, faceLivelinessFeedback, confirmEntity } = useSelector(getKyc);
 
   const onResult = async result => {
     dispatch(checkFaceLiveliness(result));
@@ -169,7 +169,7 @@ export const FaceRecognition = ({
             <div className={classes.subcontent}>{helperText}</div>
           </div>
         </div>
-        {faceScanSuccess && isStepActive ? (
+        {confirmEntity && isStepActive ? (
           <div className={classes.completedWrapper}>
             <SuccessIcon />
             <span>Completed</span>

@@ -18,7 +18,7 @@ import {
   SET_PASSPORT_ACTION_TYPE,
   VALIDATE_CONFIRM_ENTITY_SUCCESS,
   VALIDATE_CONFIRM_ENTITY_FAIL,
-  ENTITY_CONFIRMATION,
+  NOTIFY_HOST,
   CREATE_FACE_LIVELINESS_FEEDBACK_ERROR,
   NOTIFY_HOST_SUCCESS,
   NOTIFY_HOST_ERROR
@@ -94,6 +94,8 @@ export default handleActions(
       identityValidation: null,
       confirmEntityError: null,
       faceScanSuccess: false,
+      notifyHostSuccess: false,
+      confirmEntity: false,
       kycUploadedDocs: {
         eidFront: {},
         eidBack: {},
@@ -114,6 +116,8 @@ export default handleActions(
       identityValidation: null,
       confirmEntityError: null,
       faceScanSuccess: false,
+      notifyHostSuccess: false,
+      confirmEntity: false,
       kycUploadedDocs: {
         ...state.kycUploadedDocs,
         passport: {}
@@ -148,7 +152,6 @@ export default handleActions(
     }),
     [VALIDATE_IDENTITY_SUCCESS]: (state, { payload }) => ({
       ...state,
-      loading: false,
       faceScanSuccess: true,
       faceLivelinessFeedback: null
     }),
@@ -180,11 +183,6 @@ export default handleActions(
       ...state,
       actionType: { ...state.actionType, passport: payload }
     }),
-    [ENTITY_CONFIRMATION]: (state, { payload }) => ({
-      ...state,
-      loading: true,
-      confirmEntityError: null
-    }),
     [VALIDATE_CONFIRM_ENTITY_SUCCESS]: (state, { payload }) => ({
       ...state,
       loading: false,
@@ -194,6 +192,10 @@ export default handleActions(
       ...state,
       loading: false,
       confirmEntityError: payload
+    }),
+    [NOTIFY_HOST]: (state, { payload }) => ({
+      ...state,
+      loading: true
     }),
     [NOTIFY_HOST_SUCCESS]: (state, { payload }) => ({
       ...state,
