@@ -16,14 +16,14 @@ export const formStepper = [
     step: 1,
     title: "Basic Information",
     path: routes.applicantInfo,
-    relatedPath: routes.verifyOtp
+    relatedPath: [routes.verifyOtp]
   },
   { step: 2, title: "Company Information", path: routes.companyInfo },
   {
     step: 3,
     title: "Company Stakeholders",
     path: routes.stakeholdersInfo,
-    relatedPath: routes.stakeholdersPreview
+    relatedPath: [routes.stakeholdersPreview, routes.StakeholderTermsAndConditions]
   },
   { step: 4, title: "Final Questions", path: routes.finalQuestions },
   { step: 5, title: "Upload Documents", path: routes.uploadDocuments },
@@ -31,7 +31,7 @@ export const formStepper = [
     step: 6,
     title: "Select Services",
     path: routes.selectServices,
-    relatedPath: routes.SubmitApplication
+    relatedPath: [routes.SubmitApplication]
   }
 ];
 

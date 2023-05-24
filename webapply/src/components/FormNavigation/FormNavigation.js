@@ -47,7 +47,7 @@ export const FormNavigationComponent = () => {
   ] = navContext;
 
   const activeStep = navigationSteps.find(step =>
-    [step.path, step.relatedPath].some(path => pathname === path)
+    [step.path, ...(step.relatedPath ?? "")].some(path => pathname === path)
   );
   const activeStepIndex = (activeStep || {}).step;
 
