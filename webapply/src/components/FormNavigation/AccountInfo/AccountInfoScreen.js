@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 //import routes from "../../../routes";
 import { ContainedButton } from "../../Buttons/ContainedButton";
 import { MobileNotification } from "../../Modals";
+import { LinkButton } from "../../Buttons/LinkButton";
 import { useStyles } from "./styled";
 import { accountsInfo } from "./constants";
 
@@ -19,7 +20,8 @@ export const AccountInfoScreen = ({
   title,
   subtitle,
   isHideTitleOnSmBreakpoint,
-  pathname
+  pathname,
+  handleGoToAccountOptions
 }) => {
   const classes = useStyles({ isShowApply, isHideTitleOnSmBreakpoint });
 
@@ -95,6 +97,11 @@ export const AccountInfoScreen = ({
               handleClick={handleStart}
             />
           </div>
+          <LinkButton
+            className={classes.backlinkOption}
+            clickHandler={handleGoToAccountOptions}
+            title="< Back to other account options"
+          />
         </div>
       )}
     </div>

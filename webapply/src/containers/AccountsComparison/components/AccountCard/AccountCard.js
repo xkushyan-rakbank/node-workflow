@@ -7,9 +7,9 @@ export const AccountCardComponent = props => {
   const classes = useStyles();
   return (
     <div className={classes.cardsContainer}>
-      {accountTypesDescription.map(({ name, ...item }) => (
+      {accountTypesDescription.map(({ name, accountName, ...item }) => (
         <div key={name} className={classes.cardsContainerItem}>
-          <AccountTypeCard {...item} {...props} accountType={name} />
+          <AccountTypeCard {...item} {...props} accountType={name} accountTypeName={accountName} />
         </div>
       ))}
     </div>

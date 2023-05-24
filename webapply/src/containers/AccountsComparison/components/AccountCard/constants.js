@@ -1,4 +1,4 @@
-import { accountTitles } from "../../../../constants";
+import { accountTitles, accountNames } from "../../../../constants";
 import { accountTypes } from "../TableCompare/constants";
 
 import { ReactComponent as Startups } from "../../../../assets/icons/startups_ic.svg";
@@ -8,6 +8,7 @@ import { ReactComponent as EstablishedBusinesses } from "../../../../assets/icon
 export const accountTypesDescription = [
   {
     name: accountTitles.starter,
+    accountName: accountNames.starter,
     Icon: Startups,
     title: "For Startups \nand Entrepreneurs",
     description: [
@@ -15,10 +16,12 @@ export const accountTypesDescription = [
       "Free remittances & preferential forex rates",
       "Free accounting \npackage & business insurance"
     ],
-    buttonText: accountTypes.starter.name
+    buttonText: accountTypes.starter.name,
+    applyNowButton: "Apply now"
   },
   {
     name: accountTitles.currentAccount,
+    accountName: accountNames.currentAccount,
     Icon: Businesses,
     title: "For Growing Businesses",
     description: [
@@ -26,10 +29,12 @@ export const accountTypesDescription = [
       "Preferential transaction fees",
       "Dedicated Relationship Manager "
     ],
-    buttonText: accountTypes.currentAccount.name
+    buttonText: accountTypes.currentAccount.name,
+    applyNowButton: "Apply now"
   },
   {
     name: accountTitles.elite,
+    accountName: accountNames.elite,
     Icon: EstablishedBusinesses,
     title: "For Established Businesses",
     description: [
@@ -37,7 +42,8 @@ export const accountTypesDescription = [
       "Host of lifestyle benefits",
       "Priority servicing & Dedicated Relationship Manager"
     ],
-    buttonText: accountTypes.elite.name
+    buttonText: accountTypes.elite.name,
+    applyNowButton: "Apply now"
   }
 ];
 export const SECTION_INDEX = 2;

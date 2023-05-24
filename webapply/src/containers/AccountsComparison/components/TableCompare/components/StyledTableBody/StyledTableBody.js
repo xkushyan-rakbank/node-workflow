@@ -5,6 +5,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 
 import { LinkedButton } from "../../../../../../components/Buttons/LinkedButton";
+import { ContinueButton } from "../../../../../../components/Buttons/ContinueButton";
 import { StyledTableCellWitHoverHandler } from "../StyledTableCellWitHoverHandler";
 import { accountsDataRows, accountTypes } from "../../constants";
 
@@ -15,6 +16,8 @@ export const StyledTableBodyComponent = ({
   handleSelectAccount,
   selectedCurrentColumn,
   handleHover,
+  showPromptDialog,
+  handleClose,
   refs
 }) => {
   const classes = useStyles();
@@ -77,6 +80,15 @@ export const StyledTableBodyComponent = ({
             })}
           >
             <LinkedButton label="Read more" onClick={handleSelectAccount(accountName)} />
+            <ContinueButton
+              handleClick={() => showPromptDialog(accountName)}
+              label="Apply now"
+              handleClose={handleClose}
+              classes={{
+                buttonStyle: classes.continueButtonRoot,
+                labelStyle: classes.labelStyle
+              }}
+            />
           </TableCell>
         ))}
       </TableRow>
