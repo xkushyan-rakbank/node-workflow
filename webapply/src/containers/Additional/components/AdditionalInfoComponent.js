@@ -23,7 +23,7 @@ export default function AdditionalInfoComponent() {
             className={classes.additionalSelectionButton}
           >
             <div className={classes.buttonText}>
-              <div className={classes.title}>{"Add company information"}</div>
+              <div className={classes.title}>Company information</div>
             </div>
             <div className={classes.buttonWrap}>
               <Button
@@ -44,7 +44,7 @@ export default function AdditionalInfoComponent() {
         <div className={classes.btnContainer}>
           <div className={classes.additionalSelectionButton}>
             <div className={classes.buttonText}>
-              <div className={classes.title}>{"Add stakeholder information"}</div>
+              <div className={classes.title}>Stakeholder information</div>
             </div>
             <div className={classes.buttonWrap}>
               <Button
