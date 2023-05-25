@@ -9,12 +9,15 @@ export const useStyles = makeStyles(theme => ({
     border: "1px dashed #86868B",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     borderRadius: "10px",
-    "@media (max-width: 375px)": {
+    [theme.breakpoints.down("sm")]: {
       flexDirection: "column"
     }
   },
   contentContainer: {
     display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column"
+    },
     alignItems: "center"
   },
   actionButton: {
@@ -32,8 +35,8 @@ export const useStyles = makeStyles(theme => ({
       color: "#FFFFFF",
       backgroundColor: "#1F1F1F !important"
     },
-    "@media (max-width: 375px)": {
-      width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      width: "105px",
       marginTop: "24px"
     }
   },
@@ -44,7 +47,10 @@ export const useStyles = makeStyles(theme => ({
   },
   subcontent: {
     fontSize: "12px",
-    color: "#757575"
+    color: "#757575",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center"
+    }
   },
   fieldDescription: {
     fontSize: "12px",
@@ -101,5 +107,14 @@ export const useStyles = makeStyles(theme => ({
     background: "#ECF9F2",
     borderRadius: "10px",
     fontSize: "12px"
+  },
+  contentWrapper: {
+    marginLeft: "20px",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "unset",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }
   }
 }));

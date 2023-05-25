@@ -18,7 +18,10 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column"
+    }
   },
   previewContainer: {
     width: "100%",
@@ -34,9 +37,9 @@ export const useStyles = makeStyles(theme => ({
   btnWrapper: {
     display: "flex",
     [theme.breakpoints.down("xs")]: {
-      flexDirection: "column"
-    },
-    "@media (max-width: 425px)": {
+      width: "100%",
+      flexDirection: "row",
+      justifyContent: "center",
       marginTop: "20px"
     }
   },
@@ -60,7 +63,7 @@ export const useStyles = makeStyles(theme => ({
     "&:first-child": {
       marginRight: "8px",
       [theme.breakpoints.down("xs")]: {
-        marginRight: "0px",
+        marginRight: "32px",
         marginBottom: "8px"
       }
     },
@@ -74,16 +77,32 @@ export const useStyles = makeStyles(theme => ({
   },
   contentContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      width: "inherit"
+    }
   },
   content: {
     fontSize: "16px",
     color: "#1F1F1F",
-    marginBottom: "7px"
+    marginBottom: "7px",
+    [theme.breakpoints.down("xs")]: {
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      textAlign: "center"
+    }
   },
   subcontent: {
     fontSize: "12px",
-    color: "#757575"
+    color: "#757575",
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center"
+    }
   },
   fieldDescription: {
     fontSize: "12px",
@@ -119,5 +138,28 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px",
     lineHeight: "16px",
     color: "#157947"
+  },
+  contentWrapper: {
+    marginLeft: "20px",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: "unset",
+      textAlign: "center",
+      width: "85%"
+    }
+  },
+  previewMobile: {
+    borderLeft: "1px solid #E6E6E6",
+    paddingLeft: "16px",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    color: "#8D0C10",
+    cursor: "pointer"
+  },
+  success: {
+    marginLeft: "5px",
+    [theme.breakpoints.down("xs")]: {
+      marginRight: "16px"
+    }
   }
 }));

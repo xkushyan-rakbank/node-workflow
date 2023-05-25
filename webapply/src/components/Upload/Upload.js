@@ -4,6 +4,7 @@ import { Button } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import cx from "classnames";
 import { getIn } from "formik";
+import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
@@ -19,6 +20,7 @@ export const Upload = ({
   fieldDescription,
   helperText,
   path,
+  mobilecontentPlaceholder,
   form: { errors, touched },
   field: { onBlur, ...field },
   ErrorMessageComponent = ErrorMessage,
@@ -34,12 +36,15 @@ export const Upload = ({
     accept,
     maxSize,
     minSize,
+    noDrag: isMobile ? true : false,
     ...props
   });
   const hasFile = !!file;
   const { visible } = useDecisions(path);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
+  const FileIconHeight = isMobile ? "35px" : "44px";
+  const FileIconWidth = isMobile ? "32px" : "40px";
 
   return (
     visible && (
@@ -47,17 +52,24 @@ export const Upload = ({
         <div className={classes.fieldDescription}>{fieldDescription}</div>
         <div className={classes.uplaodContainer}>
           <div className={classes.main} {...getRootProps()}>
-            <FileIcon className={classes.fileIcon} height="44" width="40" alt="companyIconSvg" />
+            <FileIcon
+              style={{ height: FileIconHeight, width: FileIconWidth }}
+              alt="companyIconSvg"
+            />
             <div className={classes.contentContainer}>
               <section>
-                <div>
+                <div className={classes.contentWrapper}>
                   <input {...getInputProps()} />
                   <div className={classes.content}>
                     {/* Drag and drop file here or upload from your computer */}
                     {showUploadSuccessIcon}
                     {props.content
                       ? props.content
-                      : "Drag and drop file here or upload from your computer"}
+                      : `${
+                          isMobile
+                            ? mobilecontentPlaceholder
+                            : "Drag and drop file here or upload from your computer"
+                        }`}
                   </div>
 
                   {hasFile && showUploadSuccessIcon ? (

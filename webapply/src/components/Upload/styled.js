@@ -10,7 +10,10 @@ export const useStyles = makeStyles(theme => ({
     borderadius: "10px",
     flexDirection: "row",
     justifyContent: "space-between",
-    cursor: "pointer"
+    cursor: "pointer",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column"
+    }
   },
   actionButton: {
     width: "105px",
@@ -24,21 +27,42 @@ export const useStyles = makeStyles(theme => ({
     "@media (max-width: 372px)": {
       width: "100%",
       marginLeft: 0
+    },
+    [theme.breakpoints.down("xs")]: {
+      width: "105px",
+      height: "40px",
+      fontSize: "14px",
+      marginTop: "16px"
     }
   },
   main: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+      alignItems: "center"
+    }
   },
   contentContainer: {
-    marginLeft: "20px"
+    marginLeft: "20px",
+    [theme.breakpoints.down("xs")]: {
+      marginTop: "16px",
+      marginLeft: "none"
+    }
   },
   content: {
-    fontSize: "16px"
+    fontSize: "16px",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "12px",
+      textAlign: "center"
+    }
   },
   subcontent: {
     fontSize: "12px",
-    color: "#757575"
+    color: "#757575",
+    [theme.breakpoints.down("ls")]: {
+      textAlign: "center"
+    }
   },
   row: {
     display: "flex",
@@ -57,5 +81,12 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: "400",
     color: "#757575",
     marginBottom: "8px"
+  },
+  contentWrapper: {
+    [theme.breakpoints.down("xs")]: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
+    }
   }
 }));

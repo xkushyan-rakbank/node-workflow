@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "@material-ui/core";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isEmpty } from "lodash";
+import { isMobile } from "react-device-detect";
 
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { FaceRecognition } from "../../../../components/FaceRecognition/FaceRecognition";
@@ -162,7 +163,7 @@ export const CompanyStakeholdersComponent = ({
       <p className={classes.subTitle}>
         We have to verify your identity to check it&apos;s really you
       </p>
-      <ScanViaMobile />
+      {!isMobile && <ScanViaMobile />}
       <div className={classes.horizontalLine} />
       <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
       <div className={classes.uploadComponent}>
@@ -232,7 +233,12 @@ export const CompanyStakeholdersComponent = ({
           sdkConfig={sdkConfig}
         />
       </div>
-
+      {isMobile && (
+        <div className={classes.disclaimerInfo}>
+          By clicking on start button you confirm to verify your ID documents against the face ID
+          and retrieve your data.
+        </div>
+      )}
       {confirmEntityError && (
         <div className={classes.uploadModalErrorWrapper}>
           <ErrorOutlineIcon className={classes.errorIcon} />
@@ -240,14 +246,14 @@ export const CompanyStakeholdersComponent = ({
         </div>
       )}
 
-      <div className="linkContainer">
+      <div className={classes.linkContainer}>
         <BackLink path={routes.companyInfo} />
         <NextStepButton
           type="button"
           handleClick={handleClickNextStep}
           isDisplayLoader={isLoading}
           disabled={!(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity)}
-          label="Next"
+          label={isMobile ? "Done" : "Next"}
           justify="flex-end"
         />
       </div>

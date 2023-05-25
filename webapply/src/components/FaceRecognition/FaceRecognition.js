@@ -164,7 +164,7 @@ export const FaceRecognition = ({
       <div className={cx(classes.facseScanContainer, !isStepActive ? classes.disableUpload : "")}>
         <div className={classes.contentContainer}>
           <FaceScanIcon height="44" width="40" alt="faceRecognitionIcon" />
-          <div style={{ marginLeft: "20px" }}>
+          <div className={classes.contentWrapper}>
             <div className={classes.content}>Face ID</div>
             <div className={classes.subcontent}>{helperText}</div>
           </div>

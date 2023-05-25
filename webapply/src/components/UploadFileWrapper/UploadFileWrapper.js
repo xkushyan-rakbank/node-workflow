@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import cx from "classnames";
 import { Button } from "@material-ui/core";
+import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
@@ -34,16 +35,28 @@ export const UploadFileWrapper = ({
           <div className={classes.uploadContainer}>
             <div className={classes.contentContainer}>
               <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
-              <div style={{ marginLeft: "20px" }}>
+              <div className={classes.contentWrapper}>
                 <div className={classes.content}>
                   {uploadedContent
                     ? uploadedContent
-                    : "Drag and drop file here or upload from your computer"}
+                    : `${
+                        isMobile
+                          ? "Upload/ Scan your Emirates ID"
+                          : "Drag and drop file here or upload from your computer"
+                      }`}
                 </div>
                 {isSuccess ? (
                   <div className={cx(classes.subcontent, classes.successText)}>
                     <SuccessIcon />
-                    <span style={{ marginLeft: "5px" }}>{successText}</span>
+                    <span className={classes.success}>{successText}</span>
+                    {isMobile && showPreview && (
+                      <div
+                        className={classes.previewMobile}
+                        onClick={() => setShowPreviewModal(true)}
+                      >
+                        Preview
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className={classes.subcontent}>{helperText}</div>
@@ -87,7 +100,7 @@ export const UploadFileWrapper = ({
               )}
             </div>
           </div>
-          {showPreview && (
+          {showPreview && !isMobile && (
             <div className={classes.previewContainer} onClick={() => setShowPreviewModal(true)}>
               Preview
             </div>

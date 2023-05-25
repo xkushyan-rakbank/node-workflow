@@ -148,6 +148,11 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.only("sm")]: {
       width: "70%"
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "70%",
+      overflowY: "scroll",
+      height: "auto"
     }
   },
   uploadModalErrorWrapper: {
@@ -175,7 +180,10 @@ export const useStyles = makeStyles(theme => ({
     width: "16px",
     height: "16px",
     fill: "#525252",
-    PointerEvent: "cursor"
+    PointerEvent: "cursor",
+    [theme.breakpoints.down("xs")]: {
+      top: "50px"
+    }
   },
   uploadModalTitle: {
     margin: "0px",
@@ -340,6 +348,7 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: "4px"
     }
   },
+<<<<<<< HEAD
   qrCode: {
     width: "170px",
     height: "170px",
@@ -370,5 +379,33 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     lineHeight: "20px",
     textDecoration: "none"
+=======
+  linkContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    [theme.breakpoints.down("xs")]: {
+      justifyContent: "space-between"
+    },
+    marginTop: "42px",
+    marginBottom: "42px",
+    "& > div": {
+      width: "auto",
+      margin: "0"
+    }
+  },
+  btnWrapper: {
+    display: "flex",
+    [theme.breakpoints.down("xs")]: {
+      justifyContent: "center"
+    }
+  },
+  disclaimerInfo: {
+    marginTop: "8px",
+    fontWeight: 400,
+    fontSize: "12px",
+    lineHeight: "16px",
+    color: "#757575"
+>>>>>>> dbd20a1c4 (feat: implemented mobile view of scan, upload, preview of stakeholder page PDB-595/PDB-756)
   }
 }));

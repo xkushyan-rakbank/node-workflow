@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   stakeholderWrapper: {
     display: "flex",
     alignItems: "center"
@@ -16,7 +16,12 @@ const useStyles = makeStyles({
     fontSize: "24px",
     color: "#757575",
     textAlign: "center",
-    lineHeight: "54px"
+    lineHeight: "54px",
+    [theme.breakpoints.down("xs")]: {
+      height: "32px",
+      width: "32px",
+      lineHeight: "unset"
+    }
   },
   detailWrapper: {
     display: "flex",
@@ -40,7 +45,7 @@ const useStyles = makeStyles({
       marginTop: "4px"
     }
   }
-});
+}));
 const StakeholdersDetail = ({ name, companyCategory }) => {
   const classes = useStyles();
 

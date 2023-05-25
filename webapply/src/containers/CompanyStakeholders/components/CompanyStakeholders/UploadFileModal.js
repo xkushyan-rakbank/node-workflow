@@ -199,6 +199,7 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                       content={uploadedFileName.emiratesIDFront}
                       showUploadSuccessIcon={false}
                       component={Upload}
+                      mobilecontentPlaceholder="Upload your Emirates ID"
                     />
                     <div style={{ marginTop: "24px" }}>
                       <Field
@@ -215,6 +216,7 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                         showUploadSuccessIcon={false}
                         onDelete={() => removeValue("emiratesIDBack", "")}
                         component={Upload}
+                        mobilecontentPlaceholder="Upload your Emirates ID"
                       />
                     </div>
                   </>
@@ -234,19 +236,22 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                     showUploadSuccessIcon={false}
                     onDelete={() => removeValue("passport", "")}
                     component={Upload}
+                    mobilecontentPlaceholder="Upload your Passport"
                   />
                 )}
-                <Button
-                  color="primary"
-                  variant="contained"
-                  className={cx(classes.uploadModalSaveBtn, classes.uploadBtnContained)}
-                  disabled={!isSaveDisabled()}
-                  onClick={() => {
-                    passEmiratesIDData();
-                  }}
-                >
-                  Save
-                </Button>
+                <div className={classes.btnWrapper}>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    className={cx(classes.uploadModalSaveBtn, classes.uploadBtnContained)}
+                    disabled={!isSaveDisabled()}
+                    onClick={() => {
+                      passEmiratesIDData();
+                    }}
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
             </Modal>
           )}
