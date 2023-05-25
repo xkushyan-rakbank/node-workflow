@@ -133,13 +133,20 @@ export const useStyles = makeStyles(theme => ({
     color: "white"
   },
   paper: {
+    boxSizing: "border-box",
     position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     backgroundColor: "#FFFFFF",
     width: "710px",
     borderRadius: "20px",
     textAlign: "left",
     padding: "40px",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
+      width: "80%"
+    },
+    [theme.breakpoints.only("sm")]: {
       width: "70%"
     }
   },
@@ -332,5 +339,36 @@ export const useStyles = makeStyles(theme => ({
     "& li": {
       marginBottom: "4px"
     }
+  },
+  qrCode: {
+    width: "170px",
+    height: "170px",
+    backgroundColor: "#fff",
+    margin: "20px 0px 15px"
+  },
+  qrScanInstructions: {
+    padding: "24px",
+    border: "1px solid #BCBDC0",
+    borderRadius: "12px",
+    margin: "40px 0",
+    "& ol": {
+      margin: "0px",
+      padding: "0px",
+      paddingLeft: "24px"
+    },
+    "& li": {
+      fontSize: "14px",
+      fontWeight: 400,
+      color: "#1F1F1F",
+      lineHeight: "20px",
+      marginBottom: "4px"
+    }
+  },
+  getHelpLink: {
+    color: "#8D0C10",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    textDecoration: "none"
   }
 }));
