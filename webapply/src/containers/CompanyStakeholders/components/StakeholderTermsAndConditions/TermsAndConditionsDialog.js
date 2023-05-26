@@ -10,12 +10,15 @@ export default function TermsAndConditionsDialog({
   handleAccept,
   editedFile,
   height,
-  isDisabled = false
+  scrollToEnd = false
 }) {
   const classes = useStyles();
-  const [disabled, setDisabled] = useState(isDisabled);
+  const [disabled, setDisabled] = useState(scrollToEnd);
 
   const handleScroll = event => {
+    if (!scrollToEnd) {
+      return;
+    }
     const { scrollTop, scrollHeight, clientHeight } = event.target;
     if (scrollTop + clientHeight >= scrollHeight) {
       setDisabled(true);
@@ -55,9 +58,11 @@ export default function TermsAndConditionsDialog({
             label="Accept and continue"
             onClick={handleAccept}
           />
-          <span className={classes.scrollInstruction}>
-            Please scroll all the way through to accept.
-          </span>
+          {scrollToEnd ?? (
+            <span className={classes.scrollInstruction}>
+              Please scroll all the way through to accept.
+            </span>
+          )}
         </div>
       </DialogActions>
     </Dialog>
