@@ -21,7 +21,7 @@ export default function TermsAndConditionsDialog({
     }
     const { scrollTop, scrollHeight, clientHeight } = event.target;
     if (scrollTop + clientHeight >= scrollHeight) {
-      setDisabled(true);
+      setDisabled(false);
     }
   };
 
@@ -54,7 +54,7 @@ export default function TermsAndConditionsDialog({
           <Button
             withRightArrow
             className={classes.agreeButton}
-            disabled={!disabled}
+            disabled={disabled}
             label="Accept and continue"
             onClick={handleAccept}
           />
