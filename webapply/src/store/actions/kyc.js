@@ -21,6 +21,8 @@ export const VALIDATE_IDENTITY_SUCCESS = "VALIDATE_IDENTITY_SUCCESS";
 export const VALIDATE_IDENTITY_FAIL = "VALIDATE_IDENTITY_FAIL";
 export const VALIDATE_CONFIRM_ENTITY_SUCCESS = "VALIDATE_CONFIRM_ENTITY_SUCCESS";
 export const VALIDATE_CONFIRM_ENTITY_FAIL = "VALIDATE_CONFIRM_ENTITY_FAIL";
+export const RESET_CONFIRM_ENTITY = "RESET_CONFIRM_ENTITY";
+
 export const NOTIFY_HOST = "NOTIFY_HOST";
 
 export const EID_PREVIEW_DATA = "EID_PREVIEW_DATA";
@@ -121,6 +123,10 @@ export const validateEntityConfirmSuccess = response => {
 
 export const validateEntityConfirmFail = response => {
   return { type: VALIDATE_CONFIRM_ENTITY_FAIL, payload: response };
+};
+
+export const resetConfirmEntity = () => {
+  return { type: RESET_CONFIRM_ENTITY };
 };
 
 export const notifyHostPromisify = () => ({

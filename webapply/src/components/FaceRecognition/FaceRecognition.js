@@ -8,8 +8,13 @@ import { useStyles } from "./styled";
 import { ReactComponent as FaceScanIcon } from "../../assets/icons/face_scan.svg";
 import useFaceScan from "../../experience-web-lib/ocrScanner/useFaceScan";
 import { getKyc } from "../../store/selectors/kyc";
-import { checkFaceLiveliness, setLivelinessData } from "../../store/actions/kyc";
+import {
+  checkFaceLiveliness,
+  resetConfirmEntity,
+  setLivelinessData
+} from "../../store/actions/kyc";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
+import { getCompanyTradeLicenseNumber } from "../../store/selectors/appConfig";
 
 const localizedMessagesLiveness = {
   record_button: "Record",
@@ -125,6 +130,7 @@ export const FaceRecognition = ({
     livenessChecklist
   });
   const { identityValidation, faceLivelinessFeedback, confirmEntity } = useSelector(getKyc);
+  const tradeLicenseNo = useSelector(getCompanyTradeLicenseNumber);
 
   const onResult = async result => {
     dispatch(checkFaceLiveliness(result));
@@ -140,6 +146,12 @@ export const FaceRecognition = ({
       executeFeedback(faceLivelinessFeedback);
     }
   }, [faceLivelinessFeedback]);
+
+  useEffect(() => {
+    if (confirmEntity?.success && tradeLicenseNo !== confirmEntity.tradeLicenseNumber) {
+      dispatch(resetConfirmEntity());
+    }
+  }, []);
 
   useEffect(() => {
     if (livenessCheckError) {

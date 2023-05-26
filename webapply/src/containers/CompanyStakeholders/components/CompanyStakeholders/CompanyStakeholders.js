@@ -252,7 +252,9 @@ export const CompanyStakeholdersComponent = ({
           type="button"
           handleClick={handleClickNextStep}
           isDisplayLoader={isLoading}
-          disabled={!(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity)}
+          disabled={
+            !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success)
+          }
           label={isMobile ? "Done" : "Next"}
           justify="flex-end"
         />

@@ -157,23 +157,23 @@ export function* notifyHost() {
 }
 
 export function* entityConfirmation() {
+  const tradeLicenseNumber = yield select(getCompanyTradeLicenseNumber);
   try {
-    const tradeLicenseNumber = yield select(getCompanyTradeLicenseNumber);
     const livelinessData = yield select(getLivelinessData);
     const transactionId = yield select(getTransactionId);
     yield put(resetFormStep(true));
-    const entityConfirmResponse = yield call(
+    yield call(
       analyzeOcrData.entityConfirmation,
       transactionId,
       livelinessData.data,
       livelinessData.datahash,
       tradeLicenseNumber
     );
-    yield put(validateEntityConfirmSuccess(entityConfirmResponse));
+    yield put(validateEntityConfirmSuccess({ success: true, tradeLicenseNumber }));
   } catch (error) {
     let message = error?.response?.data?.message;
     if (error?.response?.status === 403) {
-      yield put(validateEntityConfirmSuccess(error?.response?.data));
+      yield put(validateEntityConfirmSuccess({ success: true, tradeLicenseNumber }));
     } else {
       yield put(validateEntityConfirmFail(null));
       const notificationOptions = { title: "Oops", message };

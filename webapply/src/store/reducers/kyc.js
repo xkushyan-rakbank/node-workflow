@@ -21,7 +21,8 @@ import {
   NOTIFY_HOST,
   CREATE_FACE_LIVELINESS_FEEDBACK_ERROR,
   NOTIFY_HOST_SUCCESS,
-  NOTIFY_HOST_ERROR
+  NOTIFY_HOST_ERROR,
+  RESET_CONFIRM_ENTITY
 } from "../actions/kyc";
 import { handleActions } from "../../utils/redux-utils";
 
@@ -186,12 +187,21 @@ export default handleActions(
     [VALIDATE_CONFIRM_ENTITY_SUCCESS]: (state, { payload }) => ({
       ...state,
       loading: false,
-      confirmEntity: true
+      confirmEntity: payload
     }),
     [VALIDATE_CONFIRM_ENTITY_FAIL]: (state, { payload }) => ({
       ...state,
       loading: false,
       confirmEntityError: payload
+    }),
+    [RESET_CONFIRM_ENTITY]: state => ({
+      ...state,
+      loading: false,
+      identityValidation: null,
+      confirmEntityError: null,
+      faceScanSuccess: false,
+      notifyHostSuccess: false,
+      confirmEntity: false
     }),
     [NOTIFY_HOST]: (state, { payload }) => ({
       ...state,
