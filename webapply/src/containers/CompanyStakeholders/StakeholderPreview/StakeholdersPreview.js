@@ -177,6 +177,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
               <BackLink path={routes.stakeholdersInfo} />
               <NextStepButton
                 label="Next"
+                type="button"
                 justify="flex-end"
                 onClick={() => handleClickStakeholderPreviewNextStep()}
               />

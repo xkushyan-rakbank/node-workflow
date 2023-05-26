@@ -3,11 +3,13 @@ import { Button } from "@material-ui/core";
 import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
+import useGeneratePdf from "./useGeneratePdf";
 
 export const StakeholderKfs = () => {
   const classes = useStyles();
   const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
+  const { editedFile, height } = useGeneratePdf("KFS");
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -18,6 +20,7 @@ export const StakeholderKfs = () => {
   };
 
   const handleAccept = () => {
+    setKfsDialog(false);
     setIsAccepted(true);
   };
 
@@ -51,6 +54,9 @@ export const StakeholderKfs = () => {
         open={openKfsDialog}
         handleClose={handleClose}
         handleAccept={handleAccept}
+        editedFile={editedFile}
+        height={height}
+        disabled={true}
       />
     </>
   );

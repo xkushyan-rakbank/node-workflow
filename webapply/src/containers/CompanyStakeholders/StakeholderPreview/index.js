@@ -7,7 +7,9 @@ const mapDispatchToProps = {
   sendProspectToAPI: sendProspectToAPIPromisify
 };
 
-export const StakeholderPreview = connect(
+const StakeholderPreview = connect(
   null,
   mapDispatchToProps
 )(StakeholdersPreview);
+
+export default StakeholderPreview;

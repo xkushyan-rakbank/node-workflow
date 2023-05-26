@@ -1,11 +1,26 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 import { useStyles } from "./styled";
 import { Button } from "../../../../components/Buttons/SubmitButton";
 
-export default function TermsAndConditionsDialog({ open, handleClose, handleAccept }) {
+export default function TermsAndConditionsDialog({
+  open,
+  handleClose,
+  handleAccept,
+  editedFile,
+  height,
+  isDisabled = false
+}) {
   const classes = useStyles();
+  const [disabled, setDisabled] = useState(isDisabled);
+
+  const handleScroll = event => {
+    const { scrollTop, scrollHeight, clientHeight } = event.target;
+    if (scrollTop + clientHeight >= scrollHeight) {
+      setDisabled(true);
+    }
+  };
 
   return (
     <Dialog
@@ -19,13 +34,24 @@ export default function TermsAndConditionsDialog({ open, handleClose, handleAcce
       <DialogTitle>
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
       </DialogTitle>
-      <DialogContent classes={{ root: classes.content }}>asdsadsa</DialogContent>
+      <DialogContent classes={{ root: classes.content }} onScroll={handleScroll}>
+        <div style={{ height: `${height}px` }} onScroll={handleScroll}>
+          <object
+            type="application/pdf"
+            data={editedFile + "#toolbar=0"}
+            aria-label="Passport"
+            onContextMenu={e => e.preventDefault()}
+            className={classes.previewPDF}
+            border="0"
+          ></object>
+        </div>
+      </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <div className={classes.actionContainer}>
           <Button
             withRightArrow
             className={classes.agreeButton}
-            disabled={true}
+            disabled={!disabled}
             label="Accept and continue"
             onClick={handleAccept}
           />

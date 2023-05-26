@@ -37,14 +37,14 @@ module.exports = function(app) {
   app.use(
     "/onboarding",
     proxy({
-      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      target: "https://quickapplyuat.rakbank.ae/digitalbank",
       changeOrigin: true
     })
   );
   app.use(
     "/rakbank-kyc",
     proxy({
-      target: "https://quickapplydev.rakbank.ae/digitalbank",
+      target: "https://quickapplyuat.rakbank.ae/digitalbank",
       changeOrigin: true,
       secure: false
     })
@@ -57,20 +57,11 @@ module.exports = function(app) {
     })
   );
   app.use(
-    "/wcmapi",
+    ["/wcmapi", "/wps"],
     proxy({
-      target: "https://revamp.rakbank.ae/wcmapi",
-      changeOrigin: true
+      target: "https://revamp.rakbank.ae",
+      changeOrigin: true,
+      secure: false
     })
   );
-  // app.use(
-  //   "/business",
-  //   proxy({
-  //     target: "http://localhost:3000",
-  //     changeOrigin: false,
-  //     pathRewrite: {
-  //       '^/business' : '/'
-  //     }
-  //   })
-  // );
 };

@@ -137,7 +137,6 @@ export const useStyles = makeStyles(theme => ({
   agreeButton: {
     padding: "17px 40px",
     borderRadius: "100px",
-    background: "#CCCCCC",
     color: "#fff",
     fontWeight: "normal",
     margin: "0"
@@ -145,6 +144,11 @@ export const useStyles = makeStyles(theme => ({
   scrollInstruction: {
     color: "#757575",
     fontSize: "12px"
+  },
+  previewPDF: {
+    backgroundColor: "#D9D9D9",
+    width: "100%",
+    height: "100%"
   },
   title: {
     padding: "40px 40px 20px 40px",
@@ -156,7 +160,9 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   content: {
-    padding: "8px 40px"
+    padding: "8px 40px",
+    height: "400px",
+    overflow: "auto"
   },
   divider: {
     height: "1px",

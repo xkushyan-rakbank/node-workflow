@@ -26,8 +26,6 @@ import "./App.scss";
 import SessionExpiration from "./containers/Session";
 
 import { FormEmailConfirmPage, FormConfirmMobilePage } from "./containers/FormConfirm";
-import { StakeholderPreview } from "./containers/CompanyStakeholders/StakeholderPreview";
-import { StakeholderTermsAndConditions } from "./containers/CompanyStakeholders/components/StakeholderTermsAndConditions/StakeholderTermsAndConditions";
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
 const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
 const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
@@ -38,6 +36,14 @@ const ApplicantInfo = lazy(() => import("./containers/ApplicantInfo"));
 const DetailedAccount = lazy(() => import("./containers/DetailedAccount"));
 const CompanyInfo = lazy(() => import("./containers/CompanyInfo"));
 const CompanyStakeholders = lazy(() => import("./containers/CompanyStakeholders"));
+const StakeholderPreview = lazy(() =>
+  import("./containers/CompanyStakeholders/StakeholderPreview")
+);
+const StakeholderTermsAndConditions = lazy(() =>
+  import(
+    "./containers/CompanyStakeholders/components/StakeholderTermsAndConditions/StakeholderTermsAndConditions"
+  )
+);
 const FinalQuestions = lazy(() => import("./containers/FinalQuestions"));
 const AdditionalInfoComponent = lazy(() => import("./containers/Additional"));
 const SelectServices = lazy(() => import("./containers/SelectServices"));
@@ -91,7 +97,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.verifyMobileOtp}
                 component={FormConfirmMobilePage}
               />
-              <ProspectProtectedRoute exact path={routes.companyInfo} component={StakeholderTermsAndConditions} />
+              <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
               <ProspectProtectedRoute
                 exact
                 path={routes.stakeholdersInfo}

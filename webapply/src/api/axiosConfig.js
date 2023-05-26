@@ -38,7 +38,7 @@ const apiClient = axios.create({
 });
 
 export const wcmClient = axios.create({
-  baseURL: process.env.REACT_APP_WCM_PATH || "https://revamp.rakbank.ae/wcmapi"
+  baseURL: process.env.REACT_APP_WCM_PATH || "https://revamp.rakbank.ae"
 });
 
 apiClient.interceptors.request.use(config => {

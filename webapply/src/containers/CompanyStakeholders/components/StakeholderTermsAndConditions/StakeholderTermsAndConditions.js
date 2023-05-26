@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect } from "react";
-import axios from "axios";
+import React, { useCallback } from "react";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
@@ -11,11 +10,8 @@ import { useFormNavigation } from "../../../../components/FormNavigation/FormNav
 import { useLayoutParams } from "../../../FormLayout";
 import { useViewId } from "../../../../utils/useViewId";
 import { formStepper } from "../../../../constants";
-import { wcmClient } from "../../../../api/axiosConfig";
 
-const URL = "/banking/products/variants?productId=201&productTypeId=1";
-
-export const StakeholderTermsAndConditions = () => {
+const StakeholderTermsAndConditions = () => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
   useFormNavigation([false, true, formStepper]);
@@ -25,19 +21,6 @@ export const StakeholderTermsAndConditions = () => {
   const goToAdditional = useCallback(() => {
     pushHistory(routes.additionalInfoComponent, true);
   }, [pushHistory]);
-
-  const getTermsandConditions = async () => {
-    // const response = await wcmClient.get(URL);
-    const response = await wcmClient.request({
-      url: URL,
-      method: "GET"
-    });
-    console.log(response);
-  };
-
-  useEffect(() => {
-    getTermsandConditions();
-  }, []);
 
   return (
     <>
@@ -60,3 +43,5 @@ export const StakeholderTermsAndConditions = () => {
     </>
   );
 };
+
+export default StakeholderTermsAndConditions;
