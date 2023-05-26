@@ -351,7 +351,6 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: "4px"
     }
   },
-<<<<<<< HEAD
   qrCode: {
     width: "170px",
     height: "170px",
@@ -382,7 +381,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     lineHeight: "20px",
     textDecoration: "none"
-=======
+  },
   linkContainer: {
     display: "flex",
     alignItems: "center",
@@ -409,6 +408,5 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px",
     lineHeight: "16px",
     color: "#757575"
->>>>>>> dbd20a1c4 (feat: implemented mobile view of scan, upload, preview of stakeholder page PDB-595/PDB-756)
   }
 }));
