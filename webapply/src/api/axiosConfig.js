@@ -49,7 +49,8 @@ apiClient.interceptors.request.use(config => {
       "Cache-Control": "no-cache, no-store",
       Pragma: "no-cache",
       [REQUEST_ID_HEADER]: nanoid(),
-      [TRANSACTION_ID_HEADER]: crypto.randomUUID()
+      // crypto.randomUUID supported only on 'https' or 'localhost' URL
+      [TRANSACTION_ID_HEADER]: crypto?.randomUUID && crypto.randomUUID()
     }
   };
 });
