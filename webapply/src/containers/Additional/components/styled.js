@@ -5,13 +5,7 @@ export const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    marginTop: 174,
-    [theme.breakpoints.only("sm")]: {
-      marginTop: 110
-    },
-    [theme.breakpoints.only("xs")]: {
-      marginTop: 0
-    }
+    marginTop: "25px"
   },
   section: {
     [theme.breakpoints.up("sm")]: {
