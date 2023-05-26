@@ -80,10 +80,10 @@ export default function useGeneratePdf(type) {
 
   useEffect(() => {
     const coordinates = getCoordinates();
-    const soleSignatory = signatoryInfo[0].fullName;
     if (!pdfLink) {
       return;
     }
+    const soleSignatory = signatoryInfo[0]?.fullName;
     const today = new Date(Date.now());
     const generatePdfPreview = async () => {
       const existingPdfBytes = await fetch(pdfLink).then(res => res.arrayBuffer());
