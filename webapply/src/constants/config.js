@@ -25,7 +25,10 @@ export const endpoints = {
   prospectDecisions: "/onboarding/products/accounts/prospects/:prospectId/decisions",
   createKYCTransactionUri: "/onboarding/products/sme-accounts/kyc-transactions",
   //document upload DEH
-  documentUploaderToken: "/onboarding/oauth/token"
+  documentUploaderToken: "/onboarding/oauth/token",
+  generateWebToMobileQRCode: "/onboarding/products/accounts/prospects/:prospectId/webToMobile",
+  refreshWebToMobileQRCode:
+    "/onboarding/products/accounts/prospects/:prospectId/webToMobile/:webToMobileRefId/refresh"
 };
 
 export const prospect = {

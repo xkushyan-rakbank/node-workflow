@@ -612,3 +612,9 @@ export const EID_PASSPORT_ACCEPTED_FILE_TYPES = {
   "application/pdf": [".pdf"]
 };
 export const EID_PASSPORT_FILE_SIZE = { minSize: "9500", maxSize: "5242880" };
+
+export const SESSION_TYPE = "STAKEHOLDER_KYC";
+
+export const QR_CODE_REFRESH_BEFORE_SECONDS = 10000;
+
+export const QR_CODE_SIZE = 200;

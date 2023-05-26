@@ -31,7 +31,7 @@ export const ScanViaMobile = () => {
         </Button>
       </div>
       <Modal open={openMobileScanModal}>
-        <QRCodeScanModal handleClose={() => setOpenMobileScanModal(false)}/>
+        <QRCodeScanModal handleClose={() => setOpenMobileScanModal(false)} individualId={"SID1"} />
       </Modal>
     </>
   );

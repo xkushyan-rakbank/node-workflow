@@ -352,10 +352,14 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   qrCode: {
-    width: "170px",
-    height: "170px",
+    width: "200px",
+    height: "200px",
+    lineHeight: "200px",
     backgroundColor: "#fff",
-    margin: "20px 0px 15px"
+    marginTop: "20px 0px 14px",
+    "& img": {
+      lineHeight: "15px"
+    }
   },
   qrScanInstructions: {
     padding: "24px",

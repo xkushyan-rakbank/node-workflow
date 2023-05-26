@@ -305,3 +305,32 @@ export const documents = {
     });
   }
 };
+
+export const webToMobile = {
+  generateQRCode: (prospectId, data, headers) =>
+    httpClient
+      .request({
+        url: buildURI("generateWebToMobileQRCode", prospectId),
+        method: "POST",
+        ...headers,
+        data
+      })
+      .then(response => {
+        return response.data;
+      })
+      .catch(err => {
+        console.log("error while generating QR code", err.message);
+      }),
+  refreshQRCode: (prospectId, webToMobileRefId, data, headers) =>
+    httpClient
+      .request({
+        url: buildURI("refreshWebToMobileQRCode", prospectId, null, webToMobileRefId),
+        method: "POST",
+        ...headers,
+        data
+      })
+      .then(response => {
+        return response.data;
+      })
+      .catch(err => console.log("error while refreshing QR code", err.message))
+};

@@ -3,14 +3,13 @@ import get from "lodash/get";
 import { store } from "./../store";
 import { endpoints } from "./../constants/config";
 
-export const buildURI = (uriName, prospectId, documentKey) => {
+export const buildURI = (uriName, prospectId, documentKey, webToMobileRefId) => {
   const { pathname } = window.location;
   let uri = endpoints[uriName];
   const userType = pathname.includes("/agent")
     ? get(store.getState(), "appConfig.searchInfo.segment", "")
     : "sme";
-
-  return generatePath(uri, { userType, prospectId, documentKey });
+  return generatePath(uri, { userType, prospectId, documentKey, webToMobileRefId });
 };
 
 export const getQueryString = (product, segment) => {
