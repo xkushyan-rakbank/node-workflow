@@ -56,7 +56,7 @@ export const StakeholderKfs = () => {
         handleAccept={handleAccept}
         editedFile={editedFile}
         height={height}
-        disabled={true}
+        scrollToEnd={true}
       />
     </>
   );
