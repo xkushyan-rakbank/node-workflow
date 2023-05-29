@@ -20,7 +20,7 @@ export default function TermsAndConditionsDialog({
       return;
     }
     const { scrollTop, scrollHeight, clientHeight } = event.target;
-    if (scrollTop + clientHeight >= scrollHeight) {
+    if (scrollTop + clientHeight + 20 >= scrollHeight) {
       setDisabled(false);
     }
   };
@@ -38,7 +38,7 @@ export default function TermsAndConditionsDialog({
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
       </DialogTitle>
       <DialogContent classes={{ root: classes.content }} onScroll={handleScroll}>
-        <div style={{ height: `${height}px` }} onScroll={handleScroll}>
+        <div style={{ height: `${height}px` }}>
           <object
             type="application/pdf"
             data={editedFile + "#toolbar=0"}
