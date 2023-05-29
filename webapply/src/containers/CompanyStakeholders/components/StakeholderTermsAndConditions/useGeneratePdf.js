@@ -86,7 +86,16 @@ export default function useGeneratePdf(type) {
     const soleSignatory = signatoryInfo[0]?.fullName;
     const today = new Date(Date.now());
     const generatePdfPreview = async () => {
-      const existingPdfBytes = await fetch(pdfLink).then(res => res.arrayBuffer());
+      const existingPdfBytes = await wcmClient
+        .request({
+          url: pdfLink,
+          method: "GET",
+          responseType: "arraybuffer"
+        })
+        .then(respose => respose.data)
+        .catch(error => {
+          log(error);
+        });
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
       const pages = pdfDoc.getPages();
       const pageNumberToSample = coordinates.pageNumber;
@@ -130,11 +139,7 @@ export default function useGeneratePdf(type) {
         const selectedAccountTypePdfLink = respose.data.find(
           eachType => eachType.code === accountType
         );
-        setPdfLink(
-          wcmAPIPath
-            ? selectedAccountTypePdfLink.productVariantContent[0].kfsUrl.split(wcmAPIPath)[1]
-            : selectedAccountTypePdfLink.productVariantContent[0].kfsUrl
-        );
+        setPdfLink(selectedAccountTypePdfLink.productVariantContent[0].kfsUrl.split(wcmAPIPath)[1]);
       })
       .catch(error => {
         log(error);
