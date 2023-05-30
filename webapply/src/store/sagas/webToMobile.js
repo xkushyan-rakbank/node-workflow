@@ -1,10 +1,11 @@
-import { all, call, delay, put, select, takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, delay, put, select, takeLatest } from "redux-saga/effects";
 import { webToMobile } from "../../api/apiClient";
 import { configureKYCTransactionAPIClient } from "../../api/axiosConfig";
 import { log } from "../../utils/loggger";
 import { updateProspect, updateProspectId } from "../actions/appConfig";
 import { KycTransactionSuccess } from "../actions/kyc";
 import {
+  clearSession,
   // scheduledAction,
   setSessionData,
   START_SCHEDULER,
@@ -55,6 +56,7 @@ function* schedulerWorker({ payload, type }) {
     yield call(updateStatus, payload);
     if (type === STOP_SCHEDULER) {
       yield call(updateStatus, payload);
+      yield put(clearSession);
       break;
     }
     yield delay(process.env.REACT_APP_WTM_SCHEDULER_INTERVAL);
@@ -70,10 +72,10 @@ function* updateStatus(payload) {
   yield call(webToMobile.wtmStatusUpdate, { status: payload }, headers, prospectId, webMobileRefId);
 }
 
-function* schedulerWatcher() {
-  yield takeEvery(START_SCHEDULER, schedulerWorker);
-}
-
 export default function* webToMobileSaga() {
-  yield all([takeLatest(SYNC_SESSION, SyncSession), schedulerWatcher()]);
+  yield all([
+    takeLatest(SYNC_SESSION, SyncSession),
+    takeLatest(START_SCHEDULER, schedulerWorker),
+    takeLatest(STOP_SCHEDULER, schedulerWorker)
+  ]);
 }

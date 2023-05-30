@@ -47,14 +47,14 @@ export const useStyles = makeStyles(theme => ({
     marginLeft: "20px",
     [theme.breakpoints.down("xs")]: {
       marginTop: "16px",
-      marginLeft: "none"
+      marginLeft: "0px"
     }
   },
   content: {
     fontSize: "16px",
     [theme.breakpoints.down("md")]: {
-      fontSize: "12px",
-      textAlign: "center"
+      textAlign: "center",
+      marginBottom: "7px"
     }
   },
   subcontent: {

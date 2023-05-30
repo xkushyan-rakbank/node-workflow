@@ -146,7 +146,8 @@ export const useStyles = makeStyles(theme => ({
     maxHeight: "calc(100% - 70px)",
     overflowY: "scroll",
     [theme.breakpoints.down("sm")]: {
-      width: "80%"
+      width: "80%",
+      padding: "32px"
     },
     [theme.breakpoints.only("md")]: {
       width: "70%"

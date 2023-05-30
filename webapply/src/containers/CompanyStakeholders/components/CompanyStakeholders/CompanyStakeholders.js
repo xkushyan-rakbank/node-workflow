@@ -33,6 +33,7 @@ import { OverlayLoader } from "../../../../components/Loader";
 import { DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
 import { UploadFileModal } from "./UploadFileModal";
 import { ScanViaMobile } from "./MobileScan";
+import { InfoModal } from "../../../../components/Modals/InfoModal";
 
 export const CompanyStakeholdersComponent = ({
   fullName,
@@ -40,7 +41,9 @@ export const CompanyStakeholdersComponent = ({
   handleClickNextStep,
   isDisableNextStep,
   isLoading,
-  sessionType
+  sessionType,
+  openInfo,
+  handleInfoModalClose
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
 
@@ -286,6 +289,14 @@ export const CompanyStakeholdersComponent = ({
         open={loading}
         text={"Scanning your documents....this might take a few moments"}
       />
+
+      <InfoModal
+        open={openInfo}
+        info={"Your progress has been saved"}
+        text={"Please continue the application on desktop/laptop."}
+        handleClose={handleInfoModalClose}
+      />
+
       {openDocUpload && (
         <UploadFileModal
           isOpen={openDocUpload}
