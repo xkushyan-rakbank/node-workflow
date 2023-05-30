@@ -18,7 +18,7 @@ const accountTypeMap = {
 };
 
 const CONVENTIONAL = "CONV";
-const ISLAMIC = "CONV";
+const ISLAMIC = "ISLA";
 const DATE = "KDAT";
 const COMPANY_NAME = "CNME";
 const SIGNATORY = "SIGN";
