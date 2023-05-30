@@ -58,7 +58,7 @@ export default function TermsAndConditionsDialog({
             label="Accept and continue"
             onClick={handleAccept}
           />
-          {scrollToEnd ?? (
+          {scrollToEnd && (
             <span className={classes.scrollInstruction}>
               Please scroll all the way through to accept.
             </span>
