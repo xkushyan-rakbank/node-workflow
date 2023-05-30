@@ -347,5 +347,16 @@ export const webToMobile = {
       ...headers,
       data
     });
-  }
+  },
+  checkQRCodeStatus: (prospectId, webToMobileRefId, header) =>
+    httpClient
+      .request({
+        url: buildURI("wtmStatusUpdate", prospectId, null, webToMobileRefId),
+        method: "GET",
+        ...header
+      })
+      .then(response => {
+        return response.data.status;
+      })
+      .catch(err => console.log("error while calling poll", err.message))
 };

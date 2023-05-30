@@ -412,5 +412,26 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px",
     lineHeight: "16px",
     color: "#757575"
+  },
+  progressIcon: {
+    position: "relative",
+    height: "60px",
+    marginBottom: "40px",
+    marginTop: "20px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  bottom: {
+    color: "rgba(147, 147, 147, 0.1)",
+    position: "absolute"
+  },
+  top: {
+    color: "#848484",
+    animationDuration: "550ms",
+    position: "absolute"
+  },
+  circle: {
+    strokeLinecap: "round"
   }
 }));
