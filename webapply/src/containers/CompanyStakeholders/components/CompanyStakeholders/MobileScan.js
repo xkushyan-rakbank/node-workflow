@@ -3,7 +3,7 @@ import { Button, Modal } from "@material-ui/core";
 import { ReactComponent as VerifyMobileIcon } from "../../../../assets/icons/verify_mobile.svg";
 import { useStyles } from "./styled";
 import { QRCodeScanModal } from "./QRCodeScanModal";
-export const ScanViaMobile = () => {
+export const ScanViaMobile = ({ disabled }) => {
   const classes = useStyles();
   const [openMobileScanModal, setOpenMobileScanModal] = useState(false);
   return (
@@ -25,6 +25,7 @@ export const ScanViaMobile = () => {
         <Button
           variant="outlined"
           className={classes.continueBtn}
+          disabled={disabled}
           onClick={() => setOpenMobileScanModal(true)}
         >
           Continue on mobile

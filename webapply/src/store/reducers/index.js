@@ -17,6 +17,7 @@ import agentFeatures from "./agentFeatures";
 import inputFieldBehaviours from "./inputFieldBehaviours";
 import kyc from "./kyc";
 import sdkConfig from "./sdkConfig";
+import webToMobile from "./webToMobile";
 
 const reducers = history =>
   combineReducers({
@@ -37,7 +38,8 @@ const reducers = history =>
     agentFeatures,
     inputFieldBehaviours,
     kyc,
-    sdkConfig
+    sdkConfig,
+    webToMobile
   });
 
 export default reducers;

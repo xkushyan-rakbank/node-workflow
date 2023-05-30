@@ -332,5 +332,20 @@ export const webToMobile = {
       .then(response => {
         return response.data;
       })
-      .catch(err => console.log("error while refreshing QR code", err.message))
+      .catch(err => console.log("error while refreshing QR code", err.message)),
+  wtmSyncSession: (data, headers) =>
+    httpClient.request({
+      url: buildURI("wtmSyncSession"),
+      method: "POST",
+      ...headers,
+      data
+    }),
+  wtmStatusUpdate: (data, headers, prospectId, webtobomrefId) => {
+    return httpClient.request({
+      url: buildURI("wtmStatusUpdate", prospectId, "", webtobomrefId),
+      method: "PATCH",
+      ...headers,
+      data
+    });
+  }
 };

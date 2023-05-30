@@ -5,13 +5,18 @@ import cx from "classnames";
 
 import { QR_CODE_SIZE, QR_CODE_REFRESH_BEFORE_SECONDS, SESSION_TYPE } from "../../../../constants";
 import { webToMobile } from "../../../../api/apiClient";
-import { getAuthorizationHeader, getProspectId } from "../../../../store/selectors/appConfig";
+import {
+  getApplicantFullName,
+  getAuthorizationHeader,
+  getProspectId
+} from "../../../../store/selectors/appConfig";
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
 import { useStyles } from "./styled";
 
 export const QRCodeScanModal = ({ handleClose, individualId }) => {
   const classes = useStyles();
   const prospectId = useSelector(getProspectId);
+  const fullname = useSelector(getApplicantFullName);
   const header = useSelector(getAuthorizationHeader);
   const transactionId = useSelector(getTransactionId);
   const userToken = useSelector(getUserToken);
@@ -30,6 +35,7 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
       ...reqData,
       data: {
         prospectId,
+        fullname,
         kycTransaction: {
           id: transactionId,
           userToken

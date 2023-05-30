@@ -39,7 +39,8 @@ export const CompanyStakeholdersComponent = ({
   companyCategory,
   handleClickNextStep,
   isDisableNextStep,
-  isLoading
+  isLoading,
+  sessionType
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
 
@@ -163,7 +164,13 @@ export const CompanyStakeholdersComponent = ({
       <p className={classes.subTitle}>
         We have to verify your identity to check it&apos;s really you
       </p>
-      {!isMobile && <ScanViaMobile />}
+      {!isMobile && (
+        <ScanViaMobile
+          disabled={
+            !isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success
+          }
+        />
+      )}
       <div className={classes.horizontalLine} />
       <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
       <div className={classes.uploadComponent}>
@@ -255,7 +262,7 @@ export const CompanyStakeholdersComponent = ({
           disabled={
             !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success)
           }
-          label={isMobile ? "Done" : "Next"}
+          label={sessionType ? "Done" : "Next"}
           justify="flex-end"
         />
       </div>

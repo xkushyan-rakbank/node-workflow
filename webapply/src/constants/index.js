@@ -618,3 +618,8 @@ export const SESSION_TYPE = "STAKEHOLDER_KYC";
 export const QR_CODE_REFRESH_BEFORE_SECONDS = 10000;
 
 export const QR_CODE_SIZE = 200;
+
+export const WTM_STATUS = {
+  IN_PROGRESS: "IN_PROGRESS",
+  FINISHED: "FINISHED"
+};
