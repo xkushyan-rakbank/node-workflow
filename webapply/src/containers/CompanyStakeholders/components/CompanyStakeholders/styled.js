@@ -143,16 +143,13 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "20px",
     textAlign: "left",
     padding: "40px",
+    maxHeight: "calc(100% - 70px)",
+    overflowY: "scroll",
     [theme.breakpoints.down("sm")]: {
       width: "80%"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("md")]: {
       width: "70%"
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "70%",
-      overflowY: "scroll",
-      height: "auto"
     }
   },
   uploadModalErrorWrapper: {
