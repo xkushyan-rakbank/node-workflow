@@ -40,7 +40,7 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
         Grab your phone and scan this QR code to continue via mobile
       </h3>
       <p className={classes.subTitle}>
-        This is to take your picture and check that your face and photo ID match.
+        You'll then be able to upload or scan your documents and complete the face ID step.
       </p>
       <div className={classes.qrScanInstructions}>
         <ol>
