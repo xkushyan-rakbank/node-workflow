@@ -29,5 +29,6 @@ export default {
   inviteCustomer: `${agentBaseName}/InviteCustomer`,
   //ro-assist-brd2-3
   currentAccount: `${smeBaseName}/accounts/current-account`,
-  personaSelection: `${smeBaseName}/accounts/:accountType/persona-selection`
+  personaSelection: `${smeBaseName}/accounts/:accountType/persona-selection`,
+  webToMobile: `${smeBaseName}/wtm`
 };

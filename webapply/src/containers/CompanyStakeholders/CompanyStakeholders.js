@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   StakeholdersNameManager,
@@ -10,9 +10,11 @@ import { CompanyStakeholdersComponent } from "./components/CompanyStakeholders/C
 import { useViewId } from "../../utils/useViewId";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
-import { formStepper } from "../../constants";
+import { formStepper, WTM_STATUS } from "../../constants";
 import { useLayoutParams } from "../FormLayout";
 import { getTransactionId } from "../../store/selectors/kyc";
+import { startScheduler, stopScheduler } from "../../store/actions/webToMobile";
+import { getwtmSessionDetails } from "../../store/selectors/webToMobile";
 
 export const CompanyStakeholdersContainer = ({
   fullName,
@@ -32,7 +34,11 @@ export const CompanyStakeholdersContainer = ({
   notifyHost
 }) => {
   const pushHistory = useTrackingHistory();
+  const dispatch = useDispatch();
   const transactionId = useSelector(getTransactionId);
+  const {
+    sessionData: { sessionType }
+  } = useSelector(getwtmSessionDetails);
   const [isLoading, setIsLoading] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
@@ -71,17 +77,21 @@ export const CompanyStakeholdersContainer = ({
     stakeholders.length > 0 && isAnyStakeholderStepsCompleted && !hasSignatories;
 
   const handleClickNextStep = useCallback(() => {
-    setIsLoading(true);
+    if (sessionType) {
+      dispatch(stopScheduler(WTM_STATUS.FINISHED));
+    } else {
+      setIsLoading(true);
 
-    return notifyHost().then(
-      isScreeningError => {
-        pushHistory(routes.stakeholdersPreview, true);
-      },
-      () => {
-        setIsLoading(false);
-        // pushHistory(routes.stakeholdersPreview, true);
-      }
-    );
+      return notifyHost().then(
+        isScreeningError => {
+          pushHistory(routes.stakeholdersPreview, true);
+        },
+        () => {
+          setIsLoading(false);
+          // pushHistory(routes.stakeholdersPreview, true);
+        }
+      );
+    }
   }, [notifyHost, pushHistory]);
 
   const handleDeleteStakeholder = useCallback(
@@ -92,6 +102,14 @@ export const CompanyStakeholdersContainer = ({
     },
     [deleteHandler, changeEditableStakeholder]
   );
+
+  useEffect(() => {
+    sessionType && dispatch(startScheduler(WTM_STATUS.IN_PROGRESS));
+    return () => {
+      // stopScheduler
+      sessionType && dispatch(stopScheduler(WTM_STATUS.FINISHED));
+    };
+  }, [sessionType]);
 
   return (
     <StakeholdersNameProvider>
@@ -109,6 +127,7 @@ export const CompanyStakeholdersContainer = ({
         isLowPercentageErrorDisplayed={isLowPercentageErrorDisplayed}
         editableStakeholder={editableStakeholder}
         handleClickNextStep={handleClickNextStep}
+        sessionType={sessionType}
       />
     </StakeholdersNameProvider>
   );

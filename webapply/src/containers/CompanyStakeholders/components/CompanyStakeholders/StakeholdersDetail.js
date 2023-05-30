@@ -49,14 +49,16 @@ const useStyles = makeStyles(theme => ({
 const StakeholdersDetail = ({ name, companyCategory }) => {
   const classes = useStyles();
 
-  const initial = name.charAt(0).toUpperCase();
-  const isSoleProprietor = (companyCategory === "1_SP" || companyCategory === "2_SPLL") && "(me)"
+  const initial = name?.charAt(0)?.toUpperCase();
+  const isSoleProprietor = (companyCategory === "1_SP" || companyCategory === "2_SPLL") && "(me)";
 
   return (
     <div className={classes.stakeholderWrapper}>
       <div className={classes.nameInitialWrapper}>{initial}</div>
       <div className={classes.detailWrapper}>
-        <h5>{name}&nbsp;{isSoleProprietor}</h5>
+        <h5>
+          {name}&nbsp;{isSoleProprietor}
+        </h5>
         <p>Stakeholder: 100%</p>
       </div>
     </div>

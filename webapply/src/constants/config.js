@@ -28,7 +28,10 @@ export const endpoints = {
   documentUploaderToken: "/onboarding/oauth/token",
   generateWebToMobileQRCode: "/onboarding/products/accounts/prospects/:prospectId/webToMobile",
   refreshWebToMobileQRCode:
-    "/onboarding/products/accounts/prospects/:prospectId/webToMobile/:webToMobileRefId/refresh"
+    "/onboarding/products/accounts/prospects/:prospectId/webToMobile/:webToMobileRefId/refresh",
+  wtmSyncSession: "/onboarding/products/accounts/webToMobile/auth/token",
+  wtmStatusUpdate:
+    "/onboarding/products/accounts/prospects/:prospectId/webToMobile/:webToMobileRefId"
 };
 
 export const prospect = {

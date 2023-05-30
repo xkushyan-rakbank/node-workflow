@@ -143,16 +143,13 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "20px",
     textAlign: "left",
     padding: "40px",
+    maxHeight: "calc(100% - 70px)",
+    overflowY: "scroll",
     [theme.breakpoints.down("sm")]: {
       width: "80%"
     },
-    [theme.breakpoints.only("sm")]: {
+    [theme.breakpoints.only("md")]: {
       width: "70%"
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "70%",
-      overflowY: "scroll",
-      height: "auto"
     }
   },
   uploadModalErrorWrapper: {
@@ -412,5 +409,26 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px",
     lineHeight: "16px",
     color: "#757575"
+  },
+  progressIcon: {
+    position: "relative",
+    height: "60px",
+    marginBottom: "40px",
+    marginTop: "20px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  bottom: {
+    color: "rgba(147, 147, 147, 0.1)",
+    position: "absolute"
+  },
+  top: {
+    color: "#848484",
+    animationDuration: "550ms",
+    position: "absolute"
+  },
+  circle: {
+    strokeLinecap: "round"
   }
 }));

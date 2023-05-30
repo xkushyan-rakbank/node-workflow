@@ -11,13 +11,6 @@ import {
 import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 
-function saveByteArray(byte) {
-  var blob = new Blob([byte], { type: "application/pdf" });
-  var link = document.createElement("a");
-  link.href = window.URL.createObjectURL(blob);
-  return link;
-}
-
 const accountTypeMap = {
   "Current Account": "KFSDynamicDataForPrint_CurrentAccount",
   RAKStarter: "KFSDynamicDataForPrint_RAKStarter",
@@ -100,7 +93,6 @@ export default function useGeneratePdf(type) {
       const pages = pdfDoc.getPages();
       const pageNumberToSample = coordinates.pageNumber;
       const thePage = pages[pageNumberToSample];
-
       const { height } = thePage.getSize();
       setHeight(height * pages.length);
       thePage.drawText(soleSignatory, {
@@ -117,9 +109,8 @@ export default function useGeneratePdf(type) {
         size: FONT_SIZE,
         ...coordinates[COMPANY_NAME]
       });
-      const pdfBytes = await pdfDoc.save();
-      const pdfUrl = saveByteArray(pdfBytes);
-      setEditedFile(pdfUrl);
+      const pdfBytes = await pdfDoc.saveAsBase64();
+      setEditedFile(pdfBytes);
     };
 
     generatePdfPreview();

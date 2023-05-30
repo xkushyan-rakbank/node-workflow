@@ -58,6 +58,8 @@ const SubmitApplication = lazy(() =>
 const Agents = lazy(() => import("./containers/AgentPages"));
 const PersonaSelection = lazy(() => import("./containers/PersonaSelection"));
 
+const WebToMobilePage = lazy(() => import("./containers/WebToMobilePage"));
+
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -171,6 +173,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <ProtectedRoute exact path="/" component={QuickapplyLanding} />
               {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
+              <Route path={routes.webToMobile} component={WebToMobilePage} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />

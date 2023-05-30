@@ -90,7 +90,7 @@ jobs:
             TitleName=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID?api-version=6.1" | jq -r '.title')
             DATE=$(date +"%d/%m/%Y") > releasenote/release.txt
             echo "#1. $DATE -- $(Build.BuildNumber)" >> releasenote/release.txt
-            echo "==================================" >> releasenote/release.txt
+            echo "-------------------------------------" >> releasenote/release.txt
             echo "$TitleName" >> releasenote/release.txt
             response=$(curl -s -L -u $username:$pat "https://dev.azure.com/softwarelicense/$Projectname/_apis/git/repositories/$repo_name/pullrequests/$PRID/commits?api-version=6.1")
             fix=$(echo "$response" | jq -r '.value[] | select(.comment | startswith("fix:")) | .comment' | awk '{print NR ". " substr($0, 5)}')

@@ -332,5 +332,31 @@ export const webToMobile = {
       .then(response => {
         return response.data;
       })
-      .catch(err => console.log("error while refreshing QR code", err.message))
+      .catch(err => console.log("error while refreshing QR code", err.message)),
+  wtmSyncSession: (data, headers) =>
+    httpClient.request({
+      url: buildURI("wtmSyncSession"),
+      method: "POST",
+      ...headers,
+      data
+    }),
+  wtmStatusUpdate: (data, headers, prospectId, webtobomrefId) => {
+    return httpClient.request({
+      url: buildURI("wtmStatusUpdate", prospectId, "", webtobomrefId),
+      method: "PATCH",
+      ...headers,
+      data
+    });
+  },
+  checkQRCodeStatus: (prospectId, webToMobileRefId, header) =>
+    httpClient
+      .request({
+        url: buildURI("wtmStatusUpdate", prospectId, null, webToMobileRefId),
+        method: "GET",
+        ...header
+      })
+      .then(response => {
+        return response.data.status;
+      })
+      .catch(err => console.log("error while calling poll", err.message))
 };

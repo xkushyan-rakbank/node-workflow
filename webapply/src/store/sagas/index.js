@@ -15,6 +15,7 @@ import agentFeatures from "./agentFeatures";
 import decisionsSaga from "./decisions";
 import kycSaga from "./kyc";
 import sdkConfigSaga from "./sdkConfig";
+import webToMobileSaga from "./webToMobile";
 
 export default function*() {
   yield all([
@@ -32,6 +33,7 @@ export default function*() {
     fork(agentFeatures),
     fork(decisionsSaga),
     fork(kycSaga),
-    fork(sdkConfigSaga)
+    fork(sdkConfigSaga),
+    fork(webToMobileSaga)
   ]);
 }

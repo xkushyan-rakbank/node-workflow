@@ -41,7 +41,7 @@ export default function TermsAndConditionsDialog({
         <div style={{ height: `${height}px` }}>
           <object
             type="application/pdf"
-            data={editedFile + "#toolbar=0"}
+            data={`data:application/pdf;base64,${editedFile}#toolbar=0`}
             aria-label="Passport"
             onContextMenu={e => e.preventDefault()}
             className={classes.previewPDF}
@@ -58,7 +58,7 @@ export default function TermsAndConditionsDialog({
             label="Accept and continue"
             onClick={handleAccept}
           />
-          {scrollToEnd ?? (
+          {scrollToEnd && (
             <span className={classes.scrollInstruction}>
               Please scroll all the way through to accept.
             </span>
