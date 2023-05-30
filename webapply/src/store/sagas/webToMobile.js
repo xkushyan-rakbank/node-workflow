@@ -1,7 +1,6 @@
-import { all, call, delay, put, select, take, takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, delay, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import { webToMobile } from "../../api/apiClient";
 import { configureKYCTransactionAPIClient } from "../../api/axiosConfig";
-import { WTM_STATUS } from "../../constants";
 import { log } from "../../utils/loggger";
 import { updateProspect, updateProspectId } from "../actions/appConfig";
 import { KycTransactionSuccess } from "../actions/kyc";
@@ -51,19 +50,18 @@ function* SyncSession({ payload }) {
   }
 }
 
-function* schedulerWorker() {
+function* schedulerWorker({ payload, type }) {
   while (true) {
-    yield call(updateStatus(WTM_STATUS.IN_PROGRESS));
-    const action = yield take([STOP_SCHEDULER]);
-    if (action.type === STOP_SCHEDULER) {
-      yield call(updateStatus(WTM_STATUS.FINISHED));
+    yield call(updateStatus, payload);
+    if (type === STOP_SCHEDULER) {
+      yield call(updateStatus, payload);
       break;
     }
     yield delay(process.env.REACT_APP_WTM_SCHEDULER_INTERVAL);
   }
 }
 
-function* updateStatus({ payload }) {
+function* updateStatus(payload) {
   const prospectId = yield select(getProspectId);
   const headers = yield select(getAuthorizationHeader);
   const {
