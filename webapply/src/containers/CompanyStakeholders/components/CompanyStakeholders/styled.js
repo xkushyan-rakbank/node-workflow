@@ -144,7 +144,7 @@ export const useStyles = makeStyles(theme => ({
     textAlign: "left",
     padding: "40px",
     maxHeight: "calc(100% - 70px)",
-    overflowY: "scroll",
+    overflowY: "auto",
     [theme.breakpoints.down("sm")]: {
       width: "80%",
       padding: "32px"

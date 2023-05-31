@@ -19,14 +19,20 @@ import {
   saveFaceLivelinessFeedbackError,
   notifyHostSuccess,
   notifyHostError,
-  NOTIFY_HOST
+  NOTIFY_HOST,
+  loadEidDocuments,
+  loadPassportDocuments,
+  loadConfirmEntity,
+  GET_KYC_STATUS,
+  getKycSuccess,
+  getKycError
 } from "../actions/kyc";
 import {
   getAuthorizationHeader,
   getCompanyTradeLicenseNumber,
   getProspectId
 } from "../selectors/appConfig";
-import { analyzeOcrData, createKYCTransaction } from "../../api/apiClient";
+import { analyzeOcrData, createKYCTransaction, getOCRDataStatus } from "../../api/apiClient";
 import { getKyc, getLivelinessData, getTransactionId } from "../selectors/kyc";
 import { log } from "../../utils/loggger";
 import {
@@ -254,6 +260,55 @@ export function* setLivelinessData({ payload }) {
   }
 }
 
+function* getEidDocuments(transactionId) {
+  try {
+    return yield call(getOCRDataStatus.getOCRStageData, transactionId, "EID_OCR");
+  } catch (error) {
+    log(error);
+  }
+}
+
+function* getPassportDocuments(transactionId) {
+  try {
+    return yield call(getOCRDataStatus.getOCRStageData, transactionId, "PASSPORT_OCR");
+  } catch (error) {
+    log(error);
+  }
+}
+
+export function* getCurrentKYCStatus() {
+  try {
+    const transactionId = yield select(getTransactionId);
+    const stagesResponse = yield call(getOCRDataStatus.getOCRStatus, transactionId);
+    const stageInfo = stagesResponse.stageInfo;
+    let stageInfoMap = {};
+    stageInfo.forEach(eachStage => {
+      stageInfoMap[eachStage.stage] = eachStage.isCompleted;
+    });
+    let eidDocuments = null;
+    let passportDocuments = null;
+    if (stageInfoMap["CONFIRM_ENTITY"]) {
+      eidDocuments = yield call(getEidDocuments, transactionId);
+      passportDocuments = yield call(getPassportDocuments, transactionId);
+      yield put(loadEidDocuments(eidDocuments?.documentDetails));
+      yield put(loadPassportDocuments(passportDocuments?.documentDetails[0]?.documentContent));
+      yield put(loadConfirmEntity("SUCCESS"));
+    } else if (stageInfoMap["PASSPORT_OCR"]) {
+      eidDocuments = yield call(getEidDocuments, transactionId);
+      passportDocuments = yield call(getPassportDocuments, transactionId);
+      yield put(loadEidDocuments(eidDocuments?.documentDetails));
+      yield put(loadPassportDocuments(passportDocuments?.documentDetails[0]?.documentContent));
+    } else if (stageInfoMap["EID_OCR"]) {
+      eidDocuments = yield call(getEidDocuments, transactionId);
+      yield put(loadEidDocuments(eidDocuments?.documentDetails));
+    }
+    yield put(getKycSuccess(true));
+  } catch (error) {
+    yield put(getKycError(error));
+    log(error);
+  }
+}
+
 export default function* KycTransactionSaga() {
   yield all([
     takeLatest(CREATE_KYC_TRANSACTION, createKycTransactionSaga),
@@ -261,6 +316,7 @@ export default function* KycTransactionSaga() {
     takeLatest(CREATE_FACE_SCAN_KEY, createFaceScanSaga),
     takeLatest(CHECK_FACE_LIVELINESS, checkFaceLiveliness),
     takeLatest(SET_LIVELINESS_DATA, setLivelinessData),
-    takeLatest(NOTIFY_HOST, notifyHost)
+    takeLatest(NOTIFY_HOST, notifyHost),
+    takeLatest(GET_KYC_STATUS, getCurrentKYCStatus)
   ]);
 }

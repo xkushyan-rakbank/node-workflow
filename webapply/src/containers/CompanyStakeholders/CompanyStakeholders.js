@@ -32,7 +32,8 @@ export const CompanyStakeholdersContainer = ({
   isSendingProspect,
   editableStakeholder,
   createKycTransaction,
-  notifyHost
+  notifyHost,
+  getKycStatus
 }) => {
   const pushHistory = useTrackingHistory();
   const history = useHistory();
@@ -110,7 +111,6 @@ export const CompanyStakeholdersContainer = ({
   useEffect(() => {
     sessionType && dispatch(startScheduler(WTM_STATUS.IN_PROGRESS));
     return () => {
-      // stopScheduler
       sessionType && dispatch(stopScheduler(WTM_STATUS.FINISHED));
     };
   }, [sessionType]);
@@ -139,6 +139,7 @@ export const CompanyStakeholdersContainer = ({
         sessionType={sessionType}
         openInfo={openInfo}
         handleInfoModalClose={onInfoModalClose}
+        getKycStatus={getKycStatus}
       />
     </StakeholdersNameProvider>
   );

@@ -18,8 +18,9 @@ import {
 } from "../../../../store/selectors/appConfig";
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
 import { useStyles } from "./styled";
+import { log } from "../../../../utils/loggger";
 
-export const QRCodeScanModal = ({ handleClose, individualId }) => {
+export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => {
   const classes = useStyles();
   const prospectId = useSelector(getProspectId);
   const fullname = useSelector(getApplicantFullName);
@@ -29,6 +30,7 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
 
   const [linkData, setLinkdata] = useState();
   const [pollStatus, setPollStatus] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const QrCodeContent = () => {
     return (
@@ -77,7 +79,7 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
             size={60}
           />
         </div>
-        <h3 className={classes.mainTitle}>Your mobile session is active now….”</h3>
+        <h3 className={classes.mainTitle}>Your mobile session is active now….</h3>
         <p className={classes.subTitle}>
           Please complete your document upload/scan and EFR via your mobile then you'll be able to
           continue the section in desktop once the mobile section is deactivated
@@ -132,7 +134,7 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
     let refreshTimeoutHandle;
     if (!linkData) {
       generateQRCode();
-    } else {
+    } else if (!pollStatus && pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase()) {
       const qrCodeTimeOut =
         new Date(linkData.expiresAt).getTime() -
         new Date().getTime() -
@@ -141,7 +143,6 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
     }
 
     return () => {
-      console.log("Cleaning up", refreshTimeoutHandle);
       refreshTimeoutHandle && clearTimeout(refreshTimeoutHandle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,15 +155,28 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
       handleClose();
     }
     if (linkData) {
-      refreshPollInterval = setInterval(pollQRcode, 20000);
+      refreshPollInterval = setInterval(pollQRcode, process.env.REACT_APP_WTM_SCHEDULER_INTERVAL);
     }
 
     return () => {
       refreshPollInterval && clearInterval(refreshPollInterval);
     };
-  }, [linkData]);
+  }, [linkData, pollStatus]);
 
-  if (pollStatus?.toLowerCase() === WTM_STATUS.IN_PROGRESS.toLowerCase()) {
+  useEffect(() => {
+    if (pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase()) {
+      getKycStatus()
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(error => {
+          setIsLoading(false);
+          log(error);
+        });
+    }
+  }, [pollStatus]);
+
+  if (pollStatus?.toLowerCase() === WTM_STATUS.IN_PROGRESS.toLowerCase() || isLoading) {
     content = <MobileSessionActiveContent />;
   } else {
     content = <QrCodeContent />;

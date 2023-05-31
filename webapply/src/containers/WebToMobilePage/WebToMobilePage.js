@@ -7,12 +7,13 @@ import { WebToMobileComponent } from "./components/WebToMobileComponent";
 import routes from "../../routes";
 import { createSyncSession } from "../../store/actions/webToMobile";
 import { getwtmSessionDetails } from "../../store/selectors/webToMobile";
+import { log } from "../../utils/loggger";
 
 const SESSION_TYPES = {
   STAKEHOLDER_KYC: "STAKEHOLDER_KYC"
 };
 
-export const WebToMobilePage = () => {
+export const WebToMobilePage = ({ getKycStatus }) => {
   useFormNavigation([false, false]);
 
   const location = useLocation();
@@ -30,10 +31,17 @@ export const WebToMobilePage = () => {
     tempToken && dispatch(createSyncSession(tempToken));
   }, [tempToken]);
 
+  // authenticate then load the documents and redirect to stakeholderpage
   useEffect(() => {
     if (sessionData.sessionType === SESSION_TYPES.STAKEHOLDER_KYC) {
-      setIsLoading(false);
-      history.push(routes.stakeholdersInfo);
+      getKycStatus()
+        .then(() => {
+          setIsLoading(false);
+          history.push(routes.stakeholdersInfo);
+        })
+        .catch(error => {
+          log(error);
+        });
     }
   }, [sessionData]);
 

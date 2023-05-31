@@ -33,6 +33,13 @@ export const SET_PASSPORT_ACTION_TYPE = "SET_PASSPORT_ACTION_TYPE";
 export const NOTIFY_HOST_SUCCESS = "NOTIFY_HOST_SUCCESS";
 export const NOTIFY_HOST_ERROR = "NOTIFY_HOST_ERROR";
 
+export const LOAD_EID_DOCUMENTS = "LOAD_EID_DOCUMENTS";
+export const LOAD_PASSPORT_DOCUMENTS = "LOAD_PASSPORT_DOCUMENTS";
+export const LOAD_CONFIRM_ENTITY = "LOAD_CONFIRM_ENTITY";
+export const GET_KYC_STATUS = "GET_KYC_STATUS";
+export const GET_KYC_STATUS_SUCCESS = "GET_KYC_STATUS_SUCCESS";
+export const GET_KYC_STATUS_ERROR = "GET_KYC_STATUS_ERROR";
+
 export const createKycTransaction = () => ({
   type: CREATE_KYC_TRANSACTION
 });
@@ -145,4 +152,34 @@ export const notifyHostSuccess = response => {
 
 export const notifyHostError = response => {
   return { type: NOTIFY_HOST_ERROR, payload: response };
+};
+
+export const loadEidDocuments = payload => {
+  return { type: LOAD_EID_DOCUMENTS, payload };
+};
+
+export const loadPassportDocuments = payload => {
+  return { type: LOAD_PASSPORT_DOCUMENTS, payload };
+};
+
+export const loadConfirmEntity = payload => {
+  return { type: LOAD_CONFIRM_ENTITY, payload };
+};
+
+export const getKycStatus = () => {
+  return { type: GET_KYC_STATUS };
+};
+
+export const getKycStatusPromisify = () => ({
+  type: GET_KYC_STATUS,
+  [WAIT_FOR_ACTION]: GET_KYC_STATUS_SUCCESS,
+  [ERROR_ACTION]: GET_KYC_STATUS_ERROR
+});
+
+export const getKycSuccess = response => {
+  return { type: GET_KYC_STATUS_SUCCESS, payload: response };
+};
+
+export const getKycError = response => {
+  return { type: GET_KYC_STATUS_ERROR, payload: response };
 };

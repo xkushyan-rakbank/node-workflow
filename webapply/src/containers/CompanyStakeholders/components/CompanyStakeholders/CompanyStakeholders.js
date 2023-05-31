@@ -43,7 +43,8 @@ export const CompanyStakeholdersComponent = ({
   isLoading,
   sessionType,
   openInfo,
-  handleInfoModalClose
+  handleInfoModalClose,
+  getKycStatus
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
 
@@ -172,6 +173,7 @@ export const CompanyStakeholdersComponent = ({
           disabled={
             !isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success
           }
+          getKycStatus={getKycStatus}
         />
       )}
       <div className={classes.horizontalLine} />
@@ -257,7 +259,7 @@ export const CompanyStakeholdersComponent = ({
       )}
 
       <div className={classes.linkContainer}>
-        <BackLink path={routes.companyInfo} />
+        {!sessionType ? <BackLink path={routes.companyInfo} /> : <div></div>}
         <NextStepButton
           type="button"
           handleClick={handleClickNextStep}
