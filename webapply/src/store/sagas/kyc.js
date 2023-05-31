@@ -36,8 +36,12 @@ import {
   ERROR_MESSAGES,
   DOC_MISMATCH,
   PASSPORT_EXPIRY,
-  INVALID_DOCUMENT
+  INVALID_DOCUMENT,
+  screeningStatus,
+  EFR_CHECK_ERROR
 } from "../../constants";
+import { setScreeningError } from "../actions/sendProspectToAPI";
+import routes from "../../routes";
 import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
 import { resetFormStep } from "../actions/sendProspectToAPI";
@@ -173,6 +177,28 @@ export function* entityConfirmation() {
   } catch (error) {
     let message = error?.response?.data?.message;
     if (error?.response?.status === 403) {
+      let screenError = screeningStatus.find(
+        ({ screeningType }) => screeningType === error?.response?.status
+      );
+      let buttons = [
+        {
+          external: false,
+          link: routes.accountsComparison,
+          label: "Go to home page"
+        }
+      ];
+      if (buttons !== undefined) {
+        screenError = { ...screenError, ...buttons };
+      }
+
+      yield put(
+        setScreeningError({
+          ...screenError,
+          text: EFR_CHECK_ERROR,
+          icon: "",
+          screeningType: 403
+        })
+      );
       yield put(validateEntityConfirmSuccess({ success: true, tradeLicenseNumber }));
     } else {
       yield put(validateEntityConfirmFail(null));
@@ -198,6 +224,30 @@ export function* setLivelinessData({ payload }) {
     yield put(validateIdentitySuccess());
     yield call(entityConfirmation);
   } catch (error) {
+    if (error?.response?.status === 403) {
+      let screenError = screeningStatus.find(
+        ({ screeningType }) => screeningType === error?.response?.status
+      );
+      let buttons = [
+        {
+          external: false,
+          link: routes.accountsComparison,
+          label: "Go to home page"
+        }
+      ];
+      if (buttons !== undefined) {
+        screenError = { ...screenError, ...buttons };
+      }
+
+      yield put(
+        setScreeningError({
+          ...screenError,
+          text: EFR_CHECK_ERROR,
+          icon: "",
+          screeningType: 403
+        })
+      );
+    }
     let message = error?.response?.data?.message;
     yield put(validateIdentityFail(message));
     log(error);

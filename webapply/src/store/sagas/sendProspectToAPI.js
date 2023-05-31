@@ -48,7 +48,7 @@ import {
   VIEW_IDS,
   STEP_STATUS,
   AUTO_SAVE_INTERVAL,
-  applicationdedupe,
+  applicationError,
   AUTO_SAVE_DISABLED_VIEW_IDS
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
@@ -85,7 +85,7 @@ export function* setScreeningResults({ preScreening }) {
   if (screenError) {
     //ro-assist-brd1-3
     if (screenError.screeningType === screeningStatus[1].screeningType) {
-      let buttons = applicationdedupe.find(
+      let buttons = applicationError.find(
         ({ screeningNotes }) => screeningNotes === currScreeningType.screeningNotes
       );
       if (buttons !== undefined) {
