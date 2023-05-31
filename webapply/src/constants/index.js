@@ -363,6 +363,10 @@ export const screeningStatus = [
     screeningType: "Country Of Incorporation Check"
   },
   {
+    error: "Sanction Country",
+    screeningType: "Sanction Country Of Incorporation Check"
+  },
+  {
     error: "Big Company",
     screeningType: "ShareHolderCount Check"
   },
@@ -393,9 +397,10 @@ export const SCREENING_FAIL_REASONS = ["Decline", "Match"];
 
 export const screeningStatusDefault = {
   icon: callbackRegular,
+  link: true,
   error: "Default",
   text:
-    "We apologise that we are unable to offer you a product. Thank you for your interest in RAKBANK"
+    "Thank you for your interest in RAKBANK$We apologise that we are unable to offer you a product as the details provided don't meet our requirements."
 };
 
 export const DATE_FORMAT = "yyyy-MM-dd";

@@ -10,10 +10,10 @@ import { ReactComponent as LogoSmallColor } from "../../assets/images/logo-small
 //ro-assist-brd2-3
 const accountComparisionRoute = {
   link: routes.accountsComparison,
-  label: "See products"
+  label: "Back to home"
 };
 const getFirstLine = text => {
-  var index = text.indexOf("\n");
+  var index = text.indexOf("$");
   if (index === -1) {
     index = undefined;
     return "";
@@ -21,6 +21,16 @@ const getFirstLine = text => {
     return text.substring(0, index);
   }
 };
+const getScondLine = text => {
+  var index = text.indexOf("$");
+  if (index === -1) {
+    index = undefined;
+    return text;
+  } else {
+    return text.substring(index + 1);
+  }
+};
+
 export const ApplicationError = ({
   icon,
   text,
@@ -49,7 +59,7 @@ export const ApplicationError = ({
             {screeningType !== 403 ? (
               <>
                 <div className={classes.title}>{getFirstLine(text)}</div>
-                <p className={classes.subTitle}>{text}</p>
+                <p className={classes.subTitle}>{getScondLine(text)}</p>
               </>
             ) : (
               <>
