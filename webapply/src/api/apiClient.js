@@ -275,6 +275,25 @@ export const analyzeOcrData = {
   }
 };
 
+export const getOCRDataStatus = {
+  getOCRStatus: transactionId => {
+    const kycTransactionClient = getKYCTransactionAPIClientInstance(transactionId);
+    return kycTransactionClient
+      .get("efr/transactions/" + transactionId + "/stages")
+      .then(function(response) {
+        return response.data;
+      });
+  },
+  getOCRStageData: (transactionId, stage) => {
+    const kycTransactionClient = getKYCTransactionAPIClientInstance(transactionId);
+    return kycTransactionClient
+      .get(`efr/transactions/${transactionId}/stages/${stage}/documents`)
+      .then(function(response) {
+        return response.data;
+      });
+  }
+};
+
 export const documents = {
   requestClientToken: headers =>
     httpClient.request({
@@ -341,12 +360,17 @@ export const webToMobile = {
       data
     }),
   wtmStatusUpdate: (data, headers, prospectId, webtobomrefId) => {
-    return httpClient.request({
-      url: buildURI("wtmStatusUpdate", prospectId, "", webtobomrefId),
-      method: "PATCH",
-      ...headers,
-      data
-    });
+    return httpClient
+      .request({
+        url: buildURI("wtmStatusUpdate", prospectId, "", webtobomrefId),
+        method: "PATCH",
+        ...headers,
+        data
+      })
+      .then(response => {
+        return response.data;
+      })
+      .catch(err => console.log("update status", err.message));
   },
   checkQRCodeStatus: (prospectId, webToMobileRefId, header) =>
     httpClient

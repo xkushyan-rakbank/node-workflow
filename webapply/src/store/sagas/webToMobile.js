@@ -64,12 +64,22 @@ function* schedulerWorker({ payload, type }) {
 }
 
 function* updateStatus(payload) {
-  const prospectId = yield select(getProspectId);
-  const headers = yield select(getAuthorizationHeader);
-  const {
-    sessionData: { webMobileRefId }
-  } = yield select(getwtmSessionDetails);
-  yield call(webToMobile.wtmStatusUpdate, { status: payload }, headers, prospectId, webMobileRefId);
+  try {
+    const prospectId = yield select(getProspectId);
+    const headers = yield select(getAuthorizationHeader);
+    const {
+      sessionData: { webMobileRefId }
+    } = yield select(getwtmSessionDetails);
+    yield call(
+      webToMobile.wtmStatusUpdate,
+      { status: payload },
+      headers,
+      prospectId,
+      webMobileRefId
+    );
+  } catch (error) {
+    log(error);
+  }
 }
 
 export default function* webToMobileSaga() {

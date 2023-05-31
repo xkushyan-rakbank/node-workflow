@@ -3,7 +3,7 @@ import { Button, Modal } from "@material-ui/core";
 import { ReactComponent as VerifyMobileIcon } from "../../../../assets/icons/verify_mobile.svg";
 import { useStyles } from "./styled";
 import { QRCodeScanModal } from "./QRCodeScanModal";
-export const ScanViaMobile = ({ disabled }) => {
+export const ScanViaMobile = ({ disabled, getKycStatus }) => {
   const classes = useStyles();
   const [openMobileScanModal, setOpenMobileScanModal] = useState(false);
   return (
@@ -32,7 +32,11 @@ export const ScanViaMobile = ({ disabled }) => {
         </Button>
       </div>
       <Modal open={openMobileScanModal}>
-        <QRCodeScanModal handleClose={() => setOpenMobileScanModal(false)} individualId={"SID1"} />
+        <QRCodeScanModal
+          getKycStatus={getKycStatus}
+          handleClose={() => setOpenMobileScanModal(false)}
+          individualId={"SID1"}
+        />
       </Modal>
     </>
   );
