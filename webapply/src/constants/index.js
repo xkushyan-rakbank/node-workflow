@@ -678,5 +678,5 @@ export const QR_CODE_SIZE = 200;
 
 export const WTM_STATUS = {
   IN_PROGRESS: "IN PROGRESS",
-  FINISHED: "FINISHED"
+  FINISHED: "COMPLETED"
 };
