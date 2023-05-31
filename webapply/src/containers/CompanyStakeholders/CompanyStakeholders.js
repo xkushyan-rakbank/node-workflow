@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import {
   StakeholdersNameManager,
@@ -34,12 +35,14 @@ export const CompanyStakeholdersContainer = ({
   notifyHost
 }) => {
   const pushHistory = useTrackingHistory();
+  const history = useHistory();
   const dispatch = useDispatch();
   const transactionId = useSelector(getTransactionId);
   const {
     sessionData: { sessionType }
   } = useSelector(getwtmSessionDetails);
   const [isLoading, setIsLoading] = useState(false);
+  const [openInfo, setOpenInfo] = useState(false);
 
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
@@ -78,6 +81,7 @@ export const CompanyStakeholdersContainer = ({
 
   const handleClickNextStep = useCallback(() => {
     if (sessionType) {
+      setOpenInfo(true);
       dispatch(stopScheduler(WTM_STATUS.FINISHED));
     } else {
       setIsLoading(true);
@@ -111,6 +115,11 @@ export const CompanyStakeholdersContainer = ({
     };
   }, [sessionType]);
 
+  const onInfoModalClose = () => {
+    setOpenInfo(false);
+    history.push(routes.quickapplyLanding);
+  };
+
   return (
     <StakeholdersNameProvider>
       <CompanyStakeholdersComponent
@@ -128,6 +137,8 @@ export const CompanyStakeholdersContainer = ({
         editableStakeholder={editableStakeholder}
         handleClickNextStep={handleClickNextStep}
         sessionType={sessionType}
+        openInfo={openInfo}
+        handleInfoModalClose={onInfoModalClose}
       />
     </StakeholdersNameProvider>
   );

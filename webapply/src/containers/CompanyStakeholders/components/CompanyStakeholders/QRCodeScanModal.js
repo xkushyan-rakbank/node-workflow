@@ -30,59 +30,63 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
   const [linkData, setLinkdata] = useState();
   const [pollStatus, setPollStatus] = useState();
 
-  const qrCodeContent = (
-    <>
-      <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
-      <div className={classes.qrCode}>
-        <img alt="QR code link" src={`data:image/png;base64,${linkData?.qrCode}`} />
-      </div>
-      <h3 className={classes.mainTitle}>
-        Grab your phone and scan this QR code to continue via mobile
-      </h3>
-      <p className={classes.subTitle}>
-        You'll then be able to upload or scan your documents and complete the face ID step.
-      </p>
-      <div className={classes.qrScanInstructions}>
-        <ol>
-          <li>Open your phone&apos;s camera or code scanner.</li>
-          <li>Point it at this screen to scan the code.</li>
-          <li>You&apos;ll be redirected to the mobile website to finish the process.</li>
-        </ol>
-      </div>
-      <a className={classes.getHelpLink}>Get help</a>
-    </>
-  );
+  const QrCodeContent = () => {
+    return (
+      <>
+        <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
+        <div className={classes.qrCode}>
+          <img alt="QR code link" src={`data:image/png;base64,${linkData?.qrCode}`} />
+        </div>
+        <h3 className={classes.mainTitle}>
+          Grab your phone and scan this QR code to continue via mobile
+        </h3>
+        <p className={classes.subTitle}>
+          You'll then be able to upload or scan your documents and complete the face ID step.
+        </p>
+        <div className={classes.qrScanInstructions}>
+          <ol>
+            <li>Open your phone&apos;s camera or code scanner.</li>
+            <li>Point it at this screen to scan the code.</li>
+            <li>You&apos;ll be redirected to the mobile website to finish the process.</li>
+          </ol>
+        </div>
+        <a className={classes.getHelpLink}>Get help</a>
+      </>
+    );
+  };
 
-  const mobileSessionActiveContent = (
-    <>
-      <div className={classes.progressIcon}>
-        <CircularProgress
-          variant="determinate"
-          className={classes.bottom}
-          thickness={4}
-          value={100}
-          size={60}
-        />
-        <CircularProgress
-          variant="indeterminate"
-          disableShrink
-          className={classes.top}
-          classes={{
-            circle: classes.circle
-          }}
-          thickness={4}
-          size={60}
-        />
-      </div>
-      <h3 className={classes.mainTitle}>Your mobile session is active now….”</h3>
-      <p className={classes.subTitle}>
-        Please complete your document upload/scan and EFR via your mobile then you'll be able to
-        continue the section in desktop once the mobile section is deactivated
-      </p>
-    </>
-  );
+  const MobileSessionActiveContent = () => {
+    return (
+      <>
+        <div className={classes.progressIcon}>
+          <CircularProgress
+            variant="determinate"
+            className={classes.bottom}
+            thickness={4}
+            value={100}
+            size={60}
+          />
+          <CircularProgress
+            variant="indeterminate"
+            disableShrink
+            className={classes.top}
+            classes={{
+              circle: classes.circle
+            }}
+            thickness={4}
+            size={60}
+          />
+        </div>
+        <h3 className={classes.mainTitle}>Your mobile session is active now….”</h3>
+        <p className={classes.subTitle}>
+          Please complete your document upload/scan and EFR via your mobile then you'll be able to
+          continue the section in desktop once the mobile section is deactivated
+        </p>
+      </>
+    );
+  };
 
-  let content = qrCodeContent;
+  let content;
 
   const reqData = {
     sessionType: SESSION_TYPE,
@@ -145,7 +149,7 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
 
   useEffect(() => {
     let refreshPollInterval;
-    if (pollStatus === WTM_STATUS.FINISHED) {
+    if (pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase()) {
       clearInterval(refreshPollInterval);
       handleClose();
     }
@@ -158,11 +162,11 @@ export const QRCodeScanModal = ({ handleClose, individualId }) => {
     };
   }, [linkData]);
 
-  useEffect(() => {
-    if (pollStatus === WTM_STATUS.IN_PROGRESS) {
-      content = mobileSessionActiveContent;
-    }
-  }, [pollStatus]);
+  if (pollStatus?.toLowerCase() === WTM_STATUS.IN_PROGRESS.toLowerCase()) {
+    content = <MobileSessionActiveContent />;
+  } else {
+    content = <QrCodeContent />;
+  }
 
   return <div className={cx(classes.paper, classes.qrCodeScanContainer)}>{content}</div>;
 };
