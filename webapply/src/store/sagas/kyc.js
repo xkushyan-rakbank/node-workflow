@@ -176,7 +176,7 @@ export function* entityConfirmation() {
     yield put(validateEntityConfirmSuccess({ success: true, tradeLicenseNumber }));
   } catch (error) {
     let message = error?.response?.data?.message;
-    if (error?.response?.status === 403) {
+    if (error?.response?.status === 403 && error?.response?.data?.errorCode === "024") {
       let screenError = screeningStatus.find(
         ({ screeningType }) => screeningType === error?.response?.status
       );
@@ -224,7 +224,7 @@ export function* setLivelinessData({ payload }) {
     yield put(validateIdentitySuccess());
     yield call(entityConfirmation);
   } catch (error) {
-    if (error?.response?.status === 403) {
+    if (error?.response?.status === 403 && error?.response?.data?.errorCode === "017") {
       let screenError = screeningStatus.find(
         ({ screeningType }) => screeningType === error?.response?.status
       );
