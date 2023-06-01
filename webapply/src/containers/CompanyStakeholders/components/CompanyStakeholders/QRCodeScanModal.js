@@ -12,8 +12,10 @@ import {
 } from "../../../../constants";
 import { webToMobile } from "../../../../api/apiClient";
 import {
+  getAccountType,
   getApplicantFullName,
   getAuthorizationHeader,
+  getCompanyTradeLicenseNumber,
   getIsIslamicBanking,
   getOrganizationInfo,
   getProspectId
@@ -31,6 +33,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const userToken = useSelector(getUserToken);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const { companyCategory } = useSelector(getOrganizationInfo);
+  const tradeLicenseNo = useSelector(getCompanyTradeLicenseNumber);
+  const accountType = useSelector(getAccountType);
 
   const [linkData, setLinkdata] = useState();
   const [pollStatus, setPollStatus] = useState();
@@ -91,7 +95,7 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
         <h3 className={classes.mainTitle}>Your mobile session is active now….</h3>
         <p className={classes.subTitle}>
           Please complete your document upload/scan and EFR via your mobile then you'll be able to
-          continue the section in desktop once the mobile section is deactivated
+          continue the session in desktop once the mobile session is deactivated
         </p>
       </>
     );
@@ -114,6 +118,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
         fullname,
         isIslamicBanking,
         companyCategory,
+        tradeLicenseNo,
+        accountType,
         kycTransaction: {
           id: transactionId,
           userToken

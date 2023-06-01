@@ -84,9 +84,12 @@ export function* setScreeningResults({ preScreening }) {
 
   if (screenError) {
     //ro-assist-brd1-3
-    if (screenError.screeningType === screeningStatus[1].screeningType) {
+    if (
+      screenError.screeningType?.toLowerCase() === screeningStatus[1].screeningType.toLowerCase()
+    ) {
       let buttons = applicationError.find(
-        ({ screeningNotes }) => screeningNotes === currScreeningType.screeningNotes
+        ({ screeningNotes }) =>
+          screeningNotes.toLowerCase() === currScreeningType.screeningNotes?.toLowerCase()
       );
       if (buttons !== undefined) {
         screenError = { ...screenError, ...buttons };

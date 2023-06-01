@@ -353,38 +353,46 @@ export const screeningStatus = [
     buttons: [
       {
         external: false,
-        link: routes.currentAccount,
-        label: "Open Current Account"
+        link: routes.accountsComparison,
+        label: "Go to home page"
       }
     ]
   },
   {
     error: "Not Registered In UAE",
-    screeningType: "Country Of Incorporation Check"
+    screeningType: "Country Of Incorporation Check",
+    link: true
+    //link: true
   },
   {
     error: "Sanction Country",
-    screeningType: "Sanction Country Of Incorporation Check"
+    screeningType: "Sanction Country Of Incorporation Check",
+    link: true
   },
   {
     error: "Big Company",
-    screeningType: "ShareHolderCount Check"
+    screeningType: "ShareHolderCount Check",
+    link: true
   },
   {
     error: "BlackList",
-    screeningType: "Blacklist Check"
+    screeningType: "Blacklist Check",
+    link: true
   },
   {
     error: "Company as stakeholder",
-    screeningType: "Company is a Stakeholder Check"
+    screeningType: "Company is a Stakeholder Check",
+    link: true
   },
   {
     error: "Too many Stakeholders",
-    screeningType: "Too many Stakeholders Check"
+    screeningType: "Too many Stakeholders Check",
+    link: true
   },
   {
     error: "Total No of Documents",
-    screeningType: "Total No of Documents uploaded check"
+    screeningType: "Total No of Documents uploaded check",
+    link: true
   },
   {
     error: 403,

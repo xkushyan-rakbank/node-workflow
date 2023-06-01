@@ -247,12 +247,6 @@ export const CompanyStakeholdersComponent = ({
           sdkConfig={sdkConfig}
         />
       </div>
-      {isMobile && (
-        <div className={classes.disclaimerInfo}>
-          By clicking on start button you confirm to verify your ID documents against the face ID
-          and retrieve your data.
-        </div>
-      )}
       {confirmEntityError && (
         <div className={classes.uploadModalErrorWrapper}>
           <ErrorOutlineIcon className={classes.errorIcon} />

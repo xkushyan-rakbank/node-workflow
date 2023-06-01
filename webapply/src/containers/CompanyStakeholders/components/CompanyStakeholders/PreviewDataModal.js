@@ -35,6 +35,7 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
           aria-label="Passport"
           onContextMenu={e => e.preventDefault()}
           className={classes.previewPDF}
+          type="application/pdf"
         ></object>
       </div>
     ) : (
