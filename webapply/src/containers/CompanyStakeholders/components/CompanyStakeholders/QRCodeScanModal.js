@@ -12,8 +12,10 @@ import {
 } from "../../../../constants";
 import { webToMobile } from "../../../../api/apiClient";
 import {
+  getAccountType,
   getApplicantFullName,
   getAuthorizationHeader,
+  getCompanyTradeLicenseNumber,
   getIsIslamicBanking,
   getOrganizationInfo,
   getProspectId
@@ -31,6 +33,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const userToken = useSelector(getUserToken);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const { companyCategory } = useSelector(getOrganizationInfo);
+  const tradeLicenseNo = useSelector(getCompanyTradeLicenseNumber);
+  const accountType = useSelector(getAccountType);
 
   const [linkData, setLinkdata] = useState();
   const [pollStatus, setPollStatus] = useState();
@@ -114,6 +118,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
         fullname,
         isIslamicBanking,
         companyCategory,
+        tradeLicenseNo,
+        accountType,
         kycTransaction: {
           id: transactionId,
           userToken
