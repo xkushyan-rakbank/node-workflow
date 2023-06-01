@@ -287,7 +287,7 @@ export const getOCRDataStatus = {
   getOCRStageData: (transactionId, stage) => {
     const kycTransactionClient = getKYCTransactionAPIClientInstance(transactionId);
     return kycTransactionClient
-      .get(`efr/transactions/${transactionId}/stages/${stage}/documents`)
+      .get(`efr/transactions/${transactionId}/stages/${stage}/details`)
       .then(function(response) {
         return response.data;
       });

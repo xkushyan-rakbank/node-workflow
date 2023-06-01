@@ -231,12 +231,15 @@ export default handleActions(
         ...state.kycUploadedDocs,
         eidFront: {
           name: "EID Front",
-          link: `data:image/png;base64,${payload[1].documentContent}`
+          link: `data:image/png;base64,${payload.eidFront}`
         },
-        eidBack: { name: "EID Back", link: `data:image/png;base64,${payload[0].documentContent}` }
+        eidBack: {
+          name: "EID Back",
+          link: `data:image/png;base64,${payload.eidBack}`
+        }
       },
       actionType: { ...state.actionType, eid: "Uploaded" },
-      analysedEidData: payload
+      analysedEidData: payload.efrResponse
     }),
     [LOAD_PASSPORT_DOCUMENTS]: (state, { payload }) => ({
       ...state,
@@ -246,11 +249,11 @@ export default handleActions(
         ...state.kycUploadedDocs,
         passport: {
           name: "Passport",
-          link: `data:image/png;base64,${payload}`
+          link: `data:image/png;base64,${payload.passport}`
         }
       },
       actionType: { ...state.actionType, passport: "Uploaded" },
-      analysedPassportData: payload
+      analysedPassportData: payload.efrResponse
     }),
     [LOAD_CONFIRM_ENTITY]: (state, { payload }) => ({
       ...state,
