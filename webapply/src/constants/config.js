@@ -17,7 +17,7 @@ export const endpoints = {
   screenProspectUri: "/onboarding/products/accounts/prospects/:prospectId/screening",
   otpUri: "/onboarding/accounts/otp",
   /**TODO: To be pointing 2.0 exp-api */
-  authenticateUserUri: "/webapply/api/v1/users/authenticate",
+  authenticateUserUri: "/onboarding/api/v1/users/authenticate",
   /**TODO: To be pointing 2.0 exp-api */
   docUploaderUri: "/api/v1/banks/RAK/prospects/:prospectId/documents",
   /**TODO: To be pointing 2.0 exp-api */

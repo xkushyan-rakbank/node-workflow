@@ -276,6 +276,30 @@ function* getPassportDocuments(transactionId) {
   }
 }
 
+const extractOCRData = payload => {
+  let eidFront = payload.documentDetails.find(eachDoc => eachDoc.documentType === "EID_FRONT")
+    ?.documentContent;
+  let eidBack = payload.documentDetails.find(eachDoc => eachDoc.documentType === "EID_BACK")
+    ?.documentContent;
+  let passport = payload.documentDetails.find(eachDoc => eachDoc.documentType === "PASSPORT_FRONT")
+    ?.documentContent;
+  return {
+    efrResponse: payload.efrResponse,
+    eidFront,
+    eidBack,
+    passport
+  };
+};
+
+function* putOcrData(transactionId) {
+  const eidDocuments = yield call(getEidDocuments, transactionId);
+  const passportDocuments = yield call(getPassportDocuments, transactionId);
+  const eidOcrDetails = extractOCRData(eidDocuments);
+  const passportDetails = extractOCRData(passportDocuments);
+  yield put(loadEidDocuments(eidOcrDetails));
+  yield put(loadPassportDocuments(passportDetails));
+}
+
 export function* getCurrentKYCStatus() {
   try {
     const transactionId = yield select(getTransactionId);
@@ -285,22 +309,15 @@ export function* getCurrentKYCStatus() {
     stageInfo.forEach(eachStage => {
       stageInfoMap[eachStage.stage] = eachStage.isCompleted;
     });
-    let eidDocuments = null;
-    let passportDocuments = null;
     if (stageInfoMap["CONFIRM_ENTITY"]) {
-      eidDocuments = yield call(getEidDocuments, transactionId);
-      passportDocuments = yield call(getPassportDocuments, transactionId);
-      yield put(loadEidDocuments(eidDocuments?.documentDetails));
-      yield put(loadPassportDocuments(passportDocuments?.documentDetails[0]?.documentContent));
+      yield call(putOcrData, transactionId);
       yield put(loadConfirmEntity("SUCCESS"));
     } else if (stageInfoMap["PASSPORT_OCR"]) {
-      eidDocuments = yield call(getEidDocuments, transactionId);
-      passportDocuments = yield call(getPassportDocuments, transactionId);
-      yield put(loadEidDocuments(eidDocuments?.documentDetails));
-      yield put(loadPassportDocuments(passportDocuments?.documentDetails[0]?.documentContent));
+      yield call(putOcrData, transactionId);
     } else if (stageInfoMap["EID_OCR"]) {
-      eidDocuments = yield call(getEidDocuments, transactionId);
-      yield put(loadEidDocuments(eidDocuments?.documentDetails));
+      const eidDocuments = yield call(getEidDocuments, transactionId);
+      const eidOcrDetails = extractOCRData(eidDocuments);
+      yield put(loadEidDocuments(eidOcrDetails));
     }
     yield put(getKycSuccess(true));
   } catch (error) {

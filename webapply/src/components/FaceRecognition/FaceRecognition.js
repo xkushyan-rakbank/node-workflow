@@ -3,6 +3,7 @@ import { Button } from "@material-ui/core";
 import cx from "classnames";
 import { useSelector } from "react-redux";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FaceScanIcon } from "../../assets/icons/face_scan.svg";
@@ -198,12 +199,11 @@ export const FaceRecognition = ({
           </Button>
         )}
       </div>
-      {isStepActive && (
-        <p className={classes.disclaimerInfo}>
-          Please note: By selecting Start, you give us permission to retrieve your data and verify
-          your face against your ID documents.
-        </p>
-      )}
+      <p className={classes.disclaimerInfo}>
+        {isMobile
+          ? "Please note: By tapping on the start button, you give us permission to retrieve your data and verify your face against your ID documents."
+          : "Please note: By selecting Start, you give us permission to retrieve your data and verify your face against your ID documents."}
+      </p>
       {identityValidation && (
         <div className={classes.uploadModalErrorWrapper}>
           <ErrorOutlineIcon className={classes.errorIcon} />

@@ -39,6 +39,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "row",
     [theme.breakpoints.down("xs")]: {
+      width: "100%",
       flexDirection: "column",
       alignItems: "center"
     }
@@ -46,13 +47,23 @@ export const useStyles = makeStyles(theme => ({
   contentContainer: {
     marginLeft: "20px",
     [theme.breakpoints.down("xs")]: {
+      width: "100%",
       marginTop: "16px",
       marginLeft: "0px"
     }
   },
   content: {
     fontSize: "16px",
-    [theme.breakpoints.down("md")]: {
+    "& p": {
+      margin: "0px",
+      [theme.breakpoints.down("sm")]: {
+        whiteSpace: "nowrap",
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+      }
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
       textAlign: "center",
       marginBottom: "7px"
     }
@@ -60,7 +71,8 @@ export const useStyles = makeStyles(theme => ({
   subcontent: {
     fontSize: "12px",
     color: "#757575",
-    [theme.breakpoints.down("ls")]: {
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
       textAlign: "center"
     }
   },
@@ -84,6 +96,7 @@ export const useStyles = makeStyles(theme => ({
   },
   contentWrapper: {
     [theme.breakpoints.down("xs")]: {
+      width: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center"

@@ -14,6 +14,8 @@ import { webToMobile } from "../../../../api/apiClient";
 import {
   getApplicantFullName,
   getAuthorizationHeader,
+  getIsIslamicBanking,
+  getOrganizationInfo,
   getProspectId
 } from "../../../../store/selectors/appConfig";
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
@@ -27,6 +29,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const header = useSelector(getAuthorizationHeader);
   const transactionId = useSelector(getTransactionId);
   const userToken = useSelector(getUserToken);
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
+  const { companyCategory } = useSelector(getOrganizationInfo);
 
   const [linkData, setLinkdata] = useState();
   const [pollStatus, setPollStatus] = useState();
@@ -37,7 +41,12 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
       <>
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
         <div className={classes.qrCode}>
-          <img alt="QR code link" src={`data:image/png;base64,${linkData?.qrCode}`} />
+          <img
+            alt="QR code link"
+            src={`data:image/png;base64,${linkData?.qrCode}`}
+            width="170"
+            height="170"
+          />
         </div>
         <h3 className={classes.mainTitle}>
           Grab your phone and scan this QR code to continue via mobile
@@ -103,6 +112,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
       data: {
         prospectId,
         fullname,
+        isIslamicBanking,
+        companyCategory,
         kycTransaction: {
           id: transactionId,
           userToken
