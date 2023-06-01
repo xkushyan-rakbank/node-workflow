@@ -350,8 +350,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   qrCode: {
-    width: "200px",
-    height: "200px",
+    width: "170px",
+    height: "170px",
     lineHeight: "200px",
     backgroundColor: "#fff",
     marginTop: "20px 0px 14px",

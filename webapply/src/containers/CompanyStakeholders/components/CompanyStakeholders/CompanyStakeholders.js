@@ -194,6 +194,7 @@ export const CompanyStakeholdersComponent = ({
           handleUpload={() => openDocUploadModal(DOC_TYPE_EID)}
           showPreview={!isEmpty(analysedEidData)}
           type={DOC_TYPE_EID}
+          mobileLabel="Upload/ Scan your Emirates ID"
         />
       </div>
       {isEmpty(analysedEidData) && error && (
@@ -221,6 +222,7 @@ export const CompanyStakeholdersComponent = ({
           handleRemove={() => onRemoveOcrData(DOC_TYPE_PASSPORT)}
           handleUpload={() => openDocUploadModal(DOC_TYPE_PASSPORT)}
           type={DOC_TYPE_PASSPORT}
+          mobileLabel="Upload/ Scan your passport"
         />
       </div>
       {!isEmpty(analysedEidData) && error && (

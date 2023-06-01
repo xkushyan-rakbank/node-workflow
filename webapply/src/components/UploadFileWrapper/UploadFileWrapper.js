@@ -21,6 +21,7 @@ export const UploadFileWrapper = ({
   handleRemove,
   showPreview,
   hasError = false,
+  mobileLabel,
   ...props
 }) => {
   const classes = useStyles();
@@ -40,8 +41,8 @@ export const UploadFileWrapper = ({
                   {uploadedContent
                     ? uploadedContent
                     : `${
-                        isMobile
-                          ? "Upload/ Scan your Emirates ID"
+                        isMobile && mobileLabel
+                          ? mobileLabel
                           : "Drag and drop file here or upload from your computer"
                       }`}
                 </div>

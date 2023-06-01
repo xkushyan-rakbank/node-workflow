@@ -37,7 +37,12 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
       <>
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
         <div className={classes.qrCode}>
-          <img alt="QR code link" src={`data:image/png;base64,${linkData?.qrCode}`} />
+          <img
+            alt="QR code link"
+            src={`data:image/png;base64,${linkData?.qrCode}`}
+            width="170"
+            height="170"
+          />
         </div>
         <h3 className={classes.mainTitle}>
           Grab your phone and scan this QR code to continue via mobile

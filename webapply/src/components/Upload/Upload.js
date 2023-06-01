@@ -63,13 +63,15 @@ export const Upload = ({
                   <div className={classes.content}>
                     {/* Drag and drop file here or upload from your computer */}
                     {showUploadSuccessIcon}
-                    {props.content
-                      ? props.content
-                      : `${
-                          isMobile
-                            ? mobilecontentPlaceholder
-                            : "Drag and drop file here or upload from your computer"
-                        }`}
+                    {props.content ? (
+                      <p>{props.content}</p>
+                    ) : (
+                      `${
+                        isMobile && mobilecontentPlaceholder
+                          ? mobilecontentPlaceholder
+                          : "Drag and drop file here or upload from your computer"
+                      }`
+                    )}
                   </div>
 
                   {hasFile && showUploadSuccessIcon ? (
