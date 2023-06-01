@@ -14,6 +14,8 @@ import { webToMobile } from "../../../../api/apiClient";
 import {
   getApplicantFullName,
   getAuthorizationHeader,
+  getIsIslamicBanking,
+  getOrganizationInfo,
   getProspectId
 } from "../../../../store/selectors/appConfig";
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
@@ -27,6 +29,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const header = useSelector(getAuthorizationHeader);
   const transactionId = useSelector(getTransactionId);
   const userToken = useSelector(getUserToken);
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
+  const { companyCategory } = useSelector(getOrganizationInfo);
 
   const [linkData, setLinkdata] = useState();
   const [pollStatus, setPollStatus] = useState();
@@ -108,6 +112,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
       data: {
         prospectId,
         fullname,
+        isIslamicBanking,
+        companyCategory,
         kycTransaction: {
           id: transactionId,
           userToken

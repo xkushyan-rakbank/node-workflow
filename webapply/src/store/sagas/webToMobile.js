@@ -19,7 +19,7 @@ function* SyncSession({ payload }) {
   try {
     const response = yield call(webToMobile.wtmSyncSession, { tempToken: payload });
     const {
-      data: { kycTransaction, prospectId, fullname },
+      data: { kycTransaction, prospectId, fullname, isIslamicBanking, companyCategory },
       webMobileRefId,
       SID,
       status,
@@ -40,7 +40,9 @@ function* SyncSession({ payload }) {
     };
     yield put(
       updateProspect({
-        "prospect.applicantInfo.fullName": fullname
+        "prospect.applicantInfo.fullName": fullname,
+        "prospect.applicationInfo.islamicBanking": isIslamicBanking,
+        "prospect.organizationInfo.companyCategory": companyCategory
       })
     );
     yield put(updateProspectId(prospectId));
