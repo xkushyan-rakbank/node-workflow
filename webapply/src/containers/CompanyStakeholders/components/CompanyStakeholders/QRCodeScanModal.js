@@ -91,7 +91,7 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
         <h3 className={classes.mainTitle}>Your mobile session is active now….</h3>
         <p className={classes.subTitle}>
           Please complete your document upload/scan and EFR via your mobile then you'll be able to
-          continue the section in desktop once the mobile section is deactivated
+          continue the session in desktop once the mobile session is deactivated
         </p>
       </>
     );
