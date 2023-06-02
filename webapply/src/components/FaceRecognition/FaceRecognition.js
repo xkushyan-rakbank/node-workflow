@@ -182,7 +182,7 @@ export const FaceRecognition = ({
             <div className={classes.subcontent}>{helperText}</div>
           </div>
         </div>
-        {confirmEntity && isStepActive ? (
+        {confirmEntity?.success && isStepActive ? (
           <div className={classes.completedWrapper}>
             <SuccessIcon />
             <span>Completed</span>

@@ -259,9 +259,7 @@ export default handleActions(
       ...state,
       identityValidation: null,
       faceScanSuccess: true,
-      confirmEntity: {
-        success: true
-      },
+      confirmEntity: payload,
       confirmEntityError: null
     }),
     [GET_KYC_STATUS_SUCCESS]: (state, { payload }) => ({

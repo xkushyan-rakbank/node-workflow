@@ -304,6 +304,7 @@ export function* getCurrentKYCStatus() {
   try {
     const transactionId = yield select(getTransactionId);
     const stagesResponse = yield call(getOCRDataStatus.getOCRStatus, transactionId);
+    const tradeLicenseNumber = yield select(getCompanyTradeLicenseNumber);
     const stageInfo = stagesResponse.stageInfo;
     let stageInfoMap = {};
     stageInfo.forEach(eachStage => {
@@ -311,7 +312,7 @@ export function* getCurrentKYCStatus() {
     });
     if (stageInfoMap["CONFIRM_ENTITY"]) {
       yield call(putOcrData, transactionId);
-      yield put(loadConfirmEntity("SUCCESS"));
+      yield put(loadConfirmEntity({ success: true, tradeLicenseNumber }));
     } else if (stageInfoMap["PASSPORT_OCR"]) {
       yield call(putOcrData, transactionId);
     } else if (stageInfoMap["EID_OCR"]) {
