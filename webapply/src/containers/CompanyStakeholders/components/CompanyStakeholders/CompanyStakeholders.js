@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "@material-ui/core";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isEmpty } from "lodash";
-import { isMobile } from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { FaceRecognition } from "../../../../components/FaceRecognition/FaceRecognition";
@@ -168,7 +168,7 @@ export const CompanyStakeholdersComponent = ({
       <p className={classes.subTitle}>
         We have to verify your identity to check it&apos;s really you
       </p>
-      {!isMobile && (
+      {isDesktop && (
         <ScanViaMobile
           disabled={
             !isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success
