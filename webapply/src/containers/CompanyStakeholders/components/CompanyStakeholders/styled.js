@@ -2,9 +2,9 @@ import { makeStyles } from "@material-ui/core/styles/index";
 
 export const useStyles = makeStyles(theme => ({
   mainTitle: {
-    fontSize: "28px",
+    fontSize: "24px",
     color: "#1F1F1F",
-    lineHeight: "36px",
+    lineHeight: "28px",
     fontWeight: 500,
     margin: 0,
     marginBottom: "8px",
@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
   },
   subTitle: {
     fontWeight: 400,
-    fontSize: "20px",
+    fontSize: "16px",
     color: "#757575",
     margin: 0
   },

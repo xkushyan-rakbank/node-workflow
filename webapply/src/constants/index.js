@@ -235,6 +235,11 @@ export const applicationError = [
         external: false,
         link: routes.comeBackLogin,
         label: "Yes, check status"
+      },
+      {
+        external: true,
+        link: routes.accountsComparison,
+        label: "No, thanks"
       }
     ]
   },
@@ -244,7 +249,7 @@ export const applicationError = [
     buttons: [
       {
         external: true,
-        link: smeSouqLink,
+        link: routes.accountsComparison,
         label: "No, thanks"
       },
       {
