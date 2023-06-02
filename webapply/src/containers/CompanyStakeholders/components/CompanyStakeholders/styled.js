@@ -354,9 +354,12 @@ export const useStyles = makeStyles(theme => ({
     height: "170px",
     lineHeight: "200px",
     backgroundColor: "#fff",
-    marginTop: "20px 0px 14px",
+    margin: "20px 0px 14px",
     "& img": {
       lineHeight: "15px"
+    },
+    [theme.breakpoints.down("md")]: {
+      margin: "10px 0"
     }
   },
   qrScanInstructions: {
@@ -375,6 +378,10 @@ export const useStyles = makeStyles(theme => ({
       color: "#1F1F1F",
       lineHeight: "20px",
       marginBottom: "4px"
+    },
+    [theme.breakpoints.down("md")]: {
+      margin: "25px 0",
+      padding: "18px"
     }
   },
   getHelpLink: {
