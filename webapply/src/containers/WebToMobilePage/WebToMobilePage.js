@@ -38,10 +38,8 @@ export const WebToMobilePage = ({ getKycStatus }) => {
     if (sessionData.sessionType === SESSION_TYPES.STAKEHOLDER_KYC && prospectId) {
       getKycStatus()
         .then(() => {
-          setTimeout(() => {
-            setIsLoading(false);
-            history.push(routes.stakeholdersInfo);
-          }, 2000);
+          setIsLoading(false);
+          history.push(routes.stakeholdersInfo, { prospectId });
         })
         .catch(error => {
           log(error);
