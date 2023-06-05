@@ -199,7 +199,7 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                       content={uploadedFileName.emiratesIDFront}
                       showUploadSuccessIcon={false}
                       component={Upload}
-                      mobilecontentPlaceholder="Upload/ Scan your Emirates ID"
+                      mobilecontentPlaceholder="Upload your Emirates ID"
                     />
                     <div style={{ marginTop: "24px" }}>
                       <Field
@@ -216,7 +216,7 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                         showUploadSuccessIcon={false}
                         onDelete={() => removeValue("emiratesIDBack", "")}
                         component={Upload}
-                        mobilecontentPlaceholder="Upload/ Scan your passport"
+                        mobilecontentPlaceholder="Upload your Emirates ID"
                       />
                     </div>
                   </>

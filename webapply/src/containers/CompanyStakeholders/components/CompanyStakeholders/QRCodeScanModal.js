@@ -144,7 +144,11 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const pollQRcode = async () => {
     const webToMobileRefId = linkData?.webToMobileRefId;
     const pollResp = await webToMobile.checkQRCodeStatus(prospectId, webToMobileRefId, header);
-    setPollStatus(pollResp);
+    pollResp
+      ? setPollStatus(pollResp)
+      : setPollStatus(prevState => {
+          setPollStatus(prevState);
+        });
   };
 
   useEffect(() => {

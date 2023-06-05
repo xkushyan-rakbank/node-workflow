@@ -36,6 +36,7 @@ export const DocumentUpload = ({ values, setFieldValue }) => {
         file={values.tradeLicenseOrCOI}
         onDelete={() => setFieldValue("tradeLicenseOrCOI", "")}
         component={Upload}
+        content={values?.tradeLicenseOrCOI?.name}
       />
       <div style={{ marginTop: "21px" }}>
         <Field
@@ -50,6 +51,7 @@ export const DocumentUpload = ({ values, setFieldValue }) => {
           file={values.moa}
           onDelete={() => setFieldValue("moa", "")}
           component={Upload}
+          content={values?.moa?.name}
         />
       </div>
     </>

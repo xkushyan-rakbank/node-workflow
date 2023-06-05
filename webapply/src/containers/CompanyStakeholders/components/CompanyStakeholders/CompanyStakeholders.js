@@ -72,7 +72,13 @@ export const CompanyStakeholdersComponent = ({
     setDocUploadType(type);
   };
 
-  let modalTitle = docUploadType === DOC_TYPE_EID ? "Upload Emirates ID" : "Upload passport";
+  let modalTitle = "";
+  if (docUploadType === DOC_TYPE_EID) {
+    modalTitle = isDesktop ? "Let's upload your Emirates ID" : "Upload Emirates ID";
+  } else {
+    modalTitle = isDesktop ? "Let's upload your passport" : "Upload passport";
+  }
+
   const dispatch = useDispatch();
 
   const [openEidScanner, setOpenEidScanner] = useState(false);
