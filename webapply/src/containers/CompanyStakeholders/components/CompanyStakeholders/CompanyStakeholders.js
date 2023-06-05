@@ -291,7 +291,7 @@ export const CompanyStakeholdersComponent = ({
       </Modal>
       <OverlayLoader
         open={loading}
-        text={"Scanning your documents....this might take a few moments"}
+        text={"Scanning your documents....this might take few moments"}
       />
 
       <InfoModal

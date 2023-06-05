@@ -257,7 +257,7 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
           )}
           <OverlayLoader
             open={loading}
-            text={"Uploading your documents....this might take a few moments"}
+            text={"Uploading your documents....this might take few moments"}
           />
         </Form>
       )}
