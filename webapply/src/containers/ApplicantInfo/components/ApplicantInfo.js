@@ -126,8 +126,8 @@ export const ApplicantInfoComponent = ({
               <Field
                 name="fullName"
                 path="prospect.applicantInfo.fullName"
-                label="Your Name"
-                placeholder="Your Name"
+                label="Your name"
+                placeholder="Your name"
                 component={Input}
                 InputProps={{
                   inputProps: { tabIndex: 0, maxLength: 100 }
@@ -195,8 +195,8 @@ export const ApplicantInfoComponent = ({
                   linkedFieldName="countryCode"
                   path="prospect.applicantInfo.mobileNo"
                   linkedPath="prospect.applicantInfo.countryCode"
-                  label="Mobile Number"
-                  placeholder="Mobile Number"
+                  label="Mobile number"
+                  placeholder="Mobile number"
                   component={Input}
                   contextualHelpText="This number should be unique for a Company"
                   InputProps={{
@@ -234,8 +234,8 @@ export const ApplicantInfoComponent = ({
                   <Field
                     name="roCode"
                     path="prospect.applicantInfo.roCode"
-                    label="Agent Code (Optional)"
-                    placeholder="Agent Code"
+                    label="Agent code (optional)"
+                    placeholder="Agent code"
                     contextualHelpText="Enter the Agent code of the Bank staff whom you are in touch with"
                     component={Input}
                     disabled={roCode !== ""}
@@ -261,8 +261,8 @@ export const ApplicantInfoComponent = ({
                       path={
                         allianceCodeFromQuery !== "" ? null : "prospect.applicantInfo.allianceCode"
                       }
-                      label="Partner Code (Optional)"
-                      placeholder="Partner Code"
+                      label="Partner code (optional)"
+                      placeholder="Partner code"
                       disabled={allianceCodeFromQuery !== ""}
                       component={Input}
                       contextualHelpText="If you were referred by one of our Partners, enter the code shared by them"
