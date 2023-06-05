@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom/cjs/react-router-dom";
 
 import { RedirectRoute } from "./components/RedirectRoute";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -9,7 +10,8 @@ import { checkLoginStatus } from "../../store/selectors/loginSelector";
 
 export const ProspectProtectedRoute = props => {
   const isAgent = useSelector(checkLoginStatus);
-  const prospectId = useSelector(getProspectId);
+  const locationState = useLocation()?.state;
+  const prospectId = useSelector(getProspectId) || locationState.prospectId;
 
   if (prospectId) {
     return <ProtectedRoute {...props} />;
