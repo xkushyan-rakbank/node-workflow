@@ -18,6 +18,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
   const closedChatRef = useRef(null);
   const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
   const searchName = get(searchResults, "[0].applicantInfo.fullName", "");
+  const chatLanguage = true;
 
   const openChat = useCallback(() => dispatch({ type: isClosed ? "open" : "expand" }), [
     isClosed,
@@ -61,6 +62,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
                   apiPath: process.env.REACT_APP_CHAT_API_PATH
                 }}
                 Header={Header}
+                language={chatLanguage ? "ar" : "en"}
               />
             </Suspense>
           </div>
