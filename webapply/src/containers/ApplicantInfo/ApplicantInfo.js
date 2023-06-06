@@ -1,12 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS } from "../../constants";
+import TermsAndConditionsDialog from "./components/TermsAndConditions/TermsAndConditionsDialog";
+import {
+  formStepper,
+  CONVENTIONAL,
+  ISLAMIC,
+  CREAT_PROSPECT_KEYS,
+  kfsAccountsUrls
+} from "../../constants";
 import routes from "../../routes";
+import { updateProspect } from "../../store/actions/appConfig";
 
 //ro-assist-brd3-16
 const useQuery = () => {
@@ -30,10 +38,17 @@ export const ApplicantInfoContainer = ({
   prospect
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [openKfsDialog, setKfsDialog] = useState(true);
+
+  const height = 841.89;
+
+  const kfsUrl = kfsAccountsUrls[accountType][isIslamicBanking ? ISLAMIC : CONVENTIONAL];
+
   const pushHistory = useTrackingHistory();
   const query = useQuery();
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     receiveAppConfig();
@@ -108,23 +123,42 @@ export const ApplicantInfoContainer = ({
     setToken(null);
   }, [setToken]);
 
+  const handleClose = () => {
+    setKfsDialog(false);
+  };
+
+  const handleAccept = () => {
+    setKfsDialog(false);
+    dispatch(updateProspect({ "prospect.freeFieldsInfo.freeField4": "Y" }));
+  };
+
   return (
-    <ApplicantInfoComponent
-      onSubmit={onSubmit}
-      //ro-assist-brd3-16
-      partnerInfo={findInDataList()}
-      isConfigLoading={isConfigLoading}
-      isRecaptchaEnable={isRecaptchaEnable}
-      reCaptchaSiteKey={reCaptchaSiteKey}
-      reCaptchaToken={reCaptchaToken}
-      isDisableNextstep={dataListCheck()}
-      handleReCaptchaVerify={handleReCaptchaVerify}
-      handleVerifiedFailed={handleVerifiedFailed}
-      isIslamicBanking={isIslamicBanking}
-      isLoading={isLoading}
-      accountType={accountType}
-      roCode={roCode}
-      isLemniskEnable={isLemniskEnable}
-    />
+    <>
+      <ApplicantInfoComponent
+        onSubmit={onSubmit}
+        //ro-assist-brd3-16
+        partnerInfo={findInDataList()}
+        isConfigLoading={isConfigLoading}
+        isRecaptchaEnable={isRecaptchaEnable}
+        reCaptchaSiteKey={reCaptchaSiteKey}
+        reCaptchaToken={reCaptchaToken}
+        isDisableNextstep={dataListCheck()}
+        handleReCaptchaVerify={handleReCaptchaVerify}
+        handleVerifiedFailed={handleVerifiedFailed}
+        isIslamicBanking={isIslamicBanking}
+        isLoading={isLoading}
+        accountType={accountType}
+        roCode={roCode}
+        isLemniskEnable={isLemniskEnable}
+      />
+      <TermsAndConditionsDialog
+        open={openKfsDialog}
+        handleClose={handleClose}
+        handleAccept={handleAccept}
+        kfsUrl={kfsUrl}
+        height={height}
+        scrollToEnd={true}
+      />
+    </>
   );
 };
