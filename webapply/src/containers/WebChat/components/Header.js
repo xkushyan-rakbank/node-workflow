@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-
+import { updateProspect } from "../../../store/actions/appConfig";
 import { ReactComponent as Close } from "../../../assets/icons/chat-close.svg";
 import { ReactComponent as Minimize } from "../../../assets/icons/chat-minimize.svg";
 
@@ -28,9 +29,46 @@ const ActionButtons = styled.div`
 `;
 
 const Header = ({ onClose, onMinimize }) => {
+  const [isArabic, setIsArabic] = useState(true);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    setIsArabic(true);
+    dispatch(
+      updateProspect({
+        "prospect.freeFieldsInfo.freeField3": "true"
+      })
+    );
+  }, []);
+  const setIsArbic = () => {
+    setIsArabic(false);
+    dispatch(
+      updateProspect({
+        "prospect.freeFieldsInfo.freeField3": "false"
+      })
+    );
+  };
+  const setIsEnglish = () => {
+    setIsArabic(true);
+    dispatch(
+      updateProspect({
+        "prospect.freeFieldsInfo.freeField3": "true"
+      })
+    );
+  };
   return (
     <HeaderStyled>
-      <div>Chat with us</div>
+      <div>
+        Chat with us in{" "}
+        {isArabic ? (
+          <a role="button" style={{ color: "red", cursor: "pointer" }} onClick={setIsArbic}>
+            {"(English)"}
+          </a>
+        ) : (
+          <a role="button" style={{ color: "red", cursor: "pointer" }} onClick={setIsEnglish}>
+            {"(عربي)"}
+          </a>
+        )}
+      </div>
       <ActionButtons>
         <Minimize alt="Minimize" onClick={onMinimize} />
         <Close alt="Close" onClick={onClose} />
