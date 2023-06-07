@@ -151,6 +151,7 @@ export function* notifyHost() {
       signatoryInfo,
       documents: { stakeholdersDocuments }
     } = notifyHostResponse;
+    signatoryInfo[0].editedFullName = signatoryInfo[0].fullName;
     yield put(
       updateProspect({
         "prospect.signatoryInfo": signatoryInfo,

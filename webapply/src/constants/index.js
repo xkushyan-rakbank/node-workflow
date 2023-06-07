@@ -438,7 +438,7 @@ export const VIEW_IDS = {
   ReUploadDocuments: "/ReUploadDocuments"
 };
 
-export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo"];
+export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo", "/StakeholdersInfoPreview"];
 
 export const ACTION_TYPES = {
   save: "save",

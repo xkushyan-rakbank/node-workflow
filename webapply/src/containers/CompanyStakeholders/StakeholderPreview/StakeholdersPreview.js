@@ -3,6 +3,7 @@ import { Form, Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import { format, isValid } from "date-fns";
 import cx from "classnames";
+import * as Yup from "yup";
 
 import { useStyles } from "../components/CompanyStakeholders/styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
@@ -22,6 +23,8 @@ import { useFormNavigation } from "../../../components/FormNavigation/FormNaviga
 import { useLayoutParams } from "../../FormLayout";
 import { useViewId } from "../../../utils/useViewId";
 import { BackLink } from "../../../components/Buttons/BackLink";
+import { MAX_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
+import { getRequiredMessage } from "../../../utils/getValidationMessage";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -40,6 +43,13 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     passportNumber: "",
     passportExpiryDate: ""
   };
+
+  const previewValidation = Yup.object({
+    fullName: Yup.string()
+      .required(getRequiredMessage("Fullname"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
+  });
 
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
@@ -65,7 +75,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       <p className={cx(classes.subTitle, classes["mb-40"])}>
         Take a minute to review the details we pulled from your documents
       </p>
-      <Formik initialValues={initialValues}>
+      <Formik initialValues={initialValues} validationSchema={previewValidation}>
         {props => (
           <Form>
             <Grid container>
@@ -73,13 +83,13 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                 <Field
                   isLoadDefaultValueFromStore={true}
                   name="fullName"
-                  path="prospect.signatoryInfo[0].fullName"
+                  path="prospect.signatoryInfo[0].editedFullName"
                   label="Name"
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 100 }
                   }}
-                  disabled={true}
+                  disabled={false}
                   className="testingClass"
                 />
               </Grid>
@@ -180,6 +190,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                 type="button"
                 justify="flex-end"
                 onClick={() => handleClickStakeholderPreviewNextStep()}
+                disabled={!(props.isValid && props.dirty)}
               />
             </div>
           </Form>

@@ -176,6 +176,11 @@ const getRequestPayloadForNode = (key, prospect) => {
       nodePayload = { accountType, rakValuePackage };
       break;
     }
+    case "signatoryInfo": {
+      const { editedFullName } = prospect[key][0];
+      nodePayload = [{ editedFullName }];
+      break;
+    }
     default:
       nodePayload = prospect[key];
   }
