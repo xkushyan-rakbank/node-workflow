@@ -15,31 +15,31 @@ export const SearchItem = ({ application }) => {
       className={cx(classes.applicationRow)}
       to={
         prospectVersion === BAU_PROSPECT_VERSION
-          ? process.env.REACT_APP_BAU_URL + generatePath(routes.SearchedAppInfo, { id: application.prospectId })
-          : generatePath(routes.SearchedAppInfo, { id: application.prospectId })
+          ? process.env.REACT_APP_BAU_URL + generatePath(routes.SearchedAppInfo, { id: application?.prospectId })
+          : generatePath(routes.SearchedAppInfo, { id: application?.prospectId })
       }
     >
       <div className={classes.column}>
-        <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
-        <div className={classes.account}>{application.applicantInfo.email}</div>
+        <div className={classes.fullName}>{application.applicantInfo?.fullName}</div>
+        <div className={classes.account}>{application.applicantInfo?.email}</div>
         <span className={classes.account}>
-          {`${application.applicantInfo.countryCode || ""} ${application.applicantInfo.mobileNo ||
+          {`${application.applicantInfo?.countryCode || ""} ${application.applicantInfo?.mobileNo ||
             ""}`}
         </span>
         <span className={classes.account}>
           <br />
-          {`Lead No. - ${application.organizationInfo.leadNumber || ""}`}
+          {`Lead No. - ${application.organizationInfo?.leadNumber || ""}`}
         </span>
       </div>
       <div className={classes.column}>
-        <div className={classes.companyName}>{application.organizationInfo.companyName}</div>
+        <div className={classes.companyName}>{application.organizationInfo?.companyName}</div>
         <div className={classes.account}>
-          {`TL No. - ${application.organizationInfo.licenseNumber || ""}`}
+          {`TL No. - ${application.organizationInfo?.licenseNumber || ""}`}
         </div>
       </div>
       <div className={classes.column}>
         {application.status ? (
-          <div className={classes.status}>{application.status.statusNotes}</div>
+          <div className={classes.status}>{application.status?.statusNotes}</div>
         ) : (
           <div className={classes.status}>Incomplete</div>
         )}
