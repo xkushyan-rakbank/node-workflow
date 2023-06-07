@@ -32,26 +32,14 @@ const Header = ({ onClose, onMinimize }) => {
   const [isArabic, setIsArabic] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
-    setIsArabic(true);
-    dispatch(
-      updateProspect({
-        "prospect.freeFieldsInfo.freeField3": "true"
-      })
-    );
+    setLang("en");
   }, []);
-  const setIsArbic = () => {
-    setIsArabic(false);
+
+  const setLang = lang => {
+    lang === "ar" ? setIsArabic(false) : setIsArabic(true);
     dispatch(
       updateProspect({
-        "prospect.freeFieldsInfo.freeField3": "false"
-      })
-    );
-  };
-  const setIsEnglish = () => {
-    setIsArabic(true);
-    dispatch(
-      updateProspect({
-        "prospect.freeFieldsInfo.freeField3": "true"
+        "prospect.freeFieldsInfo.freeField3": lang === "en" ? "true" : "false"
       })
     );
   };
@@ -60,11 +48,19 @@ const Header = ({ onClose, onMinimize }) => {
       <div>
         Chat with us in{" "}
         {isArabic ? (
-          <a role="button" style={{ color: "red", cursor: "pointer" }} onClick={setIsArbic}>
+          <a
+            role="button"
+            style={{ color: "red", cursor: "pointer" }}
+            onClick={() => setLang("ar")}
+          >
             {"(English)"}
           </a>
         ) : (
-          <a role="button" style={{ color: "red", cursor: "pointer" }} onClick={setIsEnglish}>
+          <a
+            role="button"
+            style={{ color: "red", cursor: "pointer" }}
+            onClick={() => setLang("en")}
+          >
             {"(عربي)"}
           </a>
         )}
