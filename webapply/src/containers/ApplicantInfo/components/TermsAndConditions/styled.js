@@ -51,11 +51,7 @@ export const useStyles = makeStyles(theme => ({
     height: "400px",
     padding: "60px 80px",
     [theme.breakpoints.down("sm")]: {
-      padding: "5px",
-      "& .react-pdf__Page__canvas": {
-        width: "100% !important",
-        height: "100% !important"
-      }
+      padding: "5px"
     }
   },
   dialogActions: {

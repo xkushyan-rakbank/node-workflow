@@ -1,11 +1,9 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import React, { useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
 import { isDesktop } from "react-device-detect";
 import { useStyles } from "./styled";
 import { Button } from "../../../../components/Buttons/SubmitButton";
-// eslint-disable-next-line max-len
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+import { PdfPreview } from "./pdfPreview";
 
 export default function TermsAndConditionsDialog({
   open,
@@ -53,9 +51,7 @@ export default function TermsAndConditionsDialog({
               height="100%"
             ></object>
           ) : (
-            <Document file={kfsUrl}>
-              <Page pageNumber={1} />
-            </Document>
+            <PdfPreview file={kfsUrl} />
           )}
         </div>
       </DialogContent>
