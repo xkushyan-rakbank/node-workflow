@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 
-import { Accordion } from "../../../../../components/Accordion/Accordion";
+import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { useStyles } from "../styled";
 import { TopCustomers } from "./TopCustomers";
 import { TopSuppliers } from "./TopSuppliers";
@@ -17,7 +17,7 @@ export const BusinessRelationship = () => {
     <div>
       <Formik initialValues={{}} onSubmit={handleSubmit} validateOnChange={false}>
         <Form>
-          <Accordion title={"Business relationships"} custom={true}>
+          <Accordion title={"Business relationships"}>
             <TopCustomers />
             <TopSuppliers />
           </Accordion>

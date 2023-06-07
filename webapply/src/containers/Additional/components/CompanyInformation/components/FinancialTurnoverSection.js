@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 
 import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
-import { Accordion } from "../../../../../components/Accordion/Accordion";
+import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { Input } from "../../../../../components/Form";
 
 import { useStyles } from "../styled";
@@ -54,7 +54,7 @@ export const FinancialTurnoverSection = () => {
     <div>
       <Formik initialValues={{}} onSubmit={handleSubmit} validateOnChange={false}>
         <Form>
-          <Accordion title={"Financial turnover"} custom={true}>
+          <Accordion title={"Financial turnover"}>
             <Field
               name="Annual financial turnover (AED)"
               label="Annual financial turnover (AED)"
