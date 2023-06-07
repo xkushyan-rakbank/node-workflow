@@ -30,5 +30,6 @@ export default {
   //ro-assist-brd2-3
   currentAccount: `${smeBaseName}/accounts/current-account`,
   personaSelection: `${smeBaseName}/accounts/:accountType/persona-selection`,
-  webToMobile: `${smeBaseName}/wtm`
+  webToMobile: `${smeBaseName}/wtm`,
+  additionalCompanyInformation: `${smeBaseName}/AdditionalInfo/additional-company-information`
 };

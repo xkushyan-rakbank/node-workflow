@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "24px",
     border: "1px dashed #86868B",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-    borderadius: "10px",
+    borderRadius: "10px",
     flexDirection: "row",
     justifyContent: "space-between",
     cursor: "pointer",

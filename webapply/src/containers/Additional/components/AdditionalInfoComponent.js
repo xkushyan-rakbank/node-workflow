@@ -7,9 +7,14 @@ import { ReactComponent as NavigationLeft } from "../../../assets/icons/blackNav
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { NextStepButton } from "../../../components/Buttons/NextStepButton";
 import { useStyles } from "./styled";
+import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 
 export default function AdditionalInfoComponent() {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
+  const navigateTo = () => {
+    pushHistory(routes.additionalCompanyInformation);
+  };
   return (
     <div className={classes.container}>
       <div className={classes.section}>
@@ -18,10 +23,8 @@ export default function AdditionalInfoComponent() {
           info="We just need some details about your business and the people involved"
           smallInfo
         />
-        <div className={classes.btnContainer}>
-          <div
-            className={classes.additionalSelectionButton}
-          >
+        <div className={classes.btnContainer} onClick={() => navigateTo()}>
+          <div className={classes.additionalSelectionButton}>
             <div className={classes.buttonText}>
               <div className={classes.title}>Company information</div>
             </div>

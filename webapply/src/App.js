@@ -60,6 +60,10 @@ const PersonaSelection = lazy(() => import("./containers/PersonaSelection"));
 
 const WebToMobilePage = lazy(() => import("./containers/WebToMobilePage"));
 
+const AdditionalCompanyInformation = lazy(() =>
+  import("./containers/Additional/components/CompanyInformation")
+);
+
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -124,6 +128,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.additionalInfoComponent}
                 component={AdditionalInfoComponent}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.additionalCompanyInformation}
+                component={AdditionalCompanyInformation}
               />
               <ProspectProtectedRoute
                 exact

@@ -25,7 +25,12 @@ export const formStepper = [
     path: routes.stakeholdersInfo,
     relatedPath: [routes.stakeholdersPreview, routes.StakeholderTermsAndConditions]
   },
-  { step: 4, title: "Additional", path: routes.additionalInfoComponent },
+  {
+    step: 4,
+    title: "Additional",
+    path: routes.additionalInfoComponent,
+    relatedPath: [routes.additionalCompanyInformation]
+  },
   { step: 5, title: "Final Questions", path: routes.finalQuestions },
   { step: 6, title: "Upload Documents", path: routes.uploadDocuments },
   {
@@ -452,7 +457,7 @@ export const Personas = {
   },
   SLLC: {
     key: "SLLC",
-    title: "I am sole proprietor with an LLC",
+    title: "I'm sole proprietor with an LLC",
     subTitle: "I do business as a limited liability company (LLC)",
     url: routes.applicantInfo,
     urlType: "2.0",
