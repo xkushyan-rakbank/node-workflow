@@ -7,6 +7,8 @@ import routes from "../../../../routes";
 import { ICONS, Icon } from "../../../../components/Icons";
 import { useStyles } from "./styled";
 import { ColoredAvatar } from "../../../../components/Avatar/ColoredAvatar";
+import { BusinessRelationship } from "./components/Business";
+import { FinancialTurnoverSection } from "./components/FinancialTurnoverSection";
 
 export const AddCompanyInformation = ({ companyName }) => {
   const classes = useStyles();
@@ -27,6 +29,8 @@ export const AddCompanyInformation = ({ companyName }) => {
           </ColoredAvatar>
           {companyName}
         </div>
+        <BusinessRelationship />
+        <FinancialTurnoverSection />
       </div>
     </div>
   );
