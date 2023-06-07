@@ -50,7 +50,7 @@ const Header = ({ onClose, onMinimize }) => {
         {isArabic ? (
           <a
             role="button"
-            style={{ color: "red", cursor: "pointer" }}
+            style={{ color: "red", cursor: "pointer", textDecoration: "underline" }}
             onClick={() => setLang("ar")}
           >
             {"(English)"}
@@ -58,7 +58,7 @@ const Header = ({ onClose, onMinimize }) => {
         ) : (
           <a
             role="button"
-            style={{ color: "red", cursor: "pointer" }}
+            style={{ color: "red", cursor: "pointer", textDecoration: "underline" }}
             onClick={() => setLang("en")}
           >
             {"(عربي)"}
