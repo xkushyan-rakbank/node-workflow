@@ -1,7 +1,11 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import React, { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { isDesktop } from "react-device-detect";
 import { useStyles } from "./styled";
 import { Button } from "../../../../components/Buttons/SubmitButton";
+// eslint-disable-next-line max-len
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 export default function TermsAndConditionsDialog({
   open,
@@ -37,16 +41,22 @@ export default function TermsAndConditionsDialog({
         onScroll={handleScroll}
       >
         <div style={{ height: `${height}px` }}>
-          <object
-            type="application/pdf"
-            data={`${kfsUrl}#toolbar=0&view=FitH`}
-            aria-label="kfs"
-            onContextMenu={e => e.preventDefault()}
-            className={classes.previewPDF}
-            border="0"
-            width="100%"
-            height="100%"
-          ></object>
+          {isDesktop ? (
+            <object
+              type="application/pdf"
+              data={`${kfsUrl}#toolbar=0&view=FitH`}
+              aria-label="kfs"
+              onContextMenu={e => e.preventDefault()}
+              className={classes.previewPDF}
+              border="0"
+              width="100%"
+              height="100%"
+            ></object>
+          ) : (
+            <Document file={kfsUrl}>
+              <Page pageNumber={1} />
+            </Document>
+          )}
         </div>
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>

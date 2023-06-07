@@ -482,24 +482,23 @@ export const applicationOverviewRoutesMap = {
   }
 };
 
+export const kfsBaseUrl =
+  process.env.REACT_APP_SERVER_ENV === "production"
+    ? "https://rakbank.ae"
+    : "https://revamp.rakbank.ae";
+
 export const kfsAccountsUrls = {
   [accountNames.starter]: {
-    [CONVENTIONAL]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/8ffe3057-3451-492a-b8b6-ac001e98faa2/KFS028+RAKStarter+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-8ffe3057-3451-492a-b8b6-ac001e98faa2-oxcwpAm",
-    [ISLAMIC]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/c359d8c9-bb73-42ef-84b6-2b761d8097b2/KFS059+Islamic+RAKStarter+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-c359d8c9-bb73-42ef-84b6-2b761d8097b2-oxcwFzT"
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/8ffe3057-3451-492a-b8b6-ac001e98faa2/KFS028+RAKStarter+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-8ffe3057-3451-492a-b8b6-ac001e98faa2-oxcwpAm`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/c359d8c9-bb73-42ef-84b6-2b761d8097b2/KFS059+Islamic+RAKStarter+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-c359d8c9-bb73-42ef-84b6-2b761d8097b2-oxcwFzT`
   },
   [accountNames.currentAccount]: {
-    [CONVENTIONAL]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/ef7f9e34-cfac-481d-953e-96a15413a51c/KFS047+Business+Current+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ef7f9e34-cfac-481d-953e-96a15413a51c-oxcwt6i",
-    [ISLAMIC]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/097f60ec-403e-4d24-8dcd-ed236a680df9/KFS085+Islamic+Business+Current+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-097f60ec-403e-4d24-8dcd-ed236a680df9-oxcwIkJ"
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/ef7f9e34-cfac-481d-953e-96a15413a51c/KFS047+Business+Current+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ef7f9e34-cfac-481d-953e-96a15413a51c-oxcwt6i`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/097f60ec-403e-4d24-8dcd-ed236a680df9/KFS085+Islamic+Business+Current+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-097f60ec-403e-4d24-8dcd-ed236a680df9-oxcwIkJ`
   },
   [accountNames.elite]: {
-    [CONVENTIONAL]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/ea363f59-b3de-4bed-9725-dff6d759b707/KFS083+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ea363f59-b3de-4bed-9725-dff6d759b707-oxcwkNI",
-    [ISLAMIC]:
-      "https://revamp.rakbank.ae/wps/wcm/connect/9a1affcd-057f-4f36-84dc-02145c0942fc/KFS084+Islamic+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-9a1affcd-057f-4f36-84dc-02145c0942fc-oxcwCcG"
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/ea363f59-b3de-4bed-9725-dff6d759b707/KFS083+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ea363f59-b3de-4bed-9725-dff6d759b707-oxcwkNI`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/9a1affcd-057f-4f36-84dc-02145c0942fc/KFS084+Islamic+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-9a1affcd-057f-4f36-84dc-02145c0942fc-oxcwCcG`
   }
 };
 
