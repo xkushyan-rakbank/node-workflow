@@ -64,7 +64,7 @@ export const ApplicationError = ({
             ) : (
               <>
                 <div className={classes.title}>
-                  {"Thank You for chosing our bank assisted application process"}
+                  {"Thank You for choosing our bank assisted application process"}
                 </div>
                 <div className={cx(classes.info)} dangerouslySetInnerHTML={{ __html: text }} />
               </>

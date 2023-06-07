@@ -208,7 +208,7 @@ export const SIGNING_TRANSACTIONS_TYPE = {
 //ro-assist-brd1-3
 const blank = "_blank";
 export const smeSouqLink = "https://rakbank.ae/wps/portal/business-banking/smesouk";
-export const EFR_CHECK_ERROR = `Dear Customer, we were unable to complete your facial recognition process successfully. Not to worry! You may still proceed with our alternative application platform by clicking this secure link.<a href="${routes.accountsComparison}" target="${blank}"> https://quickapplyuat.rakbank.ae....</a>\nAlternatively, If you wish to be assisted in your application process, we can arrange a call back but there may be a waiting time of 5 business days due to large number of applications. To opt for assisted application process click here (when client clicks - lead to be generated for sales - Display to customer We have received your request and would like to confirm that a call back will be arranged within the next 5 business days.`;
+export const EFR_CHECK_ERROR = `Dear Customer, we were unable to complete your facial recognition process successfully. Not to worry! You may still proceed with our alternative application platform by clicking this secure link.<a href="${routes.accountsComparison}" target="${blank}"> https://quickapplyuat.rakbank.ae....</a>`;
 export const applicationError = [
   {
     screeningNotes: "DECLINE",
