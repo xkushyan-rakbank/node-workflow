@@ -58,20 +58,22 @@ export default function TermsAndConditionsDialog({
         )}
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
-        <div className={classes.actionContainer}>
-          <Button
-            withRightArrow
-            className={classes.agreeButton}
-            disabled={disabled}
-            label="Accept and continue"
-            onClick={handleAccept}
-          />
-          {scrollToEnd && (
-            <span className={classes.scrollInstruction}>
-              Please scroll all the way through to accept.
-            </span>
-          )}
-        </div>
+        {handleAccept && (
+          <div className={classes.actionContainer}>
+            <Button
+              withRightArrow
+              className={classes.agreeButton}
+              disabled={disabled}
+              label="Accept and continue"
+              onClick={handleAccept}
+            />
+            {scrollToEnd && (
+              <span className={classes.scrollInstruction}>
+                Please scroll all the way through to accept.
+              </span>
+            )}
+          </div>
+        )}
       </DialogActions>
     </Dialog>
   );

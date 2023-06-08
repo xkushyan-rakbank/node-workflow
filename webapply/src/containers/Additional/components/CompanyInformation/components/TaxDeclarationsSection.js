@@ -1,20 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 
 import { useStyles } from "../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 import { ActivePassiveOptions, YesNoList } from "../../../../../constants/options";
 import { AutoSaveField as Field, InlineRadioGroup, Input } from "../../../../../components/Form";
+import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
+import useGeneratePdf from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/useGeneratePdf";
 
+const wcmData = {
+  productVariantContent: [
+    {
+      authorizationsConsent:
+        "https://revamp.rakbank.ae/wps/wcm/connect/ea363f59-b3de-4bed-9725-dff6d759b707/KFS083+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ea363f59-b3de-4bed-9725-dff6d759b707-oym18vA"
+    }
+  ]
+};
 export const TaxDeclarationsSection = () => {
   const classes = useStyles();
+  const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
+  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
 
   const definitionContext = (
     <a
       className={classes.definitionLink}
       onClick={e => {
         e.stopPropagation();
-        alert("Yet to implement");
+        setOpenDefinitionDialog(true);
       }}
     >
       Definition
@@ -110,6 +122,14 @@ export const TaxDeclarationsSection = () => {
           </p>
         </div>
       </Accordion>
+      <TermsAndConditionsDialog
+        open={openDefinitionDialog}
+        handleClose={() => setOpenDefinitionDialog(false)}
+        editedFile={editedFile}
+        height={height}
+        pages={pages}
+        scrollToEnd={false}
+      />
     </div>
   );
 };

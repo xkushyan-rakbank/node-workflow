@@ -145,11 +145,16 @@
       "globalintermediaryId": ""
     },
     "companyAdditionalInfo": {
-      "topCustomers": "",
+      "topCustomers": [
+        {
+          "name": "Walk-in Customer",
+          "country": "AE"
+        }
+      ],
       "topSuppliers": [
         {
-          "name": "",
-          "country": ""
+          "name": "Walk-in Customer",
+          "country": "AE"
         }
       ],
       "anualCashDepositAED": "",
