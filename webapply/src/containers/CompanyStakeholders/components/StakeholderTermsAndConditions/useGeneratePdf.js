@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import { useSelector } from "react-redux";
@@ -24,7 +25,7 @@ const COMPANY_NAME = "CNME";
 const SIGNATORY = "SIGN";
 const FONT_SIZE = 9;
 
-export default function useGeneratePdf(type) {
+export default function useGeneratePdf(type, enableEdit = true, path = "kfsUrl") {
   const [editedFile, setEditedFile] = useState(null);
   const [pdfLink, setPdfLink] = useState();
   const [height, setHeight] = useState();
@@ -95,20 +96,21 @@ export default function useGeneratePdf(type) {
       const thePage = pages[pageNumberToSample];
       const { height } = thePage.getSize();
       setHeight(height * pages.length);
-      thePage.drawText(soleSignatory, {
-        size: FONT_SIZE,
-        ...coordinates[SIGNATORY]
-      });
+      if (enableEdit) {
+        thePage.drawText(soleSignatory, {
+          size: FONT_SIZE,
+          ...coordinates[SIGNATORY]
+        });
+        thePage.drawText(today.toLocaleDateString(), {
+          size: FONT_SIZE,
+          ...coordinates[DATE]
+        });
+        thePage.drawText(organizationInfo, {
+          size: FONT_SIZE,
+          ...coordinates[COMPANY_NAME]
+        });
+      }
 
-      thePage.drawText(today.toLocaleDateString(), {
-        size: FONT_SIZE,
-        ...coordinates[DATE]
-      });
-
-      thePage.drawText(organizationInfo, {
-        size: FONT_SIZE,
-        ...coordinates[COMPANY_NAME]
-      });
       const pdfBytes = await pdfDoc.saveAsBase64();
       setEditedFile(pdfBytes);
     };
@@ -130,7 +132,9 @@ export default function useGeneratePdf(type) {
         const selectedAccountTypePdfLink = respose.data.find(
           eachType => eachType.code === accountType
         );
-        setPdfLink(selectedAccountTypePdfLink.productVariantContent[0].kfsUrl.split(wcmAPIPath)[1]);
+        setPdfLink(
+          selectedAccountTypePdfLink.productVariantContent[0][`${path}`].split(wcmAPIPath)[1]
+        );
       })
       .catch(error => {
         log(error);
