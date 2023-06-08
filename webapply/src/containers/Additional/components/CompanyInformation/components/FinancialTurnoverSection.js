@@ -1,13 +1,12 @@
 import React from "react";
-import { Formik, Form, Field } from "formik";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 
-import ErrorOutlineOutlinedIcon from "@material-ui/icons/ErrorOutlineOutlined";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
-import { Input } from "../../../../../components/Form";
+import { AutoSaveField as Field, Input } from "../../../../../components/Form";
 
 import { useStyles } from "../styled";
+import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 
 export const FinancialTurnoverSection = () => {
   const classes = useStyles();
@@ -46,37 +45,26 @@ export const FinancialTurnoverSection = () => {
     }
   })(Slider);
 
-  const handleSubmit = () => {
-    console.log("-handleSubmit-");
-  };
-
   return (
     <div>
-      <Formik initialValues={{}} onSubmit={handleSubmit} validateOnChange={false}>
-        <Form>
-          <Accordion title={"Financial turnover"}>
-            <Field
-              name="Annual financial turnover (AED)"
-              label="Annual financial turnover (AED)"
-              placeholder="Annual financial turnover (AED)"
-              InputProps={{
-                inputProps: { tabIndex: 1 }
-              }}
-              component={Input}
-            />
-            <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
-            <div className={classes.financialTurnOverSliderInfo}>
-              <ErrorOutlineOutlinedIcon />
-              <span>Just drag the slider to provide your cash and non-cash component</span>
-            </div>
-            <FinancialSlider aria-label="financial turnover slider" defaultValue={20} />
-            <div>
-              <span className={classes.percentageText}>35%</span>•
-              <span className={classes.amountText}>350,000 AED</span>
-            </div>
-          </Accordion>
-        </Form>
-      </Formik>
+      <Accordion title={"Financial turnover"} id={"financialTurnover"}>
+        <Field
+          name="Annual financial turnover (AED)"
+          label="Annual financial turnover (AED)"
+          placeholder="Annual financial turnover (AED)"
+          InputProps={{
+            inputProps: { tabIndex: 1 }
+          }}
+          component={Input}
+        />
+        <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
+        <DisclaimerNote text="Just drag the slider to provide your cash and non-cash component" />
+        <FinancialSlider aria-label="financial turnover slider" defaultValue={20} />
+        <div>
+          <span className={classes.percentageText}>35%</span>•
+          <span className={classes.amountText}>350,000 AED</span>
+        </div>
+      </Accordion>
     </div>
   );
 };

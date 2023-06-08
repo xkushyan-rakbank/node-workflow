@@ -1,9 +1,6 @@
-
-
 import React from "react";
-import { Field } from "formik";
 import { Button, Grid } from "@material-ui/core";
-import { Input } from "../../../../../components/Form";
+import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
 import { useStyles } from "../styled";
 
 export const TopSuppliers = () => {
@@ -16,8 +13,9 @@ export const TopSuppliers = () => {
       <Grid container spacing={3}>
         <Grid item sm={6} xs={12}>
           <Field
-            name="suppliername"
+            name="topSuppliers[0].name"
             label="Supplier name"
+            path={"prospect.companyAdditionalInfo.topSuppliers[0].name"}
             placeholder="Supplier name"
             InputProps={{
               inputProps: { tabIndex: 1 }
@@ -27,17 +25,16 @@ export const TopSuppliers = () => {
         </Grid>
         <Grid item sm={6} xs={12}>
           <Field
-            name="country"
+            name="topSuppliers[0].country"
+            path={"prospect.companyAdditionalInfo.topSuppliers[0].country"}
             label="Country"
             placeholder="Country"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 2 }
-            }}
+            datalistId="country"
+            component={SelectAutocomplete}
           />
         </Grid>
       </Grid>
-      <Button color="primary" variant="outlined" className={classes.addMoreButton} disabled={true}>
+      <Button color="primary" variant="outlined" className={classes.addMoreButton}>
         + Add more
       </Button>
     </>

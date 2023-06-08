@@ -39,7 +39,8 @@ export const CheckboxGroup = ({
   classes: extendedClasses,
   contextualHelpText,
   contextualHelpProps = {},
-  disabled = false
+  disabled = false,
+  customIcon = true
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -60,6 +61,7 @@ export const CheckboxGroup = ({
                   label={extractLabel(item)}
                   onSelect={onSelect}
                   classes={extendedClasses}
+                  customIcon={customIcon}
                 />
               ))}
               {textArea}

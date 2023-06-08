@@ -19,7 +19,10 @@ const InlineRadioGroupBase = ({
   contextualHelpText,
   contextualHelpProps = {},
   onSelect = () => {},
-  disabled: isDisabled
+  disabled: isDisabled,
+  customIcon = false,
+  classes: extendedClasses,
+  radioColor = "secondary"
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -51,11 +54,13 @@ const InlineRadioGroupBase = ({
             {options.map(item => (
               <Radio
                 disabled={isDisabled}
-                color="secondary"
+                color={radioColor}
                 key={item.key}
                 value={JSON.stringify(item.value)}
                 label={item.label}
                 onSelect={onSelect}
+                customIcon={customIcon}
+                classes={extendedClasses}
               />
             ))}
           </div>

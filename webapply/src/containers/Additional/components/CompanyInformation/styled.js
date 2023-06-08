@@ -2,7 +2,13 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
   additionalCompanyInfoContainer: {
-    marginTop: "25px"
+    marginTop: "25px",
+    [theme.breakpoints.up("ls")]: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      height: "95vh"
+    }
   },
   infoContainer: {
     display: "flex",
@@ -67,23 +73,6 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "5px",
     padding: 0
   },
-  financialTurnOverSliderInfo: {
-    display: "flex",
-    alignItems: "center",
-    padding: "16px",
-    borderRadius: "10px",
-    background: "#F5F5F5",
-    "& svg": {
-      fill: "#757575"
-    },
-    "& span": {
-      fontWeight: 500,
-      fontSize: "14px",
-      lineHeight: "20px",
-      color: "#525252",
-      marginLeft: "8px"
-    }
-  },
   percentageText: {
     color: "#1F1F1F",
     fontSize: "12px",
@@ -93,5 +82,37 @@ export const useStyles = makeStyles(theme => ({
     color: "#1F1F1F",
     fontSize: "12px",
     fontWeight: 600
+  },
+  definitionLink: {
+    fontWeight: 400,
+    fontSize: "16px",
+    lineHeight: "22px",
+    textDecoration: "underline",
+    color: "#000000",
+    marginRight: "18px",
+    "&:hover": {
+      textDecoration: "underline"
+    }
+  },
+  radioButtonRoot: {
+    border: "1px solid #cccccc",
+    borderRadius: "50px",
+    marginTop: "10px",
+    marginLeft: 0
+  },
+  radioLabelRoot: {
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "24px",
+    paddingRight: "15px"
+  },
+  activePassiveDesc: {
+    color: "#757575",
+    fontWeight: 400,
+    fontSize: "12px",
+    lineHeight: "16px"
+  },
+  taxDeclarationQuestionare: {
+    marginTop: "30px"
   }
 }));

@@ -144,6 +144,44 @@
       "isNonFinancialInstitution": "na",
       "globalintermediaryId": ""
     },
+    "companyAdditionalInfo": {
+      "topCustomers": "",
+      "topSuppliers": [
+        {
+          "name": "",
+          "country": ""
+        }
+      ],
+      "anualCashDepositAED": "",
+      "annualFinTurnoverAmtInAED": "",
+      "addressInfo": [
+        {
+          "typeOfAddress": "",
+          "officeAddressDifferent": "",
+          "addressDetails": {
+            "addressFieldDesc": "",
+            "addressLine1": "",
+            "addressLine2": "",
+            "addressLine3": "",
+            "addressLine4": "",
+            "country": "",
+            "emirateCity": "",
+            "poBox": "",
+            "preferredAddress": "",
+            "typeOfSpaceOccupied": {
+              "spaceType": "",
+              "others": ""
+            }
+          }
+        }
+      ],
+      "isDesignatedBusinessCategory": false,
+      "dnfbpField": "",
+      "isFinancialInstitution": "",
+      "isNonFinancialInstitution": "",
+      "globalintermediaryId": "",
+      "isCompanyUSEntity": false
+    },
     "signatoryInfo": [
       {
         "screeningInfo": {
