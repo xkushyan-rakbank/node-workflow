@@ -5,11 +5,11 @@ import useGeneratePdf from "./useGeneratePdf";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 
-export const TermsAndConditions = () => {
+export const TermsAndConditions = ({ pdfLink }) => {
   const classes = useStyles();
   const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height } = useGeneratePdf("KFS", false, "generalTermsAndConditions");
+  const { editedFile, height, pages } = useGeneratePdf("generalTermsAndConditions", pdfLink);
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -56,6 +56,7 @@ export const TermsAndConditions = () => {
         handleAccept={handleAccept}
         editedFile={editedFile}
         height={height}
+        pages={pages}
         scrollToEnd={false}
       />
     </>

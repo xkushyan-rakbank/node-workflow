@@ -25,10 +25,15 @@ const COMPANY_NAME = "CNME";
 const SIGNATORY = "SIGN";
 const FONT_SIZE = 9;
 
-export default function useGeneratePdf(type, enableEdit = true, path = "kfsUrl") {
+export default function useGeneratePdf(
+  path = "kfsUrl",
+  selectedAccountTypePdfLink = null,
+  enableEdit = false
+) {
   const [editedFile, setEditedFile] = useState(null);
   const [pdfLink, setPdfLink] = useState();
   const [height, setHeight] = useState();
+  const [pages, setPages] = useState();
   const signatoryInfo = useSelector(getSignatories);
   const organizationInfo = useSelector(getCompanyName);
   const dataList = useSelector(getDatalist);
@@ -73,7 +78,6 @@ export default function useGeneratePdf(type, enableEdit = true, path = "kfsUrl")
   }, [dataList]);
 
   useEffect(() => {
-    const coordinates = getCoordinates();
     if (!pdfLink) {
       return;
     }
@@ -92,27 +96,34 @@ export default function useGeneratePdf(type, enableEdit = true, path = "kfsUrl")
         });
       const pdfDoc = await PDFDocument.load(existingPdfBytes);
       const pages = pdfDoc.getPages();
-      const pageNumberToSample = coordinates.pageNumber;
-      const thePage = pages[pageNumberToSample];
-      const { height } = thePage.getSize();
-      setHeight(height * pages.length);
+      setPages(pages);
+      let thePage = pages[0];
       if (enableEdit) {
+        const coordinates = getCoordinates();
+        const pageNumberToSample = coordinates.pageNumber;
+        thePage = pages[pageNumberToSample];
         thePage.drawText(soleSignatory, {
           size: FONT_SIZE,
           ...coordinates[SIGNATORY]
         });
+
         thePage.drawText(today.toLocaleDateString(), {
           size: FONT_SIZE,
           ...coordinates[DATE]
         });
+
         thePage.drawText(organizationInfo, {
           size: FONT_SIZE,
           ...coordinates[COMPANY_NAME]
         });
       }
-
-      const pdfBytes = await pdfDoc.saveAsBase64();
-      setEditedFile(pdfBytes);
+      const { height } = thePage.getSize();
+      setHeight(height * pages.length);
+      const pdfBytes = await pdfDoc.save();
+      const file = new Blob([pdfBytes], { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(file);
+      const url = fileURL;
+      setEditedFile(url);
     };
 
     generatePdfPreview();
@@ -120,36 +131,15 @@ export default function useGeneratePdf(type, enableEdit = true, path = "kfsUrl")
 
   const getTermsandConditions = async () => {
     const wcmAPIPath = process.env.REACT_APP_WCM_API_PATH;
-    const URL = `/wcmapi/banking/products/variants?productId=201&productTypeId=${
-      isIslamic ? 2 : 1
-    }`;
-    wcmClient
-      .request({
-        url: URL,
-        method: "GET"
-      })
-      .then(respose => {
-        const selectedAccountTypePdfLink = respose.data.find(
-          eachType => eachType.code === accountType
-        );
-        setPdfLink(
-          selectedAccountTypePdfLink.productVariantContent[0][`${path}`].split(wcmAPIPath)[1]
-        );
-      })
-      .catch(error => {
-        log(error);
-      });
+    setPdfLink(selectedAccountTypePdfLink.productVariantContent[0][`${path}`].split(wcmAPIPath)[1]);
   };
 
   useEffect(() => {
-    switch (type) {
-      case "KFS":
-        getTermsandConditions();
-        break;
-      default:
-        break;
+    if (!selectedAccountTypePdfLink) {
+      return;
     }
-  }, []);
+    getTermsandConditions();
+  }, [selectedAccountTypePdfLink, path]);
 
-  return { editedFile, height };
+  return { editedFile, height, pages };
 }
