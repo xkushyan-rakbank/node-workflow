@@ -8,7 +8,7 @@ export const BusinessRelationship = values => {
   return (
     <div>
       <Accordion title={"Business relationships"} id={"business"}>
-        <TopCustomers {...values} />
+        <TopCustomers />
         <TopSuppliers />
       </Accordion>
     </div>

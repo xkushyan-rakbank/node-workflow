@@ -43,14 +43,14 @@ export const AddCompanyInformation = ({ companyName }) => {
                     </ColoredAvatar>
                     {companyName}
                   </div>
-                  <BusinessRelationship {...values} />
+                  <BusinessRelationship />
                   <FinancialTurnoverSection />
                   <MailingAddressSection />
                   <TaxDeclarationsSection />
                 </div>
               </div>
               <div className="linkContainer">
-                <NextStepButton justify="flex-end" label="Continue" />
+                <NextStepButton justify="flex-end" label="Continue" disabled={"true"} />
               </div>
             </div>
           </Form>
