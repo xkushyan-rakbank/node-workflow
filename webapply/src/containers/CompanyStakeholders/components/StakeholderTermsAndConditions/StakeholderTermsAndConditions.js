@@ -17,7 +17,7 @@ import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 
 const StakeholderTermsAndConditions = () => {
-  const [pdfLink, setPdfLink] = useState(null);
+  const [wcmData, setWcmData] = useState(null);
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
   useFormNavigation([false, true, formStepper]);
@@ -44,7 +44,7 @@ const StakeholderTermsAndConditions = () => {
           const selectedAccountTypePdfLink = respose.data.find(
             eachType => eachType.code === accountType
           );
-          setPdfLink(selectedAccountTypePdfLink);
+          setWcmData(selectedAccountTypePdfLink);
         })
         .catch(error => {
           log(error);
@@ -58,9 +58,9 @@ const StakeholderTermsAndConditions = () => {
       <h3 className={classes.mainTitle}>Time for the small print</h3>
       <p className={classes.kfsSubTitle}>Please review the terms and conditions to continue</p>
 
-      <StakeholderKfs pdfLink={pdfLink} />
-      <StakeholderAuthorisations pdfLink={pdfLink} />
-      <TermsAndConditions pdfLink={pdfLink} />
+      <StakeholderKfs wcmData={wcmData} />
+      <StakeholderAuthorisations wcmData={wcmData} />
+      <TermsAndConditions wcmData={wcmData} />
 
       <div className="linkContainer">
         <NextStepButton

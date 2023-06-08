@@ -5,11 +5,11 @@ import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_s
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
 
-export const StakeholderAuthorisations = ({ pdfLink }) => {
+export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
   const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", pdfLink);
+  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
 
   const openKFSModal = () => {
     setKfsDialog(true);

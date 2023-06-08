@@ -5,11 +5,11 @@ import useGeneratePdf from "./useGeneratePdf";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 
-export const TermsAndConditions = ({ pdfLink }) => {
+export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
   const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("generalTermsAndConditions", pdfLink);
+  const { editedFile, height, pages } = useGeneratePdf("generalTermsAndConditions", wcmData);
 
   const openKFSModal = () => {
     setKfsDialog(true);

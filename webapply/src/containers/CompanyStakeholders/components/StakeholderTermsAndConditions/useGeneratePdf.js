@@ -25,11 +25,7 @@ const COMPANY_NAME = "CNME";
 const SIGNATORY = "SIGN";
 const FONT_SIZE = 9;
 
-export default function useGeneratePdf(
-  path = "kfsUrl",
-  selectedAccountTypePdfLink = null,
-  enableEdit = false
-) {
+export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEdit = false) {
   const [editedFile, setEditedFile] = useState(null);
   const [pdfLink, setPdfLink] = useState();
   const [height, setHeight] = useState();
@@ -131,15 +127,15 @@ export default function useGeneratePdf(
 
   const getTermsandConditions = async () => {
     const wcmAPIPath = process.env.REACT_APP_WCM_API_PATH;
-    setPdfLink(selectedAccountTypePdfLink.productVariantContent[0][`${path}`].split(wcmAPIPath)[1]);
+    setPdfLink(wcmData.productVariantContent[0][`${path}`].split(wcmAPIPath)[1]);
   };
 
   useEffect(() => {
-    if (!selectedAccountTypePdfLink) {
+    if (!wcmData) {
       return;
     }
     getTermsandConditions();
-  }, [selectedAccountTypePdfLink, path]);
+  }, [wcmData, path]);
 
   return { editedFile, height, pages };
 }
