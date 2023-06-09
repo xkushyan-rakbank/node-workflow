@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
+import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
+import { sendKfsMail } from "../../../../store/actions/termsAndConditions";
 
 export const StakeholderKfs = ({ wcmData }) => {
   const classes = useStyles();
-  const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("kfsUrl", wcmData, true);
+  const { editedFile, height, pages } = useGeneratePdf("kfsUrl", wcmData, false);
+  const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const dispatch = useDispatch();
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -21,7 +25,7 @@ export const StakeholderKfs = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
-    setIsAccepted(true);
+    dispatch(sendKfsMail());
   };
 
   return (
@@ -29,7 +33,7 @@ export const StakeholderKfs = ({ wcmData }) => {
       <div className={classes.descriptionContent}>
         <div className={classes.kfsDescriptionContent}>
           <h6 className={classes.kfsTitle}>Key Facts Statement (KFS)</h6>
-          {!isAccepted ? (
+          {!termsAndConditions.kfs ? (
             <div className={classes.notAcceptWrapper}>
               <span>Not accepted</span>
             </div>
@@ -40,7 +44,7 @@ export const StakeholderKfs = ({ wcmData }) => {
             </div>
           )}
         </div>
-        {!isAccepted ? (
+        {!termsAndConditions.kfs ? (
           <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
             Read and Accept
           </Button>

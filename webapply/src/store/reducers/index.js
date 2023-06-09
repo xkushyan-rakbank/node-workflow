@@ -18,6 +18,7 @@ import inputFieldBehaviours from "./inputFieldBehaviours";
 import kyc from "./kyc";
 import sdkConfig from "./sdkConfig";
 import webToMobile from "./webToMobile";
+import termsAndConditions from "./termsAndConditions";
 
 const reducers = history =>
   combineReducers({
@@ -39,7 +40,8 @@ const reducers = history =>
     inputFieldBehaviours,
     kyc,
     sdkConfig,
-    webToMobile
+    webToMobile,
+    termsAndConditions
   });
 
 export default reducers;

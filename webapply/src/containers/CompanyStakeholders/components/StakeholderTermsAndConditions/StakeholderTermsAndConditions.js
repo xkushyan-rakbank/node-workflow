@@ -15,6 +15,7 @@ import { formStepper } from "../../../../constants";
 import { getAccountType, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
 import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
+import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 
 const StakeholderTermsAndConditions = () => {
   const [wcmData, setWcmData] = useState(null);
@@ -25,6 +26,7 @@ const StakeholderTermsAndConditions = () => {
   useViewId(true);
   const accountType = useSelector(getAccountType);
   const isIslamic = useSelector(getIsIslamicBanking);
+  const { termsAndConditions } = useSelector(getTermsAndConditions);
 
   const goToAdditional = useCallback(() => {
     pushHistory(routes.additionalInfoComponent, true);
@@ -66,7 +68,13 @@ const StakeholderTermsAndConditions = () => {
         <NextStepButton
           type="button"
           onClick={() => goToAdditional()}
-          disabled={false}
+          disabled={
+            !(
+              termsAndConditions.kfs &&
+              termsAndConditions.generalTCs &&
+              termsAndConditions.authorisation
+            )
+          }
           label="Next"
           justify="flex-end"
         />

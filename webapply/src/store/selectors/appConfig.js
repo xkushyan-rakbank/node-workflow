@@ -59,6 +59,10 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
 export const getApplicantFullName = state => getApplicantInfo(state).fullName;
 
+export const getApplicantEmail = state => getApplicantInfo(state).email;
+
+export const getRoEmail = state => getAppConfig(state).roEmail;
+
 // ro-assist-brd3-3
 export const getValidRoCode = state => {
   const validRoCode = getApplicantInfo(state).validRoCode || "N";

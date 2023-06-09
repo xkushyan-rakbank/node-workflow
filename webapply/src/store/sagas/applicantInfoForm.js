@@ -4,7 +4,12 @@ import {
   applicantInfoFormFail,
   applicantInfoFormSuccess
 } from "../actions/applicantInfoForm";
-import { updateProspectId, updateProspect, updateValidRoCode } from "../actions/appConfig";
+import {
+  updateProspectId,
+  updateProspect,
+  updateValidRoCode,
+  updateRoEmail
+} from "../actions/appConfig";
 import { resetInputsErrors, setInputsErrors } from "./../actions/serverValidation";
 import { generateCodeSuccess } from "../actions/otp";
 import { otp, prospect as prospectApi } from "../../api/apiClient";
@@ -49,7 +54,7 @@ export function* applicantInfoFormSaga({ payload }) {
     }
 
     const {
-      data: { prospectId, validRoCode }
+      data: { prospectId, validRoCode, roEmail }
     } = yield call(prospectApi.create, sendingData, headers);
 
     if (prospectId) {
@@ -63,6 +68,7 @@ export function* applicantInfoFormSaga({ payload }) {
       };
       yield call(otp.generate, { ...otpGenerationPayload }, headers);
       yield put(generateCodeSuccess());
+      yield put(updateRoEmail(roEmail));
     }
 
     yield put(updateProspectId(prospectId));

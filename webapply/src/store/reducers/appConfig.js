@@ -20,7 +20,8 @@ import {
   SET_EXPIRED,
   SET_RO_CODE,
   INITIAL_CHECK,
-  KYC_INITIAL_EDIT_CHECK
+  KYC_INITIAL_EDIT_CHECK,
+  UPDATE_RO_EMAIL
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -41,6 +42,7 @@ export const initialState = {
     goAmlIndustry: false
   },
   dataList: {},
+  roEmail: "",
   error: "",
   prospectError: false,
   searchInfo: { segment: "sme" },
@@ -177,6 +179,10 @@ export default handleActions(
     [SET_RO_CODE]: (state, action) => ({
       ...state,
       roCode: action.payload
+    }),
+    [UPDATE_RO_EMAIL]: (state, action) => ({
+      ...state,
+      roEmail: action.payload
     })
   },
   initialState
