@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
 import useGeneratePdf from "./useGeneratePdf";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
+import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
+import { termsAndConditionsAccepted } from "../../../../store/actions/termsAndConditions";
 
 export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
-  const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("generalTermsAndConditions", wcmData);
+  const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const dispatch = useDispatch();
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -21,7 +25,11 @@ export const TermsAndConditions = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
-    setIsAccepted(true);
+    dispatch(
+      termsAndConditionsAccepted({
+        generalTCs: true
+      })
+    );
   };
 
   return (
@@ -29,7 +37,7 @@ export const TermsAndConditions = ({ wcmData }) => {
       <div className={classes.descriptionContent}>
         <div className={classes.kfsDescriptionContent}>
           <h6 className={classes.kfsTitle}>General Terms and Conditions</h6>
-          {!isAccepted ? (
+          {!termsAndConditions.generalTCs ? (
             <div className={classes.notAcceptWrapper}>
               <span>Not accepted</span>
             </div>
@@ -40,7 +48,7 @@ export const TermsAndConditions = ({ wcmData }) => {
             </div>
           )}
         </div>
-        {!isAccepted ? (
+        {!termsAndConditions.generalTCs ? (
           <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
             Read and Accept
           </Button>
