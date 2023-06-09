@@ -28,7 +28,7 @@ export const StakeholderKfs = ({ wcmData }) => {
     <>
       <div className={classes.descriptionContent}>
         <div className={classes.kfsDescriptionContent}>
-          <h6 className={classes.kfsTitle}>Key Facts Statement (KFS)</h6>
+          <h6 className={classes.kfsTitle}>Key Fact Statement (KFS)</h6>
           {!isAccepted ? (
             <div className={classes.notAcceptWrapper}>
               <span>Not accepted</span>
