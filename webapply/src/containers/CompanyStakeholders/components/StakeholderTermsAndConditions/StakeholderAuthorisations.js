@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
+import { termsAndConditionsAccepted } from "../../../../store/actions/termsAndConditions";
+import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
-  const [isAccepted, setIsAccepted] = useState(false);
   const [openKfsDialog, setKfsDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
-
+  const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const dispatch = useDispatch();
   const openKFSModal = () => {
     setKfsDialog(true);
   };
@@ -21,14 +24,18 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
-    setIsAccepted(true);
+    dispatch(
+      termsAndConditionsAccepted({
+        authorisation: true
+      })
+    );
   };
   return (
     <>
       <div className={classes.descriptionContent}>
         <div className={classes.kfsDescriptionContent}>
           <h6 className={classes.kfsTitle}>Authorisations</h6>
-          {!isAccepted ? (
+          {!termsAndConditions.authorisation ? (
             <div className={classes.notAcceptWrapper}>
               <span>Not accepted</span>
             </div>
@@ -44,7 +51,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           <li>Account statements check with Central Bank of the UAE (CBUAE)</li>
           <li>Other regulatory authorisations</li>
         </ul>
-        {!isAccepted ? (
+        {!termsAndConditions.authorisation ? (
           <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
             Read and Accept
           </Button>

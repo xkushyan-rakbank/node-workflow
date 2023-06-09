@@ -72,6 +72,30 @@ export const accountTitles = {
   elite: "Business Elite"
 };
 
+export const AccountDetails = {
+  [accountNames.starter]: {
+    subProductCode: {
+      [CONVENTIONAL]: "ACNS3",
+      [ISLAMIC]: "GCNS4"
+    },
+    isElite: false
+  },
+  [accountNames.currentAccount]: {
+    subProductCode: {
+      [CONVENTIONAL]: "ACNS6",
+      [ISLAMIC]: "GCNS2"
+    },
+    isElite: false
+  },
+  [accountNames.elite]: {
+    subProductCode: {
+      [CONVENTIONAL]: "ACNS6",
+      [ISLAMIC]: "GCAP1"
+    },
+    isElite: true
+  }
+};
+
 export const UAE_CODE = "971";
 export const UAE = "AE";
 export const UAE_CURRENCY = "AED";

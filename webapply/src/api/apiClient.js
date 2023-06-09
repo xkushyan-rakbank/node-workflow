@@ -384,3 +384,17 @@ export const webToMobile = {
       })
       .catch(err => console.log("error while calling poll", err.message))
 };
+
+export const kfsAcknowledgement = {
+  sendMail: (body, headers) =>
+    httpClient
+      .request({
+        url: buildURI("cpfSendEmailUrl"),
+        method: "POST",
+        ...headers,
+        data: body
+      })
+      .then(response => {
+        return response.data;
+      })
+};
