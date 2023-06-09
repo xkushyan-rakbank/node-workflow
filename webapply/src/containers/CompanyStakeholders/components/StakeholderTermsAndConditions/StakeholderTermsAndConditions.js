@@ -11,13 +11,14 @@ import { TermsAndConditions } from "./TermsAndConditions";
 import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../../FormLayout";
 import { useViewId } from "../../../../utils/useViewId";
-import { formStepper } from "../../../../constants";
+import { formStepper, NEXT } from "../../../../constants";
 import { getAccountType, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
 import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 
-const StakeholderTermsAndConditions = () => {
+export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [wcmData, setWcmData] = useState(null);
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
@@ -29,8 +30,14 @@ const StakeholderTermsAndConditions = () => {
   const { termsAndConditions } = useSelector(getTermsAndConditions);
 
   const goToAdditional = useCallback(() => {
-    pushHistory(routes.additionalInfoComponent, true);
-  }, [pushHistory]);
+    setIsLoading(true);
+    return sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.additionalInfoComponent, true);
+      },
+      () => setIsLoading(false)
+    );
+  }, [pushHistory, sendProspectToAPI]);
 
   useEffect(() => {
     const getTermsandConditions = async () => {
@@ -66,6 +73,7 @@ const StakeholderTermsAndConditions = () => {
 
       <div className="linkContainer">
         <NextStepButton
+          isDisplayLoader={isLoading}
           type="button"
           onClick={() => goToAdditional()}
           disabled={
@@ -82,5 +90,3 @@ const StakeholderTermsAndConditions = () => {
     </>
   );
 };
-
-export default StakeholderTermsAndConditions;

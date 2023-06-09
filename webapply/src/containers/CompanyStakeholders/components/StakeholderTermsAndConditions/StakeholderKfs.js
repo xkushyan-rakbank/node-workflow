@@ -6,13 +6,19 @@ import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_s
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
-import { sendKfsMail } from "../../../../store/actions/termsAndConditions";
+import {
+  sendKfsMail,
+  termsAndConditionsAccepted
+} from "../../../../store/actions/termsAndConditions";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 
-export const StakeholderKfs = ({ wcmData }) => {
+export const StakeholderKfs = ({ wcmData, setConsent }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("kfsUrl", wcmData, false);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
 
   const openKFSModal = () => {
@@ -26,6 +32,19 @@ export const StakeholderKfs = ({ wcmData }) => {
   const handleAccept = () => {
     setKfsDialog(false);
     dispatch(sendKfsMail());
+    dispatch(
+      updateProspect({
+        "prospect.signatoryInfo[0].consentInfo": {
+          ...signatoryInfo[0]?.consentInfo,
+          kfsConsent: { accept: true }
+        }
+      })
+    );
+    dispatch(
+      termsAndConditionsAccepted({
+        kfs: true
+      })
+    );
   };
 
   return (

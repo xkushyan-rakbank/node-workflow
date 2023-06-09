@@ -177,8 +177,8 @@ const getRequestPayloadForNode = (key, prospect) => {
       break;
     }
     case "signatoryInfo": {
-      const { editedFullName } = prospect[key][0];
-      nodePayload = [{ editedFullName }];
+      const { editedFullName, consentInfo } = prospect[key][0];
+      nodePayload = [{ editedFullName, consentInfo }];
       break;
     }
     default:

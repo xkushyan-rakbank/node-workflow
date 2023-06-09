@@ -7,12 +7,15 @@ import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
 import { termsAndConditionsAccepted } from "../../../../store/actions/termsAndConditions";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -24,6 +27,17 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
+    dispatch(
+      updateProspect({
+        "prospect.signatoryInfo[0].consentInfo": {
+          ...signatoryInfo[0]?.consentInfo,
+          efrConsent: { accept: true },
+          aecbConsent: { accept: true },
+          ftsConsent: { accept: true },
+          norblocConsent: { accept: true }
+        }
+      })
+    );
     dispatch(
       termsAndConditionsAccepted({
         authorisation: true

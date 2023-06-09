@@ -7,12 +7,15 @@ import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_s
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 import { termsAndConditionsAccepted } from "../../../../store/actions/termsAndConditions";
+import { updateProspect } from "../../../../store/actions/appConfig";
+import { getSignatories } from "../../../../store/selectors/appConfig";
 
 export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("generalTermsAndConditions", wcmData);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
 
   const openKFSModal = () => {
@@ -25,6 +28,14 @@ export const TermsAndConditions = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
+    dispatch(
+      updateProspect({
+        "prospect.signatoryInfo[0].consentInfo": {
+          ...signatoryInfo[0].consentInfo,
+          otherTncConsent: { accept: true }
+        }
+      })
+    );
     dispatch(
       termsAndConditionsAccepted({
         generalTCs: true

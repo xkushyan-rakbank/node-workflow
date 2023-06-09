@@ -393,5 +393,6 @@ export const prospect = {
 // each page based payload has to be added based no the viewId
 export const pageProspectPaylodMap = {
   "/CompanyInfo": ["applicantInfo", "organizationInfo", "applicationInfo", "documents"],
-  "/StakeholdersInfoPreview": ["signatoryInfo"]
+  "/StakeholdersInfoPreview": ["signatoryInfo"],
+  "/ConsentInfo": ["signatoryInfo"]
 };

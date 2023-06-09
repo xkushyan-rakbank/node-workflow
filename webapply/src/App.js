@@ -40,9 +40,7 @@ const StakeholderPreview = lazy(() =>
   import("./containers/CompanyStakeholders/StakeholderPreview")
 );
 const StakeholderTermsAndConditions = lazy(() =>
-  import(
-    "./containers/CompanyStakeholders/components/StakeholderTermsAndConditions/StakeholderTermsAndConditions"
-  )
+  import("./containers/CompanyStakeholders/components/StakeholderTermsAndConditions")
 );
 const FinalQuestions = lazy(() => import("./containers/FinalQuestions"));
 const AdditionalInfoComponent = lazy(() => import("./containers/Additional"));
