@@ -354,7 +354,28 @@ export const screeningStatus = [
   },
   {
     error: "Virtual Currencies",
-    screeningType: "Virtual Currency Check"
+    screeningType: "Virtual Currency Check",
+    link: true
+  },
+  {
+    error: "iRBL Dedupe",
+    screeningType: "iRBL Dedupe Check",
+    link: true
+  },
+  {
+    error: "BPM Dedupe",
+    screeningType: "BPM Dedupe Check",
+    link: true
+  },
+  {
+    error: "Nationality Check",
+    screeningType: "Nationality Check Of Sanction Country",
+    link: true
+  },
+  {
+    error: "Signatory BL/NL",
+    screeningType: "Signatory BL/NL Checks",
+    link: true
   },
   {
     error: "not Eligible",
@@ -403,6 +424,11 @@ export const screeningStatus = [
   {
     error: "Total No of Documents",
     screeningType: "Total No of Documents uploaded check",
+    link: true
+  },
+  {
+    error: "Company Firco",
+    screeningType: "Company Firco Check",
     link: true
   },
   {
