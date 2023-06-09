@@ -75,8 +75,8 @@ const getCoordinates = (accountType, isIslamic, { customerName, companyName }) =
 
 export function* sendKfsMail() {
   try {
-    const { headers } = yield select(getAuthorizationHeader);
-    headers["client-id"] = "WBA";
+    const headers = yield select(getAuthorizationHeader);
+    headers.headers["client-id"] = "WBA";
     const customerName = yield select(getApplicantFullName);
     const companyName = yield select(getCompanyName);
     const customerEmailAddress = yield select(getApplicantEmail);
@@ -90,7 +90,7 @@ export function* sendKfsMail() {
     const bccIds = [dataListBccIds, roEmail];
     const accountCategory = isIslamic ? ISLAMIC : CONVENTIONAL;
     const subProductCode = AccountDetails[accountType].subProductCode[accountCategory];
-    const docStampingInfo = getCoordinates(dataList[accountTypeMap[accountType]], isIslamic, {
+    const docModificationInfo = getCoordinates(dataList[accountTypeMap[accountType]], isIslamic, {
       customerName,
       companyName
     });
@@ -104,7 +104,7 @@ export function* sendKfsMail() {
       productClassificationSubType: "ACT",
       toIds: [customerEmailAddress],
       bccIds,
-      docStampingInfo
+      docModificationInfo
     };
     yield put(
       termsAndConditionsAccepted({
