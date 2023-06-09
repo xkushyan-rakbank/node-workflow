@@ -250,6 +250,22 @@ export const applicationError = [
     ]
   },
   {
+    screeningNotes: "WITH_RO",
+    link: true,
+    buttons: [
+      {
+        external: false,
+        link: routes.comeBackLogin,
+        label: "Yes, check status"
+      },
+      {
+        external: true,
+        link: routes.accountsComparison,
+        label: "No, thanks"
+      }
+    ]
+  },
+  {
     screeningNotes: "SUCCESS",
     link: true,
     buttons: [
