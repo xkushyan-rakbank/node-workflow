@@ -87,7 +87,7 @@ export function* sendKfsMail() {
     const isElite = accountType === "RAKelite";
     const entitySubType = isIslamic ? "ISL" : "CON";
     const dataListBccIds = dataList.kfsBCCEmail[0]?.displayText;
-    const bccIds = [dataListBccIds, roEmail];
+    const bccIds = roEmail ? [dataListBccIds, roEmail] : [dataListBccIds];
     const accountCategory = isIslamic ? ISLAMIC : CONVENTIONAL;
     const subProductCode = AccountDetails[accountType].subProductCode[accountCategory];
     const docModificationInfo = getCoordinates(dataList[accountTypeMap[accountType]], isIslamic, {
