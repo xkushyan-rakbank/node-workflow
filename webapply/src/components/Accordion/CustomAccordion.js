@@ -78,7 +78,7 @@ const AccordionDetails = withStyles({
   }
 })(MuiAccordionDetails);
 
-export const Accordion = props => {
+export const Accordion = ({ id, title, children, showDefinition }) => {
   const formik = useFormikContext();
   const classes = useStyles();
   const [expanded, setExpanded] = useState("");
@@ -95,8 +95,8 @@ export const Accordion = props => {
   return (
     <div className="accordion">
       <AccordionPanel
-        expanded={expanded === props.id}
-        onChange={handleChange(props.id)}
+        expanded={expanded === id}
+        onChange={handleChange(id)}
         square
         TransitionComponent={Collapse}
         TransitionProps={transitionProps}
@@ -105,10 +105,10 @@ export const Accordion = props => {
           <div className={cx(classes.wrapper, classes.customAccordionWrapper)}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="activePanel"></span>
-              <p className="accordionTitle">{props.title}</p>
+              <p className="accordionTitle">{title}</p>
             </div>
             <div>
-              {expanded === "taxDeclarations" && props.showDefinition}
+              {expanded === "taxDeclarations" && showDefinition}
               <Check size="16px" className={classes.success} />
               <Icon
                 className={classes.expandIcon}
@@ -118,7 +118,7 @@ export const Accordion = props => {
             </div>
           </div>
         </AccordionSummary>
-        <AccordionDetails>{props.children}</AccordionDetails>
+        <AccordionDetails>{children}</AccordionDetails>
       </AccordionPanel>
     </div>
   );

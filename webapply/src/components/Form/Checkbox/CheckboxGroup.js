@@ -40,7 +40,8 @@ export const CheckboxGroup = ({
   contextualHelpText,
   contextualHelpProps = {},
   disabled = false,
-  customIcon = true
+  customIcon = true,
+  typeOfCheckbox = "checkbox"
 }) => {
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
@@ -71,6 +72,7 @@ export const CheckboxGroup = ({
           <CheckboxesWrapper>
             {opts.map(item => (
               <CustomCheckbox
+                typeOfCheckbox={typeOfCheckbox}
                 {...field}
                 key={extractId(item)}
                 value={extractValue(item)}

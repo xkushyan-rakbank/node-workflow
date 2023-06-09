@@ -161,7 +161,7 @@
       "annualFinTurnoverAmtInAED": "",
       "addressInfo": [
         {
-          "typeOfAddress": "",
+          "typeOfAddress": "virtual",
           "officeAddressDifferent": "",
           "addressDetails": {
             "addressFieldDesc": "",
@@ -169,7 +169,7 @@
             "addressLine2": "",
             "addressLine3": "",
             "addressLine4": "",
-            "country": "",
+            "country": "AE",
             "emirateCity": "",
             "poBox": "",
             "preferredAddress": "",

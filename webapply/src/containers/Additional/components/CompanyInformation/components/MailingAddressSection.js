@@ -1,26 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid } from "@material-ui/core";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
-import { AutoSaveField as Field, Input } from "../../../../../components/Form";
+import {
+  CheckboxGroup,
+  AutoSaveField as Field,
+  Input,
+  SelectAutocomplete
+} from "../../../../../components/Form";
 import { Upload } from "../../../../../components/Upload";
 import { TL_ACCEPTED_FILE_TYPES } from "../../../../../constants";
 import { TL_COI_FILE_SIZE } from "../../../../../constants";
+import { useStyles } from "../styled";
+import { virtualOrPhysicalAddressOptions } from "../../../../../constants/options";
 
 export const MailingAddressSection = () => {
+  const classes = useStyles();
+  const [isVirtualAddress, setIsVirtualAddress] = useState(true);
+
+  const handleAddressTypeSelection = event => {
+    if (event.target.value !== "virtual") {
+      setIsVirtualAddress(false);
+    }
+  };
+
   return (
     <div>
       <Accordion title={"Mailing address"} id={"mailingAddress"}>
         <Grid container spacing={3}>
+          <Grid item sm={12} xs={12}>
+            <div className={classes.virtualOrPhysicalAddressSelection}>
+              <Field
+                name="addressInfo[0].typeOfAddress"
+                datalistId="addressInfo[0].typeOfAddress"
+                path={"prospect.companyAdditionalInfo.addressInfo[0].typeOfAddress"}
+                options={virtualOrPhysicalAddressOptions}
+                component={CheckboxGroup}
+                typeOfCheckbox="radio"
+                onSelect={event => handleAddressTypeSelection(event)}
+              />
+            </div>
+          </Grid>
           <Grid item sm={6} xs={12}>
-            <Field
-              name="officeNumber"
-              label="Office or shop number"
-              placeholder="Office or shop number"
-              InputProps={{
-                inputProps: { tabIndex: 1 }
-              }}
-              component={Input}
-            />
+            {!isVirtualAddress && (
+              <Field
+                name="officeNumber"
+                label="Office or shop number"
+                placeholder="Office or shop number"
+                InputProps={{
+                  inputProps: { tabIndex: 1 }
+                }}
+                component={Input}
+              />
+            )}
+            {isVirtualAddress && (
+              <Field
+                name="villa"
+                label="Flat, villa or building"
+                placeholder="Flat, villa or building"
+                InputProps={{
+                  inputProps: { tabIndex: 1 }
+                }}
+                component={Input}
+              />
+            )}
           </Grid>
           <Grid item sm={6} xs={12}>
             <Field
@@ -33,7 +75,7 @@ export const MailingAddressSection = () => {
               component={Input}
             />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} xs={12}>
             <Field
               name="location"
               label="Street or location"
@@ -44,7 +86,7 @@ export const MailingAddressSection = () => {
               component={Input}
             />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} xs={12}>
             <Field
               name="city"
               label="Emirate or city"
@@ -55,15 +97,14 @@ export const MailingAddressSection = () => {
               component={Input}
             />
           </Grid>
-          <Grid item sm={12}>
+          <Grid item sm={12} xs={12}>
             <Field
-              name="country"
+              name="addressInfo[0].addressDetails.country"
+              path={"prospect.companyAdditionalInfo.addressInfo[0].addressDetails.country"}
               label="Country"
               placeholder="Country"
-              InputProps={{
-                inputProps: { tabIndex: 1 }
-              }}
-              component={Input}
+              datalistId="country"
+              component={SelectAutocomplete}
               disabled={true}
             />
           </Grid>

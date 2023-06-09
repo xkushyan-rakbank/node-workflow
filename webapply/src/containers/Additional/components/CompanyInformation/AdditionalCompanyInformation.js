@@ -21,7 +21,8 @@ export const AddCompanyInformation = ({ companyName }) => {
   useLayoutParams(false, true);
 
   const initialValues = {
-    topCustomers: ""
+    topCustomers: "",
+    addressInfo: ""
   };
 
   return (

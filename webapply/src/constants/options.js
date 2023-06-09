@@ -104,3 +104,18 @@ export const OthersOption = {
   key: "Others",
   value: "Others"
 };
+
+export const virtualOrPhysicalAddressOptions = [
+  {
+    code: "Virtual",
+    key: "Virtual",
+    value: "virtual",
+    label: "I have a virtual office"
+  },
+  {
+    code: "Physical",
+    key: "Physical",
+    value: "physical",
+    label: "I have a Physical office"
+  }
+];

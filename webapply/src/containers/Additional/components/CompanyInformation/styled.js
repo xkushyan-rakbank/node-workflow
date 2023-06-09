@@ -114,5 +114,12 @@ export const useStyles = makeStyles(theme => ({
   },
   taxDeclarationQuestionare: {
     marginTop: "30px"
+  },
+  virtualOrPhysicalAddressSelection: {
+    padding: "1px 24px",
+    background: "#F4F8FC",
+    borderRadius: "10px",
+    marginTop: "16px",
+    marginBottom: "16px"
   }
 }));
