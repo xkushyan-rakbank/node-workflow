@@ -25,6 +25,7 @@ import { useViewId } from "../../../utils/useViewId";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import { MAX_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { getRequiredMessage } from "../../../utils/getValidationMessage";
+import { NAME_REGEX } from "../../../utils/validation";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -48,7 +49,8 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     fullName: Yup.string()
       .required(getRequiredMessage("Fullname"))
       // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
+      .max(MAX_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(NAME_REGEX, "Please remove any special character from your name")
   });
 
   const changeDateProspectHandler = (_, value, path) =>
