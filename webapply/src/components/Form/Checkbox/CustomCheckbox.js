@@ -18,6 +18,7 @@ export const useStyles = makeStyles(theme => ({
 
 export const CustomCheckbox = ({
   label,
+  typeOfCheckbox = "checkbox",
   onSelect = () => {},
   classes: extendedClasses,
   ...rest
@@ -29,7 +30,7 @@ export const CustomCheckbox = ({
       classes={{ label: classes.label, root: classes.root }}
       control={
         <Checkbox
-          type={rest.typeOfCheckbox}
+          type={typeOfCheckbox}
           onClick={onSelect}
           classes={{ root: classes.checkbox }}
           icon={<Icon name={ICONS.uncheckedIcon} alt="checked icon" />}
