@@ -154,7 +154,7 @@ export function* prospectAutoSave() {
   }
 }
 
-const getRequestPayloadForNode = (key, prospect) => {
+const getRequestPayloadForNode = (key, prospect, viewId) => {
   let nodePayload;
   switch (key) {
     case "organizationInfo": {
@@ -177,8 +177,14 @@ const getRequestPayloadForNode = (key, prospect) => {
       break;
     }
     case "signatoryInfo": {
-      const { editedFullName, consentInfo } = prospect[key][0];
-      nodePayload = [{ editedFullName, consentInfo }];
+      if (viewId === "/ConsentInfo") {
+        const { consentInfo } = prospect[key][0];
+        nodePayload = [{ consentInfo }];
+      } else {
+        const { editedFullName } = prospect[key][0];
+        nodePayload = [{ editedFullName }];
+      }
+
       break;
     }
     default:
@@ -217,7 +223,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     payloadKeys &&
       payloadKeys.forEach(key => {
         if (newProspect[key]) {
-          createProspectPayload[key] = getRequestPayloadForNode(key, newProspect);
+          createProspectPayload[key] = getRequestPayloadForNode(key, newProspect, viewId);
         }
       });
 

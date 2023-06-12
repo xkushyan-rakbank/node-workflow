@@ -355,6 +355,26 @@
             "nameOnDebitCard": ""
           }
         },
+        "consentInfo": {
+          "efrConsent": {
+            "accept": false
+          },
+          "kfsConsent": {
+            "accept": false
+          },
+          "aecbConsent": {
+            "accept": false
+          },
+          "ftsConsent": {
+            "accept": false
+          },
+          "norblocConsent": {
+            "accept": false
+          },
+          "otherTncConsent": {
+            "accept": false
+          }
+        },
         "isUSrelation": ""
       }
     ],
