@@ -77,7 +77,7 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
     if (!pdfLink) {
       return;
     }
-    const soleSignatory = signatoryInfo[0]?.fullName;
+    const soleSignatory = signatoryInfo[0]?.editedFullName;
     const today = new Date(Date.now());
     const generatePdfPreview = async () => {
       const existingPdfBytes = await wcmClient

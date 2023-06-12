@@ -20,6 +20,8 @@ export const MailingAddressSection = () => {
   const handleAddressTypeSelection = event => {
     if (event.target.value !== "virtual") {
       setIsVirtualAddress(false);
+    } else {
+      setIsVirtualAddress(true);
     }
   };
 

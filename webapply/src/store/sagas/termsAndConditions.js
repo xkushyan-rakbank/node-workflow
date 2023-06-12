@@ -3,13 +3,13 @@ import { log } from "../../utils/loggger";
 import { SEND_KFS_MAIL, termsAndConditionsAccepted } from "../actions/termsAndConditions";
 import {
   getAccountType,
-  getApplicantEditedFullName,
   getApplicantEmail,
   getAuthorizationHeader,
   getCompanyName,
   getDatalist,
   getIsIslamicBanking,
-  getRoEmail
+  getRoEmail,
+  getSignatories
 } from "../selectors/appConfig";
 import { kfsAcknowledgement } from "../../api/apiClient";
 import { AccountDetails, CONVENTIONAL, ISLAMIC } from "../../constants";
@@ -86,7 +86,8 @@ export function* sendKfsMail() {
   try {
     const headers = yield select(getAuthorizationHeader);
     headers.headers["client-id"] = "WBA";
-    const customerName = yield select(getApplicantEditedFullName);
+    const signatories = yield select(getSignatories);
+    const customerName = signatories[0].editedFullName;
     const companyName = yield select(getCompanyName);
     const customerEmailAddress = yield select(getApplicantEmail);
     const accountType = yield select(getAccountType);
