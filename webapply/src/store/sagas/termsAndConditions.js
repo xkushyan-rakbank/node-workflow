@@ -25,8 +25,16 @@ const ISLA = "ISLA";
 const DATE = "KDAT";
 const COMPANY_NAME = "CNME";
 const SIGNATORY = "SIGN";
+const getCoordinates = obj => {
+  let parsedObj = JSON.parse(obj);
+  let coordinates = {
+    xCoordinate: parsedObj.x,
+    yCoordinate: parsedObj.y
+  };
+  return coordinates;
+};
 
-const getCoordinates = (accountType, isIslamic, { customerName, companyName }) => {
+const getModInfo = (accountType, isIslamic, { customerName, companyName }) => {
   if (!accountType) {
     return null;
   }
@@ -41,12 +49,13 @@ const getCoordinates = (accountType, isIslamic, { customerName, companyName }) =
   const corrdinateDetails = [];
   const today = new Date().toLocaleDateString();
   selectedAccountTypeData.subGroup.forEach(element => {
+    const coordinates = getCoordinates(element.displayText);
     switch (element.code) {
       case DATE:
         corrdinateDetails.push({
           pageNumber,
           text: today,
-          ...JSON.parse(element.displayText)
+          ...coordinates
         });
 
         break;
@@ -54,7 +63,7 @@ const getCoordinates = (accountType, isIslamic, { customerName, companyName }) =
         corrdinateDetails.push({
           pageNumber,
           text: companyName,
-          ...JSON.parse(element.displayText)
+          ...coordinates
         });
 
         break;
@@ -62,7 +71,7 @@ const getCoordinates = (accountType, isIslamic, { customerName, companyName }) =
         corrdinateDetails.push({
           pageNumber,
           text: customerName,
-          ...JSON.parse(element.displayText)
+          ...coordinates
         });
         break;
       default:
@@ -90,7 +99,7 @@ export function* sendKfsMail() {
     const bccIds = roEmail ? [dataListBccIds, roEmail] : [dataListBccIds];
     const accountCategory = isIslamic ? ISLAMIC : CONVENTIONAL;
     const subProductCode = AccountDetails[accountType].subProductCode[accountCategory];
-    const docModificationInfo = getCoordinates(dataList[accountTypeMap[accountType]], isIslamic, {
+    const docModificationInfo = getModInfo(dataList[accountTypeMap[accountType]], isIslamic, {
       customerName,
       companyName
     });
