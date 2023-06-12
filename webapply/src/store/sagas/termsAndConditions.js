@@ -3,8 +3,8 @@ import { log } from "../../utils/loggger";
 import { SEND_KFS_MAIL, termsAndConditionsAccepted } from "../actions/termsAndConditions";
 import {
   getAccountType,
+  getApplicantEditedFullName,
   getApplicantEmail,
-  getApplicantFullName,
   getAuthorizationHeader,
   getCompanyName,
   getDatalist,
@@ -86,7 +86,7 @@ export function* sendKfsMail() {
   try {
     const headers = yield select(getAuthorizationHeader);
     headers.headers["client-id"] = "WBA";
-    const customerName = yield select(getApplicantFullName);
+    const customerName = yield select(getApplicantEditedFullName);
     const companyName = yield select(getCompanyName);
     const customerEmailAddress = yield select(getApplicantEmail);
     const accountType = yield select(getAccountType);
