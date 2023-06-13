@@ -1,4 +1,7 @@
 import React from "react";
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
+
 import { createMuiTheme } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
 import { ThemeProvider as SliderThemeProvider } from "@material-ui/styles";
@@ -12,7 +15,6 @@ import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNot
 const FormatDecimalNumberInput = props => <NumberFormat allowNegative={false} {...props} />;
 
 export const FinancialTurnoverSection = props => {
-  const { setFieldValue, values, isValid } = props;
   const classes = useStyles();
 
   const FinancialSlider = createMuiTheme({
@@ -53,54 +55,85 @@ export const FinancialTurnoverSection = props => {
     }
   });
 
-  function handleBlur(ev, blur) {
-    const { value } = ev.target;
-    const annualTurnover = value ? parseFloat(value).toFixed(2) : "";
-    setFieldValue("annualFinTurnoverAmtInAED", annualTurnover?.toString());
-    blur(ev);
-  }
+  const initialValues = {
+    annualFinTurnoverAmtInAED: "",
+    anualCashDepositAED: ""
+  };
 
-  function handleChange(ev, newValue) {
-    setFieldValue("anualCashDepositAED", newValue.toString());
-  }
+  const additionalCompanyInfoSchema = Yup.object({
+    annualFinTurnoverAmtInAED: Yup.number()
+      .required("This field is required")
+      .min(1000.01, "This amount should be greater than 1000.00 AED")
+  });
 
   return (
-    <div>
-      <Accordion title={"Financial turnover"} id={"financialTurnover"} isCompleted={isValid}>
-        <Field
-          name="annualFinTurnoverAmtInAED"
-          label="Annual financial turnover (AED)"
-          placeholder="Annual financial turnover (AED)"
-          path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
-          component={Input}
-          InputProps={{
-            inputComponent: FormatDecimalNumberInput,
-            inputProps: { maxLength: 9, tabIndex: 0 },
-            onBlur: e => handleBlur(e, props.handleBlur)
-          }}
-        />
-        <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
-        <DisclaimerNote text="Just drag the slider to provide your cash and non-cash component" />
-        <SliderThemeProvider theme={FinancialSlider}>
-          <Field
-            name="anualCashDepositAED"
-            path="prospect.companyAdditionalInfo.anualCashDepositAED"
-            value={parseInt(values.anualCashDepositAED)}
-            defaultValue={0}
-            component={Slider}
-            onChange={handleChange}
-            disabled={values.annualFinTurnoverAmtInAED.length === 0}
-            InputProps={{
-              max: parseInt(values?.annualFinTurnoverAmtInAED),
-              type: "number"
-            }}
-          />
-        </SliderThemeProvider>
-        {/* <div>
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={additionalCompanyInfoSchema}
+        validateOnChange={true}
+        validateOnBlur={true}
+        validateOnMount={true}
+        onSubmit={() => {}}
+      >
+        {({ setFieldValue, values, isValid, handleBlur }) => {
+          function handleChange(ev, blur) {
+            const { value } = ev.target;
+            const annualTurnover = value ? parseFloat(value).toFixed(2) : "";
+            if (!annualTurnover) {
+              setFieldValue("anualCashDepositAED", "");
+            }
+            setFieldValue("annualFinTurnoverAmtInAED", annualTurnover?.toString());
+            blur(ev);
+          }
+
+          function handleSliderChange(ev, newValue) {
+            setFieldValue("anualCashDepositAED", newValue.toString());
+          }
+          return (
+            <Form>
+              <Accordion
+                title={"Financial turnover"}
+                id={"financialTurnover"}
+                isCompleted={isValid}
+              >
+                <Field
+                  name="annualFinTurnoverAmtInAED"
+                  label="Annual financial turnover (AED)"
+                  placeholder="Annual financial turnover (AED)"
+                  path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
+                  component={Input}
+                  InputProps={{
+                    inputComponent: FormatDecimalNumberInput,
+                    inputProps: { maxLength: 9, tabIndex: 0 },
+                    onBlur: e => handleChange(e, handleBlur)
+                  }}
+                />
+                <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
+                <DisclaimerNote text="Just drag the slider to provide your cash and non-cash component" />
+                <SliderThemeProvider theme={FinancialSlider}>
+                  <Field
+                    name="anualCashDepositAED"
+                    path="prospect.companyAdditionalInfo.anualCashDepositAED"
+                    value={values?.anualCashDepositAED ? parseInt(values.anualCashDepositAED) : 0}
+                    component={Slider}
+                    onChange={handleSliderChange}
+                    disabled={!values?.annualFinTurnoverAmtInAED}
+                    InputProps={{
+                      max: parseInt(values?.annualFinTurnoverAmtInAED),
+                      type: "number"
+                    }}
+                  />
+                </SliderThemeProvider>
+                {/* <div>
           <span className={classes.percentageText}>35%</span>•
           <span className={classes.amountText}>350,000 AED</span>
         </div> */}
-      </Accordion>
-    </div>
+              </Accordion>
+            </Form>
+          );
+        }}
+      </Formik>
+    </>
   );
 };

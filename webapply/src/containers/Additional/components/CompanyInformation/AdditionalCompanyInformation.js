@@ -24,26 +24,12 @@ export const AddCompanyInformation = ({ companyName }) => {
 
   const initialValues = {
     topCustomers: "",
-    addressInfo: "",
-    annualFinTurnoverAmtInAED: "",
-    anualCashDepositAED: ""
+    addressInfo: ""
   };
-
-  const additionalCompanyInfoSchema = Yup.object({
-    annualFinTurnoverAmtInAED: Yup.number()
-      .required("This field is required")
-      .min(1000.01, "This amount should be greater than 1000.00 AED")
-  });
 
   return (
     <>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={additionalCompanyInfoSchema}
-        validateOnChange={true}
-        validateOnBlur={true}
-        onSubmit={() => {}}
-      >
+      <Formik initialValues={initialValues} validateOnChange={true} onSubmit={() => {}}>
         {props => (
           <Form>
             <div className={classes.additionalCompanyInfoContainer}>
@@ -61,7 +47,7 @@ export const AddCompanyInformation = ({ companyName }) => {
                     {companyName}
                   </div>
                   <BusinessRelationship />
-                  <FinancialTurnoverSection {...props} />
+                  <FinancialTurnoverSection />
                   <MailingAddressSection />
                   <TaxDeclarationsSection />
                 </div>
