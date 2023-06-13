@@ -1,4 +1,4 @@
-import { all, call, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, put, select, takeLatest, fork } from "redux-saga/effects";
 
 import {
   KycTransactionSuccess,
@@ -44,7 +44,11 @@ import {
   PASSPORT_EXPIRY,
   INVALID_DOCUMENT,
   screeningStatus,
-  EFR_CHECK_ERROR
+  EFR_CHECK_ERROR,
+  APP_STOP_SCREEN_RESULT,
+  screeningStatusDefault,
+  SCREENING_FAIL_REASONS,
+  applicationError
 } from "../../constants";
 import { setScreeningError } from "../actions/sendProspectToAPI";
 import routes from "../../routes";
@@ -142,22 +146,65 @@ export function* checkFaceLiveliness({ payload }) {
   }
 }
 
+export function* setScreeningResults({ preScreening }) {
+  const currScreeningType = preScreening.screeningResults.find(screeningResult =>
+    SCREENING_FAIL_REASONS.includes(screeningResult.screeningReason)
+  );
+
+  let screenError = screeningStatus.find(
+    ({ screeningType }) => screeningType === (currScreeningType || {}).screeningType
+  );
+
+  if (screenError) {
+    //ro-assist-brd1-3
+    if (
+      screenError.screeningType?.toLowerCase() === screeningStatus[1].screeningType.toLowerCase()
+    ) {
+      let buttons = applicationError.find(
+        ({ screeningNotes }) =>
+          screeningNotes.toLowerCase() === currScreeningType.screeningNotes?.toLowerCase()
+      );
+      if (buttons !== undefined) {
+        screenError = { ...screenError, ...buttons };
+      }
+    }
+
+    yield put(
+      setScreeningError({
+        ...screenError,
+        text: currScreeningType.reasonNotes,
+        icon: ""
+      })
+    );
+  } else {
+    yield put(setScreeningError(screeningStatusDefault));
+  }
+}
+
 export function* notifyHost() {
   try {
     const transactionId = yield select(getTransactionId);
     const notifyHostResponse = yield call(analyzeOcrData.notifyHost, transactionId);
-    yield put(notifyHostSuccess(notifyHostResponse));
-    const {
-      signatoryInfo,
-      documents: { stakeholdersDocuments }
-    } = notifyHostResponse;
-    signatoryInfo[0].editedFullName = signatoryInfo[0].fullName;
-    yield put(
-      updateProspect({
-        "prospect.signatoryInfo": signatoryInfo,
-        "prospect.documents.stakeholdersDocuments": stakeholdersDocuments
-      })
-    );
+    const { preScreening } = notifyHostResponse;
+
+    const isScreeningError = preScreening && preScreening.statusOverAll === APP_STOP_SCREEN_RESULT;
+
+    if (isScreeningError) {
+      yield fork(setScreeningResults, notifyHostResponse);
+    } else if (notifyHostResponse) {
+      yield put(notifyHostSuccess(notifyHostResponse));
+      const {
+        signatoryInfo,
+        documents: { stakeholdersDocuments }
+      } = notifyHostResponse;
+      signatoryInfo[0].editedFullName = signatoryInfo[0].fullName;
+      yield put(
+        updateProspect({
+          "prospect.signatoryInfo": signatoryInfo,
+          "prospect.documents.stakeholdersDocuments": stakeholdersDocuments
+        })
+      );
+    }
   } catch (error) {
     let message = error?.response?.data?.message;
     const notificationOptions = { title: "Oops", message: error.message };
