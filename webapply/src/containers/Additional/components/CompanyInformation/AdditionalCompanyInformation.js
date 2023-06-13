@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
 import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../../FormLayout";
@@ -22,13 +24,27 @@ export const AddCompanyInformation = ({ companyName }) => {
 
   const initialValues = {
     topCustomers: "",
-    addressInfo: ""
+    addressInfo: "",
+    annualFinTurnoverAmtInAED: "",
+    anualCashDepositAED: ""
   };
+
+  const additionalCompanyInfoSchema = Yup.object({
+    annualFinTurnoverAmtInAED: Yup.number()
+      .required("This field is required")
+      .min(1000.01, "This amount should be greater than 1000.00 AED")
+  });
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={false}>
-        {values => (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={additionalCompanyInfoSchema}
+        validateOnChange={true}
+        validateOnBlur={true}
+        onSubmit={() => {}}
+      >
+        {props => (
           <Form>
             <div className={classes.additionalCompanyInfoContainer}>
               <div>
@@ -45,13 +61,13 @@ export const AddCompanyInformation = ({ companyName }) => {
                     {companyName}
                   </div>
                   <BusinessRelationship />
-                  <FinancialTurnoverSection />
+                  <FinancialTurnoverSection {...props} />
                   <MailingAddressSection />
                   <TaxDeclarationsSection />
                 </div>
               </div>
               <div className="linkContainer">
-                <NextStepButton justify="flex-end" label="Continue" disabled={"true"} />
+                <NextStepButton label="Continue" disabled={false} />
               </div>
             </div>
           </Form>

@@ -78,7 +78,7 @@ const AccordionDetails = withStyles({
   }
 })(MuiAccordionDetails);
 
-export const Accordion = ({ id, title, children, showDefinition }) => {
+export const Accordion = ({ id, title, children, showDefinition, isCompleted = false }) => {
   const formik = useFormikContext();
   const classes = useStyles();
   const [expanded, setExpanded] = useState("");
@@ -109,7 +109,7 @@ export const Accordion = ({ id, title, children, showDefinition }) => {
             </div>
             <div>
               {expanded === "taxDeclarations" && showDefinition}
-              <Check size="16px" className={classes.success} />
+              {isCompleted && <Check size="16px" className={classes.success} />}
               <Icon
                 className={classes.expandIcon}
                 alt="collapse-icon"

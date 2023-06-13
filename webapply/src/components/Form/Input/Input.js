@@ -81,11 +81,13 @@ const InputBase = ({
 
       {infoTitle && <InfoTitle title={infoTitle} />}
 
-      <FieldDescription
-        title={fieldDescription}
-        fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
-        fieldMaxLength={InputProps.inputProps?.maxLength}
-      />
+      {fieldDescription && (
+        <FieldDescription
+          title={fieldDescription}
+          fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
+          fieldMaxLength={InputProps.inputProps?.maxLength}
+        />
+      )}
 
       {isError && <ErrorMessageComponent error={errorMessage} />}
     </FormControl>
