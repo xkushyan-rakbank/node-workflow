@@ -5,6 +5,8 @@ import { useStyles } from "./styled";
 import { Button } from "../../../../components/Buttons/SubmitButton";
 import { PdfPreview } from "./pdfPreview";
 
+const smallerLaptopWidth = 1280;
+
 export default function TermsAndConditionsDialog({
   open,
   handleAccept,
@@ -35,11 +37,11 @@ export default function TermsAndConditionsDialog({
     >
       <DialogContent
         classes={{ root: classes.content }}
-        style={{ paddingTop: "60px" }}
+        style={{ marginTop: "60px" }}
         onScroll={handleScroll}
       >
         <div style={{ height: `${height}px` }}>
-          {isDesktop ? (
+          {window.innerWidth > smallerLaptopWidth && isDesktop ? (
             <object
               type="application/pdf"
               data={`${kfsUrl}#toolbar=0&view=FitH`}
