@@ -8,12 +8,20 @@
         },
         "prospect.organizationInfo.licenseIssuingAuthority": {
             "dependantFields": []
+        },
+        "prospect.organizationInfo.industryMultiSelect.subCategory": {
+            "dependantFields": ["prospect.organizationInfo.industryMultiSelect.industry"]
+        },
+        "prospect.organizationInfo.dateOfIncorporation": {
+            "dependantFields": []
         }
     },
     "decisionDrivenFields": {
         "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": {"showByDefault": true},
         "prospect.organizationInfo.countryOfIncorporation": {"showByDefault": true},
         "prospect.organizationInfo.licenseOrCOIExpiryDate": {"showByDefault": true},
-        "prospect.prospectDocuments.companyDocument.moa": {"showByDefault": false}
+        "prospect.prospectDocuments.companyDocument.moa": {"showByDefault": false},
+        "prospect.companyAdditionalInfo.topCustomers[0].name": {"label": ""},
+        "prospect.companyAdditionalInfo.topCustomers[0].country": {"label": ""}
     }
 }

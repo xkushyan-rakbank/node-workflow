@@ -7,6 +7,7 @@ import {
   disableInputFeild,
   enableInputField,
   hideInputFeild,
+  setLabel,
   showInputField
 } from "../actions/decisions";
 import { getAuthorizationHeader, getProspectId } from "../selectors/appConfig";
@@ -22,6 +23,8 @@ function* processDecisionOutput(decision, changedFieldValues) {
       return yield put(enableInputField(decision.output_key));
     case "DISABLE_FIELD":
       return yield put(disableInputFeild(decision.output_key));
+    case "SET_LABEL_TEXT":
+      return yield put(setLabel(decision.output_key, decision.output_value[0]));
     case "SET_FIELD_VALUE":
       changedFieldValues[decision.output_key] = decision.output_value[0];
       break;

@@ -13,6 +13,7 @@ import useDecisions from "../../../utils/useDecisions";
 export const AutoSaveField = ({
   name,
   path,
+  decisionKey,
   isLoadDefaultValueFromStore = true,
   datalistId,
   filterOptionsDeps,
@@ -20,6 +21,7 @@ export const AutoSaveField = ({
   changeProspect = prospect => prospect,
   initialValue = "",
   addOthers = false,
+  label,
   ...rest
 }) => {
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ export const AutoSaveField = ({
     !isLoadDefaultValueFromStore
   );
   const timer = useRef(null);
-  const { visible, enabled, makeDecisions } = useDecisions(path);
+  const { visible, enabled, label: decisionLabel, makeDecisions } = useDecisions(path, decisionKey);
   useEffect(() => {
     if (!isLoadedDefaultValueFromStore && path) {
       const value = get(appConfig, path);
@@ -103,12 +105,22 @@ export const AutoSaveField = ({
     const fieldValue = e?.target?.value;
     const value = fieldValue === null || fieldValue === undefined ? e : fieldValue;
     setFieldValue(name, value);
+    if (decisionKey) {
+      setFieldValue(decisionKey, value);
+    }
     makeDecisions && makeDecisions(value);
   };
 
   return (
     visible && (
-      <Field onChange={handleChange} disabled={!enabled} name={name} options={options} {...rest} />
+      <Field
+        onChange={handleChange}
+        disabled={!enabled}
+        name={name}
+        options={options}
+        {...rest}
+        label={decisionLabel || label}
+      />
     )
   );
 };

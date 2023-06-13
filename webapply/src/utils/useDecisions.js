@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useFormikContext } from "formik";
+import { get } from "lodash";
 
 import { decisionTriggerFields } from "../config/decisionsConfig.json";
 import { triggerDecisions } from "../store/actions/decisions";
 
-export default function useDecisions(path) {
+export default function useDecisions(path, decisionKey) {
   const inputFieldBehaviours = useSelector(state => state.inputFieldBehaviours);
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext();
@@ -42,7 +43,7 @@ export default function useDecisions(path) {
         inputFields: {
           decision_input: [
             {
-              input_key: path,
+              input_key: decisionKey || path,
               input_value: value
             },
             ...dependantFields
@@ -55,20 +56,25 @@ export default function useDecisions(path) {
   //hide or show / enable or disable the item based on the inputFieldBehaviour
   if (inputFieldBehaviours[path]) {
     const getBehaviour = inputFieldBehaviours[path];
-    if (!getBehaviour.visible) {
+    if (getBehaviour.visible !== undefined && !getBehaviour.visible) {
       decisions.visible = false;
     }
-    if (!getBehaviour.enabled) {
+    if (getBehaviour.enabled !== undefined && !getBehaviour.enabled) {
       decisions.enabled = false;
+    }
+    if (getBehaviour.label) {
+      decisions.label = getBehaviour.label;
     }
   }
 
-  if (decisionTriggerFields[path]) {
-    dependantFields = decisionTriggerFields[path].dependantFields.map(dependantField => {
-      let key = dependantField.split(".").pop();
+  const decisionTriggers = decisionTriggerFields[path] || decisionTriggerFields[decisionKey];
+  if (decisionTriggers) {
+    dependantFields = decisionTriggers.dependantFields.map(dependantField => {
+      // handling the support for custom decisionKey other than path
+      let key = decisionKey ? dependantField : dependantField.split(".").pop();
       return {
         input_key: dependantField,
-        input_value: values[key] || null
+        input_value: get(values, key, null)
       };
     });
     decisions.makeDecisions = updatePropspectandUI;

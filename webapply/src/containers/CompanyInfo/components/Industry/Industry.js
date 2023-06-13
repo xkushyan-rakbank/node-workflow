@@ -20,6 +20,7 @@ export const Industry = ({ datalistId, values }) => {
                 <Field
                   name={`industries[${industryIndex}].industry`}
                   path={currentIndustry}
+                  decisionKey={"prospect.organizationInfo.industryMultiSelect.industry"}
                   label="Industry"
                   component={SelectAutocomplete}
                   datalistId={datalistId}
@@ -41,6 +42,7 @@ export const Industry = ({ datalistId, values }) => {
                 <Field
                   name={`industries[${industryIndex}].subCategory`}
                   path={currentSubCategory}
+                  decisionKey={"prospect.organizationInfo.industryMultiSelect.subCategory"}
                   label="Industry sub-category"
                   component={SelectAutocomplete}
                   datalistId={datalistId}

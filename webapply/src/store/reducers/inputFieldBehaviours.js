@@ -4,7 +4,8 @@ import {
   SHOW_INPUT_FIELD,
   HIDE_INPUT_FIELD,
   ENABLE_INPUT_FIELD,
-  DISABLE_INPUT_FIELD
+  DISABLE_INPUT_FIELD,
+  SET_LABEL
 } from "../actions/decisions";
 
 export const initialState = (() => {
@@ -13,7 +14,8 @@ export const initialState = (() => {
       // visible unless explicitely mentioned as false
       visible: decisionDrivenFields[inputPath].showByDefault !== false,
       // enabled unless explicitely mentioned as false
-      enabled: decisionDrivenFields[inputPath].enableByDefault !== false
+      enabled: decisionDrivenFields[inputPath].enableByDefault !== false,
+      label: decisionDrivenFields[inputPath].label
     };
     return inputStates;
   }, {});
@@ -35,12 +37,23 @@ const setFieldEnabled = (state, payload, enabled) => ({
   }
 });
 
+const setLabel = (state, payload) => {
+  return {
+    ...state,
+    [payload.key]: {
+      ...state[payload.key],
+      label: payload.value
+    }
+  };
+};
+
 export default handleActions(
   {
     [SHOW_INPUT_FIELD]: (state, { payload }) => setFieldVisibility(state, payload, true),
     [HIDE_INPUT_FIELD]: (state, { payload }) => setFieldVisibility(state, payload, false),
     [ENABLE_INPUT_FIELD]: (state, { payload }) => setFieldEnabled(state, payload, true),
-    [DISABLE_INPUT_FIELD]: (state, { payload }) => setFieldEnabled(state, payload, false)
+    [DISABLE_INPUT_FIELD]: (state, { payload }) => setFieldEnabled(state, payload, false),
+    [SET_LABEL]: (state, { payload }) => setLabel(state, payload)
   },
   initialState
 );
