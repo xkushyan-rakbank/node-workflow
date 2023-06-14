@@ -1,7 +1,11 @@
 import { Dialog, DialogActions, DialogContent } from "@material-ui/core";
 import React, { useState } from "react";
+import { isDesktop } from "react-device-detect";
 import { useStyles } from "./styled";
 import { Button } from "../../../../components/Buttons/SubmitButton";
+import { PdfPreview } from "./pdfPreview";
+
+const smallerLaptopWidth = 1280;
 
 export default function TermsAndConditionsDialog({
   open,
@@ -33,20 +37,24 @@ export default function TermsAndConditionsDialog({
     >
       <DialogContent
         classes={{ root: classes.content }}
-        style={{ paddingTop: "60px" }}
+        style={{ marginTop: "60px" }}
         onScroll={handleScroll}
       >
         <div style={{ height: `${height}px` }}>
-          <object
-            type="application/pdf"
-            data={`${kfsUrl}#toolbar=0&view=FitH`}
-            aria-label="kfs"
-            onContextMenu={e => e.preventDefault()}
-            className={classes.previewPDF}
-            border="0"
-            width="100%"
-            height="100%"
-          ></object>
+          {window.innerWidth > smallerLaptopWidth && isDesktop ? (
+            <object
+              type="application/pdf"
+              data={`${kfsUrl}#toolbar=0&view=FitH`}
+              aria-label="kfs"
+              onContextMenu={e => e.preventDefault()}
+              className={classes.previewPDF}
+              border="0"
+              width="100%"
+              height="100%"
+            ></object>
+          ) : (
+            <PdfPreview file={kfsUrl} />
+          )}
         </div>
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
