@@ -54,11 +54,19 @@ export const MailingAddressSection = () => {
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
-    addressLine1: Yup.string()
-      .required(getRequiredMessage("Flat / Villa / Building"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat / Villa / Building")),
+    addressLine1: Yup.string().when("typeOfAddress", {
+      is: typeOfAddress => typeOfAddress === "physical",
+      then: Yup.string()
+        .required(getRequiredMessage("Office or shop number"))
+        // eslint-disable-next-line no-template-curly-in-string
+        .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office or shop number")),
+      otherwise: Yup.string()
+        .required(getRequiredMessage("Flat, villa or building"))
+        // eslint-disable-next-line no-template-curly-in-string
+        .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat, villa or building"))
+    }),
     poBox: Yup.string()
       .required(getRequiredMessage("PO Box Number"))
       .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),

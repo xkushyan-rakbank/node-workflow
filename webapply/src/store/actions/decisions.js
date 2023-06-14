@@ -25,6 +25,6 @@ export const triggerDecisions = payload => {
   return { type: DECISIONS_TRIGGERED, payload };
 };
 
-export const setLabel = payload => {
-  return { type: SET_LABEL, payload };
+export const setLabel = (key, value) => {
+  return { type: SET_LABEL, payload: { key, value } };
 };
