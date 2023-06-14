@@ -9,10 +9,14 @@ import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../.
 import { useStyles } from "../styled";
 import { BUSINESS_RELATIONSHIPS } from "../../../../../constants";
 import { updateProspect } from "../../../../../store/actions/appConfig";
+import useDecisions from "../../../../../utils/useDecisions";
 
 export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { label: topSupplierNameLabel } = useDecisions(
+    "prospect.companyAdditionalInfo.topSuppliers[0].name"
+  );
 
   const addSupplier = (arrayHelpers, arrayLength) => {
     arrayHelpers.insert(arrayLength, {
@@ -55,9 +59,9 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
                 <Grid item sm={6} xs={12}>
                   <Field
                     name={`topSuppliers[${index}].name`}
-                    label="Supplier name"
+                    label={topSupplierNameLabel || "Supplier name"}
                     path={`prospect.companyAdditionalInfo.topSuppliers[${index}].name`}
-                    placeholder="Supplier name"
+                    placeholder={topSupplierNameLabel || "Supplier name"}
                     InputProps={{
                       inputProps: { maxLength: 255, tabIndex: 1 }
                     }}

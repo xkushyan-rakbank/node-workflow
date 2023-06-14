@@ -11,10 +11,14 @@ import { useStyles } from "../styled";
 import { ErrorInfo } from "../../../../../components/InfoNote/ErrorInfo";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { BUSINESS_RELATIONSHIPS } from "../../../../../constants";
+import useDecisions from "../../../../../utils/useDecisions";
 
 export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { label: topCustomersNameLabel } = useDecisions(
+    "prospect.companyAdditionalInfo.topCustomers[0].name"
+  );
 
   const addCustomers = (arrayHelpers, arrayLength) => {
     arrayHelpers.insert(arrayLength, {
@@ -65,9 +69,9 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
                   <Grid item sm={6} xs={12}>
                     <Field
                       name={`topCustomers[${index}].name`}
-                      label="Customer name"
+                      label={topCustomersNameLabel || "Customer name"}
                       path={`prospect.companyAdditionalInfo.topCustomers[${index}].name`}
-                      placeholder="Customer name"
+                      placeholder={topCustomersNameLabel || "Customer name"}
                       InputProps={{
                         inputProps: { maxLength: 255, tabIndex: 1 }
                       }}
