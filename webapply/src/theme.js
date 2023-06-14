@@ -33,9 +33,6 @@ export const theme = createMuiTheme({
     },
     text: {
       color: "#373737"
-    },
-    radioActive: {
-      main: "#1F1F1F"
     }
   }
 });
