@@ -4,7 +4,6 @@ import { Collapse, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import { useFormikContext } from "formik";
 import cx from "classnames";
 
 import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
@@ -79,7 +78,6 @@ const AccordionDetails = withStyles({
 })(MuiAccordionDetails);
 
 export const Accordion = ({ id, title, children, showDefinition, isCompleted = false }) => {
-  const formik = useFormikContext();
   const classes = useStyles();
   const [expanded, setExpanded] = useState("");
 

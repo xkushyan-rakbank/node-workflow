@@ -147,13 +147,13 @@
     "companyAdditionalInfo": {
       "topCustomers": [
         {
-          "name": "Walk-in Customer",
+          "name": "",
           "country": "AE"
         }
       ],
       "topSuppliers": [
         {
-          "name": "Walk-in Customer",
+          "name": "",
           "country": "AE"
         }
       ],
@@ -178,8 +178,8 @@
               "others": ""
             }
           }]
-        }]
-      ,
+        }
+      ],
       "isDesignatedBusinessCategory": false,
       "dnfbpField": "",
       "isFinancialInstitution": "",

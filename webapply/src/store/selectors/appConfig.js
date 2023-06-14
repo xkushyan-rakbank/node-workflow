@@ -190,3 +190,5 @@ export const getIsLemniskEnable = state => {
     ? state.appConfig.lemniskEnable
     : false;
 };
+
+export const getCompanyAdditionalInfo = state => getProspect(state).companyAdditionalInfo || {};

@@ -121,5 +121,11 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "10px",
     marginTop: "16px",
     marginBottom: "16px"
+  },
+  customLabel: {
+    margin: "12px 0 10px"
+  },
+  supplierSection: {
+    marginTop: "40px"
   }
 }));
