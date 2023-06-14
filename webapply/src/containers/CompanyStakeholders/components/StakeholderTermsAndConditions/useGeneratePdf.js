@@ -103,7 +103,7 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
           ...coordinates[SIGNATORY]
         });
 
-        thePage.drawText(today.toLocaleDateString(), {
+        thePage.drawText(today.toLocaleDateString("en-GB"), {
           size: FONT_SIZE,
           ...coordinates[DATE]
         });

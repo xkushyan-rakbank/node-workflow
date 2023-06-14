@@ -47,7 +47,7 @@ const getModInfo = (accountType, isIslamic, { customerName, companyName }) => {
   });
   const pageNumber = parseInt(JSON.parse(selectedAccountTypeData.displayText).pageNumber) + 1;
   const corrdinateDetails = [];
-  const today = new Date().toLocaleDateString();
+  const today = new Date().toLocaleDateString("en-GB");
   selectedAccountTypeData.subGroup.forEach(element => {
     const coordinates = getCoordinates(element.displayText);
     switch (element.code) {
