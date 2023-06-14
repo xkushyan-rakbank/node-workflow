@@ -6,6 +6,7 @@ import Alert from "./components/Alert";
 let reminderTimer = EXPIRY_INTERVAL;
 export const SessionExpiration = memo(props => {
   const location = useLocation();
+
   const [isExpired, setExpiredStatus] = useState(false);
   const [showReminder, setShowReminder] = useState(false);
   const [expiryTime, setExpiryTime] = useState(reminderTimer);
@@ -14,7 +15,7 @@ export const SessionExpiration = memo(props => {
 
   useEffect(() => {
     setExtendExpiryTime(true);
-  }, [props.uploadDocuments]);
+  }, [props.uploadDocuments, props.webToMobile.overallStatus]);
 
   useEffect(() => {
     if (props.expired === true) {

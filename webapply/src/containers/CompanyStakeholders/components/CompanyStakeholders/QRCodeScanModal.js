@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
 import { CircularProgress } from "@material-ui/core";
 import cx from "classnames";
@@ -23,9 +23,12 @@ import {
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
 import { useStyles } from "./styled";
 import { log } from "../../../../utils/loggger";
+import { setOverallStatus } from "../../../../store/actions/webToMobile";
 
 export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const prospectId = useSelector(getProspectId);
   const fullname = useSelector(getApplicantFullName);
   const header = useSelector(getAuthorizationHeader);
@@ -144,11 +147,14 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const pollQRcode = async () => {
     const webToMobileRefId = linkData?.webToMobileRefId;
     const pollResp = await webToMobile.checkQRCodeStatus(prospectId, webToMobileRefId, header);
-    pollResp
-      ? setPollStatus(pollResp)
-      : setPollStatus(prevState => {
-          setPollStatus(prevState);
-        });
+    if (pollResp) {
+      dispatch(setOverallStatus(pollResp));
+    } else {
+      setPollStatus(prevState => {
+        dispatch(setOverallStatus(prevState));
+        setPollStatus(prevState);
+      });
+    }
   };
 
   useEffect(() => {

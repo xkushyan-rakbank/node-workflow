@@ -6,12 +6,14 @@ import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { logout } from "../../store/actions/loginForm";
 import { setAccessToken } from "../../store/actions/appConfig";
 import { SessionExpiration } from "./SessionExpiration";
+import { getwtmSessionDetails } from "../../store/selectors/webToMobile";
 
 const mapStateToProps = state => ({
   expired: getExpired(state),
   authToken: getAuthToken(state),
   isAuthenticated: checkLoginStatus(state),
-  uploadDocuments: getUploadDocuments(state)
+  uploadDocuments: getUploadDocuments(state),
+  webToMobile: getwtmSessionDetails(state)
 });
 
 const mapDispatchToProps = {
