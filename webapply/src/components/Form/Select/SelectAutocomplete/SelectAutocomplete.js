@@ -52,11 +52,7 @@ const SelectAutocompleteBase = ({
     : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
   return (
-    <FormControl
-      classes={{ root: classes.formControlRoot }}
-      className="formControl"
-      variant="outlined"
-    >
+    <FormControl classes={{ root: classes.formControlRoot }} variant="outlined">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}

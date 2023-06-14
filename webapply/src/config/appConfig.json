@@ -147,25 +147,25 @@
     "companyAdditionalInfo": {
       "topCustomers": [
         {
-          "name": "Walk-in Customer",
+          "name": "",
           "country": "AE"
         }
       ],
       "topSuppliers": [
         {
-          "name": "Walk-in Customer",
+          "name": "",
           "country": "AE"
         }
       ],
       "anualCashDepositAED": "",
       "annualFinTurnoverAmtInAED": "",
-      "addressInfo": [
+      "addressInfo":[ 
         {
           "typeOfAddress": "virtual",
           "officeAddressDifferent": "",
-          "addressDetails": {
+          "addressDetails": [{
             "addressFieldDesc": "",
-            "addressLine1": "",
+            "addressLine1": "", 
             "addressLine2": "",
             "addressLine3": "",
             "addressLine4": "",
@@ -177,7 +177,7 @@
               "spaceType": "",
               "others": ""
             }
-          }
+          }]
         }
       ],
       "isDesignatedBusinessCategory": false,
@@ -387,7 +387,8 @@
     },
     "documents": {
       "companyDocuments": [],
-      "stakeholdersDocuments": null
+      "stakeholdersDocuments": null,
+      "companyAddressProof": null
     },
     "prospectStatusInfo": {
       "statusType": "",

@@ -438,9 +438,12 @@ export function* uploadDocuments({ payload }) {
     const documentList = yield select(getDocumentsList);
     // find the respective document section from documentList
     const documentSection = documentList[payload.documentSection];
+    const documentSectionArray = documentSection.length
+      ? documentSection
+      : documentSection.documents;
     const uploadedDocuments = [];
     for (let docPath in payload.docs) {
-      const docItem = documentSection.find(doc => doc.documentTitle === docPath);
+      const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
         let generateName = [

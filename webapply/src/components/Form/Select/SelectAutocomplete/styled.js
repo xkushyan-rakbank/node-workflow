@@ -3,7 +3,14 @@ import { emphasize } from "@material-ui/core/styles/colorManipulator";
 
 export const useStyles = makeStyles(theme => ({
   formControlRoot: {
-    zIndex: "auto"
+    zIndex: "auto",
+    width: "100%",
+    margin: "12px 0 24px",
+    display: "flex",
+    position: "relative",
+    "& > div": {
+      margin: 0
+    }
   },
   input: {
     display: "flex",
