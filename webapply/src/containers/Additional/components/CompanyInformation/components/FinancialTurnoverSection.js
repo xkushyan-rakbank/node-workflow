@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 
 import { createMuiTheme } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
@@ -114,43 +114,37 @@ export const FinancialTurnoverSection = () => {
             handlePercentCalculation(values.annualFinTurnoverAmtInAED, newValue);
           }
           return (
-            <Form>
-              <Accordion
-                title={"Financial turnover"}
-                id={"financialTurnover"}
-                isCompleted={isValid}
-              >
+            <Accordion title={"Financial turnover"} id={"financialTurnover"} isCompleted={isValid}>
+              <Field
+                name="annualFinTurnoverAmtInAED"
+                label="Annual financial turnover (AED)"
+                placeholder="Annual financial turnover (AED)"
+                path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
+                component={Input}
+                InputProps={{
+                  inputComponent: FormatDecimalNumberInput,
+                  inputProps: { maxLength: 9, tabIndex: 0 },
+                  onBlur: e => handleChange(e, handleBlur)
+                }}
+              />
+              <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
+              <DisclaimerNote text="Just drag the slider to provide your cash and non-cash component" />
+              <SliderThemeProvider theme={FinancialSlider}>
                 <Field
-                  name="annualFinTurnoverAmtInAED"
-                  label="Annual financial turnover (AED)"
-                  placeholder="Annual financial turnover (AED)"
-                  path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
-                  component={Input}
-                  InputProps={{
-                    inputComponent: FormatDecimalNumberInput,
-                    inputProps: { maxLength: 9, tabIndex: 0 },
-                    onBlur: e => handleChange(e, handleBlur)
-                  }}
+                  name="anualCashDepositAED"
+                  path="prospect.companyAdditionalInfo.anualCashDepositAED"
+                  value={values?.anualCashDepositAED ? parseFloat(values.anualCashDepositAED) : 0}
+                  component={Slider}
+                  max={parseInt(values?.annualFinTurnoverAmtInAED)}
+                  onChange={handleSliderChange}
+                  disabled={!values?.annualFinTurnoverAmtInAED}
                 />
-                <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
-                <DisclaimerNote text="Just drag the slider to provide your cash and non-cash component" />
-                <SliderThemeProvider theme={FinancialSlider}>
-                  <Field
-                    name="anualCashDepositAED"
-                    path="prospect.companyAdditionalInfo.anualCashDepositAED"
-                    value={values?.anualCashDepositAED ? parseFloat(values.anualCashDepositAED) : 0}
-                    component={Slider}
-                    max={parseInt(values?.annualFinTurnoverAmtInAED)}
-                    onChange={handleSliderChange}
-                    disabled={!values?.annualFinTurnoverAmtInAED}
-                  />
-                </SliderThemeProvider>
-                <div>
-                  <span className={classes.percentageText}>{percent}</span>•
-                  <span className={classes.amountText}>{amount} AED</span>
-                </div>
-              </Accordion>
-            </Form>
+              </SliderThemeProvider>
+              <div>
+                <span className={classes.percentageText}>{percent}</span>•
+                <span className={classes.amountText}>{amount} AED</span>
+              </div>
+            </Accordion>
           );
         }}
       </Formik>
