@@ -108,7 +108,10 @@ export const AutoSaveField = ({
     if (decisionKey) {
       setFieldValue(decisionKey, value);
     }
-    makeDecisions && makeDecisions(value);
+    //TODO : its a temporary workaround for handling invalid date, need to move the decision invocation in to onBlur
+    if (!(e?.getTime && isNaN(e?.getTime()))) {
+      makeDecisions && makeDecisions(value);
+    }
   };
 
   return (
