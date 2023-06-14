@@ -85,6 +85,8 @@ export const FinancialTurnoverSection = () => {
     setAmount(totalAmount.toFixed(2));
   }
 
+  const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
+
   return (
     <>
       <Formik
@@ -93,6 +95,7 @@ export const FinancialTurnoverSection = () => {
         validateOnChange={true}
         validateOnBlur={true}
         validateOnMount={true}
+        isInitialValid={initialIsValid}
         onSubmit={() => {}}
       >
         {({ setFieldValue, values, isValid, handleBlur }) => {
