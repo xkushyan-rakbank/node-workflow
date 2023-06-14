@@ -31,6 +31,7 @@ const InputBase = ({
   showCharLength = false,
   lemniskCall = value => {},
   fieldDescription,
+  showCounter = true,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -81,7 +82,7 @@ const InputBase = ({
 
       {infoTitle && <InfoTitle title={infoTitle} />}
 
-      {(fieldDescription || InputProps.inputProps?.maxLength) && (
+      {showCounter && (fieldDescription || InputProps.inputProps?.maxLength) && (
         <FieldDescription
           title={fieldDescription}
           fieldValueLength={typeof field.value === "string" ? field.value.length : 0}

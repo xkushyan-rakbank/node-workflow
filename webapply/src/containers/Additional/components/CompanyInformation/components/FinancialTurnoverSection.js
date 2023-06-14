@@ -121,6 +121,7 @@ export const FinancialTurnoverSection = () => {
                 placeholder="Annual financial turnover (AED)"
                 path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
                 component={Input}
+                showCounter={false}
                 InputProps={{
                   inputComponent: FormatDecimalNumberInput,
                   inputProps: { maxLength: 9, tabIndex: 0 },
