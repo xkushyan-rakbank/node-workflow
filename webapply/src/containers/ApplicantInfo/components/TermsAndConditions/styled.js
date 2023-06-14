@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
   },
   noTitlePaper: {
     width: "1239px",
-    minHeight: "845px",
+    height: "min(845px, 90vh)",
     borderRadius: "20px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
@@ -24,7 +24,7 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "20px 40px",
+    padding: "10px 30px",
     gap: "8px",
     [theme.breakpoints.down("sm")]: {
       padding: "0px "
@@ -60,12 +60,12 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   dialogActions: {
-    padding: "20px",
+    padding: "10px",
     justifyContent: "center",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     borderRadius: "0px 0px 20px 20px",
     [theme.breakpoints.down("sm")]: {
-      padding: "10px"
+      padding: "5px"
     }
   },
   buttonSpacing: {
