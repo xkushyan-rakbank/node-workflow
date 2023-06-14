@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
@@ -12,9 +12,16 @@ import { AutoSaveField as Field, Input, NumberFormat } from "../../../../../comp
 import { useStyles } from "../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 
+function calculatePercent(number, total) {
+  return (number / total) * 100;
+}
+function calculateAmountFromPercentage(percent, total) {
+  return (percent * total) / 100;
+}
+
 const FormatDecimalNumberInput = props => <NumberFormat allowNegative={false} {...props} />;
 
-export const FinancialTurnoverSection = props => {
+export const FinancialTurnoverSection = () => {
   const classes = useStyles();
 
   const FinancialSlider = createMuiTheme({
@@ -55,6 +62,9 @@ export const FinancialTurnoverSection = props => {
     }
   });
 
+  const [percent, setPercent] = useState(0);
+  const [amount, setAmount] = useState(0);
+
   const initialValues = {
     annualFinTurnoverAmtInAED: "",
     anualCashDepositAED: ""
@@ -65,6 +75,15 @@ export const FinancialTurnoverSection = props => {
       .required("This field is required")
       .min(1000.01, "This amount should be greater than 1000.00 AED")
   });
+
+  function handlePercentCalculation(annualAmt, sliderValue) {
+    const annualFinTurnoverAmtInAED = parseFloat(annualAmt);
+    const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED);
+    const totalAmount = calculateAmountFromPercentage(percentValue, annualFinTurnoverAmtInAED);
+
+    setPercent(percentValue.toFixed());
+    setAmount(totalAmount.toFixed(2));
+  }
 
   return (
     <>
@@ -80,15 +99,16 @@ export const FinancialTurnoverSection = props => {
           function handleChange(ev, blur) {
             const { value } = ev.target;
             const annualTurnover = value ? parseFloat(value).toFixed(2) : "";
-            if (!annualTurnover) {
-              setFieldValue("anualCashDepositAED", "");
-            }
+            setFieldValue("anualCashDepositAED", "");
+            setPercent(0);
+            setAmount(0);
             setFieldValue("annualFinTurnoverAmtInAED", annualTurnover?.toString());
             blur(ev);
           }
 
           function handleSliderChange(ev, newValue) {
             setFieldValue("anualCashDepositAED", newValue.toString());
+            handlePercentCalculation(values.annualFinTurnoverAmtInAED, newValue);
           }
           return (
             <Form>
@@ -115,20 +135,17 @@ export const FinancialTurnoverSection = props => {
                   <Field
                     name="anualCashDepositAED"
                     path="prospect.companyAdditionalInfo.anualCashDepositAED"
-                    value={values?.anualCashDepositAED ? parseInt(values.anualCashDepositAED) : 0}
+                    value={values?.anualCashDepositAED ? parseFloat(values.anualCashDepositAED) : 0}
                     component={Slider}
+                    max={parseInt(values?.annualFinTurnoverAmtInAED)}
                     onChange={handleSliderChange}
                     disabled={!values?.annualFinTurnoverAmtInAED}
-                    InputProps={{
-                      max: parseInt(values?.annualFinTurnoverAmtInAED),
-                      type: "number"
-                    }}
                   />
                 </SliderThemeProvider>
-                {/* <div>
-          <span className={classes.percentageText}>35%</span>•
-          <span className={classes.amountText}>350,000 AED</span>
-        </div> */}
+                <div>
+                  <span className={classes.percentageText}>{percent}</span>•
+                  <span className={classes.amountText}>{amount} AED</span>
+                </div>
               </Accordion>
             </Form>
           );
