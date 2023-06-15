@@ -11,6 +11,7 @@ import { AutoSaveField as Field, Input, NumberFormat } from "../../../../../comp
 
 import { useStyles } from "../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
+import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 
 function calculatePercent(number, total) {
   return (number / total) * 100;
@@ -72,8 +73,9 @@ export const FinancialTurnoverSection = () => {
 
   const additionalCompanyInfoSchema = Yup.object({
     annualFinTurnoverAmtInAED: Yup.number()
-      .required("This field is required")
-      .min(1000.01, "This amount should be greater than 1000.00 AED")
+      .typeError(getInvalidMessage("Annual financial turnover (AED)"))
+      .required(getRequiredMessage("Annual financial turnover (AED)"))
+      .min(1000.01, "The amount should be greater than 1000.00 AED")
   });
 
   function handlePercentCalculation(annualAmt, sliderValue) {
