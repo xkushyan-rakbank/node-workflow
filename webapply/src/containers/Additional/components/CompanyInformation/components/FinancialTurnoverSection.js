@@ -73,17 +73,17 @@ export const FinancialTurnoverSection = () => {
 
   const additionalCompanyInfoSchema = Yup.object({
     annualFinTurnoverAmtInAED: Yup.number()
-      .typeError(getInvalidMessage("Annual financial turnover (AED)"))
+      .typeError(getInvalidMessage("The amount should be greater than 1000.00 AED"))
       .required(getRequiredMessage("Annual financial turnover (AED)"))
       .min(1000.01, "The amount should be greater than 1000.00 AED")
   });
 
   function handlePercentCalculation(annualAmt, sliderValue) {
     const annualFinTurnoverAmtInAED = parseFloat(annualAmt);
-    const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED);
+    const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED).toFixed();
     const totalAmount = calculateAmountFromPercentage(percentValue, annualFinTurnoverAmtInAED);
 
-    setPercent(percentValue.toFixed());
+    setPercent(percentValue);
     setAmount(totalAmount.toFixed(2));
   }
 
@@ -144,7 +144,7 @@ export const FinancialTurnoverSection = () => {
                 />
               </SliderThemeProvider>
               <div>
-                <span className={classes.percentageText}>{percent}</span>•
+                <span className={classes.percentageText}>{percent}%</span>•
                 <span className={classes.amountText}>{amount} AED</span>
               </div>
             </Accordion>

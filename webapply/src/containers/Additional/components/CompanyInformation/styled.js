@@ -76,12 +76,14 @@ export const useStyles = makeStyles(theme => ({
   percentageText: {
     color: "#1F1F1F",
     fontSize: "12px",
-    fontWeight: 400
+    fontWeight: 400,
+    marginRight: "6px"
   },
   amountText: {
     color: "#1F1F1F",
     fontSize: "12px",
-    fontWeight: 600
+    fontWeight: 600,
+    marginLeft: "6px"
   },
   definitionLink: {
     fontWeight: 400,
