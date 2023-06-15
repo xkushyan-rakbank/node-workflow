@@ -9,13 +9,8 @@ export const checkDocumentSideValid = (optionalData, personalNumber) => {
 };
 
 export const checkDocumentValid = node => {
-  if (!node?.documentNumber) {
+  if (node?.documentMismatch[0]?.value === "0") {
     return false;
   }
-  const isDifferentSide = checkDocumentSideValid(
-    node?.optionalData[0]?.value,
-    node?.personalNumber[0]?.value
-  );
-  const documentNumber = node?.documentNumber[0]?.value;
-  return isDifferentSide && node?.documentNumber.every(x => x?.value === documentNumber);
+  return true;
 };
