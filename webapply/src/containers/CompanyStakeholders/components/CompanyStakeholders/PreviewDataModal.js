@@ -4,10 +4,12 @@ import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import CloseIcon from "@material-ui/icons/Close";
+import { isDesktop } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
 import { getKyc } from "../../../../store/selectors/kyc";
+import { PdfPreview } from "../StakeholderTermsAndConditions/PDFconverter";
 
 function getModalStyle() {
   return {
@@ -15,6 +17,27 @@ function getModalStyle() {
     left: "50%",
     transform: "translate(-50%, -50%)"
   };
+}
+
+const base64toBlob = data => {
+  // Cut the prefix `data:application/pdf;base64` from the raw base 64
+  const base64WithoutPrefix = data.substr("data:application/pdf;base64,".length);
+
+  const bytes = atob(base64WithoutPrefix);
+  let length = bytes.length;
+  let out = new Uint8Array(length);
+
+  while (length--) {
+    out[length] = bytes.charCodeAt(length);
+  }
+
+  return new Blob([out], { type: "application/pdf" });
+};
+
+function getFileLink(base64String) {
+  const blob = base64toBlob(base64String);
+  const url = URL.createObjectURL(blob);
+  return url;
 }
 
 export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => {
@@ -30,13 +53,17 @@ export const PreviewDataModal = ({ isOpen, handleClose, type, previewData }) => 
   const context = link =>
     isPDF(link) ? (
       <div className={classes.previewImg}>
-        <object
-          data={link ? link + "#toolbar=0" : ""}
-          aria-label="Passport"
-          onContextMenu={e => e.preventDefault()}
-          className={classes.previewPDF}
-          type="application/pdf"
-        ></object>
+        {isDesktop ? (
+          <object
+            data={link ? link + "#toolbar=0" : ""}
+            aria-label="Passport"
+            onContextMenu={e => e.preventDefault()}
+            className={classes.previewPDF}
+            type="application/pdf"
+          ></object>
+        ) : (
+          <PdfPreview file={getFileLink(link)} pages={[link]} />
+        )}
       </div>
     ) : (
       <div
