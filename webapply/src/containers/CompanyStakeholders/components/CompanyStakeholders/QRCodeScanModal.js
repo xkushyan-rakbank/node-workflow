@@ -148,6 +148,7 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
     const webToMobileRefId = linkData?.webToMobileRefId;
     const pollResp = await webToMobile.checkQRCodeStatus(prospectId, webToMobileRefId, header);
     if (pollResp) {
+      setPollStatus(pollResp);
       dispatch(setOverallStatus(pollResp));
     } else {
       setPollStatus(prevState => {
@@ -182,7 +183,10 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
       handleClose();
     }
     if (linkData) {
-      refreshPollInterval = setInterval(pollQRcode, process.env.REACT_APP_WTM_SCHEDULER_INTERVAL);
+      refreshPollInterval = setInterval(
+        pollQRcode,
+        process.env.REACT_APP_WTM_SCHEDULER_INTERVAL || 5000
+      );
     }
 
     return () => {
