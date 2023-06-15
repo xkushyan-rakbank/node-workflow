@@ -8,7 +8,7 @@ import routes from "../../routes";
 import { createSyncSession } from "../../store/actions/webToMobile";
 import { getwtmSessionDetails } from "../../store/selectors/webToMobile";
 import { log } from "../../utils/loggger";
-import { getProspectId } from "../../store/selectors/appConfig";
+import { getApplicantFullName, getProspectId } from "../../store/selectors/appConfig";
 
 const SESSION_TYPES = {
   STAKEHOLDER_KYC: "STAKEHOLDER_KYC"
@@ -21,6 +21,7 @@ export const WebToMobilePage = ({ getKycStatus }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const prospectId = useSelector(getProspectId);
+  const fullName = useSelector(getApplicantFullName);
 
   const searchParams = new URLSearchParams(location.search);
   const tempToken = searchParams.get("tt");
@@ -35,7 +36,7 @@ export const WebToMobilePage = ({ getKycStatus }) => {
 
   // authenticate then load the documents and redirect to stakeholderpage
   useEffect(() => {
-    if (sessionData.sessionType === SESSION_TYPES.STAKEHOLDER_KYC && prospectId) {
+    if (sessionData.sessionType === SESSION_TYPES.STAKEHOLDER_KYC && prospectId && fullName) {
       getKycStatus()
         .then(() => {
           setIsLoading(false);
@@ -45,7 +46,7 @@ export const WebToMobilePage = ({ getKycStatus }) => {
           log(error);
         });
     }
-  }, [sessionData, prospectId]);
+  }, [sessionData, prospectId, fullName]);
 
   return <WebToMobileComponent loading={isLoading} />;
 };
