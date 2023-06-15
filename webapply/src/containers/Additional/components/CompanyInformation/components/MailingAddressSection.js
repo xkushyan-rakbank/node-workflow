@@ -20,7 +20,7 @@ import {
   MAX_FLAT_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
 } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
-import { ALPHANUMERIC_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
+import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 
@@ -69,7 +69,8 @@ export const MailingAddressSection = () => {
     }),
     poBox: Yup.string()
       .required(getRequiredMessage("PO Box Number"))
-      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("PO Box Number")),
+      .max(10, "Maximum ${max} characters allowed")
+      .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
     emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City")),
     addressProof: Yup.mixed()
       .test("required", getRequiredMessage("Proof of address"), file => {
@@ -126,7 +127,11 @@ export const MailingAddressSection = () => {
       {({ setFieldValue, values, touched, setTouched, isValid, dirty, ...props }) => {
         return (
           <div>
-            <Accordion title={"Mailing address"} id={"mailingAddress"} isCompleted={isValid}>
+            <Accordion
+              title={"Mailing address"}
+              id={"mailingAddress"}
+              isCompleted={initialIsValid && isValid}
+            >
               <Grid container spacing={3}>
                 <Grid item sm={12} xs={12}>
                   <div className={classes.virtualOrPhysicalAddressSelection}>
@@ -205,10 +210,8 @@ export const MailingAddressSection = () => {
                     }
                     label="Emirate or city"
                     placeholder="Emirate or city"
-                    InputProps={{
-                      inputProps: { tabIndex: 1 }
-                    }}
-                    component={Input}
+                    datalistId="emirateCity"
+                    component={SelectAutocomplete}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12}>

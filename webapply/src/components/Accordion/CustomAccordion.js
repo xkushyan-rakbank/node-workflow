@@ -82,8 +82,8 @@ export const Accordion = ({ id, title, children, showDefinition, isCompleted = f
   const [expanded, setExpanded] = useState("");
 
   const transitionProps = {
-    mountOnEnter: true,
-    unmountOnExit: true
+    mountOnEnter: false,
+    unmountOnExit: false
   };
 
   const handleChange = panel => (event, newExpanded) => {
