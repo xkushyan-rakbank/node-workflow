@@ -127,11 +127,7 @@ export const MailingAddressSection = () => {
       {({ setFieldValue, values, touched, setTouched, isValid, dirty, ...props }) => {
         return (
           <div>
-            <Accordion
-              title={"Mailing address"}
-              id={"mailingAddress"}
-              isCompleted={initialIsValid && isValid}
-            >
+            <Accordion title={"Mailing address"} id={"mailingAddress"} isCompleted={isValid}>
               <Grid container spacing={3}>
                 <Grid item sm={12} xs={12}>
                   <div className={classes.virtualOrPhysicalAddressSelection}>
