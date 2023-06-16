@@ -5,8 +5,6 @@ import { log } from "../../utils/loggger";
 import { RECEIVE_APPCONFIG_SUCCESS, updateProspect, updateProspectId } from "../actions/appConfig";
 import { KycTransactionSuccess } from "../actions/kyc";
 import {
-  clearSession,
-  // scheduledAction,
   setSessionData,
   START_SCHEDULER,
   STOP_SCHEDULER,
@@ -69,8 +67,6 @@ function* schedulerWorker({ payload, type }) {
   while (true) {
     yield call(updateStatus, payload);
     if (type === STOP_SCHEDULER) {
-      yield call(updateStatus, payload);
-      yield put(clearSession);
       break;
     }
     yield delay(process.env.REACT_APP_WTM_SCHEDULER_INTERVAL || 5000);

@@ -164,6 +164,7 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
       if (currentTime.getTime() - lastModifiedTime.getTime() > tenSeconds) {
         dispatch(stopScheduler(WTM_STATUS.FINISHED));
         setPollStatus(WTM_STATUS.FINISHED);
+        return;
       }
     }
 
