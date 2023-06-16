@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -53,12 +53,20 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
     );
   };
 
+  const isError = useCallback(() => {
+    const atleastOneError = values?.topCustomers?.length === 1 && errors?.topCustomers?.[0];
+    const morethanOneError =
+      errors?.topCustomers && errors?.topCustomers.filter(eachItem => eachItem);
+    return (
+      atleastOneError ||
+      (morethanOneError && morethanOneError.length === values.topCustomers.length)
+    );
+  }, [errors, values]);
+
   return (
     <>
       <p className={classes.sectionLabel}>Top customers (up to 3)</p>
-      {errors?.topCustomers?.[0] && (
-        <ErrorInfo text={"You should add one top customer to continue. "} />
-      )}
+      {isError() && <ErrorInfo text={"You should add one top customer to continue. "} />}
       <FieldArray
         name="topCustomers"
         render={arrayHelpers => (

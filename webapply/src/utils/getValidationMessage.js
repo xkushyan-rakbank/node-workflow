@@ -1,8 +1,8 @@
 export const getRequiredNotTextInputMessage = fieldName => `${fieldName} is not filled`;
 
-export const getRequiredMessage = fieldName => `${fieldName} is blank`;
+export const getRequiredMessage = fieldName => `${fieldName} is required`;
 
-export const getInvalidMessage = fieldName => `${fieldName} is invalid`;
+export const getInvalidMessage = fieldName => `Please enter a valid ${fieldName}`;
 
 export const getMinDateMessage = fieldName => `${fieldName} should not be less than 01/01/1900`;
 
