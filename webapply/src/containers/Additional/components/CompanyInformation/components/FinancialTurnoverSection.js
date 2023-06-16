@@ -20,7 +20,14 @@ function calculateAmountFromPercentage(percent, total) {
   return (percent * total) / 100;
 }
 
-const FormatDecimalNumberInput = props => <NumberFormat allowNegative={false} {...props} />;
+const FormatDecimalNumberInput = props => (
+  <NumberFormat
+    allowNegative={false}
+    thousandsGroupStyle="thousand"
+    thousandSeparator=","
+    {...props}
+  />
+);
 
 export const FinancialTurnoverSection = () => {
   const classes = useStyles();
@@ -78,13 +85,19 @@ export const FinancialTurnoverSection = () => {
       .min(1000.01, "The amount should be greater than 1000.00 AED")
   });
 
+  const numberWithCommas = x => {
+    let numberX = x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return numberX;
+  };
+
   function handlePercentCalculation(annualAmt, sliderValue) {
     const annualFinTurnoverAmtInAED = parseFloat(annualAmt);
     const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED).toFixed();
     const totalAmount = calculateAmountFromPercentage(percentValue, annualFinTurnoverAmtInAED);
 
     setPercent(percentValue);
-    setAmount(totalAmount.toFixed(2));
+    const formattedAmount = numberWithCommas(totalAmount.toFixed(2));
+    setAmount(formattedAmount);
   }
 
   const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
@@ -103,7 +116,7 @@ export const FinancialTurnoverSection = () => {
         {({ setFieldValue, values, isValid, handleBlur }) => {
           function handleChange(ev, blur) {
             const { value } = ev.target;
-            const annualTurnover = value ? parseFloat(value).toFixed(2) : "";
+            const annualTurnover = value ? parseFloat(value.replaceAll(",", "")).toFixed(2) : "";
             setFieldValue("anualCashDepositAED", "");
             setPercent(0);
             setAmount(0);
