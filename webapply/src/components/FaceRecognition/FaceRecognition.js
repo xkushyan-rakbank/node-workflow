@@ -16,6 +16,7 @@ import {
 } from "../../store/actions/kyc";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
 import { getCompanyTradeLicenseNumber } from "../../store/selectors/appConfig";
+import { OverlayLoader } from "../Loader";
 
 const localizedMessagesLiveness = {
   record_button: "Record",
@@ -120,6 +121,7 @@ export const FaceRecognition = ({
   const classes = useStyles();
 
   const {
+    isLoading,
     isLivenessCheckReady,
     livenessCheckError,
     startLivenessCheck,
@@ -209,6 +211,12 @@ export const FaceRecognition = ({
           <ErrorOutlineIcon className={classes.errorIcon} />
           {identityValidation}
         </div>
+      )}
+      {isLoading && (
+        <OverlayLoader
+          open={isLoading}
+          text={"Scanning your documents....this might take few moments"}
+        />
       )}
     </Fragment>
   );
