@@ -1,8 +1,8 @@
-import { all, call, delay, put, select, takeLatest } from "redux-saga/effects";
+import { all, call, delay, put, select, take, takeLatest } from "redux-saga/effects";
 import { webToMobile } from "../../api/apiClient";
 import { configureKYCTransactionAPIClient } from "../../api/axiosConfig";
 import { log } from "../../utils/loggger";
-import { updateProspect, updateProspectId } from "../actions/appConfig";
+import { RECEIVE_APPCONFIG_SUCCESS, updateProspect, updateProspectId } from "../actions/appConfig";
 import { KycTransactionSuccess } from "../actions/kyc";
 import {
   clearSession,
@@ -17,6 +17,8 @@ import { getwtmSessionDetails } from "../selectors/webToMobile";
 
 function* SyncSession({ payload }) {
   try {
+    //waiting for app config be loaded before invoking the authentication
+    yield take(RECEIVE_APPCONFIG_SUCCESS);
     const response = yield call(webToMobile.wtmSyncSession, { tempToken: payload });
     const {
       data: {
@@ -71,7 +73,7 @@ function* schedulerWorker({ payload, type }) {
       yield put(clearSession);
       break;
     }
-    yield delay(process.env.REACT_APP_WTM_SCHEDULER_INTERVAL);
+    yield delay(process.env.REACT_APP_WTM_SCHEDULER_INTERVAL || 5000);
   }
 }
 

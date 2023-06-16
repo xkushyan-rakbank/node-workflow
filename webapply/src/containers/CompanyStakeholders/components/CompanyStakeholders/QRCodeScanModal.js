@@ -23,7 +23,11 @@ import {
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
 import { useStyles } from "./styled";
 import { log } from "../../../../utils/loggger";
-import { setOverallStatus } from "../../../../store/actions/webToMobile";
+import {
+  setOverallStatus,
+  setSessionData,
+  stopScheduler
+} from "../../../../store/actions/webToMobile";
 
 export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => {
   const classes = useStyles();
@@ -147,9 +151,25 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const pollQRcode = async () => {
     const webToMobileRefId = linkData?.webToMobileRefId;
     const pollResp = await webToMobile.checkQRCodeStatus(prospectId, webToMobileRefId, header);
-    if (pollResp) {
-      setPollStatus(pollResp);
-      dispatch(setOverallStatus(pollResp));
+    dispatch(setSessionData(pollResp));
+    const status = pollResp.status;
+    if (status === WTM_STATUS.IN_PROGRESS) {
+      const lastModifiedTime = new Date(
+        `${pollResp.lastModDateTime}`.replace(/^(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")
+      );
+
+      const currentTime = new Date();
+      const tenSeconds = 10 * 1000;
+
+      if (currentTime.getTime() - lastModifiedTime.getTime() > tenSeconds) {
+        dispatch(stopScheduler(WTM_STATUS.FINISHED));
+        setPollStatus(WTM_STATUS.FINISHED);
+      }
+    }
+
+    if (status) {
+      setPollStatus(status);
+      dispatch(setOverallStatus(status));
     } else {
       setPollStatus(prevState => {
         dispatch(setOverallStatus(prevState));

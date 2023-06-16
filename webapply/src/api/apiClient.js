@@ -380,7 +380,7 @@ export const webToMobile = {
         ...header
       })
       .then(response => {
-        return response.data.status;
+        return response.data;
       })
       .catch(err => console.log("error while calling poll", err.message))
 };
