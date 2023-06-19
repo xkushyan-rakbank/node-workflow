@@ -7,14 +7,11 @@ import {
 } from "@material-ui/core";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import React, { useState } from "react";
-import { isDesktop } from "react-device-detect";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import { useStyles } from "./styled";
 import { Button } from "../../../../components/Buttons/SubmitButton";
 import { PdfPreview } from "./pdfPreview";
-
-const smallerLaptopWidth = 1280;
 
 export default function TermsAndConditionsDialog({
   open,
@@ -100,22 +97,7 @@ export default function TermsAndConditionsDialog({
           </div>
         </div>
 
-        <div style={{ height: `${height}px` }}>
-          {window.innerWidth > smallerLaptopWidth && isDesktop ? (
-            <object
-              type="application/pdf"
-              data={`${kfsUrl}#toolbar=0&view=FitH`}
-              aria-label="kfs"
-              onContextMenu={e => e.preventDefault()}
-              className={classes.previewPDF}
-              border="0"
-              width="100%"
-              height="100%"
-            ></object>
-          ) : (
-            <PdfPreview file={kfsUrl} />
-          )}
-        </div>
+        <PdfPreview file={kfsUrl} />
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <div className={classes.actionContainer}>
