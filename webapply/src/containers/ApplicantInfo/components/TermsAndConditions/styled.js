@@ -50,27 +50,51 @@ export const useStyles = makeStyles(theme => ({
   content: {
     height: "400px",
     padding: "0px 60px",
+    marginTop: "40px",
     "& .react-pdf__Page__canvas": {
       width: "100% !important",
       height: "100% !important",
       overflow: "hidden"
     },
     [theme.breakpoints.down("sm")]: {
-      padding: "5px"
+      marginTop: "10px",
+      padding: "20px"
     }
   },
   dialogActions: {
     padding: "10px",
     justifyContent: "center",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-    borderRadius: "0px 0px 20px 20px",
-    [theme.breakpoints.down("sm")]: {
-      padding: "5px"
-    }
+    borderRadius: "0px 0px 20px 20px"
   },
   buttonSpacing: {
     "& > * + *": {
       marginLeft: "20px"
+    }
+  },
+  iconSize: {
+    width: "24px",
+    height: "24px"
+  },
+  customTooltip: {
+    zIndex: "9999"
+  },
+  importantInfo: {
+    backgroundColor: "#ee1d23",
+    borderRadius: "10px",
+    color: "white",
+    padding: "10px",
+    marginBottom: "10px"
+  },
+  impInfoTitle: {
+    fontWeight: 600
+  },
+  title: {
+    fontWeight: 600
+  },
+  iconButton: {
+    [theme.breakpoints.down("sm")]: {
+      marginRight: "-10px"
     }
   }
 }));
