@@ -57,8 +57,9 @@ export const useStyles = makeStyles(theme => ({
       overflow: "hidden"
     },
     [theme.breakpoints.down("sm")]: {
-      marginTop: "10px",
-      padding: "20px"
+      padding: "5px",
+      overflowX: "hidden",
+      marginTop: "10px"
     }
   },
   dialogActions: {
