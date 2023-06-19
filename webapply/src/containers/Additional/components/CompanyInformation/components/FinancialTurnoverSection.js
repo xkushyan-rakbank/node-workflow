@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useSelector } from "react-redux";
 
 import { createMuiTheme } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
@@ -12,6 +13,7 @@ import { AutoSaveField as Field, Input, NumberFormat } from "../../../../../comp
 import { useStyles } from "../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { getCompanyAdditionalInfo } from "../../../../../store/selectors/appConfig";
 
 function calculatePercent(number, total) {
   return (number / total) * 100;
@@ -31,6 +33,7 @@ const FormatDecimalNumberInput = props => (
 
 export const FinancialTurnoverSection = () => {
   const classes = useStyles();
+  const { annualFinTurnoverAmtInAED, anualCashDepositAED } = useSelector(getCompanyAdditionalInfo);
 
   const FinancialSlider = createMuiTheme({
     overrides: {
@@ -70,12 +73,9 @@ export const FinancialTurnoverSection = () => {
     }
   });
 
-  const [percent, setPercent] = useState(0);
-  const [amount, setAmount] = useState(0);
-
   const initialValues = {
-    annualFinTurnoverAmtInAED: "",
-    anualCashDepositAED: ""
+    annualFinTurnoverAmtInAED,
+    anualCashDepositAED
   };
 
   const additionalCompanyInfoSchema = Yup.object({
@@ -90,15 +90,18 @@ export const FinancialTurnoverSection = () => {
     return numberX;
   };
 
-  function handlePercentCalculation(annualAmt, sliderValue) {
+  const calculateAmountPercentage = useCallback(values => {
+    const annualAmt = values.annualFinTurnoverAmtInAED || 0;
+    const sliderValue = values.anualCashDepositAED || 0;
+    if (!(annualAmt && sliderValue)) {
+      return { formattedAmount: 0, percentValue: 0 };
+    }
     const annualFinTurnoverAmtInAED = parseFloat(annualAmt);
     const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED).toFixed();
     const totalAmount = calculateAmountFromPercentage(percentValue, annualFinTurnoverAmtInAED);
-
-    setPercent(percentValue);
     const formattedAmount = numberWithCommas(totalAmount.toFixed(2));
-    setAmount(formattedAmount);
-  }
+    return { formattedAmount, percentValue };
+  });
 
   const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
 
@@ -118,15 +121,12 @@ export const FinancialTurnoverSection = () => {
             const { value } = ev.target;
             const annualTurnover = value ? parseFloat(value.replaceAll(",", "")).toFixed(2) : "";
             setFieldValue("anualCashDepositAED", "");
-            setPercent(0);
-            setAmount(0);
             setFieldValue("annualFinTurnoverAmtInAED", annualTurnover?.toString());
             blur(ev);
           }
 
           function handleSliderChange(ev, newValue) {
             setFieldValue("anualCashDepositAED", newValue.toString());
-            handlePercentCalculation(values.annualFinTurnoverAmtInAED, newValue);
           }
           return (
             <Accordion title={"Financial turnover"} id={"financialTurnover"} isCompleted={isValid}>
@@ -157,8 +157,13 @@ export const FinancialTurnoverSection = () => {
                 />
               </SliderThemeProvider>
               <div>
-                <span className={classes.percentageText}>{percent}%</span>•
-                <span className={classes.amountText}>{amount} AED</span>
+                <span className={classes.percentageText}>
+                  {calculateAmountPercentage(values).percentValue}%
+                </span>
+                •
+                <span className={classes.amountText}>
+                  {calculateAmountPercentage(values).formattedAmount} AED
+                </span>
               </div>
             </Accordion>
           );
