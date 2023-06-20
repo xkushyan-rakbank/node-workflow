@@ -14,8 +14,8 @@ import useDecisions from "../../../../../utils/useDecisions";
 export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { label: topSupplierNameLabel } = useDecisions(
-    "prospect.companyAdditionalInfo.topSuppliers[0].name"
+  const { label: topSupplierTitle } = useDecisions(
+    "prospect.companyAdditionalInfo.topSuppliers.title"
   );
 
   const addSupplier = (arrayHelpers, arrayLength) => {
@@ -49,7 +49,9 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
 
   return (
     <div className={classes.supplierSection}>
-      <p className={classes.sectionLabel}>Top suppliers (up to 3)</p>
+      <p className={classes.sectionLabel}>
+        {topSupplierTitle ? topSupplierTitle : "Top suppliers (up to 3)"}
+      </p>
       <FieldArray
         name="topSuppliers"
         render={arrayHelpers => (
@@ -59,9 +61,9 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
                 <Grid item sm={6} xs={12}>
                   <Field
                     name={`topSuppliers[${index}].name`}
-                    label={topSupplierNameLabel || "Supplier name"}
+                    label={"Supplier name"}
                     path={`prospect.companyAdditionalInfo.topSuppliers[${index}].name`}
-                    placeholder={topSupplierNameLabel || "Supplier name"}
+                    placeholder={"Supplier name"}
                     InputProps={{
                       inputProps: { maxLength: 255, tabIndex: 1 }
                     }}

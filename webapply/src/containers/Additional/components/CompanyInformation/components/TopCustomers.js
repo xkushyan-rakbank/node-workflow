@@ -16,8 +16,8 @@ import useDecisions from "../../../../../utils/useDecisions";
 export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { label: topCustomersNameLabel } = useDecisions(
-    "prospect.companyAdditionalInfo.topCustomers[0].name"
+  const { label: topCustomersTitle } = useDecisions(
+    "prospect.companyAdditionalInfo.topCustomers.title"
   );
 
   const addCustomers = (arrayHelpers, arrayLength) => {
@@ -65,7 +65,9 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
 
   return (
     <>
-      <p className={classes.sectionLabel}>Top customers (up to 3)</p>
+      <p className={classes.sectionLabel}>
+        {topCustomersTitle ? topCustomersTitle : "Top customers (up to 3)"}
+      </p>
       {isError() && <ErrorInfo text={"You should add one top customer to continue. "} />}
       <FieldArray
         name="topCustomers"
@@ -77,9 +79,9 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
                   <Grid item sm={6} xs={12}>
                     <Field
                       name={`topCustomers[${index}].name`}
-                      label={topCustomersNameLabel || "Customer name"}
+                      label={"Customer name"}
                       path={`prospect.companyAdditionalInfo.topCustomers[${index}].name`}
-                      placeholder={topCustomersNameLabel || "Customer name"}
+                      placeholder={"Customer name"}
                       InputProps={{
                         inputProps: { maxLength: 255, tabIndex: 1 }
                       }}

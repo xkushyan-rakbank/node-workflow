@@ -22,6 +22,8 @@
         "prospect.organizationInfo.licenseOrCOIExpiryDate": {"showByDefault": true},
         "prospect.prospectDocuments.companyDocument.moa": {"showByDefault": false},
         "prospect.companyAdditionalInfo.topCustomers[0].name": {"label": ""},
-        "prospect.companyAdditionalInfo.topCustomers[0].country": {"label": ""}
+        "prospect.companyAdditionalInfo.topCustomers[0].country": {"label": ""},
+        "prospect.companyAdditionalInfo.topSuppliers.title": { "label": "" },
+        "prospect.companyAdditionalInfo.topCustomers.title": { "label": "" }
     }
 }
