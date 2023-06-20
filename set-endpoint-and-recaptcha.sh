@@ -13,6 +13,7 @@ then
     echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
     echo 'REACT_APP_RECAPTCHA_ENABLE=N' >> webapply/.env.production
     echo 'REACT_APP_ENCRYPTION_ENABLE=N' >> webapply/.env.production
+    echo 'REACT_APP_DISABLE_GTM=Y' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "release" ];
     then
         echo 'REACT_APP_API_PATH=https://quickapplyuat.rakbank.ae' > webapply/.env.production
@@ -26,6 +27,7 @@ then
         echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
+        echo 'REACT_APP_DISABLE_GTM=Y' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "replica" ];
     then
         echo 'REACT_APP_API_PATH=https://quickapplyuat.rakbank.ae:9443' > webapply/.env.production
@@ -39,6 +41,7 @@ then
         echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
+        echo 'REACT_APP_DISABLE_GTM=Y' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "prod" ];
     then
         echo 'REACT_APP_API_PATH=https://quickapply.rakbank.ae' > webapply/.env.production
