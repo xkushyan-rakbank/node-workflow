@@ -14,31 +14,24 @@ export const authorityType = [
 export const formStepper = [
   {
     step: 1,
-    title: "Basic Information",
+    title: "Create your account",
     path: routes.applicantInfo,
     relatedPath: [routes.verifyOtp]
   },
-  { step: 2, title: "Company Information", path: routes.companyInfo },
+  { step: 2, title: "Company details", path: routes.companyInfo },
   {
     step: 3,
-    title: "Company Stakeholders",
+    title: "Stakeholder details",
     path: routes.stakeholdersInfo,
     relatedPath: [routes.stakeholdersPreview, routes.StakeholderTermsAndConditions]
   },
   {
     step: 4,
-    title: "Additional",
+    title: "Supporting information",
     path: routes.additionalInfoComponent,
     relatedPath: [routes.additionalCompanyInformation]
   },
-  { step: 5, title: "Final Questions", path: routes.finalQuestions },
-  { step: 6, title: "Upload Documents", path: routes.uploadDocuments },
-  {
-    step: 7,
-    title: "Select Services",
-    path: routes.selectServices,
-    relatedPath: [routes.SubmitApplication]
-  }
+  { step: 5, title: "Account preferences", path: routes.finalQuestions }
 ];
 
 export const agentFormStepper = [
