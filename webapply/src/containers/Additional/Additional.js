@@ -6,8 +6,8 @@ import { useLayoutParams } from "../FormLayout";
 import { formStepper } from "../../constants";
 
 export const Additional = () => {
-    useFormNavigation([false, true, formStepper]);
-    useLayoutParams(false, true);
-    useViewId(true);
+  useFormNavigation([false, true, formStepper]);
+  useLayoutParams(false, true);
+  useViewId(true);
   return <AdditionalInfoComponent />;
 };

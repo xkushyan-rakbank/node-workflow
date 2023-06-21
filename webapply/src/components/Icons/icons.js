@@ -10,7 +10,7 @@ import { ReactComponent as CheckedRadio } from "../../assets/icons/checked.svg";
 import { ReactComponent as UnCheckedRadio } from "../../assets/icons/unchecked.svg";
 import { ReactComponent as CheckOutline } from "../../assets/icons/check_outline_ic.svg";
 import { ReactComponent as CheckedIcon } from "../../assets/icons/on.svg";
-import { ReactComponent as UncheckedIcon } from "../../assets/icons/off.svg";
+import { ReactComponent as UncheckedIcon } from "../../assets/icons/Rectangle.svg";
 import { ReactComponent as Brief } from "../../assets/icons/brief.svg";
 import { ReactComponent as AccountDetails } from "../../assets/icons/account_details.svg";
 import { ReactComponent as SigningPreferences } from "../../assets/icons/signing_preferences.svg";

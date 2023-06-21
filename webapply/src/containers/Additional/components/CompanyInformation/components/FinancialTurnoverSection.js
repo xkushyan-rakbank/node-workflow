@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useSelector } from "react-redux";
 
 import { createMuiTheme } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
@@ -10,7 +10,7 @@ import { ThemeProvider as SliderThemeProvider } from "@material-ui/styles";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { AutoSaveField as Field, Input, NumberFormat } from "../../../../../components/Form";
 
-import { useStyles } from "../styled";
+import { useStyles } from "../../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { getCompanyAdditionalInfo } from "../../../../../store/selectors/appConfig";

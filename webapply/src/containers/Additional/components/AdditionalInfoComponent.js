@@ -12,8 +12,8 @@ import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 export default function AdditionalInfoComponent() {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
-  const navigateTo = () => {
-    pushHistory(routes.additionalCompanyInformation);
+  const navigateTo = path => {
+    pushHistory(path);
   };
   return (
     <div className={classes.container}>
@@ -23,7 +23,10 @@ export default function AdditionalInfoComponent() {
           info="We just need some details about your business and the people involved"
           smallInfo
         />
-        <div className={classes.btnContainer} onClick={() => navigateTo()}>
+        <div
+          className={classes.btnContainer}
+          onClick={() => navigateTo(routes.additionalCompanyInformation)}
+        >
           <div className={classes.additionalSelectionButton}>
             <div className={classes.buttonText}>
               <div className={classes.title}>Company information</div>
@@ -44,7 +47,10 @@ export default function AdditionalInfoComponent() {
             </div>
           </div>
         </div>
-        <div className={classes.btnContainer}>
+        <div
+          className={classes.btnContainer}
+          onClick={() => navigateTo(routes.additionalStakeholderInformation)}
+        >
           <div className={classes.additionalSelectionButton}>
             <div className={classes.buttonText}>
               <div className={classes.title}>Stakeholder information</div>

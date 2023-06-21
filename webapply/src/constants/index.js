@@ -200,6 +200,7 @@ export const CREAT_PROSPECT_KEYS = [
   "organizationInfo",
   "orgKYCDetails",
   "companyAdditionalInfo",
+  "stakeholderAdditionalInfo",
   "signatoryInfo",
   "channelServicesInfo",
   "documents",

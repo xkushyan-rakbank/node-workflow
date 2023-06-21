@@ -119,3 +119,29 @@ export const virtualOrPhysicalAddressOptions = [
     label: "I have a Physical office"
   }
 ];
+
+export const YesNoListForTaxPayInAnotherCountry = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: "yes",
+    label: "Yes, I pay taxes in another country"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: "no",
+    label: "No, I don’t pay taxes in another country"
+  }
+];
+
+export const reasonForTINNotAvailableOptions = [
+  {
+    code:
+      "The country/jurisdiction where the account holder is resident does not issue TIN to its residents",
+    value:
+      "The country/jurisdiction where the account holder is resident does not issue TIN to its residents",
+    label:
+      "The country/jurisdiction where the account holder is resident does not issue TIN to its residents"
+  }
+];

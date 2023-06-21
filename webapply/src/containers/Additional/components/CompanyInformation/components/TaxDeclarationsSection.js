@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Formik } from "formik";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
-import { useStyles } from "../styled";
+import { useStyles } from "../../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 import { ActivePassiveOptions, YesNoList } from "../../../../../constants/options";
 import { AutoSaveField as Field, InlineRadioGroup, Input } from "../../../../../components/Form";

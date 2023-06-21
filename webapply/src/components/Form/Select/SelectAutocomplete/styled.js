@@ -33,7 +33,9 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   chip: {
-    margin: `${theme.spacing(0.5)}px ${theme.spacing(0.25)}px`
+    margin: `${theme.spacing(0.5)}px ${theme.spacing(0.25)}px`,
+    border: "1px solid #000000",
+    fontSize: "14px"
   },
   chipFocused: {
     backgroundColor: emphasize(
@@ -85,6 +87,13 @@ export const useStyles = makeStyles(theme => ({
     "& .MuiCheckbox-root": {
       marginLeft: "auto"
     }
+  },
+  customMenuItem: {
+    minHeight: 70,
+    borderRadius: 10
+  },
+  customSeclectCheckbox: {
+    marginRight: "0"
   }
 }));
 

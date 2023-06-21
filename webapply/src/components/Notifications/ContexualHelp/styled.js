@@ -20,10 +20,10 @@ const arrowGenerator = color => {
     "&[x-placement*='right'] $tooltip": {
       "&::before": {
         left: 0,
-        top: "20%",
+        top: "30%",
         marginLeft: "0",
         transform: "rotate(45deg)",
-        borderWidth: "0.3em"
+        borderWidth: "5px"
       }
     },
     "&[x-placement*='left'] $tooltip": {
@@ -42,13 +42,14 @@ const arrowGenerator = color => {
 export const useStyles = makeStyles(theme => ({
   tooltip: {
     position: "relative",
-    backgroundColor: theme.palette.common.white,
-    color: "rgba(0, 0, 0, 0.87)",
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-    maxWidth: "232px",
+    backgroundColor: "#E8E8E8",
+    color: "#000000",
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.15);",
+    fontSize: "10px",
+    lineHeight: "16px",
     whiteSpace: "pre-line",
-    padding: "10px",
+    padding: "5px 8px",
+    borderRadius: "4px",
     "&::before": {
       content: "''",
       position: "absolute",
@@ -58,12 +59,11 @@ export const useStyles = makeStyles(theme => ({
       bottom: "-2em",
       left: "50%",
       boxSizing: "border-box",
-      border: "0.5em solid black",
+      border: "5px solid #E8E8E8",
       transformOrigin: "0 0",
       transform: "rotate(-45deg)",
-      boxShadow: "-1px 1px 3px 0 rgba(0, 0, 0, 0.1)",
-      borderColor: "transparent transparent #fff #fff"
+      borderColor: "transparent transparent #E8E8E8 #E8E8E8"
     }
   },
-  popper: arrowGenerator(theme.palette.grey[700])
+  popper: arrowGenerator("#E8E8E8")
 }));

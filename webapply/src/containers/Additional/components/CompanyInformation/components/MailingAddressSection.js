@@ -14,7 +14,7 @@ import {
 import { Upload } from "../../../../../components/Upload";
 import { MOA_FILE_SIZE, TL_ACCEPTED_FILE_TYPES } from "../../../../../constants";
 import { TL_COI_FILE_SIZE } from "../../../../../constants";
-import { useStyles } from "../styled";
+import { useStyles } from "../../styled";
 import { virtualOrPhysicalAddressOptions } from "../../../../../constants/options";
 import {
   MAX_FLAT_NUMBER_LENGTH,

@@ -89,10 +89,12 @@ export const useStyles = makeStyles(theme => ({
     color: "#8D0C10"
   },
   fieldDescription: {
+    display: "flex",
     fontSize: "12px",
     fontWeight: "400",
     color: "#757575",
-    marginBottom: "8px"
+    marginBottom: "8px",
+    width: "fit-content"
   },
   contentWrapper: {
     [theme.breakpoints.down("xs")]: {
@@ -101,5 +103,11 @@ export const useStyles = makeStyles(theme => ({
       flexDirection: "column",
       alignItems: "center"
     }
+  },
+  uploadInfoIcon: {
+    fill: "#909093",
+    width: "16px",
+    height: "16px",
+    marginLeft: "8px"
   }
 }));

@@ -7,12 +7,11 @@ const useStyles = makeStyles({
   wrapper: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
     fontSize: "12px",
     fontWeight: "normal",
     lineHeight: 1.33,
     color: "#86868b",
-    marginTop: "10px",
+    marginTop: "4px!important",
     ".formControl &": {
       marginTop: "10px"
     },
@@ -42,11 +41,13 @@ const InfoTitleBase = ({
   charLength,
   totalLength,
   iconName = ICONS.info,
+  showIcon = false,
   ...props
 }) => {
   const classes = useStyles(props);
   return (
     <div className={classes.wrapper}>
+      {showIcon && <IconStyled name={iconName} />}
       <div>{title}</div>
     </div>
   );

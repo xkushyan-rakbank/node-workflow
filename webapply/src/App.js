@@ -62,6 +62,10 @@ const AdditionalCompanyInformation = lazy(() =>
   import("./containers/Additional/components/CompanyInformation")
 );
 
+const AdditionalStakeholderInformation = lazy(() =>
+  import("./containers/Additional/components/StakeholderInformation")
+);
+
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -131,6 +135,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.additionalCompanyInformation}
                 component={AdditionalCompanyInformation}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.additionalStakeholderInformation}
+                component={AdditionalStakeholderInformation}
               />
               <ProspectProtectedRoute
                 exact

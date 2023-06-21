@@ -9,13 +9,6 @@ import { CustomRadioButton } from "../RadioButton/CustomRadioButton";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
 import { InfoTitle } from "../../InfoTitle";
 
-export const CheckboxesWrapper = styled("div")({
-  display: "flex",
-  flexWrap: "wrap",
-  alignItems: "flex-start",
-  alignContent: "start"
-});
-
 const useStyles = makeStyles({
   formControlRoot: {
     "& > div:last-child": {
@@ -41,8 +34,16 @@ export const CheckboxGroup = ({
   contextualHelpProps = {},
   disabled = false,
   customIcon = true,
-  typeOfCheckbox = "checkbox"
+  typeOfCheckbox = "checkbox",
+  isInlineStyle = true
 }) => {
+  const CheckboxesWrapper = styled("div")({
+    display: "flex",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    alignContent: "start",
+    flexDirection: isInlineStyle ? "row" : "column"
+  });
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
 
@@ -63,6 +64,7 @@ export const CheckboxGroup = ({
                   onSelect={onSelect}
                   classes={extendedClasses}
                   customIcon={customIcon}
+                  color="primary"
                 />
               ))}
               {textArea}

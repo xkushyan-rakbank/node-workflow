@@ -10,7 +10,9 @@ import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
 import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
 import useDecisions from "../../utils/useDecisions";
-import { ErrorMessage } from "./../Notifications";
+import { ContexualHelp, ErrorMessage } from "./../Notifications";
+import { ICONS, Icon } from "../Icons";
+import { InfoTitle } from "../InfoTitle";
 
 export const Upload = ({
   accept,
@@ -26,6 +28,11 @@ export const Upload = ({
   ErrorMessageComponent = ErrorMessage,
   showUploadSuccessIcon = true,
   selectMultipleFiles = false,
+  contextualHelpText,
+  contextualHelpProps,
+  showUploadInfoIcon = false,
+  infoTitle,
+  infoIcon = false,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
@@ -49,7 +56,15 @@ export const Upload = ({
   return (
     visible && (
       <Fragment>
-        <div className={classes.fieldDescription}>{fieldDescription}</div>
+        <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
+          <div className={classes.fieldDescription}>
+            {fieldDescription}
+            {showUploadInfoIcon && (
+              <Icon name={ICONS.info} className={classes.uploadInfoIcon} alt="info" />
+            )}
+          </div>
+        </ContexualHelp>
+
         <div className={classes.uplaodContainer}>
           <div className={classes.main} {...getRootProps()}>
             <FileIcon
@@ -128,6 +143,7 @@ export const Upload = ({
             </Button>
           )}
         </div>
+        {infoTitle && <InfoTitle title={infoTitle} showIcon={infoIcon} />}
         {isError && <ErrorMessageComponent error={errorMessage} />}
       </Fragment>
     )

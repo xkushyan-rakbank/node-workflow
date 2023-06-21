@@ -31,6 +31,8 @@ const SelectAutocompleteBase = ({
   contextualHelpText,
   contextualHelpProps,
   onChange = value => setFieldValue(field.name, value),
+  customCheckbox = false,
+  infoIcon = false,
   ...props
 }) => {
   const classes = useStyles({
@@ -66,6 +68,7 @@ const SelectAutocompleteBase = ({
           value={renderValue || ""}
           onChange={handleChange}
           isMulti={multiple}
+          customCheckbox={customCheckbox}
           isDisabled={disabled}
           closeMenuOnSelect={!multiple}
           tabSelectsValue={!multiple}
@@ -88,7 +91,7 @@ const SelectAutocompleteBase = ({
           getOptionLabel={extractLabel}
         />
       </ContexualHelp>
-      {infoTitle && <InfoTitle title={infoTitle} />}
+      {infoTitle && <InfoTitle title={infoTitle} showIcon={infoIcon} />}
       {isError && <ErrorMessage error={errorMessage} />}
     </FormControl>
   );

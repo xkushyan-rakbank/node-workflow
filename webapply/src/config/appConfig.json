@@ -187,6 +187,45 @@
       "globalintermediaryId": "",
       "isCompanyUSEntity": false
     },
+    "stakeholderAdditionalInfo": {
+      "backgroundDetails": {
+        "highestEducationAttained": "",
+        "employmentStatus": "",
+        "editedMothersMaidenName": "",
+        "linkedInURL": "",
+        "backgroundInfo": ""
+      },
+      "sourceOfIncomeDetails": {
+        "sourceOfIncome": [],
+        "IBANType": "",
+        "IBAN": "",
+        "companyNameforSOF": ""
+      },
+      "residentialAddress": {
+        "addressDetails": [{
+          "addressFieldDesc": "",
+          "addressLine1": "", 
+          "addressLine2": "",
+          "addressLine3": "",
+          "addressLine4": "",
+          "country": "AE",
+          "emirateCity": "",
+          "poBox": "",
+          "preferredAddress": "",
+          "typeOfSpaceOccupied": {
+            "spaceType": "",
+            "others": ""
+          }
+        }]
+      },
+      "taxDetails": {
+        "taxesInAnotherCountry": "",
+        "country": "",
+        "TIN": "",
+        "reasonForTINNotAvailable": "",
+        "remarks": ""
+      }
+    },
     "signatoryInfo": [
       {
         "screeningInfo": {

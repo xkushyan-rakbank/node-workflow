@@ -1,8 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
+import CloseIcon from "@material-ui/icons/Close";
 
 import { TextField, MenuItem, Chip, Checkbox } from "@material-ui/core";
+import { CustomCheckbox } from "../../Checkbox/CustomCheckbox";
 
 const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef} {...props} />;
 
@@ -37,7 +39,9 @@ export const Option = ({
     buttonRef={innerRef}
     selected={isFocused}
     component="div"
-    className={selectProps.classes.menuItem}
+    className={classNames(selectProps.classes.menuItem, {
+      [selectProps.classes.customMenuItem]: selectProps.customCheckbox
+    })}
     style={{
       fontWeight: isSelected ? 500 : 400
     }}
@@ -45,7 +49,14 @@ export const Option = ({
   >
     {children}
 
-    {isMulti && <Checkbox color="default" checked={isSelected} />}
+    {isMulti && !selectProps.customCheckbox && <Checkbox color="default" checked={isSelected} />}
+    {isMulti && selectProps.customCheckbox && (
+      <CustomCheckbox
+        color="default"
+        checked={isSelected}
+        classes={{ root: selectProps.classes.customSeclectCheckbox }}
+      />
+    )}
   </MenuItem>
 );
 
@@ -62,11 +73,13 @@ const IndicatorSeparator = ({ selectProps }) => (
 
 export const MultiValue = ({ selectProps, children, isFocused, removeProps }) => (
   <Chip
+    variant="outlined"
     tabIndex={-1}
     label={children}
     className={classNames(selectProps.classes.chip, {
       [selectProps.classes.chipFocused]: isFocused
     })}
+    deleteIcon={<CloseIcon style={{ width: "14px", height: "14px", fill: "#000000" }} />}
     onDelete={event => {
       removeProps.onClick();
       removeProps.onMouseDown(event);

@@ -7,7 +7,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
-import { useStyles } from "../styled";
+import { useStyles } from "../../styled";
 import { ErrorInfo } from "../../../../../components/InfoNote/ErrorInfo";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { BUSINESS_RELATIONSHIPS } from "../../../../../constants";
