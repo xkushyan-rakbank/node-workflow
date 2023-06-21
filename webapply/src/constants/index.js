@@ -493,8 +493,8 @@ export const kfsAccountsUrls = {
     [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/f4f5cf53-4828-4ec0-a908-c796f8e6bee9/KFS059+Islamic+RAKStarter+Account+-+170623+-NoSignature.pdf?MOD=AJPERES`
   },
   [accountNames.currentAccount]: {
-    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/1076e454-6b09-4c09-9ea8-abbe3e084fbb/KFS017+Current+Account+310523+-+No+Signature.pdf?MOD=AJPERES`,
-    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/75926671-ab36-4e46-9aa7-4772aaee34a9/KFS035+Islamic+Current+Account+17062023+-+no+Signature.pdf?MOD=AJPERES`
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/1076e454-6b09-4c09-9ea8-abbe3e084fbb/KFS047+Business+Current+Account+21062023+-+NoSignature.pdf?MOD=AJPERES`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/75926671-ab36-4e46-9aa7-4772aaee34a9/KFS107+Islamic+Business+Current+Account+21062023+-+NoSignature.pdf?MOD=AJPERES`
   },
   [accountNames.elite]: {
     [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/a3dfc51e-88e2-48a3-a18d-3fb8e8fd6111/KFS083+Business+RAKelite+Account+15062023+-+NoSignature.pdf?MOD=AJPERES`,
