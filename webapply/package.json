@@ -9,7 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.47",
     "@material-ui/pickers": "^3.2.10",
-    "@rakbank/web-chat": "1.0.17",
+    "@rakbank/web-chat": "1.0.22",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "cometd": "7.0.7",
@@ -90,11 +90,6 @@
       "last 1 safari version",
       "ie 11"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm test"
-    }
   },
   "devDependencies": {
     "@redux-saga/core": "^1.1.3",
