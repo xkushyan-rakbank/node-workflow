@@ -50,7 +50,7 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
   return (
     <div className={classes.supplierSection}>
       <p className={classes.sectionLabel}>
-        {topSupplierTitle ? topSupplierTitle : "Top suppliers (up to 3)"}
+        {topSupplierTitle ? topSupplierTitle : "Top suppliers"} (up to 3)
       </p>
       <FieldArray
         name="topSuppliers"

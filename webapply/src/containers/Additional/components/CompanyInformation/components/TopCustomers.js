@@ -66,9 +66,15 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
   return (
     <>
       <p className={classes.sectionLabel}>
-        {topCustomersTitle ? topCustomersTitle : "Top customers (up to 3)"}
+        {topCustomersTitle ? topCustomersTitle : "Top customers"} (up to 3)
       </p>
-      {isError() && <ErrorInfo text={"You should add one top customer to continue. "} />}
+      {isError() && (
+        <ErrorInfo
+          text={`You should add one ${
+            topCustomersTitle ? "potential" : "top"
+          } customer to continue. `}
+        />
+      )}
       <FieldArray
         name="topCustomers"
         render={arrayHelpers => (
