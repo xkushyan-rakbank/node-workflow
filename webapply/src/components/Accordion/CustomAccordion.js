@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Collapse, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
@@ -77,7 +77,14 @@ const AccordionDetails = withStyles({
   }
 })(MuiAccordionDetails);
 
-export const Accordion = ({ id, title, children, showDefinition, isCompleted = false }) => {
+export const Accordion = ({
+  id,
+  title,
+  children,
+  showDefinition,
+  isCompleted = false,
+  setFormFieldValue
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState("");
 
@@ -89,6 +96,10 @@ export const Accordion = ({ id, title, children, showDefinition, isCompleted = f
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
+
+  useEffect(() => {
+    setFormFieldValue(id, isCompleted);
+  }, [id, isCompleted]);
 
   return (
     <div className="accordion">

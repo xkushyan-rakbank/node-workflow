@@ -31,7 +31,7 @@ const FormatDecimalNumberInput = props => (
   />
 );
 
-export const FinancialTurnoverSection = () => {
+export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const { annualFinTurnoverAmtInAED, anualCashDepositAED } = useSelector(getCompanyAdditionalInfo);
 
@@ -129,7 +129,12 @@ export const FinancialTurnoverSection = () => {
             setFieldValue("anualCashDepositAED", newValue.toString());
           }
           return (
-            <Accordion title={"Financial turnover"} id={"financialTurnover"} isCompleted={isValid}>
+            <Accordion
+              title={"Financial turnover"}
+              id={id}
+              setFormFieldValue={setFormFieldValue}
+              isCompleted={isValid}
+            >
               <Field
                 name="annualFinTurnoverAmtInAED"
                 label="Annual financial turnover (AED)"

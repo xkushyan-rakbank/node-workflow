@@ -24,13 +24,37 @@ export const AddCompanyInformation = ({ companyName, topCustomers, topSuppliers 
   useLayoutParams(false, true);
 
   const initialValues = {
-    addressInfo: ""
+    isBusinessRelationshipCompleted: "",
+    isFinancialTurnoverCompleted: "",
+    isMailingAddressCompleted: "",
+    isTaxDeclarationCompleted: ""
   };
+
+  const formValidationSchema = Yup.object().shape({
+    isBusinessRelationshipCompleted: Yup.boolean()
+      .required()
+      .oneOf([true]),
+    isFinancialTurnoverCompleted: Yup.boolean()
+      .required()
+      .oneOf([true]),
+    isMailingAddressCompleted: Yup.boolean()
+      .required()
+      .oneOf([true]),
+    isTaxDeclarationCompleted: Yup.boolean()
+      .required()
+      .oneOf([true])
+  });
 
   return (
     <>
-      <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={false}>
-        {props => {
+      <Formik
+        initialValues={initialValues}
+        validationSchema={formValidationSchema}
+        onSubmit={() => {}}
+        validateOnChange={true}
+        validateOnMount={true}
+      >
+        {({ isValid, ...props }) => {
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
@@ -50,15 +74,16 @@ export const AddCompanyInformation = ({ companyName, topCustomers, topSuppliers 
                     <BusinessRelationship
                       topCustomers={topCustomers}
                       topSuppliers={topSuppliers}
+                      id={"isBusinessRelationshipCompleted"}
                       {...props}
                     />
-                    <FinancialTurnoverSection />
-                    <MailingAddressSection />
-                    <TaxDeclarationsSection />
+                    <FinancialTurnoverSection id={"isFinancialTurnoverCompleted"} {...props} />
+                    <MailingAddressSection id={"isMailingAddressCompleted"} {...props} />
+                    <TaxDeclarationsSection id={"isTaxDeclarationCompleted"} {...props} />
                   </div>
                 </div>
                 <div className="linkContainer">
-                  <NextStepButton justify="flex-end" label="Continue" disabled={true} />
+                  <NextStepButton justify="flex-end" label="Continue" disabled={!isValid} />
                 </div>
               </div>
             </Form>

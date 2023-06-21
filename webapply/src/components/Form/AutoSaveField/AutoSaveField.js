@@ -11,6 +11,7 @@ import { OthersOption } from "../../../constants/options";
 import useDecisions from "../../../utils/useDecisions";
 
 export const AutoSaveField = ({
+  isVisible = true,
   name,
   path,
   decisionKey,
@@ -108,6 +109,7 @@ export const AutoSaveField = ({
     if (decisionKey) {
       setFieldValue(decisionKey, value);
     }
+    // eslint-disable-next-line max-len
     //TODO : its a temporary workaround for handling invalid date, need to move the decision invocation in to onBlur
     if (!(e?.getTime && isNaN(e?.getTime()))) {
       makeDecisions && makeDecisions(value);
@@ -115,7 +117,7 @@ export const AutoSaveField = ({
   };
 
   return (
-    visible && (
+    (visible || isVisible) && (
       <Field
         onChange={handleChange}
         disabled={!enabled}

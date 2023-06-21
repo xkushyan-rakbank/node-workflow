@@ -33,7 +33,12 @@ const additionalCompanyInfoSchema = Yup.object().shape({
   )
 });
 
-export const BusinessRelationship = ({ topCustomers, topSuppliers }) => {
+export const BusinessRelationship = ({
+  topCustomers,
+  topSuppliers,
+  setFieldValue: setFormFieldValue,
+  id
+}) => {
   const initialValues = {
     topCustomers,
     topSuppliers
@@ -52,7 +57,8 @@ export const BusinessRelationship = ({ topCustomers, topSuppliers }) => {
           <Form>
             <Accordion
               title={"Business relationships"}
-              id={"business"}
+              id={id}
+              setFormFieldValue={setFormFieldValue}
               isCompleted={initialIsValid && props.isValid}
             >
               <TopCustomers topCustomers={topCustomers} {...props} />

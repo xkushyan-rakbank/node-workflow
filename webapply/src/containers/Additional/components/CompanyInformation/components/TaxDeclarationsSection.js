@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { useStyles } from "../../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 import { ActivePassiveOptions, YesNoList } from "../../../../../constants/options";
-import { AutoSaveField as Field, InlineRadioGroup, Input } from "../../../../../components/Form";
+import {
+  AutoSaveField as Field,
+  GlobalIntermediaryID,
+  InlineRadioGroup
+} from "../../../../../components/Form";
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
 import useGeneratePdf from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/useGeneratePdf";
+import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
+import { GLOBAL_INTERMEDIARY_REGEX } from "../../../../../utils/validation";
+import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 
 const wcmData = {
   productVariantContent: [
@@ -17,10 +25,10 @@ const wcmData = {
     }
   ]
 };
-export const TaxDeclarationsSection = () => {
+export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
-  const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
+  const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
 
   const definitionContext = (
     <a
@@ -34,31 +42,83 @@ export const TaxDeclarationsSection = () => {
     </a>
   );
 
-  const taxDeclareValue = event => {
-    console.log("event-", event.target.value);
+  const createCompanyTaxRadioHandler = ({ values, setFieldValue }) => async event => {
+    const value = JSON.parse(event.target.value);
+    const target = event.target.name;
+    await setFieldValue(target, value);
+    const globalintermediaryId = values["globalintermediaryId"] || undefined;
+    await setFieldValue("globalintermediaryId", globalintermediaryId);
   };
+
+  const taxDeclarationSchema = Yup.object().shape({
+    dnfbpField: Yup.string()
+      .nullable()
+      .required()
+      .oneOf(
+        ["yes", "no"],
+        "Is your company dealing in Designated Business Categories is required"
+      ),
+    isCompanyUSEntity: Yup.string().required(),
+    isFinancialInstitution: Yup.string()
+      .nullable()
+      .required()
+      .oneOf(["yes", "no"], "Is your company a Financial Instituion is required"),
+    globalintermediaryId: Yup.string().when("isFinancialInstitution", {
+      is: "yes",
+      then: Yup.string()
+        .required(getRequiredMessage("GIIN (Global Intermediary Identification Number)"))
+        .matches(
+          GLOBAL_INTERMEDIARY_REGEX,
+          getInvalidMessage("GIIN (Global Intermediary Identification Number)")
+        )
+    }),
+    isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {
+      is: "no",
+      then: Yup.string()
+        .required()
+        .oneOf(
+          ["active", "passive"],
+          "Is your company a active or passive Non-Financial Instituion is required"
+        )
+    })
+  });
+
+  const initialValues = {
+    dnfbpField: "no",
+    isCompanyUSEntity: "no",
+    isFinancialInstitution: "na",
+    isNonFinancialInstitution: "active",
+    globalintermediaryId: ""
+  };
+
+  const initialIsValid = taxDeclarationSchema.isValidSync(initialValues);
 
   return (
     <Formik
-      initialValues={{
-        isDesignatedBusinessCategory: "",
-        isCompanyUSEntity: "",
-        isFinancialInstitution: "",
-        globalintermediaryId: "",
-        isNonFinancialInstitution: ""
-      }}
-      onSubmit={() => {}}
+      initialValues={initialValues}
+      validationSchema={taxDeclarationSchema}
       validateOnChange={false}
+      validateOnBlur={false}
+      isInitialValid={initialIsValid}
+      onSubmit={() => {}}
     >
-      {props => {
+      {({ values, setFieldValue, isValid }) => {
+        const companyTaxRadioFieldHandler = createCompanyTaxRadioHandler({
+          values,
+          setFieldValue
+        });
+        const hideGIINField = values.isFinancialInstitution === "yes";
+        const isCompanyUSEntityVisible = values.isCompanyUSEntity === "yes";
         return (
           <Form>
             <Accordion
               title={"Tax declarations"}
               showDefinition={definitionContext}
-              id={"taxDeclarations"}
+              id={id}
+              setFormFieldValue={setFormFieldValue}
+              isCompleted={isValid}
             >
-              <DisclaimerNote text="“RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support”" />
+              <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
               <div className={classes.taxDeclarationQuestionare}>
                 <label className={classes.sectionLabel}>
                   Is your company dealing in Designated Business Categories?
@@ -66,28 +126,31 @@ export const TaxDeclarationsSection = () => {
                 <Field
                   typeRadio
                   options={YesNoList}
-                  name="isDesignatedBusinessCategory"
-                  path={"prospect.companyAdditionalInfo.isDesignatedBusinessCategory"}
+                  name="dnfbpField"
+                  path={"prospect.companyAdditionalInfo.dnfbpField"}
                   component={InlineRadioGroup}
                   customIcon={false}
                   classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                  onChange={taxDeclareValue}
+                  onChange={companyTaxRadioFieldHandler}
                   radioColor="primary"
                 />
               </div>
-              <div className={classes.taxDeclarationQuestionare}>
-                <label className={classes.sectionLabel}>Is your company a US entity?</label>
-                <Field
-                  typeRadio
-                  options={YesNoList}
-                  name="isCompanyUSEntity"
-                  path={"prospect.companyAdditionalInfo.isCompanyUSEntity"}
-                  component={InlineRadioGroup}
-                  customIcon={false}
-                  classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                  radioColor="primary"
-                />
-              </div>
+              {isCompanyUSEntityVisible && (
+                <div className={classes.taxDeclarationQuestionare}>
+                  <label className={classes.sectionLabel}>Is your company a US entity?</label>
+                  <Field
+                    typeRadio
+                    options={YesNoList}
+                    name="isCompanyUSEntity"
+                    path={"prospect.companyAdditionalInfo.isCompanyUSEntity"}
+                    component={InlineRadioGroup}
+                    customIcon={false}
+                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                    onChange={companyTaxRadioFieldHandler}
+                    radioColor="primary"
+                  />
+                </div>
+              )}
               <div className={classes.taxDeclarationQuestionare}>
                 <label className={classes.sectionLabel}>
                   Is your company a financial institution?
@@ -100,36 +163,37 @@ export const TaxDeclarationsSection = () => {
                   component={InlineRadioGroup}
                   customIcon={false}
                   classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                  onChange={companyTaxRadioFieldHandler}
                   radioColor="primary"
                 />
               </div>
+              {hideGIINField && (
+                <div className={classes.taxDeclarationQuestionare}>
+                  <label className={classes.sectionLabel}>
+                    GIIN (Global Intermediary Identification Number)
+                  </label>
+                  <Field
+                    isVisible={hideGIINField}
+                    name="globalintermediaryId"
+                    path={"prospect.companyAdditionalInfo.globalintermediaryId"}
+                    label={"Enter GIIN"}
+                    component={GlobalIntermediaryID}
+                  />
+                </div>
+              )}
               <div className={classes.taxDeclarationQuestionare}>
-                <label className={classes.sectionLabel}>
-                  GIIN (Global Intermediary Identification Number)
-                </label>
-                <Field
-                  name="globalintermediaryId"
-                  path={"prospect.companyAdditionalInfo.globalintermediaryId"}
-                  label="Enter GIIN "
-                  placeholder="Enter GIIN "
-                  InputProps={{
-                    inputProps: { tabIndex: 1 }
-                  }}
-                  component={Input}
-                />
-              </div>
-              <div>
                 <label className={classes.sectionLabel}>
                   Is your company an active or passive non-financial entity (NFE)?
                 </label>
                 <Field
-                  typeRadio
-                  options={ActivePassiveOptions}
                   name="isNonFinancialInstitution"
                   path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
+                  typeRadio
+                  options={ActivePassiveOptions}
                   component={InlineRadioGroup}
                   customIcon={false}
                   classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                  onChange={companyTaxRadioFieldHandler}
                   radioColor="primary"
                 />
                 <p className={classes.activePassiveDesc}>

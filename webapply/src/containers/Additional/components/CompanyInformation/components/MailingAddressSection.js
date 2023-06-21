@@ -24,7 +24,7 @@ import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/vali
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 
-export const MailingAddressSection = () => {
+export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const [isVirtualAddress, setIsVirtualAddress] = useState(true);
   const dispatch = useDispatch();
@@ -127,7 +127,12 @@ export const MailingAddressSection = () => {
       {({ setFieldValue, values, touched, setTouched, isValid, dirty, ...props }) => {
         return (
           <div>
-            <Accordion title={"Mailing address"} id={"mailingAddress"} isCompleted={isValid}>
+            <Accordion
+              title={"Mailing address"}
+              id={id}
+              setFormFieldValue={setFormFieldValue}
+              isCompleted={isValid}
+            >
               <Grid container spacing={3}>
                 <Grid item sm={12} xs={12}>
                   <div className={classes.virtualOrPhysicalAddressSelection}>
