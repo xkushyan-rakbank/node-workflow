@@ -26,7 +26,6 @@ export const SourceOfIncome = () => {
         return (
           <Accordion title={"Source of income"} id={"sourceOfIncome"} isCompleted={true}>
             <>
-              <p className={classes.sectionLabel}>Education and employment</p>
               <Grid container>
                 <Grid item sm={12} xs={12}>
                   <Field
