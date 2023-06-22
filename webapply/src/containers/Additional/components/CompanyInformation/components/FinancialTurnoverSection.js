@@ -112,7 +112,6 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
         validationSchema={additionalCompanyInfoSchema}
         validateOnChange={true}
         validateOnBlur={true}
-        validateOnMount={true}
         isInitialValid={initialIsValid}
         onSubmit={() => {}}
       >

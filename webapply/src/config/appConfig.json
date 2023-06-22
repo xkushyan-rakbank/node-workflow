@@ -172,7 +172,7 @@
             "country": "AE",
             "emirateCity": "",
             "poBox": "",
-            "preferredAddress": "",
+            "preferredAddress": "Yes",
             "typeOfSpaceOccupied": {
               "spaceType": "",
               "others": ""
