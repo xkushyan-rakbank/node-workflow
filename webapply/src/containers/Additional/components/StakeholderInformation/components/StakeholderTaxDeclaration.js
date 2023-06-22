@@ -3,10 +3,7 @@ import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
 
 import useGeneratePdf from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/useGeneratePdf";
-import {
-  YesNoListForTaxPayInAnotherCountry,
-  reasonForTINNotAvailableOptions
-} from "../../../../../constants/options";
+import { YesNoListForTaxPayInAnotherCountry } from "../../../../../constants/options";
 import {
   CheckboxGroup,
   AutoSaveField as Field,
@@ -118,8 +115,7 @@ export const StakeholderTaxDeclarations = () => {
                       path={`${basePath}.reasonForTINNotAvailable`}
                       label="Select a reason if TIN is not available"
                       placeholder="Select a reason if TIN is not available"
-                      options={reasonForTINNotAvailableOptions}
-                      // datalistId="reasonForTINNotAvailable"
+                      datalistId="TINReason"
                       component={SelectAutocomplete}
                     />
                   </Grid>

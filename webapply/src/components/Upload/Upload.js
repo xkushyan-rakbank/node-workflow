@@ -7,13 +7,16 @@ import { getIn } from "formik";
 import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
-import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
+import FileUploadIcon from "../../assets/icons/fileUpload.svg";
 import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
 import useDecisions from "../../utils/useDecisions";
 import { ContexualHelp, ErrorMessage } from "./../Notifications";
 import { ICONS, Icon } from "../Icons";
 import { InfoTitle } from "../InfoTitle";
 
+const FileIcon = ({ height, width }) => (
+  <img src={FileUploadIcon} style={{ height, width }} alt="fileIconPng" />
+);
 export const Upload = ({
   accept,
   fileSize,
@@ -67,10 +70,7 @@ export const Upload = ({
 
         <div className={classes.uplaodContainer}>
           <div className={classes.main} {...getRootProps()}>
-            <FileIcon
-              style={{ height: FileIconHeight, width: FileIconWidth }}
-              alt="companyIconSvg"
-            />
+            <FileIcon height={FileIconHeight} width={FileIconWidth} alt="companyIconSvg" />
             <div className={classes.contentContainer}>
               <section>
                 <div className={classes.contentWrapper}>

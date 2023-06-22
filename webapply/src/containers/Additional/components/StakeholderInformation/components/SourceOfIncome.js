@@ -34,7 +34,7 @@ export const SourceOfIncome = () => {
                     customCheckbox
                     name="sourceOfIncome"
                     path={`${basePath}.sourceOfIncome`}
-                    datalistId="wealthType"
+                    datalistId="sourceOfIncome"
                     label={"Source of income"}
                     onChange={selectedValue => {
                       const withOption = selectedValue.includes("4");
@@ -60,12 +60,10 @@ export const SourceOfIncome = () => {
                   <Field
                     name="IBANType"
                     path={`${basePath}.IBANType`}
+                    datalistId="internationalBankAccountNumber"
                     label="IBAN type"
-                    placeholder="IBAN of your UAE bank"
-                    InputProps={{
-                      inputProps: { tabIndex: 1 }
-                    }}
-                    component={Input}
+                    placeholder="IBAN type"
+                    component={SelectAutocomplete}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12}>

@@ -134,14 +134,3 @@ export const YesNoListForTaxPayInAnotherCountry = [
     label: "No, I don’t pay taxes in another country"
   }
 ];
-
-export const reasonForTINNotAvailableOptions = [
-  {
-    code:
-      "The country/jurisdiction where the account holder is resident does not issue TIN to its residents",
-    value:
-      "The country/jurisdiction where the account holder is resident does not issue TIN to its residents",
-    label:
-      "The country/jurisdiction where the account holder is resident does not issue TIN to its residents"
-  }
-];
