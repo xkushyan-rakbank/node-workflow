@@ -1,33 +1,67 @@
 import React from "react";
 import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
+import * as Yup from "yup";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../../components/Form";
+import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
+import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 
 export const ResidentialAddress = () => {
-  const basePath = "prospect.stakeholderAdditionalInfo.residentialAddress.addressDetails[0]";
+  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
 
   const initialValues = {
     addressLine1: "",
     addressLine2: "",
-    addressLine3: "",
-    addressLine4: "",
     country: "AE",
     emirateCity: "",
     poBox: ""
   };
 
+  const residentialAddressSchema = Yup.object().shape({
+    country: Yup.string().required(),
+    addressLine1: Yup.string()
+      .required(getRequiredMessage("Flat, villa or building"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat, villa or building")),
+    addressLine2: Yup.string()
+      .required(getRequiredMessage("Street or location"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street or location")),
+    poBox: Yup.string()
+      .required(getRequiredMessage("P.O. Box number"))
+      .max(10, "Maximum ${max} characters allowed")
+      .matches(POBOX_REGEX, getInvalidMessage("P.O. Box number")),
+    emirateCity: Yup.string().required(getRequiredMessage("Emirate or city"))
+  });
+
   return (
-    <Formik initialValues={initialValues} onSubmit={() => {}}>
-      {isValid => {
+    <Formik
+      initialValues={initialValues}
+      validationSchema={residentialAddressSchema}
+      validateOnMount={true}
+      onSubmit={() => {}}
+    >
+      {({ setFieldValue, isValid }) => {
+        const isAccordionOpened = open => {
+          setFieldValue("opened", open);
+        };
         return (
-          <Accordion title={"Residential address"} id={"residentialAddress"} isCompleted={isValid}>
+          <Accordion
+            title={"Residential address"}
+            id={"residentialAddress"}
+            isCompleted={isValid}
+            isOpened={isAccordionOpened}
+          >
             <Grid container spacing={3}>
               <Grid item sm={6} xs={12}>
                 <Field
-                  name="addressLine3"
-                  path={`${basePath}.addressLine3`}
+                  name="addressLine1"
+                  path={`${basePath}.addressLine1`}
                   label="Flat, villa or building"
                   placeholder="Flat, villa or building"
                   InputProps={{
