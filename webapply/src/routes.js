@@ -31,7 +31,7 @@ export default {
   currentAccount: `${smeBaseName}/accounts/current-account`,
   personaSelection: `${smeBaseName}/accounts/:accountType/persona-selection`,
   webToMobile: `${smeBaseName}/wtm`,
-  additionalCompanyInformation: `${smeBaseName}/AdditionalInfo/additional-company-information`,
   // eslint-disable-next-line max-len
-  additionalStakeholderInformation: `${smeBaseName}/AdditionalInfo/additional-stakeholder-information`
+  additionalStakeholderInformation: `${smeBaseName}/AdditionalInfo/additional-stakeholder-information`,
+  additionalCompanyInformation: `${smeBaseName}/CompanyAdditionalInfo`
 };

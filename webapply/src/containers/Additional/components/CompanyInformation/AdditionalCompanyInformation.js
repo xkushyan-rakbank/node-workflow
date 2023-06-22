@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { Form, Formik } from "formik";
+import React, { useState } from "react";
 import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 
 import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../../FormLayout";
-import { formStepper } from "../../../../constants";
+import { formStepper, NEXT } from "../../../../constants";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";
 import { ICONS, Icon } from "../../../../components/Icons";
@@ -15,13 +16,23 @@ import { FinancialTurnoverSection } from "./components/FinancialTurnoverSection"
 import { MailingAddressSection } from "./components/MailingAddressSection";
 import { TaxDeclarationsSection } from "./components/TaxDeclarationsSection";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
+import { useViewId } from "../../../../utils/useViewId";
 
 import { useStyles } from "../styled";
 
-export const AddCompanyInformation = ({ companyName, topCustomers, topSuppliers }) => {
+export const AddCompanyInformation = ({
+  companyName,
+  topCustomers,
+  topSuppliers,
+  sendProspectToAPI
+}) => {
   const classes = useStyles();
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
+  useViewId(true);
+  const pushHistory = useTrackingHistory();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     isBusinessRelationshipCompleted: "",
@@ -45,12 +56,23 @@ export const AddCompanyInformation = ({ companyName, topCustomers, topSuppliers 
       .oneOf([true])
   });
 
+  const handleClickNextStep = () => {
+    setIsLoading(true);
+
+    return sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.additionalInfoComponent, true);
+      },
+      () => setIsLoading(false)
+    );
+  };
+
   return (
     <>
       <Formik
         initialValues={initialValues}
         validationSchema={formValidationSchema}
-        onSubmit={() => {}}
+        onSubmit={handleClickNextStep}
         validateOnChange={true}
         validateOnMount={true}
       >
@@ -83,7 +105,12 @@ export const AddCompanyInformation = ({ companyName, topCustomers, topSuppliers 
                   </div>
                 </div>
                 <div className="linkContainer">
-                  <NextStepButton justify="flex-end" label="Continue" disabled={!isValid} />
+                  <NextStepButton
+                    justify="flex-end"
+                    label="Continue"
+                    disabled={!isValid}
+                    isDisplayLoader={isLoading}
+                  />
                 </div>
               </div>
             </Form>
