@@ -302,6 +302,45 @@
           "tradeLicenseNo": "",
           "dateOfIncorporation": ""
         },
+        "stakeholderAdditionalInfo": {
+          "backgroundDetails": {
+            "highestEducationAttained": "",
+            "employmentStatus": "",
+            "editedMothersMaidenName": "",
+            "linkedInURL": "",
+            "backgroundInfo": ""
+          },
+          "sourceOfIncomeDetails": {
+            "sourceOfIncome": [
+              ""
+            ],
+            "IBANType": "",
+            "IBAN": "",
+            "companyNameforSOF": ""
+          },
+          "residentialAddress": {
+            "addressFieldDesc": "",
+            "preferredAddress": "",
+            "addressLine1": "",
+            "addressLine2": "",
+            "addressLine3": "",
+            "addressLine4": "",
+            "poBox": "",
+            "emirateCity": "",
+            "country": "",
+            "typeOfSpaceOccupied": {
+              "spaceType": "",
+              "others": ""
+            }
+          },
+          "taxDetails": {
+            "taxesInAnotherCountry": "",
+            "country": "",
+            "TIN": "",
+            "reasonForTINNotAvailable": "",
+            "remarks": ""
+          }
+        },
         "contactDetails": {
           "primaryMobileNo": "",
           "primaryMobCountryCode": "971",
