@@ -482,6 +482,26 @@ export const applicationOverviewRoutesMap = {
   }
 };
 
+export const kfsBaseUrl =
+  process.env.REACT_APP_SERVER_ENV === "production"
+    ? "https://rakbank.ae"
+    : "https://revamp.rakbank.ae";
+
+export const kfsAccountsUrls = {
+  [accountNames.starter]: {
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/9b01e5d1-5b66-41f7-82d2-2dd60d52bec9/KFS050+RAKStarter+Account+15062023+-+NoSignature.pdf?MOD=AJPERES`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/f4f5cf53-4828-4ec0-a908-c796f8e6bee9/KFS059+Islamic+RAKStarter+Account+-+170623+-NoSignature.pdf?MOD=AJPERES`
+  },
+  [accountNames.currentAccount]: {
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/1076e454-6b09-4c09-9ea8-abbe3e084fbb/KFS047+Business+Current+Account+21062023+-+NoSignature.pdf?MOD=AJPERES`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/75926671-ab36-4e46-9aa7-4772aaee34a9/KFS107+Islamic+Business+Current+Account+21062023+-+NoSignature.pdf?MOD=AJPERES`
+  },
+  [accountNames.elite]: {
+    [CONVENTIONAL]: `${kfsBaseUrl}/wps/wcm/connect/a3dfc51e-88e2-48a3-a18d-3fb8e8fd6111/KFS083+Business+RAKelite+Account+15062023+-+NoSignature.pdf?MOD=AJPERES`,
+    [ISLAMIC]: `${kfsBaseUrl}/wps/wcm/connect/a6bb56e8-cfb6-4926-95c6-f913ddf96ceb/KFS084+Islamic+RAKelite+Account+17062023+-+NoSignature.pdf?MOD=AJPERES`
+  }
+};
+
 export const applicationOverviewRoutes = [
   `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/application-overview`,
   `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}/application-overview`,

@@ -22,6 +22,7 @@ export const getAuthToken = state => getAppConfig(state).authorizationToken;
 
 export const getProspect = state => getAppConfig(state).prospect || {};
 
+export const getFreeFieldsInfo = state => getProspect(state).freeFieldsInfo || {};
 export const getInitialProspectTableCheck = state => getAppConfig(state).initialProspectTableCheck;
 
 export const getSignatories = state => getProspect(state).signatoryInfo || [];
