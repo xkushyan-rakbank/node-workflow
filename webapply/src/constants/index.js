@@ -29,7 +29,7 @@ export const formStepper = [
     step: 4,
     title: "Supporting information",
     path: routes.additionalInfoComponent,
-    relatedPath: [routes.additionalCompanyInformation]
+    relatedPath: [routes.additionalCompanyInformation, routes.additionalStakeholderInformation]
   },
   { step: 5, title: "Account preferences", path: routes.finalQuestions }
 ];
