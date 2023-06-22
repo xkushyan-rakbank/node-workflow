@@ -83,7 +83,8 @@ export const Accordion = ({
   children,
   showDefinition,
   isCompleted = false,
-  setFormFieldValue
+  setFormFieldValue = () => {},
+  isOpened
 }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState("");
@@ -95,6 +96,7 @@ export const Accordion = ({
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
+    isOpened && isOpened(newExpanded);
   };
 
   useEffect(() => {

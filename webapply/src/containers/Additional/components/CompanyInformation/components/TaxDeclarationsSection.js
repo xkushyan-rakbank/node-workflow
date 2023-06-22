@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
@@ -46,8 +46,10 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
     const value = JSON.parse(event.target.value);
     const target = event.target.name;
     await setFieldValue(target, value);
-    const globalintermediaryId = values["globalintermediaryId"] || undefined;
-    await setFieldValue("globalintermediaryId", globalintermediaryId);
+    if (target === "isFinancialInstitution") {
+      const globalintermediaryId = values["globalintermediaryId"] || undefined;
+      await setFieldValue("globalintermediaryId", globalintermediaryId);
+    }
   };
 
   const taxDeclarationSchema = Yup.object().shape({
@@ -80,7 +82,10 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
           ["active", "passive"],
           "Is your company a active or passive Non-Financial Instituion is required"
         )
-    })
+    }),
+    opened: Yup.boolean()
+      .required()
+      .oneOf([true, false])
   });
 
   const initialValues = {
@@ -88,7 +93,8 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
     isCompanyUSEntity: "no",
     isFinancialInstitution: "na",
     isNonFinancialInstitution: "active",
-    globalintermediaryId: ""
+    globalintermediaryId: "",
+    opened: ""
   };
 
   const initialIsValid = taxDeclarationSchema.isValidSync(initialValues);
@@ -97,26 +103,30 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
     <Formik
       initialValues={initialValues}
       validationSchema={taxDeclarationSchema}
-      validateOnChange={false}
-      validateOnBlur={false}
+      validateOnBlur={true}
+      validateOnMount={true}
       isInitialValid={initialIsValid}
       onSubmit={() => {}}
     >
-      {({ values, setFieldValue, isValid }) => {
+      {({ values, setFieldValue, isValid, ...props }) => {
         const companyTaxRadioFieldHandler = createCompanyTaxRadioHandler({
           values,
           setFieldValue
         });
+        const isAccordionOpened = open => {
+          setFieldValue("opened", open);
+        };
         const hideGIINField = values.isFinancialInstitution === "yes";
         const isCompanyUSEntityVisible = values.isCompanyUSEntity === "yes";
         return (
-          <Form>
+          <>
             <Accordion
               title={"Tax declarations"}
               showDefinition={definitionContext}
               id={id}
               setFormFieldValue={setFormFieldValue}
               isCompleted={isValid}
+              isOpened={isAccordionOpened}
             >
               <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
               <div className={classes.taxDeclarationQuestionare}>
@@ -215,7 +225,7 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
               pages={pages}
               scrollToEnd={false}
             />
-          </Form>
+          </>
         );
       }}
     </Formik>
