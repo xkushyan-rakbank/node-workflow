@@ -43,19 +43,16 @@ export const ResidentialAddress = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={residentialAddressSchema}
-      validateOnMount={true}
+      validateOnChange={true}
       onSubmit={() => {}}
     >
-      {({ setFieldValue, isValid }) => {
-        const isAccordionOpened = open => {
-          setFieldValue("opened", open);
-        };
+      {({ values, isValid }) => {
+        const isValidForm = residentialAddressSchema.isValidSync(values);
         return (
           <Accordion
             title={"Residential address"}
             id={"residentialAddress"}
-            isCompleted={isValid}
-            isOpened={isAccordionOpened}
+            isCompleted={isValidForm}
           >
             <Grid container spacing={3}>
               <Grid item sm={6} xs={12}>

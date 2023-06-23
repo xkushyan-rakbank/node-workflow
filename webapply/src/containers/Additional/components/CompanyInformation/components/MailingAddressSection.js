@@ -113,25 +113,23 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
     }
   }, []);
 
-  const initialIsValid = mailingAddressSchema.isValidSync(initialValues);
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={mailingAddressSchema}
       validateOnChange={true}
       validateOnBlur={true}
-      isInitialValid={initialIsValid}
       onSubmit={() => {}}
     >
       {({ setFieldValue, values, touched, setTouched, isValid, dirty, ...props }) => {
+        const IsValidForm = mailingAddressSchema.isValidSync(values);
         return (
           <div>
             <Accordion
               title={"Mailing address"}
               id={id}
               setFormFieldValue={setFormFieldValue}
-              isCompleted={isValid}
+              isCompleted={IsValidForm}
             >
               <Grid container spacing={3}>
                 <Grid item sm={12} xs={12}>
