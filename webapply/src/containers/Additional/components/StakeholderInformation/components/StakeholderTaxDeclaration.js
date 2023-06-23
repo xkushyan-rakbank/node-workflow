@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
+import * as Yup from "yup";
 
 import useGeneratePdf from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/useGeneratePdf";
 import { YesNoListForTaxPayInAnotherCountry } from "../../../../../constants/options";
@@ -15,6 +17,8 @@ import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNot
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
 
 import { useStyles } from "../../styled";
+import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 const wcmData = {
   productVariantContent: [
@@ -27,10 +31,68 @@ const wcmData = {
 
 export const StakeholderTaxDeclarations = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
   const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
 
-  const basePath = "prospect.stakeholderAdditionalInfo.taxDetails";
+  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.taxDetails";
+
+  const initialValues = {
+    taxesInAnotherCountry: "",
+    country: "",
+    TIN: "",
+    reasonForTINNotAvailable: "",
+    remarks: ""
+  };
+
+  const createStakeholderTaxRadioHandler = ({ values, setFieldValue }) => async event => {
+    const value = event.target.value;
+    const target = event.target.name;
+    await setFieldValue(target, value);
+    if (target === "taxesInAnotherCountry") {
+      if (value === "yes") {
+        const country = values["country"] || undefined;
+        await setFieldValue("country", country);
+      } else {
+        await setFieldValue("country", "");
+        await setFieldValue("TIN", "");
+        await setFieldValue("reasonForTINNotAvailable", "");
+        await setFieldValue("remarks", "");
+        dispatch(
+          updateProspect({
+            [`${basePath}.country`]: "",
+            [`${basePath}.TIN`]: "",
+            [`${basePath}.reasonForTINNotAvailable`]: "",
+            [`${basePath}.remarks`]: ""
+          })
+        );
+      }
+    }
+  };
+
+  const stakeholderTaxInfoSchema = Yup.object().shape({
+    taxesInAnotherCountry: Yup.string()
+      .required()
+      .oneOf(["yes", "no"], "Do you pay taxes in another country is required"),
+    country: Yup.string().when("taxesInAnotherCountry", {
+      is: "yes",
+      then: Yup.string().required(getRequiredMessage("Country"))
+    }),
+    TIN: Yup.string().when("taxesInAnotherCountry", {
+      is: "yes",
+      then: Yup.string()
+    }),
+    reasonForTINNotAvailable: Yup.string().when(["taxesInAnotherCountry", "TIN"], {
+      is: (taxesInAnotherCountry, TIN) => !TIN && taxesInAnotherCountry === "yes",
+      then: Yup.string().required(getRequiredMessage("Select a reason if TIN is not available"))
+    }),
+    remarks: Yup.string().when("reasonForTINNotAvailable", {
+      is: reasonForTINNotAvailable => reasonForTINNotAvailable === "REA2",
+      then: Yup.string()
+        .required(getRequiredMessage("Remarks"))
+        .max(500, "Maximum ${max} characters allowed")
+    })
+  });
 
   const definitionContext = (
     <a
@@ -44,25 +106,31 @@ export const StakeholderTaxDeclarations = () => {
     </a>
   );
 
+  const isFormValidInitial = stakeholderTaxInfoSchema.isValidSync(initialValues);
+
   return (
     <Formik
-      initialValues={{
-        taxesInAnotherCountry: "",
-        country: "",
-        TIN: "",
-        reasonForTINNotAvailable: "",
-        remarks: ""
-      }}
-      onSubmit={() => {}}
+      initialValues={initialValues}
+      validationSchema={stakeholderTaxInfoSchema}
       validateOnChange={false}
+      isInitialValid={isFormValidInitial}
+      onSubmit={() => {}}
     >
-      {({ values }) => {
+      {({ values, setFieldValue, isValid, errors }) => {
+        const stakeholderTaxRadioFieldHandler = createStakeholderTaxRadioHandler({
+          values,
+          setFieldValue
+        });
+        const hideAnotherCountryTaxField = values.taxesInAnotherCountry === "yes";
+        const hideRemarks =
+          hideAnotherCountryTaxField && values.reasonForTINNotAvailable === "REA2";
         return (
           <>
             <Accordion
               title={"Tax declarations"}
               showDefinition={definitionContext}
               id={"taxDeclarations"}
+              isCompleted={isValid}
             >
               <DisclaimerNote text="“RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support”" />
               <div className={classes.taxDeclarationQuestionare}>
@@ -73,6 +141,7 @@ export const StakeholderTaxDeclarations = () => {
                   path={`${basePath}.taxesInAnotherCountry`}
                   options={YesNoListForTaxPayInAnotherCountry}
                   component={CheckboxGroup}
+                  onSelect={stakeholderTaxRadioFieldHandler}
                   customIcon={false}
                   classes={{
                     root: classes.radioButtonRoot,
@@ -82,7 +151,7 @@ export const StakeholderTaxDeclarations = () => {
                   radioColor="primary"
                 />
               </div>
-              {values.taxesInAnotherCountry === "yes" && (
+              {hideAnotherCountryTaxField && (
                 <Grid container spacing={3}>
                   <Grid item sm={12} xs={12}>
                     <Field
@@ -119,7 +188,7 @@ export const StakeholderTaxDeclarations = () => {
                       component={SelectAutocomplete}
                     />
                   </Grid>
-                  {values.reasonForTINNotAvailable && (
+                  {hideRemarks && (
                     <Grid item sm={12} xs={12}>
                       <Field
                         name="remarks"

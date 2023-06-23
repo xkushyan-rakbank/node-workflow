@@ -72,7 +72,7 @@ export const useStyles = makeStyles(theme => ({
   btnAdd: {
     background: "#FFFFFF",
     color: "#1F1F1F",
-    marginRight: "9px"
+    marginRight: "16px"
   },
   buttonWrap: {
     display: "flex",
