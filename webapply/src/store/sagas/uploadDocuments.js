@@ -437,7 +437,8 @@ export function* uploadDocuments({ payload }) {
     const token = yield select(getDocumentUplaoderjwtToken);
     const documentList = yield select(getDocumentsList);
     // find the respective document section from documentList
-    const documentSection = documentList[payload.documentSection];
+    const documentSection = get(documentList, payload.documentSection);
+
     const documentSectionArray = documentSection.length
       ? documentSection
       : documentSection.documents;

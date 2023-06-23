@@ -266,5 +266,23 @@ export const useStyles = makeStyles(theme => ({
   },
   anotherCountryTaxOption: {
     flexDirection: "column"
+  },
+  uploadModalErrorWrapper: {
+    display: "flex",
+    alignItems: "center",
+    padding: "16px 20px",
+    marginTop: "16px",
+    marginBottom: "10px",
+    color: "#8D0C10",
+    background: "#FDE7E8",
+    fontWeight: 500,
+    fontSize: "14px",
+    lineHeight: "20px",
+    borderRadius: "10px"
+  },
+  errorIcon: {
+    width: "13px",
+    height: "13px",
+    marginRight: "8px"
   }
 }));
