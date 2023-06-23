@@ -106,14 +106,11 @@ export const StakeholderTaxDeclarations = () => {
     </a>
   );
 
-  const isFormValidInitial = stakeholderTaxInfoSchema.isValidSync(initialValues);
-
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={stakeholderTaxInfoSchema}
       validateOnChange={false}
-      isInitialValid={isFormValidInitial}
       onSubmit={() => {}}
     >
       {({ values, setFieldValue, isValid, errors }) => {
