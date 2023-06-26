@@ -50,7 +50,7 @@ export const Background = () => {
       .max(250, "LinkedIn URL is too long. Please enter upto 250 characters.")
       .matches(
         LINKEDIN_REGEX,
-        getInvalidMessage("Invalid LinkedIn URL format. Please enter a valid LinkedIn profile URL.")
+        "Invalid LinkedIn URL format. Please enter a valid LinkedIn profile URL."
       ),
     backgroundInfo: Yup.string()
       .min(100, "Background information is too short.")
