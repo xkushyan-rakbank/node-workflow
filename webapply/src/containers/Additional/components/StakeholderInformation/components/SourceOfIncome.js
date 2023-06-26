@@ -69,8 +69,10 @@ export const SourceOfIncome = () => {
   });
 
   const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
-    const file = acceptedFiles[0];
+    let file = acceptedFiles[0];
     if (file) {
+      file.preview = URL.createObjectURL(file);
+      file = { ...file, ...{ name: file.name, size: file.size } };
       let path = "";
       if (name === "proofOfIncome") {
         path =
@@ -87,12 +89,7 @@ export const SourceOfIncome = () => {
           },
           documentSection: "stakeholdersDocuments.index_stakeholderName",
           onSuccess: () => {
-            setFieldValue(
-              name,
-              Object.assign(file, {
-                preview: URL.createObjectURL(file)
-              })
-            );
+            setFieldValue(name, file);
             setTouched({ ...touched, ...{ [name]: true } });
             setIsUploading({ [name]: false });
           },

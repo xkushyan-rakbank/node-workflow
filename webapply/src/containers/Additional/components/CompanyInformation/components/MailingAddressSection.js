@@ -91,14 +91,11 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
   }, []);
 
   const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
-    const file = acceptedFiles[0];
+    let file = acceptedFiles[0];
     if (file) {
-      setFieldValue(
-        name,
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      );
+      file.preview = URL.createObjectURL(file);
+      file = { ...file, ...{ name: file.name, size: file.size } };
+      setFieldValue(name, file);
       setTouched({ ...touched, ...{ [name]: true } });
       dispatch(
         uploadDocuments({
@@ -121,7 +118,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
       validateOnBlur={true}
       onSubmit={() => {}}
     >
-      {({ setFieldValue, values, touched, setTouched, isValid, dirty, ...props }) => {
+      {({ values, setFieldValue, touched, setTouched, isValid, dirty, ...props }) => {
         const IsValidForm = mailingAddressSchema.isValidSync(values);
         return (
           <div>

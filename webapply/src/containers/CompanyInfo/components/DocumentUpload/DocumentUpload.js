@@ -11,14 +11,11 @@ import {
 
 export const DocumentUpload = ({ values, setFieldValue }) => {
   const handleDropFile = useCallback((acceptedFiles, name) => {
-    const file = acceptedFiles[0];
+    let file = acceptedFiles[0];
     if (file) {
-      setFieldValue(
-        name,
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      );
+      file.preview = URL.createObjectURL(file);
+      file = { ...file, ...{ name: file.name, size: file.size } };
+      setFieldValue(name, file);
     }
   }, []);
 

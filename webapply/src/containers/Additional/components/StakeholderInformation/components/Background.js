@@ -67,8 +67,10 @@ export const Background = () => {
   });
 
   const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
-    const file = acceptedFiles[0];
+    let file = acceptedFiles[0];
     if (file) {
+      file.preview = URL.createObjectURL(file);
+      file = { ...file, ...{ name: file.name, size: file.size } };
       setTouched({ ...touched, ...{ [name]: true } });
       dispatch(
         uploadDocuments({
@@ -77,12 +79,7 @@ export const Background = () => {
           },
           documentSection: "stakeholdersDocuments.index_stakeholderName.personalBackground",
           onSuccess: () => () => {
-            setFieldValue(
-              name,
-              Object.assign(file, {
-                preview: URL.createObjectURL(file)
-              })
-            );
+            setFieldValue(name, file);
           },
           onFailure: () => () => {
             setFieldValue(name, "");

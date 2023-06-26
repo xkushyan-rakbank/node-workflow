@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Collapse, withStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
@@ -9,6 +10,8 @@ import cx from "classnames";
 import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../Icons";
+import { updateProspect } from "../../store/actions/appConfig";
+import { isFieldTouched } from "../../store/selectors/appConfig";
 
 const AccordionPanel = withStyles({
   root: {
@@ -84,8 +87,9 @@ export const Accordion = ({
   showDefinition,
   isCompleted = false,
   setFormFieldValue = () => {},
-  isOpened
 }) => {
+  const dispatch = useDispatch();
+  const isTouched = useSelector(isFieldTouched(id));
   const classes = useStyles();
   const [expanded, setExpanded] = useState("");
 
@@ -95,8 +99,8 @@ export const Accordion = ({
   };
 
   const handleChange = panel => (event, newExpanded) => {
+    dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
     setExpanded(newExpanded ? panel : false);
-    isOpened && isOpened(newExpanded);
   };
 
   useEffect(() => {
@@ -120,7 +124,7 @@ export const Accordion = ({
             </div>
             <div>
               {expanded === "taxDeclarations" && showDefinition}
-              {isCompleted && <Check size="16px" className={classes.success} />}
+              {isCompleted && isTouched && <Check size="16px" className={classes.success} />}
               <Icon
                 className={classes.expandIcon}
                 alt="collapse-icon"

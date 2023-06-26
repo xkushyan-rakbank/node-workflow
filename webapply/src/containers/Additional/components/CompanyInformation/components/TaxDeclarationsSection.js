@@ -82,19 +82,15 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
           ["active", "passive"],
           "Is your company a active or passive Non-Financial Instituion is required"
         )
-    }),
-    opened: Yup.boolean()
-      .required()
-      .oneOf([true, false])
+    })
   });
 
   const initialValues = {
     dnfbpField: "no",
     isCompanyUSEntity: "no",
-    isFinancialInstitution: "na",
+    isFinancialInstitution: "no",
     isNonFinancialInstitution: "active",
-    globalintermediaryId: "",
-    opened: ""
+    globalintermediaryId: ""
   };
 
   const initialIsValid = taxDeclarationSchema.isValidSync(initialValues);
@@ -109,13 +105,11 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
       onSubmit={() => {}}
     >
       {({ values, setFieldValue, isValid, ...props }) => {
+        const IsValidForm = taxDeclarationSchema.isValidSync(values);
         const companyTaxRadioFieldHandler = createCompanyTaxRadioHandler({
           values,
           setFieldValue
         });
-        const isAccordionOpened = open => {
-          setFieldValue("opened", open);
-        };
         const hideGIINField = values.isFinancialInstitution === "yes";
         const isCompanyUSEntityVisible = values.isCompanyUSEntity === "yes";
         return (
@@ -125,8 +119,7 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
               showDefinition={definitionContext}
               id={id}
               setFormFieldValue={setFormFieldValue}
-              isCompleted={isValid}
-              isOpened={isAccordionOpened}
+              isCompleted={IsValidForm}
             >
               <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
               <div className={classes.taxDeclarationQuestionare}>
