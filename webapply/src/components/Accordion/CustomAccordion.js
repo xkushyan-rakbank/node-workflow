@@ -86,7 +86,7 @@ export const Accordion = ({
   children,
   showDefinition,
   isCompleted = false,
-  setFormFieldValue = () => {},
+  setFormFieldValue = () => {}
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -99,7 +99,7 @@ export const Accordion = ({
   };
 
   const handleChange = panel => (event, newExpanded) => {
-    dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
+    !isTouched && dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
     setExpanded(newExpanded ? panel : false);
   };
 
