@@ -143,7 +143,8 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
                 showCounter={false}
                 InputProps={{
                   inputComponent: FormatDecimalNumberInput,
-                  inputProps: { maxLength: 9, tabIndex: 0 },
+                  // 9 digits + 2 ','(commas)
+                  inputProps: { maxLength: 11, tabIndex: 0 },
                   onBlur: e => handleChange(e, handleBlur)
                 }}
               />
