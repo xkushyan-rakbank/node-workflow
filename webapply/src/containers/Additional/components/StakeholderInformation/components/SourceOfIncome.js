@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
+import PatternFormat from "react-number-format";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
@@ -13,6 +14,27 @@ import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants";
+
+const TextMask = ({ inputRef, ...rest }) => (
+  <PatternFormat
+    ref={ref => {
+      inputRef(ref ? ref.inputElement : null);
+    }}
+    format="AE#####################"
+    allowEmptyFormatting
+    mask=" "
+    {...rest}
+  />
+);
+
+export const IBANField = props => (
+  <Input
+    label="IBAN of your UAE bank"
+    placeholder="IBAN of your UAE bank"
+    InputProps={{ inputComponent: TextMask }}
+    {...props}
+  />
+);
 
 export const SourceOfIncome = () => {
   const classes = useStyles();
@@ -166,12 +188,7 @@ export const SourceOfIncome = () => {
                     name="IBAN"
                     isLoadDefaultValueFromStore={true}
                     path={`${basePath}.IBAN`}
-                    label="IBAN of your UAE bank"
-                    placeholder="IBAN of your UAE bank"
-                    InputProps={{
-                      inputProps: { tabIndex: 1 }
-                    }}
-                    component={Input}
+                    component={IBANField}
                   />
                 </Grid>
                 {isBARO && (

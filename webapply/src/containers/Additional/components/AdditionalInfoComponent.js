@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import cx from "classnames";
 import { Button } from "@material-ui/core";
-import { useDispatch } from "react-redux";
 import routes from "../../../routes";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ReactComponent as NavigationLeft } from "../../../assets/icons/blackNavigationLeftArrow.svg";
@@ -9,25 +8,13 @@ import { BackLink } from "../../../components/Buttons/BackLink";
 import { NextStepButton } from "../../../components/Buttons/NextStepButton";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
-import { updateProspect } from "../../../store/actions/appConfig";
 
 export default function AdditionalInfoComponent() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
   const navigateTo = path => {
     pushHistory(path);
   };
-
-  //Adding this to set IBAN AE as default value in stakeholder additionalinfo page
-  //TODO: might have to revisit
-  useEffect(() => {
-    dispatch(
-      updateProspect({
-        "prospect.signatoryInfo[0]stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN": "AE"
-      })
-    );
-  }, []);
 
   return (
     <div className={classes.container}>
