@@ -192,3 +192,5 @@ export const getIsLemniskEnable = state => {
 };
 
 export const getCompanyAdditionalInfo = state => getProspect(state).companyAdditionalInfo || {};
+
+export const isFieldTouched = id => state => getProspect(state).fields?.[id]?.touched;
