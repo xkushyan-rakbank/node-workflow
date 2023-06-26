@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
+import { useLocation } from "react-router-dom";
 
 import { SearchedAppInfoComponent } from "./components/SearchedAppInfo";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
@@ -21,6 +22,9 @@ export const SearchedAppInfoContainer = ({
 }) => {
   useFormNavigation([false, false, searchProspectStepper]);
   useLayoutParams(true);
+
+  const location = useLocation();
+  const receivedFullName = location?.state?.fullName;
 
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
@@ -77,7 +81,7 @@ export const SearchedAppInfoContainer = ({
 
   return (
     <SearchedAppInfoComponent
-      fullName={fullName}
+      fullName={fullName || receivedFullName}
       isDisabled={isDisabled}
       confirmDialogHandler={confirmDialogHandler}
       confirmHandler={confirmHandler}

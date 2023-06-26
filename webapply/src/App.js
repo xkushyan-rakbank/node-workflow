@@ -46,6 +46,7 @@ const SubmitApplication = lazy(() =>
   import("./containers/SelectServices/components/SubmitApplication")
 );
 const Agents = lazy(() => import("./containers/AgentPages"));
+const ApplicationRedirect = lazy(() => import("./containers/ApplicationRedirect"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -131,6 +132,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <ProtectedRoute exact path="/"  component={QuickapplyLanding} />
               {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
+              <Route path={routes.applicationRedirect} component={ApplicationRedirect} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />

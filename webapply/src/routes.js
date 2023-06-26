@@ -24,5 +24,6 @@ export default {
   SearchedAppInfo: `${agentBaseName}/SearchedAppInfo/:id`,
   inviteCustomer: `${agentBaseName}/InviteCustomer`,
   //ro-assist-brd2-3
-  currentAccount: `${smeBaseName}/accounts/current-account`
+  currentAccount: `${smeBaseName}/accounts/current-account`,
+  applicationRedirect: `${smeBaseName}/application-redirect`
 };
