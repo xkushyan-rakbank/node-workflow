@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: 80,
     [theme.breakpoints.only("xs")]: {
       marginTop: 41
     }
@@ -17,11 +16,16 @@ export const useStyles = makeStyles(theme => ({
       overflow: "inherit"
     }
   },
+  divider: {
+    height: "1px",
+    background: "#E6E6E6",
+    marginTop: "30px"
+  },
   title: {
     minWidth: "500px",
-    padding: "18px 24px",
-    fontSize: "16px",
-    fontWeight: "600",
+    padding: "40px 0 24px 0",
+    fontSize: "28px",
+    fontWeight: "500",
     [theme.breakpoints.only("xs")]: {
       marginBottom: 20,
       minWidth: "auto",
@@ -29,10 +33,23 @@ export const useStyles = makeStyles(theme => ({
       borderRadius: "8px 8px 0 0"
     }
   },
+  subTitle: {
+    fontSize: "20px",
+    fontWeight: "400",
+    lineHeight: "28px",
+    color: "#757575"
+  },
   videoTitle: {
-    fontSize: 20,
-    fontWeight: 600,
+    fontSize: 28,
+    fontWeight: 500,
+    lineHeight: "36px",
     padding: "40px 0 24px 0"
+  },
+  videoSubTitle: {
+    fontSize: "20px",
+    fontWeight: "400",
+    lineHeight: "28px",
+    color: "#757575"
   },
   info: {
     fontSize: 20,

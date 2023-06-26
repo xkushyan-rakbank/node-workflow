@@ -62,5 +62,9 @@ export const useStyles = makeStyles(theme => ({
     color: "#373737",
     fontSize: 20,
     lineHeight: "26px"
+  },
+  divider: {
+    height: "1px",
+    background: "#E6E6E6"
   }
 }));

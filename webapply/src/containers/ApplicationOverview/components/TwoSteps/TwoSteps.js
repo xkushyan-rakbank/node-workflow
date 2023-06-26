@@ -1,16 +1,16 @@
 import React from "react";
-
+import { Divider } from "@material-ui/core";
 import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
 import { IconCardsContainer } from "../../../../components/IconCards/IconCardsContainer";
 import { IconCardItem } from "../../../../components/IconCards/IconCardItem";
 import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
+import { SectionSteps } from "../../../../components/SectionSteps";
 
 import { useStyles } from "./styled";
 
 export const TwoSteps = () => {
   const classes = useStyles();
   const {
-    overview,
     license: License,
     passport: Passport,
     companyDocuments: CompanyDocuments,
@@ -22,6 +22,7 @@ export const TwoSteps = () => {
     <>
       {/* //ro-assist header missing issue fix --- removed manual call */}
       <div className={classes.firstGroup}>
+        <SectionSteps />
         <SectionTitleWithInfo
           title="Documents"
           info="Have these documents ready before we get started"
@@ -48,18 +49,11 @@ export const TwoSteps = () => {
         </div>
       </div>
       <div className={classes.note}>
-        ¹ Memorandum of Association / Articles of Association / Partners Agreement / Service Agreement / Share Certificate<br />
-        ² Emirates ID not required for non-resident stakeholders
+        ¹ Memorandum of Association / Articles of Association / Partners Agreement / Service
+        Agreement / Share Certificate
+        <br />² Emirates ID not required for non-resident stakeholders
       </div>
-      <div className={classes.secondGroup}>
-        <div className={classes.secondGroupText}>
-          <h3 className={classes.title}>Grab a cup of tea</h3>
-          <span className={classes.info}>
-            We need to spend some time getting to know you and your company
-          </span>
-        </div>
-        <img src={overview} alt="overview" />
-      </div>
+      <Divider className={classes.divider} />
     </>
   );
 };
