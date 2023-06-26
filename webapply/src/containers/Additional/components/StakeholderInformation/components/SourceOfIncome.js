@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import * as Yup from "yup";
@@ -11,7 +11,7 @@ import { MOA_FILE_SIZE, TL_ACCEPTED_FILE_TYPES, TL_COI_FILE_SIZE } from "../../.
 
 import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
+import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants";
 
 export const SourceOfIncome = () => {
@@ -103,6 +103,10 @@ export const SourceOfIncome = () => {
         })
       );
     }
+  }, []);
+
+  useEffect(() => {
+    dispatch(initDocumentUpload());
   }, []);
 
   const initialIsValid = sourceOfIncomeValidationSchema.isValidSync(initialValues);
