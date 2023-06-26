@@ -36,6 +36,7 @@ export const Upload = ({
   showUploadInfoIcon = false,
   infoTitle,
   infoIcon = false,
+  isUploading = false,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
@@ -109,7 +110,7 @@ export const Upload = ({
                         );
                       })
                     )
-                  ) : isDragActive ? (
+                  ) : isDragActive || isUploading ? (
                     <div className={classes.row}>
                       <CircularProgress size="14px" style={{ marginRight: "8px" }} />
                       <div className={classes.subcontent}>Uploading...</div>

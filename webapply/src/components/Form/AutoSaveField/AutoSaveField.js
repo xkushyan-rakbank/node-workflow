@@ -76,7 +76,7 @@ export const AutoSaveField = ({
 
         if (!isEqual(oldValue, value)) {
           validateForm().then(errors => {
-            if (!getIn(errors, name)) {
+            if (!getIn(errors, name) || value === "") {
               const prospect = changeProspect({ [path]: value }, value, path, errors);
               dispatch(updateProspect(prospect));
             } else if (!touch) {

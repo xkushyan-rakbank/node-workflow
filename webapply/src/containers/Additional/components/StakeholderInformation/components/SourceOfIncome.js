@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import * as Yup from "yup";
@@ -16,6 +16,7 @@ import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants"
 
 export const SourceOfIncome = () => {
   const classes = useStyles();
+  const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0]stakeholderAdditionalInfo.sourceOfIncomeDetails";
   const dispatch = useDispatch();
   const initialValues = {
@@ -78,6 +79,7 @@ export const SourceOfIncome = () => {
         path =
           "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense";
       }
+      setIsUploading({ [name]: true });
       dispatch(
         uploadDocuments({
           docs: {
@@ -92,9 +94,11 @@ export const SourceOfIncome = () => {
               })
             );
             setTouched({ ...touched, ...{ [name]: true } });
+            setIsUploading({ [name]: false });
           },
           onFailure: () => {
             setFieldValue(name, "");
+            setIsUploading({ [name]: false });
           }
         })
       );
@@ -207,6 +211,7 @@ export const SourceOfIncome = () => {
                         onDelete={() => setFieldValue("tradeLicense", "")}
                         component={Upload}
                         content={values?.tradeLicense?.name}
+                        isUploading={isUploading["tradeLicense"]}
                       />
                     </Grid>
                   </>
@@ -241,6 +246,7 @@ export const SourceOfIncome = () => {
                     file={values.proofOfIncome}
                     onDelete={() => setFieldValue("proofOfIncome", "")}
                     content={values?.proofOfIncome?.name}
+                    isUploading={isUploading["proofOfIncome"]}
                   />
                 </Grid>
               </Grid>
