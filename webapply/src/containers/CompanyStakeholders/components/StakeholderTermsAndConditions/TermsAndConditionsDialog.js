@@ -42,20 +42,7 @@ export default function TermsAndConditionsDialog({
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
       </DialogTitle>
       <DialogContent classes={{ root: classes.content }} onScroll={handleScroll}>
-        {isDesktop ? (
-          <div style={{ height: `${height}px` }}>
-            <object
-              type="application/pdf"
-              data={`${editedFile}#toolbar=0`}
-              aria-label="Passport"
-              onContextMenu={e => e.preventDefault()}
-              className={classes.previewPDF}
-              border="0"
-            ></object>
-          </div>
-        ) : (
-          <PdfPreview file={editedFile} pages={pages} />
-        )}
+        <PdfPreview file={editedFile} pages={pages} />
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         {handleAccept && (

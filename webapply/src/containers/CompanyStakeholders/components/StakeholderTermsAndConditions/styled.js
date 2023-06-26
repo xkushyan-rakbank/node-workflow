@@ -148,7 +148,8 @@ export const useStyles = makeStyles(theme => ({
   previewPDF: {
     backgroundColor: "#D9D9D9",
     width: "100%",
-    height: "100%"
+    height: "100%",
+    textAlign: "center"
   },
   title: {
     padding: "40px 40px 20px 40px",
@@ -167,7 +168,8 @@ export const useStyles = makeStyles(theme => ({
       padding: "8px 40px"
     },
     "& .react-pdf__Page__canvas": {
-      width: "auto"
+      width: "100%!important",
+      height: "100%!important"
     }
   },
   divider: {
