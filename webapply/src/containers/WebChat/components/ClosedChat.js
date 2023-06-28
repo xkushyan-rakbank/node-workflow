@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, forwardRef, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
@@ -47,7 +48,7 @@ const ClosedChatScreen = ({ openChat, isMinimized }, ref) => {
           </div>
           <div className="hide-on-mobile small-menu-hide"> Chat with Us</div>
         </div>
-        {isArabic ? (
+        {/* {isArabic ? (
           <a
             role="button"
             style={{ color: "#fff", cursor: "pointer", textDecoration: "underline" }}
@@ -63,7 +64,7 @@ const ClosedChatScreen = ({ openChat, isMinimized }, ref) => {
           >
             {"(عربي)"}
           </a>
-        )}
+        )} */}
       </div>
     </div>
   );
