@@ -189,9 +189,12 @@ export const SourceOfIncome = () => {
                 <Grid item sm={12} xs={12}>
                   <Field
                     name="IBAN"
+                    label="IBAN of your UAE bank"
+                    placeholder="IBAN of your UAE bank"
                     isLoadDefaultValueFromStore={true}
                     path={`${basePath}.IBAN`}
                     component={IBANField}
+                    shrink={true}
                   />
                 </Grid>
                 {isBARO && (
