@@ -6,7 +6,7 @@ function areEqualFileProp(prefFile, nextFile) {
   return prefFile.file === nextFile.file && prefFile.pages === nextFile.pages;
 }
 
-const PdfToPngConverter = ({ file, pages }) => {
+const PdfToPngConverter = ({ file, pages = [] }) => {
   const classes = useStyles();
   useEffect(() => {
     // eslint-disable-next-line max-len

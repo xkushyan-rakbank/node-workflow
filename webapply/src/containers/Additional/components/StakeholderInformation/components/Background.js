@@ -24,6 +24,7 @@ export const Background = () => {
   const { signatoryInfo } = useSelector(getProspect);
 
   const [showGenaralErr, setShowGeneralErr] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo";
 
@@ -69,23 +70,24 @@ export const Background = () => {
   const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
     const file = acceptedFiles[0];
     if (file) {
-      setTouched({ ...touched, ...{ [name]: true } });
+      setIsUploading({ [name]: true });
       dispatch(
         uploadDocuments({
           docs: {
             "prospect.prospectDocuments.stakeholderAdditionalInfo.backgroundDetails.cv": file
           },
           documentSection: "stakeholdersDocuments.index_stakeholderName.personalBackground",
-          onSuccess: () => () => {
-            setFieldValue(
-              name,
-              Object.assign(file, {
-                preview: URL.createObjectURL(file)
-              })
-            );
+          onSuccess: () => {
+            let fileStore = new File([file], file.name, { type: file.type });
+            fileStore.preview = URL.createObjectURL(fileStore);
+            fileStore = { ...fileStore, ...{ name: fileStore.name, size: fileStore.size } };
+            setFieldValue(name, fileStore);
+            setTouched({ ...touched, ...{ [name]: true } });
+            setIsUploading({ [name]: false });
           },
-          onFailure: () => () => {
+          onFailure: () => {
             setFieldValue(name, "");
+            setIsUploading({ [name]: false });
           }
         })
       );
@@ -184,6 +186,7 @@ export const Background = () => {
                 <Field
                   name="cv"
                   type="file"
+                  path="prospect.prospectDocuments.additionalStakeholderDocument.cv"
                   fieldDescription="CV"
                   helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
                   accept={TL_ACCEPTED_FILE_TYPES}
@@ -192,8 +195,11 @@ export const Background = () => {
                     handleDropFile(acceptedFile, "cv", touched, setTouched, setFieldValue)
                   }
                   file={values.cv}
+                  content={values?.cv?.name}
+
                   onDelete={() => setFieldValue("cv", "")}
                   component={Upload}
+                  isUploading={isUploading["cv"]}
                 />
               </div>
               <span className={classes.orSelection}>Or</span>

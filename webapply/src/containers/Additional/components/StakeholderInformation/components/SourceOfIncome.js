@@ -109,12 +109,11 @@ export const SourceOfIncome = () => {
           },
           documentSection: "stakeholdersDocuments.index_stakeholderName",
           onSuccess: () => {
-            setFieldValue(
-              name,
-              Object.assign(file, {
-                preview: URL.createObjectURL(file)
-              })
-            );
+            let fileStore = new File([file], file.name, { type: file.type });
+            fileStore.preview = URL.createObjectURL(fileStore);
+            fileStore = { ...fileStore, ...{ name: fileStore.name, size: fileStore.size } };
+
+            setFieldValue(name, fileStore);
             setTouched({ ...touched, ...{ [name]: true } });
             setIsUploading({ [name]: false });
           },
@@ -143,9 +142,10 @@ export const SourceOfIncome = () => {
       onSubmit={() => {}}
     >
       {({ values, setFieldValue, touched, setTouched, isValid, ...props }) => {
+        const IsValidForm = sourceOfIncomeValidationSchema.isValidSync(values);
         const isBARO = values.IBANType === "BARO";
         return (
-          <Accordion title={"Source of income"} id={"sourceOfIncome"} isCompleted={isValid}>
+          <Accordion title={"Source of income"} id={"sourceOfIncome"} isCompleted={IsValidForm}>
             <>
               <Grid container>
                 <Grid item sm={12} xs={12}>
@@ -244,6 +244,7 @@ export const SourceOfIncome = () => {
                 <Grid item sm={12} xs={12}>
                   <Field
                     name="proofOfIncome"
+                    path="prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome"
                     type="file"
                     fieldDescription={"Proof of income"}
                     helperText={
