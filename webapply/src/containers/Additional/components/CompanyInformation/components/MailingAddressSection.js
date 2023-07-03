@@ -91,11 +91,14 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
   }, []);
 
   const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
-    let file = acceptedFiles[0];
+    const file = acceptedFiles[0];
     if (file) {
-      file.preview = URL.createObjectURL(file);
-      file = { ...file, ...{ name: file.name, size: file.size } };
-      setFieldValue(name, file);
+      setFieldValue(
+        name,
+        Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })
+      );
       setTouched({ ...touched, ...{ [name]: true } });
       dispatch(
         uploadDocuments({

@@ -88,7 +88,7 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
   const initialValues = {
     dnfbpField: "no",
     isCompanyUSEntity: "no",
-    isFinancialInstitution: "no",
+    isFinancialInstitution: "na",
     isNonFinancialInstitution: "active",
     globalintermediaryId: ""
   };
