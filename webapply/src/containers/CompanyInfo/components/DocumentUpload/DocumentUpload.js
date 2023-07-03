@@ -13,9 +13,12 @@ export const DocumentUpload = ({ values, setFieldValue }) => {
   const handleDropFile = useCallback((acceptedFiles, name) => {
     let file = acceptedFiles[0];
     if (file) {
-      file.preview = URL.createObjectURL(file);
-      file = { ...file, ...{ name: file.name, size: file.size } };
-      setFieldValue(name, file);
+      setFieldValue(
+        name,
+        Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })
+      );
     }
   }, []);
 
