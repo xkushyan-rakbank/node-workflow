@@ -77,6 +77,7 @@ export const AddCompanyInformation = ({
         validateOnMount={true}
       >
         {({ isValid, ...props }) => {
+          const isValidForm = formValidationSchema.isValidSync(props.values);
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
@@ -108,7 +109,7 @@ export const AddCompanyInformation = ({
                   <NextStepButton
                     justify="flex-end"
                     label="Continue"
-                    disabled={!isValid}
+                    disabled={!isValidForm}
                     isDisplayLoader={isLoading}
                   />
                 </div>
