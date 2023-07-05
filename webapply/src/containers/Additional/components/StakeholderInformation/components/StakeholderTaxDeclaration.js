@@ -29,7 +29,7 @@ const wcmData = {
   ]
 };
 
-export const StakeholderTaxDeclarations = () => {
+export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
@@ -38,7 +38,7 @@ export const StakeholderTaxDeclarations = () => {
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.taxDetails";
 
   const initialValues = {
-    taxesInAnotherCountry: "",
+    taxesInAnotherCountry: "no",
     country: "",
     TIN: "",
     reasonForTINNotAvailable: "",
@@ -48,16 +48,13 @@ export const StakeholderTaxDeclarations = () => {
   const createStakeholderTaxRadioHandler = ({ values, setFieldValue }) => async event => {
     const value = event.target.value;
     const target = event.target.name;
-    await setFieldValue(target, value);
+    setFieldValue(target, value);
     if (target === "taxesInAnotherCountry") {
-      if (value === "yes") {
-        const country = values["country"] || undefined;
-        await setFieldValue("country", country);
-      } else {
-        await setFieldValue("country", "");
-        await setFieldValue("TIN", "");
-        await setFieldValue("reasonForTINNotAvailable", "");
-        await setFieldValue("remarks", "");
+      if (value === "no") {
+        setFieldValue("country", "");
+        setFieldValue("TIN", "");
+        setFieldValue("reasonForTINNotAvailable", "");
+        setFieldValue("remarks", "");
         dispatch(
           updateProspect({
             [`${basePath}.country`]: "",
@@ -127,7 +124,8 @@ export const StakeholderTaxDeclarations = () => {
             <Accordion
               title={"Tax declarations"}
               showDefinition={definitionContext}
-              id={"taxDeclarations"}
+              id={id}
+              setFormFieldValue={setFormFieldValue}
               isCompleted={IsValidForm}
             >
               <DisclaimerNote text="“RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support”" />

@@ -180,6 +180,9 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
       if (viewId === "/ConsentInfo") {
         const { consentInfo } = prospect[key][0];
         nodePayload = [{ consentInfo }];
+      } else if (viewId === "/StakeholdersAdditionalInfo") {
+        const { stakeholderAdditionalInfo } = prospect[key][0];
+        nodePayload = [{ stakeholderAdditionalInfo }];
       } else {
         const { editedFullName } = prospect[key][0];
         nodePayload = [{ editedFullName }];

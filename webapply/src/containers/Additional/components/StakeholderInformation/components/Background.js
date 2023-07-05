@@ -17,7 +17,7 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getV
 import { NAME_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 
-export const Background = () => {
+export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { employmentType } = useSelector(getDatalist);
@@ -26,7 +26,7 @@ export const Background = () => {
   const [showGenaralErr, setShowGeneralErr] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
-  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo";
+  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.backgroundDetails";
 
   const initialValues = {
     highestEducationAttained: "",
@@ -115,7 +115,12 @@ export const Background = () => {
     >
       {({ touched, setTouched, setFieldValue, values, isValid, errors }) => {
         return (
-          <Accordion title={"Background"} id={"background"} isCompleted={isValid}>
+          <Accordion
+            title={"Background"}
+            isCompleted={isValid}
+            id={id}
+            setFormFieldValue={setFormFieldValue}
+          >
             <>
               <p className={classes.sectionLabel}>Education and employment</p>
               <Grid container spacing={3}>
@@ -196,7 +201,6 @@ export const Background = () => {
                   }
                   file={values.cv}
                   content={values?.cv?.name}
-
                   onDelete={() => setFieldValue("cv", "")}
                   component={Upload}
                   isUploading={isUploading["cv"]}

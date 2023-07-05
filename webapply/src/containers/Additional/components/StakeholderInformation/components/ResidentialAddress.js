@@ -9,7 +9,7 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getV
 import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
 import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 
-export const ResidentialAddress = () => {
+export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id }) => {
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
 
   const initialValues = {
@@ -46,12 +46,13 @@ export const ResidentialAddress = () => {
       validateOnChange={true}
       onSubmit={() => {}}
     >
-      {({ values, isValid }) => {
+      {({ values }) => {
         const isValidForm = residentialAddressSchema.isValidSync(values);
         return (
           <Accordion
             title={"Residential address"}
-            id={"residentialAddress"}
+            id={id}
+            setFormFieldValue={setFormFieldValue}
             isCompleted={isValidForm}
           >
             <Grid container spacing={3}>

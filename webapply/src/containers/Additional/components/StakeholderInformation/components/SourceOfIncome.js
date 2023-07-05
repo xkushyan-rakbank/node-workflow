@@ -36,13 +36,13 @@ export const IBANField = props => (
   />
 );
 
-export const SourceOfIncome = () => {
+export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0]stakeholderAdditionalInfo.sourceOfIncomeDetails";
   const dispatch = useDispatch();
   const initialValues = {
-    sourceOfIncome: "",
+    sourceOfIncome: [""],
     IBANType: "",
     IBAN: "",
     companyNameforSOF: "",
@@ -136,8 +136,6 @@ export const SourceOfIncome = () => {
     <Formik
       initialValues={initialValues}
       validationSchema={sourceOfIncomeValidationSchema}
-      validateOnBlur={true}
-      validateOnMount={true}
       isInitialValid={initialIsValid}
       onSubmit={() => {}}
     >
@@ -145,7 +143,12 @@ export const SourceOfIncome = () => {
         const IsValidForm = sourceOfIncomeValidationSchema.isValidSync(values);
         const isBARO = values.IBANType === "BARO";
         return (
-          <Accordion title={"Source of income"} id={"sourceOfIncome"} isCompleted={IsValidForm}>
+          <Accordion
+            title={"Source of income"}
+            id={id}
+            setFormFieldValue={setFormFieldValue}
+            isCompleted={IsValidForm}
+          >
             <>
               <Grid container>
                 <Grid item sm={12} xs={12}>
@@ -157,18 +160,11 @@ export const SourceOfIncome = () => {
                     datalistId="sourceOfIncome"
                     label={"Source of income"}
                     onChange={selectedValue => {
-                      const withOption = selectedValue.includes("4");
-                      const sourceOfWealth = selectedValue.map(value => ({
-                        wealthType: value,
-                        others: withOption ? values.others : ""
-                      }));
+                      const sourceOfWealth = selectedValue.map(value => value);
 
                       setFieldValue("sourceOfIncome", sourceOfWealth);
-                      if (!withOption) {
-                        setFieldValue("others", "");
-                      }
                     }}
-                    extractValue={value => value.wealthType}
+                    extractValue={value => value}
                     infoTitle={"You can select multiple options"}
                     infoIcon={true}
                     component={SelectAutocomplete}
