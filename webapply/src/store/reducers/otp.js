@@ -7,7 +7,8 @@ import {
   VERIFY_CODE_SUCCESS,
   VERIFY_CODE_FAILED,
   VERIFY_CLEAR_ERROR,
-  RESET_OTP
+  RESET_OTP,
+  SET_OTP_MODE
 } from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 import { handleActions, composeActions } from "../../utils/redux-utils";
@@ -82,6 +83,10 @@ export default handleActions(
     [VERIFY_CLEAR_ERROR]: state => ({
       ...state,
       verificationError: false
+    }),
+    [SET_OTP_MODE]: (state, action) => ({
+      ...state,
+      mode: action.payload
     })
   },
   initialState

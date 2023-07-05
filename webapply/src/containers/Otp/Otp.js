@@ -16,6 +16,7 @@ import { Form } from "./components/Form";
 import { OtpChannel } from "../../constants";
 import { triggerDecisions } from "../../store/actions/decisions";
 import { getDocumentsList } from "../../store/actions/uploadDocuments";
+import routes from "../../routes";
 
 export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   //if user is verified
   useEffect(() => {
     if (isVerified) {
-      if (otpType === OtpChannel.Sms) {
+      if (otpType === OtpChannel.Sms && redirectRoute !== routes.MyApplications) {
         dispatch(smsOtpVerified());
         const otpData = { ...applicantInfo };
         otpData.action = "generate";

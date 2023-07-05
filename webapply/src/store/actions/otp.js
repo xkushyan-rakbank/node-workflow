@@ -9,6 +9,7 @@ export const VERIFY_CODE_SUCCESS = "OTP/VERIFY_CODE_SUCCESS";
 export const VERIFY_CODE_FAILED = "OTP/VERIFY_CODE_FAILED";
 export const VERIFY_CLEAR_ERROR = "VERIFY_CLEAR_ERROR";
 export const RESET_OTP = "RESET_OTP";
+export const SET_OTP_MODE = "SET_OTP_MODE";
 
 export const generateOtpCode = payload => ({
   type: GENERATE_OTP_CODE,
@@ -33,6 +34,11 @@ export const setOtpPendingRequest = payload => ({
 
 export const setGeneratingCode = payload => ({
   type: SET_GENERATING,
+  payload
+});
+
+export const setOtpMode = payload => ({
+  type: SET_OTP_MODE,
   payload
 });
 

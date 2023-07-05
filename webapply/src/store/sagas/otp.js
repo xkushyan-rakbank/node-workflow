@@ -40,6 +40,9 @@ export function* verifyOtp({ payload: { code, mode } }) {
       otpToken: code,
       mode
     };
+    if (!prospectId) {
+      delete payload.prospectId;
+    }
     const { data } = yield call(otp.verify, payload, headers);
     if (data.verified) {
       yield put(verifyCodeSuccess());

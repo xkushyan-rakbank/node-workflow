@@ -13,28 +13,28 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
     <div className={classes.wrapper} key={app.prospectId}>
       <div className={classes.applicationRow}>
         <div className={app.status ? classes.oneThirdWidth : classes.fullWidth}>
-          <div className={classes.companyName}>{app.organizationInfo.companyName}</div>
+          <div className={classes.companyName}>{app.organizationInfo?.companyName}</div>
           <div className={classes.listAccount}>
-            {getTitleForAccountType(app.applicationInfo.accountType)}
+            {getTitleForAccountType(app.applicationInfo?.accountType)}
           </div>
           <div className={classes.listAccount}>
-            {app.applicationInfo.roEmail ||
-            app.applicationInfo.roLandlineNo ||
-            app.applicationInfo.roMobileNo
+            {app.applicationInfo?.roEmail ||
+            app.applicationInfo?.roLandlineNo ||
+            app.applicationInfo?.roMobileNo
               ? RO_LABEL
               : ""}
           </div>
           <div className={classes.listAccount}>
-            {app.applicationInfo.roName ? app.applicationInfo.roName : ""}
+            {app.applicationInfo?.roName ? app.applicationInfo?.roName : ""}
           </div>
           <div className={classes.listAccount}>
-            {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}
+            {app.applicationInfo?.roEmail ? app.applicationInfo?.roEmail : ""}
           </div>
           <div className={classes.listAccount}>
-            {app.applicationInfo.roLandlineNo ? app.applicationInfo.roLandlineNo : ""}
+            {app.applicationInfo?.roLandlineNo ? app.applicationInfo?.roLandlineNo : ""}
           </div>
           <div className={classes.listAccount}>
-            {app.applicationInfo.roMobileNo ? app.applicationInfo.roMobileNo : ""}
+            {app.applicationInfo?.roMobileNo ? app.applicationInfo?.roMobileNo : ""}
           </div>
         </div>
         {app.status
