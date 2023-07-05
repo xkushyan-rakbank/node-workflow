@@ -11,7 +11,7 @@ import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/Uplo
 import StakeholdersDetail from "./StakeholdersDetail";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";
-import { removeEncodingPrefix } from "../../../../utils/ocr";
+import { getOcrFieldValueBySource, removeEncodingPrefix } from "../../../../utils/ocr";
 
 import { getSdkConfig } from "../../../../store/selectors/sdkConfig";
 import { createSdkCofig } from "../../../../store/actions/sdkConfig";
@@ -24,13 +24,14 @@ import {
   setEidPreviewData,
   setPassportPreviewData,
   setEidActionType,
-  setPassportActionType
+  setPassportActionType,
+  analyseOcrAgeRestriction
 } from "../../../../store/actions/kyc";
 
 import { useStyles } from "./styled";
 import { OCRScanner } from "./OCRScanner";
 import { OverlayLoader } from "../../../../components/Loader";
-import { DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
+import { AGE_RESTRICTION, DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../constants";
 import { UploadFileModal } from "./UploadFileModal";
 import { ScanViaMobile } from "./MobileScan";
 import { InfoModal } from "../../../../components/Modals/InfoModal";
@@ -67,6 +68,8 @@ export const CompanyStakeholdersComponent = ({
   const [openDocUpload, setOpenDocUpload] = useState(false);
   const [docUploadType, setDocUploadType] = useState(null);
 
+  const dispatch = useDispatch();
+
   const openDocUploadModal = type => {
     onRemoveOcrData(type);
     setOpenDocUpload(true);
@@ -80,8 +83,6 @@ export const CompanyStakeholdersComponent = ({
     modalTitle = isDesktop ? "Let's upload your passport" : "Upload passport";
   }
 
-  const dispatch = useDispatch();
-
   const [openEidScanner, setOpenEidScanner] = useState(false);
   const [openPassportScanner, setOpenPassportScanner] = useState(false);
 
@@ -91,6 +92,15 @@ export const CompanyStakeholdersComponent = ({
       dispatch(createFaceScanKey());
     }
   }, [transactionId]);
+
+  useEffect(() => {
+    if (analysedEidData.age) {
+      const age = getOcrFieldValueBySource(analysedEidData?.age, "mrz");
+      if (age < 18) {
+        dispatch(analyseOcrAgeRestriction(AGE_RESTRICTION));
+      }
+    }
+  }, [analysedEidData]);
 
   const onScanEid = () => {
     onRemoveOcrData(DOC_TYPE_EID);
