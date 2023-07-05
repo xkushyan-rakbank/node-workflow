@@ -128,6 +128,8 @@ export const INVALID_DOCUMENT = "Invalid Document Error";
 
 export const EID_EXPIRY =
   "Your Emirates ID has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed Emirates ID";
+export const AGE_RESTRICTION =
+  "Please ensure that the uploaded EID or passport corresponds to an age above 18 years. Failing to meet this criteria may result in the decline of your application.";
 export const PASSPORT_EXPIRY =
   "Your passport has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed passport";
 export const DOC_MISMATCH = "Your emirates ID and passport do not match";

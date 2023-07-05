@@ -25,7 +25,8 @@ import {
   loadConfirmEntity,
   GET_KYC_STATUS,
   getKycSuccess,
-  getKycError
+  getKycError,
+  analyseOcrAgeRestriction
 } from "../actions/kyc";
 import {
   getAuthorizationHeader,
@@ -48,7 +49,8 @@ import {
   APP_STOP_SCREEN_RESULT,
   screeningStatusDefault,
   SCREENING_FAIL_REASONS,
-  applicationError
+  applicationError,
+  AGE_RESTRICTION
 } from "../../constants";
 import { setScreeningError } from "../actions/sendProspectToAPI";
 import routes from "../../routes";
@@ -91,11 +93,15 @@ export function* analyseOcrDataSaga({ payload }) {
 
     const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry, "visual");
     const nationality = getOcrFieldValueBySource(response?.nationalityIso2, "mrz");
+    const age = getOcrFieldValueBySource(response?.age, "mrz");
 
     if (documentType === DOC_TYPE_EID) {
       parseInt(daysToExpiry) <= 10
         ? yield put(analyseOcrFail(EID_EXPIRY))
         : yield put(analyseOcrSuccessEid(response));
+      if (age < 18) {
+        yield put(analyseOcrAgeRestriction(AGE_RESTRICTION));
+      }
     }
     if (documentType === DOC_TYPE_PASSPORT) {
       const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2, "mrz");

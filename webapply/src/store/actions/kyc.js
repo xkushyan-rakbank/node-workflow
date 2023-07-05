@@ -39,6 +39,7 @@ export const LOAD_CONFIRM_ENTITY = "LOAD_CONFIRM_ENTITY";
 export const GET_KYC_STATUS = "GET_KYC_STATUS";
 export const GET_KYC_STATUS_SUCCESS = "GET_KYC_STATUS_SUCCESS";
 export const GET_KYC_STATUS_ERROR = "GET_KYC_STATUS_ERROR";
+export const ANALYSE_OCR_AGE_RESTRICTION = "ANALYSE_OCR_AGE_RESTRICTION";
 
 export const createKycTransaction = () => ({
   type: CREATE_KYC_TRANSACTION
@@ -74,6 +75,10 @@ export const removeEidOcrData = () => ({
 
 export const analyseOcrFail = payload => {
   return { type: ANALYSE_OCR_FAIL, payload };
+};
+
+export const analyseOcrAgeRestriction = payload => {
+  return { type: ANALYSE_OCR_AGE_RESTRICTION, payload };
 };
 
 export const createFaceScanKey = () => ({

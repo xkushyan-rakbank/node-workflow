@@ -58,7 +58,8 @@ export const CompanyStakeholdersComponent = ({
     confirmEntity,
     kycUploadedDocs,
     actionType,
-    confirmEntityError
+    confirmEntityError,
+    ageRestrictionError
   } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
@@ -203,10 +204,10 @@ export const CompanyStakeholdersComponent = ({
           mobileLabel="Upload/ Scan your Emirates ID"
         />
       </div>
-      {isEmpty(analysedEidData) && error && (
+      {((isEmpty(analysedEidData) && error) || ageRestrictionError) && (
         <div className={classes.uploadModalErrorWrapper}>
           <ErrorOutlineIcon className={classes.errorIcon} />
-          {error}
+          {error || ageRestrictionError}
         </div>
       )}
 
