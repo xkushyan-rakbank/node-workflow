@@ -45,8 +45,8 @@ const CustomCheckbox = props => (
   />
 );
 
-const pathDebitCardApplied = "prospect.accountInfo[0].debitCardApplied";
-const pathChequeBookApplied = "prospect.accountInfo[0].chequeBookApplied";
+const pathDebitCardApplied = "prospect.accountInfo.debitCardApplied";
+const pathChequeBookApplied = "prospect.accountInfo.chequeBookApplied";
 
 export const ChannelsComponent = ({
   isHasSignatories,
@@ -147,7 +147,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="eStatements"
-            path={"prospect.accountInfo[0].eStatements"}
+            path={"prospect.accountInfo.eStatements"}
             label="I want online bank statements"
             classes={{ formControlRoot: classes.eStatementsFormControl }}
             onChange={() => {
@@ -159,7 +159,7 @@ export const ChannelsComponent = ({
 
           <CustomCheckbox
             name="mailStatements"
-            path={"prospect.accountInfo[0].mailStatements"}
+            path={"prospect.accountInfo.mailStatements"}
             label="I want paper statements (monthly charges apply)"
             classes={{ formControlRoot: classes.mailStatementsFormControl }}
             onChange={() => {

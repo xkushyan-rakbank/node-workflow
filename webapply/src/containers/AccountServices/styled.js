@@ -85,6 +85,10 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "10px",
     background: "#F7F8F9"
   },
+  selectedPackageList: {
+    border: "2px solid #157947",
+    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
+  },
   packageListTitle: {
     paddingBottom: "24px",
     marginBottom: "24px",
@@ -110,7 +114,7 @@ export const useStyles = makeStyles(theme => ({
     listStyle: "none",
     padding: 0,
     color: "#1F1F1F",
-    fontSize: "16px",
+    fontSize: "14px",
     fontWeight: 600,
     lineHeight: "28px",
     "& > li": {
@@ -148,6 +152,10 @@ export const useStyles = makeStyles(theme => ({
       color: "#ffffff",
       backgroundColor: "#1F1F1F"
     }
+  },
+  selectedPackageListBtn: {
+    color: "#ffffff",
+    backgroundColor: "#1F1F1F"
   },
   accountServiceAccordionRoot: {
     borderTop: "none"

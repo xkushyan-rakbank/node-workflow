@@ -45,25 +45,29 @@
       "sanctionUndertaking": false,
       "promoCode": ""
     },
-    "accountInfo": [
-      {
-        "branchId": "",
-        "accountType": "",
-        "accountSubType": "",
-        "accountNo": "",
-        "accountCurrencies": [],
-        "accountCurrency": "",
-        "accountPurpose": "",
-        "debitCardApplied": false,
-        "chequeBookApplied": false,
-        "eStatements": true,
-        "mailStatements": false,
-        "receiveInterest": false,
-        "deliverByCourier": false,
-        "expressTandC": false,
-        "express": false
-      }
-    ],
+    "accountInfo": {
+      "branchId": "",
+      "accountEmirateCity": "",
+      "accountType": "",
+      "accountSubType": "",
+      "accountNo": "",
+      "accountCurrencies": [
+        ""
+      ],
+      "accountCurrency": "AED",
+      "accountPurpose": "",
+      "signingPreferences": "singly",
+      "preferredLanguage": "en",
+      "debitCardApplied": false,
+      "chequeBookApplied": false,
+      "accountwithoutChequebook": false,
+      "eStatements": false,
+      "mailStatements": false,
+      "receiveInterest": false,
+      "deliverByCourier": false,
+      "expressTandC": false,
+      "express": false
+    },
     "organizationInfo": {
       "countryOfIncorporation": "AE",
       "companyName": "",

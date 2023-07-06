@@ -48,7 +48,7 @@ export function* receiveAppConfigSaga() {
 
     if (newConfig.prospect) {
       newConfig.prospect.signatoryInfo = [];
-      newConfig.prospect.accountInfo[0].accountCurrency = UAE_CURRENCY;
+      newConfig.prospect.accountInfo.accountCurrency = UAE_CURRENCY;
       if (!newConfig.prospect.applicantInfo.countryCode) {
         newConfig.prospect.applicantInfo.countryCode = UAE_CODE;
       }

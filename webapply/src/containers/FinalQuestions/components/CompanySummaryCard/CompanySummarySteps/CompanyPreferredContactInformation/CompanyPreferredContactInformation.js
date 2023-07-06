@@ -92,7 +92,7 @@ export const CompanyPreferredContactInformationComponent = ({
                   component={CustomSelect}
                   changeProspect={(prospect, value) =>
                     value !== UAE_CODE && chequeBookApplied
-                      ? { ...prospect, "prospect.accountInfo[0].chequeBookApplied": false }
+                      ? { ...prospect, "prospect.accountInfo.chequeBookApplied": false }
                       : prospect
                   }
                   inputProps={{ tabIndex: 0 }}

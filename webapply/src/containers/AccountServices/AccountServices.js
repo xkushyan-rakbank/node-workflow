@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Form, Formik } from "formik";
 import cx from "classnames";
 
@@ -23,13 +24,17 @@ import {
   PreferredLanguageOptions,
   PreferredNotificationOptions,
   SinglyOptionList,
-  YesNoList
+  YesNoList,
+  yesNoAskMeLaterOptions,
+  yesNoOptions
 } from "../../constants/options";
 import { SelectServicePackage } from "./components/SelectServicePackage";
+import { updateProspect } from "../../store/actions/appConfig";
 
 export const AccountServices = () => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const labelTextForGoGreenOption = (
@@ -51,33 +56,53 @@ export const AccountServices = () => {
     {
       code: "Yes",
       key: "Yes",
-      value: "yes",
+      value: true,
       label: labelTextForGoGreenOption
     },
     {
       code: "No",
       key: "No",
-      value: "no",
+      value: false,
       label: labelTextForPreferPaper
     }
   ];
-  const customerName = "Anand Sharma";
+  const signatoryName = "Anand Sharma";
+
+  const createRecieveStatementsRadioHandler = ({ values, setFieldValue }) => async event => {
+    const value = JSON.parse(event.target.value);
+    setFieldValue("statementsVia", value);
+    if (value) {
+      dispatch(
+        updateProspect({
+          "prospect.accountInfo.eStatements": value
+        })
+      );
+    } else {
+      dispatch(
+        updateProspect({
+          "prospect.accountInfo.mailStatements": value
+        })
+      );
+    }
+  };
 
   const initialValues = {
-    accountCurrencies: "AED",
-    emirateCity: "",
-    branch: "",
-    earnInterest: "no",
-    signingPreference: "singly",
-    chequebookNeeded: "yes",
-    openAccountConfirmation: "yes",
-    applyDebitCard: "yes",
-    recieveStatementsViaEmail: "yes",
-    preferredLanguage: "en",
-    recieveNotification: "yes",
-    latestOffers: "yes",
-    notificationVia: "email",
-    contactDirectly: "yes"
+    rakValuePackage: "",
+    accountCurrency: "AED",
+    accountEmirateCity: "",
+    branchId: "",
+    receiveInterest: "",
+    signingPreferences: "",
+    chequeBookApplied: true,
+    accountwithoutChequebook: true,
+    debitCardApplied: true,
+    statementsVia: true,
+    preferredLanguage: "",
+    mobileInstructions: true,
+    marketing: true,
+    marketingChannel: "",
+    nameOnDebitCard: "",
+    surveys: true
   };
   return (
     <div className={classes.container}>
@@ -87,247 +112,274 @@ export const AccountServices = () => {
           info="Go ahead and select your preferences, from debit cards to extra services"
           smallInfo
         />
-        <Formik initialValues={initialValues}>
-          <Form>
-            <SelectServicePackage />
-            <div className={classes.packageSelectionWrapper}>
-              <Accordion
-                title={"Preferences of Product & Services"}
-                id={"productAndServices"}
-                subTitle={"Lorem ipsum dolor sit amet."}
-                classes={{
-                  accordionRoot: classes.accountServiceAccordionRoot,
-                  accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
-                  accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
-                  accordionDetails: classes.accordionDetails
-                }}
-              >
-                <Field
-                  name="accountCurrencies"
-                  label="Account currency"
-                  placeholder="Account currency"
-                  datalistId="accountCurrencies"
-                  component={SelectAutocomplete}
-                  disabled={true}
-                />
-                <Field
-                  name="emirateCity"
-                  label="Emirate or city"
-                  placeholder="Emirate or city"
-                  datalistId="emirateCity"
-                  component={SelectAutocomplete}
-                />
-                <Field
-                  name="branch"
-                  label="Branch"
-                  placeholder="Branch"
-                  datalistId="branchCity"
-                  component={SelectAutocomplete}
-                />
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>
-                    Do you want to earn interest on the account?
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="earnInterest"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-              </Accordion>
-            </div>
-            <div className={classes.packageSelectionWrapper}>
-              <Accordion
-                title={"Preferences of Authorizations"}
-                id={"authorizations"}
-                subTitle={"Lorem ipsum dolor sit amet."}
-                classes={{
-                  accordionRoot: classes.accountServiceAccordionRoot,
-                  accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
-                  accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
-                  accordionDetails: classes.accordionDetails
-                }}
-              >
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>Signing preferences</label>
-                  <Field
-                    typeRadio
-                    options={SinglyOptionList}
-                    name="signingPreference"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
-                    Do you want a chequebook for the company?
-                    <span>Chequebook availability is subject to successful credit checks</span>
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="chequebookNeeded"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>
-                    Would you still to open an account if you don't qualify for a chequebook?
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="openAccountConfirmation"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
-                    Would you like to apply for a business debit card for {customerName}?
-                    <span>
-                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                      when an unknown printer took a galley of type and scrambled it to make a type
-                      specimen book
-                    </span>
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="applyDebitCard"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                  <Field
-                    name="nameOnCard"
-                    label={"Name on card"}
-                    placeholder={"Name on card"}
-                    InputProps={{
-                      inputProps: { tabIndex: 1 }
-                    }}
-                    component={Input}
-                    classes={{ formControlRoot: classes.customLabel }}
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
-                    Please help us save the environment by recieving your statements through e-mail
-                    <span>Help us save the environment going paperless</span>
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoListForRecieveStatementMode}
-                    name="recieveStatementsViaEmail"
-                    component={InlineRadioGroup}
-                    customIcon={false}
+        <Formik initialValues={initialValues} onSubmit={() => {}}>
+          {({ values, setFieldValue, ...props }) => {
+            const recieveStatementsChangeHandler = createRecieveStatementsRadioHandler({
+              values,
+              setFieldValue
+            });
+            return (
+              <Form>
+                <SelectServicePackage {...props} />
+                <div className={classes.packageSelectionWrapper}>
+                  <Accordion
+                    title={"Preferences of product & services"}
+                    id={"productAndServices"}
+                    subTitle={"Lorem ipsum dolor sit amet."}
                     classes={{
-                      root: classes.radioButtonRoot,
-                      label: classes.radioLabelRoot,
-                      parent: classes.radioConatiner
+                      accordionRoot: classes.accountServiceAccordionRoot,
+                      accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                      accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                      accordionDetails: classes.accordionDetails
                     }}
-                    radioColor={"#00CA2C"}
-                  />
+                  >
+                    <Field
+                      name="accountCurrency"
+                      path={"prospect.accountInfo.accountCurrency"}
+                      label="Account currency"
+                      placeholder="Account currency"
+                      datalistId="accountCurrencies"
+                      component={SelectAutocomplete}
+                      disabled={true}
+                    />
+                    <Field
+                      name="accountEmirateCity"
+                      path={"prospect.accountInfo.accountEmirateCity"}
+                      label="Emirate or city"
+                      placeholder="Emirate or city"
+                      datalistId="emirateCity"
+                      component={SelectAutocomplete}
+                    />
+                    <Field
+                      name="branch"
+                      path={"prospect.accountInfo.branch"}
+                      label="Branch"
+                      placeholder="Branch"
+                      datalistId="branchCity"
+                      component={SelectAutocomplete}
+                    />
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>
+                        Do you want to earn interest on this account?
+                      </label>
+                      <Field
+                        typeRadio
+                        options={YesNoList}
+                        name="receiveInterest"
+                        path={"prospect.accountInfo.receiveInterest"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                  </Accordion>
                 </div>
-              </Accordion>
-            </div>
-            <div className={classes.packageSelectionWrapper}>
-              <Accordion
-                title={"Preferences of communication"}
-                id={"communication"}
-                subTitle={"Lorem ipsum dolor sit amet."}
-                classes={{
-                  accordionRoot: classes.accountServiceAccordionRoot,
-                  accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
-                  accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
-                  accordionDetails: classes.accordionDetails
-                }}
-              >
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>Select your preferred language</label>
-                  <Field
-                    typeRadio
-                    options={PreferredLanguageOptions}
-                    name="preferredLanguage"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>
-                    Would you like to get transaction notifications on your mobile?
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="recieveNotification"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>
-                    Would you like to be the first to hear about the latest offers (including from
-                    RAKBANK’s authorised third parties)?
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="latestOffers"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
-                </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>Receive notifications via:</label>
-                  <Field
-                    name="notificationVia"
-                    options={PreferredNotificationOptions}
-                    component={CheckboxGroup}
-                    customIcon={true}
+                <div className={classes.packageSelectionWrapper}>
+                  <Accordion
+                    title={"Preferences of authorizations"}
+                    id={"authorizations"}
+                    subTitle={"Lorem ipsum dolor sit amet."}
                     classes={{
-                      label: classes.radioLabelRoot
+                      accordionRoot: classes.accountServiceAccordionRoot,
+                      accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                      accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                      accordionDetails: classes.accordionDetails
                     }}
-                    isInlineStyle={false}
-                    radioColor="primary"
-                  />
+                  >
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>Signing preferences</label>
+                      <Field
+                        typeRadio
+                        options={SinglyOptionList}
+                        name="signingPreferences"
+                        path={"prospect.accountInfo.signingPreferences"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
+                        Do you want a chequebook for your company?
+                        <span>Chequebook availability is subject to successful credit checks</span>
+                      </label>
+                      <Field
+                        typeRadio
+                        options={yesNoOptions}
+                        name="chequeBookApplied"
+                        path={"prospect.accountInfo.chequeBookApplied"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>
+                        Would you still like to open an account if you don't qualify for a
+                        chequebook?
+                      </label>
+                      <Field
+                        typeRadio
+                        options={yesNoOptions}
+                        name="accountwithoutChequebook"
+                        path={"prospect.accountInfo.accountwithoutChequebook"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
+                        Would you like to apply for a business debit card for {signatoryName}?
+                        <span>
+                          Lorem Ipsum has been the industry's standard dummy text ever since the
+                          1500s, when an unknown printer took a galley of type and scrambled it to
+                          make a type specimen book
+                        </span>
+                      </label>
+                      <Field
+                        typeRadio
+                        options={yesNoOptions}
+                        name="debitCardApplied"
+                        path={"prospect.accountInfo.debitCardApplied"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                      <Field
+                        name="nameOnDebitCard"
+                        label={"Name on the card"}
+                        path={
+                          "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard"
+                        }
+                        placeholder={"Name on the card"}
+                        InputProps={{
+                          inputProps: { tabIndex: 1 }
+                        }}
+                        component={Input}
+                        classes={{ formControlRoot: classes.customLabel }}
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
+                        Please help us save the environment by recieving your statements through
+                        e-mail
+                        <span>Help us save the environment going paperless</span>
+                      </label>
+                      <Field
+                        typeRadio
+                        options={YesNoListForRecieveStatementMode}
+                        name="statementsVia"
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{
+                          root: classes.radioButtonRoot,
+                          label: classes.radioLabelRoot,
+                          parent: classes.radioConatiner
+                        }}
+                        radioColor={"#00CA2C"}
+                        onChange={recieveStatementsChangeHandler}
+                      />
+                    </div>
+                  </Accordion>
                 </div>
-                <div className={classes.questionareWrapper}>
-                  <label className={classes.sectionLabel}>
-                    Can we contact you for surveys or feedback, either directly or through a third
-                    party?
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="contactDirectly"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                  />
+                <div className={classes.packageSelectionWrapper}>
+                  <Accordion
+                    title={"Preferences of communication"}
+                    id={"communication"}
+                    subTitle={"Lorem ipsum dolor sit amet."}
+                    classes={{
+                      accordionRoot: classes.accountServiceAccordionRoot,
+                      accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                      accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                      accordionDetails: classes.accordionDetails
+                    }}
+                  >
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>Select your preferred language</label>
+                      <Field
+                        typeRadio
+                        options={PreferredLanguageOptions}
+                        name="preferredLanguage"
+                        path={"prospect.accountInfo.preferredLanguage"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>
+                        Would you like to get transaction notifications on your mobile?
+                      </label>
+                      <Field
+                        typeRadio
+                        options={yesNoOptions}
+                        name="mobileInstructions"
+                        path={"prospect.channelServicesInfo.mobileInstructions"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>
+                        Would you like to be the first to hear about the latest offers (including
+                        from RAKBANK’s authorised third parties)?
+                      </label>
+                      <Field
+                        typeRadio
+                        options={yesNoAskMeLaterOptions}
+                        name="marketing"
+                        path={"prospect.channelServicesInfo.marketing"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>Receive notifications via:</label>
+                      <Field
+                        name="marketingChannel"
+                        path={"prospect.channelServicesInfo.marketingChannel"}
+                        options={PreferredNotificationOptions}
+                        component={CheckboxGroup}
+                        customIcon={true}
+                        classes={{
+                          label: classes.radioLabelRoot
+                        }}
+                        isInlineStyle={false}
+                        radioColor="primary"
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>
+                        Can we contact you for surveys or feedback, either directly or through a
+                        third party?
+                      </label>
+                      <Field
+                        typeRadio
+                        options={YesNoList}
+                        name="surveys"
+                        path={"prospect.channelServicesInfo.surveys"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        radioColor="primary"
+                      />
+                    </div>
+                  </Accordion>
                 </div>
-              </Accordion>
-            </div>
-          </Form>
+              </Form>
+            );
+          }}
         </Formik>
       </div>
       <div className="linkContainer">

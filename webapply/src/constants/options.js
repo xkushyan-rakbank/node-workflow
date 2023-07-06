@@ -143,10 +143,22 @@ export const SinglyOptionList = [
     label: "Singly"
   },
   {
+    code: "Any one of us can sign",
+    key: "Any one of us can sign",
+    value: "jointly",
+    label: "Any one of us can sign"
+  },
+  {
     code: "Jointly",
     key: "Jointly",
     value: "jointly",
-    label: "Jointly"
+    label: "All of us must sign"
+  },
+  {
+    code: "Jointly",
+    key: "Jointly",
+    value: "jointly",
+    label: "Other(please specify)"
   }
 ];
 
@@ -183,5 +195,26 @@ export const PreferredNotificationOptions = [
     key: "Phone call",
     value: "phone",
     label: "Phone call"
+  }
+];
+
+export const yesNoAskMeLaterOptions = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: "yes",
+    label: "Yes"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: "no",
+    label: "No"
+  },
+  {
+    code: "ask_me_later",
+    key: "ask_me_later",
+    value: "ask_me_later",
+    label: "Ask me later"
   }
 ];
