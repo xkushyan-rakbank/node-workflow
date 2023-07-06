@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,6 +39,10 @@ export const AddCompanyInformation = ({
   const isTouched = useSelector(isFieldTouched("isTaxDeclarationCompleted"));
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(updateCompanyAdditionalInfoStatus("inProgress"));
+  }, []);
 
   const initialValues = {
     isBusinessRelationshipCompleted: "",
@@ -92,14 +96,7 @@ export const AddCompanyInformation = ({
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
                 <div>
-                  <BackLink
-                    path={routes.additionalInfoComponent}
-                    onClick={() =>
-                      dispatch(
-                        updateCompanyAdditionalInfoStatus(!isValidForm ? "inProgress" : "completed")
-                      )
-                    }
-                  />
+                  <BackLink path={routes.additionalInfoComponent} />
                   <div className={classes.infoContainer}>
                     <Icon className={classes.infoIcon} alt="collapse-icon" name={ICONS.info} />
                     We need the information below to understand your business needs.

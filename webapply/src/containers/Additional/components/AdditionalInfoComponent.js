@@ -12,7 +12,7 @@ import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import { ReactComponent as ErrorIcon } from "../../../assets/icons/credit_score_error.svg";
 
-const AdditionalInfoButton = ({ status, onClick, disabled }) => {
+const AdditionalInfoButton = ({ status, onClick, disabled, text }) => {
   const classes = useStyles();
   console.log("status", status);
 
@@ -29,7 +29,7 @@ const AdditionalInfoButton = ({ status, onClick, disabled }) => {
   return (
     <div className={cx(classes.additionalSelectionButton, classes.additionalbtnSelected)}>
       <div className={classes.buttonText}>
-        <div className={classes.title}>Company information</div>
+        <div className={classes.title}>{text}</div>
       </div>
       <div className={classes.buttonWrap}>
         {!status ? (
@@ -92,6 +92,7 @@ export default function AdditionalInfoComponent() {
             status={companyAdditionalInfoStatus}
             onClick={() => navigateTo(routes.additionalCompanyInformation)}
             disabled={false}
+            text="Company information"
           />
         </div>
         <div
@@ -104,6 +105,7 @@ export default function AdditionalInfoComponent() {
             status={addionalStakeholderInfoStatus}
             onClick={() => navigateTo(routes.additionalStakeholderInformation)}
             disabled={!isStakeholderEnabled}
+            text="Stakeholder information"
           />
         </div>
       </div>

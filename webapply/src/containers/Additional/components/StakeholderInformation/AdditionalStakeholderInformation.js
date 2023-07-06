@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import routes from "../../../../routes";
 import { NEXT, formStepper } from "../../../../constants";
@@ -21,6 +21,7 @@ import { SourceOfIncome } from "./components/SourceOfIncome";
 
 import { useStyles } from "../styled";
 import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
+import { isFieldTouched } from "../../../../store/selectors/appConfig";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -36,6 +37,11 @@ export const AdditionalStakeholderInformation = ({
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
+  const isTouched = useSelector(isFieldTouched("stakeholderTaxDeclarationSection"));
+
+  useEffect(() => {
+    dispatch(updateStakeholderInfoStatus("inProgress"));
+  }, []);
 
   const initialValues = {
     backgroundInfoSection: "",
@@ -83,21 +89,13 @@ export const AdditionalStakeholderInformation = ({
         validateOnMount={true}
       >
         {props => {
-          const isValidStakeholderInfo = formValidationSchema.isValidSync(props.values);
+          const isValidStakeholderInfo =
+            formValidationSchema.isValidSync(props.values) && isTouched;
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
                 <div>
-                  <BackLink
-                    path={routes.additionalInfoComponent}
-                    onClick={() =>
-                      dispatch(
-                        updateStakeholderInfoStatus(
-                          isValidStakeholderInfo ? "completed" : "inProgress"
-                        )
-                      )
-                    }
-                  />
+                  <BackLink path={routes.additionalInfoComponent} />
                   <div className={classes.infoContainer}>
                     <Icon className={classes.infoIcon} alt="collapse-icon" name={ICONS.info} />
                     We need the information below to understand your business needs.

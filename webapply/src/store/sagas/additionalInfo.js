@@ -1,11 +1,13 @@
 import { takeLatest, put, all } from "redux-saga/effects";
 import {
   UPDATE_COMPANY_ADDITIONAL_INFO_STATUS,
-  UPDATE_STAKEHOLDER_INFO_STATUS
+  UPDATE_STAKEHOLDER_INFO_STATUS,
+  updateCompanyAdditionalInfoStatus,
+  updateStakeholderInfoStatus
 } from "../actions/additionalInfo";
 import { log } from "../../utils/loggger";
 
-function* updateCompanyAdditionalInfoStatus(action) {
+function* updateCompanyAdditionalInfo(action) {
   try {
     yield put(updateCompanyAdditionalInfoStatus(action.payload));
   } catch (error) {
@@ -13,7 +15,7 @@ function* updateCompanyAdditionalInfoStatus(action) {
   }
 }
 
-function* updateStakeholderInfoStatus(action) {
+function* updateStakeholderInfo(action) {
   try {
     yield put(updateStakeholderInfoStatus(action.payload));
   } catch (error) {
@@ -21,14 +23,9 @@ function* updateStakeholderInfoStatus(action) {
   }
 }
 
-function* watchUpdateCompanyAdditionalInfoStatus() {
-  yield takeLatest(UPDATE_COMPANY_ADDITIONAL_INFO_STATUS, updateCompanyAdditionalInfoStatus);
-}
-
-function* watchUpdateStakeholderInfoStatus() {
-  yield takeLatest(UPDATE_STAKEHOLDER_INFO_STATUS, updateStakeholderInfoStatus);
-}
-
 export default function* addtionalInfoSaga() {
-  yield all([watchUpdateCompanyAdditionalInfoStatus(), watchUpdateStakeholderInfoStatus()]);
+  yield all(
+    takeLatest(UPDATE_STAKEHOLDER_INFO_STATUS, updateStakeholderInfo),
+    takeLatest(UPDATE_COMPANY_ADDITIONAL_INFO_STATUS, updateCompanyAdditionalInfo)
+  );
 }
