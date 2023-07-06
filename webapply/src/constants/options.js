@@ -134,3 +134,54 @@ export const YesNoListForTaxPayInAnotherCountry = [
     label: "No, I don’t pay taxes in another country"
   }
 ];
+
+export const SinglyOptionList = [
+  {
+    code: "Singly",
+    key: "Singly",
+    value: "singly",
+    label: "Singly"
+  },
+  {
+    code: "Jointly",
+    key: "Jointly",
+    value: "jointly",
+    label: "Jointly"
+  }
+];
+
+export const PreferredLanguageOptions = [
+  {
+    code: "Arabic",
+    key: "Arabic",
+    value: "ar",
+    label: "Arabic"
+  },
+  {
+    code: "English",
+    key: "English",
+    value: "en",
+    label: "English"
+  }
+];
+
+export const PreferredNotificationOptions = [
+  {
+    code: "Email",
+    key: "Email",
+    value: "email",
+    label: "Email"
+  },
+  {
+    code: "SMS",
+    key: "SMS",
+    value: "sms",
+    label: "SMS"
+  },
+  {
+    code: "Phone call",
+    key: "Phone call",
+    value: "phone",
+    label: "Phone call"
+  }
+];

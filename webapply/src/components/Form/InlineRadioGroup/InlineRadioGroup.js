@@ -50,10 +50,10 @@ const InlineRadioGroupBase = ({
           )}
         >
           {label && <span className={classes.label}>{label}</span>}
-          <div className={classes.inlineFormRadioWrapper}>
+          <div className={cx(classes.inlineFormRadioWrapper, extendedClasses.parent)}>
             {options.map(item => (
               <Radio
-                disabled={isDisabled}
+                disabled={isDisabled || item.label === "Jointly"}
                 color={radioColor}
                 key={item.key}
                 value={JSON.stringify(item.value)}

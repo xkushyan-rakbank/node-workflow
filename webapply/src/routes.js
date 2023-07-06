@@ -33,5 +33,6 @@ export default {
   webToMobile: `${smeBaseName}/wtm`,
   // eslint-disable-next-line max-len
   additionalStakeholderInformation: `${smeBaseName}/StakeholdersAdditionalInfo`,
-  additionalCompanyInformation: `${smeBaseName}/CompanyAdditionalInfo`
+  additionalCompanyInformation: `${smeBaseName}/CompanyAdditionalInfo`,
+  accountServices: `${smeBaseName}/AccountServices`
 };

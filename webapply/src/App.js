@@ -65,6 +65,7 @@ const AdditionalCompanyInformation = lazy(() =>
 const AdditionalStakeholderInformation = lazy(() =>
   import("./containers/Additional/components/StakeholderInformation")
 );
+const AccountServices = lazy(() => import("./containers/AccountServices"));
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -140,6 +141,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.additionalStakeholderInformation}
                 component={AdditionalStakeholderInformation}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.accountServices}
+                component={AccountServices}
               />
               <ProspectProtectedRoute
                 exact

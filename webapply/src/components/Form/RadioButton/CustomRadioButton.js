@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
@@ -25,6 +25,7 @@ export const CustomRadioButton = ({
   function CustomIconRadio(props) {
     return (
       <Radio
+        color={props.color}
         onClick={onSelect}
         icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
         checkedIcon={<Icon name={ICONS.checkedRadio} alt="selected icon" />}
@@ -33,6 +34,16 @@ export const CustomRadioButton = ({
     );
   }
 
+  const CustomColorRadio = withStyles({
+    root: {
+      color: "primary",
+      "&$checked": {
+        color: rest.color
+      }
+    },
+    checked: {}
+  })(props => <Radio color="primary" {...props} />);
+
   return (
     <FormControlLabel
       classes={{ label: classes.label, root: classes.root }}
@@ -40,7 +51,7 @@ export const CustomRadioButton = ({
         customIcon ? (
           <CustomIconRadio />
         ) : (
-          <Radio onClick={onSelect} disableRipple={true} {...rest} />
+          <CustomColorRadio onClick={onSelect} disableRipple={true} {...rest} />
         )
       }
       label={label}

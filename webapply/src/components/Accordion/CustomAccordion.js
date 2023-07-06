@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Collapse, withStyles } from "@material-ui/core";
+import { Collapse, makeStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import cx from "classnames";
 
 import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
-import { useStyles } from "./styled";
 import { ICONS, Icon } from "../Icons";
 import { updateProspect } from "../../store/actions/appConfig";
 import { isFieldTouched } from "../../store/selectors/appConfig";
 
-const AccordionPanel = withStyles({
-  root: {
+const useStyles = makeStyles(theme => ({
+  accordionRoot: {
     borderTop: "1px solid #E6E6E6",
     boxShadow: "none",
     "&:not(:last-child)": {
@@ -22,63 +21,74 @@ const AccordionPanel = withStyles({
     },
     "&:before": {
       display: "none"
-    },
-    "&$expanded": {
-      margin: "auto"
     }
   },
-  expanded: {}
-})(MuiAccordion);
-
-const AccordionSummary = withStyles({
-  root: {
+  accordionExpanded: { margin: "auto !important" },
+  accordionSummaryRoot: {
     marginBottom: -1,
     minHeight: 56,
-    padding: 0,
-    "&$expanded": {
-      minHeight: 56
-    }
+    padding: 0
   },
-  content: {
+  accordionSummaryContent: {
     margin: 0,
     "& .accordionTitle": {
-      color: "#8D0C10",
-      fontWeight: 400,
-      fontSize: "16px",
-      lineHeight: "22px",
-      margin: 0,
       letterSpacing: "0px",
-      transition: "font-weight 0.25s ease-out"
-    },
-    "&$expanded": {
-      margin: 0,
-      fontWeight: 600,
       transition: "font-weight 0.25s ease-out",
-      "& .activePanel": {
-        display: "inline-block",
-        width: "4px",
-        height: "16px",
-        backgroundColor: "#8D0C10",
-        borderRadius: "2px"
+      "& .title": {
+        fontWeight: 400,
+        fontSize: "16px",
+        lineHeight: "22px",
+        color: "#8D0C10",
+        margin: 0
       },
-      "& .accordionTitle": {
-        fontWeight: 600,
-        paddingLeft: "15px",
-
-        transition: "fontWeight 0.25s ease-in-out"
+      "& .subTitle": {
+        fontWeight: 400,
+        fontSize: "14px",
+        lineHeight: "28px",
+        color: "#757575",
+        margin: 0
       }
     }
   },
-  expanded: {}
-})(MuiAccordionSummary);
 
-const AccordionDetails = withStyles({
-  root: {
+  accordionSummaryContentExpanded: {
+    minHeight: "56px !important",
+    margin: "0px !important",
+    fontWeight: 600,
+    transition: "font-weight 0.25s ease-out",
+    "& .activePanel": {
+      display: "inline-block",
+      width: "4px",
+      height: "16px",
+      backgroundColor: "#8D0C10",
+      borderRadius: "2px"
+    },
+    "& .accordionTitle": {
+      fontWeight: 600,
+      paddingLeft: "15px",
+
+      transition: "fontWeight 0.25s ease-in-out"
+    }
+  },
+  accordionDetails: {
     flexDirection: "column",
     padding: 0,
     marginBottom: "24px"
+  },
+  accordionSummaryWrapper: {
+    display: "flex",
+    width: "100%"
+  },
+  customAccordionSummaryWrapper: {
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  expandIcon: {
+    fill: "#BF0000",
+    width: "20px",
+    height: "10px"
   }
-})(MuiAccordionDetails);
+}));
 
 export const Accordion = ({
   id,
@@ -86,11 +96,13 @@ export const Accordion = ({
   children,
   showDefinition,
   isCompleted = false,
+  subTitle,
+  classes: extendedClasses,
   setFormFieldValue = () => {}
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
-  const classes = useStyles();
+  const classes = useStyles({ classes: extendedClasses });
   const [expanded, setExpanded] = useState("");
 
   const transitionProps = {
@@ -109,21 +121,33 @@ export const Accordion = ({
 
   return (
     <div className="accordion">
-      <AccordionPanel
+      <MuiAccordion
         expanded={expanded === id}
         onChange={handleChange(id)}
         square
         TransitionComponent={Collapse}
         TransitionProps={transitionProps}
+        classes={{ root: classes.accordionRoot, expanded: classes.accordionExpanded }}
       >
-        <AccordionSummary className={classes.accordionSummary}>
-          <div className={cx(classes.wrapper, classes.customAccordionWrapper)}>
+        <MuiAccordionSummary
+          classes={{
+            root: classes.accordionSummaryRoot,
+            expanded: classes.accordionSummaryContentExpanded,
+            content: classes.accordionSummaryContent
+          }}
+        >
+          <div
+            className={cx(classes.accordionSummaryWrapper, classes.customAccordionSummaryWrapper)}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="activePanel"></span>
-              <p className="accordionTitle">{title}</p>
+              <div className="accordionTitle">
+                <p className="title">{title}</p>
+                {subTitle && <p className="subTitle">{subTitle}</p>}
+              </div>
             </div>
             <div>
-              {expanded === "taxDeclarations" && showDefinition}
+              {expanded === "isTaxDeclarationCompleted" && showDefinition}
               {isCompleted && isTouched && <Check size="16px" className={classes.success} />}
               <Icon
                 className={classes.expandIcon}
@@ -132,9 +156,11 @@ export const Accordion = ({
               />
             </div>
           </div>
-        </AccordionSummary>
-        <AccordionDetails>{children}</AccordionDetails>
-      </AccordionPanel>
+        </MuiAccordionSummary>
+        <MuiAccordionDetails classes={{ root: classes.accordionDetails }}>
+          {children}
+        </MuiAccordionDetails>
+      </MuiAccordion>
     </div>
   );
 };

@@ -31,7 +31,8 @@ export const formStepper = [
     path: routes.additionalInfoComponent,
     relatedPath: [routes.additionalCompanyInformation, routes.additionalStakeholderInformation]
   },
-  { step: 5, title: "Account preferences", path: routes.finalQuestions }
+  { step: 5, title: "Setup", path: routes.accountServices },
+  { step: 6, title: "Account preferences", path: routes.finalQuestions }
 ];
 
 export const agentFormStepper = [
