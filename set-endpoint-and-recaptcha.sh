@@ -20,7 +20,7 @@ then
     echo 'REACT_APP_WCM_PATH=https://revamp.rakbank.ae' >> webapply/.env.production
     echo 'REACT_APP_WCM_API_PATH=https://revamp.rakbank.ae' >> webapply/.env.production
     echo 'REACT_APP_WTM_SCHEDULER_INTERVAL=5000' >> webapply/.env.production
-    echo 'REACT_APP_DISABLE_GTM=true' >> webapply/.env.production
+    echo 'REACT_APP_DISABLE_GTM=false' >> webapply/.env.production
     echo 'REACT_APP_BAU_URL=https://quickapplydev.rakbank.ae' >> webapply/.env.production
     elif [ "$VAR_env_to_deploy" == "release" ];
     then
