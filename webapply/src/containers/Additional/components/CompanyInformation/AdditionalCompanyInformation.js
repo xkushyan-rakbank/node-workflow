@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 
 import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
@@ -19,6 +20,8 @@ import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { useViewId } from "../../../../utils/useViewId";
 
 import { useStyles } from "../styled";
+import { updateCompanyAdditionalInfoStatus } from "../../../../store/actions/additionalInfo";
+import { isFieldTouched } from "../../../../store/selectors/appConfig";
 
 export const AddCompanyInformation = ({
   companyName,
@@ -31,6 +34,9 @@ export const AddCompanyInformation = ({
   useLayoutParams(false, true);
   useViewId(true);
   const pushHistory = useTrackingHistory();
+  const dispatch = useDispatch();
+
+  const isTouched = useSelector(isFieldTouched("isTaxDeclarationCompleted"));
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,7 +67,10 @@ export const AddCompanyInformation = ({
 
     return sendProspectToAPI(NEXT).then(
       isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.additionalInfoComponent, true);
+        if (!isScreeningError) {
+          dispatch(updateCompanyAdditionalInfoStatus("completed"));
+          pushHistory(routes.additionalInfoComponent, true);
+        }
       },
       () => setIsLoading(false)
     );
@@ -77,12 +86,20 @@ export const AddCompanyInformation = ({
         validateOnMount={true}
       >
         {({ isValid, ...props }) => {
-          const isValidForm = formValidationSchema.isValidSync(props.values);
+          const isValidForm = formValidationSchema.isValidSync(props.values) && isTouched;
+
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
                 <div>
-                  <BackLink path={routes.additionalInfoComponent} />
+                  <BackLink
+                    path={routes.additionalInfoComponent}
+                    onClick={() =>
+                      dispatch(
+                        updateCompanyAdditionalInfoStatus(!isValidForm ? "inProgress" : "completed")
+                      )
+                    }
+                  />
                   <div className={classes.infoContainer}>
                     <Icon className={classes.infoIcon} alt="collapse-icon" name={ICONS.info} />
                     We need the information below to understand your business needs.

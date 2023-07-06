@@ -17,6 +17,7 @@ import kycSaga from "./kyc";
 import sdkConfigSaga from "./sdkConfig";
 import webToMobileSaga from "./webToMobile";
 import termsAndConditionsSaga from "./termsAndConditions";
+import additionalInfoSaga from "./additionalInfo";
 
 export default function*() {
   yield all([
@@ -36,6 +37,7 @@ export default function*() {
     fork(kycSaga),
     fork(sdkConfigSaga),
     fork(webToMobileSaga),
-    fork(termsAndConditionsSaga)
+    fork(termsAndConditionsSaga),
+    fork(additionalInfoSaga)
   ]);
 }

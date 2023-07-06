@@ -27,11 +27,13 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "row",
     padding: "24px",
     alignItems: "center",
-    justifyContent: "space-between",
-    cursor: "pointer",
+    justifyContent: "space-between"
+  },
+  additionalbtnSelected: {
     "&:hover": {
       boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
-    }
+    },
+    cursor: "pointer"
   },
   buttonText: {
     display: "flex",
@@ -83,11 +85,19 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-evenly",
     alignItems: "center",
     height: "32px",
-    minWidth: "98px",
-    background: "#ECF9F2",
     borderRadius: "10px",
     fontSize: "12px",
-    color: "#157947"
+    marginRight: "16px"
+  },
+  success: {
+    background: "#ECF9F2",
+    color: "#157947",
+    minWidth: "98px"
+  },
+  incompleted: {
+    background: "#FDE7E8",
+    color: "#8D0C10",
+    minWidth: "99px"
   },
   additionalCompanyInfoContainer: {
     marginTop: "25px",

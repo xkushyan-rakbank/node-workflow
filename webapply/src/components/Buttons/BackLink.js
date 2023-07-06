@@ -35,6 +35,7 @@ const BackLinkBase = ({ text = "Back", className = "", path, ...props }) => (
 
 const areEqual = (prevProps, nextProps) =>
   prevProps.text === nextProps.text &&
-  JSON.stringify(prevProps.path) === JSON.stringify(nextProps.path);
+  JSON.stringify(prevProps.path) === JSON.stringify(nextProps.path) &&
+  prevProps.onClick === nextProps.onClick;
 
 export const BackLink = memo(BackLinkBase, areEqual);

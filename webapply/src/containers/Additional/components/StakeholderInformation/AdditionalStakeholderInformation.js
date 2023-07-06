@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 
 import routes from "../../../../routes";
 import { NEXT, formStepper } from "../../../../constants";
@@ -19,6 +20,7 @@ import { StakeholderTaxDeclarations } from "./components/StakeholderTaxDeclarati
 import { SourceOfIncome } from "./components/SourceOfIncome";
 
 import { useStyles } from "../styled";
+import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -31,6 +33,7 @@ export const AdditionalStakeholderInformation = ({
 
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,7 +64,10 @@ export const AdditionalStakeholderInformation = ({
 
     return sendProspectToAPI(NEXT).then(
       isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.additionalInfoComponent, true);
+        if (!isScreeningError) {
+          dispatch(updateStakeholderInfoStatus("completed"));
+          pushHistory(routes.additionalInfoComponent, true);
+        }
       },
       () => setIsLoading(false)
     );
@@ -82,7 +88,16 @@ export const AdditionalStakeholderInformation = ({
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
                 <div>
-                  <BackLink path={routes.additionalInfoComponent} />
+                  <BackLink
+                    path={routes.additionalInfoComponent}
+                    onClick={() =>
+                      dispatch(
+                        updateStakeholderInfoStatus(
+                          isValidStakeholderInfo ? "completed" : "inProgress"
+                        )
+                      )
+                    }
+                  />
                   <div className={classes.infoContainer}>
                     <Icon className={classes.infoIcon} alt="collapse-icon" name={ICONS.info} />
                     We need the information below to understand your business needs.

@@ -19,6 +19,7 @@ import kyc from "./kyc";
 import sdkConfig from "./sdkConfig";
 import webToMobile from "./webToMobile";
 import termsAndConditions from "./termsAndConditions";
+import additionalInfo from "./additionalInfo";
 
 const reducers = history =>
   combineReducers({
@@ -41,7 +42,8 @@ const reducers = history =>
     kyc,
     sdkConfig,
     webToMobile,
-    termsAndConditions
+    termsAndConditions,
+    additionalInfo
   });
 
 export default reducers;
