@@ -76,6 +76,10 @@ export default function AdditionalInfoComponent() {
 
   const isStakeholderEnabled = companyAdditionalInfoStatus === "completed";
 
+  const handleAdditionalInfoNextStep = () => {
+    pushHistory(routes.accountServices);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.section}>
@@ -111,7 +115,12 @@ export default function AdditionalInfoComponent() {
       </div>
       <div className="linkContainer">
         <BackLink path={routes.StakeholderTermsAndConditions} />
-        <NextStepButton label="Next" justify="flex-end" disabled={!isNextButtonEnabled} />
+        <NextStepButton
+          label="Next"
+          justify="flex-end"
+          disabled={!isNextButtonEnabled}
+          onClick={() => handleAdditionalInfoNextStep()}
+        />
       </div>
     </div>
   );
