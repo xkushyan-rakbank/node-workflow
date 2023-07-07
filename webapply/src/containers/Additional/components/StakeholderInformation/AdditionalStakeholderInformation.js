@@ -38,9 +38,10 @@ export const AdditionalStakeholderInformation = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const isTouched = useSelector(isFieldTouched("stakeholderTaxDeclarationSection"));
+  const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
 
   useEffect(() => {
-    dispatch(updateStakeholderInfoStatus("inProgress"));
+    !addionalStakeholderInfoStatus && dispatch(updateStakeholderInfoStatus("inProgress"));
   }, []);
 
   const initialValues = {

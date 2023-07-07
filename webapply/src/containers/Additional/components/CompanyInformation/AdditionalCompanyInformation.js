@@ -37,11 +37,12 @@ export const AddCompanyInformation = ({
   const dispatch = useDispatch();
 
   const isTouched = useSelector(isFieldTouched("isTaxDeclarationCompleted"));
+  const { companyAdditionalInfoStatus } = useSelector(state => state.additionalInfo);
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(updateCompanyAdditionalInfoStatus("inProgress"));
+    !companyAdditionalInfoStatus && dispatch(updateCompanyAdditionalInfoStatus("inProgress"));
   }, []);
 
   const initialValues = {
