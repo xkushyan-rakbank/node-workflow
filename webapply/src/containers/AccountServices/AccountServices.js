@@ -27,8 +27,8 @@ import {
   yesNoAskMeLaterOptions,
   yesNoOptions
 } from "../../constants/options";
-import { SelectServicePackage } from "./components/SelectServicePackage";
 import { updateProspect } from "../../store/actions/appConfig";
+import { SelectServicePackage } from "./components/SelectServicePackage";
 
 export const AccountServices = () => {
   useFormNavigation([false, true, formStepper]);
@@ -122,7 +122,7 @@ export const AccountServices = () => {
             });
             return (
               <Form>
-                <SelectServicePackage {...props} />
+                <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
                     title={"Preferences of product & services"}

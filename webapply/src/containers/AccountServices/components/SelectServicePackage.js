@@ -6,14 +6,13 @@ import { ReactComponent as Check } from "../../../assets/icons/credit_score.svg"
 import { useStyles } from "../styled";
 import { updateProspect } from "../../../store/actions/appConfig";
 
-export const SelectServicePackage = ({ setFieldValue }) => {
+export const SelectServicePackage = ({ setFormFieldValue }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [selectedService, setSelectedService] = useState("");
   const selectedPackage = selectedPackage => {
-    console.log(selectedPackage);
     setSelectedService(selectedPackage);
-    setFieldValue("rakValuePackage", selectedPackage);
+    setFormFieldValue("rakValuePackage", selectedPackage);
     dispatch(
       updateProspect({
         "prospect.applicationInfo.rakValuePackage": selectedPackage
@@ -64,7 +63,7 @@ export const SelectServicePackage = ({ setFieldValue }) => {
               [classes.selectedPackageListBtn]: selectedService === "RAK value SME plus"
             })}
           >
-            Select
+            {selectedService === "RAK value SME plus" ? "Selected" : "Select"}
           </Button>
         </div>
         <div
@@ -104,7 +103,7 @@ export const SelectServicePackage = ({ setFieldValue }) => {
               [classes.selectedPackageListBtn]: selectedService === "RAK value SME max"
             })}
           >
-            Select
+            {selectedService === "RAK value SME max" ? "Selected" : "Select"}
           </Button>
         </div>
       </div>
