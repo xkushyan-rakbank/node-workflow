@@ -87,6 +87,11 @@ const useStyles = makeStyles(theme => ({
     fill: "#BF0000",
     width: "20px",
     height: "10px"
+  },
+  success: {
+    height: "11px",
+    width: "14px",
+    marginRight: "24px"
   }
 }));
 

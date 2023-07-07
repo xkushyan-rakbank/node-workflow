@@ -24,7 +24,6 @@ import {
   PreferredLanguageOptions,
   PreferredNotificationOptions,
   SinglyOptionList,
-  YesNoList,
   yesNoAskMeLaterOptions,
   yesNoOptions
 } from "../../constants/options";
@@ -68,21 +67,24 @@ export const AccountServices = () => {
   ];
   const signatoryName = "Anand Sharma";
 
-  const createRecieveStatementsRadioHandler = ({ values, setFieldValue }) => async event => {
+  const createAccountServiceRadioHandler = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
-    setFieldValue("statementsVia", value);
-    if (value) {
-      dispatch(
-        updateProspect({
-          "prospect.accountInfo.eStatements": value
-        })
-      );
-    } else {
-      dispatch(
-        updateProspect({
-          "prospect.accountInfo.mailStatements": value
-        })
-      );
+    const target = event.target.name;
+    setFieldValue(target, value);
+    if (target === "statementsVia") {
+      if (value) {
+        dispatch(
+          updateProspect({
+            "prospect.accountInfo.eStatements": value
+          })
+        );
+      } else {
+        dispatch(
+          updateProspect({
+            "prospect.accountInfo.mailStatements": value
+          })
+        );
+      }
     }
   };
 
@@ -91,15 +93,15 @@ export const AccountServices = () => {
     accountCurrency: "AED",
     accountEmirateCity: "",
     branchId: "",
-    receiveInterest: "",
-    signingPreferences: "",
+    receiveInterest: false,
+    signingPreferences: "singly",
     chequeBookApplied: true,
     accountwithoutChequebook: true,
     debitCardApplied: true,
     statementsVia: true,
-    preferredLanguage: "",
+    preferredLanguage: "EN",
     mobileInstructions: true,
-    marketing: true,
+    marketing: "yes",
     marketingChannel: "",
     nameOnDebitCard: "",
     surveys: true
@@ -114,7 +116,7 @@ export const AccountServices = () => {
         />
         <Formik initialValues={initialValues} onSubmit={() => {}}>
           {({ values, setFieldValue, ...props }) => {
-            const recieveStatementsChangeHandler = createRecieveStatementsRadioHandler({
+            const accountServiceChangeHandler = createAccountServiceRadioHandler({
               values,
               setFieldValue
             });
@@ -164,13 +166,14 @@ export const AccountServices = () => {
                       </label>
                       <Field
                         typeRadio
-                        options={YesNoList}
+                        options={yesNoOptions}
                         name="receiveInterest"
                         path={"prospect.accountInfo.receiveInterest"}
                         component={InlineRadioGroup}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                   </Accordion>
@@ -198,6 +201,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -214,6 +218,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -230,6 +235,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -250,6 +256,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                       <Field
                         name="nameOnDebitCard"
@@ -283,7 +290,7 @@ export const AccountServices = () => {
                           parent: classes.radioConatiner
                         }}
                         radioColor={"#00CA2C"}
-                        onChange={recieveStatementsChangeHandler}
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                   </Accordion>
@@ -311,6 +318,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -326,6 +334,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -342,6 +351,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -366,13 +376,14 @@ export const AccountServices = () => {
                       </label>
                       <Field
                         typeRadio
-                        options={YesNoList}
+                        options={yesNoOptions}
                         name="surveys"
                         path={"prospect.channelServicesInfo.surveys"}
                         component={InlineRadioGroup}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
+                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                   </Accordion>

@@ -10,7 +10,8 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     color: theme.palette.text.color
   },
-  root: {}
+  root: {},
+  parent: {}
 }));
 
 export const CustomRadioButton = ({
@@ -46,7 +47,7 @@ export const CustomRadioButton = ({
 
   return (
     <FormControlLabel
-      classes={{ label: classes.label, root: classes.root }}
+      classes={{ label: classes.label, root: classes.root, parent: "" }}
       control={
         customIcon ? (
           <CustomIconRadio />

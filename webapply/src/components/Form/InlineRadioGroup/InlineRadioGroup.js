@@ -29,6 +29,11 @@ const InlineRadioGroupBase = ({
   const isError = errorMessage && getIn(touched, field.name);
   const handleChange = event =>
     onChange ? onChange(event) : setFieldValue(field.name, JSON.parse(event.target.value));
+  const disabledRadioButtonByDefault = [
+    "Any one of us can sign",
+    "All of us must sign",
+    "other (please Specify)"
+  ];
 
   return (
     <FormControl
@@ -53,7 +58,7 @@ const InlineRadioGroupBase = ({
           <div className={cx(classes.inlineFormRadioWrapper, extendedClasses.parent)}>
             {options.map(item => (
               <Radio
-                disabled={isDisabled || item.label === "Jointly"}
+                disabled={isDisabled || disabledRadioButtonByDefault.includes(item.label)}
                 color={radioColor}
                 key={item.key}
                 value={JSON.stringify(item.value)}
