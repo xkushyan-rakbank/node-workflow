@@ -520,7 +520,7 @@ export const CHAT_INFO = {
   HEADER_ENG: "Important Info:",
   HEADER_AR: ":معلومات مهمة",
   DESC_ENG:
-    "\nArabic chat is now available! While our complete revamped bilingual webchat is work in progress, to view the current content in Arabic, simply select Arabic Language from the Accessibility menu.",
+    "\nWhile our complete revamped bilingual webchat is work in progress, to view the current content in Arabic, simply select Arabic Language from the Accessibility menu.",
   DESC_AR:
     "\nنحن بصدد تجديد دردشة الويب ثنائية اللغة بالكامل، ولذلك، لعرض المحتوى الحالي باللغة العربية، ما عليك سوى تحديد اللغة العربية من قائمة إمكانية الوصول المتوفرة على موقعنا",
   ICON_DESC_ENG: "To chat with us in Arabic,",
