@@ -68,7 +68,7 @@ const ChatComponent = ({
                   apiPath: process.env.REACT_APP_CHAT_API_PATH
                 }}
                 Header={Header}
-                language={freeField === "" || freeField === "true" ? "en" : "ar"}
+                //language={freeField === "" || freeField === "true" ? "en" : "ar"}
               />
             </Suspense>
           </div>
