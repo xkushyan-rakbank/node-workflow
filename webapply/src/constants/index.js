@@ -524,7 +524,7 @@ export const CHAT_INFO = {
   DESC_AR:
     "\nنحن بصدد تجديد دردشة الويب ثنائية اللغة بالكامل، ولذلك، لعرض المحتوى الحالي باللغة العربية، ما عليك سوى تحديد اللغة العربية من قائمة إمكانية الوصول المتوفرة على موقعنا",
   ICON_DESC_ENG: "To chat with us in Arabic,",
-  ICON_DESC_AR: "يرجى الاتصال على",
+  ICON_DESC_AR: "للتكلم معنا بالعربية",
   PLEASE_CALL_ENG: "please call",
   PLEASE_CALL_AR: "يرجى الاتصال على",
   PHONE_NUM: "04 213 0000"
