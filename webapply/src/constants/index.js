@@ -515,3 +515,17 @@ export const DEFAULT_REFERRAL_NAME = "Direct";
 export const USER_IDLE_TIMEOUT = (process.env.REACT_APP_SESSION_TIMEOUT - 1) * 60 * 1000;
 export const EXPIRY_INTERVAL = 60;
 export const UPLOAD = "Upload ";
+
+export const CHAT_INFO = {
+  HEADER_ENG: "Important Info:",
+  HEADER_AR: ":معلومات مهمة",
+  DESC_ENG:
+    "\nWhile our complete revamped bilingual webchat is work in progress, to view the current content in Arabic, simply select Arabic Language from the Accessibility menu.",
+  DESC_AR:
+    "\nنحن بصدد تجديد دردشة الويب ثنائية اللغة بالكامل، ولذلك، لعرض المحتوى الحالي باللغة العربية، ما عليك سوى تحديد اللغة العربية من قائمة إمكانية الوصول المتوفرة على موقعنا",
+  ICON_DESC_ENG: "To chat with us in Arabic,",
+  ICON_DESC_AR: "للتكلم معنا بالعربية",
+  PLEASE_CALL_ENG: "please call",
+  PLEASE_CALL_AR: "يرجى الاتصال على",
+  PHONE_NUM: "04 213 0000"
+};
