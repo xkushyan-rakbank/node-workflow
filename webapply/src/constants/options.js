@@ -149,16 +149,16 @@ export const SinglyOptionList = [
     label: "Any one of us can sign"
   },
   {
-    code: "All of us must sign",
-    key: "All of us must sign",
-    value: "All of us must sign",
+    code: "Jointly",
+    key: "JointlyAll",
+    value: "jointlyAll",
     label: "All of us must sign"
   },
   {
-    code: "other (please Specify)",
-    key: "other (please Specify)",
-    value: "other (please Specify)",
-    label: "other (please Specify)"
+    code: "Jointly",
+    key: "JointlyOther",
+    value: "jointlyOther",
+    label: "Other(please specify)"
   }
 ];
 

@@ -78,6 +78,7 @@ export const TradeLicenceInformation = ({ values }) => {
             path="prospect.organizationInfo.dateOfIncorporation"
             placeholder="Date of incorporation"
             component={DatePicker}
+            maxDate={addDays(new Date(), 0)}
             infoTitle="The date when your company was legally formed or started."
             InputProps={{
               inputProps: { tabIndex: 0 }

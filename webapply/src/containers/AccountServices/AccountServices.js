@@ -1,7 +1,8 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import cx from "classnames";
+import * as Yup from "yup";
 
 import { formStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
@@ -29,12 +30,17 @@ import {
 } from "../../constants/options";
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicePackage } from "./components/SelectServicePackage";
+import { getApplicantEditedFullName } from "../../store/selectors/appConfig";
+import { getRequiredMessage } from "../../utils/getValidationMessage";
+import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
+import { NAME_REGEX } from "../../utils/validation";
 
 export const AccountServices = () => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   const dispatch = useDispatch();
   const classes = useStyles();
+  const signatoryName = useSelector(getApplicantEditedFullName);
 
   const labelTextForGoGreenOption = (
     <span style={{ display: "flex", alignItems: "center" }}>
@@ -65,26 +71,24 @@ export const AccountServices = () => {
       label: labelTextForPreferPaper
     }
   ];
-  const signatoryName = "Anand Sharma";
 
   const createAccountServiceRadioHandler = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
-    const target = event.target.name;
-    setFieldValue(target, value);
-    if (target === "statementsVia") {
-      if (value) {
-        dispatch(
-          updateProspect({
-            "prospect.accountInfo.eStatements": value
-          })
-        );
-      } else {
-        dispatch(
-          updateProspect({
-            "prospect.accountInfo.mailStatements": value
-          })
-        );
-      }
+    setFieldValue("statementsVia", value);
+    if (value) {
+      dispatch(
+        updateProspect({
+          "prospect.accountInfo.mailStatements": value,
+          "prospect.accountInfo.eStatements": !value
+        })
+      );
+    } else {
+      dispatch(
+        updateProspect({
+          "prospect.accountInfo.eStatements": !value,
+          "prospect.accountInfo.mailStatements": value
+        })
+      );
     }
   };
 
@@ -106,6 +110,24 @@ export const AccountServices = () => {
     nameOnDebitCard: "",
     surveys: true
   };
+
+  const accountInfoValidation = Yup.object().shape({
+    nameOnDebitCard: Yup.mixed().when("debitCardApplied", {
+      is: debitCardApplied => debitCardApplied,
+      then: Yup.string()
+        .required(getRequiredMessage("Name"))
+        .max(MAX_DEBIT_CARD_NAME_LENGTH, "Maximum ${max} characters allowed")
+        .min(MIN_DEBIT_CARD_NAME_LENGTH, "Minimum ${max} characters required")
+        .matches(NAME_REGEX, "Please remove any special character from your name")
+    })
+  });
+
+  const selectRadioBoolean = ({ values, setFieldValue }) => event => {
+    const value = JSON.parse(event.target.value);
+    const name = event.target.name;
+    setFieldValue(name, value);
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.section}>
@@ -114,9 +136,17 @@ export const AccountServices = () => {
           info="Go ahead and select your preferences, from debit cards to extra services"
           smallInfo
         />
-        <Formik initialValues={initialValues} onSubmit={() => {}}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={() => {}}
+          validationSchema={accountInfoValidation}
+        >
           {({ values, setFieldValue, ...props }) => {
             const accountServiceChangeHandler = createAccountServiceRadioHandler({
+              values,
+              setFieldValue
+            });
+            const radioChangeHandler = selectRadioBoolean({
               values,
               setFieldValue
             });
@@ -197,6 +227,7 @@ export const AccountServices = () => {
                         options={SinglyOptionList}
                         name="signingPreferences"
                         path={"prospect.accountInfo.signingPreferences"}
+                        disabled={true}
                         component={InlineRadioGroup}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
@@ -215,10 +246,10 @@ export const AccountServices = () => {
                         name="chequeBookApplied"
                         path={"prospect.accountInfo.chequeBookApplied"}
                         component={InlineRadioGroup}
+                        onChange={radioChangeHandler}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
-                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
@@ -232,19 +263,19 @@ export const AccountServices = () => {
                         name="accountwithoutChequebook"
                         path={"prospect.accountInfo.accountwithoutChequebook"}
                         component={InlineRadioGroup}
+                        onChange={radioChangeHandler}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
-                        onChange={accountServiceChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
                         Would you like to apply for a business debit card for {signatoryName}?
                         <span>
-                          Lorem Ipsum has been the industry's standard dummy text ever since the
-                          1500s, when an unknown printer took a galley of type and scrambled it to
-                          make a type specimen book
+                          You can get a card for yourself and/or other people in your company.
+                          Business debit cards can only be issued for eligible AED accounts and will
+                          be sent by courier to your designated mailing address
                         </span>
                       </label>
                       <Field
@@ -253,24 +284,26 @@ export const AccountServices = () => {
                         name="debitCardApplied"
                         path={"prospect.accountInfo.debitCardApplied"}
                         component={InlineRadioGroup}
+                        onChange={radioChangeHandler}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
-                        onChange={accountServiceChangeHandler}
                       />
-                      <Field
-                        name="nameOnDebitCard"
-                        label={"Name on the card"}
-                        path={
-                          "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard"
-                        }
-                        placeholder={"Name on the card"}
-                        InputProps={{
-                          inputProps: { tabIndex: 1 }
-                        }}
-                        component={Input}
-                        classes={{ formControlRoot: classes.customLabel }}
-                      />
+                      {values.debitCardApplied && (
+                        <Field
+                          name="nameOnDebitCard"
+                          label={"Name on the card"}
+                          path={
+                            "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard"
+                          }
+                          placeholder={"Name on the card"}
+                          InputProps={{
+                            inputProps: { tabIndex: 1 }
+                          }}
+                          component={Input}
+                          classes={{ formControlRoot: classes.customLabel }}
+                        />
+                      )}
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
