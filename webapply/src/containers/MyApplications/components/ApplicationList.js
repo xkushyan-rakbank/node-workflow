@@ -36,6 +36,9 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
           <div className={classes.listAccount}>
             {app.applicationInfo?.roMobileNo ? app.applicationInfo?.roMobileNo : ""}
           </div>
+          <div className={classes.listAccount}>
+            {app.organizationInfo?.licenseNumber ? app.organizationInfo?.licenseNumber : ""}
+          </div>
         </div>
         {app.status
           ? [
