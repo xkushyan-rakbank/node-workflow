@@ -17,29 +17,29 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
       <div className={classes.application}>
         <WavesBG className={classes.containerBg} alt="waves background" />
         <Typography variant="h6" component="span" classes={{ root: classes.title }}>
-          {app.organizationInfo.companyName}
+          {app.organizationInfo?.companyName}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.accountType}
+          {app.applicationInfo?.accountType}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.roEmail ||
-          app.applicationInfo.roLandlineNo ||
-          app.applicationInfo.roMobileNo
+          {app.applicationInfo?.roEmail ||
+          app.applicationInfo?.roLandlineNo ||
+          app.applicationInfo?.roMobileNo
             ? RO_LABEL
             : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.roName ? app.applicationInfo.roName : ""}
+          {app.applicationInfo?.roName ? app.applicationInfo?.roName : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.roEmail ? app.applicationInfo.roEmail : ""}
+          {app.applicationInfo?.roEmail ? app.applicationInfo?.roEmail : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.roLandlineNo ? app.applicationInfo.roLandlineNo : ""}
+          {app.applicationInfo?.roLandlineNo ? app.applicationInfo?.roLandlineNo : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.roMobileNo ? app.applicationInfo.roMobileNo : ""}
+          {app.applicationInfo?.roMobileNo ? app.applicationInfo?.roMobileNo : ""}
         </Typography>
         {app.status
           ? [
@@ -52,7 +52,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
                     <WhiteContainedButton
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
-                      handleClick={() => getProspectInfo(app.prospectId)}
+                      handleClick={() => getProspectInfo(app.prospectId, app)}
                       isDisplayLoader={loadingProspectId === app.prospectId}
                     />
                     <div className={classes.hint}>
@@ -75,7 +75,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
               <div key="action" className={classes.blockAction}>
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => getProspectInfo(app.prospectId)}
+                  handleClick={() => getProspectInfo(app.prospectId, app)}
                 />
                 <div className={classes.hint}>
                   {ctaStatuses[app.status.statusNotes].mobileStatus}

@@ -73,19 +73,19 @@ export function* getProspectIdInfo({ payload }) {
     const response = yield call(prospectApi.get, payload.prospectId, headers);
     const config = { prospect: response.data };
     if (
-      config.prospect.organizationInfo.addressInfo[0] &&
-      !config.prospect.organizationInfo.addressInfo[0].typeOfAddress
+      config.prospect?.organizationInfo?.addressInfo &&
+      !config.prospect?.organizationInfo?.addressInfo[0]?.typeOfAddress
     ) {
       config.prospect.organizationInfo.addressInfo = concatAddressInfo(
         organizationInfoModel.addressInfo,
         config.prospect.organizationInfo.addressInfo
       );
     }
-    const freeFieldsInfo = config.prospect.freeFieldsInfo;
+    const freeFieldsInfo = config.prospect?.freeFieldsInfo;
     const newStakeholder = yield select(getSignatoryModel);
     if (
-      !config.prospect.signatoryInfo.length &&
-      config.prospect.applicationInfo.viewId.includes(VIEW_IDS.StakeholdersInfo)
+      !config.prospect?.signatoryInfo?.length &&
+      config.prospect?.applicationInfo?.viewId?.includes(VIEW_IDS.StakeholdersInfo)
     ) {
       config.prospect.signatoryInfo = [newStakeholder];
     }
@@ -93,56 +93,60 @@ export function* getProspectIdInfo({ payload }) {
     const prospect = {};
     try {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
-        config.prospect.organizationInfo.addressInfo[0].officeAddressDifferent === "No";
+        config.prospect.organizationInfo?.addressInfo[0]?.officeAddressDifferent === "No";
       // eslint-disable-next-line prettier/prettier
       if (
-        config.prospect.organizationInfo.addressInfo[0].addressDetails[0].preferredAddress === "Yes"
+        config.prospect.organizationInfo?.addressInfo[0]?.addressDetails[0].preferredAddress ===
+        "Yes"
       ) {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = true;
         // eslint-disable-next-line prettier/prettier
       } else if (
-        config.prospect.organizationInfo.addressInfo[1].addressDetails[0].preferredAddress === "Yes"
+        config.prospect.organizationInfo?.addressInfo[1].addressDetails[0]?.preferredAddress ===
+        "Yes"
       ) {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = false;
       } else {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
       }
-      config.prospect.signatoryInfo.forEach((element, index) => {
-        if (element.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
-          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = true;
-        } else if (
-          element.addressInfo[1] &&
-          element.addressInfo[1].addressDetails[0].preferredAddress === "Yes"
-        ) {
-          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = false;
-        } else {
-          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
-        }
-        if (
-          newStakeholder.addressInfo.length >
-          config.prospect.signatoryInfo[index].addressInfo.length
-        ) {
-          config.prospect.signatoryInfo[index].addressInfo = concatAddressInfo(
-            newStakeholder.addressInfo,
-            config.prospect.signatoryInfo[index].addressInfo
-          );
-        }
-        if (!element.kycDetails?.isShareholderACompany) {
-          config.prospect.signatoryInfo[index].kycDetails.isShareholderACompany = false;
-        }
-        if (!element?.signatoryCompanyInfo) {
-          config.prospect.signatoryInfo[index].signatoryCompanyInfo = signatoryCompanyInfo;
-        }
-      });
+      config.prospect?.signatoryInfo &&
+        config.prospect.signatoryInfo.forEach((element, index) => {
+          if (element?.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+            prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = true;
+          } else if (
+            element?.addressInfo[1] &&
+            element?.addressInfo[1].addressDetails[0].preferredAddress === "Yes"
+          ) {
+            prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = false;
+          } else {
+            prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+          }
+          if (
+            newStakeholder.addressInfo.length >
+            config.prospect.signatoryInfo[index].addressInfo.length
+          ) {
+            config.prospect.signatoryInfo[index].addressInfo = concatAddressInfo(
+              newStakeholder.addressInfo,
+              config.prospect.signatoryInfo[index].addressInfo
+            );
+          }
+          if (!element.kycDetails?.isShareholderACompany) {
+            config.prospect.signatoryInfo[index].kycDetails.isShareholderACompany = false;
+          }
+          if (!element?.signatoryCompanyInfo) {
+            config.prospect.signatoryInfo[index].signatoryCompanyInfo = signatoryCompanyInfo;
+          }
+        });
       if (!config.prospect?.kycAnnexure) {
         config.prospect.kycAnnexure = kycAnnexure;
       }
     } catch (error) {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] = false;
       prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = "";
-      config.prospect.signatoryInfo.forEach((element, index) => {
-        prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
-      });
+      config.prospect?.signatoryInfo &&
+        config.prospect.signatoryInfo.forEach((element, index) => {
+          prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = "";
+        });
       log(error);
     }
     //ro-assist-brd1-5
@@ -187,7 +191,7 @@ export function* getProspectIdInfo({ payload }) {
           yield put(loadMetaData(freeFieldsInfo));
 
           const stakeholdersIds = [
-            ...newSteps.reduce((acc, { flowId }) => {
+            ...newSteps?.reduce((acc, { flowId }) => {
               if (flowId.startsWith(COMPANY_STAKEHOLDER_ID)) {
                 acc.add(flowId.split(COMPANY_STAKEHOLDER_ID)[1]);
               }

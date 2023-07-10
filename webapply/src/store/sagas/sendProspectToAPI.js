@@ -160,7 +160,7 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
     case "organizationInfo": {
       //transforming the proscpect industryMultiSelect to industry & industryAndSubCategory
       const { industryMultiSelect, ...rest } = prospect[key];
-      const { industry, subCategory } = industryMultiSelect.reduce(
+      const { industry, subCategory } = industryMultiSelect?.reduce(
         (industryAndSubCategory, item) => {
           item.industry?.length && industryAndSubCategory.industry.push(item.industry[0]);
           item.subCategory?.length && industryAndSubCategory.subCategory.push(item.subCategory[0]);

@@ -48,7 +48,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
                     <WhiteContainedButton
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
-                      handleClick={() => getProspectInfo(app.prospectId)}
+                      handleClick={() => getProspectInfo(app.prospectId, app)}
                       isDisplayLoader={loadingProspectId === app.prospectId}
                     />
                     {/* <div className={classes.hint}>
@@ -67,7 +67,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 <WhiteContainedButton
                   label="Finish Application"
-                  handleClick={() => getProspectInfo(app.prospectId)}
+                  handleClick={() => getProspectInfo(app.prospectId, app)}
                 />
                 {/* <div className={classes.hint}>
                   {ctaStatuses[app.status.statusNotes].mobileStatus}
