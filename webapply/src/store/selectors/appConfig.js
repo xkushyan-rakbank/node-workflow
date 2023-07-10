@@ -59,7 +59,7 @@ export const getApplicantInfo = state => getProspect(state).applicantInfo || {};
 
 export const getApplicantFullName = state => getApplicantInfo(state).fullName;
 
-export const getApplicantEditedFullName = state => getApplicantInfo(state).editedFullName;
+export const getApplicantEditedFullName = state => getSignatories(state)[0].editedFullName;
 
 export const getApplicantEmail = state => getApplicantInfo(state).email;
 

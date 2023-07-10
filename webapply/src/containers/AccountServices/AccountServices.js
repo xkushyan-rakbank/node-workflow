@@ -249,7 +249,7 @@ export const AccountServices = () => {
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
-                        onChange={accountServiceChangeHandler}
+                        onChange={radioChangeHandler}
                       />
                     </div>
                   </Accordion>
