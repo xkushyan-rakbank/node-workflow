@@ -6,10 +6,10 @@ import { ReactComponent as Check } from "../../../assets/icons/credit_score.svg"
 import { useStyles } from "../styled";
 import { updateProspect } from "../../../store/actions/appConfig";
 
-export const SelectServicePackage = ({ setFormFieldValue }) => {
+export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [selectedService, setSelectedService] = useState("");
+  const [selectedService, setSelectedService] = useState(isRakStarter ? "RAK value SME plus" : "");
   const selectedPackage = selectedPackage => {
     setSelectedService(selectedPackage);
     setFormFieldValue("rakValuePackage", selectedPackage);
@@ -70,7 +70,9 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           className={cx(classes.packageList, {
             [classes.selectedPackageList]: selectedService === "RAK value SME max"
           })}
-          onClick={() => selectedPackage("RAK value SME max")}
+          onClick={() => {
+            !isRakStarter && selectedPackage("RAK value SME max");
+          }}
         >
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Max</h2>
@@ -98,6 +100,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
             </li>
           </ul>
           <Button
+            disabled={isRakStarter}
             variant="outlined"
             className={cx(classes.selectBtn, {
               [classes.selectedPackageListBtn]: selectedService === "RAK value SME max"

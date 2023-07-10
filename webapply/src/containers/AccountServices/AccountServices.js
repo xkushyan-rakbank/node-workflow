@@ -1,10 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
-import cx from "classnames";
 import * as Yup from "yup";
+import cx from "classnames";
 
-import { formStepper } from "../../constants";
+import { accountNames, formStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -34,6 +34,12 @@ import { getApplicantEditedFullName } from "../../store/selectors/appConfig";
 import { getRequiredMessage } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
 import { NAME_REGEX } from "../../utils/validation";
+import {
+  getAccountType,
+  getDatalist,
+  getIsIslamicBanking,
+  getOrganizationInfo
+} from "../../store/selectors/appConfig";
 
 export const AccountServices = () => {
   useFormNavigation([false, true, formStepper]);
@@ -41,6 +47,15 @@ export const AccountServices = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const signatoryName = useSelector(getApplicantEditedFullName);
+
+  const { licenseIssuingAuthority } = useSelector(getOrganizationInfo);
+  const {
+    emirate: emiratesList,
+    licenseIssuingAuthority: licenseIssuingAuthorityList,
+    TLIAEmirate: TLIAEmiratesList
+  } = useSelector(getDatalist);
+  const isIslamic = useSelector(getIsIslamicBanking);
+  const accountType = useSelector(getAccountType);
 
   const labelTextForGoGreenOption = (
     <span style={{ display: "flex", alignItems: "center" }}>
@@ -92,10 +107,19 @@ export const AccountServices = () => {
     }
   };
 
+  const matchedEmirateList = emiratesList?.filter(
+    emirate =>
+      TLIAEmiratesList?.find(
+        ({ value }) =>
+          value ===
+          licenseIssuingAuthorityList?.find(({ code }) => code === licenseIssuingAuthority)?.value
+      )?.displayText === emirate.value
+  );
+
   const initialValues = {
     rakValuePackage: "",
     accountCurrency: "AED",
-    accountEmirateCity: "",
+    accountEmirateCity: (matchedEmirateList && matchedEmirateList[0]?.value) || "",
     branchId: "",
     receiveInterest: false,
     signingPreferences: "singly",
@@ -119,7 +143,10 @@ export const AccountServices = () => {
         .max(MAX_DEBIT_CARD_NAME_LENGTH, "Maximum ${max} characters allowed")
         .min(MIN_DEBIT_CARD_NAME_LENGTH, "Minimum ${max} characters required")
         .matches(NAME_REGEX, "Please remove any special character from your name")
-    })
+    }),
+    accountCurrency: Yup.string().required(getRequiredMessage("Account currency")),
+    accountEmirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),
+    branchId: Yup.string().required(getRequiredMessage("Branch"))
   });
 
   const selectRadioBoolean = ({ values, setFieldValue }) => event => {
@@ -140,6 +167,7 @@ export const AccountServices = () => {
           initialValues={initialValues}
           onSubmit={() => {}}
           validationSchema={accountInfoValidation}
+          validateOnChange={true}
         >
           {({ values, setFieldValue, ...props }) => {
             const accountServiceChangeHandler = createAccountServiceRadioHandler({
@@ -152,7 +180,12 @@ export const AccountServices = () => {
             });
             return (
               <Form>
-                <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
+                <SelectServicePackage
+                  setFormFieldValue={setFieldValue}
+                  isRakStarter={accountType === accountNames.starter}
+                  {...props}
+                />
+
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
                     title={"Preferences of product & services"}
@@ -181,18 +214,31 @@ export const AccountServices = () => {
                       placeholder="Emirate or city"
                       datalistId="emirateCity"
                       component={SelectAutocomplete}
+                      isLoadDefaultValueFromStore={false}
                     />
                     <Field
-                      name="branch"
+                      name="branchId"
                       path={"prospect.accountInfo.branch"}
                       label="Branch"
                       placeholder="Branch"
                       datalistId="branchCity"
                       component={SelectAutocomplete}
+                      filterOptions={options => {
+                        return (
+                          options.find(
+                            item =>
+                              item.displayText ===
+                              emiratesList.find(item => item.value === values.accountEmirateCity)
+                                ?.displayText
+                          )?.subGroup || []
+                        );
+                      }}
                     />
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        Do you want to earn interest on this account?
+                        {isIslamic
+                          ? `Do you want to earn profit on your account?`
+                          : `Do you want to earn interest on this account?`}
                       </label>
                       <Field
                         typeRadio
