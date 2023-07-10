@@ -322,7 +322,7 @@ export const AccountServices = () => {
                           label: classes.radioLabelRoot,
                           parent: classes.radioConatiner
                         }}
-                        radioColor={"#00CA2C"}
+                        radioColor={!values.statementsVia ? "fff" : "#00CA2C"}
                         onChange={accountServiceChangeHandler}
                       />
                     </div>
