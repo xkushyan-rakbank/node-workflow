@@ -37,12 +37,7 @@ export const Form = ({
 
   return (
     <div className={classes.centeredContainer}>
-      <SectionTitleWithInfo
-        className={classes.title}
-        title={title}
-        info={info}
-        changeText={changeText}
-      />
+      <SectionTitleWithInfo className={classes.title} title={title} info={info} />
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
