@@ -46,6 +46,10 @@ const SubmitApplication = lazy(() =>
   import("./containers/SelectServices/components/SubmitApplication")
 );
 const Agents = lazy(() => import("./containers/AgentPages"));
+const ApplicationRedirect = lazy(() => import("./containers/ApplicationRedirect"));
+const ApplicationComeBackRedirect = lazy(() =>
+  import("./containers/ApplicationRedirect/ApplicationComeBackRedirect")
+);
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -128,9 +132,14 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <ProtectedRoute path={agentBaseName} component={Agents} />
               <ProtectedRoute exact path={routes.quickapplyLanding} component={QuickapplyLanding} />
               <ProtectedRoute exact path={smeBaseName} component={QuickapplyLanding} />
-              <ProtectedRoute exact path="/"  component={QuickapplyLanding} />
+              <ProtectedRoute exact path="/" component={QuickapplyLanding} />
               {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
+              <Route path={routes.applicationRedirect} component={ApplicationRedirect} />
+              <Route
+                path={routes.applicationComeBackRedirect}
+                component={ApplicationComeBackRedirect}
+              />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />
