@@ -54,7 +54,7 @@ const SelectAutocompleteBase = ({
     : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
   return (
-    <FormControl classes={{ root: classes.formControlRoot }} variant="outlined">
+    <FormControl classes={{ root: classes.formControlRoot }} variant="filled">
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
@@ -85,7 +85,8 @@ const SelectAutocompleteBase = ({
             label,
             error: !!isError,
             InputLabelProps: {
-              shrink: hasFocus || !!(Array.isArray(renderValue) ? renderValue.length : renderValue)
+              shrink: hasFocus || !!(Array.isArray(renderValue) ? renderValue.length : renderValue),
+              classes: { filled: classes.filledLabel, shrink: classes.filledLabelShrink }
             }
           }}
           getOptionLabel={extractLabel}

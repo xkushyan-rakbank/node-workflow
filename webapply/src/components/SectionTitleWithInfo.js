@@ -3,24 +3,31 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: "24px",
+    fontSize: "1.25rem",
     fontWeight: 600,
     lineHeight: "32px",
-    color: "#373737",
+    color: "#1F1F1F",
     margin: 0,
-    [theme.breakpoints.only("xs")]: {
-      marginTop: "60px"
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.75rem",
+      margin: 0,
+      marginBottom: "8px"
     }
   },
   info: {
-    fontSize: 20,
-    lineHeight: "26px",
-    color: "#373737",
+    fontSize: "1rem",
+    lineHeight: "28px",
+    color: "#757575",
     display: "block",
     marginTop: 10,
+    fontWeight: 400,
     [theme.breakpoints.only("xs")]: {
-      fontSize: ({ smallInfo }) => (smallInfo ? 14 : 20),
+      fontSize: ({ smallInfo }) => (smallInfo ? "0.875rem" : "1.25rem"),
       marginTop: ({ smallInfo }) => (smallInfo ? 5 : 10)
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.25rem",
+      margin: 0
     }
   },
   changeLink: {

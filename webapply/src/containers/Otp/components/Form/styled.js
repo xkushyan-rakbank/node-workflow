@@ -18,12 +18,19 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between"
   },
   link: {
+    fontSize: "0.75rem",
     cursor: "pointer",
     opacity: 1,
     visibility: "visible",
     float: "right",
     marginRight: "45px",
-    color: "#8D0C10"
+    color: "#8D0C10",
+    fontWeight: 500,
+    lineHeight: "16px",
+    letterSpacing: "0.064px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem"
+    }
   },
   linkDisabled: {
     opacity: "0.5",
@@ -54,5 +61,20 @@ export const useStyles = makeStyles(theme => ({
   submitButton: {
     width: "auto",
     margin: 0
+  },
+  resendOtpWrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  otpExpireMsg: {
+    color: "#757575",
+    fontSize: "0.75rem",
+    fontWeight: 500,
+    lineHeight: "16px",
+    margin: 0,
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem"
+    }
   }
 }));

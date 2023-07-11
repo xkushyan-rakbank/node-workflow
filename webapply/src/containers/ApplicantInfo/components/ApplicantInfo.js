@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
+import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 
@@ -26,6 +27,16 @@ import {
 import { NAME_REGEX, NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
+import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
+
+const useStyles = makeStyles(theme => ({
+  header: {
+    marginBottom: "16px",
+    [theme.breakpoints.up("sm")]: {
+      marginBottom: "40px"
+    }
+  }
+}));
 
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
@@ -81,6 +92,7 @@ export const ApplicantInfoComponent = ({
   isDisableNextstep,
   persona
 }) => {
+  const classes = useStyles();
   //ro-assist-brd3-16
   const allianceCodeFromQuery = partnerInfo !== undefined ? partnerInfo.code : "";
   const allianceCodeDisplyText = partnerInfo !== undefined ? partnerInfo.displayText : "";
@@ -98,10 +110,12 @@ export const ApplicantInfoComponent = ({
 
   return (
     <>
-      <h2>Let&apos;s kick things off with an intro</h2>
-      <p className="formDescription">
-        Give us a few details so we can keep track of your application
-      </p>
+      <SectionTitleWithInfo
+        title={"Let's kick things off with an intro"}
+        info=" Give us a few details so we can keep track of your application"
+        smallInfo
+        className={classes.header}
+      />
       <Formik
         initialValues={{
           fullName: "",
@@ -130,7 +144,7 @@ export const ApplicantInfoComponent = ({
                 placeholder="Your name"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0, maxLength: 100 }
+                  inputProps: { tabIndex: 0, maxLength: 50 }
                 }}
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
@@ -154,7 +168,6 @@ export const ApplicantInfoComponent = ({
                 fieldDescription="This should be the same as shown on your trade licence."
               />
             )}
-
             {isConfigLoading ? (
               <SkeletonLoader />
             ) : (
@@ -174,7 +187,6 @@ export const ApplicantInfoComponent = ({
                 }
               />
             )}
-
             {isConfigLoading ? (
               <SkeletonLoader />
             ) : (

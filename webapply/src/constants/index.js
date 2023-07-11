@@ -16,7 +16,7 @@ export const formStepper = [
     step: 1,
     title: "Create your account",
     path: routes.applicantInfo,
-    relatedPath: [routes.verifyOtp]
+    relatedPath: [routes.verifyEmailOtp, routes.verifyMobileOtp]
   },
   { step: 2, title: "Company details", path: routes.companyInfo },
   {

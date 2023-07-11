@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles({
   selectField: {
-    height: "56px",
+    height: "61px",
     "& svg": {
       fontSize: " 18px",
       color: " #000",
@@ -13,6 +13,10 @@ export const useStyles = makeStyles({
       "@media all and (-ms-high-contrast: active), (-ms-high-contrast: none)": {
         top: "0"
       }
+    },
+    "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#BCBDC0",
+      borderWidth: "1px"
     }
   },
   selectFieldBasic: {
@@ -28,7 +32,7 @@ export const useStyles = makeStyles({
       zIndex: "1"
     },
     "& fieldset": {
-      borderRadius: "8px ",
+      borderRadius: "12px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
     },
     "& svg": {
