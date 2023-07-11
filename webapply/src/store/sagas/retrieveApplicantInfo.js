@@ -89,8 +89,28 @@ export function* getProspectIdInfo({ payload }) {
     ) {
       config.prospect.signatoryInfo = [newStakeholder];
     }
+
     //ro-assist-brd1-5
-    const prospect = {};
+    let prospect = {};
+    //to incooperate industry mapping
+    try {
+      if (config.prospect?.organizationInfo) {
+        prospect["organizationInfo.industryMultiSelect"] = [
+          {
+            industry: config.prospect?.organizationInfo.industry,
+            subCategory: config.prospect?.organizationInfo.subCategory
+          }
+        ];
+        config.prospect.organizationInfo["industryMultiSelect"] = [
+          {
+            industry: config.prospect?.organizationInfo.industry,
+            subCategory: config.prospect?.organizationInfo.subCategory
+          }
+        ];
+      }
+    } catch (e) {
+      log(e);
+    }
     try {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
         config.prospect.organizationInfo?.addressInfo[0]?.officeAddressDifferent === "No";
