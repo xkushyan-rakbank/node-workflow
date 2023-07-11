@@ -6,19 +6,16 @@ import CloseIcon from "@material-ui/icons/Close";
 import { TextField, MenuItem, Chip, Checkbox } from "@material-ui/core";
 import { CustomCheckbox } from "../../Checkbox/CustomCheckbox";
 
-const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef}  {...props} />;
+const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef} {...props} />;
 
 export const Control = ({ selectProps, innerRef, children, innerProps }) => (
   <TextField
     fullWidth
-    variant="filled"
-    className={selectProps.classes.inputCustom}
+    variant="outlined"
     InputProps={{
       inputComponent,
-      disableUnderline: true,
       inputProps: {
         className: selectProps.classes.input,
-
         inputRef: innerRef,
         children,
         ...innerProps

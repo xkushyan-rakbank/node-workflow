@@ -27,11 +27,11 @@ export const Form = ({
   changeText,
   info,
   title,
-  classes: extendedClasses,
+  classes: extendedClasses
 }) => {
   const classes = useStyles({ classes: extendedClasses });
 
-  const isValid = code.every((value) => digitRegExp.test(value));
+  const isValid = code.every(value => digitRegExp.test(value));
   const hasMaxAttemptsError =
     loginAttempt > MAX_ATTEMPT_ALLOWED || attempts >= MAX_NUMBER_VALIDATION_ERRORS;
 
@@ -43,7 +43,7 @@ export const Form = ({
         {() => (
           <FormikForm className={classes.form}>
             <div>
-              <Grid container item xs={12} direction="row" alignItems="flex-start">
+              <Grid container item xs={12} direction="row" justify="flex-start">
                 <Input code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
@@ -60,18 +60,17 @@ export const Form = ({
                 />
               )}
 
-              <div className={classes.resendOtpWrapper}>
+              <span>
                 {/* OTP expires in 3:00 mins */}
-                {/* <p className={classes.otpExpireMsg}>OTP expires in 3:00 mins</p> */}
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: hasMaxAttemptsError,
+                    [classes.linkDisabled]: hasMaxAttemptsError
                   })}
                 >
                   Resend OTP
                 </span>
-              </div>
+              </span>
             </div>
 
             <div className={classes.linkContainer}>

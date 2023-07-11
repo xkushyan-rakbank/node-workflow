@@ -9,7 +9,7 @@ import { getApplicantInfo } from "../../store/selectors/appConfig";
 
 export default function FormEmailConfirmPage() {
   useFormNavigation([false, false, formStepper]);
-  useLayoutParams(false);
+  useLayoutParams(true);
 
   const applicantInfo = useSelector(getApplicantInfo);
 

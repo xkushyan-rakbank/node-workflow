@@ -66,7 +66,7 @@ const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
         type="number"
         name={`${index}`}
         variant="outlined"
-        inputProps={{ inputMode: "numeric", maxLength: 1, ref: bindNodeRef(index) }}
+        inputProps={{ maxLength: 1, ref: bindNodeRef(index) }}
         onFocus={handleInputFocus}
         onChange={handleChange}
         onKeyUp={handleKeyUp}

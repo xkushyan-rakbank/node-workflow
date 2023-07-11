@@ -164,7 +164,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "8px 17px",
     overflow: "auto",
     height: "400px",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("ls")]: {
       padding: "8px 40px"
     },
     "& .react-pdf__Page__canvas": {

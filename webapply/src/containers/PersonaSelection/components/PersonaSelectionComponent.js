@@ -25,9 +25,7 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
                   <div className={classes.title}>{persona.title}</div>
                   <span className={classes.subTitle}> {persona.subTitle}</span>
                 </div>
-                <div>
-                  <NavigationLeft key="navigationArrowLeft" alt="blackArrowLeft" />
-                </div>
+                <NavigationLeft key="navigationArrowLeft" alt="blackArrowLeft" />
               </div>
             );
           })}

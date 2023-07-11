@@ -27,9 +27,8 @@ const DatePickerBase = ({
   contextualHelpText,
   contextualHelpProps = {},
   disableFuture = false,
-  onChange = (value) => setFieldValue(field.name, value),
-  inputAdornmentPosition = "start",
-  InputProps,
+  onChange = value => setFieldValue(field.name, value),
+  inputAdornmentPosition = "start"
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -49,7 +48,7 @@ const DatePickerBase = ({
             disableFuture={disableFuture}
             margin="normal"
             format={format}
-            inputVariant="filled"
+            inputVariant="outlined"
             variant="inline"
             placeholder={placeholder}
             error={false}
@@ -57,7 +56,7 @@ const DatePickerBase = ({
             maxDateMessage={false}
             minDateMessage={false}
             KeyboardButtonProps={{
-              "aria-label": "change date",
+              "aria-label": "change date"
             }}
             {...field}
             {...datePickerProps}
@@ -66,19 +65,8 @@ const DatePickerBase = ({
             ToolbarComponent={PickerToolbar}
             views={["date"]}
             onChange={onChange}
-            InputProps={{
-              ...InputProps,
-              disableUnderline: true,
-              classes: {
-                root: classes.filledInput,
-                input: classes.input,
-                inputMultiline: classes.inputMultiline,
-                error: classes.filledInputError,
-                disabled: classes.disabled,
-              },
-            }}
-            InputLabelProps={{
-              classes: { filled: classes.filledLabel, shrink: classes.filledLabelShrink },
+            classes={{
+              root: classes.root
             }}
           />
         </MuiPickersUtilsProvider>

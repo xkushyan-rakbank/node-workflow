@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   section: {
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       width: contentWidth,
       marginLeft: "auto",
       marginRight: "auto"
@@ -22,12 +22,8 @@ export const useStyles = makeStyles(theme => ({
   },
   roleSelectionButton: {
     boxSizing: "border-box",
-    [theme.breakpoints.up("lg")]: {
-      width: contentWidth,
-      padding: "24px"
-    },
     [theme.breakpoints.up("sm")]: {
-      padding: "24px"
+      width: contentWidth
     },
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
@@ -35,16 +31,12 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "24px",
     display: "flex",
     flexDirection: "row",
-    padding: "16px",
+    padding: "24px",
     alignItems: "center",
     justifyContent: "space-between",
     cursor: "pointer",
     "&:hover": {
-      border: 0,
       boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
-    },
-    "&:first-child": {
-      marginTop: "0px"
     }
   },
   buttonText: {
@@ -55,28 +47,22 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   title: {
-    fontSize: "0.875rem",
+    fontSize: 20,
     fontWeight: 600,
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "1rem"
+    [theme.breakpoints.only("xs")]: {
+      fontSize: 16
     }
   },
   subTitle: {
     marginTop: 3,
     fontWeight: 400,
-    fontSize: "0.75rem",
+    fontSize: 16,
     color: theme.palette.text.secondary,
-    paddingRight: "30px",
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "1rem"
+    [theme.breakpoints.only("xs")]: {
+      fontSize: 10
     }
   },
   btnContainer: {
-    marginTop: "16px",
-    marginBottom: "55px",
-    [theme.breakpoints.up("sm")]: {
-      marginTop: "40px",
-      marginBottom: "0px"
-    }
+    marginTop: "60px"
   }
 }));

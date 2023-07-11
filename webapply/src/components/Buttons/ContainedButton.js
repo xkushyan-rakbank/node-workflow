@@ -44,9 +44,6 @@ const styles = {
     verticalAlign: "top",
     marginLeft: 18,
     marginRight: -10
-  },
-  disabledBtnStyle: {
-    backgroundColor: "#CCCCCC"
   }
 };
 
@@ -72,8 +69,7 @@ const BaseButton = ({
     type={type}
     classes={{
       root: cx(classes.buttonStyle, className),
-      label: classes.labelStyle,
-      disabled: classes.disabledBtnStyle
+      label: classes.labelStyle
     }}
     disabled={isDisplayLoader || disabled}
     onClick={handleClick}

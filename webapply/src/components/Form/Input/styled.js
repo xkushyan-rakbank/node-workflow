@@ -129,9 +129,6 @@ export const useStyles = makeStyles(theme => {
         "& label": {
           transform: "translate(107px, 20px) scale(1)"
         },
-        "& label.MuiInputLabel-filled.MuiInputLabel-shrink": {
-          transform: "translate(107px, 10px) scale(0.75)"
-        },
         "& label.MuiInputLabel-outlined.MuiInputLabel-shrink": {
           transform: "translate(107px, -6px) scale(0.75)"
         },
@@ -158,25 +155,9 @@ export const useStyles = makeStyles(theme => {
         backgroundColor: "#fff"
       }
     },
-    filledInput: {
-      fontSize: "1rem",
-      fontWeight: 400,
-      lineHeight: "22px",
-      letterSpacing: "0.08px",
-      color: "#2C2C2C",
-      backgroundColor: "#FFF",
-      borderRadius: "12px",
-      borderWidth: "1px",
-      borderStyle: "solid",
-      borderColor: "#BCBDC0"
-    },
     input: {
       paddingLeft: 16,
       paddingRight: 16,
-      backgroundColor: "#FFF",
-      borderRadius: "12px",
-      border: "none",
-      height: "22px",
       "&::placeholder": placeholder,
       "&::-webkit-input-placeholder": placeholder,
       "&::-moz-placeholder": placeholder,
@@ -204,20 +185,6 @@ export const useStyles = makeStyles(theme => {
       backgroundColor: "transparent",
       opacity: "0.42",
       letterSpacing: "-0.7px"
-    },
-    filledInputError: {
-      borderColor: "#ea2b1e"
-    },
-    filledLabel: {
-      color: "#585A61",
-      fontSize: "1rem",
-      fontWeight: 400,
-      lineHeight: "22px",
-      letterSpacing: "0.08px"
-    },
-    filledLabelShrink: {
-      fontWeight: 500,
-      fontSize: "0.875rem"
     }
   };
 });
