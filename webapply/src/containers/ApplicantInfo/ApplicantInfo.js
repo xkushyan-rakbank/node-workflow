@@ -8,7 +8,7 @@ import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE, Personas } from "../../constants";
 import routes from "../../routes";
-import { updateProspect } from "../../store/actions/appConfig";
+import { setAccessToken, updateProspect } from "../../store/actions/appConfig";
 
 //ro-assist-brd3-16
 const useQuery = () => {
@@ -79,6 +79,7 @@ export const ApplicantInfoContainer = ({
   };
   const onSubmit = useCallback(
     values => {
+      dispatch(setAccessToken(""));
       setIsLoading(true);
       submit(values)
         .then(() => {
