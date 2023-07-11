@@ -1,15 +1,21 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
 import cx from "classnames";
 import { ReactComponent as Check } from "../../../assets/icons/credit_score.svg";
 import { useStyles } from "../styled";
 import { updateProspect } from "../../../store/actions/appConfig";
+import { getRakValuePackage } from "../../../store/selectors/appConfig";
 
 export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [selectedService, setSelectedService] = useState(isRakStarter ? "RAK value SME plus" : "");
+  const rakValuePackage = useSelector(getRakValuePackage);
+
+  const [selectedService, setSelectedService] = useState(
+    rakValuePackage ? rakValuePackage : isRakStarter ? "RAK value SME plus" : ""
+  );
+
   const selectedPackage = selectedPackage => {
     setSelectedService(selectedPackage);
     setFormFieldValue("rakValuePackage", selectedPackage);
