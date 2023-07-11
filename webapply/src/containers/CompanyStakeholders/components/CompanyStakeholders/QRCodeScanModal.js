@@ -23,11 +23,7 @@ import {
 import { getTransactionId, getUserToken } from "../../../../store/selectors/kyc";
 import { useStyles } from "./styled";
 import { log } from "../../../../utils/loggger";
-import {
-  setOverallStatus,
-  setSessionData,
-  stopScheduler
-} from "../../../../store/actions/webToMobile";
+import { setOverallStatus, setSessionData } from "../../../../store/actions/webToMobile";
 
 export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => {
   const classes = useStyles();
@@ -153,21 +149,6 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
     const pollResp = await webToMobile.checkQRCodeStatus(prospectId, webToMobileRefId, header);
     dispatch(setSessionData(pollResp));
     const status = pollResp.status;
-    if (status === WTM_STATUS.IN_PROGRESS) {
-      const lastModifiedTime = new Date(
-        `${pollResp.lastModDateTime}`.replace(/^(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3")
-      );
-
-      const currentTime = new Date();
-      const tenSeconds = 10 * 1000;
-
-      if (currentTime.getTime() - lastModifiedTime.getTime() > tenSeconds) {
-        dispatch(stopScheduler(WTM_STATUS.FINISHED));
-        setPollStatus(WTM_STATUS.FINISHED);
-        return;
-      }
-    }
-
     if (status) {
       setPollStatus(status);
       dispatch(setOverallStatus(status));
@@ -183,23 +164,32 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
     let refreshTimeoutHandle;
     if (!linkData) {
       generateQRCode();
-    } else if (!pollStatus && pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase()) {
-      const qrCodeTimeOut =
-        new Date(linkData.expiresAt).getTime() -
-        new Date().getTime() -
-        QR_CODE_REFRESH_BEFORE_SECONDS; // before 10 seconds of expiry
-      refreshTimeoutHandle = setTimeout(refreshQRCode, qrCodeTimeOut);
+    } else if (pollStatus?.toLowerCase() === WTM_STATUS.CREATED.toLowerCase()) {
+      // const qrCodeTimeOut =
+      //   new Date(linkData.expiresAt).getTime() -
+      //   new Date().getTime() -
+      //   QR_CODE_REFRESH_BEFORE_SECONDS; // before 10 seconds of expiry
+
+      /**
+       * A temp fix to handle time differences between client browser and the server
+       * QR code will be refreshed in every 50 seconds (1 min - 10 seconds)
+       */
+      refreshTimeoutHandle = setTimeout(refreshQRCode, 50000);
     }
 
     return () => {
       refreshTimeoutHandle && clearTimeout(refreshTimeoutHandle);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [linkData]);
+  }, [linkData, pollStatus]);
 
   useEffect(() => {
     let refreshPollInterval;
-    if (pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase()) {
+    if (
+      [WTM_STATUS.FINISHED.toLowerCase(), WTM_STATUS.INACTIVE.toLowerCase()].includes(
+        pollStatus?.toLowerCase()
+      )
+    ) {
       clearInterval(refreshPollInterval);
       handleClose();
     }
