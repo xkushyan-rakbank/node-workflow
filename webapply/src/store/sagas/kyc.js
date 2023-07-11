@@ -207,7 +207,9 @@ export function* notifyHost() {
       yield put(
         updateProspect({
           "prospect.signatoryInfo": signatoryInfo,
-          "prospect.documents.stakeholdersDocuments": stakeholdersDocuments
+          "prospect.documents.stakeholdersDocuments": stakeholdersDocuments,
+          "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard":
+            signatoryInfo[0].firstName
         })
       );
     }

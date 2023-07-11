@@ -237,8 +237,8 @@ export const AccountServices = () => {
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
                         {isIslamic
-                          ? `Do you want to earn profit on your account?`
-                          : `Do you want to earn interest on this account?`}
+                          ? "Do you want to earn profit on your account?"
+                          : "Do you want to earn interest on this account?"}
                       </label>
                       <Field
                         typeRadio
@@ -273,12 +273,11 @@ export const AccountServices = () => {
                         options={SinglyOptionList}
                         name="signingPreferences"
                         path={"prospect.accountInfo.signingPreferences"}
-                        disabled={true}
                         component={InlineRadioGroup}
                         customIcon={false}
                         classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                         radioColor="primary"
-                        onChange={accountServiceChangeHandler}
+                        onChange={radioChangeHandler}
                       />
                     </div>
                     <div className={classes.questionareWrapper}>

@@ -32,7 +32,7 @@ const InlineRadioGroupBase = ({
   const disabledRadioButtonByDefault = [
     "Any one of us can sign",
     "All of us must sign",
-    "other (please Specify)"
+    "Other(please specify)"
   ];
 
   return (
