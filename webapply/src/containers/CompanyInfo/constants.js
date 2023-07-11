@@ -10,7 +10,7 @@ export const MAX_LICENSE_NUMBER_LENGTH = 25;
 export const MAX_YEARS_IN_BUSINESS_LENGTH = 3;
 export const MAX_INDUSTRIES_LENGTH = 12;
 export const MAX_FULL_NAME_LENGTH = 100;
-export const MAX_DEBIT_CARD_NAME_LENGTH = 21;
+export const MAX_DEBIT_CARD_NAME_LENGTH = 19;
 export const MIN_DEBIT_CARD_NAME_LENGTH = 1;
 
 export const COMPANY_INFO_PAGE_ID = "companyInfo";
