@@ -204,12 +204,14 @@ export function* notifyHost() {
         documents: { stakeholdersDocuments }
       } = notifyHostResponse;
       signatoryInfo[0].editedFullName = signatoryInfo[0].fullName;
+      //Name on card for account info screen
+      const fullName = `${signatoryInfo[0].firstName} ${signatoryInfo[0].lastName}`;
+      const nameOnCard = fullName.length > 19 ? signatoryInfo[0].firstName : fullName;
       yield put(
         updateProspect({
           "prospect.signatoryInfo": signatoryInfo,
           "prospect.documents.stakeholdersDocuments": stakeholdersDocuments,
-          "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard":
-            signatoryInfo[0].firstName
+          "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard": nameOnCard
         })
       );
     }

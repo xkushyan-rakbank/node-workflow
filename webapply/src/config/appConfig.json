@@ -57,16 +57,16 @@
       "accountCurrency": "AED",
       "accountPurpose": "",
       "signingPreferences": "singly",
-      "preferredLanguage": "en",
-      "debitCardApplied": false,
-      "chequeBookApplied": false,
-      "accountwithoutChequebook": false,
+      "preferredLanguage": "",
+      "debitCardApplied": true,
+      "chequeBookApplied": "",
+      "accountwithoutChequebook": "",
       "eStatements": false,
-      "mailStatements": false,
-      "receiveInterest": false,
-      "deliverByCourier": false,
-      "expressTandC": false,
-      "express": false
+      "mailStatements": true,
+      "receiveInterest": "",
+      "deliverByCourier": "",
+      "expressTandC": "",
+      "express": ""
     },
     "organizationInfo": {
       "countryOfIncorporation": "AE",
@@ -422,13 +422,14 @@
       }
     ],
     "channelServicesInfo": {
-      "mobileInstructions": false,
+      "mobileInstructions": "",
       "marketingSMS": true,
       "doNotDisturbHours": "",
       "weeklyBalanceNotification": "",
       "monthlyBalanceNotification": 0,
-      "surveys": true,
-      "marketing": false
+      "surveys": "",
+      "marketing": "",
+      "marketingChannel": ""
 
     },
     "documents": {

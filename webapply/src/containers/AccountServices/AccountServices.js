@@ -121,18 +121,18 @@ export const AccountServices = () => {
     accountCurrency: "AED",
     accountEmirateCity: (matchedEmirateList && matchedEmirateList[0]?.value) || "",
     branchId: "",
-    receiveInterest: false,
+    receiveInterest: "",
     signingPreferences: "singly",
-    chequeBookApplied: true,
-    accountwithoutChequebook: true,
+    chequeBookApplied: "",
+    accountwithoutChequebook: "",
     debitCardApplied: true,
     statementsVia: true,
-    preferredLanguage: "EN",
-    mobileInstructions: true,
-    marketing: "yes",
+    preferredLanguage: "",
+    mobileInstructions: "",
+    marketing: "",
     marketingChannel: "",
     nameOnDebitCard: "",
-    surveys: true
+    surveys: ""
   };
 
   const accountInfoValidation = Yup.object().shape({
