@@ -92,6 +92,16 @@ export function* getProspectIdInfo({ payload }) {
 
     //ro-assist-brd1-5
     let prospect = {};
+    //set signatory edited name
+    try {
+      if (config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0]) {
+        config.prospect.signatoryInfo[0]["editedFullName"] =
+          config.prospect.signatoryInfo[0].fullName;
+        prospect["signatoryInfo[0].editedFullName"] = config.prospect.signatoryInfo[0].fullName;
+      }
+    } catch (e) {
+      log(e);
+    }
     //to incooperate industry mapping
     try {
       if (config.prospect?.organizationInfo) {

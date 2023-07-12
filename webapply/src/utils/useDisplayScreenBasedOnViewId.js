@@ -22,11 +22,11 @@ export const useDisplayScreenBasedOnViewId = () => {
   const pushDisplayScreenToHistory = useCallback(
     prospect => {
       const newApplicationInfo = prospect ? prospect.applicationInfo : applicationInfo;
-      const viewId = newApplicationInfo?.viewId || routes.companyInfo.replace(smeBaseName, "");
+      const viewId = prospect.viewId || routes.companyInfo.replace(smeBaseName, "");
       const prospectId = prospect ? prospect.generalInfo.prospectId : prospectIdFromStore;
       const isSubmit =
         newApplicationInfo?.actionType === ACTION_TYPES.submit &&
-        newApplicationInfo?.viewId === VIEW_IDS.SubmitApplication;
+        prospect?.viewId === VIEW_IDS.SubmitApplication;
       const isRetrieveMode = newApplicationInfo?.retrieveMode;
       const isEditRedirect = location.pathname.includes(VIEW_IDS.SearchedAppInfo);
       const prospectStatus = (statuses.find(status => status.prospectId === prospectId) || {})
