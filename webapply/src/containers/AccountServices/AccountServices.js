@@ -30,7 +30,7 @@ import {
 } from "../../constants/options";
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicePackage } from "./components/SelectServicePackage";
-import { getApplicantEditedFullName } from "../../store/selectors/appConfig";
+import { getAccountInfo, getApplicantEditedFullName } from "../../store/selectors/appConfig";
 import { getRequiredMessage } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
 import { NAME_REGEX } from "../../utils/validation";
@@ -56,6 +56,10 @@ export const AccountServices = () => {
   } = useSelector(getDatalist);
   const isIslamic = useSelector(getIsIslamicBanking);
   const accountType = useSelector(getAccountType);
+
+  const accountInfo = useSelector(getAccountInfo);
+
+  const accountEmirateCity = accountInfo.accountEmirateCity;
 
   const labelTextForGoGreenOption = (
     <span style={{ display: "flex", alignItems: "center" }}>
@@ -119,7 +123,8 @@ export const AccountServices = () => {
   const initialValues = {
     rakValuePackage: "",
     accountCurrency: "AED",
-    accountEmirateCity: (matchedEmirateList && matchedEmirateList[0]?.value) || "",
+    accountEmirateCity:
+      accountEmirateCity || (matchedEmirateList && matchedEmirateList[0]?.value) || "",
     branchId: "",
     receiveInterest: "",
     signingPreferences: "singly",
