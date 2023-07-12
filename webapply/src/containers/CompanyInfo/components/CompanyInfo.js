@@ -19,7 +19,7 @@ import { Industry } from "./Industry";
 import {
   getCompanyDocuments,
   getIsIslamicBanking,
-  getOrganizationInfo
+  getOrganizationInfo,
 } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
@@ -29,10 +29,11 @@ import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uplo
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
+import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
-  TradeLicenseOrCOI: "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
+  TradeLicenseOrCOI: "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI",
 };
 
 export const CompanyInfo = ({
@@ -40,7 +41,7 @@ export const CompanyInfo = ({
   isAllStepsCompleted,
   isLoading,
   handleClickNextStep,
-  showLoading
+  showLoading,
 }) => {
   const dispatch = useDispatch();
   const conditionalSchema = useDynamicValidation();
@@ -56,11 +57,11 @@ export const CompanyInfo = ({
 
   const companyDocuments = useSelector(getCompanyDocuments) || [];
   const tradeLicenseOrCOI = useMemo(
-    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI),
+    () => companyDocuments.some((doc) => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI),
     [companyDocuments]
   );
   const moa = useMemo(
-    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.Moa),
+    () => companyDocuments.some((doc) => doc.documentKey === CompanyDocumentKeys.Moa),
     [companyDocuments]
   );
 
@@ -84,12 +85,12 @@ export const CompanyInfo = ({
         ? industries[0].industry.map((item, index) => ({
             industry: item,
             subCategory: industries[0].subCategory[index],
-            id: uniqueId()
+            id: uniqueId(),
           }))
-        : industries.map(item => ({
+        : industries.map((item) => ({
             ...item,
-            id: uniqueId()
-          }))
+            id: uniqueId(),
+          })),
   };
 
   const companyInfoSchema = {
@@ -107,17 +108,17 @@ export const CompanyInfo = ({
       Yup.object().shape({
         industry: Yup.string().required(getRequiredMessage("Industry")),
         subCategory: Yup.string().when("industry", {
-          is: industry => !!industry,
-          then: Yup.string().required(getRequiredMessage("Sub-category"))
-        })
+          is: (industry) => !!industry,
+          then: Yup.string().required(getRequiredMessage("Sub-category")),
+        }),
       })
     ),
     moa: Yup.mixed()
-      .test("required", getRequiredMessage("MOA"), file => {
+      .test("required", getRequiredMessage("MOA"), (file) => {
         if (file) return true;
         return false;
       })
-      .test("fileSize", "The file is too large", file => {
+      .test("fileSize", "The file is too large", (file) => {
         return (
           file &&
           (file === true ||
@@ -129,7 +130,7 @@ export const CompanyInfo = ({
     licenseOrCOINumber: Yup.string()
       .required(getRequiredMessage("License Or COINumber"))
       .matches(/^[a-zA-Z0-9./\- ]+$/, {
-        message: "Invalid Format"
+        message: "Invalid Format",
       }),
     licenseOrCOIExpiryDate: Yup.date()
       .nullable()
@@ -141,49 +142,52 @@ export const CompanyInfo = ({
       .typeError(getInvalidMessage("Date Of Incorporation"))
       .required(getRequiredMessage("Date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
-      .test("required", getRequiredMessage("Trade License Or COI"), file => {
+      .test("required", getRequiredMessage("Trade License Or COI"), (file) => {
         if (file) return true;
         return false;
       })
-      .test("fileSize", "The file is too large", file => {
+      .test("fileSize", "The file is too large", (file) => {
         return (
           file &&
           (file === true ||
             (file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize))
         );
-      })
+      }),
   };
 
   function onUploadSuccess(props) {
     handleClickNextStep();
   }
 
-  const handleClick = props => {
+  const handleClick = (props) => {
     showLoading(true);
     dispatch(
       uploadDocuments({
         docs: {
           "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": props.tradeLicenseOrCOI,
-          "prospect.prospectDocuments.companyDocument.moa": props.moa
+          "prospect.prospectDocuments.companyDocument.moa": props.moa,
         },
         documentSection: "companyDocuments",
         onSuccess: () => onUploadSuccess(props),
-        onFailure: () => showLoading(false)
+        onFailure: () => showLoading(false),
       })
     );
   };
 
   return (
     <>
-      <h2 className={classes.pageTitle}>Tell us about your company</h2>
-      <p className={classes.subTitle}>This will help us get your account set up properly</p>
+      <SectionTitleWithInfo
+        title={"Tell us about your company"}
+        info="This will help us get your account set up properly"
+        smallInfo
+      />
       <Formik
         initialValues={initialValues}
         validationSchema={conditionalSchema(companyInfoSchema)}
         validateOnChange={true}
         onSubmit={handleClick}
       >
-        {props => (
+        {(props) => (
           <Form>
             <div>
               <SectionTitle
@@ -210,10 +214,11 @@ export const CompanyInfo = ({
               />
               <TradeLicenceInformation {...props} />
             </div>
-            <div className="linkContainer">
+            <div className={`linkContainer ${!isComeFromROScreens ? "oneElement" : ""}`}>
               {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
               <NextStepButton
                 justify="flex-end"
+                display="block"
                 label="Next"
                 disabled={!(props.isValid && props.dirty)}
                 // handleClick={() => handleClick(props)}

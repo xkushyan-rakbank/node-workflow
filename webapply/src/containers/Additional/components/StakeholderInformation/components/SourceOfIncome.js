@@ -158,7 +158,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                     name="sourceOfIncome"
                     path={`${basePath}.sourceOfIncome`}
                     datalistId="sourceOfIncome"
-                    label={"Source of income"}
+                    label={""}
                     onChange={selectedValue => {
                       const sourceOfWealth = selectedValue.map(value => value);
 

@@ -84,7 +84,10 @@ export const useStyles = makeStyles(theme => ({
       paddingLeft: 16
     },
     [theme.breakpoints.up("sm")]: {
-      overflowY: "auto"
+      overflowY: "auto",
+      "&::-webkit-scrollbar": {
+        display: "none"
+      }
     }
   },
   mainContainer: {
@@ -95,11 +98,12 @@ export const useStyles = makeStyles(theme => ({
     },
     minWidth: "40vw",
     maxWidth: "100%",
-    margin: "0 auto",
+    margin: "40px auto 0px",
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
     },
     [theme.breakpoints.up("md")]: {
+      margin: "40px auto 0px",
       width: "832px"
     }
   },

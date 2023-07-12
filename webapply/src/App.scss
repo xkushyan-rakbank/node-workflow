@@ -45,7 +45,8 @@
     url("assets/fonts/OpenSans-Bold.svg#svgFontName") format("svg");
 }
 
-$mobileResolution: 1023;
+$mobileResolution: 768;
+$tabletResolution: 1023;
 $normalScrollHeight: 740;
 
 /*
@@ -58,7 +59,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   &.overflow-hidden {
-    @media (min-width: #{$mobileResolution + 1}px) and (min-height: #{$normalScrollHeight + 1}px) {
+    @media (min-width: #{$tabletResolution + 1}px) and (min-height: #{$normalScrollHeight + 1}px) {
       overflow: hidden;
     }
   }
@@ -68,6 +69,7 @@ html,
 body,
 #root {
   min-height: 100%;
+  font-size: 16px;
 }
 
 .formDescription {
@@ -198,6 +200,19 @@ input[type="number"]::-webkit-outer-spin-button {
   > div {
     width: auto;
     margin: 0;
+  }
+
+  &.oneElement {
+  display: block;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 42px;
+  margin-bottom: 42px;
+  }
+
+  @media (max-width: #{$mobileResolution}px) {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 
@@ -412,7 +427,7 @@ h3 {
   width: 25px;
 }
 
-@media (max-width: #{$mobileResolution}px) and (max-device-width: #{$mobileResolution}px) {
+@media (max-width: #{$tabletResolution}px) and (max-device-width: #{$tabletResolution}px) {
   .hide-on-mobile {
     display: none !important;
   }

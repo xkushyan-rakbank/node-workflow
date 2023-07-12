@@ -64,8 +64,10 @@ export const TradeLicenceInformation = ({ values }) => {
             label="Licence or Certificate of Incorporation expiry date"
             path="prospect.organizationInfo.licenseOrCOIExpiryDate"
             placeholder="Licence or Certificate of Incorporation expiry date"
+            inputAdornmentPosition="end"
             component={DatePicker}
             InputProps={{
+              disableUnderline: true,
               inputProps: { tabIndex: 0 }
             }}
             minDate={addDays(new Date(), 10)}
@@ -82,7 +84,9 @@ export const TradeLicenceInformation = ({ values }) => {
             maxDate={addDays(new Date(), 0)}
             inputAdornmentPosition="end"
             infoTitle="The date when your company was legally formed or started."
+            disableUnderline={true}
             InputProps={{
+              disableUnderline: true,
               inputProps: { tabIndex: 0 }
             }}
             changeProspect={changeDateProspectHandler}

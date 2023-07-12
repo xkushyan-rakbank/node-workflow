@@ -18,7 +18,7 @@ export const CompanyInfoPage = ({
   isComeFromROScreens
 }) => {
   useFormNavigation([false, true, formStepper]);
-  useLayoutParams(true, true);
+  useLayoutParams(false, true);
   useViewId(true);
   const pushHistory = useTrackingHistory();
 

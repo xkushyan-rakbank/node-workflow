@@ -6,14 +6,7 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import {
-  formStepper,
-  CONVENTIONAL,
-  ISLAMIC,
-  CREAT_PROSPECT_KEYS,
-  UAE_CODE,
-  Personas
-} from "../../constants";
+import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE, Personas } from "../../constants";
 import routes from "../../routes";
 import { setAccessToken, updateProspect } from "../../store/actions/appConfig";
 
@@ -36,14 +29,14 @@ export const ApplicantInfoContainer = ({
   dataList,
   roCode,
   isLemniskEnable,
-  prospect
+  prospect,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
   const query = useQuery();
   useFormNavigation([false, false, formStepper]);
-  useLayoutParams(true);
+  useLayoutParams(false);
 
   useEffect(() => {
     receiveAppConfig();
@@ -153,7 +146,7 @@ export const ApplicantInfoContainer = ({
       accountType={accountType}
       roCode={roCode}
       isLemniskEnable={isLemniskEnable}
-      persona={prospect.applicantInfo.persona}
+      persona={prospect.applicantInfo?.persona}
     />
   );
 };

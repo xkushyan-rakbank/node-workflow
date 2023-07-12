@@ -48,16 +48,26 @@ const InputBase = ({
           {...field}
           {...props}
           label={label}
-          variant="outlined"
+          variant="filled"
           className={cx(classes.textField, { [classes.disabled]: disabled })}
           placeholder={placeholder}
           disabled={disabled}
           error={!!isError}
           InputProps={{
             ...InputProps,
-            classes: { input: classes.input, inputMultiline: classes.inputMultiline }
+            disableUnderline: true,
+            classes: {
+              root: classes.filledInput,
+              input: classes.input,
+              inputMultiline: classes.inputMultiline,
+              error: classes.filledInputError,
+              disabled: classes.disabled
+            }
           }}
-          InputLabelProps={{ shrink }}
+          InputLabelProps={{
+            shrink,
+            classes: { filled: classes.filledLabel, shrink: classes.filledLabelShrink }
+          }}
           onFocus={() => {
             if (isIE) {
               setFocus(true);

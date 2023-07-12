@@ -27,7 +27,7 @@ export const Form = ({
   changeText,
   info,
   title,
-  classes: extendedClasses
+  classes: extendedClasses,
 }) => {
   const classes = useStyles({ classes: extendedClasses });
 
@@ -37,13 +37,13 @@ export const Form = ({
 
   return (
     <div className={classes.centeredContainer}>
-      <SectionTitleWithInfo className={classes.title} title={title} info={info} />
+      <SectionTitleWithInfo className={classes.title} title={title} info={info} smallInfo />
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
           <FormikForm className={classes.form}>
             <div>
-              <Grid container item xs={12} direction="row" justify="flex-start">
+              <Grid container item xs={12} direction="row" alignItems="flex-start">
                 <Input code={code} onChange={setCode} ref={otpRef} />
               </Grid>
 
@@ -60,17 +60,18 @@ export const Form = ({
                 />
               )}
 
-              <span>
+              <div className={classes.resendOtpWrapper}>
                 {/* OTP expires in 3:00 mins */}
+                {/* <p className={classes.otpExpireMsg}>OTP expires in 3:00 mins</p> */}
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: hasMaxAttemptsError
+                    [classes.linkDisabled]: hasMaxAttemptsError,
                   })}
                 >
                   Resend OTP
                 </span>
-              </span>
+              </div>
             </div>
 
             <div className={classes.linkContainer}>

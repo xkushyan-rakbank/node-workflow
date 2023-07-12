@@ -17,7 +17,11 @@ export const useStyles = makeStyles(theme => ({
     padding: 0,
     minHeight: "56px",
     height: "auto",
-    backgroundColor: ({ disabled }) => (disabled ? "rgba(242, 242, 242, 0.5)" : "transparent"),
+    backgroundColor: ({ disabled }) => (disabled ? "rgba(242, 242, 242, 0.5)" : "#FFF"),
+    borderRadius: "12px",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: "#BCBDC0",
     "& > *": {
       minHeight: "56px"
     },
@@ -68,7 +72,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   indicatorSeparator: {
-    width: 1,
+    width: 0,
     height: "100%",
     position: "absolute",
     top: 0,
@@ -94,6 +98,22 @@ export const useStyles = makeStyles(theme => ({
   },
   customSeclectCheckbox: {
     marginRight: "0"
+  },
+  inputCustom: {
+    "& .MuiFilledInput-root": {
+      backgroundColor: "#FFF"
+    }
+  },
+  filledLabel: {
+    color: "#585A61",
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: "22px",
+    letterSpacing: "0.08px"
+  },
+  filledLabelShrink: {
+    fontWeight: 500,
+    fontSize: "0.875rem"
   }
 }));
 
@@ -107,6 +127,7 @@ export const customStyles = {
   singleValue: provided => ({
     ...provided,
     whiteSpace: "nowrap",
-    padding: "2px"
+    padding: "2px",
+    marginTop: "6px"
   })
 };

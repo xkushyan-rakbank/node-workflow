@@ -21,7 +21,7 @@ export const useStyles = makeStyles(theme => ({
       height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
       maxHeight: "none"
     },
-    [theme.breakpoints.between("ls", "sm")]: {
+    [theme.breakpoints.between("xs", "sm")]: {
       top: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 260 : 0),
       height: ({ isMobileNotificationActive }) => (isMobileNotificationActive ? 735 : 671),
       maxHeight: "none"

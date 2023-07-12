@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     height: "32px",
     color: "#757575",
     marginRight: "16px",
-    [theme.breakpoints.up("ls")]: {
+    [theme.breakpoints.up("sm")]: {
       fontSize: "24px",
       width: "54px",
       height: "54px"

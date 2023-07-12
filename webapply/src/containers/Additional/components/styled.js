@@ -101,7 +101,7 @@ export const useStyles = makeStyles(theme => ({
   },
   additionalCompanyInfoContainer: {
     marginTop: "25px",
-    [theme.breakpoints.up("ls")]: {
+    [theme.breakpoints.up("sm")]: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
@@ -134,7 +134,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "28px",
     textAlign: "left",
     marginBottom: "24px",
-    [theme.breakpoints.up("ls")]: {
+    [theme.breakpoints.up("sm")]: {
       fontSize: "20px",
       lineHeight: "24px"
     }
