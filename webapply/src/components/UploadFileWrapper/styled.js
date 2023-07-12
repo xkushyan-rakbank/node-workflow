@@ -126,12 +126,12 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "8px"
   },
   fileUploadIcon: {
-    height: "23px",
-    width: "21px",
-    "@media (max-width: 425px)": {
+    width: "32px",
+    height: "35px",
+    [theme.breakpoints.up("sm")]: {
       height: "44px",
-      width: "40px"
-    }
+      width: "40px",
+    },
   },
   successText: {
     fontWeight: 500,
@@ -141,6 +141,7 @@ export const useStyles = makeStyles(theme => ({
   },
   contentWrapper: {
     marginLeft: "20px",
+    paddingTop: "24px",
     [theme.breakpoints.down("xs")]: {
       marginLeft: "unset",
       textAlign: "center",
@@ -159,7 +160,7 @@ export const useStyles = makeStyles(theme => ({
   success: {
     marginLeft: "5px",
     [theme.breakpoints.down("xs")]: {
-      marginRight: "16px"
-    }
-  }
+      marginRight: "16px",
+    },
+  },
 }));

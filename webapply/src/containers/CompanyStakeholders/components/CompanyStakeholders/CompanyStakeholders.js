@@ -193,7 +193,7 @@ export const CompanyStakeholdersComponent = ({
           getKycStatus={getKycStatus}
         />
       )}
-      <div className={classes.horizontalLine} />
+      {isDesktop && <div className={classes.horizontalLine} />}
       <StakeholdersDetail name={fullName} companyCategory={companyCategory} />
       <div className={classes.uploadComponent}>
         <UploadFileWrapper
