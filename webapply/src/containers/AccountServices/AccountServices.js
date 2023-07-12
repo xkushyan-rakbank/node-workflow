@@ -439,21 +439,23 @@ export const AccountServices = () => {
                         onChange={radioChangeHandler}
                       />
                     </div>
-                    <div className={classes.questionareWrapper}>
-                      <label className={classes.sectionLabel}>Receive notifications via:</label>
-                      <Field
-                        name="marketingChannel"
-                        path={"prospect.channelServicesInfo.marketingChannel"}
-                        options={PreferredNotificationOptions}
-                        component={CheckboxGroup}
-                        customIcon={true}
-                        classes={{
-                          label: classes.radioLabelRoot
-                        }}
-                        isInlineStyle={false}
-                        radioColor="primary"
-                      />
-                    </div>
+                    {values.marketing === "yes" && (
+                      <div className={classes.questionareWrapper}>
+                        <label className={classes.sectionLabel}>Receive notifications via:</label>
+                        <Field
+                          name="marketingChannel"
+                          path={"prospect.channelServicesInfo.marketingChannel"}
+                          options={PreferredNotificationOptions}
+                          component={CheckboxGroup}
+                          customIcon={true}
+                          classes={{
+                            label: classes.radioLabelRoot
+                          }}
+                          isInlineStyle={false}
+                          radioColor="primary"
+                        />
+                      </div>
+                    )}
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
                         Can we contact you for surveys or feedback, either directly or through a
