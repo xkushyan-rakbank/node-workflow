@@ -8,7 +8,7 @@ import {
   smsOtpVerified
 } from "../../store/actions/otp";
 import { getOtp } from "../../store/selectors/otp";
-import { getApplicantInfo } from "../../store/selectors/appConfig";
+import { getApplicantInfo, getProspectId } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 import { MAX_ATTEMPT_ALLOWED } from "./constants";
@@ -21,6 +21,7 @@ import routes from "../../routes";
 export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   const dispatch = useDispatch();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = useSelector(getOtp);
+  const prospectId = useSelector(getProspectId);
   const applicantInfo = useSelector(getApplicantInfo);
   const pushHistory = useTrackingHistory();
 
@@ -45,24 +46,26 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
         dispatch(generateOtpCode(otpData));
       }
       if (otpType === OtpChannel.Email) {
-        dispatch(
-          triggerDecisions({
-            onValuesChanged: changedValues => {
-              // console.log(changedValues);
-            },
-            inputFields: {
-              decision_input: [
-                {
-                  input_key: "prospect.applicantInfo.persona",
-                  input_value: applicantInfo.persona
-                }
-              ]
-            }
-          })
-        );
+        if (prospectId) {
+          dispatch(
+            triggerDecisions({
+              onValuesChanged: changedValues => {
+                // console.log(changedValues);
+              },
+              inputFields: {
+                decision_input: [
+                  {
+                    input_key: "prospect.applicantInfo.persona",
+                    input_value: applicantInfo.persona
+                  }
+                ]
+              }
+            })
+          );
 
-        //document upload init
-        dispatch(getDocumentsList());
+          //document upload init
+          dispatch(getDocumentsList());
+        }
       }
 
       pushHistory(redirectRoute, true);

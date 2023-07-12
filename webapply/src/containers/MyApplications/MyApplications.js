@@ -14,6 +14,7 @@ import { getLoadingProspectId } from "../../store/selectors/retrieveApplicantInf
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
 import { BAU_PROSPECT_VERSION, searchProspectStepper } from "../../constants";
 import { receiveAppConfig } from "../../store/actions/appConfig";
+import { getDocumentsList } from "../../store/actions/uploadDocuments";
 
 export const MyApplications = () => {
   const inputParam = useSelector(getApplicantInfo);
@@ -58,7 +59,11 @@ export const MyApplications = () => {
         );
       } else {
         dispatch(getProspectInfoPromisify(prospectId)).then(
-          prospect => pushDisplayScreenToHistory(prospect),
+          prospect => {
+            dispatch(getDocumentsList());
+
+            pushDisplayScreenToHistory(prospect);
+          },
           () => {}
         );
       }
