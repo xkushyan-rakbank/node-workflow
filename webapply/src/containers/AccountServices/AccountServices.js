@@ -59,6 +59,8 @@ export const AccountServices = () => {
 
   const accountInfo = useSelector(getAccountInfo);
 
+  const statementsVia = accountInfo.mailStatements;
+
   const accountEmirateCity = accountInfo.accountEmirateCity;
 
   const labelTextForGoGreenOption = (
@@ -131,7 +133,7 @@ export const AccountServices = () => {
     chequeBookApplied: "",
     accountwithoutChequebook: "",
     debitCardApplied: true,
-    statementsVia: true,
+    statementsVia,
     preferredLanguage: "",
     mobileInstructions: "",
     marketing: "",
