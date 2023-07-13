@@ -45,6 +45,7 @@ export const useStyles = makeStyles({
   filledLabelShrink: {
     fontWeight: 500,
     fontSize: "0.875rem",
-    color: "#585A61 !important"
+    color: "#585A61 !important",
+    width: "100%"
   }
 });
