@@ -74,6 +74,7 @@ export const useStyles = makeStyles(theme => ({
   },
   formInner: {
     display: "flex",
+    flexDirection: "column",
     height: "100%",
     padding: "0 15px",
     "& nextButton": {

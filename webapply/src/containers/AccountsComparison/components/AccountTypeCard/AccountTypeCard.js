@@ -1,50 +1,39 @@
+/* eslint-disable max-len */
 import React from "react";
-
-import { ContinueButton } from "../../../../components/Buttons/ContinueButton";
-
 import { useStyles } from "./styled";
-
-import { ReactComponent as CheckIcon } from "../../../../assets/images/icons/circle_checked_o.svg";
-
+import { Button } from "@material-ui/core";
+import cx from "classnames";
+import { ReactComponent as NavigationLeft } from "../../../../assets/icons/whiteArrow.svg";
+import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
+import { ContainedButton } from "../../../../components/Buttons/ContainedButton";
+//import { ReactComponent as CheckIcon } from "../../../../assets/images/icons/circle_checked_o.svg";
 export const AccountTypeCardComponent = ({
   Icon,
   title,
-  description,
   buttonText,
+  applyNowButton,
   handleSetAccountType,
-  accountType
+  accountType,
+  accountTypeName,
+  isSticky
 }) => {
   const classes = useStyles();
-
   return (
-    <div className={classes.container}>
+    <>
       <div>
-        <div className={classes.header}>
-          <div>
-            <Icon alt={title} />
-          </div>
-          <span>{title}</span>
-        </div>
-        <div className={classes.divider}> </div>
-        <div className={classes.differencesContainer}>
-          <ul className={classes.differences}>
-            {description.map((difference, index) => (
-              <li key={index}>
-                <CheckIcon alt="check icon" />
-                {difference}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <h2 className={cx(classes.accountTypeTitle, isSticky && classes.accountTypeTitleSticky)}>
+          {buttonText}
+        </h2>
+        {!isSticky && <p className={classes.accountTypeDesc}>{title}</p>}
       </div>
-
-      <div className={classes.buttonWrapper}>
-        <ContinueButton
-          handleClick={() => handleSetAccountType(accountType)}
-          label={buttonText}
-          classes={{ buttonStyle: classes.continueButtonRoot }}
+      {applyNowButton !== "" && (
+        <ContainedButton
+          className={classes.stickyBtn}
+          withRightArrow={!isSticky}
+          label={applyNowButton}
+          handleClick={() => handleSetAccountType(accountTypeName)}
         />
-      </div>
-    </div>
+      )}
+    </>
   );
 };

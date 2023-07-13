@@ -3,11 +3,9 @@ import { useLocation } from "react-router-dom";
 
 import { VerticalPaginationContext } from "../../components/VerticalPagination";
 import { accountTypes } from "./components/TableCompare/constants";
-import { useLayoutParams, useLogoType } from "../FormLayout";
-import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
-import { LOGO_STANDART } from "../../components/Header/constants";
-import { DEFAULT_REFERRAL_NAME } from "../../constants";
+import { applicationOverviewRoutesMap, CONVENTIONAL, DEFAULT_REFERRAL_NAME } from "../../constants";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -19,6 +17,10 @@ export const AccountsComparisonContainer = ({
   setRoCode
 }) => {
   let query = useQuery();
+
+  const pushHistory = useTrackingHistory();
+  const queryParams = useLocation().search;
+
   useEffect(() => {
     let referralName = query.get("product-name");
     if (!referralName) referralName = DEFAULT_REFERRAL_NAME;
@@ -28,24 +30,29 @@ export const AccountsComparisonContainer = ({
     setRoCode(roCode);
   }, [query, setRoCode, setProspectLead]);
 
-  const { setCurrentSection, currentSectionIndex } = useContext(VerticalPaginationContext);
-  useFormNavigation([true, false, [], !!currentSectionIndex]);
-  useLayoutParams(false, false, true);
-  useLogoType(LOGO_STANDART);
-
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
+
+  const goto = useCallback(
+    url => {
+      if (queryParams) {
+        pushHistory(url + queryParams);
+      } else {
+        pushHistory(url);
+      }
+    },
+    [pushHistory]
+  );
 
   const handleSetAccountType = useCallback(
     accountType => {
       setSelectedAccount(accountType);
-      setCurrentSection(2);
+      goto(applicationOverviewRoutesMap[accountType][CONVENTIONAL]);
     },
-    [setSelectedAccount, setCurrentSection]
+    [setSelectedAccount]
   );
 
   return (
     <AccountsComparisonComponent
-      setCurrentSection={setCurrentSection}
       handleSetAccountType={handleSetAccountType}
       selectedAccount={selectedAccount}
       servicePricingGuideUrl={servicePricingGuideUrl}

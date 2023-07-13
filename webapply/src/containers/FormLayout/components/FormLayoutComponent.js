@@ -11,6 +11,8 @@ import { useBlobColor } from "../../../utils/useBlobColor/useBlobColor";
 import { LayoutContext } from "../LayoutProvider";
 
 import { useStyles } from "./styled";
+import routes from "../../../routes";
+import { HeaderButtonGroup } from "../../../components/HeaderButtonGroup";
 
 export const FormLayoutComponent = ({
   screeningError,
@@ -32,11 +34,15 @@ export const FormLayoutComponent = ({
     isSmallContentWidth: !checkIsShowSmallMenu(pathname)
   });
 
-  return (
+  return pathname === routes.quickapplyLanding || pathname === "/" ? (
+    <>{children}</>
+  ) : (
     <div className={classes.formLayout}>
       <FormNavigation />
       <div className={classes.formWrapper}>
         <div className={classes.formInner}>
+          {pathname.includes("application-overview") && <HeaderButtonGroup />}
+
           <div className={classes.mainContainer}>
             {isDisplayHeader && <HeaderTitle withoutMarginBottom />}
 
