@@ -4,7 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   stakeholderWrapper: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+     paddingTop: "30px"
+    }
   },
   nameInitialWrapper: {
     height: "54px",

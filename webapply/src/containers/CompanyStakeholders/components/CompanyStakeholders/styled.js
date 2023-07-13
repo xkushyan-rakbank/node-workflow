@@ -156,7 +156,7 @@ export const useStyles = makeStyles(theme => ({
   uploadModalErrorWrapper: {
     display: "flex",
     alignItems: "center",
-    padding: "16px 38px",
+    padding: "16px 16px",
     marginTop: "8px",
     marginBottom: "24px",
     color: "#8D0C10",
@@ -164,11 +164,12 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: "20px",
-    borderRadius: "10px"
+    borderRadius: "10px",
+    fontStyle: "normal"
   },
   errorIcon: {
-    width: "13px",
-    height: "13px",
+    width: "15px",
+    height: "15px",
     marginRight: "8px"
   },
   uploadModalCloseIcon: {
@@ -218,11 +219,15 @@ export const useStyles = makeStyles(theme => ({
   },
   previewImg: {
     width: "100%",
-    height: "min(400px, 50vh)",
+    height: "min(250px, 35vh)",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "contain",
-    background: "#D9D9D9"
+    objectFit: "contain", 
+    background: "#D9D9D9",
+    [theme.breakpoints.up("sm")]: {
+      height: "min(400px, 50vh)",
+    },
   },
   previewPDF: {
     backgroundColor: "#D9D9D9",
@@ -232,20 +237,28 @@ export const useStyles = makeStyles(theme => ({
   previewModalTitle: {
     color: "#1F1F1F",
     fontWeight: 500,
-    fontSize: "28px",
-    lineHeight: "36px",
+    fontSize: "16px",
+    lineHeight: "24px",
     margin: "0px",
-    textAlign: "left"
+    textAlign: "left",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "28px",
+      lineHeight: "36px",
+    },
   },
   previewModalSubtitle: {
     margin: "0px",
     marginTop: "8px",
     marginBottom: "8px",
-    fontSize: "20px",
+    fontSize: "14px",
     fontWeight: "400",
-    lineHeight: "28px",
+    lineHeight: "18px",
     textAlign: "left",
-    color: "#757575"
+    color: "#757575",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "20px",
+      lineHeight: "28px",
+    },
   },
   previewImgWrapper: {
     marginTop: "24px"

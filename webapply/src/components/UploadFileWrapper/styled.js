@@ -155,7 +155,10 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     lineHeight: "20px",
     color: "#8D0C10",
-    cursor: "pointer"
+    cursor: "pointer",
+    [theme.breakpoints.up("sm")]: {
+      paddingLeft: "16px",
+    },
   },
   success: {
     marginLeft: "5px",
