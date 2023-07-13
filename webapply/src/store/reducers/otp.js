@@ -34,13 +34,13 @@ export default handleActions(
       isVerified: false,
       isPending: true
     }),
-    [composeActions(GENERATE_OTP_CODE, APPLICANT_INFO_FORM)]: state => ({
+    [composeActions(GENERATE_OTP_CODE, APPLICANT_INFO_FORM)]: (state, action) => ({
       ...state,
       verificationError: false,
       isVerified: false,
       isGenerating: true,
       isGenerated: false,
-      mode: "",
+      mode: action.payload.mode || "",
       otpTokenValidityInSec: "",
       otpTokenValidUntil: "",
       isPending: false,
