@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles/index";
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   mainTitle: {
     fontSize: "24px",
     color: "#1F1F1F",
@@ -8,13 +8,13 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     margin: 0,
     marginBottom: "8px",
-    marginTop: "25px",
+    marginTop: "25px"
   },
   subTitle: {
     fontWeight: 400,
     fontSize: "16px",
     color: "#757575",
-    margin: 0,
+    margin: 0
   },
   buttonStyle: {
     width: "346px",
@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: "0 20px 0 32px",
     fontWeight: "normal",
     letterSpacing: "normal",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   buttonsWrapper: {
     borderRadius: "8px",
@@ -33,20 +33,20 @@ export const useStyles = makeStyles((theme) => ({
     border: "solid 1px #e8e8e8",
     backgroundColor: "#ffffff",
     flexDirection: "column",
-    marginTop: "24px",
+    marginTop: "24px"
   },
   stakeholdersTitleWrapper: {
     margin: "60px 0",
     display: "flex",
-    alignItems: "center",
+    alignItems: "center"
   },
   stakeholderTitle: {
     marginLeft: "10px",
-    fontSize: "14px",
+    fontSize: "14px"
   },
   iconSize: {
     width: "24px",
-    height: "24px",
+    height: "24px"
   },
   verifyMobileWrapper: {
     display: "flex",
@@ -58,8 +58,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "16px",
     "@media (max-width: 425px)": {
       flexDirection: "column",
-      padding: "24px 10px",
-    },
+      padding: "24px 10px"
+    }
   },
   descriptionWrapper: {
     display: "flex",
@@ -72,7 +72,7 @@ export const useStyles = makeStyles((theme) => ({
         lineHeight: "24px",
         color: "#1F1F1F",
         margin: "0px",
-        marginBottom: "4px",
+        marginBottom: "4px"
       },
       "& p": {
         fontSize: "14px",
@@ -81,17 +81,17 @@ export const useStyles = makeStyles((theme) => ({
         letterSpacing: "0em",
         textAlign: "left",
         margin: "0px",
-        color: "#757575",
-      },
-    },
+        color: "#757575"
+      }
+    }
   },
   verifyMobileIcon: {
     width: "18px",
     height: "22px",
     "@media (max-width: 425px)": {
       width: "40px",
-      height: "44px",
-    },
+      height: "44px"
+    }
   },
   continueBtn: {
     height: "40px",
@@ -164,12 +164,12 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: "20px",
-    borderRadius: "10px",
+    borderRadius: "10px"
   },
   errorIcon: {
     width: "13px",
     height: "13px",
-    marginRight: "8px",
+    marginRight: "8px"
   },
   uploadModalCloseIcon: {
     position: "absolute",
@@ -183,8 +183,8 @@ export const useStyles = makeStyles((theme) => ({
       top: "16px",
       width: "24px",
       height: "24px",
-      right: "9.214px",
-    },
+      right: "9.214px"
+    }
   },
   uploadModalTitle: {
     margin: "0px",
@@ -193,7 +193,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     fontStlye: "normal",
     fontWeight: 500,
-    lineHeight: "24px",
+    lineHeight: "24px"
   },
   uploadModalSaveBtn: {
     marginTop: "40px",
@@ -417,16 +417,15 @@ export const useStyles = makeStyles((theme) => ({
   },
   btnWrapper: {
     display: "flex",
-    justifyContent: "center",
     [theme.breakpoints.down("xs")]: {
-      justifyContent: "center",
+      justifyContent: "center"
     },
     "& .MuiButton-label": {
       fontSize: "18px",
       fontStyle: "normal",
       fontWeight: 600,
-      lineHeight: "24px",
-    },
+      lineHeight: "24px"
+    }
   },
   disclaimerInfo: {
     marginTop: "8px",
