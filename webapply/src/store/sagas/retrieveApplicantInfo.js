@@ -21,6 +21,7 @@ import { COMPANY_INFO_PAGE_ID } from "../../containers/CompanyInfo/constants";
 import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constants";
 import { OUTSIDE_BASE_PATH } from "../../containers/FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { signatoryCompanyInfo, kycAnnexure } from "../../constants/prospectPatches";
+import { termsAndConditionsAccepted } from "../actions/termsAndConditions";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -95,9 +96,21 @@ export function* getProspectIdInfo({ payload }) {
     //set signatory edited name
     try {
       if (config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0]) {
-        config.prospect.signatoryInfo[0]["editedFullName"] =
-          config.prospect.signatoryInfo[0].fullName;
-        prospect["signatoryInfo[0].editedFullName"] = config.prospect.signatoryInfo[0].fullName;
+        const signatoryDetails =
+          config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0];
+        signatoryDetails["editedFullName"] = signatoryDetails.fullName;
+        prospect["signatoryInfo[0].editedFullName"] = signatoryDetails.fullName;
+
+        //consent screen
+        if (signatoryDetails.consentInfo) {
+          yield put(
+            termsAndConditionsAccepted({
+              kfs: signatoryDetails.consentInfo?.kfsConsent?.accept,
+              authorisation: signatoryDetails.consentInfo?.efrConsent?.accept,
+              generalTCs: signatoryDetails.consentInfo?.otherTncConsent?.accept
+            })
+          );
+        }
       }
     } catch (e) {
       log(e);

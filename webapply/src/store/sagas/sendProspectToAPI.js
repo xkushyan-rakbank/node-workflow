@@ -140,6 +140,10 @@ export function* prospectAutoSave() {
         authToken &&
         [
           VIEW_IDS.CompanyInfo,
+          VIEW_IDS.StakeholdersInfoPreview,
+          VIEW_IDS.ConsentInfo,
+          VIEW_IDS.CompanyAdditionalInfo,
+          VIEW_IDS.StakeholdersAdditionalInfo,
           VIEW_IDS.FinalQuestions,
           VIEW_IDS.UploadDocuments,
           VIEW_IDS.SelectServices

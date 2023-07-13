@@ -124,11 +124,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               />
               <ProspectProtectedRoute
                 exact
-                path={routes.finalQuestions}
-                component={FinalQuestions}
-              />
-              <ProspectProtectedRoute
-                exact
                 path={routes.additionalInfoComponent}
                 component={AdditionalInfoComponent}
               />
@@ -146,6 +141,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.accountServices}
                 component={AccountServices}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.finalQuestions}
+                component={FinalQuestions}
               />
               <ProspectProtectedRoute
                 exact

@@ -491,6 +491,12 @@ export const BYTES_IN_MEGABYTE = 1048576;
 export const VIEW_IDS = {
   CompanyInfo: "/CompanyInfo",
   StakeholdersInfo: "/StakeholdersInfo",
+  StakeholdersInfoPreview: "/StakeholdersInfoPreview",
+  ConsentInfo: "/ConsentInfo",
+  CompanyAdditionalInfo: "/CompanyAdditionalInfo",
+  StakeholdersAdditionalInfo: "/StakeholdersAdditionalInfo",
+  AccountServices: "/AccountServices",
+  //V1 proespect view ids
   FinalQuestions: "/FinalQuestions",
   UploadDocuments: "/UploadDocuments",
   SelectServices: "/SelectServices",
@@ -501,7 +507,7 @@ export const VIEW_IDS = {
   ReUploadDocuments: "/ReUploadDocuments"
 };
 
-export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo", "/StakeholdersInfoPreview"];
+export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo"];
 
 export const ACTION_TYPES = {
   save: "save",
