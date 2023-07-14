@@ -16,7 +16,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column",
-    },
+    }
   },
   actionButton: {
     width: "105px",
@@ -40,44 +40,50 @@ export const useStyles = makeStyles((theme) => ({
   },
   main: {
     display: "flex",
-    flexDirection: "row",
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-      flexDirection: "column",
-      alignItems: "center",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "calc(100% - 105px)",
+      flexDirection: "row"
     },
+    [theme.breakpoints.up("md")]: {
+      flexDirection: "row"
+    }
   },
   contentContainer: {
-    marginLeft: "20px",
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-      marginTop: "16px",
-      marginLeft: "0px",
+    width: "100%",
+    textAlign: "center",
+    marginTop: "16px",
+    marginLeft: "0px",
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "calc(100% - 105px)",
+      textAlign: "left",
+      marginTop: "0px",
+      marginLeft: "20px"
     },
+    [theme.breakpoints.up("md")]: {
+      textAlign: "left",
+      marginTop: "0px",
+      marginLeft: "20px"
+    }
   },
   content: {
     fontSize: "16px",
+    width: "100%",
     "& p": {
       margin: "0px",
-      [theme.breakpoints.down("sm")]: {
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-      },
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      textAlign: "center",
-      marginBottom: "7px",
-    },
+      marginBottom: "7px"
+    }
   },
   subcontent: {
     fontSize: "12px",
     color: "#757575",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      textAlign: "center",
-    },
   },
   row: {
     display: "flex",
@@ -90,6 +96,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   error: {
     color: "#8D0C10",
+    wordBreak: "break-word",
   },
   fieldDescription: {
     display: "flex",
@@ -100,8 +107,8 @@ export const useStyles = makeStyles((theme) => ({
     width: "fit-content",
   },
   contentWrapper: {
+    width: "100%",
     [theme.breakpoints.down("xs")]: {
-      width: "100%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
