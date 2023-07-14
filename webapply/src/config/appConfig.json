@@ -161,8 +161,8 @@
           "country": "AE"
         }
       ],
-      "anualCashDepositAED": "",
-      "annualFinTurnoverAmtInAED": "",
+      "anualCashDepositAED": null,
+      "annualFinTurnoverAmtInAED": null,
       "addressInfo":[ 
         {
           "typeOfAddress": "virtual",

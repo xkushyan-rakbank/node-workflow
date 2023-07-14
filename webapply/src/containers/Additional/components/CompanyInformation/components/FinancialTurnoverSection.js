@@ -82,7 +82,8 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
     annualFinTurnoverAmtInAED: Yup.number()
       .typeError("The amount should be greater than 1000.00 AED")
       .required(getRequiredMessage("Annual financial turnover (AED)"))
-      .min(1000.01, "The amount should be greater than 1000.00 AED")
+      .min(1000.01, "The amount should be greater than 1000.00 AED"),
+    anualCashDepositAED: Yup.number().required(getRequiredMessage("Annual cash deposit"))
   });
 
   const numberWithCommas = x => {
