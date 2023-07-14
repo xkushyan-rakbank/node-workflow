@@ -701,6 +701,15 @@ export const applicationOverviewRoutes = [
   `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`
 ];
 
+export const applicationPersona = [
+  `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${RAKSTARTER_ISLAMIC_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/persona-selection`,
+  `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/persona-selection`
+];
+
 export const personaSelectionRoutesMap = {
   [accountNames.starter]: {
     [CONVENTIONAL]: `${smeBaseName}/accounts/${RAKSTARTER_ROUTE_PARAM}/persona-selection`,

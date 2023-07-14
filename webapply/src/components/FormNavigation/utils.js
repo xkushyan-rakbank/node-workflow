@@ -1,5 +1,9 @@
 import routes from "../../routes";
-import { applicationOverviewRoutes, detailedAccountRoutes } from "../../constants";
+import {
+  applicationOverviewRoutes,
+  applicationPersona,
+  detailedAccountRoutes
+} from "../../constants";
 
 export const checkIsShowSmallBg = pathname =>
   [
@@ -10,4 +14,9 @@ export const checkIsShowSmallBg = pathname =>
   ].includes(pathname);
 
 export const checkIsShowSmallMenu = pathname =>
-  ![routes.login, ...detailedAccountRoutes, ...applicationOverviewRoutes].includes(pathname);
+  ![
+    routes.login,
+    ...detailedAccountRoutes,
+    ...applicationOverviewRoutes,
+    ...applicationPersona
+  ].includes(pathname);

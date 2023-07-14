@@ -111,7 +111,8 @@ export const useStyles = makeStyles(theme => ({
               fillOpacity: ({ smallMenu }) => (smallMenu ? 0 : 1)
             }
           }
-        }
+        },
+        transition: "all 0.1s ease-in-out"
       },
       "& .small-menu-hide": {
         opacity: 1,
