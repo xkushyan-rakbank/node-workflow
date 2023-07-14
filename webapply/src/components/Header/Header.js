@@ -26,9 +26,11 @@ const HeaderComponent = ({ className, isOtpVerified }) => {
   //ro-assist-brd3-16
   const queryParams = useLocation().search;
 
+  const logoClassName = cx(classes.logo, "small-menu-hide");
+
   return (
     <>
-      <header className={cx(classes.header, "small-menu-hide", className)}>
+      <header className={cx(classes.header, className)}>
         <Link
           to={routes.accountsComparison + queryParams}
           className={cx({ [classes.disabled]: isOtpVerified })}
@@ -36,14 +38,14 @@ const HeaderComponent = ({ className, isOtpVerified }) => {
           {(() => {
             switch (logoType) {
               case LOGO_ELITE_ISLAMIC:
-                return <EliteIslamicLogo className={classes.logo} />;
+                return <EliteIslamicLogo className={logoClassName} />;
               case LOGO_ELITE:
-                return <EliteLogo className={classes.logo} />;
+                return <EliteLogo className={logoClassName} />;
               case LOGO_ISLAMIC:
-                return <IslamicLogo className={classes.logo} />;
+                return <IslamicLogo className={logoClassName} />;
               case LOGO_STANDART:
               default:
-                return <StandartLogo className={classes.logo} />;
+                return <StandartLogo className={logoClassName} />;
             }
           })()}
         </Link>
