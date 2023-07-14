@@ -22,6 +22,9 @@ export const useStyles = makeStyles(theme => ({
     color: "#888888",
     textDecoration: "underline"
   },
+  withPadding: {
+    paddingTop: "100px"
+  },
   landingPageHeader: {
     marginBottom: "40px",
     "& h3": {
@@ -45,7 +48,7 @@ export const useStyles = makeStyles(theme => ({
   //  }
   // },
   mainWrapper: {
-    marginTop: "100px",
+    // marginTop: "100px",
     marginBottom: "50px"
   },
   bgContainer: {
@@ -99,7 +102,7 @@ export const useStyles = makeStyles(theme => ({
   },
   stickyDiv: {
     position: "sticky",
-    top: "114px"
+    top: "88px"
   },
   featureSection: {
     marginTop: "80px"
@@ -279,11 +282,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   accountInfoNavScrolled: {
-    height: "210px",
+    height: "200px",
     backgroundColor: "#FFFFFF",
     position: "fixed",
     top: 0,
-    paddingTop: "40px",
+    paddingTop: "24px",
     boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
   }
 }));

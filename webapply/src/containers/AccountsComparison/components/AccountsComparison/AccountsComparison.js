@@ -30,7 +30,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
 
   const [isAccountTypeSticky, setIsAccountTypeSticky] = useState(false);
 
-  const [isScrollPast800, setIsScrollPast800] = useState(false);
+  const [isFullyScrolled, setIsFullyScrolled] = useState(false);
 
   const accountTypeRef = useRef(null);
 
@@ -48,10 +48,10 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   }, []);
 
   const checkIfScrolled = () => {
-    if (window.scrollY >= 800) {
-      setIsScrollPast800(true);
+    if (window.scrollY >= window.innerHeight - 40) {
+      setIsFullyScrolled(true);
     } else {
-      setIsScrollPast800(false);
+      setIsFullyScrolled(false);
     }
   };
   useEffect(() => {
@@ -84,7 +84,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
 
   const handleClick = () => {
     document.body.classList.remove("no-scroll");
-    accountTypeRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+    accountTypeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN));
   };
 
@@ -125,13 +125,13 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         <nav
           className={cx(
             classes.accountInfoNav,
-            isScrollPast800 ? classes.accountInfoNavScrolled : ""
+            isFullyScrolled && isAccountTypeSticky ? classes.accountInfoNavScrolled : ""
           )}
         >
           <div className={classes.accountInfoNavLinks}>
             <Link to={routes.accountsComparison + queryParams}>
               <img
-                src={isScrollPast800 ? StandardRedLogo : StandardLogo}
+                src={isFullyScrolled ? StandardRedLogo : StandardLogo}
                 alt="logo"
                 className={classes.logo}
               />
@@ -141,7 +141,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
                 variant="outlined"
                 className={cx(
                   classes.trackNSwitchAccountBtn,
-                  isScrollPast800 ? classes.black : classes.white
+                  isFullyScrolled ? classes.black : classes.white
                 )}
                 onClick={() => handleRedirection(routes.comeBackLogin)}
               >
@@ -193,7 +193,10 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         </div>
       </div>
       <Container maxWidth="md" className={classes.mainWrapper}>
-        <div className={classes.landingPageHeader} ref={accountTypeRef}>
+        <div
+          ref={accountTypeRef}
+          className={cx(classes.landingPageHeader, !isAccountTypeSticky ? classes.withPadding : "")}
+        >
           <h3>Whatever the size of your business, we’ve got the account for you</h3>
           <p>Available for conventional or Islamic banking.</p>
         </div>

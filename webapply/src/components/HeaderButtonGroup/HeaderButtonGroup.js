@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "./styled";
 import routes from "../../routes";
-import { applicationOverviewRoutesMap, ISLAMIC } from "../../constants";
-import { getAccountType } from "../../store/selectors/appConfig";
+import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC } from "../../constants";
+import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
 export const HeaderButtonGroup = () => {
@@ -13,6 +13,7 @@ export const HeaderButtonGroup = () => {
   const accountType = useSelector(getAccountType);
   const pushHistory = useTrackingHistory();
   const queryParams = useLocation().search;
+  const isIslamic = useSelector(getIsIslamicBanking);
 
   const handleRedirection = path => {
     pushHistory(path);
@@ -32,10 +33,14 @@ export const HeaderButtonGroup = () => {
         variant="outlined"
         className={classes.trackNSwitchAccountBtn}
         onClick={() =>
-          handleRedirection(applicationOverviewRoutesMap[accountType][ISLAMIC] + queryParams)
+          handleRedirection(
+            isIslamic
+              ? applicationOverviewRoutesMap[accountType][CONVENTIONAL] + queryParams
+              : applicationOverviewRoutesMap[accountType][ISLAMIC] + queryParams
+          )
         }
       >
-        Switch to RAKislamic
+        {isIslamic ? "Switch to Conventional" : "Switch to RAKislamic"}
       </Button>
     </div>
   );
