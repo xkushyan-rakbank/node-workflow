@@ -21,7 +21,7 @@ import { SourceOfIncome } from "./components/SourceOfIncome";
 
 import { useStyles } from "../styled";
 import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
-import { isFieldTouched } from "../../../../store/selectors/appConfig";
+import { getSignatories, isFieldTouched } from "../../../../store/selectors/appConfig";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -39,6 +39,7 @@ export const AdditionalStakeholderInformation = ({
   const [isLoading, setIsLoading] = useState(false);
   const isTouched = useSelector(isFieldTouched("stakeholderTaxDeclarationSection"));
   const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
+  const { showSOF } = useSelector(getSignatories)[0];
 
   useEffect(() => {
     !addionalStakeholderInfoStatus && dispatch(updateStakeholderInfoStatus("inProgress"));
@@ -48,16 +49,20 @@ export const AdditionalStakeholderInformation = ({
     backgroundInfoSection: "",
     sourceOfIncomeSection: "",
     residentialAddressSection: "",
-    stakeholderTaxDeclarationSection: ""
+    stakeholderTaxDeclarationSection: "",
+    showSOF
   };
 
   const formValidationSchema = Yup.object().shape({
     backgroundInfoSection: Yup.boolean()
       .required()
       .oneOf([true]),
-    sourceOfIncomeSection: Yup.boolean()
-      .required()
-      .oneOf([true]),
+    sourceOfIncomeSection: Yup.mixed().when("showSOF", {
+      is: showSOF => showSOF,
+      then: Yup.boolean()
+        .required()
+        .oneOf([true])
+    }),
     residentialAddressSection: Yup.boolean()
       .required()
       .oneOf([true]),
@@ -109,7 +114,7 @@ export const AdditionalStakeholderInformation = ({
                       />
                     </div>
                     <Background id={"backgroundInfoSection"} {...props} />
-                    <SourceOfIncome id={"sourceOfIncomeSection"} {...props} />
+                    {showSOF && <SourceOfIncome id={"sourceOfIncomeSection"} {...props} />}
                     <ResidentialAddress id={"residentialAddressSection"} {...props} />
                     <StakeholderTaxDeclarations
                       id={"stakeholderTaxDeclarationSection"}

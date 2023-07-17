@@ -31,7 +31,8 @@ import {
   getAccountType,
   getIsIslamicBanking,
   getAuthToken,
-  getApplicationInfo
+  getApplicationInfo,
+  getSignatories
 } from "../selectors/appConfig";
 import { getCompletedSteps } from "../selectors/completedSteps";
 import { getScreeningError } from "../selectors/sendProspectToAPI";
@@ -206,6 +207,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     const headers = yield select(getAuthorizationHeader);
     const completedSteps = yield select(getCompletedSteps);
     const applicationInfo = yield select(getApplicationInfo);
+    const signatoryInfo = yield select(getSignatories);
 
     const viewId = applicationInfo.viewId;
 
@@ -248,6 +250,14 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
             ...newProspect.accountInfo[index],
             accountNo: data.accountInfo[index].accountNo
           })
+      );
+    }
+
+    if (data.signatoryInfo && Array.isArray(data.signatoryInfo)) {
+      yield put(
+        updateProspect({
+          "prospect.signatoryInfo": [{ ...signatoryInfo[0], ...data.signatoryInfo[0] }]
+        })
       );
     }
 
