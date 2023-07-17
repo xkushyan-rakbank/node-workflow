@@ -23,7 +23,7 @@ export const UploadLimitComponent = () => {
         Looking for other products or services to grow your business?
       </p>
       <Grid item xs={12} className={classes.btnContainer}>
-        <Link to={routes.accountsComparison}>
+        <Link to={routes.quickapplyLanding}>
           <Button
             onClick={() => ""}
             color="primary"

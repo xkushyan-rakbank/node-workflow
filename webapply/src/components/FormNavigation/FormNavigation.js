@@ -30,7 +30,7 @@ export const FormNavigationComponent = () => {
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
-    accountsComparisonPage: routes.accountsComparison === pathname,
+    accountsComparisonPage: routes.quickapplyLanding === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });
 

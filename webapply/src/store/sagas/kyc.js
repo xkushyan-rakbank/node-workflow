@@ -247,7 +247,7 @@ export function* entityConfirmation() {
       let buttons = [
         {
           external: false,
-          link: routes.accountsComparison,
+          link: routes.quickapplyLanding,
           label: "Go to home page"
         }
       ];
@@ -295,7 +295,7 @@ export function* setLivelinessData({ payload }) {
       let buttons = [
         {
           external: false,
-          link: routes.accountsComparison,
+          link: routes.quickapplyLanding,
           label: "Go to home page"
         }
       ];

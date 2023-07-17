@@ -25,7 +25,7 @@ export const getTitleByPathname = (pathname, accountType) => {
     [routes.verifyOtp]: "Confirm that it's you",
     [routes.ApplicationSubmitted]: "Check it out. Application submitted!",
     [routes.reUploadDocuments]: "Upload your documents",
-    [routes.accountsComparison]: "All businesses start with an account. Get yours now."
+    [routes.quickapplyLanding]: "All businesses start with an account. Get yours now."
     //[routes.quickapplyLanding]: "Welcome to Quick Apply!"
   }[pathname];
 };

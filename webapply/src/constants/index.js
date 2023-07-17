@@ -229,7 +229,7 @@ export const SIGNING_TRANSACTIONS_TYPE = {
 //ro-assist-brd1-3
 const blank = "_blank";
 export const smeSouqLink = "https://rakbank.ae/wps/portal/business-banking/smesouk";
-export const EFR_CHECK_ERROR = `Dear Customer, we were unable to complete your facial recognition process successfully. Not to worry! You may still proceed with our alternative application platform by clicking this secure link.<a href="${routes.accountsComparison}" target="${blank}"> https://quickapplyuat.rakbank.ae....</a>`;
+export const EFR_CHECK_ERROR = `Dear Customer, we were unable to complete your facial recognition process successfully. Not to worry! You may still proceed with our alternative application platform by clicking this secure link.<a href="${routes.quickapplyLanding}" target="${blank}"> https://quickapplyuat.rakbank.ae....</a>`;
 export const applicationError = [
   {
     screeningNotes: "DECLINE",
@@ -237,7 +237,7 @@ export const applicationError = [
     buttons: [
       {
         external: false,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "Back to home"
       }
     ]
@@ -248,7 +248,7 @@ export const applicationError = [
     buttons: [
       {
         external: false,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "Back to home"
       }
     ]
@@ -264,7 +264,7 @@ export const applicationError = [
       },
       {
         external: true,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "No, thanks"
       }
     ]
@@ -280,7 +280,7 @@ export const applicationError = [
       },
       {
         external: true,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "No, thanks"
       }
     ]
@@ -291,7 +291,7 @@ export const applicationError = [
     buttons: [
       {
         external: true,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "No, thanks"
       },
       {
@@ -309,7 +309,7 @@ export const applicationdedupe = [
     buttons: [
       {
         external: false,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "Go to home page"
       }
     ]
@@ -320,7 +320,7 @@ export const applicationdedupe = [
     buttons: [
       {
         external: false,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "Go to home page"
       }
     ]
@@ -378,7 +378,7 @@ export const screeningStatus = [
     buttons: [
       {
         external: false,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "Go to home page"
       }
     ]
@@ -421,7 +421,7 @@ export const screeningStatus = [
     buttons: [
       {
         external: false,
-        link: routes.accountsComparison,
+        link: routes.quickapplyLanding,
         label: "Go to home page"
       }
     ]

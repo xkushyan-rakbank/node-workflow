@@ -10,7 +10,7 @@ export const NotFoundPage = () => {
   useFormNavigation([false, false]);
 
   const handleGoToHomePage = useCallback(() => {
-    history.push(routes.accountsComparison);
+    history.push(routes.quickapplyLanding);
   }, [history]);
 
   return <NotFoundComponent goToHomePage={handleGoToHomePage} />;

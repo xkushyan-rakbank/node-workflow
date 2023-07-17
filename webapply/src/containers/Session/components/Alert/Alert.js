@@ -27,7 +27,7 @@ export const Alert = ({
   const history = useHistory();
 
   const redirectToHome = () => {
-    history.push(routes.accountsComparison);
+    history.push(routes.quickapplyLanding);
     window.location.reload();
   };
   return (

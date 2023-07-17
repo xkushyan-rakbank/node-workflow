@@ -9,7 +9,7 @@ export const useBlobColor = (isHideSideBar = false) => {
   const { pathname } = useLocation();
   const accountType = useSelector(getAccountType);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
-  const isAccountsComparison = routes.accountsComparison === pathname;
+  const isAccountsComparison = routes.quickapplyLanding === pathname;
 
   if (isHideSideBar) return NONE;
   if (!isAccountsComparison && accountType === accountNames.elite) return ELITE;

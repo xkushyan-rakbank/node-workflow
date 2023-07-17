@@ -9,7 +9,7 @@ import { ReactComponent as LogoSmallColor } from "../../assets/images/logo-small
 
 //ro-assist-brd2-3
 const accountComparisionRoute = {
-  link: routes.accountsComparison,
+  link: routes.quickapplyLanding,
   label: "Back to home"
 };
 const getFirstLine = text => {

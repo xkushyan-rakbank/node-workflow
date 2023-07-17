@@ -7,7 +7,7 @@ import { UploadLimitComponent } from "../../containers/UploadDocuments/component
 
 //ro-assist-brd2-3
 const accountComparisionRoute = {
-  link: routes.accountsComparison,
+  link: routes.quickapplyLanding,
   label: "See products"
 };
 export const ApplicationStatus = ({

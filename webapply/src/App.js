@@ -27,8 +27,7 @@ import SessionExpiration from "./containers/Session";
 
 import { FormEmailConfirmPage, FormConfirmMobilePage } from "./containers/FormConfirm";
 const ApplicationSubmitted = lazy(() => import("./containers/ApplicationSubmitted"));
-const QuickapplyLanding = lazy(() => import("./containers/QuickapplyLanding"));
-const AccountsComparison = lazy(() => import("./containers/AccountsComparison"));
+const QuickapplyLanding = lazy(() => import("./containers/AccountsComparison"));
 
 const UploadDocuments = lazy(() => import("./containers/UploadDocuments"));
 const ReUploadDocuments = lazy(() => import("./containers/ReUploadDocuments"));
@@ -89,11 +88,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.ApplicationSubmitted}
                 component={ApplicationSubmitted}
-              />
-              <ProtectedRoute
-                exact
-                path={routes.accountsComparison}
-                component={AccountsComparison}
               />
               <ProtectedRoute exact path={routes.applicantInfo} component={ApplicantInfo} />
               <ProspectProtectedRoute
@@ -190,13 +184,9 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 component={SubmitApplication}
               />
               <ProtectedRoute path={agentBaseName} component={Agents} />
-              <ProtectedRoute
-                exact
-                path={routes.quickapplyLanding}
-                component={AccountsComparison}
-              />
-              <ProtectedRoute exact path={smeBaseName} component={AccountsComparison} />
-              <ProtectedRoute exact path="/" component={AccountsComparison} />
+              <ProtectedRoute exact path={routes.quickapplyLanding} component={QuickapplyLanding} />
+              <ProtectedRoute exact path={smeBaseName} component={QuickapplyLanding} />
+              <ProtectedRoute exact path="/" component={QuickapplyLanding} />
               {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
               <Route path={routes.webToMobile} component={WebToMobilePage} />

@@ -49,15 +49,11 @@ export const LandingVideoPlayer = ({ video: { mp4, webm, poster }, ...rest }) =>
             onClick={() =>
               dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN))
             }
-            to={queryParams ? routes.accountsComparison + queryParams : routes.accountsComparison}
+            to={queryParams ? routes.quickapplyLanding + queryParams : routes.quickapplyLanding}
           >
             <ExpandMoreButton label="Business Account" className={classes.accountBtn} />
           </Link>
-          <div
-            onClick={() =>
-              redirectInToFinance(smeBaseName + "/finances")
-            }
-          >
+          <div onClick={() => redirectInToFinance(smeBaseName + "/finances")}>
             <ExpandMoreButton
               label="Business Finance"
               className={classes.accountBtn}
