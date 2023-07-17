@@ -22,7 +22,8 @@ export const useDisplayScreenBasedOnViewId = () => {
   const pushDisplayScreenToHistory = useCallback(
     prospect => {
       const newApplicationInfo = prospect ? prospect.applicationInfo : applicationInfo;
-      const viewId = prospect.viewId || routes.companyInfo.replace(smeBaseName, "");
+      const viewId =
+        newApplicationInfo.viewId || prospect.viewId || routes.companyInfo.replace(smeBaseName, "");
       const prospectId = prospect ? prospect.generalInfo.prospectId : prospectIdFromStore;
       const isSubmit =
         newApplicationInfo?.actionType === ACTION_TYPES.submit &&
