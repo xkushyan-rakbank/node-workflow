@@ -129,7 +129,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           )}
         >
           <div className={classes.accountInfoNavLinks}>
-            <Link to={routes.accountsComparison + queryParams}>
+            <Link to={routes.quickapplyLanding + queryParams}>
               <img
                 src={isFullyScrolled ? StandardRedLogo : StandardLogo}
                 alt="logo"

@@ -69,8 +69,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "16px",
     marginBottom: "55px",
     [theme.breakpoints.up("sm")]: {
-      marginTop: "40px",
-      marginBottom: "0px"
+      marginTop: "40px"
     }
   }
 }));

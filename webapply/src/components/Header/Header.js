@@ -32,7 +32,7 @@ const HeaderComponent = ({ className, isOtpVerified }) => {
     <>
       <header className={cx(classes.header, className)}>
         <Link
-          to={routes.accountsComparison + queryParams}
+          to={routes.quickapplyLanding + queryParams}
           className={cx({ [classes.disabled]: isOtpVerified })}
         >
           {(() => {

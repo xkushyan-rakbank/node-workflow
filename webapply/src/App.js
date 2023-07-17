@@ -75,7 +75,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
 
   useEffect(() => {
     if (history.location.pathname === routes.applicantInfo) {
-      history.push(routes.accountsComparison);
+      history.push(routes.quickapplyLanding);
     }
   }, []);
 
