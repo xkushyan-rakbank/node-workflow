@@ -4,6 +4,7 @@ export const ENABLE_INPUT_FIELD = "ENABLE_INPUT_FIELD";
 export const DISABLE_INPUT_FIELD = "DISABLE_INPUT_FIELD";
 export const DECISIONS_TRIGGERED = "DECISIONS_TRIGGERED";
 export const SET_LABEL = "SET_LABEL";
+export const GET_DECISIONS = "GET_DECISIONS";
 
 export const showInputField = payload => {
   return { type: SHOW_INPUT_FIELD, payload };
@@ -23,6 +24,10 @@ export const disableInputFeild = payload => {
 
 export const triggerDecisions = payload => {
   return { type: DECISIONS_TRIGGERED, payload };
+};
+
+export const setDecisions = payload => {
+  return { type: GET_DECISIONS, payload };
 };
 
 export const setLabel = (key, value) => {

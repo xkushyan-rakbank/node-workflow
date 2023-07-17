@@ -132,7 +132,7 @@ export function* prospectAutoSave() {
       const newProspect = yield select(getProspect);
       const screeningError = yield select(getScreeningError);
       const isScreeningError = screeningError.error;
-      const viewId = newProspect.applicationInfo.viewId;
+      const viewId = newProspect.viewId;
       const authToken = yield select(getAuthToken);
 
       const isAutoSaveEnabled =

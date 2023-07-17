@@ -7,7 +7,11 @@ import {
   GET_PROSPECT_INFO_REQUEST
 } from "../actions/retrieveApplicantInfo";
 import { setConfig, loadMetaData, updateProspect } from "../actions/appConfig";
-import { search as searchApi, prospect as prospectApi } from "../../api/apiClient";
+import {
+  search as searchApi,
+  prospect as prospectApi,
+  decisions as decisionsAPIClient
+} from "../../api/apiClient";
 import { log } from "../../utils/loggger";
 import {
   getAuthorizationHeader,
@@ -22,6 +26,8 @@ import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constan
 import { OUTSIDE_BASE_PATH } from "../../containers/FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { signatoryCompanyInfo, kycAnnexure } from "../../constants/prospectPatches";
 import { termsAndConditionsAccepted } from "../actions/termsAndConditions";
+import { getAppConfig } from "../selectors/appConfig";
+import { setDecisions } from "../actions/decisions";
 
 export function* retrieveApplicantInfoSaga({ payload }) {
   try {
@@ -67,12 +73,26 @@ const concatAddressInfo = (configAddress, existAddress) => {
   });
 };
 
+function removeNullUndefinedKeys(obj, initialProspect) {
+  let newObj = JSON.parse(JSON.stringify(obj));
+  for (let key in newObj) {
+    if (newObj[key] === null || newObj[key] === undefined) {
+      newObj[key] = initialProspect[key];
+    }
+  }
+  return newObj;
+}
+
 export function* getProspectIdInfo({ payload }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     const organizationInfoModel = yield select(getOrganizationInfoModel);
+    const initialConfig = yield select(getAppConfig);
+    const initialProspect = initialConfig.prospect;
     const response = yield call(prospectApi.get, payload.prospectId, headers);
-    const config = { prospect: response.data };
+    const config = { prospect: removeNullUndefinedKeys(response.data, initialProspect) };
+    const prospectId = response.data.generalInfo.prospectId;
+    // console.log(config);
     if (
       config.prospect?.organizationInfo?.addressInfo &&
       !config.prospect?.organizationInfo?.addressInfo[0]?.typeOfAddress
@@ -154,7 +174,10 @@ export function* getProspectIdInfo({ payload }) {
       }
       config.prospect?.signatoryInfo &&
         config.prospect.signatoryInfo.forEach((element, index) => {
-          if (element?.addressInfo[0].addressDetails[0].preferredAddress === "Yes") {
+          if (
+            element?.addressInfo &&
+            element?.addressInfo[0]?.addressDetails[0]?.preferredAddress === "Yes"
+          ) {
             prospect[`signatoryInfo[${index}].signoPreferredMailingAddrs`] = true;
           } else if (
             element?.addressInfo[1] &&
@@ -247,6 +270,10 @@ export function* getProspectIdInfo({ payload }) {
         }
       }
     }
+
+    const updatedHeaders = yield select(getAuthorizationHeader);
+    const decisionValue = yield call(decisionsAPIClient.get, prospectId, updatedHeaders);
+    yield put(setDecisions(decisionValue));
 
     yield put(getProspectInfoSuccess(config.prospect));
   } catch (error) {

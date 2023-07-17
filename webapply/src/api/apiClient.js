@@ -148,7 +148,18 @@ export const decisions = {
       method: "POST",
       ...headers,
       data
-    })
+    }),
+  get: (prospectId, headers) =>
+    httpClient
+      .request({
+        url: buildURI("prospectDecisions", prospectId),
+        method: "GET",
+        ...headers
+      })
+      .then(response => {
+        console.log(response);
+        return response;
+      })
 };
 
 export const createKYCTransaction = {
