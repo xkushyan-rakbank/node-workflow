@@ -104,8 +104,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between",
-      height: "95vh"
+      justifyContent: "space-between"
     }
   },
   infoContainer: {
