@@ -12,6 +12,9 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   sectionLabel: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
     fontWeight: 400,
     fontSize: "16px",
     lineHeight: "22px",
@@ -81,6 +84,9 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   packageList: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
     padding: "40px 24px",
     borderRadius: "10px",
     background: "#F7F8F9"
@@ -183,5 +189,11 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: "30px",
     marginTop: "24px",
     marginBottom: "0px"
+  },
+  infoIcon: {
+    width: "20px",
+    height: "20px",
+    color: "#757575",
+    fontSize: "1.25rem"
   }
 }));

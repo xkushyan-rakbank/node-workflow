@@ -29,11 +29,7 @@ const InlineRadioGroupBase = ({
   const isError = errorMessage && getIn(touched, field.name);
   const handleChange = event =>
     onChange ? onChange(event) : setFieldValue(field.name, JSON.parse(event.target.value));
-  const disabledRadioButtonByDefault = [
-    "Any one of us can sign",
-    "All of us must sign",
-    "Other(please specify)"
-  ];
+  const disabledRadioButtonByDefault = ["Any of ours", "All of ours", "Other (please specify)"];
 
   return (
     <FormControl

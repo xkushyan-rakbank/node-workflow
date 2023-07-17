@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import cx from "classnames";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { accountNames, formStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
@@ -30,7 +30,7 @@ import {
 } from "../../constants/options";
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicePackage } from "./components/SelectServicePackage";
-import { getAccountInfo, getApplicantEditedFullName } from "../../store/selectors/appConfig";
+import { getAccountInfo } from "../../store/selectors/appConfig";
 import { getRequiredMessage } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
 import { NAME_REGEX } from "../../utils/validation";
@@ -40,13 +40,13 @@ import {
   getIsIslamicBanking,
   getOrganizationInfo
 } from "../../store/selectors/appConfig";
+import { ContexualHelp } from "../../components/Notifications";
 
 export const AccountServices = () => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   const dispatch = useDispatch();
   const classes = useStyles();
-  const signatoryName = useSelector(getApplicantEditedFullName);
 
   const { licenseIssuingAuthority } = useSelector(getOrganizationInfo);
   const {
@@ -74,7 +74,7 @@ export const AccountServices = () => {
 
   const labelTextForPreferPaper = (
     <p style={{ margin: "0px" }}>
-      I prefer paper <span style={{ fontSize: "12px" }}>(monthly charges apply)</span>
+      I prefer paper <span style={{ fontSize: "12px" }}>(monthly charge of AED [xx])</span>
     </p>
   );
 
@@ -131,7 +131,7 @@ export const AccountServices = () => {
     receiveInterest: "",
     signingPreferences: "singly",
     chequeBookApplied: "",
-    accountwithoutChequebook: "",
+    accountwithoutChequebook: "true",
     debitCardApplied: true,
     statementsVia,
     preferredLanguage: "",
@@ -166,8 +166,8 @@ export const AccountServices = () => {
     <div className={classes.container}>
       <div className={classes.section}>
         <SectionTitleWithInfo
-          title={"Finally, let's customise your account"}
-          info="Go ahead and select your preferences, from debit cards to extra services"
+          title={"Now for the finishing touches"}
+          info="Set up your account preferences, from packages to communications."
           smallInfo
         />
         <Formik
@@ -195,9 +195,11 @@ export const AccountServices = () => {
 
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Preferences of product & services"}
+                    title={"Choose how you want your account set up"}
                     id={"productAndServices"}
-                    subTitle={"Lorem ipsum dolor sit amet."}
+                    subTitle={
+                      "Check your account’s currency and select the branch that’s most convenient for you."
+                    }
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
@@ -246,6 +248,16 @@ export const AccountServices = () => {
                         {isIslamic
                           ? "Do you want to earn profit on your account?"
                           : "Do you want to earn interest on this account?"}
+                        <ContexualHelp
+                          title={
+                            "Get the most out of your money. Just maintain\n the minimum account balance to unlock\n competitive interest rates."
+                          }
+                          placement="right"
+                          isDisableHoverListener={false}
+                          classes={classes.infoIcon}
+                        >
+                          <ErrorOutlineIcon className={classes.infoIcon} />
+                        </ContexualHelp>
                       </label>
                       <Field
                         typeRadio
@@ -263,9 +275,9 @@ export const AccountServices = () => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Preferences of authorizations"}
+                    title={"Specify how you want to use your account"}
                     id={"authorizations"}
-                    subTitle={"Lorem ipsum dolor sit amet."}
+                    subTitle={"Customise your account by sharing your preferences for features and services."}
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
@@ -274,7 +286,9 @@ export const AccountServices = () => {
                     }}
                   >
                     <div className={classes.questionareWrapper}>
-                      <label className={classes.sectionLabel}>Signing preferences</label>
+                      <label className={classes.sectionLabel}>
+                        When signing for the account, whose signature is needed?
+                      </label>
                       <Field
                         typeRadio
                         options={SinglyOptionList}
@@ -288,9 +302,18 @@ export const AccountServices = () => {
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
-                      <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
-                        Do you want a chequebook for your company?
-                        <span>Chequebook availability is subject to successful credit checks</span>
+                      <label className={classes.sectionLabel}>
+                        Would you like a company chequebook?
+                        <ContexualHelp
+                          title={
+                            "Chequebook availability is subject to\n successful credit checks."
+                          }
+                          placement="right"
+                          isDisableHoverListener={false}
+                          classes={classes.infoIcon}
+                        >
+                          <ErrorOutlineIcon className={classes.infoIcon} />
+                        </ContexualHelp>
                       </label>
                       <Field
                         typeRadio
@@ -304,7 +327,7 @@ export const AccountServices = () => {
                         radioColor="primary"
                       />
                     </div>
-                    <div className={classes.questionareWrapper}>
+                    <div className={classes.questionareWrapper} style={{ display: "none" }}>
                       <label className={classes.sectionLabel}>
                         Would you still like to open an account if you don't qualify for a
                         chequebook?
@@ -322,13 +345,18 @@ export const AccountServices = () => {
                       />
                     </div>
                     <div className={classes.questionareWrapper}>
-                      <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
-                        Would you like to apply for a business debit card for {signatoryName}?
-                        <span>
-                          You can get a card for yourself and/or other people in your company.
-                          Business debit cards can only be issued for eligible AED accounts and will
-                          be sent by courier to your designated mailing address
-                        </span>
+                      <label className={classes.sectionLabel}>
+                        Would you like to apply for a business debit card?
+                        <ContexualHelp
+                          title={
+                            "You can get a card for yourself and/or\n other people in your company. Business\n debit cards can only be issued for\n eligible AED accounts and will be sent\n by courier to your designated mailing\n address."
+                          }
+                          placement="right"
+                          isDisableHoverListener={false}
+                          classes={classes.infoIcon}
+                        >
+                          <ErrorOutlineIcon className={classes.infoIcon} />
+                        </ContexualHelp>
                       </label>
                       <Field
                         typeRadio
@@ -358,10 +386,8 @@ export const AccountServices = () => {
                       )}
                     </div>
                     <div className={classes.questionareWrapper}>
-                      <label className={cx(classes.sectionLabel, classes.sectionLabelWithInfo)}>
-                        Please help us save the environment by recieving your statements through
-                        e-mail
-                        <span>Help us save the environment going paperless</span>
+                      <label className={classes.sectionLabel}>
+                        Would you like to go paperless and help save the environment?
                       </label>
                       <Field
                         typeRadio
@@ -382,9 +408,11 @@ export const AccountServices = () => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Preferences of communication"}
+                    title={"Manage how you want to be contacted"}
                     id={"communication"}
-                    subTitle={"Lorem ipsum dolor sit amet."}
+                    subTitle={
+                      "Stay connected with RAKBANK and get access to personalised updates and offers. "
+                    }
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
@@ -393,7 +421,7 @@ export const AccountServices = () => {
                     }}
                   >
                     <div className={classes.questionareWrapper}>
-                      <label className={classes.sectionLabel}>Select your preferred language</label>
+                      <label className={classes.sectionLabel}>Which language do you prefer?</label>
                       <Field
                         typeRadio
                         options={PreferredLanguageOptions}
@@ -424,8 +452,8 @@ export const AccountServices = () => {
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        Would you like to be the first to hear about the latest offers (including
-                        from RAKBANK’s authorised third parties)?
+                        Would you like to hear about the latest offers from RAKBANK and authorised
+                        third parties?
                       </label>
                       <Field
                         typeRadio
@@ -458,8 +486,7 @@ export const AccountServices = () => {
                     )}
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        Can we contact you for surveys or feedback, either directly or through a
-                        third party?
+                        Would you be open to participating in surveys and feedback?
                       </label>
                       <Field
                         typeRadio

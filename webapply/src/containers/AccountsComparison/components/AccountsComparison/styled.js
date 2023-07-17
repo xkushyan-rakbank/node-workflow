@@ -232,20 +232,21 @@ export const useStyles = makeStyles(theme => ({
     left: "65%",
     transform: "translate(-55%,-65%)",
     "& h2": {
-      fontSize: "0.017rem",
+      fontSize: "1.75rem",
       fontWeight: 700,
       lineHeight: "111px",
       color: "#FFFFFF",
       margin: 0,
-      letterSpacing: " -5.5px",
       width: "708px",
-      [theme.breakpoints.between("md", "lg")]: {
+      [theme.breakpoints.between("sm", "lg")]: {
         fontSize: "6.8rem",
-        lineHeight: "100px"
+        lineHeight: "100px",
+        letterSpacing: " -5.5px"
       },
       [theme.breakpoints.up("lg")]: {
         fontSize: "6.8rem",
-        lineHeight: "111px"
+        lineHeight: "111px",
+        letterSpacing: " -5.5px"
       }
     },
     "& p": {

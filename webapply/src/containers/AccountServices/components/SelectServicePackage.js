@@ -29,7 +29,7 @@ export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }
     <div className={classes.packageSelectionWrapper}>
       <div className={classes.packageSelectionTitle}>
         <h3>Select your package</h3>
-        <p>Lorem ipsum dolor sit amet.</p>
+        <p>Simplify your business banking with a package that offers convenience and perks.</p>
       </div>
       <div className={classes.packageListWrapper}>
         <div
@@ -46,7 +46,7 @@ export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }
             <li>
               <Check className={classes.serviceListIcon} />
               <div>
-                All-in-one basic business solution:
+                All-in-one basic business solution with:
                 <ul className={classes.serviceSubList}>
                   <li>Connected banking</li>
                   <li>Automated accounting</li>
@@ -88,7 +88,7 @@ export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }
             <li>
               <Check className={classes.serviceListIcon} />
               <div>
-                All-in-one advanced business solution:
+                All-in-one advanced business solution with:
                 <ul className={classes.serviceSubList}>
                   <li>Connected banking</li>
                   <li>Automated accounting</li>

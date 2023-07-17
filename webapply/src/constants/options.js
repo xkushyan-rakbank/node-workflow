@@ -140,40 +140,40 @@ export const SinglyOptionList = [
     code: "Singly",
     key: "Singly",
     value: "singly",
-    label: "Singly"
+    label: "Just mine"
   },
   {
     code: "Any one of us can sign",
     key: "Any one of us can sign",
     value: "Any one of us can sign",
-    label: "Any one of us can sign"
+    label: "Any of ours"
   },
   {
     code: "Jointly",
     key: "JointlyAll",
     value: "jointlyAll",
-    label: "All of us must sign"
+    label: "All of ours"
   },
   {
     code: "Jointly",
     key: "JointlyOther",
     value: "jointlyOther",
-    label: "Other(please specify)"
+    label: "Other (please specify)"
   }
 ];
 
 export const PreferredLanguageOptions = [
   {
-    code: "Arabic",
-    key: "Arabic",
-    value: "AR",
-    label: "Arabic"
-  },
-  {
     code: "English",
     key: "English",
     value: "EN",
     label: "English"
+  },
+  {
+    code: "Arabic",
+    key: "Arabic",
+    value: "AR",
+    label: "Arabic"
   }
 ];
 
