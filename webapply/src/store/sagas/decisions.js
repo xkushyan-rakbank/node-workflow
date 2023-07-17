@@ -47,8 +47,21 @@ function* processDecisionOutput(decision, changedFieldValues, prospect) {
   }
 }
 
+export const sortRules = arr => {
+  arr &&
+    arr.sort(function(a, b) {
+      let timeStampA = new Date(a.timestamp);
+      let timeStampB = new Date(b.timestamp);
+      if (timeStampA < timeStampB) return -1;
+      if (timeStampA > timeStampB) return 1;
+      return 0;
+    });
+  return arr;
+};
+
 export function* setDecisions(response, onValuesChanged = null) {
   let { decision_output: rulesOutput } = response;
+  sortRules(rulesOutput);
   const prospect = yield select(getProspect);
 
   const changedFieldValues = {};
