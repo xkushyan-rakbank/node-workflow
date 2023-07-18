@@ -11,6 +11,13 @@ const useStyles = makeStyles({
     alignItems: "center",
     color: "#373737",
     marginBottom: "10px"
+  },
+  divider: {
+    width: "4px",
+    height: "16px",
+    borderRadius: "2px",
+    backgroundColor: "#373737",
+    marginRight: "11px"
   }
 });
 
@@ -25,6 +32,7 @@ export const SectionTitle = ({ title, subTitle, scrollIntoView = false, ...props
   return (
     <>
       <div ref={sectionTitleRef} className={classes.wrapper}>
+        {scrollIntoView && <div className={classes.divider} />}
         {title}
       </div>
       {!!subTitle && <InfoTitle title={subTitle} />}

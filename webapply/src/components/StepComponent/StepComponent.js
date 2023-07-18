@@ -21,7 +21,12 @@ export const StepComponent = ({
   const renderTitle = () => {
     if (isActiveStep) {
       return (
-        <SectionTitle title={title} subTitle={subTitle} classes={{ wrapper: classes.title }} />
+        <SectionTitle
+          title={title}
+          subTitle={subTitle}
+          classes={{ wrapper: classes.title }}
+          scrollIntoView={true}
+        />
       );
     }
     return isFilled ? (
