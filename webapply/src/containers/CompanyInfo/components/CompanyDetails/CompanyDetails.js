@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
-import {
-  MAX_COMPANY_FULL_NAME_LENGTH,
-  MAX_COMPANY_SHORT_NAME_LENGTH,
-  REGEX_LLC_PATTERN
-} from "../../constants";
+import { MAX_COMPANY_FULL_NAME_LENGTH, REGEX_LLC_PATTERN } from "../../constants";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { triggerDecisions } from "../../../../store/actions/decisions";
 import { getApplicantInfo } from "../../../../store/selectors/appConfig";
@@ -72,16 +68,6 @@ export const CompanyDetails = ({ setFieldValue }) => {
         InputProps={{
           inputProps: { maxLength: MAX_COMPANY_FULL_NAME_LENGTH, tabIndex: 0 },
           onBlur: handleBlur
-        }}
-      />
-      <Field
-        name="shortName"
-        label="Shortened company name"
-        path="prospect.organizationInfo.shortName"
-        fieldDescription="To keep things simple, we'll use this shortened name for the account and chequebook.                     "
-        component={Input}
-        InputProps={{
-          inputProps: { maxLength: MAX_COMPANY_SHORT_NAME_LENGTH, tabIndex: 0 }
         }}
       />
       <Field

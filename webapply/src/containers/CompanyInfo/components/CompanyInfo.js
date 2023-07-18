@@ -23,8 +23,7 @@ import {
 } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
-import { checkIsTrimmed } from "../../../utils/validation";
-import { MAX_COMPANY_FULL_NAME_LENGTH, MAX_COMPANY_SHORT_NAME_LENGTH } from "../constants";
+import { MAX_COMPANY_FULL_NAME_LENGTH } from "../constants";
 import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uploadDocuments";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
@@ -101,11 +100,6 @@ export const CompanyInfo = ({
       .required(getRequiredMessage("Company name"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
-    shortName: Yup.string()
-      .required(getRequiredMessage("Company short name"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_COMPANY_SHORT_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .test("space validation", getInvalidMessage("Company short name"), checkIsTrimmed),
     companyCategory: Yup.string().required(getRequiredMessage("Company category")),
     industries: Yup.array().of(
       Yup.object().shape({
