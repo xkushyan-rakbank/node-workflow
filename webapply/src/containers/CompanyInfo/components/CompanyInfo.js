@@ -91,8 +91,9 @@ export const CompanyInfo = ({
             ...item,
             id: uniqueId()
           })),
-    "prospect.organizationInfo.industryMultiSelect.industry": industry[0] || "",
-    "prospect.organizationInfo.industryMultiSelect.subCategory": subCategory[0] || ""
+    "prospect.organizationInfo.industryMultiSelect.industry": (industry && industry[0]) || "",
+    "prospect.organizationInfo.industryMultiSelect.subCategory":
+      (subCategory && subCategory[0]) || ""
   };
 
   const companyInfoSchema = {
