@@ -180,7 +180,7 @@ export const FaceRecognition = ({
         <div className={classes.contentContainer}>
           <FaceScanIcon height="44" width="40" alt="faceRecognitionIcon" />
           <div className={classes.contentWrapper}>
-            <div className={classes.content}>Face ID</div>
+            <div className={classes.content}>Face verification</div>
             <div className={classes.subcontent}>{helperText}</div>
           </div>
         </div>
@@ -202,9 +202,9 @@ export const FaceRecognition = ({
         )}
       </div>
       <p className={classes.disclaimerInfo}>
-        {isMobile
-          ? "Please note: By tapping on the start button, you give us permission to retrieve your data and verify your face against your ID documents."
-          : "Please note: By selecting Start, you give us permission to retrieve your data and verify your face against your ID documents."}
+        {`Please note: ${
+          isMobile ? "By tapping on the start button" : "By selecting Start"
+        } , you give us permission to retrieve your data for facial recoginition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority, and we strictly adhere to applicable regulations and security measures`}
       </p>
       {identityValidation && (
         <div className={classes.uploadModalErrorWrapper}>
