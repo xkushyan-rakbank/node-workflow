@@ -247,7 +247,7 @@ jobs:
           collectBuildInfo: true
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to replica'
-        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/replica'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/bbg2.0/replica'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
@@ -277,7 +277,7 @@ jobs:
           collectBuildInfo: true
       - task: JFrog.jfrog-artifactory-vsts-extension.artifactory-generic-upload.ArtifactoryGenericUpload@1
         displayName: 'Artifactory Generic Upload to PROD'
-        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+        condition: and(succeeded(),eq(variables['Build.SourceBranch'], 'refs/heads/bbg2.0/master'))
         inputs:
           artifactoryService: 'Jfrog'
           fileSpec: |
