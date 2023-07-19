@@ -193,7 +193,6 @@ export const ApplicantInfoComponent = ({
               <InputGroup>
                 <LinkedField
                   name="countryCode"
-                  disabled
                   linkedFieldName="mobileNo"
                   path="prospect.applicantInfo.countryCode"
                   linkedPath="prospect.applicantInfo.mobileNo"
