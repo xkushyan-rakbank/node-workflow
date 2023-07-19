@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import {
@@ -23,6 +23,8 @@ import {
 import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
+import { getDocuments } from "../../../../../store/selectors/appConfig";
+import { useFindDocument } from "../../../../../utils/useFindDocument";
 
 export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
@@ -35,6 +37,12 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
       setIsVirtualAddress(true);
     }
   };
+  const documents = useSelector(getDocuments)?.companyAddressProof?.documents ?? null;
+
+  const documentKeyToCheck =
+    "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof";
+
+  const addressProof = useFindDocument(documents, documentKeyToCheck);
 
   const initialValues = {
     typeOfAddress: "virtual",
@@ -43,7 +51,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
     addressLine2: "",
     emirateCity: "",
     country: "AE",
-    addressProof: ""
+    addressProof
   };
 
   const mailingAddressSchema = Yup.object().shape({
@@ -103,7 +111,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
           docs: {
             "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof": file
           },
-          documentSection: "companyAddressProof",
+          documentSection: "companyAddressProof.documents",
           onSuccess: () => () => {},
           onFailure: () => () => {}
         })

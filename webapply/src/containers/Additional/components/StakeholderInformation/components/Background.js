@@ -12,10 +12,11 @@ import { Upload } from "../../../../../components/Upload";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 
 import { useStyles } from "../../styled";
-import { getDatalist, getProspect } from "../../../../../store/selectors/appConfig";
+import { getDatalist, getDocuments, getProspect } from "../../../../../store/selectors/appConfig";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { NAME_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
+import { useFindDocument } from "../../../../../utils/useFindDocument";
 
 export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
@@ -28,13 +29,22 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.backgroundDetails";
 
+  const documents =
+    useSelector(getDocuments)?.stakeholdersDocuments?.index_stakeholderName?.personalBackground
+      ?.documents ?? null;
+
+  const documentKeyToCheck =
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.backgroundDetails.cv";
+
+  const cv = useFindDocument(documents, documentKeyToCheck);
+
   const initialValues = {
     highestEducationAttained: "",
     employmentStatus: employmentType?.filter(item => item.code === "Self-employed")[0]?.value,
     editedMothersMaidenName: signatoryInfo[0]?.mothersMaidenName || "",
     linkedInURL: "",
     backgroundInfo: "",
-    cv: "",
+    cv,
     common: ""
   };
 
@@ -76,7 +86,8 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
           docs: {
             "prospect.prospectDocuments.stakeholderAdditionalInfo.backgroundDetails.cv": file
           },
-          documentSection: "stakeholdersDocuments.index_stakeholderName.personalBackground",
+          documentSection:
+            "stakeholdersDocuments.index_stakeholderName.personalBackground.documents",
           onSuccess: () => {
             let fileStore = new File([file], file.name, { type: file.type });
             fileStore.preview = URL.createObjectURL(fileStore);

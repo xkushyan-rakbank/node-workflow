@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PatternFormat from "react-number-format";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
@@ -14,6 +14,8 @@ import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants";
+import { getDocuments } from "../../../../../store/selectors/appConfig";
+import { useFindDocument } from "../../../../../utils/useFindDocument";
 
 const TextMask = ({ inputRef, ...rest }) => (
   <PatternFormat
@@ -41,13 +43,27 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails";
   const dispatch = useDispatch();
+
+  const documents =
+    useSelector(getDocuments)?.stakeholdersDocuments?.index_stakeholderName?.personalBackground
+      ?.documents ?? null;
+
+  const tradeLicenseKeyToCheck =
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense";
+
+  const proofOfIncomeKeyToCheck =
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.proofOfIncome";
+
+  const tradeLicense = useFindDocument(documents, tradeLicenseKeyToCheck);
+  const proofOfIncome = useFindDocument(documents, proofOfIncomeKeyToCheck);
+
   const initialValues = {
     sourceOfIncome: [""],
     IBANType: "",
     IBAN: "",
     companyNameforSOF: "",
-    proofOfIncome: "",
-    tradeLicense: ""
+    proofOfIncome,
+    tradeLicense
   };
 
   const sourceOfIncomeValidationSchema = Yup.object().shape({
@@ -107,7 +123,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
           docs: {
             [path]: file
           },
-          documentSection: "stakeholdersDocuments.index_stakeholderName",
+          documentSection: "stakeholdersDocuments.index_stakeholderName.documents",
           onSuccess: () => {
             let fileStore = new File([file], file.name, { type: file.type });
             fileStore.preview = URL.createObjectURL(fileStore);
