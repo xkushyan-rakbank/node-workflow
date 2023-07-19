@@ -5,13 +5,16 @@ import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../c
 import { MAX_COMPANY_FULL_NAME_LENGTH, REGEX_LLC_PATTERN } from "../../constants";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { triggerDecisions } from "../../../../store/actions/decisions";
-import { getApplicantInfo } from "../../../../store/selectors/appConfig";
+import { getApplicantInfo, getApplicationInfo } from "../../../../store/selectors/appConfig";
+import { ConfirmDialog } from "../../../../components/Modals";
 
-export const CompanyDetails = ({ setFieldValue }) => {
+export const CompanyDetails = ({ setFieldValue, values }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState(false);
+  const [loadedPersona, setLoadedPersona] = useState(null);
   const dispatch = useDispatch();
   const applicantInfo = useSelector(getApplicantInfo);
-
-  const [loadedPersona, setLoadedPersona] = useState(null);
+  const applicantionInfo = useSelector(getApplicationInfo);
 
   useEffect(() => {
     setLoadedPersona(applicantInfo.persona);
@@ -56,6 +59,32 @@ export const CompanyDetails = ({ setFieldValue }) => {
     }
   }
 
+  const onChange = (value, renderValue) => {
+    if (value === "3_OTHER") {
+      setIsOpen(true);
+      setMessage(renderValue.displayText);
+    } else {
+      setFieldValue("companyCategory", value);
+    }
+  };
+
+  function redirectToExternalURL(externalURL) {
+    const data = {
+      islamicBanking: applicantionInfo.islamicBanking,
+      accountType: applicantionInfo.accountType
+    };
+
+    const params = new URLSearchParams();
+
+    for (const key in data) {
+      params.append(key, data[key]);
+    }
+
+    const encodedQuery = params.toString();
+    const url = `${externalURL}?${encodedQuery}`;
+    window.location.href = url;
+  }
+
   return (
     <>
       <Field
@@ -76,8 +105,21 @@ export const CompanyDetails = ({ setFieldValue }) => {
         path="prospect.organizationInfo.companyCategory"
         datalistId="companyCategory"
         isSearchable
+        onChange={onChange}
         component={SelectAutocomplete}
         tabIndex="0"
+      />
+
+      <ConfirmDialog
+        title={"Are you sure?"}
+        isOpen={isOpen}
+        handleConfirm={() =>
+          redirectToExternalURL(process.env.REACT_APP_BAU_URL + "/business/applicantinfo-redirect")
+        }
+        handleReject={() => {}}
+        handleClose={() => setIsOpen(false)}
+        // eslint-disable-next-line max-len
+        message={`Are you sure the company category is not ${message}? On Confirmation, the journey will be restarted. Do you want to continue?`}
       />
     </>
   );

@@ -43,15 +43,15 @@ const SelectAutocompleteBase = ({
   const isError = errorMessage && getIn(touched, field.name);
   const [hasFocus, setFocus] = useState(false);
 
-  const handleChange = selected => {
-    const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
-
-    return onChange(value);
-  };
-
   const renderValue = !multiple
     ? options.find(option => extractValue(option) === field.value)
     : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
+
+  const handleChange = selected => {
+    const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
+
+    return onChange(value, renderValue);
+  };
 
   return (
     <FormControl classes={{ root: classes.formControlRoot }} variant="filled">
