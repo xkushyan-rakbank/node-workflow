@@ -51,9 +51,11 @@ export const FormNavigationComponent = () => {
   );
   const activeStepIndex = (activeStep || {}).step;
 
-  const hideKeyboardOnExpansion = () => {
-    document.activeElement && document.activeElement.blur();
-  }
+  const hideKeyboardOnExpansion = (e) => {
+    if (!["textarea", "text"].includes(e.target.tagName)) {
+      document.activeElement && document.activeElement.blur();
+    }
+  };
 
   return (
     <div className={cx(classes.formNav, classes.formNavBg, { active: !isCollapsible, })} onClick={hideKeyboardOnExpansion}>
