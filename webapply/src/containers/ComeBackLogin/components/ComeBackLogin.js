@@ -92,6 +92,7 @@ export const ComeBackLoginComponent = ({
                     path="prospect.applicantInfo.countryCode"
                     linkedPath="prospect.applicantInfo.mobileNo"
                     required
+                    disabled
                     datalistId="countryCode"
                     extractLabel={item => item.displayText}
                     component={CustomSelect}
