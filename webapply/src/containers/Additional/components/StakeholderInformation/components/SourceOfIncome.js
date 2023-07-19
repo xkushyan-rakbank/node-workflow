@@ -39,7 +39,7 @@ export const IBANField = props => (
 export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const [isUploading, setIsUploading] = useState(false);
-  const basePath = "prospect.signatoryInfo[0]stakeholderAdditionalInfo.sourceOfIncomeDetails";
+  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails";
   const dispatch = useDispatch();
   const initialValues = {
     sourceOfIncome: [""],

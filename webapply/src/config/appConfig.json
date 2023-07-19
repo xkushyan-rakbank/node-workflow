@@ -210,6 +210,7 @@
         },
         "salutation": "MR.",
         "signatoryId": "",
+        "showSOF": true,
         "firstName": "",
         "middleName": "",
         "lastName": "",
@@ -423,7 +424,6 @@
     ],
     "channelServicesInfo": {
       "mobileInstructions": "",
-      "marketingSMS": true,
       "doNotDisturbHours": "",
       "weeklyBalanceNotification": "",
       "monthlyBalanceNotification": 0,

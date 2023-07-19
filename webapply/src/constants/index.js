@@ -504,7 +504,8 @@ export const VIEW_IDS = {
   SearchProspect: "/SearchProspect",
   SearchedAppInfo: "/SearchedAppInfo",
   ApplicationSubmitted: "/ApplicationSubmitted",
-  ReUploadDocuments: "/ReUploadDocuments"
+  ReUploadDocuments: "/ReUploadDocuments",
+  AccountInfo: "/AccountInfo"
 };
 
 export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo"];

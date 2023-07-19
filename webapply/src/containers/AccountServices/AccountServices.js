@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
-import { accountNames, formStepper } from "../../constants";
+import { accountNames, formStepper, NEXT } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -41,12 +41,17 @@ import {
   getOrganizationInfo
 } from "../../store/selectors/appConfig";
 import { ContexualHelp } from "../../components/Notifications";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { useViewId } from "../../utils/useViewId";
 
-export const AccountServices = () => {
+export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   const dispatch = useDispatch();
   const classes = useStyles();
+  useViewId(true);
+
+  const pushHistory = useTrackingHistory();
 
   const { licenseIssuingAuthority } = useSelector(getOrganizationInfo);
   const {
@@ -62,6 +67,12 @@ export const AccountServices = () => {
   const statementsVia = accountInfo.mailStatements;
 
   const accountEmirateCity = accountInfo.accountEmirateCity;
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(updateProspect({ "prospect.accountInfo.accountType": accountType }));
+  }, [accountType]);
 
   const labelTextForGoGreenOption = (
     <span style={{ display: "flex", alignItems: "center" }}>
@@ -151,8 +162,6 @@ export const AccountServices = () => {
         .min(MIN_DEBIT_CARD_NAME_LENGTH, "Minimum ${max} characters required")
         .matches(NAME_REGEX, "Please remove any special character from your name")
     }),
-    accountCurrency: Yup.string().required(getRequiredMessage("Account currency")),
-    accountEmirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),
     branchId: Yup.string().required(getRequiredMessage("Branch"))
   });
 
@@ -161,6 +170,16 @@ export const AccountServices = () => {
     const name = event.target.name;
     setFieldValue(name, value);
   };
+
+  const handleClickNextStep = useCallback(() => {
+    setIsLoading(true);
+    return sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.reviewAndSubmit, true);
+      },
+      () => setIsLoading(false)
+    );
+  }, [pushHistory, sendProspectToAPI]);
 
   return (
     <div className={classes.container}>
@@ -172,9 +191,10 @@ export const AccountServices = () => {
         />
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {}}
+          onSubmit={handleClickNextStep}
           validationSchema={accountInfoValidation}
           validateOnChange={true}
+          validateOnMount={true}
         >
           {({ values, setFieldValue, ...props }) => {
             const accountServiceChangeHandler = createAccountServiceRadioHandler({
@@ -185,13 +205,10 @@ export const AccountServices = () => {
               values,
               setFieldValue
             });
+            const isValidAccountInfoValidation = accountInfoValidation.isValidSync(values);
             return (
               <Form>
-                <SelectServicePackage
-                  setFormFieldValue={setFieldValue}
-                  isRakStarter={accountType === accountNames.starter}
-                  {...props}
-                />
+                <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
 
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
@@ -227,7 +244,7 @@ export const AccountServices = () => {
                     />
                     <Field
                       name="branchId"
-                      path={"prospect.accountInfo.branch"}
+                      path={"prospect.accountInfo.branchId"}
                       label="Branch"
                       placeholder="Branch"
                       datalistId="branchCity"
@@ -277,7 +294,9 @@ export const AccountServices = () => {
                   <Accordion
                     title={"Specify how you want to use your account"}
                     id={"authorizations"}
-                    subTitle={"Customise your account by sharing your preferences for features and services."}
+                    subTitle={
+                      "Customise your account by sharing your preferences for features and services."
+                    }
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
@@ -502,14 +521,19 @@ export const AccountServices = () => {
                     </div>
                   </Accordion>
                 </div>
+                <div className="linkContainer">
+                  <BackLink path={routes.additionalInfoComponent} />
+                  <NextStepButton
+                    label="Next"
+                    justify="flex-end"
+                    disabled={!isValidAccountInfoValidation}
+                    isDisplayLoader={isLoading}
+                  />
+                </div>
               </Form>
             );
           }}
         </Formik>
-      </div>
-      <div className="linkContainer">
-        <BackLink path={routes.additionalInfoComponent} />
-        <NextStepButton label="Next" justify="flex-end" disabled={false} />
       </div>
     </div>
   );

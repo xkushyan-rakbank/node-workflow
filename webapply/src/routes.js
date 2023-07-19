@@ -33,5 +33,6 @@ export default {
   // eslint-disable-next-line max-len
   additionalStakeholderInformation: `${smeBaseName}/StakeholdersAdditionalInfo`,
   additionalCompanyInformation: `${smeBaseName}/CompanyAdditionalInfo`,
-  accountServices: `${smeBaseName}/AccountServices`
+  accountServices: `${smeBaseName}/AccountInfo`,
+  reviewAndSubmit: `${smeBaseName}/ReviewAndSubmit`
 };

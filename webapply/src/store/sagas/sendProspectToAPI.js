@@ -145,6 +145,7 @@ export function* prospectAutoSave() {
           VIEW_IDS.ConsentInfo,
           VIEW_IDS.CompanyAdditionalInfo,
           VIEW_IDS.StakeholdersAdditionalInfo,
+          VIEW_IDS.AccountServices,
           VIEW_IDS.FinalQuestions,
           VIEW_IDS.UploadDocuments,
           VIEW_IDS.SelectServices
@@ -188,6 +189,9 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
       } else if (viewId === "/StakeholdersAdditionalInfo") {
         const { stakeholderAdditionalInfo } = prospect[key][0];
         nodePayload = [{ stakeholderAdditionalInfo }];
+      } else if (viewId === "/AccountInfo") {
+        const { debitCardInfo } = prospect[key][0];
+        nodePayload = [{ debitCardInfo }];
       } else {
         const { editedFullName } = prospect[key][0];
         nodePayload = [{ editedFullName }];

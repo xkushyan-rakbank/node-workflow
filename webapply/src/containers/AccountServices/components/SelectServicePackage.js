@@ -7,14 +7,11 @@ import { useStyles } from "../styled";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getRakValuePackage } from "../../../store/selectors/appConfig";
 
-export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }) => {
+export const SelectServicePackage = ({ setFormFieldValue }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const rakValuePackage = useSelector(getRakValuePackage);
 
-  const [selectedService, setSelectedService] = useState(
-    rakValuePackage ? rakValuePackage : isRakStarter ? "RAK value SME plus" : ""
-  );
+  const [selectedService, setSelectedService] = useState("RAK value SME plus");
 
   const selectedPackage = selectedPackage => {
     setSelectedService(selectedPackage);
@@ -76,9 +73,7 @@ export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }
           className={cx(classes.packageList, {
             [classes.selectedPackageList]: selectedService === "RAK value SME max"
           })}
-          onClick={() => {
-            !isRakStarter && selectedPackage("RAK value SME max");
-          }}
+          onClick={() => selectedPackage("RAK value SME max")}
         >
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Max</h2>
@@ -106,7 +101,6 @@ export const SelectServicePackage = ({ setFormFieldValue, isRakStarter = false }
             </li>
           </ul>
           <Button
-            disabled={isRakStarter}
             variant="outlined"
             className={cx(classes.selectBtn, {
               [classes.selectedPackageListBtn]: selectedService === "RAK value SME max"

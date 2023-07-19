@@ -22,6 +22,7 @@ import { SourceOfIncome } from "./components/SourceOfIncome";
 import { useStyles } from "../styled";
 import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
 import { getSignatories, isFieldTouched } from "../../../../store/selectors/appConfig";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -42,6 +43,12 @@ export const AdditionalStakeholderInformation = ({
   const { showSOF } = useSelector(getSignatories)[0];
 
   useEffect(() => {
+    !showSOF &&
+      dispatch(
+        updateProspect({
+          "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails": {}
+        })
+      );
     !addionalStakeholderInfoStatus && dispatch(updateStakeholderInfoStatus("inProgress"));
   }, []);
 
