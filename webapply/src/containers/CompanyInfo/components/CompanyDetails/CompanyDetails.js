@@ -5,8 +5,9 @@ import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../c
 import { MAX_COMPANY_FULL_NAME_LENGTH, REGEX_LLC_PATTERN } from "../../constants";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { triggerDecisions } from "../../../../store/actions/decisions";
-import { getApplicantInfo, getApplicationInfo } from "../../../../store/selectors/appConfig";
+import { getApplicantInfo } from "../../../../store/selectors/appConfig";
 import { ConfirmDialog } from "../../../../components/Modals";
+import useRedirectionUrl from "../../../../utils/useRedirectionUrl";
 
 export const CompanyDetails = ({ setFieldValue, values }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
   const [loadedPersona, setLoadedPersona] = useState(null);
   const dispatch = useDispatch();
   const applicantInfo = useSelector(getApplicantInfo);
-  const applicantionInfo = useSelector(getApplicationInfo);
+  const { redirectToExternalURL } = useRedirectionUrl();
 
   useEffect(() => {
     setLoadedPersona(applicantInfo.persona);
@@ -68,20 +69,8 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
     }
   };
 
-  function redirectToExternalURL(externalURL) {
-    const data = {
-      islamicBanking: applicantionInfo.islamicBanking,
-      accountType: applicantionInfo.accountType
-    };
-
-    const params = new URLSearchParams();
-
-    for (const key in data) {
-      params.append(key, data[key]);
-    }
-
-    const encodedQuery = params.toString();
-    const url = `${externalURL}?${encodedQuery}`;
+  function redirectToUrl(externalURL) {
+    const url = redirectToExternalURL(externalURL);
     window.location.href = url;
   }
 
@@ -114,7 +103,7 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
         title={"Are you sure?"}
         isOpen={isOpen}
         handleConfirm={() =>
-          redirectToExternalURL(process.env.REACT_APP_BAU_URL + "/business/applicantinfo-redirect")
+          redirectToUrl(process.env.REACT_APP_BAU_URL + "/business/applicantinfo-redirect")
         }
         handleReject={() => {}}
         handleClose={() => setIsOpen(false)}

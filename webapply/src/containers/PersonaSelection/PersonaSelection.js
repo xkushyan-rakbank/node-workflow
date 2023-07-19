@@ -8,10 +8,12 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useLayoutParams } from "../FormLayout";
 import PersonaSelectionComponent from "./components/PersonaSelectionComponent";
 import { Personas } from "../../constants";
+import useRedirectionUrl from "../../utils/useRedirectionUrl";
 
 export const PersonaSelection = ({ datalist }) => {
   const queryParams = useLocation().search;
   const pushHistory = useTrackingHistory();
+  const { redirectToExternalURL } = useRedirectionUrl();
 
   useFormNavigation([true, false]);
   useLayoutParams(false, false, true);
@@ -38,13 +40,10 @@ export const PersonaSelection = ({ datalist }) => {
     [pushHistory]
   );
 
-  const goToBau = url => {
-    if (queryParams) {
-      window.location.href = url + queryParams;
-    } else {
-      window.location.href = url;
-    }
-  };
+  function redirectToUrl(externalURL) {
+    const url = redirectToExternalURL(externalURL);
+    window.location.href = url;
+  }
 
   const onSelectPersona = ({ url, key }, type) => {
     dispatch(
@@ -53,7 +52,7 @@ export const PersonaSelection = ({ datalist }) => {
       })
     );
     if (type === "bau") {
-      goToBau(url);
+      redirectToUrl(process.env.REACT_APP_BAU_URL + "/business/applicantinfo-redirect");
     } else {
       goto(url);
     }
