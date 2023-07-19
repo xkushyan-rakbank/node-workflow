@@ -26,5 +26,6 @@ export default {
   //ro-assist-brd2-3
   currentAccount: `${smeBaseName}/accounts/current-account`,
   applicationRedirect: `${smeBaseName}/application-redirect`,
-  applicationComeBackRedirect: `${smeBaseName}/application-comeback-redirect`
+  applicationComeBackRedirect: `${smeBaseName}/application-comeback-redirect`,
+  applicantInfoRedirect: `${smeBaseName}/applicantinfo-redirect`
 };

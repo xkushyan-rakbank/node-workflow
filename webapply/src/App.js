@@ -50,6 +50,9 @@ const ApplicationRedirect = lazy(() => import("./containers/ApplicationRedirect"
 const ApplicationComeBackRedirect = lazy(() =>
   import("./containers/ApplicationRedirect/ApplicationComeBackRedirect")
 );
+const ApplicantInfoRedirect = lazy(() =>
+  import("./containers/ApplicationRedirect/ApplicantInfoRedirect")
+);
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
@@ -140,6 +143,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 path={routes.applicationComeBackRedirect}
                 component={ApplicationComeBackRedirect}
               />
+              <Route path={routes.applicantInfoRedirect} component={ApplicantInfoRedirect} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />
