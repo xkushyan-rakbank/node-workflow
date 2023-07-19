@@ -93,6 +93,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   }}
                   disabled={false}
                   className="testingClass"
+                  showEditIcon={true}
                 />
               </Grid>
               <Grid item xs={12}>

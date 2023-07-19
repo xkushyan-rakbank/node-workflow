@@ -1,6 +1,8 @@
 import React, { useState, memo } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import EditIcon from "@material-ui/icons/Edit";
 import { getIn } from "formik";
 import cx from "classnames";
 
@@ -32,6 +34,8 @@ const InputBase = ({
   lemniskCall = value => {},
   fieldDescription,
   showCounter = true,
+  showEditIcon = false,
+  iconColor = "grey",
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -54,6 +58,11 @@ const InputBase = ({
           disabled={disabled}
           error={!!isError}
           InputProps={{
+            endAdornment: showEditIcon ? (
+              <InputAdornment position="end">
+                <EditIcon style={{ color: iconColor }} />
+              </InputAdornment>
+            ) : null,
             ...InputProps,
             disableUnderline: true,
             classes: {
