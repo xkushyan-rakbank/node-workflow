@@ -203,8 +203,8 @@ export const FaceRecognition = ({
       </div>
       <p className={classes.disclaimerInfo}>
         {`Please note: ${
-          isMobile ? "By tapping on the start button" : "By selecting Start"
-        } , you give us permission to retrieve your data for facial recoginition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority, and we strictly adhere to applicable regulations and security measures`}
+          isMobile ? 'By tapping on the "Start" button' : 'By selecting "Start"'
+        }, you give us permission to retrieve your data for facial recognition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority and we strictly adhere to applicable regulations and security measures.`}
       </p>
       {identityValidation && (
         <div className={classes.uploadModalErrorWrapper}>
