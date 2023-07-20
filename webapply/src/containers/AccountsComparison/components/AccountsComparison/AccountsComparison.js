@@ -21,9 +21,18 @@ import routes, { smeBaseName } from "../../../../routes";
 import { ExpandMoreButton } from "../../../QuickapplyLanding/components/LandingVideoPlayer/ExpandMoreButton";
 import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 import { GA_EVENTS } from "../../../../utils/ga";
+import { useBlobColor } from "../../../../utils/useBlobColor/useBlobColor";
+import {
+  feesChargesDataMobile,
+  featuresDataMobile,
+  perksDataMobile,
+} from "../../AccountsMobileData";
 
 export const AccountsComparisonComponent = ({ handleSetAccountType, servicePricingGuideUrl }) => {
-  const classes = useStyles();
+  const blobColor = useBlobColor();
+  const classes = useStyles({
+    color: blobColor,
+  });
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -31,6 +40,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   const [isAccountTypeSticky, setIsAccountTypeSticky] = useState(false);
 
   const [isFullyScrolled, setIsFullyScrolled] = useState(false);
+  const [featureType, setFeatureType] = useState("");
 
   const accountTypeRef = useRef(null);
 
@@ -76,8 +86,12 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     window.addEventListener("scroll", checkIfScrolled);
   });
 
-  const handleRedirection = path => {
+  const handleRedirection = (path) => {
     pushHistory(path);
+  };
+
+  const handleAccountFeatureType = (type) => {
+    setFeatureType(type);
   };
 
   const queryParams = useLocation().search;
@@ -88,7 +102,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN));
   };
 
-  const redirectInToFinance = url => {
+  const redirectInToFinance = (url) => {
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_FINANCE_CHOSEN));
     if (queryParams) {
       window.location.href = url + queryParams;
@@ -105,9 +119,10 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         </Helmet>
       </HelmetProvider>
       <div
-        className={classes.bgContainer}
+        className={cx(classes.bgContainer)}
         style={{ backgroundImage: `url(${landingVideo.poster})` }}
       >
+        <div className={classes.blobMobile}></div>
         <video
           muted
           id="video-background"
@@ -170,7 +185,20 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             src={accountsInfo.landingPage.image}
           />
           <p>{accountsInfo.landingPage.subtitle}</p>
+          <div className={classes.navOutline}>
+            <Button
+              variant="outlined"
+              className={classes.navButton}
+              onClick={() => handleRedirection(routes.comeBackLogin)}
+            >
+              Track my Application
+            </Button>
+            <Button variant="outlined" className={classes.navButton}>
+              Switch to RAKIslamic
+            </Button>
+          </div>
         </div>
+
         <div className={classes.accountInfoMain}>
           <h2>Let’s get down to business</h2>
           <p>How can we help you?</p>
@@ -204,11 +232,27 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <AccountCard
             handleSetAccountType={handleSetAccountType}
             accountSticky={isAccountTypeSticky}
+            handleFeatureType={handleAccountFeatureType}
           />
         </div>
-        <AccountFeatureListing title={"Features"} featureData={featuresDataRows} />
-        <AccountFeatureListing title={"Perks"} featureData={perksDataRows} />
-        <AccountFeatureListing title={"Fees & charges"} featureData={feesChargesDataRows} />
+        <AccountFeatureListing
+          title={"Features"}
+          featureData={featuresDataRows}
+          featureDataMobile={featuresDataMobile(featureType)}
+          featureType={featureType}
+        />
+        <AccountFeatureListing
+          title={"Perks"}
+          featureData={perksDataRows}
+          featureDataMobile={perksDataMobile(featureType)}
+          featureType={featureType}
+        />
+        <AccountFeatureListing
+          title={"Fees & charges"}
+          featureData={feesChargesDataRows}
+          featureDataMobile={feesChargesDataMobile(featureType)}
+          featureType={featureType}
+        />
         <div className={classes.featureInfo}>
           <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>
           <p>

@@ -4,8 +4,15 @@ import { useLocation } from "react-router-dom";
 import { VerticalPaginationContext } from "../../components/VerticalPagination";
 import { accountTypes } from "./components/TableCompare/constants";
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
-import { applicationOverviewRoutesMap, CONVENTIONAL, DEFAULT_REFERRAL_NAME } from "../../constants";
+import {
+  accountNames,
+  applicationOverviewRoutesMap,
+  CONVENTIONAL,
+  DEFAULT_REFERRAL_NAME
+} from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { ConfirmDialog } from "../../components/Modals";
+import { RAK_STARTER_CONFIRM_MESSAGE } from "./constants";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -31,13 +38,14 @@ export const AccountsComparisonContainer = ({
   }, [query, setRoCode, setProspectLead]);
 
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
+  const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
 
   const goto = useCallback(
-    url => {
+    accountType => {
       if (queryParams) {
-        pushHistory(url + queryParams);
+        pushHistory(applicationOverviewRoutesMap[accountType][CONVENTIONAL] + queryParams);
       } else {
-        pushHistory(url);
+        pushHistory(applicationOverviewRoutesMap[accountType][CONVENTIONAL]);
       }
     },
     [pushHistory]
@@ -45,17 +53,43 @@ export const AccountsComparisonContainer = ({
 
   const handleSetAccountType = useCallback(
     accountType => {
+      if (accountType === accountNames.starter) {
+        setIsDisplayConfirmDialog(true);
+      } else {
+        goto(accountType);
+      }
       setSelectedAccount(accountType);
-      goto(applicationOverviewRoutesMap[accountType][CONVENTIONAL]);
     },
     [setSelectedAccount]
   );
 
+  const closeDialogHandler = useCallback(() => {
+    setIsDisplayConfirmDialog(false);
+  }, [setIsDisplayConfirmDialog]);
+
+  const confirmHandler = useCallback(() => {
+    closeDialogHandler();
+    goto(accountNames.starter);
+  }, [closeDialogHandler, goto]);
+
   return (
-    <AccountsComparisonComponent
-      handleSetAccountType={handleSetAccountType}
-      selectedAccount={selectedAccount}
-      servicePricingGuideUrl={servicePricingGuideUrl}
-    />
+    <>
+      <AccountsComparisonComponent
+        handleSetAccountType={handleSetAccountType}
+        selectedAccount={selectedAccount}
+        servicePricingGuideUrl={servicePricingGuideUrl}
+      />
+      <ConfirmDialog
+        title={null}
+        isOpen={isDisplayConfirmDialog}
+        handleConfirm={confirmHandler}
+        handleReject={closeDialogHandler}
+        handleClose={closeDialogHandler}
+        message={RAK_STARTER_CONFIRM_MESSAGE}
+        cancelLabel="No"
+        confirmLabel="Yes"
+        divider={false}
+      />
+    </>
   );
 };
