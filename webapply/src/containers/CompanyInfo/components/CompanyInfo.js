@@ -159,21 +159,6 @@ export const CompanyInfo = ({
     handleClickNextStep();
   }
 
-  const handleClick = props => {
-    showLoading(true);
-    dispatch(
-      uploadDocuments({
-        docs: {
-          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": props.tradeLicenseOrCOI,
-          "prospect.prospectDocuments.companyDocument.moa": props.moa
-        },
-        documentSection: "companyDocuments",
-        onSuccess: () => onUploadSuccess(props),
-        onFailure: () => showLoading(false)
-      })
-    );
-  };
-
   return (
     <>
       <SectionTitleWithInfo
@@ -185,7 +170,7 @@ export const CompanyInfo = ({
         initialValues={initialValues}
         validationSchema={conditionalSchema(companyInfoSchema)}
         validateOnChange={true}
-        onSubmit={handleClick}
+        onSubmit={onUploadSuccess}
       >
         {props => (
           <Form>
