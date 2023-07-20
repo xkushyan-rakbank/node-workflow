@@ -21,7 +21,7 @@ import {
 import { updateProspect } from "../actions/appConfig";
 import appConfig from "../../config/appConfig.json";
 
-function* processDecisionOutput(decision, changedFieldValues, prospect) {
+function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBack) {
   switch (decision.action_type) {
     case "SHOW_FIELD":
       return yield put(showInputField(decision.output_key));
@@ -37,7 +37,11 @@ function* processDecisionOutput(decision, changedFieldValues, prospect) {
       const storeAppConfig = yield select(getAppConfig);
       const prospectValue = get(storeAppConfig, decision.output_key);
       const defaultValue = get(appConfig, decision.output_key);
-      if (prospectValue === defaultValue) {
+      console.log(defaultValue, prospectValue, isComeBack, "test");
+      if (isComeBack && prospectValue === defaultValue) {
+        changedFieldValues[decision.output_key] = decision.output_value[0];
+      }
+      if (!isComeBack) {
         changedFieldValues[decision.output_key] = decision.output_value[0];
       }
       break;
@@ -59,7 +63,7 @@ export const sortRules = arr => {
   return arr;
 };
 
-export function* setDecisions(response, onValuesChanged = null) {
+export function* setDecisions(response, onValuesChanged = null, isComeBack = false) {
   let { decision_output: rulesOutput } = response;
   sortRules(rulesOutput);
   const prospect = yield select(getProspect);
@@ -70,7 +74,7 @@ export function* setDecisions(response, onValuesChanged = null) {
     const rule = rulesOutput[index];
     for (let j = 0; j < rule.decisions.length; j++) {
       const decision = rule.decisions[j];
-      yield processDecisionOutput(decision, changedFieldValues, prospect);
+      yield processDecisionOutput(decision, changedFieldValues, prospect, isComeBack);
     }
   }
   // if there are dependantFields to be changed then trigger callback
@@ -81,7 +85,7 @@ export function* setDecisions(response, onValuesChanged = null) {
 }
 
 export function* getDecisions({ payload }) {
-  yield call(setDecisions, payload.data);
+  yield call(setDecisions, payload.data, null, true);
 }
 
 export function* makeDecisions({ payload }) {
