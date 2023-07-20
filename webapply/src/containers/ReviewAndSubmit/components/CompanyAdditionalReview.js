@@ -101,6 +101,10 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
         >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
+              <label>Is your company dealing in Designated Business Categories?</label>
+              <p>{fieldValues.dnfbpField}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>Is your company a US entity?</label>
               <p>{fieldValues.isCompanyUSEntity}</p>
             </div>
@@ -111,15 +115,12 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           </div>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
-              <label>Country of tax residence:</label>
-              <p>United Arab Emirates</p>
+              <label>Is your company a financial institution?</label>
+              <p>{fieldValues.isFinancialInstitution}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>GIIN number:</label>
               <p>{fieldValues.globalintermediaryId ? fieldValues.globalintermediaryId : "N/A"}</p>
-            </div>
-            <div className={classes.infoLabelValue}>
-              <label>Reason for TIN not available:</label> <p>N/A</p>
             </div>
           </div>
         </InformationSection>

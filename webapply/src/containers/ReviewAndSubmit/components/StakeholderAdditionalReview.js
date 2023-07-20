@@ -91,6 +91,10 @@ export const StakeholderAdditionalReview = ({ fieldValues, addressFormat, trunca
               <p>{fieldValues.sourceOfIncome}</p>
             </div>
             <div className={classes.infoLabelValue}>
+              <label>CV:</label>
+              <p>{fieldValues.employmentType}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>Linkedin:</label>
               <p>{truncateString(fieldValues.linkedInURL, 40)}</p>
             </div>
@@ -101,9 +105,25 @@ export const StakeholderAdditionalReview = ({ fieldValues, addressFormat, trunca
           </div>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
+              <label>IBAN type:</label>
+              <p>{fieldValues.IBANType}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>UAE IBAN: </label>
               <p>{fieldValues.uaeIBAN}</p>
             </div>
+            {fieldValues.IBANType === "BARO" && (
+              <>
+                <div className={classes.infoLabelValue}>
+                  <label>Company Name: </label>
+                  <p>{fieldValues.companyNameforSOF}</p>
+                </div>
+                <div className={classes.infoLabelValue}>
+                  <label>Trade licence: </label>
+                  <p>{fieldValues.sourceOfIncomeTradeLicense}</p>
+                </div>
+              </>
+            )}
             <div className={classes.infoLabelValue}>
               <label>Proof of income:</label> <p>{fieldValues.proofOfAddress}</p>
             </div>
@@ -137,7 +157,7 @@ export const StakeholderAdditionalReview = ({ fieldValues, addressFormat, trunca
             </div>
             <div className={classes.infoLabelValue}>
               <label>Reason for TIN not available:</label>
-              <p>{fieldValues.reasonForTINNotAvailable}</p>
+              <p>{truncateString(fieldValues.reasonForTINNotAvailable, 100)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Remarks:</label>

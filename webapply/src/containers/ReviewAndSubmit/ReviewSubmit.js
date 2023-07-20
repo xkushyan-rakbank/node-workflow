@@ -56,7 +56,8 @@ export const ReviewSubmit = () => {
   const formatFinancialValues = useCallback(
     value => {
       if (value) {
-        let numberX = value?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        const fixedValue = parseInt(value).toFixed(2);
+        let numberX = fixedValue.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         return `${numberX} AED`;
       }
     },
@@ -196,7 +197,10 @@ export const ReviewSubmit = () => {
         isNonFinancialInstitution:
           companyAdditionalInfo?.isNonFinancialInstitution === "active" ? "Active" : "Passive",
         globalintermediaryId: companyAdditionalInfo?.globalintermediaryId,
-        signatoryFullName: signatoryInfo && signatoryInfo && signatoryInfo[0]?.fullName,
+        isFinancialInstitution:
+          companyAdditionalInfo?.isFinancialInstitution === "yes" ? "Yes" : "No",
+        dnfbpField: companyAdditionalInfo?.dnfbpField === "yes" ? "Yes" : "No",
+        signatoryFullName: signatoryInfo && signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
         dateOfBirth: formatDate(signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth),
@@ -223,6 +227,12 @@ export const ReviewSubmit = () => {
         ),
         uaeIBAN:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN,
+        IBANType:
+          signatoryInfo &&
+          signatoryInfo[0]?.stakeholderAdditionalInfo.sourceOfIncomeDetails.IBANType,
+        companyNameforSOF:
+          signatoryInfo &&
+          signatoryInfo[0]?.stakeholderAdditionalInfo.sourceOfIncomeDetails.companyNameforSOF,
         residentialAddress:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
         countryOfTaxResidency:
@@ -249,13 +259,13 @@ export const ReviewSubmit = () => {
             : "N/A",
 
         nameOnDebitCard:
-          signatoryInfo && signatoryInfo[0]?.debitCardInfo.authSignatoryDetails.nameOnDebitCard,
+          signatoryInfo && signatoryInfo[0]?.debitCardInfo?.authSignatoryDetails?.nameOnDebitCard,
         linkedInURL:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.backgroundDetails.linkedInURL,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails.linkedInURL,
         backgroundInfo:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.backgroundDetails.backgroundInfo,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails.backgroundInfo,
         accountCurrency: accountInfo?.accountCurrency,
         branch: getBranchName(accountInfo?.branchId) || "",
         branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
@@ -268,12 +278,17 @@ export const ReviewSubmit = () => {
         marketing: channelServicesInfo?.marketing ? "Yes" : "No",
         marketingChannel: channelServicesInfo?.marketingChannel,
         surveys: channelServicesInfo?.surveys ? "Yes" : "No",
-        proofOfIncome: prospectDocuments?.additionalStakeholderDocument.proofOfIncome.name
+        proofOfIncome: prospectDocuments?.additionalStakeholderDocument?.proofOfIncome?.name
           ? "Provided"
-          : "",
-        proofOfAddress: prospectDocuments?.additionalCompanyDocument.companyAddressProof.name
+          : "N/A",
+        proofOfAddress: prospectDocuments?.additionalCompanyDocument?.companyAddressProof?.name
           ? "Provided"
-          : ""
+          : "N/A",
+        cv: prospectDocuments?.additionalStakeholderDocument?.cv?.name ? "Provided" : "N/A",
+        sourceOfIncomeTradeLicense: prospectDocuments?.additionalStakeholderDocument?.tradeLicense
+          .name
+          ? "Provided"
+          : "N/A"
       };
       setDisplayFields(fields);
     }
