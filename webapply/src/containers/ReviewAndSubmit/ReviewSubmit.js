@@ -197,7 +197,8 @@ export const ReviewSubmit = () => {
           companyAdditionalInfo?.isNonFinancialInstitution === "active" ? "Active" : "Passive",
         globalintermediaryId: companyAdditionalInfo?.globalintermediaryId,
         signatoryFullName: signatoryInfo && signatoryInfo && signatoryInfo[0]?.fullName,
-        signatoryNationality: signatoryInfo && signatoryInfo[0]?.kycDetails.nationality,
+        signatoryNationality:
+          signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
         dateOfBirth: formatDate(signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth),
         mothersMaidenName: signatoryInfo && signatoryInfo[0]?.mothersMaidenName,
         eidNumber: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidNumber,
@@ -262,7 +263,7 @@ export const ReviewSubmit = () => {
         debitCardApplied: accountInfo?.debitCardApplied ? "Yes" : "No",
         chequeBookApplied: accountInfo?.chequeBookApplied ? "Yes" : "No",
         mailStatements: accountInfo?.mailStatements,
-        eStatements: accountInfo?.eStatements,
+        eStatements: accountInfo?.eStatements ? "Physical" : "",
         mobileInstructions: channelServicesInfo?.mobileInstructions ? "Yes" : "No",
         marketing: channelServicesInfo?.marketing ? "Yes" : "No",
         marketingChannel: channelServicesInfo?.marketingChannel,

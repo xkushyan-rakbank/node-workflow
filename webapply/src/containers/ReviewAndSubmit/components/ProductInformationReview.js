@@ -6,6 +6,17 @@ import { ReactComponent as LetsGoGreen } from "../../../assets/icons/letsGoGreen
 
 export const ProductInformationReview = ({ fieldValues }) => {
   const classes = useStyles();
+  const bankStatementType = () => {
+    return fieldValues.mailStatements ? (
+      <>
+        Online <LetsGoGreen style={{ marginLeft: 4 }} />
+      </>
+    ) : fieldValues.eStatements ? (
+      "Physical"
+    ) : (
+      ""
+    );
+  };
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
@@ -49,15 +60,7 @@ export const ProductInformationReview = ({ fieldValues }) => {
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>How would you like to get your bank statements?</label>
-              <p style={{ display: "flex", alignItems: "center" }}>
-                {fieldValues.mailStatements ? (
-                  <>
-                    Online <LetsGoGreen style={{ marginLeft: 4 }} />{" "}
-                  </>
-                ) : (
-                  "Offline"
-                )}
-              </p>
+              <p style={{ display: "flex", alignItems: "center" }}>{bankStatementType()} </p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Would you like to get transaction notifications on your mobile?</label>

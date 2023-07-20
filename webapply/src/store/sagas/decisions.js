@@ -37,7 +37,6 @@ function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBa
       const storeAppConfig = yield select(getAppConfig);
       const prospectValue = get(storeAppConfig, decision.output_key);
       const defaultValue = get(appConfig, decision.output_key);
-      console.log(defaultValue, prospectValue, isComeBack, "test");
       if (isComeBack && prospectValue === defaultValue) {
         changedFieldValues[decision.output_key] = decision.output_value[0];
       }
