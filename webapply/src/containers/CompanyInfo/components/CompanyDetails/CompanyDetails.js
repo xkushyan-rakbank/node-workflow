@@ -66,6 +66,7 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
       setMessage(renderValue.displayText);
     } else {
       setFieldValue("companyCategory", value);
+      triggerDecisionsForCompanyCategory(value);
     }
   };
 

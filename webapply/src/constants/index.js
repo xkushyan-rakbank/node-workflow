@@ -32,7 +32,7 @@ export const formStepper = [
     relatedPath: [routes.additionalCompanyInformation, routes.additionalStakeholderInformation]
   },
   { step: 5, title: "Account preferences", path: routes.accountServices },
-  { step: 6, title: "Submit", path: routes.finalQuestions }
+  { step: 6, title: "Submit", path: routes.reviewAndSubmit }
 ];
 
 export const agentFormStepper = [

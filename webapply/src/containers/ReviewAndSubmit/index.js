@@ -1,5 +1,11 @@
-import React from "react";
+import { connect } from "react-redux";
 
-export default function ReviewAndSubmit() {
-  return <div>index</div>;
-}
+import { ReviewSubmit } from "./ReviewSubmit";
+import { sendProspectToAPIPromisify } from "../../store/actions/sendProspectToAPI";
+
+const mapDispatchToProps = { sendProspectToAPI: sendProspectToAPIPromisify };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ReviewSubmit);

@@ -27,6 +27,7 @@ import { ReactComponent as MinimizeChat } from "../../assets/icons/chat-minimize
 import { ReactComponent as Bolt } from "../../assets/icons/bolt.svg";
 import { ReactComponent as KycAnnexure } from "../../assets/icons/kyc_annexure.svg";
 import { ReactComponent as ArrowUp } from "../../assets/icons/arrowUp.svg";
+import { ReactComponent as EditIcon } from "../../assets/icons/editIcon.svg";
 
 export const iconComponents = {
   done: Done,
@@ -57,7 +58,8 @@ export const iconComponents = {
   minimizeChat: MinimizeChat,
   bolt: Bolt,
   kycAnnexure: KycAnnexure,
-  arrowUp: ArrowUp
+  arrowUp: ArrowUp,
+  editIcon: EditIcon
 };
 
 export const ICONS = {
@@ -89,5 +91,6 @@ export const ICONS = {
   minimizeChat: "minimizeChat",
   bolt: "bolt",
   kycAnnexure: "kycAnnexure",
-  arrowUp: "arrowUp"
+  arrowUp: "arrowUp",
+  editIcon: "editIcon"
 };

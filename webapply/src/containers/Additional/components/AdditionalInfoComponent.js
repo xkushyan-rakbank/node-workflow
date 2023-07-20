@@ -14,7 +14,6 @@ import { ReactComponent as ErrorIcon } from "../../../assets/icons/credit_score_
 
 const AdditionalInfoButton = ({ status, onClick, disabled, text }) => {
   const classes = useStyles();
-  console.log("status", status);
 
   const getStatusText = () => {
     if (status === "inProgress") {
