@@ -169,6 +169,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
     setFieldValue(name, value);
+    if (name === "marketing") {
+      !value && dispatch(updateProspect({ "prospect.channelServicesInfo.marketingChannel": [] }));
+    }
   };
 
   const handleClickNextStep = useCallback(() => {
@@ -486,7 +489,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         onChange={radioChangeHandler}
                       />
                     </div>
-                    {values.marketing === "yes" && (
+                    {values.marketing && (
                       <div className={classes.questionareWrapper}>
                         <label className={classes.sectionLabel}>Receive notifications via:</label>
                         <Field

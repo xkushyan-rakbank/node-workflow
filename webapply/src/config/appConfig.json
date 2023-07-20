@@ -429,8 +429,7 @@
       "monthlyBalanceNotification": 0,
       "surveys": "",
       "marketing": "",
-      "marketingChannel": ""
-
+      "marketingChannel": []
     },
     "documents": {
       "companyDocuments": [],

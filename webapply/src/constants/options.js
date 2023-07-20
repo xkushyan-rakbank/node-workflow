@@ -181,19 +181,19 @@ export const PreferredNotificationOptions = [
   {
     code: "Email",
     key: "Email",
-    value: "email",
+    value: "Email",
     label: "Email"
   },
   {
     code: "SMS",
     key: "SMS",
-    value: "sms",
+    value: "SMS",
     label: "SMS"
   },
   {
     code: "Phone call",
     key: "Phone call",
-    value: "phone",
+    value: "Call",
     label: "Phone call"
   }
 ];
@@ -202,19 +202,19 @@ export const yesNoAskMeLaterOptions = [
   {
     code: "Yes",
     key: "Yes",
-    value: "yes",
+    value: true,
     label: "Yes"
   },
   {
     code: "No",
     key: "No",
-    value: "no",
+    value: false,
     label: "No"
   },
   {
     code: "ask_me_later",
     key: "ask_me_later",
-    value: "ask_me_later",
+    value: null,
     label: "Ask me later"
   }
 ];

@@ -11,7 +11,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [selectedService, setSelectedService] = useState("RAK value SME plus");
+  const [selectedService, setSelectedService] = useState("RAKvalue PLUS");
 
   const selectedPackage = selectedPackage => {
     setSelectedService(selectedPackage);
@@ -31,9 +31,9 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
       <div className={classes.packageListWrapper}>
         <div
           className={cx(classes.packageList, {
-            [classes.selectedPackageList]: selectedService === "RAK value SME plus"
+            [classes.selectedPackageList]: selectedService === "RAKvalue PLUS"
           })}
-          onClick={() => selectedPackage("RAK value SME plus")}
+          onClick={() => selectedPackage("RAKvalue PLUS")}
         >
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Plus</h2>
@@ -63,17 +63,17 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           <Button
             variant="outlined"
             className={cx(classes.selectBtn, {
-              [classes.selectedPackageListBtn]: selectedService === "RAK value SME plus"
+              [classes.selectedPackageListBtn]: selectedService === "RAKvalue PLUS"
             })}
           >
-            {selectedService === "RAK value SME plus" ? "Selected" : "Select"}
+            {selectedService === "RAKvalue PLUS" ? "Selected" : "Select"}
           </Button>
         </div>
         <div
           className={cx(classes.packageList, {
-            [classes.selectedPackageList]: selectedService === "RAK value SME max"
+            [classes.selectedPackageList]: selectedService === "RAKvalue MAX"
           })}
-          onClick={() => selectedPackage("RAK value SME max")}
+          onClick={() => selectedPackage("RAKvalue MAX")}
         >
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Max</h2>
@@ -103,10 +103,10 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           <Button
             variant="outlined"
             className={cx(classes.selectBtn, {
-              [classes.selectedPackageListBtn]: selectedService === "RAK value SME max"
+              [classes.selectedPackageListBtn]: selectedService === "RAKvalue MAX"
             })}
           >
-            {selectedService === "RAK value SME max" ? "Selected" : "Select"}
+            {selectedService === "RAKvalue MAX" ? "Selected" : "Select"}
           </Button>
         </div>
       </div>
