@@ -33,7 +33,8 @@ export const ReviewSubmit = () => {
     industry: industryList,
     sourceOfIncome: sourceOfIncomeList,
     branchCity: branchCityList,
-    emirateCity: emirateCityList
+    emirateCity: emirateCityList,
+    internationalBankAccountNumber: internationalBankAccountNumberList
   } = useSelector(getDatalist);
 
   const prospect = useSelector(getProspect);
@@ -47,6 +48,12 @@ export const ReviewSubmit = () => {
   const getEmirateLabel = useCallback(
     code => emirateList?.find(emirate => emirate.code === code)?.displayText,
     [displayFields, emirateList]
+  );
+
+  const getIBANTypeLabel = useCallback(
+    code =>
+      internationalBankAccountNumberList?.find(ibanType => ibanType.code === code)?.displayText,
+    [displayFields, internationalBankAccountNumberList]
   );
 
   const formatDate = useCallback(date => (date ? format(new Date(date), "dd/MM/yyyy") : ""), [
@@ -315,6 +322,7 @@ export const ReviewSubmit = () => {
                   fieldValues={displayFields}
                   addressFormat={formatAddress}
                   truncateString={truncateString}
+                  ibanTypeLabel={getIBANTypeLabel(displayFields.IBANType)}
                 />
                 <ProductInformationReview fieldValues={displayFields} />
 

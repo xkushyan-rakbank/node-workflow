@@ -4,7 +4,12 @@ import { useStyles } from "../styled";
 import { InformationSection } from "./InformationSection";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import routes from "../../../routes";
-export const StakeholderAdditionalReview = ({ fieldValues, addressFormat, truncateString }) => {
+export const StakeholderAdditionalReview = ({
+  fieldValues,
+  addressFormat,
+  truncateString,
+  ibanTypeLabel
+}) => {
   const classes = useStyles();
 
   return (
@@ -106,7 +111,7 @@ export const StakeholderAdditionalReview = ({ fieldValues, addressFormat, trunca
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>IBAN type:</label>
-              <p>{fieldValues.IBANType}</p>
+              <p>{truncateString(ibanTypeLabel, 100)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>UAE IBAN: </label>
