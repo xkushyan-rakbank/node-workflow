@@ -1,19 +1,23 @@
 import { makeStyles } from "@material-ui/core/styles/index";
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   trackNSwitchAccountBtnWrapper: {
     display: "flex",
+    left: 0,
     flexWrap: "nowrap",
-    justifyContent: "flex-end",
-    marginTop: "21px"
+    marginTop: "21px",
   },
   trackNSwitchAccountBtn: {
-    fontSize: "1rem",
-    fontWeight: 600,
-    lineHeight: "22px",
+    width: "144px",
+    height: "40px",
     borderRadius: "21px",
+    border: "1px solid black",
+    fontSize: "0.75rem",
+    textAlign: "center",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "1rem",
+    color: "black",
     textTransform: "none",
-    color: "#000",
-    border: "1px solid #000"
-  }
+  },
 }));
