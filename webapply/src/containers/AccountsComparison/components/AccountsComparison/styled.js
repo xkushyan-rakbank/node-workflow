@@ -71,7 +71,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   bgContainer: {
     width: "100%",
-    height: "100%",
+    height: "100vh",
     minHeight: "100vh",
     overflow: "hidden",
     position: "relative",
@@ -371,9 +371,6 @@ export const useStyles = makeStyles((theme) => ({
   accountInfoMain: {
     position: "absolute",
     zIndex: 111,
-    top: "70%",
-    left: "70%",
-    transform: "translate(-70%,-75%)",
 
     "& h2": {
       fontSize: "1.75rem",
@@ -382,7 +379,6 @@ export const useStyles = makeStyles((theme) => ({
       width: "350px",
       fontWeight: 700,
 
-      // desktop
       [theme.breakpoints.up("sm")]: {
         left: "65%",
         width: "708px",
@@ -419,25 +415,14 @@ export const useStyles = makeStyles((theme) => ({
         lineHeight: "40px",
         color: "#FFFFFF",
       },
-
-      [theme.breakpoints.between("sm", "md")]: {},
     },
 
-    [theme.breakpoints.down("sm")]: {
-      top: "80%",
-      left: "70%",
-      transform: "translate(-70%,-75%)",
-    },
-
-    [theme.breakpoints.between("sm", "md")]: {
-      top: "36%",
-      left: "66%",
-      transform: "translate(-39%,-40%)",
-    },
     [theme.breakpoints.up("md")]: {
-      top: "55%",
-      left: "65%",
+      height: "unset",
+      top: "55% !important",
+      left: "65% !important",
       transform: "translate(-55%,-65%)",
+      width: "50%",
     },
   },
   btnWrapper: {

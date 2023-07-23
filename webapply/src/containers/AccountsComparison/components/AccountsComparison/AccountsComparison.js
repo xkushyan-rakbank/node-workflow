@@ -43,6 +43,9 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   const [featureType, setFeatureType] = useState("");
 
   const accountTypeRef = useRef(null);
+  const [accountNavTop, setAccountNavTop] = useState(0);
+  const [accountNavLeft, setAccountNavLeft] = useState(0);
+  const [accountNavHeight, setAccountNavHeight] = useState(0);
 
   useEffect(() => {
     if ("scrollRestoration" in history) {
@@ -110,6 +113,49 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
       window.location.href = url;
     }
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowHeight = window.innerHeight;
+      const windowWidth = window.innerWidth;
+
+      //mobile
+      const topMobilePercent = 45;
+      const heightMobilePercent = 55;
+      const leftMobilePercent = 15;
+      //tablet
+      const topTabletPercentage = 20;
+      const leftTabletPercentage = 40;
+      const heightTabletPercentage = 40;
+
+      let topPercentage, leftPercentage, heightPercentage;
+
+      if (windowWidth <= 768) {
+        topPercentage = topMobilePercent;
+        leftPercentage = leftMobilePercent;
+        heightPercentage = heightMobilePercent;
+      } else {
+        topPercentage = topTabletPercentage;
+        leftPercentage = leftTabletPercentage;
+        heightPercentage = heightTabletPercentage;
+      }
+
+      const calculatedTop = (windowHeight * topPercentage) / 100;
+      const calculatedHeight = (windowHeight * heightPercentage) / 100;
+      const calculatedLeft = (windowWidth * leftPercentage) / 100;
+
+      setAccountNavTop(`${calculatedTop}px`);
+      setAccountNavHeight(`${calculatedHeight}px`);
+      setAccountNavLeft(`${calculatedLeft}px`);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -199,7 +245,14 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           </div>
         </div>
 
-        <div className={classes.accountInfoMain}>
+        <div
+          className={classes.accountInfoMain}
+          style={{
+            top: `${accountNavTop}`,
+            height: `${accountNavHeight}`,
+            left: `${accountNavLeft}`,
+          }}
+        >
           <h2>Let’s get down to business</h2>
           <p>How can we help you?</p>
           <div className={classes.btnWrapper}>
