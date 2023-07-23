@@ -140,8 +140,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   stickyDiv: {
     position: "sticky",
-    top: "88px",
+    top: "9%",
     zIndex: 55,
+    overflow: "hidden",
+    background: "#fff",
 
     [theme.breakpoints.only("xs")]: {
       "& .MuiGrid-container:first-child": {
