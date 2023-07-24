@@ -264,11 +264,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
                 redirectInToFinance(process.env.REACT_APP_API_PATH + smeBaseName + "/finances")
               }
             >
-              <ExpandMoreButton
-                label="Business Finance"
-                className={classes.accountBtn}
-                style={{ backgroundColor: "#252525" }}
-              />
+              <ExpandMoreButton label="Business Finance" className={classes.accountBtn} />
             </div>
           </div>
         </div>
