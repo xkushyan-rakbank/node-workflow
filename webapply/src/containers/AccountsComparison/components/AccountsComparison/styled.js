@@ -144,6 +144,7 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: 55,
     overflow: "hidden",
     background: "#fff",
+    paddingTop: "12px",
 
     [theme.breakpoints.only("xs")]: {
       "& .MuiGrid-container:first-child": {
