@@ -239,9 +239,9 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             >
               Track my Application
             </Button>
-            <Button variant="outlined" className={classes.navButton}>
+            {/* <Button variant="outlined" className={classes.navButton}>
               Switch to RAKIslamic
-            </Button>
+            </Button> */}
           </div>
         </div>
 
