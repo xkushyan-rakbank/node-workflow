@@ -144,14 +144,17 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: 55,
     overflow: "hidden",
     background: "#fff",
-    paddingTop: "12px",
 
     [theme.breakpoints.only("xs")]: {
+      paddingTop: "24px",
       "& .MuiGrid-container:first-child": {
         display: "none",
         position: "inherit",
       },
 
+      "& .MuiGrid-container:nth-child(2)": {
+        paddingTop: "12px !important",
+      },
       "& .MuiInputBase": {
         display: "flex",
         gap: "20px",

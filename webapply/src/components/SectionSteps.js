@@ -5,7 +5,6 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import { useMediaQuery } from "@material-ui/core";
-import { is } from "date-fns/locale";
 
 const useStyles = makeStyles((theme) => ({
   title: {
