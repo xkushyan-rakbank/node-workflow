@@ -57,7 +57,7 @@ export const StakeholderAdditionalReview = ({
               <label>EID number:</label>
               <p>
                 <PatternFormat
-                  value={784199420948103}
+                  value={fieldValues.eidNumber}
                   format="###-####-#######-#"
                   disabled
                   className={classes.eidField}
