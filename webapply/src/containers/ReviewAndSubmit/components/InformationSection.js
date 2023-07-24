@@ -8,7 +8,7 @@ export const InformationSection = ({ title, children, showEditIcon = false, rout
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
   return (
-    <div className={classes.infoSection}>
+    <div className={cx(classes.infoSection, { [classes.bgColorChange]: routeTo })}>
       <div className={classes.infoSectionTitleWrapper}>
         <p className={classes.infoSectionTitle}>{title}</p>
         {showEditIcon && (

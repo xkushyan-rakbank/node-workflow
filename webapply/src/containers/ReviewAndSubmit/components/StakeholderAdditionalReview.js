@@ -24,7 +24,7 @@ export const StakeholderAdditionalReview = ({
           accordionDetails: classes.accordionDetails
         }}
       >
-        <InformationSection title={"Primary information"} showEditIcon={true}>
+        <InformationSection title={"Primary information"}>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Full name:</label> <p>{fieldValues.signatoryFullName}</p>
@@ -97,7 +97,7 @@ export const StakeholderAdditionalReview = ({
             </div>
             <div className={classes.infoLabelValue}>
               <label>CV:</label>
-              <p>{fieldValues.employmentType}</p>
+              <p>{fieldValues.cv}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Linkedin:</label>

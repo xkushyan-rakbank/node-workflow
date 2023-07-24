@@ -58,6 +58,9 @@ export const useStyles = makeStyles(theme => ({
       marginBottom: "0px"
     }
   },
+  bgColorChange: {
+    background: "#F5F5F5"
+  },
   infoSectionTitleWrapper: {
     width: "100%",
     display: "flex",

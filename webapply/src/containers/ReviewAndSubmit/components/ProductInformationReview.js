@@ -3,6 +3,7 @@ import { useStyles } from "../styled";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import { InformationSection } from "./InformationSection";
 import { ReactComponent as LetsGoGreen } from "../../../assets/icons/letsGoGreenIcon.svg";
+import routes from "../../../routes";
 
 export const ProductInformationReview = ({ fieldValues }) => {
   const classes = useStyles();
@@ -29,16 +30,18 @@ export const ProductInformationReview = ({ fieldValues }) => {
           accordionDetails: classes.accordionDetails
         }}
       >
-        <InformationSection title={"Account details"} showEditIcon={true}>
+        <InformationSection
+          title={"Account details"}
+          showEditIcon={true}
+          routeTo={routes.accountServices}
+        >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Currency:</label> <p>{fieldValues.accountCurrency}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Branch:</label>
-              <p>
-                {fieldValues.branch}, {fieldValues.branchEmirate}
-              </p>
+              <p>{fieldValues.branch && `${fieldValues.branch}, ${fieldValues.branchEmirate}`}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Do you want to earn interest on this account?</label>
