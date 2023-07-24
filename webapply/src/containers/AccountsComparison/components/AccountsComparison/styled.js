@@ -140,7 +140,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   stickyDiv: {
     position: "sticky",
-    top: "9%",
+    top: "8.85%",
     zIndex: 55,
     overflow: "hidden",
     background: "#fff",
@@ -331,7 +331,7 @@ export const useStyles = makeStyles((theme) => ({
     position: "fixed",
     top: 40,
     width: "100%",
-    zIndex: 2,
+    zIndex: 137,
   },
   accountInfoNavLinks: {
     display: "flex",
