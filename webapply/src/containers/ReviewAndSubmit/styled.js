@@ -115,7 +115,9 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     padding: 0,
     fontSize: "0.875rem",
-    fontStyle: "normal"
+    fontStyle: "normal",
+    fontFamily: "Open Sans",
+    fontWeight: 600
   },
   infoListWrapper: {
     display: "flex",
