@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import { format } from "date-fns";
 
 import routes from "../../routes";
-import { formStepper } from "../../constants";
+import { NEXT, formStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -13,17 +13,28 @@ import { BackLink } from "../../components/Buttons/BackLink";
 import { Accordion } from "../../components/Accordion/CustomAccordion";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { InformationSection } from "./components/InformationSection";
-import { getDatalist, getProspect } from "../../store/selectors/appConfig";
+import {
+  getDatalist,
+  getDocuments,
+  getProspect,
+  getSignatories
+} from "../../store/selectors/appConfig";
 import { useStyles } from "./styled";
 import { CompanyAdditionalReview } from "./components/CompanyAdditionalReview";
 import { StakeholderAdditionalReview } from "./components/StakeholderAdditionalReview";
 import { ProductInformationReview } from "./components/ProductInformationReview";
+import { OverlayLoader } from "../../components/Loader";
+import { useViewId } from "../../utils/useViewId";
+import { useFindDocument } from "../../utils/useFindDocument";
 
-export const ReviewSubmit = () => {
+export const ReviewSubmit = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
+  useViewId(true);
   const pushHistory = useTrackingHistory();
   const classes = useStyles();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     country: countryList,
@@ -34,11 +45,44 @@ export const ReviewSubmit = () => {
     sourceOfIncome: sourceOfIncomeList,
     branchCity: branchCityList,
     emirateCity: emirateCityList,
-    internationalBankAccountNumber: internationalBankAccountNumberList
+    internationalBankAccountNumber: internationalBankAccountNumberList,
+    qualification: qualificationList
   } = useSelector(getDatalist);
 
   const prospect = useSelector(getProspect);
   const [displayFields, setDisplayFields] = useState({});
+  const signatoryName = useSelector(getSignatories)[0]?.fullName;
+
+  const cvDocument =
+    useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.personalBackground
+      .documents ?? null;
+
+  const proofOfIncomeDocuments =
+    useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.personalBankStatements
+      .documents ?? null;
+
+  const tradeLicenceSourceIncomeDocuments =
+    useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.documents ?? null;
+
+  const companyAddressProofDoc = useSelector(getDocuments)?.companyAddressProof?.documents ?? null;
+
+  const addressProofKeyToCheck =
+    "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof";
+
+  const proofOfAddressProvided = useFindDocument(companyAddressProofDoc, addressProofKeyToCheck);
+  const cvProvided = useFindDocument(
+    cvDocument,
+    "prospect.prospectDocuments.additionalStakeholderDocument.cv"
+  );
+  const proofOfIncomeProvided = useFindDocument(
+    proofOfIncomeDocuments,
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.proofOfIncome"
+  );
+
+  const tradeLicenceSourceIncomeProvided = useFindDocument(
+    tradeLicenceSourceIncomeDocuments,
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense"
+  );
 
   const getCountryLabel = useCallback(
     code => countryList?.find(country => country.code === code)?.displayText,
@@ -151,6 +195,10 @@ export const ReviewSubmit = () => {
     [displayFields]
   );
 
+  const getqualificationLabel = useCallback(
+    education => qualificationList?.find(city => city.code === education)?.displayText,
+    [displayFields, qualificationList]
+  );
   const initialValues = {};
 
   useEffect(() => {
@@ -162,8 +210,7 @@ export const ReviewSubmit = () => {
         organizationInfo,
         signatoryInfo,
         accountInfo,
-        channelServicesInfo,
-        prospectDocuments
+        channelServicesInfo
       } = prospect;
       const fields = {
         applicantName: applicantInfo?.fullName,
@@ -223,33 +270,41 @@ export const ReviewSubmit = () => {
         ),
         education:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.backgroundDetails.highestEducationAttained,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.highestEducationAttained
+            ? getqualificationLabel(
+                signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails
+                  ?.highestEducationAttained
+              )
+            : "N/A",
         employmentType:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.backgroundDetails.employmentStatus,
-        sourceOfIncome: getSourceOfIncome(
-          (signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.sourceOfIncome) ||
-            []
-        ),
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.employmentStatus,
+        sourceOfIncome:
+          getSourceOfIncome(
+            (signatoryInfo &&
+              signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.sourceOfIncome) ||
+              []
+          ) || "N/A",
         uaeIBAN:
-          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN,
+          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBAN,
         IBANType:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.sourceOfIncomeDetails.IBANType,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
+            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
+            : "N/A",
         companyNameforSOF:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.sourceOfIncomeDetails.companyNameforSOF,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.companyNameforSOF,
         residentialAddress:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
         countryOfTaxResidency:
           (signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails?.taxesInAnotherCountry ===
+            signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry ===
               "no") ||
           ""
             ? getCountryLabel("AE")
             : getCountryLabel(
-                signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails?.country
+                signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.country
               ),
         TIN:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
@@ -285,87 +340,93 @@ export const ReviewSubmit = () => {
         marketing: channelServicesInfo?.marketing ? "Yes" : "No",
         marketingChannel: channelServicesInfo?.marketingChannel,
         surveys: channelServicesInfo?.surveys ? "Yes" : "No",
-        proofOfIncome: prospectDocuments?.additionalStakeholderDocument?.proofOfIncome?.name
-          ? "Provided"
-          : "N/A",
-        proofOfAddress: prospectDocuments?.additionalCompanyDocument?.companyAddressProof?.name
-          ? "Provided"
-          : "N/A",
-        cv: prospectDocuments?.additionalStakeholderDocument?.cv?.name ? "Provided" : "N/A",
-        sourceOfIncomeTradeLicense: prospectDocuments?.additionalStakeholderDocument?.tradeLicense
-          ?.name
-          ? "Provided"
-          : "N/A"
+        proofOfIncome: proofOfIncomeProvided ? "Provided" : "N/A",
+        proofOfAddress: proofOfAddressProvided ? "Provided" : "N/A",
+        cv: cvProvided ? "Provided" : "N/A",
+        sourceOfIncomeTradeLicense: tradeLicenceSourceIncomeProvided ? "Provided" : "N/A"
       };
       setDisplayFields(fields);
     }
   }, [prospect]);
 
+  const handleReviewSubmit = useCallback(() => {
+    setIsLoading(true);
+    return sendProspectToAPI(NEXT).then(
+      isScreeningError => {
+        if (!isScreeningError) pushHistory(routes.reviewAndSubmit, true);
+      },
+      () => setIsLoading(false)
+    );
+  }, [pushHistory, sendProspectToAPI]);
+
   return (
-    <div className={classes.container}>
-      <div className={classes.section}>
-        <SectionTitleWithInfo
-          title={"Have one last look over your info"}
-          info="If it's good to go, just hit Submit!"
-          smallInfo
-        />
-        <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={true}>
-          {({ values, setFieldValue, ...props }) => {
-            return (
-              <Form>
-                <CompanyAdditionalReview
-                  fieldValues={displayFields}
-                  addressFormat={formatAddress}
-                />
+    <>
+      <div className={classes.container}>
+        <div className={classes.section}>
+          <SectionTitleWithInfo
+            title={"Have one last look over your info"}
+            info="If it's good to go, just hit Submit!"
+            smallInfo
+          />
+          <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={true}>
+            {({ values, setFieldValue, ...props }) => {
+              return (
+                <Form>
+                  <CompanyAdditionalReview
+                    fieldValues={displayFields}
+                    addressFormat={formatAddress}
+                  />
 
-                <StakeholderAdditionalReview
-                  fieldValues={displayFields}
-                  addressFormat={formatAddress}
-                  truncateString={truncateString}
-                  ibanTypeLabel={getIBANTypeLabel(displayFields.IBANType)}
-                />
-                <ProductInformationReview fieldValues={displayFields} />
+                  <StakeholderAdditionalReview
+                    fieldValues={displayFields}
+                    addressFormat={formatAddress}
+                    truncateString={truncateString}
+                    ibanTypeLabel={getIBANTypeLabel(displayFields.IBANType)}
+                  />
+                  <ProductInformationReview fieldValues={displayFields} />
 
-                <div className={classes.packageSelectionWrapper}>
-                  <Accordion
-                    title={"Codes-Bank use"}
-                    id={"codesBankUse"}
-                    classes={{
-                      accordionRoot: classes.accountServiceAccordionRoot,
-                      accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
-                      accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
-                      accordionDetails: classes.accordionDetails
-                    }}
-                  >
-                    <InformationSection title={""}>
-                      <div className={classes.infoListWrapper}>
-                        <div className={classes.infoLabelValue}>
-                          <label>Agent code:</label> <p>{displayFields.partnerCode}</p>
+                  <div className={classes.packageSelectionWrapper}>
+                    <Accordion
+                      title={"Codes-Bank use"}
+                      id={"codesBankUse"}
+                      classes={{
+                        accordionRoot: classes.accountServiceAccordionRoot,
+                        accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                        accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                        accordionDetails: classes.accordionDetails
+                      }}
+                    >
+                      <InformationSection title={""}>
+                        <div className={classes.infoListWrapper}>
+                          <div className={classes.infoLabelValue}>
+                            <label>Agent code:</label> <p>{displayFields.partnerCode}</p>
+                          </div>
                         </div>
-                      </div>
-                      <div className={classes.infoListWrapper}>
-                        <div className={classes.infoLabelValue}>
-                          <label>Partner code:</label>
-                          <p>{displayFields.agentCode}</p>
+                        <div className={classes.infoListWrapper}>
+                          <div className={classes.infoLabelValue}>
+                            <label>Partner code:</label>
+                            <p>{displayFields.agentCode}</p>
+                          </div>
                         </div>
-                      </div>
-                    </InformationSection>
-                  </Accordion>
-                </div>
-              </Form>
-            );
-          }}
-        </Formik>
+                      </InformationSection>
+                    </Accordion>
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
+        </div>
+        <div className="linkContainer">
+          <BackLink path={routes.accountServices} />
+          <NextStepButton
+            label="Submit"
+            justifyContent="flex-end"
+            disabled={false}
+            onClick={() => handleReviewSubmit()}
+          />
+        </div>
       </div>
-      <div className="linkContainer">
-        <BackLink path={routes.accountServices} />
-        <NextStepButton
-          label="Submit"
-          justify="flex-end"
-          disabled={true}
-          onClick={() => pushHistory(routes.reviewSubmit)}
-        />
-      </div>
-    </div>
+      <OverlayLoader open={isLoading} text={"Loading..."} />
+    </>
   );
 };

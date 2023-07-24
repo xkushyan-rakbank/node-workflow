@@ -34,5 +34,6 @@ export default {
   additionalStakeholderInformation: `${smeBaseName}/StakeholdersAdditionalInfo`,
   additionalCompanyInformation: `${smeBaseName}/CompanyAdditionalInfo`,
   accountServices: `${smeBaseName}/AccountInfo`,
-  reviewAndSubmit: `${smeBaseName}/ReviewAndSubmit`
+  reviewAndSubmit: `${smeBaseName}/SubmitApplication`,
+  congratulations: `${smeBaseName}/Congratulations`
 };

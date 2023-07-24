@@ -67,6 +67,8 @@ const AdditionalStakeholderInformation = lazy(() =>
 const AccountServices = lazy(() => import("./containers/AccountServices"));
 const ReviewAndSubmit = lazy(() => import("./containers/ReviewAndSubmit"));
 
+const CongratulationsScreen = lazy(() => import("./containers/Congratulations"));
+
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -141,6 +143,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
                 exact
                 path={routes.reviewAndSubmit}
                 component={ReviewAndSubmit}
+              />
+              <ProspectProtectedRoute
+                exact
+                path={routes.congratulations}
+                component={CongratulationsScreen}
               />
               <ProspectProtectedRoute
                 exact
