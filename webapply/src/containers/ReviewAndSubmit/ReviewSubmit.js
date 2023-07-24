@@ -55,11 +55,11 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
   const cvDocument =
     useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.personalBackground
-      .documents ?? null;
+      ?.documents ?? null;
 
   const proofOfIncomeDocuments =
     useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.personalBankStatements
-      .documents ?? null;
+      ?.documents ?? null;
 
   const tradeLicenceSourceIncomeDocuments =
     useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.documents ?? null;
