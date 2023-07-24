@@ -70,7 +70,9 @@ export const ProductInformationReview = ({ fieldValues }) => {
               <label>Would you like to be the first to hear about the latest offers?</label>
               <p>
                 {fieldValues.marketing}&nbsp;
-                {fieldValues.marketingChannel ? `(${fieldValues.marketingChannel.join(", ")})` : ""}
+                {fieldValues.marketing === "Yes" && fieldValues.marketingChannel
+                  ? `(${fieldValues.marketingChannel.join(", ")})`
+                  : ""}
               </p>
             </div>
             <div className={classes.infoLabelValue}>

@@ -252,27 +252,27 @@ export const ReviewSubmit = () => {
                 signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails?.country
               ),
         TIN:
-          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails.TIN
-            ? signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails.TIN
+          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
+            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
             : "N/A",
         reasonForTINNotAvailable:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails.reasonForTINNotAvailable
-            ? signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails.reasonForTINNotAvailable
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
+            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
             : "N/A",
         remarks:
-          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails.remarks
-            ? signatoryInfo[0]?.stakeholderAdditionalInfo.taxDetails.remarks
+          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.remarks
+            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.remarks
             : "N/A",
 
         nameOnDebitCard:
           signatoryInfo && signatoryInfo[0]?.debitCardInfo?.authSignatoryDetails?.nameOnDebitCard,
         linkedInURL:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails.linkedInURL,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.linkedInURL,
         backgroundInfo:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails.backgroundInfo,
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo,
         accountCurrency: accountInfo?.accountCurrency,
         branch: getBranchName(accountInfo?.branchId) || "",
         branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
@@ -293,7 +293,7 @@ export const ReviewSubmit = () => {
           : "N/A",
         cv: prospectDocuments?.additionalStakeholderDocument?.cv?.name ? "Provided" : "N/A",
         sourceOfIncomeTradeLicense: prospectDocuments?.additionalStakeholderDocument?.tradeLicense
-          .name
+          ?.name
           ? "Provided"
           : "N/A"
       };
