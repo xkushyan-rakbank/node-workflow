@@ -5,6 +5,7 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import { useMediaQuery } from "@material-ui/core";
+import { is } from "date-fns/locale";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -42,7 +43,7 @@ export const SectionSteps = () => {
     "Account activation",
   ];
   const classes = useStyles();
-  const isVertical = useMediaQuery("(max-width: 767px");
+  const isVertical = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
   return (
     <div>
       <div className={classes.box}>

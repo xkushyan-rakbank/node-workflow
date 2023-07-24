@@ -332,7 +332,9 @@ export const useStyles = makeStyles((theme) => ({
     position: "fixed",
     top: 40,
     width: "100%",
-    zIndex: 137,
+    [theme.breakpoints.only("xs")]: {
+      zIndex: 137,
+    },
   },
   accountInfoNavLinks: {
     display: "flex",
