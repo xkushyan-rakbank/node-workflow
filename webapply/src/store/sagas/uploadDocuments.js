@@ -95,7 +95,7 @@ export function createUploader(prospectId, data, source, headers) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
-    return () => {};
+    return () => { };
   });
   const onUploadProgress = ({ total, loaded }) => {
     const percentage = Math.round((loaded * 100) / total);
@@ -441,7 +441,10 @@ export function* uploadDocuments({ payload }) {
     // find the respective document section from documentList
     const documentSection = get(documentList, payload.documentSection);
     const index = payload.index;
-    const uploadedList = get(prospect, `documents.${payload.documentSection}`);
+    const uploadedList = get(
+      prospect,
+      `documents.${payload.saveProspectPath || payload.documentSection}`
+    );
     const newUplaodedLsit = uploadedList && uploadedList.length ? uploadedList : null;
     const documentSectionArray =
       documentSection && documentSection.length ? documentSection : documentSection.documents;
@@ -481,7 +484,10 @@ export function* uploadDocuments({ payload }) {
     }
     if (uploadedDocuments.length) {
       yield put(
-        updateProspect({ [`prospect.documents.${payload.documentSection}`]: uploadedDocuments })
+        updateProspect({
+          [`prospect.documents.${payload.saveProspectPath ||
+            payload.documentSection}`]: uploadedDocuments
+        })
       );
     }
     payload.onSuccess();

@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Formik } from "formik";
-import { Grid } from "@material-ui/core";
+import { FieldArray, Formik } from "formik";
+import { Button, Grid, IconButton } from "@material-ui/core";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import PatternFormat from "react-number-format";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
@@ -14,8 +15,9 @@ import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants";
-import { getDocuments } from "../../../../../store/selectors/appConfig";
+import { getDocuments, getSignatories } from "../../../../../store/selectors/appConfig";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 const TextMask = ({ inputRef, ...rest }) => (
   <PatternFormat
@@ -42,10 +44,14 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails";
+  const signatoryName = useSelector(getSignatories)[0]?.fullName;
   const dispatch = useDispatch();
 
-  const documents =
-    useSelector(getDocuments)?.stakeholdersDocuments?.index_stakeholderName?.personalBackground
+  const tradeLicenceDocuments =
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.documents ?? null;
+
+  const sourceOfIncomeDocuments =
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.personalBankStatements
       ?.documents ?? null;
 
   const tradeLicenseKeyToCheck =
@@ -54,15 +60,14 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const proofOfIncomeKeyToCheck =
     "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.proofOfIncome";
 
-  const tradeLicense = useFindDocument(documents, tradeLicenseKeyToCheck);
-  const proofOfIncome = useFindDocument(documents, proofOfIncomeKeyToCheck);
-
+  const tradeLicense = useFindDocument(tradeLicenceDocuments, tradeLicenseKeyToCheck);
+  const proofOfIncome = useFindDocument(sourceOfIncomeDocuments, proofOfIncomeKeyToCheck);
   const initialValues = {
     sourceOfIncome: [""],
     IBANType: "",
     IBAN: "",
     companyNameforSOF: "",
-    proofOfIncome,
+    proofOfIncome: proofOfIncome || [""],
     tradeLicense
   };
 
@@ -73,18 +78,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
       .required(getRequiredMessage("IBAN"))
       .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
       .max(23, "IBAN must have a maximum of 23 characters"),
-    proofOfIncome: Yup.mixed()
-      .test("required", getRequiredMessage("Proof of income"), file => {
-        if (file) return true;
-        return false;
-      })
-      .test("fileSize", "The file is too large", file => {
-        return (
-          file &&
-          (file === true ||
-            (file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize))
-        );
-      }),
+
     companyNameforSOF: Yup.string().when("IBANType", {
       is: IBANType => IBANType === "BARO",
       then: Yup.string()
@@ -92,6 +86,21 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
     }),
+    proofOfIncome: Yup.array().of(
+      Yup.mixed()
+        .test("required", getRequiredMessage("Trade License Or COI"), file => {
+          if (file) return true;
+          return false;
+        })
+        .test("fileSize", "The file is too large", file => {
+          return (
+            file &&
+            (file === true ||
+              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+          );
+        })
+    ),
     tradeLicense: Yup.mixed().when("IBANType", {
       is: IBANType => IBANType === "BARO",
       then: Yup.mixed()
@@ -99,48 +108,63 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
         .test("fileSize", "The file is too large", file => {
           return (
             file &&
-            (file === true ||
-              (file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize))
+            (tradeLicense ||
+              file === true ||
+              (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
           );
         })
     })
   });
 
-  const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      let path = "";
-      if (name === "proofOfIncome") {
-        path =
-          "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.proofOfIncome";
-      } else {
-        path =
-          "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense";
-      }
-      setIsUploading({ [name]: true });
-      dispatch(
-        uploadDocuments({
-          docs: {
-            [path]: file
-          },
-          documentSection: "stakeholdersDocuments.index_stakeholderName.documents",
-          onSuccess: () => {
-            let fileStore = new File([file], file.name, { type: file.type });
-            fileStore.preview = URL.createObjectURL(fileStore);
-            fileStore = { ...fileStore, ...{ name: fileStore.name, size: fileStore.size } };
+  const handleDropFile = useCallback(
+    (acceptedFiles, name, touched, setTouched, setFieldValue, index) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        let path = "";
+        if (name.includes("proofOfIncome")) {
+          path =
+            "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.proofOfIncome";
+        } else {
+          path =
+            "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense";
+        }
+        let proofDoc = { ...isUploading };
+        proofDoc[index] = true;
+        setIsUploading(proofDoc);
+        dispatch(
+          uploadDocuments({
+            docs: {
+              [path]: file
+            },
+            documentSection: "stakeholdersDocuments.index_stakeholderName.documents",
+            onSuccess: () => {
+              let fileStore = new File([file], file.name, { type: file.type });
+              fileStore.preview = URL.createObjectURL(fileStore);
+              fileStore = {
+                ...fileStore,
+                ...{ fileName: fileStore.name, fileSize: fileStore.size }
+              };
 
-            setFieldValue(name, fileStore);
-            setTouched({ ...touched, ...{ [name]: true } });
-            setIsUploading({ [name]: false });
-          },
-          onFailure: () => {
-            setFieldValue(name, "");
-            setIsUploading({ [name]: false });
-          }
-        })
-      );
-    }
-  }, []);
+              setFieldValue(name, fileStore);
+              setTouched({ ...touched, ...{ [name]: true } });
+              proofDoc[index] = false;
+              setIsUploading(proofDoc);
+            },
+            onFailure: () => {
+              setFieldValue(name, "");
+              proofDoc[index] = false;
+              setIsUploading(proofDoc);
+            },
+            index,
+            saveProspectPath: `stakeholdersDocuments.0_${[
+              signatoryName
+            ]}.personalBankStatements.documents`
+          })
+        );
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     dispatch(initDocumentUpload());
@@ -148,12 +172,39 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
 
   const initialIsValid = sourceOfIncomeValidationSchema.isValidSync(initialValues);
 
+  const removeProofOfIncome = (indexToRemove, values, length, setFieldValue) => {
+    const isMinLength = length === 1;
+
+    if (setFieldValue) {
+      setFieldValue(`proofOfIncome[${indexToRemove}]`, null);
+    } else {
+      isMinLength && setFieldValue("proofOfIncome", [""]);
+      values["proofOfIncome"].splice(indexToRemove, 1);
+      dispatch(
+        updateProspect({
+          "prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome": isMinLength
+            ? []
+            : values["proofOfIncome"]
+        })
+      );
+    }
+    const path = `prospect.documents.stakeholdersDocuments.0_${[
+      signatoryName
+    ]}.personalBankStatements.documents`;
+    sourceOfIncomeDocuments.splice(indexToRemove, 1);
+    dispatch(
+      updateProspect({
+        [path]: isMinLength ? [] : sourceOfIncomeDocuments
+      })
+    );
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={sourceOfIncomeValidationSchema}
       isInitialValid={initialIsValid}
-      onSubmit={() => {}}
+      onSubmit={() => { }}
     >
       {({ values, setFieldValue, touched, setTouched, isValid, ...props }) => {
         const IsValidForm = sourceOfIncomeValidationSchema.isValidSync(values);
@@ -256,35 +307,79 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                 <Grid item sm={12} xs={12}>
                   <div className={classes.horizontalLine} />
                 </Grid>
-                <Grid item sm={12} xs={12}>
-                  <Field
-                    name="proofOfIncome"
-                    path="prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome"
-                    type="file"
-                    fieldDescription={"Proof of income"}
-                    helperText={
-                      "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                    }
-                    accept={TL_ACCEPTED_FILE_TYPES}
-                    fileSize={TL_COI_FILE_SIZE}
-                    component={Upload}
-                    showInfoIcon={true}
-                    // infoTitle={"You can select multiple options"}
-                    // infoIcon={true}
-                    onDrop={acceptedFile =>
-                      handleDropFile(
-                        acceptedFile,
-                        "proofOfIncome",
-                        touched,
-                        setTouched,
-                        setFieldValue
-                      )
-                    }
-                    file={values.proofOfIncome}
-                    onDelete={() => setFieldValue("proofOfIncome", "")}
-                    content={values?.proofOfIncome?.name}
-                    isUploading={isUploading["proofOfIncome"]}
-                  />
+                <Grid container spacing={3} style={{ marginBottom: "20px" }}>
+                  <FieldArray name="proofOfIncome">
+                    {({ push, remove, arrayHelpers }) => (
+                      <Grid item sm={12} xs={12}>
+                        {values.proofOfIncome.map((file, index) => (
+                          <div key={index} style={{ marginBottom: "20px" }}>
+                            <Field
+                              name={`proofOfIncome[${index}]`}
+                              // eslint-disable-next-line max-len
+                              path={`prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome[${index}]`}
+                              type="file"
+                              fieldDescription={"Proof of income"}
+                              helperText={
+                                "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
+                              }
+                              accept={TL_ACCEPTED_FILE_TYPES}
+                              fileSize={TL_COI_FILE_SIZE}
+                              component={Upload}
+                              showInfoIcon={true}
+                              // infoTitle={"You can select multiple options"}
+                              // infoIcon={true}
+                              onDrop={acceptedFile =>
+                                handleDropFile(
+                                  acceptedFile,
+                                  `proofOfIncome[${index}]`,
+                                  touched,
+                                  setTouched,
+                                  setFieldValue,
+                                  index
+                                )
+                              }
+                              file={values.proofOfIncome[index]}
+                              onDelete={() =>
+                                removeProofOfIncome(
+                                  index,
+                                  values,
+                                  values.proofOfIncome.length,
+                                  setFieldValue
+                                )
+                              }
+                              content={values?.proofOfIncome[index]?.fileName}
+                              isUploading={isUploading[index]}
+                            />
+                            {index > 0 && (
+                              <IconButton
+                                aria-label="delete"
+                                style={{
+                                  padding: 0,
+                                  marginTop: "5px",
+                                  width: "100%",
+                                  justifyContent: "end"
+                                }}
+                                onClick={() => removeProofOfIncome(index, values)}
+                              >
+                                <HighlightOffIcon />
+                              </IconButton>
+                            )}
+                          </div>
+                        ))}
+                        {values.proofOfIncome.length < 3 && (
+                          <Button
+                            color="primary"
+                            variant="outlined"
+                            className={classes.addMoreButton}
+                            onClick={() => push("")}
+                            disabled={!values.proofOfIncome[0]}
+                          >
+                            + Add more
+                          </Button>
+                        )}
+                      </Grid>
+                    )}
+                  </FieldArray>
                 </Grid>
               </Grid>
             </>

@@ -12,7 +12,12 @@ import { Upload } from "../../../../../components/Upload";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 
 import { useStyles } from "../../styled";
-import { getDatalist, getDocuments, getProspect } from "../../../../../store/selectors/appConfig";
+import {
+  getDatalist,
+  getDocuments,
+  getProspect,
+  getSignatories
+} from "../../../../../store/selectors/appConfig";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { NAME_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
@@ -28,9 +33,10 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
   const [isUploading, setIsUploading] = useState(false);
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.backgroundDetails";
+  const signatoryName = useSelector(getSignatories)[0]?.fullName;
 
   const documents =
-    useSelector(getDocuments)?.stakeholdersDocuments?.index_stakeholderName?.personalBackground
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.personalBackground
       ?.documents ?? null;
 
   const documentKeyToCheck =
@@ -99,7 +105,10 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
           onFailure: () => {
             setFieldValue(name, "");
             setIsUploading({ [name]: false });
-          }
+          },
+          saveProspectPath: `stakeholdersDocuments.0_${[
+            signatoryName
+          ]}.personalBackground.documents`
         })
       );
     }
