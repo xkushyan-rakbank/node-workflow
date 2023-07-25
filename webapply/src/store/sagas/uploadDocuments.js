@@ -32,7 +32,8 @@ import {
   getOrgKYCDetails,
   getDocumentsList,
   getDocumentUplaoderjwtToken,
-  getDocuploaderHeader
+  getDocuploaderHeader,
+  getProspect
 } from "../selectors/appConfig";
 import { getProspectStatus } from "../selectors/searchProspect";
 import {
@@ -436,17 +437,21 @@ export function* uploadDocuments({ payload }) {
     const headers = yield select(getDocuploaderHeader);
     const token = yield select(getDocumentUplaoderjwtToken);
     const documentList = yield select(getDocumentsList);
+    const prospect = yield select(getProspect);
     // find the respective document section from documentList
     const documentSection = get(documentList, payload.documentSection);
-
-    const documentSectionArray = documentSection.length
-      ? documentSection
-      : documentSection.documents;
-    const uploadedDocuments = [];
+    const index = payload.index;
+    const uploadedList = get(prospect, `documents.${payload.documentSection}`);
+    const newUplaodedLsit = uploadedList && uploadedList.length ? uploadedList : null;
+    const documentSectionArray =
+      documentSection && documentSection.length ? documentSection : documentSection.documents;
+    const uploadedDocuments = newUplaodedLsit || [];
     for (let docPath in payload.docs) {
       const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
+        const documentUniq =
+          index !== undefined ? `${docItem.documentTitle}-${index}` : `${docItem.documentTitle}`;
         let generateName = [
           BBG_COMPANY_INFO_MODULEID,
           prospectId,
@@ -455,7 +460,7 @@ export function* uploadDocuments({ payload }) {
         ];
         const fileData = {
           documentType: fieldData.type,
-          documentTitle: docItem.documentTitle,
+          documentTitle: documentUniq,
           fileName: generateName.join("_"),
           fileFormat: fieldData.type,
           fileSize: fieldData.size,
@@ -464,11 +469,12 @@ export function* uploadDocuments({ payload }) {
         //await documents.upload(fileData, token, prospectId, headers);
         const response = yield call(documents.upload, fileData, token, prospectId, headers);
         uploadedDocuments.push({
-          documentKey: docItem.documentTitle,
+          documentKey: documentUniq,
           documentType: fieldData.type,
           fileFormat: fieldData.type,
           fileName: response.data.fileName,
           fileDescription: fieldData.name,
+          fileSize: fieldData.size,
           submittedDt: new Date().toISOString()
         });
       }

@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 
 export const useFindDocument = (documentList, documentKey) => {
-  const foundDocument = useMemo(() => documentList?.some(doc => doc.documentKey === documentKey), [
-    documentList,
-    documentKey
-  ]);
+  const foundDocument = useMemo(
+    () => documentList?.filter(doc => doc.documentKey?.includes(documentKey)),
+    [documentList, documentKey]
+  );
 
-  return foundDocument || "";
+  return foundDocument?.length > 0 ? foundDocument : [""];
 };

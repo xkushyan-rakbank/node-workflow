@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
-import { Formik } from "formik";
+import { Button, Grid } from "@material-ui/core";
+import { FieldArray, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import IconButton from "@material-ui/core/IconButton";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import {
@@ -25,10 +27,12 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getV
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { getDocuments } from "../../../../../store/selectors/appConfig";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
   const [isVirtualAddress, setIsVirtualAddress] = useState(true);
+  const [isUploading, setIsUploading] = useState({});
   const dispatch = useDispatch();
   const handleAddressTypeSelection = event => {
     if (event.target.value !== "virtual") {
@@ -42,7 +46,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
   const documentKeyToCheck =
     "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof";
 
-  const addressProof = useFindDocument(documents, documentKeyToCheck);
+  const addressProof = useFindDocument(documents, documentKeyToCheck) || [""];
 
   const initialValues = {
     typeOfAddress: "virtual",
@@ -80,44 +84,87 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
       .max(10, "Maximum ${max} characters allowed")
       .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
     emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City")),
-    addressProof: Yup.mixed()
-      .test("required", getRequiredMessage("Proof of address"), file => {
-        if (file) return true;
-        return false;
-      })
-      .test("fileSize", "The file is too large", file => {
-        return (
-          file &&
-          (file === true ||
-            (file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize))
-        );
-      })
+    addressProof: Yup.array().of(
+      Yup.mixed()
+        .test("required", getRequiredMessage("Proof of Address"), file => {
+          if (file) return true;
+          return false;
+        })
+        .test("fileSize", "The file is too large", file => {
+          return (
+            file &&
+            (file === true ||
+              (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
+          );
+        })
+    )
   });
 
   useEffect(() => {
     dispatch(initDocumentUpload());
   }, []);
 
-  const handleDropFile = useCallback((acceptedFiles, name, touched, setTouched, setFieldValue) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      let fileStore = new File([file], file.name, { type: file.type });
-      fileStore.preview = URL.createObjectURL(fileStore);
-      fileStore = { ...fileStore, ...{ name: fileStore.name, size: fileStore.size } };
-      setFieldValue(name, fileStore);
-      setTouched({ ...touched, ...{ [name]: true } });
-      dispatch(
-        uploadDocuments({
-          docs: {
-            "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof": file
-          },
-          documentSection: "companyAddressProof.documents",
-          onSuccess: () => () => {},
-          onFailure: () => () => {}
-        })
-      );
-    }
-  }, []);
+  const handleDropFile = useCallback(
+    (acceptedFiles, name, touched, setTouched, setFieldValue, index) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const path = "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof";
+
+        let proofDoc = { ...isUploading };
+        proofDoc[index] = true;
+        setIsUploading(proofDoc);
+        dispatch(
+          uploadDocuments({
+            docs: {
+              [path]: file
+            },
+            documentSection: "companyAddressProof.documents",
+            onSuccess: () => {
+              let fileStore = new File([file], file.name, { type: file.type });
+              fileStore.preview = URL.createObjectURL(fileStore);
+              fileStore = {
+                ...fileStore,
+                ...{ fileName: fileStore.name, fileSize: fileStore.size }
+              };
+
+              setFieldValue(name, fileStore);
+              setTouched({ ...touched, ...{ [name]: true } });
+              proofDoc[index] = false;
+              setIsUploading(proofDoc);
+            },
+            onFailure: () => {
+              setFieldValue(name, "");
+              proofDoc[index] = false;
+              setIsUploading(proofDoc);
+            },
+            index
+          })
+        );
+      }
+    },
+    []
+  );
+  const addAddressProofDocument = (arrayHelpers, arrayLength) => {
+    arrayHelpers.insert(arrayLength, "");
+  };
+
+  const removeAddressProofDocument = (indexToRemove, values, length, setFieldValue) => {
+    const isMinLength = length === 1;
+
+    isMinLength && setFieldValue("addressProof", [""]);
+
+    values["addressProof"].splice(indexToRemove, 1);
+    documents.splice(indexToRemove, 1);
+
+    dispatch(
+      updateProspect({
+        "prospect.documents.companyAddressProof.documents": isMinLength ? [] : documents,
+        "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof": isMinLength
+          ? []
+          : values["addressProof"]
+      })
+    );
+  };
 
   return (
     <Formik
@@ -129,6 +176,11 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
     >
       {({ values, setFieldValue, touched, setTouched, isValid, dirty, ...props }) => {
         const IsValidForm = mailingAddressSchema.isValidSync(values);
+        const isSingleDocument = values.addressProof.length === 1;
+        const hasFileName = values.addressProof[0]?.fileName;
+
+        const isAddMoreButtonDisabled = isSingleDocument && !hasFileName;
+
         return (
           <div>
             <Accordion
@@ -231,29 +283,80 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
                   />
                 </Grid>
                 <Grid item sm={12}>
-                  <Field
+                  <FieldArray
                     name="addressProof"
-                    path="prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof"
-                    type="file"
-                    fieldDescription="Proof of Company Address"
-                    helperText={
-                      "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                    }
-                    accept={TL_ACCEPTED_FILE_TYPES}
-                    fileSize={TL_COI_FILE_SIZE}
-                    onDrop={acceptedFile =>
-                      handleDropFile(
-                        acceptedFile,
-                        "addressProof",
-                        touched,
-                        setTouched,
-                        setFieldValue
-                      )
-                    }
-                    file={values.addressProof}
-                    onDelete={() => setFieldValue("addressProof", "")}
-                    component={Upload}
-                    content={values?.addressProof?.name}
+                    render={arrayHelpers => (
+                      <>
+                        {values.addressProof?.map((item, index) => {
+                          return (
+                            <Grid
+                              item
+                              style={{
+                                textAlign: "right",
+                                marginBottom: index === 0 ? "25px" : ""
+                              }}
+                            >
+                              <Field
+                                name={`addressProof[${index}]`}
+                                path={`prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof[${index}]`}
+                                type="file"
+                                fieldDescription="Proof of Company Address"
+                                helperText={
+                                  "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
+                                }
+                                accept={TL_ACCEPTED_FILE_TYPES}
+                                fileSize={TL_COI_FILE_SIZE}
+                                onDrop={acceptedFile =>
+                                  handleDropFile(
+                                    acceptedFile,
+                                    `addressProof[${index}]`,
+                                    touched,
+                                    setTouched,
+                                    setFieldValue,
+                                    index
+                                  )
+                                }
+                                file={values.addressProof[index]?.fileName}
+                                onDelete={() =>
+                                  removeAddressProofDocument(
+                                    index,
+                                    values,
+                                    values.addressProof.length,
+                                    setFieldValue
+                                  )
+                                }
+                                // () => setFieldValue(`addressProof[${index}]`, null)}
+                                component={Upload}
+                                content={values.addressProof[index]?.fileName}
+                                isUploading={isUploading[index]}
+                              />
+                              {values.addressProof.length > 1 && index > 0 && (
+                                <IconButton
+                                  aria-label="delete"
+                                  style={{ padding: 0, marginTop: "5px" }}
+                                  onClick={() => removeAddressProofDocument(index, values)}
+                                >
+                                  <HighlightOffIcon />
+                                </IconButton>
+                              )}
+                            </Grid>
+                          );
+                        })}
+                        {values.addressProof.length < 3 && (
+                          <Button
+                            disabled={isAddMoreButtonDisabled}
+                            color="primary"
+                            variant="outlined"
+                            className={classes.addMoreButton}
+                            onClick={() =>
+                              addAddressProofDocument(arrayHelpers, values.addressProof.length)
+                            }
+                          >
+                            + Add more
+                          </Button>
+                        )}
+                      </>
+                    )}
                   />
                 </Grid>
               </Grid>
