@@ -11,6 +11,7 @@ export const PROSPECT_AUTO_SAVE = "PROSPECT_AUTO_SAVE";
 export const SET_SCREENING_ERROR = "SET_SCREENING_ERROR";
 export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
+export const PROSPECT_SAVE_ONCLICK = "PROSPECT_SAVE_ONCLICK";
 
 export const sendProspectToAPI = (saveType = NEXT, actionType = SAVE) => {
   return { type: SEND_PROSPECT_TO_API, payload: { saveType, actionType } };
@@ -33,7 +34,18 @@ export const sendProspectToAPIPromisify = (
   return appendGaEventToAction(action, gaEvent);
 };
 
-export const sendProspectToAPISuccess = isScreeningError => {
+export const prospectSaveOnClickPromisfy = (saveType = NEXT, gaEvent = null, actionType = SAVE) => {
+  const action = {
+    type: PROSPECT_SAVE_ONCLICK,
+    [WAIT_FOR_ACTION]: SEND_PROSPECT_TO_API_SUCCESS,
+    [ERROR_ACTION]: SEND_PROSPECT_TO_API_FAIL,
+    [CALLBACK_ARGUMENT]: (action) => action.payload,
+    payload: { saveType, actionType },
+  };
+
+  return appendGaEventToAction(action, gaEvent);
+};
+export const sendProspectToAPISuccess = (isScreeningError) => {
   return { type: SEND_PROSPECT_TO_API_SUCCESS, payload: isScreeningError };
 };
 
@@ -55,6 +67,10 @@ export const setScreeningError = error => {
 
 export const resetScreeningError = () => {
   return { type: RESET_SCREENING_ERROR };
+};
+
+export const prospectSaveOnClick = () => {
+  return { type: PROSPECT_SAVE_ONCLICK };
 };
 
 export const sendProspectRequest = (

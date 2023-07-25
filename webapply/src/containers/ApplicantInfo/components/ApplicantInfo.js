@@ -33,9 +33,10 @@ const useStyles = makeStyles(theme => ({
   header: {
     marginBottom: "16px",
     [theme.breakpoints.up("sm")]: {
-      marginBottom: "40px"
-    }
-  }
+      marginBottom: "40px",
+      paddingTop: "40px",
+    },
+  },
 }));
 
 const aplicantInfoSchema = Yup.object({

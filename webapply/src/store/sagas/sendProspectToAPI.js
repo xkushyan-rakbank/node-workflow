@@ -21,7 +21,8 @@ import {
   PROSPECT_AUTO_SAVE,
   sendProspectRequest,
   SEND_PROSPECT_REQUEST,
-  setScreeningError
+  setScreeningError,
+  PROSPECT_SAVE_ONCLICK,
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
 import {
@@ -125,37 +126,66 @@ export function* sendProspectToAPISaga({ payload: { saveType, actionType, step }
   }
 }
 
+function* saveProspectData() {
+  try {
+    const newProspect = yield select(getProspect);
+    const screeningError = yield select(getScreeningError);
+    const isScreeningError = screeningError.error;
+    const viewId = newProspect.viewId || newProspect.applicationInfo.viewId;
+    console.log("this is current view id", viewId);
+    const authToken = yield select(getAuthToken);
+
+    const isSaveEnabled =
+      !isScreeningError &&
+      authToken &&
+      [
+        VIEW_IDS.CompanyInfo,
+        VIEW_IDS.StakeholdersInfoPreview,
+        VIEW_IDS.ConsentInfo,
+        VIEW_IDS.CompanyAdditionalInfo,
+        VIEW_IDS.StakeholdersAdditionalInfo,
+        VIEW_IDS.AccountServices,
+        VIEW_IDS.FinalQuestions,
+        VIEW_IDS.UploadDocuments,
+        VIEW_IDS.SelectServices,
+      ].includes(viewId);
+
+    return { isSaveEnabled, newProspect };
+  } catch (e) {
+    log(e);
+    return { isSaveEnabled: false, newProspect: null };
+  }
+}
+
+export function* prospectSaveOnClick() {
+  try {
+    const { isSaveEnabled, newProspect } = yield call(saveProspectData);
+    if (isSaveEnabled && newProspect) {
+      yield put(sendProspectRequest(newProspect, AUTO));
+    }
+
+    return { isSaveEnabled, newProspect };
+  } catch (e) {
+    log(e);
+  }
+}
+
 export function* prospectAutoSave() {
   try {
     while (true) {
       yield delay(AUTO_SAVE_INTERVAL);
 
-      const newProspect = yield select(getProspect);
-      const screeningError = yield select(getScreeningError);
-      const isScreeningError = screeningError.error;
-      const viewId = newProspect.viewId || newProspect.applicationInfo.viewId;
-      const authToken = yield select(getAuthToken);
-
-      const isAutoSaveEnabled =
-        !isScreeningError &&
-        authToken &&
-        [
-          VIEW_IDS.CompanyInfo,
-          VIEW_IDS.StakeholdersInfoPreview,
-          VIEW_IDS.ConsentInfo,
-          VIEW_IDS.CompanyAdditionalInfo,
-          VIEW_IDS.StakeholdersAdditionalInfo,
-          VIEW_IDS.AccountServices,
-          VIEW_IDS.FinalQuestions,
-          VIEW_IDS.UploadDocuments,
-          VIEW_IDS.SelectServices
-        ].includes(viewId);
+      const { isSaveEnabled, newProspect } = yield call(saveProspectData);
+      const isAutoSaveEnabled = isSaveEnabled;
 
       if (isAutoSaveEnabled) {
+        console.log("saving function before call");
         yield put(sendProspectRequest(newProspect, AUTO));
+        console.log("auto save saved successfully");
       }
     }
   } catch (e) {
+    console.log("auto save error", e);
     log(e);
   }
 }
@@ -306,6 +336,7 @@ export default function* sendProspectToAPISagas() {
   yield all([
     takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
     takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
-    fork(watchRequest)
+    takeLatest(PROSPECT_SAVE_ONCLICK, prospectSaveOnClick),
+    fork(watchRequest),
   ]);
 }

@@ -136,7 +136,7 @@ export const useStyles = makeStyles(theme => ({
     "& ul": {
       margin: 0,
       paddingLeft: 0,
-      padding: "5px 0 0 25px",
+      padding: "17px 0 0 25px",
       marginLeft: "20px",
       direction: "rtl",
       [theme.breakpoints.up("sm")]: {
@@ -222,6 +222,11 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "36px",
     fontWeight: 600,
     fontFamily: "Open Sans",
-    whiteSpace: "pre-line"
-  }
+    whiteSpace: "pre-line",
+  },
+  saveAndCloseMobile: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
 }));

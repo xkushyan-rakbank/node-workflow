@@ -5,6 +5,8 @@ export const INITIAL_SECTION_POSITION = 0;
 export const RAK_STARTER_CONFIRM_MESSAGE =
   "Please note that RAKstarter account is only available for business with a length of business less than a year. Would you like to learn more about RAKstarter account?";
 
+export const RAK_SAVE_CLOSE_CONFIRM_MESSAGE =
+  "Are you sure you want to save the changes and exit the application?";
 export const accountsDataRows = [
   {
     info: ["Monthly Average ", "Credit Balance"],

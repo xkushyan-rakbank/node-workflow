@@ -16,12 +16,14 @@ import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import { useStyles } from "./styled";
 
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
+import SaveAndClose from "../SaveAndClose";
+import { VIEW_IDS } from "../../constants";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
 export const FormNavigationComponent = () => {
   const {
-    location: { pathname }
+    location: { pathname },
   } = useHistory();
   const navContext = useContext(FormNavigationContext);
   const [isSwitcherShow, setIsSwitcherShow] = useState(false);
@@ -31,8 +33,14 @@ export const FormNavigationComponent = () => {
     isSmallBg: checkIsShowSmallBg(pathname),
     isOpen: isSwitcherShow,
     accountsComparisonPage: routes.quickapplyLanding === pathname,
-    smallMenu: checkIsShowSmallMenu(pathname)
+    smallMenu: checkIsShowSmallMenu(pathname),
   });
+
+  const saveScreensToExclude = [VIEW_IDS.StakeholdersInfo];
+
+  const showSaveClose = Object.values(VIEW_IDS).some(
+    (screen) => pathname.includes(screen) && !saveScreensToExclude.includes(screen)
+  );
 
   if (!navContext) {
     return null;
@@ -43,15 +51,15 @@ export const FormNavigationComponent = () => {
     isChatVisible,
     navigationSteps = [],
     isCollapsible = true,
-    isAgentPage = false
+    isAgentPage = false,
   ] = navContext;
 
-  const activeStep = navigationSteps.find(step =>
-    [step.path, ...(step.relatedPath ?? "")].some(path => pathname === path)
+  const activeStep = navigationSteps.find((step) =>
+    [step.path, ...(step.relatedPath ?? "")].some((path) => pathname === path)
   );
   const activeStepIndex = (activeStep || {}).step;
 
-  const hideKeyboardOnExpansion = e => {
+  const hideKeyboardOnExpansion = (e) => {
     if (!["textarea", "text"].includes(e.target.tagName.toLowerCase())) {
       document.activeElement && document.activeElement.blur();
     }
@@ -74,13 +82,14 @@ export const FormNavigationComponent = () => {
             What banking option do you prefer?
           </Typography>
         </IslamicSwitcher>
+
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (
           <>
             {isAgentPage ? (
               <ul>
-                {navigationSteps.map(step => (
+                {navigationSteps.map((step) => (
                   <FormNavigationAgentStep
                     path={step.path}
                     key={step.step}
@@ -92,17 +101,24 @@ export const FormNavigationComponent = () => {
                 ))}
               </ul>
             ) : (
-              <ul>
-                {navigationSteps.map(step => (
-                  <FormNavigationStep
-                    key={step.step}
-                    title={step.title}
-                    activeStep={activeStepIndex === step.step}
-                    isDisplayProgress={navigationSteps.length > 1}
-                    filled={activeStepIndex > step.step}
-                  />
-                ))}
-              </ul>
+              <>
+                {showSaveClose && (
+                  <div className={classes.saveAndCloseMobile}>
+                    <SaveAndClose />
+                  </div>
+                )}
+                <ul>
+                  {navigationSteps.map((step) => (
+                    <FormNavigationStep
+                      key={step.step}
+                      title={step.title}
+                      activeStep={activeStepIndex === step.step}
+                      isDisplayProgress={navigationSteps.length > 1}
+                      filled={activeStepIndex > step.step}
+                    />
+                  ))}
+                </ul>
+              </>
             )}
           </>
         )}

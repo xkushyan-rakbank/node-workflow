@@ -13,6 +13,8 @@ import { LayoutContext } from "../LayoutProvider";
 import { useStyles } from "./styled";
 import routes from "../../../routes";
 import { HeaderButtonGroup } from "../../../components/HeaderButtonGroup";
+import SaveAndClose from "../../../components/SaveAndClose";
+
 
 export const FormLayoutComponent = ({
   screeningError,
@@ -34,6 +36,12 @@ export const FormLayoutComponent = ({
     isSmallContentWidth: !checkIsShowSmallMenu(pathname)
   });
 
+  const saveScreensToExclude = [VIEW_IDS.StakeholdersInfo];
+
+  const showSaveClose = Object.values(VIEW_IDS).some(
+    (screen) => pathname.includes(screen) && !saveScreensToExclude.includes(screen)
+  );
+
   return pathname === routes.quickapplyLanding || pathname === "/" ? (
     <>{children}</>
   ) : (
@@ -41,6 +49,7 @@ export const FormLayoutComponent = ({
       <FormNavigation />
       <div className={classes.formWrapper}>
         <div className={classes.formInner}>
+          {showSaveClose && <SaveAndClose />}
           {pathname.includes("application-overview") && <HeaderButtonGroup />}
 
           <div className={classes.mainContainer}>
