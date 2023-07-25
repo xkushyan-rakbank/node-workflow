@@ -247,7 +247,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                 multiline
                 minRows="9"
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 2000, minLength: 100 }
                 }}
                 component={Input}
                 fieldDescription={

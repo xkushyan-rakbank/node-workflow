@@ -17,6 +17,7 @@ import { InformationSection } from "./components/InformationSection";
 import {
   getDatalist,
   getDocuments,
+  getIsIslamicBanking,
   getProspect,
   getSignatories
 } from "../../store/selectors/appConfig";
@@ -27,6 +28,7 @@ import { ProductInformationReview } from "./components/ProductInformationReview"
 import { OverlayLoader } from "../../components/Loader";
 import { useViewId } from "../../utils/useViewId";
 import { useFindDocument } from "../../utils/useFindDocument";
+import { rakValuePackages } from "../../constants";
 
 export const ReviewSubmit = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -47,12 +49,15 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     branchCity: branchCityList,
     emirateCity: emirateCityList,
     internationalBankAccountNumber: internationalBankAccountNumberList,
-    qualification: qualificationList
+    qualification: qualificationList,
+    TINReason: TINReasonList,
+    islamicIndustry: islamicIndustryList
   } = useSelector(getDatalist);
 
   const prospect = useSelector(getProspect);
   const [displayFields, setDisplayFields] = useState({});
   const signatoryName = useSelector(getSignatories)[0]?.fullName;
+  const isIslamicBanking = useSelector(getIsIslamicBanking);
 
   const cvDocument =
     useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.personalBackground
@@ -142,12 +147,13 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const getIndustrySubIndustryText = useCallback(
     (industryCode, subIndustryCode) => {
       if (industryCode && subIndustryCode) {
-        const industry = industryList?.find(industry => industry.code === industryCode);
+        const industryType = isIslamicBanking ? islamicIndustryList : industryList;
+        const industry = industryType?.find(industry => industry.code === industryCode);
         const subCategory = industry?.subGroup.find(subCat => subCat.code === subIndustryCode);
-        return `${industry?.displayText}, ${subCategory?.displayText}`;
+        return industry ? `${industry?.displayText}, ${subCategory?.displayText}` : "";
       }
     },
-    [displayFields, industryList]
+    [displayFields, industryList, islamicIndustryList, isIslamicBanking]
   );
 
   const getSourceOfIncome = useCallback(
@@ -200,6 +206,12 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     education => qualificationList?.find(city => city.code === education)?.displayText,
     [displayFields, qualificationList]
   );
+
+  const getTINReasonLabel = useCallback(
+    tinCode => TINReasonList?.find(tin => tin.code === tinCode)?.displayText,
+    [displayFields, TINReasonList]
+  );
+
   const initialValues = {};
 
   useEffect(() => {
@@ -220,15 +232,12 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         countryCode: applicantInfo?.countryCode,
         agentCode: applicantInfo?.roCode,
         partnerCode: applicantInfo?.allianceCode,
-        rakValuePackage: applicationInfo?.rakValuePackage,
+        rakValuePackage: applicationInfo?.rakValuePackage
+          ? rakValuePackages[(applicationInfo?.rakValuePackage)]
+          : "N/A",
         companyName: organizationInfo?.companyName,
         companyCategory: getCompanyCategoryDesc(organizationInfo?.companyCategory),
-        lineOfBusiness:
-          organizationInfo &&
-          getIndustrySubIndustryText(
-            organizationInfo?.industryMultiSelect[0]?.industry[0],
-            organizationInfo?.industryMultiSelect[0]?.subCategory[0]
-          ),
+        lineOfBusiness: organizationInfo && getIndustrySubIndustryText("LUX", "21"),
         licenseOrCOINumber: organizationInfo?.licenseOrCOINumber,
         licenseIssuingAuthority: getLicenseIssuingAuthorityText(
           organizationInfo?.licenseIssuingAuthority
@@ -314,7 +323,9 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         reasonForTINNotAvailable:
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
-            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
+            ? getTINReasonLabel(
+                signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
+              )
             : "N/A",
         remarks:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.remarks

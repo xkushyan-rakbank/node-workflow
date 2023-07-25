@@ -789,3 +789,10 @@ export const BUSINESS_RELATIONSHIPS = {
   CUSTOMER_LIMIT: 3,
   SUPPLIER_LIMIT: 3
 };
+export const RAKvalue_PLUS = "RAKvalue PLUS";
+export const RAKvalue_MAX = "RAKvalue MAX";
+
+export const rakValuePackages = {
+  [RAKvalue_PLUS]: "RAKvalue SME Plus",
+  [RAKvalue_MAX]: "RAKvalue SME MAX"
+};

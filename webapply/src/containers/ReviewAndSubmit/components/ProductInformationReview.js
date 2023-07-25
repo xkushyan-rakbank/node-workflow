@@ -51,10 +51,13 @@ export const ProductInformationReview = ({ fieldValues }) => {
               <label>Would you like to apply for a business debit card?</label>
               <p>{fieldValues.debitCardApplied}</p>
             </div>
-            <div className={classes.infoLabelValue}>
-              <label>Name on card:</label>
-              <p>{fieldValues.nameOnDebitCard}</p>
-            </div>
+            {fieldValues.debitCardApplied === "Yes" && (
+              <div className={classes.infoLabelValue}>
+                <label>Name on card:</label>
+                <p>{fieldValues.nameOnDebitCard}</p>
+              </div>
+            )}
+
             <div className={classes.infoLabelValue}>
               <label>Do you want a chequebook for the company?</label>
               <p>{fieldValues.chequeBookApplied}</p>
