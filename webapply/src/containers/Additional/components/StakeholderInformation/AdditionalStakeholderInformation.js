@@ -23,6 +23,7 @@ import { useStyles } from "../styled";
 import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
 import { getSignatories, isFieldTouched } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
+import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -40,6 +41,7 @@ export const AdditionalStakeholderInformation = ({
   const [isLoading, setIsLoading] = useState(false);
   const isTouched = useSelector(isFieldTouched("stakeholderTaxDeclarationSection"));
   const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
+  const isComeback = useSelector(getIsComeback);
   const { showSOF } = useSelector(getSignatories)[0];
 
   useEffect(() => {
@@ -103,7 +105,7 @@ export const AdditionalStakeholderInformation = ({
       >
         {props => {
           const isValidStakeholderInfo =
-            formValidationSchema.isValidSync(props.values) && isTouched;
+            formValidationSchema.isValidSync(props.values) && (isTouched || isComeback);
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>

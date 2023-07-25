@@ -22,6 +22,7 @@ import { useViewId } from "../../../../utils/useViewId";
 import { useStyles } from "../styled";
 import { updateCompanyAdditionalInfoStatus } from "../../../../store/actions/additionalInfo";
 import { isFieldTouched } from "../../../../store/selectors/appConfig";
+import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 
 export const AddCompanyInformation = ({
   companyName,
@@ -38,6 +39,7 @@ export const AddCompanyInformation = ({
 
   const isTouched = useSelector(isFieldTouched("isTaxDeclarationCompleted"));
   const { companyAdditionalInfoStatus } = useSelector(state => state.additionalInfo);
+  const isComeback = useSelector(getIsComeback);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -91,7 +93,8 @@ export const AddCompanyInformation = ({
         validateOnMount={true}
       >
         {({ isValid, ...props }) => {
-          const isValidForm = formValidationSchema.isValidSync(props.values) && isTouched;
+          const isValidForm =
+            formValidationSchema.isValidSync(props.values) && (isTouched || isComeback);
 
           return (
             <Form>

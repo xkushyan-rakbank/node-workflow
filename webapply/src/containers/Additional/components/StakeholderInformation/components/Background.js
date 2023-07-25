@@ -50,7 +50,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
     editedMothersMaidenName: signatoryInfo[0]?.mothersMaidenName || "",
     linkedInURL: "",
     backgroundInfo: "",
-    cv,
+    cv: cv[0] || "",
     common: ""
   };
 
@@ -97,7 +97,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
           onSuccess: () => {
             let fileStore = new File([file], file.name, { type: file.type });
             fileStore.preview = URL.createObjectURL(fileStore);
-            fileStore = { ...fileStore, ...{ name: fileStore.name, size: fileStore.size } };
+            fileStore = { ...fileStore, ...{ fileName: fileStore.name, fileSize: fileStore.size } };
             setFieldValue(name, fileStore);
             setTouched({ ...touched, ...{ [name]: true } });
             setIsUploading({ [name]: false });
@@ -220,7 +220,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                     handleDropFile(acceptedFile, "cv", touched, setTouched, setFieldValue)
                   }
                   file={values.cv}
-                  content={values?.cv?.name}
+                  content={values?.cv?.fileName}
                   onDelete={() => setFieldValue("cv", "")}
                   component={Upload}
                   isUploading={isUploading["cv"]}

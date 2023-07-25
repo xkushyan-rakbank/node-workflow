@@ -11,6 +11,7 @@ import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
 import { ICONS, Icon } from "../Icons";
 import { updateProspect } from "../../store/actions/appConfig";
 import { isFieldTouched } from "../../store/selectors/appConfig";
+import { getIsComeback } from "../../store/selectors/retrieveApplicantInfo";
 
 const useStyles = makeStyles(theme => ({
   accordionRoot: {
@@ -103,13 +104,13 @@ export const Accordion = ({
   isCompleted = false,
   subTitle,
   classes: extendedClasses,
-  setFormFieldValue = () => {}
+  setFormFieldValue = () => { }
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
   const classes = useStyles({ classes: extendedClasses });
   const [expanded, setExpanded] = useState("");
-
+  const isComeback = useSelector(getIsComeback);
   const transitionProps = {
     mountOnEnter: false,
     unmountOnExit: false
@@ -153,7 +154,9 @@ export const Accordion = ({
             </div>
             <div>
               {expanded === "isTaxDeclarationCompleted" && showDefinition}
-              {isCompleted && isTouched && <Check size="16px" className={classes.success} />}
+              {isCompleted && (isTouched || isComeback) && (
+                <Check size="16px" className={classes.success} />
+              )}
               <Icon
                 className={classes.expandIcon}
                 alt="collapse-icon"

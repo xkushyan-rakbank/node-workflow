@@ -69,7 +69,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     IBAN: "",
     companyNameforSOF: "",
     proofOfIncome: proofOfIncome || [""],
-    tradeLicense: tradeLicense[0] || {}
+    tradeLicense: tradeLicense[0] || ""
   };
 
   const sourceOfIncomeValidationSchema = Yup.object().shape({
