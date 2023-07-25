@@ -33,7 +33,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
   const classes = useStyles();
   const dispatch = useDispatch();
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
+  // const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.taxDetails";
 
@@ -108,7 +108,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
       initialValues={initialValues}
       validationSchema={stakeholderTaxInfoSchema}
       validateOnChange={false}
-      onSubmit={() => {}}
+      onSubmit={() => { }}
     >
       {({ values, setFieldValue, isValid, errors }) => {
         const IsValidForm = stakeholderTaxInfoSchema.isValidSync(values);
@@ -203,14 +203,14 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                 </Grid>
               )}
             </Accordion>
-            <TermsAndConditionsDialog
+            {/* <TermsAndConditionsDialog
               open={openDefinitionDialog}
               handleClose={() => setOpenDefinitionDialog(false)}
               editedFile={editedFile}
               height={height}
               pages={pages}
               scrollToEnd={false}
-            />
+            /> */}
           </>
         );
       }}
