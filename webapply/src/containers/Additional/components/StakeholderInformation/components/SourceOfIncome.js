@@ -48,7 +48,8 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const dispatch = useDispatch();
 
   const tradeLicenceDocuments =
-    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.documents ?? null;
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.additionalDocuments ??
+    null;
 
   const sourceOfIncomeDocuments =
     useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.personalBankStatements
@@ -68,7 +69,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     IBAN: "",
     companyNameforSOF: "",
     proofOfIncome: proofOfIncome || [""],
-    tradeLicense
+    tradeLicense: tradeLicense[0] || {}
   };
 
   const sourceOfIncomeValidationSchema = Yup.object().shape({
@@ -131,9 +132,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
         } else {
           path =
             "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense";
-          saveProspectPath = `stakeholdersDocuments.0_${[
-            signatoryName
-          ]}.additionalDocuments.documents`;
+          saveProspectPath = `stakeholdersDocuments.0_${[signatoryName]}.additionalDocuments`;
         }
         let proofDoc = { ...isUploading };
         proofDoc[index || name] = true;
