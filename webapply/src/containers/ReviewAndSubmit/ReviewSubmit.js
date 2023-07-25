@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import { format } from "date-fns";
 
 import routes from "../../routes";
-import { SUBMIT, formStepper } from "../../constants";
+import { NEXT, SUBMIT, formStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -72,7 +72,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const proofOfAddressProvided = useFindDocument(companyAddressProofDoc, addressProofKeyToCheck);
   const cvProvided = useFindDocument(
     cvDocument,
-    "prospect.prospectDocuments.additionalStakeholderDocument.cv"
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.backgroundDetails.cv"
   );
   const proofOfIncomeProvided = useFindDocument(
     proofOfIncomeDocuments,
@@ -270,11 +270,11 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         ),
         education:
           signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.highestEducationAttained
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.highestEducationAttained
             ? getqualificationLabel(
-              signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails
-                ?.highestEducationAttained
-            )
+                signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails
+                  ?.highestEducationAttained
+              )
             : "N/A",
         employmentType:
           signatoryInfo &&
@@ -283,13 +283,13 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           getSourceOfIncome(
             (signatoryInfo &&
               signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.sourceOfIncome) ||
-            []
+              []
           ) || "N/A",
         uaeIBAN:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBAN,
         IBANType:
           signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
             ? signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
             : "N/A",
         companyNameforSOF:
@@ -300,19 +300,19 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         countryOfTaxResidency:
           (signatoryInfo &&
             signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry ===
-            "no") ||
-            ""
+              "no") ||
+          ""
             ? getCountryLabel("AE")
             : getCountryLabel(
-              signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.country
-            ),
+                signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.country
+              ),
         TIN:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
             ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
             : "N/A",
         reasonForTINNotAvailable:
           signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
             ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
             : "N/A",
         remarks:
@@ -351,9 +351,11 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
   const handleReviewSubmit = useCallback(() => {
     setIsLoading(true);
-    return sendProspectToAPI(SUBMIT).then(
+    return sendProspectToAPI(NEXT, null, SUBMIT).then(
       isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.reviewAndSubmit, true);
+        if (!isScreeningError) {
+          pushHistory(routes.congratulations, true);
+        }
       },
       () => setIsLoading(false)
     );
@@ -368,7 +370,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
             info="If it's good to go, just hit Submit!"
             smallInfo
           />
-          <Formik initialValues={initialValues} onSubmit={() => { }} validateOnChange={true}>
+          <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={true}>
             {({ values, setFieldValue, ...props }) => {
               return (
                 <Form>

@@ -130,7 +130,7 @@ export const StakeholderAdditionalReview = ({
               </>
             )}
             <div className={classes.infoLabelValue}>
-              <label>Proof of income:</label> <p>{fieldValues.proofOfAddress}</p>
+              <label>Proof of income:</label> <p>{fieldValues.proofOfIncome}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Residential address:</label>

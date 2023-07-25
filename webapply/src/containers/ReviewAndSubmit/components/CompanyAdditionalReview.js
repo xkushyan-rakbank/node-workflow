@@ -80,7 +80,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
               <p>{fieldValues.mailingAddress && addressFormat(fieldValues.mailingAddress)}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Proof of address:</label> <p>{fieldValues.proofOfIncome}</p>
+              <label>Proof of address:</label> <p>{fieldValues.proofOfAddress}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Registered email:</label>
