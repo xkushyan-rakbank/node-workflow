@@ -12,7 +12,7 @@ import routes from "../../routes";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 import { ICONS, Icon } from "../../components/Icons";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { getProspectId } from "../../store/selectors/appConfig";
+import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
 
 export const CongratulationsScreen = () => {
   useFormNavigation([true, true, formStepper]);
@@ -23,10 +23,13 @@ export const CongratulationsScreen = () => {
   const classes = useStyles();
   const { submitted } = useIconsByAccount();
   const prospectId = useSelector(getProspectId);
+  const accountType = useSelector(getAccountType);
 
   const navigateToDashboard = () => {
     pushHistory(routes.MyApplications, true);
   };
+
+  const accountTypeLabel = accountType === "Current Account" ? "Current" : accountType;
 
   return (
     <>
@@ -39,7 +42,7 @@ export const CongratulationsScreen = () => {
       />
       <SectionTitleWithInfo
         title={"Congratulations!"}
-        info={"You've successfully submitted your RAKstarter account application."}
+        info={`You've successfully submitted your ${accountTypeLabel} account application.`}
       />
       <ContainedButton
         withRightArrow
