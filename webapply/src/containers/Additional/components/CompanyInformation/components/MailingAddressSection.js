@@ -84,20 +84,22 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
       .max(10, "Maximum ${max} characters allowed")
       .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
     emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City")),
-    addressProof: Yup.array().of(
-      Yup.mixed()
-        .test("required", getRequiredMessage("Proof of Address"), file => {
-          if (file) return true;
-          return false;
-        })
-        .test("fileSize", "The file is too large", file => {
-          return (
-            file &&
-            (file === true ||
-              (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
-          );
-        })
-    )
+    addressProof: Yup.array()
+      .of(
+        Yup.mixed()
+          .test("required", getRequiredMessage("Proof of Address"), file => {
+            if (file) return true;
+            return false;
+          })
+          .test("fileSize", "The file is too large", file => {
+            return (
+              file &&
+              (file === true ||
+                (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
+            );
+          })
+      )
+      .min(1, "At least one file is required")
   });
 
   useEffect(() => {
@@ -151,17 +153,24 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
   const removeAddressProofDocument = (indexToRemove, values, length, setFieldValue) => {
     const isMinLength = length === 1;
 
-    isMinLength && setFieldValue("addressProof", [""]);
+    if (setFieldValue) {
+      setFieldValue(`addressProof[${indexToRemove}]`, null);
+    } else {
+      isMinLength && setFieldValue("addressProof", [""]);
+      values["addressProof"].splice(indexToRemove, 1);
+      dispatch(
+        updateProspect({
+          "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof": isMinLength
+            ? []
+            : values["addressProof"]
+        })
+      );
+    }
 
-    values["addressProof"].splice(indexToRemove, 1);
     documents.splice(indexToRemove, 1);
-
     dispatch(
       updateProspect({
-        "prospect.documents.companyAddressProof.documents": isMinLength ? [] : documents,
-        "prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof": isMinLength
-          ? []
-          : values["addressProof"]
+        "prospect.documents.companyAddressProof.documents": isMinLength ? [] : documents
       })
     );
   };
