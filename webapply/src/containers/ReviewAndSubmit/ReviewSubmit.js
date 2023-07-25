@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Form, Formik } from "formik";
@@ -54,15 +55,15 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const signatoryName = useSelector(getSignatories)[0]?.fullName;
 
   const cvDocument =
-    useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.personalBackground
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.personalBackground
       ?.documents ?? null;
 
   const proofOfIncomeDocuments =
-    useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.personalBankStatements
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.personalBankStatements
       ?.documents ?? null;
 
   const tradeLicenceSourceIncomeDocuments =
-    useSelector(getDocuments)?.stakeholdersDocuments?.[signatoryName]?.documents ?? null;
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.documents ?? null;
 
   const companyAddressProofDoc = useSelector(getDocuments)?.companyAddressProof?.documents ?? null;
 
@@ -107,7 +108,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const formatFinancialValues = useCallback(
     value => {
       if (value) {
-        const fixedValue = parseInt(value).toFixed(2);
+        const fixedValue = parseFloat(value).toFixed(2);
         let numberX = fixedValue.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         return `${numberX} AED`;
       }
@@ -340,10 +341,10 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         marketing: channelServicesInfo?.marketing ? "Yes" : "No",
         marketingChannel: channelServicesInfo?.marketingChannel,
         surveys: channelServicesInfo?.surveys ? "Yes" : "No",
-        proofOfIncome: proofOfIncomeProvided ? "Provided" : "N/A",
-        proofOfAddress: proofOfAddressProvided ? "Provided" : "N/A",
-        cv: cvProvided ? "Provided" : "N/A",
-        sourceOfIncomeTradeLicense: tradeLicenceSourceIncomeProvided ? "Provided" : "N/A"
+        proofOfIncome: !!proofOfIncomeProvided[0] ? "Provided" : "N/A",
+        proofOfAddress: !!proofOfAddressProvided[0] ? "Provided" : "N/A",
+        cv: !!cvProvided[0] ? "Provided" : "N/A",
+        sourceOfIncomeTradeLicense: !!tradeLicenceSourceIncomeProvided[0] ? "Provided" : "N/A"
       };
       setDisplayFields(fields);
     }
@@ -422,7 +423,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           <BackLink path={routes.accountServices} />
           <NextStepButton
             label="Submit"
-            justifyContent="flex-end"
+            justifycontent="flex-end"
             disabled={false}
             onClick={() => handleReviewSubmit()}
           />
