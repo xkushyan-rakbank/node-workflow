@@ -88,7 +88,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     }),
     proofOfIncome: Yup.array().of(
       Yup.mixed()
-        .test("required", getRequiredMessage("Trade License Or COI"), file => {
+        .test("required", getRequiredMessage("Proof of income"), file => {
           if (file) return true;
           return false;
         })
@@ -121,15 +121,22 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
       const file = acceptedFiles[0];
       if (file) {
         let path = "";
+        let saveProspectPath = "";
         if (name.includes("proofOfIncome")) {
           path =
             "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.proofOfIncome";
+          saveProspectPath = `stakeholdersDocuments.0_${[
+            signatoryName
+          ]}.personalBankStatements.documents`;
         } else {
           path =
             "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense";
+          saveProspectPath = `stakeholdersDocuments.0_${[
+            signatoryName
+          ]}.additionalDocuments.documents`;
         }
         let proofDoc = { ...isUploading };
-        proofDoc[index] = true;
+        proofDoc[index || name] = true;
         setIsUploading(proofDoc);
         dispatch(
           uploadDocuments({
@@ -147,18 +154,16 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
 
               setFieldValue(name, fileStore);
               setTouched({ ...touched, ...{ [name]: true } });
-              proofDoc[index] = false;
+              proofDoc[index || name] = false;
               setIsUploading(proofDoc);
             },
             onFailure: () => {
               setFieldValue(name, "");
-              proofDoc[index] = false;
+              proofDoc[index || name] = false;
               setIsUploading(proofDoc);
             },
             index,
-            saveProspectPath: `stakeholdersDocuments.0_${[
-              signatoryName
-            ]}.personalBankStatements.documents`
+            saveProspectPath
           })
         );
       }
@@ -297,7 +302,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                         file={values.tradeLicense}
                         onDelete={() => setFieldValue("tradeLicense", "")}
                         component={Upload}
-                        content={values?.tradeLicense?.name}
+                        content={values?.tradeLicense?.fileName}
                         isUploading={isUploading["tradeLicense"]}
                       />
                     </Grid>
