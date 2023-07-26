@@ -68,7 +68,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
       ?.documents ?? null;
 
   const tradeLicenceSourceIncomeDocuments =
-    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.documents ?? null;
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.additionalDocuments ??
+    null;
 
   const companyAddressProofDoc = useSelector(getDocuments)?.companyAddressProof?.documents ?? null;
 
