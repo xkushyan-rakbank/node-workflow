@@ -441,8 +441,7 @@ export function* uploadDocuments({ payload }) {
     // find the respective document section from documentList
     const documentSection = get(documentList, payload.documentSection);
     const index = payload.index;
-    const uploadedList =
-      index && get(prospect, `documents.${payload.saveProspectPath || payload.documentSection}`);
+    const uploadedList = get(prospect, `documents.${payload.saveProspectPath || payload.documentSection}`);
     const newUplaodedLsit = uploadedList && uploadedList.length ? uploadedList : null;
     const documentSectionArray =
       documentSection && documentSection.length ? documentSection : documentSection.documents;
