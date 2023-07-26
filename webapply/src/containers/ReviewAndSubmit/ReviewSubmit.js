@@ -128,7 +128,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
       address += addressLine1 ? `${addressLine1},` : "";
       address += poBox ? ` P.O Box ${poBox},` : "";
       address += addressLine2 ? `${addressLine2},` : "";
-      address += emirateCity ? ` ${getEmirateLabel(emirateCity)},` : "";
+      address += emirateCity ? ` ${getBranchEmirate(emirateCity)},` : "";
       address += country ? ` ${getCountryLabel(country)}` : "";
       return address;
     },
