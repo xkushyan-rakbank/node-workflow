@@ -237,7 +237,12 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           : "N/A",
         companyName: organizationInfo?.companyName,
         companyCategory: getCompanyCategoryDesc(organizationInfo?.companyCategory),
-        lineOfBusiness: organizationInfo && getIndustrySubIndustryText("LUX", "21"),
+        lineOfBusiness:
+          organizationInfo &&
+          getIndustrySubIndustryText(
+            organizationInfo?.industryMultiSelect[0]?.industry[0],
+            organizationInfo?.industryMultiSelect[0]?.subCategory[0]
+          ),
         licenseOrCOINumber: organizationInfo?.licenseOrCOINumber,
         licenseIssuingAuthority: getLicenseIssuingAuthorityText(
           organizationInfo?.licenseIssuingAuthority
