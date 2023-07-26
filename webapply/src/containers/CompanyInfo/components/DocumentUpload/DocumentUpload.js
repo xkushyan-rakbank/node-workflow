@@ -67,7 +67,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         component={Upload}
         content={values?.tradeLicenseOrCOI?.fileName}
         isUploading={isUploading["tradeLicenseOrCOI"]}
-        mobilecontentPlaceholder={"Upload your Trade License"}
+        mobilecontentPlaceholder={"Upload your File"}
       />
       <div style={{ marginTop: "21px" }}>
         <Field
@@ -86,7 +86,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           component={Upload}
           content={values?.moa?.fileName}
           isUploading={isUploading["moa"]}
-          mobilecontentPlaceholder={"Upload your Memorandum of Association"}
+          mobilecontentPlaceholder={"Upload your File"}
         />
       </div>
     </>

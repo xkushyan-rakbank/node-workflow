@@ -224,6 +224,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                   onDelete={() => setFieldValue("cv", "")}
                   component={Upload}
                   isUploading={isUploading["cv"]}
+                  mobilecontentPlaceholder={"Upload your file"}
                 />
               </div>
               <span className={classes.orSelection}>Or</span>

@@ -303,6 +303,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                         component={Upload}
                         content={values?.tradeLicense?.fileName}
                         isUploading={isUploading["tradeLicense"]}
+                        mobilecontentPlaceholder={"Upload your File"}
                       />
                     </Grid>
                   </>
@@ -353,6 +354,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                               }
                               content={values?.proofOfIncome[index]?.fileName}
                               isUploading={isUploading[index]}
+                              mobilecontentPlaceholder={"Upload your file"}
                             />
                             {index > 0 && (
                               <IconButton

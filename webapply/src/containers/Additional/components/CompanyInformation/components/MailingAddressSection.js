@@ -338,6 +338,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
                                 component={Upload}
                                 content={values.addressProof[index]?.fileName}
                                 isUploading={isUploading[index]}
+                                mobilecontentPlaceholder={"Upload your file"}
                               />
                               {values.addressProof.length > 1 && index > 0 && (
                                 <IconButton
