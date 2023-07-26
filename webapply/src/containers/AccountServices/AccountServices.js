@@ -147,7 +147,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     preferredLanguage: "",
     mobileInstructions: "",
     marketing: "",
-    marketingChannel: null,
+    marketingChannel: [],
     nameOnDebitCard: "",
     surveys: ""
   };
