@@ -47,7 +47,7 @@ export const SaveAndClose = ({ prospectSaveOnClick }) => {
           variant="outlined"
           onClick={handleSaveAndCloseClick}
         >
-          Save and exit
+          Save and Close
         </Button>
         <ConfirmDialog
           title={null}
