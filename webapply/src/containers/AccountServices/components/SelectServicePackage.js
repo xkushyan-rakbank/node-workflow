@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@material-ui/core";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import cx from "classnames";
 import { ReactComponent as Check } from "../../../assets/icons/credit_score.svg";
 import { useStyles } from "../styled";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getRakValuePackage } from "../../../store/selectors/appConfig";
+import { ContexualHelp } from "../../../components/Notifications";
 
 export const SelectServicePackage = ({ setFormFieldValue }) => {
   const classes = useStyles();
@@ -26,8 +28,19 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
   return (
     <div className={classes.packageSelectionWrapper}>
       <div className={classes.packageSelectionTitle}>
-        <h3>Select your package</h3>
-        <p>Simplify your business banking with a package that offers convenience and perks.</p>
+        <div className={classes.headerWithHelperIcon}>
+          <h3>Select your package </h3>
+          <ContexualHelp
+            title={
+              "Simplify your business banking with a package that offers convenience and perks."
+            }
+            placement="right"
+            isDisableHoverListener={false}
+            className={classes.infoIcon}
+          >
+            <HelpOutlineIcon className={classes.infoIcon} />
+          </ContexualHelp>
+        </div>
       </div>
       <div className={classes.packageListWrapper}>
         <div

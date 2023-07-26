@@ -2,9 +2,9 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
-import { accountNames, formStepper, NEXT } from "../../constants";
+import { formStepper, NEXT } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -77,7 +77,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const labelTextForGoGreenOption = (
     <span style={{ display: "flex", alignItems: "center" }}>
       <p style={{ margin: "0px" }}>
-        Yes, let’s go green <span style={{ fontSize: "12px" }}>(no additional charge)</span>
+        Yes, let’s go green <span style={{ fontSize: "12px" }}>(free)</span>
       </p>
       <LetsGoGreen style={{ marginLeft: 4 }} />
     </span>
@@ -85,7 +85,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const labelTextForPreferPaper = (
     <p style={{ margin: "0px" }}>
-      I prefer paper <span style={{ fontSize: "12px" }}>(monthly charge of AED [xx])</span>
+      I prefer paper <span style={{ fontSize: "12px" }}>(AED [xx] per month)</span>
     </p>
   );
 
@@ -189,7 +189,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       <div className={classes.section}>
         <SectionTitleWithInfo
           title={"Now for the finishing touches"}
-          info="Set up your account preferences, from packages to communications."
+          info="Set up your account preferences."
           smallInfo
         />
         <Formik
@@ -215,9 +215,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Choose how you want your account set up"}
-                    id={"productAndServices"}
-                    subTitle={
+                    title={"Preferences"}
+                    showHelperText={
                       "Check your account’s currency and select the branch that’s most convenient for you."
                     }
                     classes={{
@@ -276,7 +275,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           isDisableHoverListener={false}
                           classes={classes.infoIcon}
                         >
-                          <ErrorOutlineIcon className={classes.infoIcon} />
+                          <HelpOutlineIcon className={classes.infoIcon} />
                         </ContexualHelp>
                       </label>
                       <Field
@@ -295,21 +294,21 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Specify how you want to use your account"}
+                    title={"Account settings"}
                     id={"authorizations"}
-                    subTitle={
-                      "Customise your account by sharing your preferences for features and services."
-                    }
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
+                    showHelperText={
+                      "Customise your account by sharing your preferences for features and services."
+                    }
                   >
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        When signing for the account, whose signature is needed?
+                        Who has signing rights for this account?
                       </label>
                       <Field
                         typeRadio
@@ -334,7 +333,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           isDisableHoverListener={false}
                           classes={classes.infoIcon}
                         >
-                          <ErrorOutlineIcon className={classes.infoIcon} />
+                          <HelpOutlineIcon className={classes.infoIcon} />
                         </ContexualHelp>
                       </label>
                       <Field
@@ -377,7 +376,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           isDisableHoverListener={false}
                           classes={classes.infoIcon}
                         >
-                          <ErrorOutlineIcon className={classes.infoIcon} />
+                          <HelpOutlineIcon className={classes.infoIcon} />
                         </ContexualHelp>
                       </label>
                       <Field
@@ -394,11 +393,11 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       {values.debitCardApplied && (
                         <Field
                           name="nameOnDebitCard"
-                          label={"Name on the card"}
+                          label={"Name on card"}
                           path={
                             "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard"
                           }
-                          placeholder={"Name on the card"}
+                          placeholder={"Name on card"}
                           InputProps={{
                             inputProps: { tabIndex: 1 }
                           }}
@@ -430,17 +429,17 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Manage how you want to be contacted"}
+                    title={"Communication preferences"}
                     id={"communication"}
-                    subTitle={
-                      "Stay connected with RAKBANK and get access to personalised updates and offers. "
-                    }
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
+                    showHelperText={
+                      "Stay connected with RAKBANK and get access to personalised updates and offers."
+                    }
                   >
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>Which language do you prefer?</label>

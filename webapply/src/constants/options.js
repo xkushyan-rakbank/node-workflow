@@ -140,19 +140,19 @@ export const SinglyOptionList = [
     code: "Singly",
     key: "Singly",
     value: "singly",
-    label: "Just mine"
-  },
-  {
-    code: "Any one of us can sign",
-    key: "Any one of us can sign",
-    value: "Any one of us can sign",
-    label: "Any of ours"
+    label: "Only me"
   },
   {
     code: "Jointly",
     key: "JointlyAll",
     value: "jointlyAll",
-    label: "All of ours"
+    label: "All of us"
+  },
+  {
+    code: "Any one of us can sign",
+    key: "Any one of us can sign",
+    value: "Any one of us can sign",
+    label: "Any of us"
   },
   {
     code: "Jointly",

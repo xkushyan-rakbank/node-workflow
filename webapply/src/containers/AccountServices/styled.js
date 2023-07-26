@@ -195,5 +195,10 @@ export const useStyles = makeStyles(theme => ({
     height: "20px",
     color: "#757575",
     fontSize: "1.25rem"
+  },
+  headerWithHelperIcon: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px"
   }
 }));

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { Collapse, makeStyles } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
@@ -12,6 +13,7 @@ import { ICONS, Icon } from "../Icons";
 import { updateProspect } from "../../store/actions/appConfig";
 import { isFieldTouched } from "../../store/selectors/appConfig";
 import { getIsComeback } from "../../store/selectors/retrieveApplicantInfo";
+import { ContexualHelp } from "../Notifications";
 
 const useStyles = makeStyles(theme => ({
   accordionRoot: {
@@ -36,6 +38,9 @@ const useStyles = makeStyles(theme => ({
       letterSpacing: "0px",
       transition: "font-weight 0.25s ease-out",
       "& .title": {
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
         fontWeight: 400,
         fontSize: "16px",
         lineHeight: "22px",
@@ -48,6 +53,12 @@ const useStyles = makeStyles(theme => ({
         lineHeight: "28px",
         color: "#757575",
         margin: 0
+      },
+      "& .helperIcon": {
+        width: "20px",
+        height: "20px",
+        fontSize: "1.25rem",
+        color: "#525252"
       }
     }
   },
@@ -104,7 +115,8 @@ export const Accordion = ({
   isCompleted = false,
   subTitle,
   classes: extendedClasses,
-  setFormFieldValue = () => { }
+  showHelperText,
+  setFormFieldValue = () => {}
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -148,7 +160,18 @@ export const Accordion = ({
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="activePanel"></span>
               <div className="accordionTitle">
-                <p className="title">{title}</p>
+                <p className="title">
+                  {title}
+                  {showHelperText && (
+                    <ContexualHelp
+                      title={showHelperText}
+                      placement="right"
+                      isDisableHoverListener={false}
+                    >
+                      <HelpOutlineIcon className="helperIcon" />
+                    </ContexualHelp>
+                  )}
+                </p>
                 {subTitle && <p className="subTitle">{subTitle}</p>}
               </div>
             </div>
