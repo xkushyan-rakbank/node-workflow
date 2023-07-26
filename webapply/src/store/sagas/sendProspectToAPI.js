@@ -215,8 +215,8 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
         const { consentInfo } = prospect[key][0];
         nodePayload = [{ consentInfo }];
       } else if (viewId === "/StakeholdersAdditionalInfo") {
-        const { stakeholderAdditionalInfo } = prospect[key][0];
-        nodePayload = [{ stakeholderAdditionalInfo }];
+        const { stakeholderAdditionalInfo, debitCardInfo } = prospect[key][0];
+        nodePayload = [{ stakeholderAdditionalInfo, debitCardInfo }];
       } else if (viewId === "/AccountInfo") {
         const { debitCardInfo } = prospect[key][0];
         nodePayload = [{ debitCardInfo }];
