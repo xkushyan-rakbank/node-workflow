@@ -118,8 +118,8 @@ export function* getProspectIdInfo({ payload }) {
       if (config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0]) {
         const signatoryDetails =
           config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0];
-        signatoryDetails["editedFullName"] = signatoryDetails.fullName;
-        prospect["signatoryInfo[0].editedFullName"] = signatoryDetails.fullName;
+        signatoryDetails["editedFullName"] = signatoryDetails.editedFullName || signatoryDetails.fullName;
+        prospect["signatoryInfo[0].editedFullName"] = signatoryDetails.editedFullName || signatoryDetails.fullName;
 
         //consent screen
         if (signatoryDetails.consentInfo) {
