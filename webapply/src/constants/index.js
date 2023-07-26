@@ -495,17 +495,17 @@ export const VIEW_IDS = {
   ConsentInfo: "/ConsentInfo",
   CompanyAdditionalInfo: "/CompanyAdditionalInfo",
   StakeholdersAdditionalInfo: "/StakeholdersAdditionalInfo",
-  AccountServices: "/AccountServices",
+  AccountInfo: "/AccountInfo",
+  SubmitApplication: "/SubmitApplication",
   //V1 proespect view ids
   FinalQuestions: "/FinalQuestions",
   UploadDocuments: "/UploadDocuments",
   SelectServices: "/SelectServices",
-  SubmitApplication: "/SubmitApplication",
   SearchProspect: "/SearchProspect",
   SearchedAppInfo: "/SearchedAppInfo",
   ApplicationSubmitted: "/ApplicationSubmitted",
   ReUploadDocuments: "/ReUploadDocuments",
-  AccountInfo: "/AccountInfo"
+  AccountServices: "/AccountServices"
 };
 
 export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo"];

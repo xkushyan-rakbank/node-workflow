@@ -22,7 +22,7 @@ import {
   sendProspectRequest,
   SEND_PROSPECT_REQUEST,
   setScreeningError,
-  PROSPECT_SAVE_ONCLICK,
+  PROSPECT_SAVE_ONCLICK
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
 import {
@@ -132,7 +132,6 @@ function* saveProspectData() {
     const screeningError = yield select(getScreeningError);
     const isScreeningError = screeningError.error;
     const viewId = newProspect.viewId || newProspect.applicationInfo.viewId;
-    console.log("this is current view id", viewId);
     const authToken = yield select(getAuthToken);
 
     const isSaveEnabled =
@@ -144,10 +143,12 @@ function* saveProspectData() {
         VIEW_IDS.ConsentInfo,
         VIEW_IDS.CompanyAdditionalInfo,
         VIEW_IDS.StakeholdersAdditionalInfo,
+        VIEW_IDS.AccountInfo,
+        VIEW_IDS.SubmitApplication,
         VIEW_IDS.AccountServices,
         VIEW_IDS.FinalQuestions,
         VIEW_IDS.UploadDocuments,
-        VIEW_IDS.SelectServices,
+        VIEW_IDS.SelectServices
       ].includes(viewId);
 
     return { isSaveEnabled, newProspect };
@@ -247,11 +248,11 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
 
     const newCompletedSteps = step
       ? completedSteps.map(completedStep => {
-          if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
-            return { ...completedStep, status: STEP_STATUS.COMPLETED };
-          }
-          return completedStep;
-        })
+        if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
+          return { ...completedStep, status: STEP_STATUS.COMPLETED };
+        }
+        return completedStep;
+      })
       : completedSteps;
 
     newProspect.applicationInfo.saveType = saveType;
@@ -280,10 +281,10 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
       yield put(updateAccountNumbers(data.accountInfo));
       data.accountInfo.forEach(
         (_, index) =>
-          (newProspect.accountInfo[index] = {
-            ...newProspect.accountInfo[index],
-            accountNo: data.accountInfo[index].accountNo
-          })
+        (newProspect.accountInfo[index] = {
+          ...newProspect.accountInfo[index],
+          accountNo: data.accountInfo[index].accountNo
+        })
       );
     }
 
@@ -337,6 +338,6 @@ export default function* sendProspectToAPISagas() {
     takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
     takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
     takeLatest(PROSPECT_SAVE_ONCLICK, prospectSaveOnClick),
-    fork(watchRequest),
+    fork(watchRequest)
   ]);
 }
