@@ -142,19 +142,19 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     receiveInterest: "",
     signingPreferences: "singly",
     chequeBookApplied: "",
-    accountwithoutChequebook: "true",
     debitCardApplied: true,
     statementsVia,
     preferredLanguage: "",
     mobileInstructions: "",
     marketing: "",
-    marketingChannel: "",
+    marketingChannel: null,
     nameOnDebitCard: "",
     surveys: ""
   };
 
   const accountInfoValidation = Yup.object().shape({
-    nameOnDebitCard: Yup.mixed().when("debitCardApplied", {
+    debitCardApplied: Yup.boolean().required("This field is required"),
+    nameOnDebitCard: Yup.string().when("debitCardApplied", {
       is: debitCardApplied => debitCardApplied,
       then: Yup.string()
         .required(getRequiredMessage("Name"))
@@ -162,15 +162,31 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         .min(MIN_DEBIT_CARD_NAME_LENGTH, "Minimum ${max} characters required")
         .matches(NAME_REGEX, "Please remove any special character from your name")
     }),
-    branchId: Yup.string().required(getRequiredMessage("Branch"))
+    branchId: Yup.string().required(getRequiredMessage("Branch")),
+    accountEmirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),
+    receiveInterest: Yup.string().required("This field is required"),
+    signingPreferences: Yup.string().required("This field is required"),
+    chequeBookApplied: Yup.string().required("This field is required"),
+    statementsVia: Yup.string().required("This field is required"),
+    preferredLanguage: Yup.string().required("This field is required"),
+    mobileInstructions: Yup.string().required("This field is required"),
+    marketing: Yup.mixed()
+      .oneOf([true, false, null])
+      .nullable(true),
+    marketingChannel: Yup.array().when("marketing", {
+      is: true,
+      then: Yup.array().required(getRequiredMessage("Marketing Channel"))
+    }),
+    surveys: Yup.string().required("This field is required")
   });
 
-  const selectRadioBoolean = ({ values, setFieldValue }) => event => {
+  const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
-    setFieldValue(name, value);
+    await setFieldValue(name, value);
     if (name === "marketing") {
-      !value && dispatch(updateProspect({ "prospect.channelServicesInfo.marketingChannel": [] }));
+      const marketingChannel = values["marketingChannel"] || undefined;
+      await setFieldValue("marketingChannel", marketingChannel);
     }
   };
 
@@ -341,23 +357,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         options={yesNoOptions}
                         name="chequeBookApplied"
                         path={"prospect.accountInfo.chequeBookApplied"}
-                        component={InlineRadioGroup}
-                        onChange={radioChangeHandler}
-                        customIcon={false}
-                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                        radioColor="primary"
-                      />
-                    </div>
-                    <div className={classes.questionareWrapper} style={{ display: "none" }}>
-                      <label className={classes.sectionLabel}>
-                        Would you still like to open an account if you don't qualify for a
-                        chequebook?
-                      </label>
-                      <Field
-                        typeRadio
-                        options={yesNoOptions}
-                        name="accountwithoutChequebook"
-                        path={"prospect.accountInfo.accountwithoutChequebook"}
                         component={InlineRadioGroup}
                         onChange={radioChangeHandler}
                         customIcon={false}
