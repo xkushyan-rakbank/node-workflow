@@ -120,7 +120,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
             </div>
             <div className={classes.infoLabelValue}>
               <label>GIIN number:</label>
-              <p>{fieldValues.globalintermediaryId ? fieldValues.globalintermediaryId : "N/A"}</p>
+              <p>{fieldValues.globalintermediaryId}</p>
             </div>
           </div>
         </InformationSection>

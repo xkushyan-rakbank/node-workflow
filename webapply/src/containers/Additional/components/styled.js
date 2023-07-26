@@ -293,5 +293,8 @@ export const useStyles = makeStyles(theme => ({
     width: "13px",
     height: "13px",
     marginRight: "8px"
+  },
+  textAreaStyle: {
+    borderRadius: 0
   }
 }));

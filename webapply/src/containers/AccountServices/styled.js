@@ -52,15 +52,10 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   packageSelectionWrapper: {
-    padding: "30px",
-    borderRadius: "10px",
-    border: "1px solid #cccccc",
     margin: "40px 0"
   },
   packageSelectionTitle: {
-    paddingBottom: "24px",
-    marginBottom: "16px",
-    borderBottom: "1px solid #E6E6E6",
+    marginBottom: "20px",
     "& h3": {
       color: "#1F1F1F",
       fontSize: "20px",
@@ -76,36 +71,51 @@ export const useStyles = makeStyles(theme => ({
       margin: 0
     }
   },
-  packageListWrapper: {
-    display: "flex",
-    gap: 16,
-    [theme.breakpoints.down("xs")]: {
-      flexDirection: "column"
-    }
-  },
   packageList: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
-    padding: "40px 24px",
-    borderRadius: "10px",
-    background: "#F7F8F9"
+    alignItems: "center",
+    textAlign: "center",
+    gap: "16px",
+    padding: "40px 18px",
+    paddingTop: "40px!important",
+    paddingBottom: "40px!important",
+    background: "rgba(245, 245, 245, 0.50)",
+    "&:nth-child(2)": {
+      background: "rgba(253, 231, 232, 0.60)"
+    },
+    "&:nth-child(3)": {
+      background: "#FDE7E8"
+    }
+  },
+  packageFeatureWrapper: {
+    display: "table",
+    textAlign: "center",
+    padding: "22px 20px",
+    paddingTop: "22px!important",
+    paddingBottom: "22px!important",
+    "&:first-child": {
+      background: "rgba(245, 245, 245, 0.50)"
+    },
+    "&:nth-child(2)": {
+      background: "rgba(253, 231, 232, 0.60)"
+    },
+    "&:nth-child(3)": {
+      background: "#FDE7E8"
+    }
   },
   selectedPackageList: {
     border: "2px solid #157947",
     boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
   },
   packageListTitle: {
-    paddingBottom: "24px",
-    marginBottom: "24px",
-    borderBottom: "1px solid #E6E6E6",
     "& h2": {
-      color: "#1F1F1F",
-      fontSize: "24px",
-      fontWeight: 600,
+      color: "#830000",
+      fontSize: "1.75rem",
+      fontWeight: 500,
       lineHeight: "36px",
       margin: 0,
-      marginBottom: 4
+      marginBottom: 8
     },
     "& p": {
       color: "#1F1F1F",
@@ -146,18 +156,22 @@ export const useStyles = makeStyles(theme => ({
     border: "1px solid #1F1F1F",
     outline: "none ",
     fontSize: "20px",
-    fontWeight: 400,
+    fontWeight: 500,
     lineHeight: "32px",
     textTransform: "none",
     padding: "10px 40px",
     textAlign: "center",
     color: "#3B3A3A",
     width: "80%",
-    margin: "32px 40px 0",
     "&:hover": {
       color: "#ffffff",
       backgroundColor: "#1F1F1F"
     }
+  },
+  selectBtnArrow: {
+    width: "16px",
+    height: "16px",
+    marginLeft: "8px"
   },
   selectedPackageListBtn: {
     color: "#ffffff",
@@ -200,5 +214,37 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     gap: "8px"
+  },
+  packagefeatureTitle: {
+    color: "#8D0C10",
+    fontSize: "1.5rem",
+    fontWeight: 500,
+    lineHeight: "32px",
+    margin: "18px 25px"
+  },
+  featureDesc: {
+    color: "#1F1F1F",
+    textAlign: "left",
+    fontSize: "1rem",
+    fontWeight: 500,
+    lineHeight: "24px",
+    margin: 0
+  },
+  featureValues: {
+    color: "#1F1F1F",
+    display: "table-cell",
+    verticalAlign: "middle",
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: "24px",
+    margin: 0
+  },
+  featureValueIcon: {
+    display: "table-cell",
+    verticalAlign: "middle",
+    "& img": {
+      width: "24px",
+      height: "24px"
+    }
   }
 }));

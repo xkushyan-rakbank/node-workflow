@@ -254,7 +254,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                 fieldDescription={
                   "Provide a summary of your employment and qualifications as relevant to your current position."
                 }
-                classes={{ formControlRoot: classes.customUrlLabel }}
+                classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
               />
             </>
           </Accordion>

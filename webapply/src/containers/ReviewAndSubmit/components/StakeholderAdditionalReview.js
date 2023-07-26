@@ -111,7 +111,7 @@ export const StakeholderAdditionalReview = ({
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>IBAN type:</label>
-              <p>{truncateString(ibanTypeLabel, 100)}</p>
+              <p>{truncateString(ibanTypeLabel, 100) || "N/A"}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>UAE IBAN: </label>
@@ -148,7 +148,7 @@ export const StakeholderAdditionalReview = ({
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>{fieldValues.signatoryFullName} is a tax resident of the United States?</label>
-              <p>No</p>
+              <p>{fieldValues.isPayingTaxInAnotherCountry}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Country of Tax Residency:</label>
@@ -166,7 +166,7 @@ export const StakeholderAdditionalReview = ({
             </div>
             <div className={classes.infoLabelValue}>
               <label>Remarks:</label>
-              <p>{fieldValues.remarks}</p>
+              <p>{truncateString(fieldValues.remarks, 100)}</p>
             </div>
           </div>
         </InformationSection>

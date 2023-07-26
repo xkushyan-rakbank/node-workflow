@@ -232,8 +232,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         email: applicantInfo?.email,
         mobileNo: applicantInfo?.mobileNo,
         countryCode: applicantInfo?.countryCode,
-        agentCode: applicantInfo?.roCode,
-        partnerCode: applicantInfo?.allianceCode,
+        agentCode: applicantInfo?.roCode || "N/A",
+        partnerCode: applicantInfo?.allianceCode || "N/A",
         rakValuePackage: applicationInfo?.rakValuePackage
           ? rakValuePackages[(applicationInfo?.rakValuePackage)]
           : "N/A",
@@ -267,7 +267,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         isCompanyUSEntity: companyAdditionalInfo?.isCompanyUSEntity ? "Yes" : "No",
         isNonFinancialInstitution:
           companyAdditionalInfo?.isNonFinancialInstitution === "active" ? "Active" : "Passive",
-        globalintermediaryId: companyAdditionalInfo?.globalintermediaryId,
+        globalintermediaryId: companyAdditionalInfo?.globalintermediaryId || "N/A",
         isFinancialInstitution:
           companyAdditionalInfo?.isFinancialInstitution === "yes" ? "Yes" : "No",
         dnfbpField: companyAdditionalInfo?.dnfbpField === "yes" ? "Yes" : "No",
@@ -275,7 +275,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
         dateOfBirth: formatDate(signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth),
-        mothersMaidenName: signatoryInfo && signatoryInfo[0]?.mothersMaidenName,
+        mothersMaidenName: (signatoryInfo && signatoryInfo[0]?.mothersMaidenName) || "N/A",
         eidNumber: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidNumber,
         eidExpiryDt: formatDate(
           signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidExpiryDt
@@ -303,17 +303,26 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
               []
           ) || "N/A",
         uaeIBAN:
-          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBAN,
+          (signatoryInfo &&
+            signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBAN) ||
+          "N/A",
         IBANType:
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
             ? signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.IBANType
             : "N/A",
         companyNameforSOF:
-          signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails?.companyNameforSOF,
+          (signatoryInfo &&
+            signatoryInfo[0]?.stakeholderAdditionalInfo?.sourceOfIncomeDetails
+              ?.companyNameforSOF) ||
+          "N/A",
         residentialAddress:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
+        isPayingTaxInAnotherCountry:
+          signatoryInfo &&
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "no"
+            ? "No"
+            : "Yes",
         countryOfTaxResidency:
           (signatoryInfo &&
             signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry ===
@@ -342,11 +351,13 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         nameOnDebitCard:
           signatoryInfo && signatoryInfo[0]?.debitCardInfo?.authSignatoryDetails?.nameOnDebitCard,
         linkedInURL:
-          signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.linkedInURL,
+          (signatoryInfo &&
+            signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.linkedInURL) ||
+          "N/A",
         backgroundInfo:
-          signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo,
+          (signatoryInfo &&
+            signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo) ||
+          "N/A",
         accountCurrency: accountInfo?.accountCurrency,
         branch: getBranchName(accountInfo?.branchId) || "",
         branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
