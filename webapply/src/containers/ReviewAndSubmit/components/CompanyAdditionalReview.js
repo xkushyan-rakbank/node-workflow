@@ -56,7 +56,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           </div>
         </InformationSection>
         <InformationSection
-          title={"Addtional information"}
+          title={"Additional information"}
           showEditIcon={true}
           routeTo={routes.additionalCompanyInformation}
         >

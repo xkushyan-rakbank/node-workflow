@@ -78,7 +78,7 @@ export const StakeholderAdditionalReview = ({
           </div>
         </InformationSection>
         <InformationSection
-          title={"Addtional information"}
+          title={"Additional information"}
           showEditIcon={true}
           routeTo={routes.additionalStakeholderInformation}
         >
