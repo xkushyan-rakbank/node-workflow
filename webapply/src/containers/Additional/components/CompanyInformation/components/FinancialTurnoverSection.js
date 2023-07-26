@@ -91,9 +91,9 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
     return numberX;
   };
 
-  const calculateAmountPercentage = useCallback(values => {
+  const calculateAmountPercentage = useCallback((values, sliderNewValue) => {
     const annualAmt = values.annualFinTurnoverAmtInAED || 0;
-    const sliderValue = values.anualCashDepositAED || 0;
+    const sliderValue = sliderNewValue || values.anualCashDepositAED || 0;
     if (!(annualAmt && sliderValue)) {
       return { formattedAmount: 0, percentValue: 0 };
     }
@@ -101,7 +101,7 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
     const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED).toFixed();
     const totalAmount = calculateAmountFromPercentage(percentValue, annualFinTurnoverAmtInAED);
     const formattedAmount = numberWithCommas(totalAmount.toFixed(2));
-    return { formattedAmount, percentValue };
+    return { formattedAmount, percentValue, totalAmount };
   });
 
   const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
@@ -126,7 +126,8 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
           }
 
           function handleSliderChange(ev, newValue) {
-            setFieldValue("anualCashDepositAED", newValue.toString());
+            const calculateValue = calculateAmountPercentage(values, newValue).totalAmount;
+            setFieldValue("anualCashDepositAED", calculateValue.toString());
           }
           return (
             <Accordion
