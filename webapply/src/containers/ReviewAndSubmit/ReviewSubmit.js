@@ -227,7 +227,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         channelServicesInfo
       } = prospect;
       const fields = {
-        applicantName: applicantInfo?.fullName,
+        applicantName:
+          (signatoryInfo && signatoryInfo[0]?.editedFullName) || applicantInfo?.fullName,
         email: applicantInfo?.email,
         mobileNo: applicantInfo?.mobileNo,
         countryCode: applicantInfo?.countryCode,
@@ -270,7 +271,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         isFinancialInstitution:
           companyAdditionalInfo?.isFinancialInstitution === "yes" ? "Yes" : "No",
         dnfbpField: companyAdditionalInfo?.dnfbpField === "yes" ? "Yes" : "No",
-        signatoryFullName: signatoryInfo && signatoryInfo && signatoryInfo[0]?.editedFullName,
+        signatoryFullName: signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
         dateOfBirth: formatDate(signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth),
