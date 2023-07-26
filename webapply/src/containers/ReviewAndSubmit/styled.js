@@ -108,7 +108,8 @@ export const useStyles = makeStyles(theme => ({
       fontStyle: "normal",
       fontWeight: 600,
       lineHeight: "20px",
-      margin: 0
+      margin: 0,
+      wordBreak: "break-word"
     }
   },
   eidField: {
