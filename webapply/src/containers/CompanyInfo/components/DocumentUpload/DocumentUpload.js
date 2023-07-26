@@ -86,6 +86,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           component={Upload}
           content={values?.moa?.fileName}
           isUploading={isUploading["moa"]}
+          mobilecontentPlaceholder={"Upload your Memorandum of Association"}
         />
       </div>
     </>
