@@ -206,8 +206,8 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
       break;
     }
     case "applicationInfo": {
-      const { accountType, rakValuePackage } = prospect[key];
-      nodePayload = { accountType, rakValuePackage };
+      const { accountType, rakValuePackage, islamicBanking } = prospect[key];
+      nodePayload = { accountType, rakValuePackage, islamicBanking };
       break;
     }
     case "signatoryInfo": {
