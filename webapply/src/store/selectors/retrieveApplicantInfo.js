@@ -4,3 +4,4 @@ export const getApplicantInfo = state =>
 export const getApplicantProspectInfo = state => state.retrieveApplicantInfo.prospectResults;
 
 export const getLoadingProspectId = state => state.retrieveApplicantInfo.loadingProspectId;
+export const getIsComeback = state => state.retrieveApplicantInfo.isComeback;
