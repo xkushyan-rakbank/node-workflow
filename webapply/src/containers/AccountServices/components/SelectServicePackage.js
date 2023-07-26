@@ -10,8 +10,9 @@ import { getRakValuePackage } from "../../../store/selectors/appConfig";
 export const SelectServicePackage = ({ setFormFieldValue }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const rakValuePackage = useSelector(getRakValuePackage);
 
-  const [selectedService, setSelectedService] = useState("RAKvalue PLUS");
+  const [selectedService, setSelectedService] = useState(rakValuePackage);
 
   const selectedPackage = selectedPackage => {
     setSelectedService(selectedPackage);
