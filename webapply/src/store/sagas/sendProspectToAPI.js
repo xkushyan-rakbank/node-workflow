@@ -180,13 +180,10 @@ export function* prospectAutoSave() {
       const isAutoSaveEnabled = isSaveEnabled;
 
       if (isAutoSaveEnabled) {
-        console.log("saving function before call");
         yield put(sendProspectRequest(newProspect, AUTO));
-        console.log("auto save saved successfully");
       }
     }
   } catch (e) {
-    console.log("auto save error", e);
     log(e);
   }
 }
@@ -224,8 +221,8 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
         const { debitCardInfo } = prospect[key][0];
         nodePayload = [{ debitCardInfo }];
       } else {
-        const { editedFullName } = prospect[key][0];
-        nodePayload = [{ editedFullName }];
+        const { editedFullName, debitCardInfo } = prospect[key][0];
+        nodePayload = [{ editedFullName, debitCardInfo }];
       }
 
       break;
