@@ -101,11 +101,11 @@ export const StakeholderAdditionalReview = ({
             </div>
             <div className={classes.infoLabelValue}>
               <label>Linkedin:</label>
-              <p>{truncateString(fieldValues.linkedInURL, 40)}</p>
+              <p>{truncateString(fieldValues.linkedInURL, 40) || "N/A"}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Background info:</label>
-              <p>{truncateString(fieldValues.backgroundInfo, 100)}</p>
+              <p>{truncateString(fieldValues.backgroundInfo, 100) || "N/A"}</p>
             </div>
           </div>
           <div className={classes.infoListWrapper}>

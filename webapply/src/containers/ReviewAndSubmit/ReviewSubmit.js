@@ -351,13 +351,11 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         nameOnDebitCard:
           signatoryInfo && signatoryInfo[0]?.debitCardInfo?.authSignatoryDetails?.nameOnDebitCard,
         linkedInURL:
-          (signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.linkedInURL) ||
-          "N/A",
+          signatoryInfo &&
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.linkedInURL,
         backgroundInfo:
-          (signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo) ||
-          "N/A",
+          signatoryInfo &&
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo,
         accountCurrency: accountInfo?.accountCurrency,
         branch: getBranchName(accountInfo?.branchId) || "",
         branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
