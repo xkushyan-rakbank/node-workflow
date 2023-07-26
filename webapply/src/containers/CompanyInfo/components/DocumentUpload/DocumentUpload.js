@@ -34,7 +34,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           onSuccess: () => {
             let fileStore = new File([file], file.name, { type: file.type });
             fileStore.preview = URL.createObjectURL(fileStore);
-            fileStore = { ...fileStore, ...{ name: fileStore.name, size: fileStore.size } };
+            fileStore = { ...fileStore, ...{ fileName: fileStore.name, fileSize: fileStore.size } };
 
             setFieldValue(name, fileStore);
             setTouched({ ...touched, ...{ [name]: true } });
@@ -65,7 +65,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         file={values.tradeLicenseOrCOI}
         onDelete={() => setFieldValue("tradeLicenseOrCOI", "")}
         component={Upload}
-        content={values?.tradeLicenseOrCOI?.name}
+        content={values?.tradeLicenseOrCOI?.fileName}
         isUploading={isUploading["tradeLicenseOrCOI"]}
       />
       <div style={{ marginTop: "21px" }}>
@@ -83,7 +83,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           file={values.moa}
           onDelete={() => setFieldValue("moa", "")}
           component={Upload}
-          content={values?.moa?.name}
+          content={values?.moa?.fileName}
           isUploading={isUploading["moa"]}
         />
       </div>

@@ -24,11 +24,12 @@ import {
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../constants";
-import { initDocumentUpload, uploadDocuments } from "../../../store/actions/uploadDocuments";
+import { initDocumentUpload } from "../../../store/actions/uploadDocuments";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
+import { useFindDocument } from "../../../utils/useFindDocument";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
@@ -55,15 +56,13 @@ export const CompanyInfo = ({
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   const companyDocuments = useSelector(getCompanyDocuments) || [];
-  const tradeLicenseOrCOI = useMemo(
-    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.TradeLicenseOrCOI),
-    [companyDocuments]
+  const tradeLicenseOrCOI = useFindDocument(
+    companyDocuments,
+    CompanyDocumentKeys.TradeLicenseOrCOI
   );
-  const moa = useMemo(
-    () => companyDocuments.some(doc => doc.documentKey === CompanyDocumentKeys.Moa),
-    [companyDocuments]
-  );
+  const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa);
 
+  console.log();
   useEffect(() => {
     dispatch(initDocumentUpload());
   }, []);
@@ -72,8 +71,8 @@ export const CompanyInfo = ({
     companyName: "",
     shortName: "",
     companyCategory: "",
-    tradeLicenseOrCOI,
-    moa,
+    tradeLicenseOrCOI: tradeLicenseOrCOI && tradeLicenseOrCOI[0],
+    moa: moa && moa[0],
     licenseIssuingAuthority: "",
     countryOfIncorporation: "",
     licenseOrCOINumber: "",
@@ -82,14 +81,14 @@ export const CompanyInfo = ({
     industries:
       get(industries, "[0].industry[0].length", 0) > 0
         ? industries[0].industry.map((item, index) => ({
-            industry: item,
-            subCategory: industries[0].subCategory[index],
-            id: uniqueId()
-          }))
+          industry: item,
+          subCategory: industries[0].subCategory[index],
+          id: uniqueId()
+        }))
         : industries.map(item => ({
-            ...item,
-            id: uniqueId()
-          })),
+          ...item,
+          id: uniqueId()
+        })),
     ...(industry && {
       "prospect.organizationInfo.industryMultiSelect.industry": industry && industry[0]
     }),
@@ -122,7 +121,7 @@ export const CompanyInfo = ({
         return (
           file &&
           (file === true ||
-            (file.size >= MOA_FILE_SIZE.minSize && file.size <= MOA_FILE_SIZE.maxSize))
+            (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
         );
       }),
     licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
@@ -150,7 +149,8 @@ export const CompanyInfo = ({
         return (
           file &&
           (file === true ||
-            (file.size >= TL_COI_FILE_SIZE.minSize && file.size <= TL_COI_FILE_SIZE.maxSize))
+            (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+              file.fileSize <= TL_COI_FILE_SIZE.maxSize))
         );
       })
   };
@@ -206,7 +206,7 @@ export const CompanyInfo = ({
                 display="block"
                 label="Next"
                 disabled={!(props.isValid && props.dirty)}
-                // handleClick={() => handleClick(props)}
+              // handleClick={() => handleClick(props)}
               />
             </div>
           </Form>
