@@ -27,7 +27,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
     );
   };
   return (
-    <div className={classes.packageSelectionWrapper}>
+    <div className={classes.packageSelectionContainer}>
       <div className={classes.packageSelectionTitle}>
         <div className={classes.headerWithHelperIcon}>
           <h3>Select your package </h3>

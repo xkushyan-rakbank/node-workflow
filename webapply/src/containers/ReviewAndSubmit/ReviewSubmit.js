@@ -320,18 +320,16 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
         isPayingTaxInAnotherCountry:
           signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "no"
-            ? "No"
-            : "Yes",
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "yes"
+            ? "Yes"
+            : "No",
         countryOfTaxResidency:
-          (signatoryInfo &&
-            signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry ===
-              "no") ||
-          ""
-            ? getCountryLabel("AE")
-            : getCountryLabel(
+          signatoryInfo &&
+          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "yes"
+            ? getCountryLabel(
                 signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.country
-              ),
+              )
+            : getCountryLabel("AE"),
         TIN:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
             ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN

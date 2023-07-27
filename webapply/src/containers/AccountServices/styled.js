@@ -51,7 +51,13 @@ export const useStyles = makeStyles(theme => ({
       flexDirection: "column"
     }
   },
+  packageSelectionContainer: {
+    marginTop: "40px"
+  },
   packageSelectionWrapper: {
+    padding: "30px",
+    borderRadius: "10px",
+    border: "1px solid #cccccc",
     margin: "40px 0"
   },
   packageSelectionTitle: {
