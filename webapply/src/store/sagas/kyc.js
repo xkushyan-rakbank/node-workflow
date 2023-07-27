@@ -1,4 +1,5 @@
 import { all, call, put, select, takeLatest, fork } from "redux-saga/effects";
+import { merge } from "lodash";
 
 import {
   KycTransactionSuccess,
@@ -59,7 +60,6 @@ import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
 import { resetFormStep } from "../actions/sendProspectToAPI";
 import { updateProspect } from "../actions/appConfig";
-import { merge } from "lodash";
 
 export function* createKycTransactionSaga() {
   try {
@@ -209,7 +209,7 @@ export function* notifyHost() {
       signatoryInfo[0].editedFullName =
         signatoryDetails[0].editedFullName || signatoryInfo[0].fullName;
 
-      const signatory = merge(signatoryInfo, signatoryDetails);
+      const signatory = merge(signatoryDetails, signatoryInfo);
       //Name on card for account info screen
       yield put(
         updateProspect({
