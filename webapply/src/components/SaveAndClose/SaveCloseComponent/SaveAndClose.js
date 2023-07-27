@@ -14,6 +14,15 @@ export const SaveAndClose = ({ prospectSaveOnClick }) => {
 
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
   const [circularProgress, setCircularProgess] = useState(false);
+  const [isMounted, setIsMounted] = useState(true);
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
 
   const handleSaveAndCloseClick = () => {
     setIsDisplayConfirmDialog(true);
@@ -23,16 +32,20 @@ export const SaveAndClose = ({ prospectSaveOnClick }) => {
     setCircularProgess(true);
     prospectSaveOnClick(NEXT)
       .then(() => {
-        setIsDisplayConfirmDialog(false);
-        pushHistory(routes.comeBackLogin, true);
+        if (isMounted) { 
+          setIsDisplayConfirmDialog(false);
+          setCircularProgess(false);
+          pushHistory(routes.comeBackLogin, true);
+        }
       })
       .catch((error) => {
         console.log("Error while saving:", error);
+        if (isMounted) { 
+          setIsDisplayConfirmDialog(false);
+          setCircularProgess(false);
+        }
       })
-      .finally(() => {
-        setCircularProgess(false);
-      });
-  }, [setIsDisplayConfirmDialog, prospectSaveOnClick, pushHistory]);
+  }, [isMounted,setIsDisplayConfirmDialog, prospectSaveOnClick, pushHistory]);
 
   const closeDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);

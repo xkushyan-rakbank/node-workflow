@@ -131,7 +131,7 @@ function* saveProspectData() {
     const newProspect = yield select(getProspect);
     const screeningError = yield select(getScreeningError);
     const isScreeningError = screeningError.error;
-    const viewId = newProspect.viewId || newProspect.applicationInfo.viewId;
+    const viewId = newProspect.applicationInfo.viewId || newProspect.viewId;
     const authToken = yield select(getAuthToken);
 
     const isSaveEnabled =
