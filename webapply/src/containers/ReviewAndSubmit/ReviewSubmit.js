@@ -227,8 +227,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         channelServicesInfo
       } = prospect;
       const fields = {
-        applicantName:
-          (signatoryInfo && signatoryInfo[0]?.editedFullName) || applicantInfo?.fullName,
+        applicantName: applicantInfo?.fullName,
         email: applicantInfo?.email,
         mobileNo: applicantInfo?.mobileNo,
         countryCode: applicantInfo?.countryCode,
