@@ -1,5 +1,4 @@
 import { all, call, put, select, takeLatest, fork } from "redux-saga/effects";
-import { merge } from "lodash";
 
 import {
   KycTransactionSuccess,
@@ -208,12 +207,10 @@ export function* notifyHost() {
       } = notifyHostResponse;
       signatoryInfo[0].editedFullName =
         signatoryDetails[0].editedFullName || signatoryInfo[0].fullName;
-
-      const signatory = merge(signatoryDetails, signatoryInfo);
       //Name on card for account info screen
       yield put(
         updateProspect({
-          "prospect.signatoryInfo": signatory,
+          "prospect.signatoryInfo": signatoryInfo,
           "prospect.documents.stakeholdersDocuments": stakeholdersDocuments
         })
       );
