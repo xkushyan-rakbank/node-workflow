@@ -363,8 +363,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo,
         accountCurrency: accountInfo?.accountCurrency,
-        branchEmirate: getBranchEmirate(accountInfo?.branchId) || "",
-        branch: getBranchName(accountInfo?.accountEmirateCity) || "",
+        branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
+        branch: getBranchName(accountInfo?.branchId) || "",
         receiveInterest: accountInfo?.receiveInterest ? "Yes" : "No",
         debitCardApplied: accountInfo?.debitCardApplied ? "Yes" : "No",
         chequeBookApplied: accountInfo?.chequeBookApplied ? "Yes" : "No",
