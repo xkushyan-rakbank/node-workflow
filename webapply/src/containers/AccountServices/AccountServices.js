@@ -190,6 +190,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     if (name === "marketing") {
       const marketingChannel = values["marketingChannel"] || undefined;
       await setFieldValue("marketingChannel", marketingChannel);
+      !value && dispatch(updateProspect({ "prospect.channelServicesInfo.marketingChannel": [] }));
     }
   };
 

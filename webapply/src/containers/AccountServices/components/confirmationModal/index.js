@@ -11,8 +11,8 @@ export const ConfirmationDialog = ({
   isOpen,
   handleContinueWithoutAddon,
   handleGoToPackage,
-  continueButtonLabel = "Continue Without Addon",
-  goToPackageButtonLabel = "Go to Package"
+  continueButtonLabel = "Continue without add-on",
+  goToPackageButtonLabel = "Select package"
 }) => {
   const classes = useStyles();
 
