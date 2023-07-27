@@ -101,6 +101,11 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     [displayFields, emirateList]
   );
 
+  const getEmirateCityLabel = useCallback(
+    code => emirateCityList?.find(emirate => emirate.code === code)?.displayText,
+    [displayFields, emirateCityList]
+  );
+
   const getIBANTypeLabel = useCallback(
     code =>
       internationalBankAccountNumberList?.find(ibanType => ibanType.code === code)?.displayText,
@@ -128,7 +133,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
       address += addressLine1 ? `${addressLine1},` : "";
       address += poBox ? ` P.O Box ${poBox},` : "";
       address += addressLine2 ? `${addressLine2},` : "";
-      address += emirateCity ? ` ${getBranchEmirate(emirateCity)},` : "";
+      address += emirateCity ? ` ${getEmirateCityLabel(emirateCity)},` : "";
       address += country ? ` ${getCountryLabel(country)}` : "";
       return address;
     },
@@ -166,9 +171,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   );
 
   const getBranchEmirate = useCallback(
-    branchEmirateCode =>
-      emirateCityList?.find(city => city.code === branchEmirateCode)?.displayText,
-    [emirateCityList, displayFields]
+    branchEmirateCode => branchCityList?.find(city => city.code === branchEmirateCode)?.displayText,
+    [branchCityList, displayFields]
   );
 
   const getBranchName = useCallback(
@@ -359,8 +363,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo,
         accountCurrency: accountInfo?.accountCurrency,
-        branch: getBranchName(accountInfo?.branchId) || "",
-        branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
+        branchEmirate: getBranchEmirate(accountInfo?.branchId) || "",
+        branch: getBranchName(accountInfo?.accountEmirateCity) || "",
         receiveInterest: accountInfo?.receiveInterest ? "Yes" : "No",
         debitCardApplied: accountInfo?.debitCardApplied ? "Yes" : "No",
         chequeBookApplied: accountInfo?.chequeBookApplied ? "Yes" : "No",
