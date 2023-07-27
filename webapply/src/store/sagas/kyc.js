@@ -31,7 +31,8 @@ import {
 import {
   getAuthorizationHeader,
   getCompanyTradeLicenseNumber,
-  getProspectId
+  getProspectId,
+  getSignatories
 } from "../selectors/appConfig";
 import { analyzeOcrData, createKYCTransaction, getOCRDataStatus } from "../../api/apiClient";
 import { getKyc, getLivelinessData, getTransactionId } from "../selectors/kyc";
@@ -58,6 +59,7 @@ import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
 import { resetFormStep } from "../actions/sendProspectToAPI";
 import { updateProspect } from "../actions/appConfig";
+import { merge } from "lodash";
 
 export function* createKycTransactionSaga() {
   try {
@@ -190,6 +192,7 @@ export function* setScreeningResults({ preScreening }) {
 export function* notifyHost() {
   try {
     const transactionId = yield select(getTransactionId);
+    const signatoryDetails = yield select(getSignatories);
     const notifyHostResponse = yield call(analyzeOcrData.notifyHost, transactionId);
     const { preScreening } = notifyHostResponse;
 
@@ -203,11 +206,14 @@ export function* notifyHost() {
         signatoryInfo,
         documents: { stakeholdersDocuments }
       } = notifyHostResponse;
-      signatoryInfo[0].editedFullName = signatoryInfo[0].fullName;
+      signatoryInfo[0].editedFullName =
+        signatoryDetails[0].editedFullName || signatoryInfo[0].fullName;
+
+      const signatory = merge(signatoryInfo, signatoryDetails);
       //Name on card for account info screen
       yield put(
         updateProspect({
-          "prospect.signatoryInfo": signatoryInfo,
+          "prospect.signatoryInfo": signatory,
           "prospect.documents.stakeholdersDocuments": stakeholdersDocuments
         })
       );
