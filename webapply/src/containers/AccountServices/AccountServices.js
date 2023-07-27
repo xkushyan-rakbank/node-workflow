@@ -66,7 +66,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const accountInfo = useSelector(getAccountInfo);
   const rakValuePackage = useSelector(getRakValuePackage);
 
-  const statementsVia = accountInfo.mailStatements;
+  const statementsVia = accountInfo.eStatements ? true : false;
 
   const accountEmirateCity = accountInfo.accountEmirateCity;
 
@@ -113,15 +113,15 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     if (value) {
       dispatch(
         updateProspect({
-          "prospect.accountInfo.mailStatements": value,
-          "prospect.accountInfo.eStatements": !value
+          "prospect.accountInfo.mailStatements": !value,
+          "prospect.accountInfo.eStatements": value
         })
       );
     } else {
       dispatch(
         updateProspect({
-          "prospect.accountInfo.eStatements": !value,
-          "prospect.accountInfo.mailStatements": value
+          "prospect.accountInfo.eStatements": value,
+          "prospect.accountInfo.mailStatements": !value
         })
       );
     }

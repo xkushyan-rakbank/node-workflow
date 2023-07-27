@@ -6,14 +6,15 @@ import { ReactComponent as LetsGoGreen } from "../../../assets/icons/letsGoGreen
 import routes from "../../../routes";
 
 export const ProductInformationReview = ({ fieldValues }) => {
+  console.log("fieldValues", fieldValues);
   const classes = useStyles();
   const bankStatementType = () => {
     return fieldValues.mailStatements ? (
+      "Physical"
+    ) : fieldValues.eStatements ? (
       <>
         Online <LetsGoGreen style={{ marginLeft: 4 }} />
       </>
-    ) : fieldValues.eStatements ? (
-      "Physical"
     ) : (
       ""
     );
