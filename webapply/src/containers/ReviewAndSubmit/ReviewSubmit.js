@@ -317,11 +317,6 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           "N/A",
         residentialAddress:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
-        isPayingTaxInAnotherCountry:
-          signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "yes"
-            ? "Yes"
-            : "No",
         countryOfTaxResidency:
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "yes"

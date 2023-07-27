@@ -148,7 +148,7 @@ export const StakeholderAdditionalReview = ({
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>{fieldValues.signatoryFullName} is a tax resident of the United States?</label>
-              <p>{fieldValues.isPayingTaxInAnotherCountry}</p>
+              <p>No</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Country of Tax Residency:</label>
