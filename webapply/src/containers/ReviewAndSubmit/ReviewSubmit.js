@@ -215,6 +215,16 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
   const initialValues = {};
 
+  const findMarketingLabel = value => {
+    const labelMap = {
+      yes: "Yes",
+      no: "No",
+      other: "Ask me later"
+    };
+
+    return labelMap[value] || "";
+  };
+
   useEffect(() => {
     if (prospect) {
       const {
@@ -357,7 +367,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         mailStatements: accountInfo?.mailStatements,
         eStatements: accountInfo?.eStatements ? "Physical" : "",
         mobileInstructions: channelServicesInfo?.mobileInstructions ? "Yes" : "No",
-        marketing: channelServicesInfo?.marketing ? "Yes" : "No",
+        marketing: findMarketingLabel(channelServicesInfo?.marketing),
         marketingChannel: channelServicesInfo?.marketingChannel,
         surveys: channelServicesInfo?.surveys ? "Yes" : "No",
         proofOfIncome: !!proofOfIncomeProvided[0] ? "Provided" : "N/A",

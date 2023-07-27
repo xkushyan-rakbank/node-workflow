@@ -202,19 +202,19 @@ export const yesNoAskMeLaterOptions = [
   {
     code: "Yes",
     key: "Yes",
-    value: true,
+    value: "yes",
     label: "Yes"
   },
   {
     code: "No",
     key: "No",
-    value: false,
+    value: "no",
     label: "No"
   },
   {
     code: "ask_me_later",
     key: "ask_me_later",
-    value: null,
+    value: "other",
     label: "Ask me later"
   }
 ];

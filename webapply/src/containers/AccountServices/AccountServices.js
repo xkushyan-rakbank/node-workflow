@@ -173,11 +173,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     statementsVia: Yup.string().required("This field is required"),
     preferredLanguage: Yup.string().required("This field is required"),
     mobileInstructions: Yup.string().required("This field is required"),
-    marketing: Yup.mixed()
-      .oneOf([true, false, null])
-      .nullable(true),
+    marketing: Yup.string().required("This field is required"),
     marketingChannel: Yup.array().when("marketing", {
-      is: true,
+      is: "yes",
       then: Yup.array().required(getRequiredMessage("Marketing Channel"))
     }),
     surveys: Yup.string().required("This field is required")
@@ -188,9 +186,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     const name = event.target.name;
     await setFieldValue(name, value);
     if (name === "marketing") {
-      const marketingChannel = values["marketingChannel"] || undefined;
+      const marketingChannel = values["marketingChannel"] ?? undefined;
       await setFieldValue("marketingChannel", marketingChannel);
-      !value && dispatch(updateProspect({ "prospect.channelServicesInfo.marketingChannel": [] }));
     }
   };
 
@@ -514,7 +511,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         onChange={radioChangeHandler}
                       />
                     </div>
-                    {values.marketing && (
+                    {values.marketing === "yes" && (
                       <div className={classes.questionareWrapper}>
                         <label className={classes.sectionLabel}>Receive notifications via:</label>
                         <Field
