@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
-import { useViewId } from "../../utils/useViewId";
 import { formStepper } from "../../constants";
 import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { useStyles } from "./styled";
@@ -16,7 +15,6 @@ import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
 
 export const CongratulationsScreen = () => {
   useFormNavigation([true, true, formStepper]);
-  useViewId();
 
   const pushHistory = useTrackingHistory();
 
