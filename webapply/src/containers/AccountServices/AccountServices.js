@@ -186,7 +186,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     const name = event.target.name;
     await setFieldValue(name, value);
     if (name === "marketing") {
-      const marketingChannel = values["marketingChannel"] ?? undefined;
+      const marketingChannel =
+        values.marketingChannel?.length > 0 ? values["marketingChannel"] : undefined;
       await setFieldValue("marketingChannel", marketingChannel);
     }
   };
