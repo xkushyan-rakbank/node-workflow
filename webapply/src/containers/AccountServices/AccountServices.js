@@ -281,7 +281,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       path={"prospect.accountInfo.accountEmirateCity"}
                       label="Emirate or city"
                       placeholder="Emirate or city"
-                      datalistId="emirateCity"
+                      datalistId="branchCity"
                       component={SelectAutocomplete}
                       isLoadDefaultValueFromStore={false}
                     />
@@ -292,16 +292,14 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       placeholder="Branch"
                       datalistId="branchCity"
                       component={SelectAutocomplete}
-                      filterOptions={options => {
-                        return (
-                          options.find(
-                            item =>
-                              item.displayText ===
-                              emiratesList.find(item => item.value === values.accountEmirateCity)
-                                ?.displayText
-                          )?.subGroup || []
-                        );
-                      }}
+                      filterOptions={options =>
+                        options
+                          .filter(city => city.code === values.accountEmirateCity)
+                          .reduce(
+                            (acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc),
+                            []
+                          )
+                      }
                     />
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
