@@ -17,12 +17,15 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
 
   const [selectedService, setSelectedService] = useState(rakValuePackage);
 
-  const selectedPackage = selectedPackage => {
-    setSelectedService(selectedPackage);
-    setFormFieldValue("rakValuePackage", selectedPackage);
+  const handleTogglePackage = selectedPackage => {
+    const selectedPackageValue = selectedService ? "" : selectedPackage;
+
+    setSelectedService(selectedPackageValue);
+    setFormFieldValue("rakValuePackage", selectedPackageValue);
+
     dispatch(
       updateProspect({
-        "prospect.applicationInfo.rakValuePackage": selectedPackage
+        "prospect.applicationInfo.rakValuePackage": selectedPackageValue
       })
     );
   };
@@ -55,7 +58,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
             className={cx(classes.selectBtn, {
               [classes.selectedPackageListBtn]: selectedService === "RAKvalue PLUS"
             })}
-            onClick={() => selectedPackage("RAKvalue PLUS")}
+            onClick={() => handleTogglePackage("RAKvalue PLUS")}
           >
             {selectedService === "RAKvalue PLUS" ? "Selected" : "Select"}
             <ArrowForwardIcon className={classes.selectBtnArrow} />
@@ -71,7 +74,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
             className={cx(classes.selectBtn, {
               [classes.selectedPackageListBtn]: selectedService === "RAKvalue MAX"
             })}
-            onClick={() => selectedPackage("RAKvalue MAX")}
+            onClick={() => handleTogglePackage("RAKvalue MAX")}
           >
             {selectedService === "RAKvalue MAX" ? "Selected" : "Select"}
             <ArrowForwardIcon className={classes.selectBtnArrow} />

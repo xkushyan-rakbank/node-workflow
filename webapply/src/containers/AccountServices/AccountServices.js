@@ -30,7 +30,7 @@ import {
 } from "../../constants/options";
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicePackage } from "./components/SelectServicePackage";
-import { getAccountInfo } from "../../store/selectors/appConfig";
+import { getAccountInfo, getRakValuePackage } from "../../store/selectors/appConfig";
 import { getRequiredMessage } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
 import { NAME_REGEX } from "../../utils/validation";
@@ -43,6 +43,7 @@ import {
 import { ContexualHelp } from "../../components/Notifications";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useViewId } from "../../utils/useViewId";
+import { ConfirmationDialog } from "./components/confirmationModal";
 
 export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -63,12 +64,14 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const accountType = useSelector(getAccountType);
 
   const accountInfo = useSelector(getAccountInfo);
+  const rakValuePackage = useSelector(getRakValuePackage);
 
   const statementsVia = accountInfo.mailStatements;
 
   const accountEmirateCity = accountInfo.accountEmirateCity;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
 
   useEffect(() => {
     dispatch(updateProspect({ "prospect.accountInfo.accountType": accountType }));
@@ -190,19 +193,42 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }
   };
 
-  const handleClickNextStep = useCallback(() => {
-    setIsLoading(true);
-    return sendProspectToAPI(NEXT).then(
-      isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.reviewAndSubmit, true);
-      },
-      () => setIsLoading(false)
-    );
-  }, [pushHistory, sendProspectToAPI]);
+  const handleClickNextStep = useCallback(
+    proceedWithoutAddon => {
+      if (!rakValuePackage && !proceedWithoutAddon) {
+        setShowConfirmationPopup(true);
+        return;
+      }
+      setShowConfirmationPopup(false);
+      setIsLoading(true);
+      return sendProspectToAPI(NEXT).then(
+        isScreeningError => {
+          if (!isScreeningError) pushHistory(routes.reviewAndSubmit, true);
+        },
+        () => setIsLoading(false)
+      );
+    },
+    [pushHistory, sendProspectToAPI]
+  );
+
+  const handleGoToPackage = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setShowConfirmationPopup(false);
+  };
 
   return (
     <div className={classes.container}>
       <div className={classes.section}>
+        <ConfirmationDialog
+          title={"Sure you don't want an add-on?"}
+          message={
+            "Upgrading to a RAKvalue package can save you tons of time and money, making it that much easier to run your business."
+          }
+          handleContinueWithoutAddon={() => handleClickNextStep(true)}
+          handleGoToPackage={handleGoToPackage}
+          handleClose={() => setShowConfirmationPopup(false)}
+          isOpen={showConfirmationPopup}
+        />
         <SectionTitleWithInfo
           title={"Now for the finishing touches"}
           info="Set up your account preferences."
@@ -210,7 +236,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         />
         <Formik
           initialValues={initialValues}
-          onSubmit={handleClickNextStep}
+          onSubmit={() => handleClickNextStep(false)}
           validationSchema={accountInfoValidation}
           validateOnChange={true}
           validateOnMount={true}
