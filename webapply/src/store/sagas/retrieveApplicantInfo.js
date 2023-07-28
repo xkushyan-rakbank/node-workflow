@@ -115,6 +115,8 @@ export function* getProspectIdInfo({ payload }) {
     let prospect = {};
     //set signatory edited name
     try {
+      config.prospect.applicationInfo.viewId = config.prospect.viewId;
+      prospect["applicationInfo.viewId"] = config.prospect.viewId;
       if (config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0]) {
         const signatoryDetails =
           config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0];
