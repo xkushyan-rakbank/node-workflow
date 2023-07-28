@@ -15,7 +15,7 @@ import {
   setLivelinessData
 } from "../../store/actions/kyc";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
-import { getCompanyTradeLicenseNumber } from "../../store/selectors/appConfig";
+import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { OverlayLoader } from "../Loader";
 
 const localizedMessagesLiveness = {
@@ -133,7 +133,12 @@ export const FaceRecognition = ({
     livenessChecklist
   });
   const { identityValidation, faceLivelinessFeedback, confirmEntity } = useSelector(getKyc);
-  const tradeLicenseNo = useSelector(getCompanyTradeLicenseNumber);
+  const {
+    licenseOrCOINumber,
+    licenseOrCOIExpiryDate,
+    dateOfIncorporation,
+    licenseIssuingAuthority
+  } = useSelector(getOrganizationInfo);
 
   const onResult = async result => {
     dispatch(checkFaceLiveliness(result));
@@ -151,7 +156,13 @@ export const FaceRecognition = ({
   }, [faceLivelinessFeedback]);
 
   useEffect(() => {
-    if (confirmEntity?.success && tradeLicenseNo !== confirmEntity.tradeLicenseNumber) {
+    if (
+      confirmEntity?.success &&
+      licenseOrCOINumber !== confirmEntity?.tradeLicenseNumber &&
+      licenseOrCOIExpiryDate !== confirmEntity?.expiryDate &&
+      dateOfIncorporation !== confirmEntity?.creationDate &&
+      licenseIssuingAuthority !== confirmEntity?.issuingAuthority
+    ) {
       dispatch(resetConfirmEntity());
     }
   }, []);

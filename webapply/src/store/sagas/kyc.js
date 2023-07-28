@@ -31,6 +31,8 @@ import {
 import {
   getAuthorizationHeader,
   getCompanyTradeLicenseNumber,
+  getDatalist,
+  getOrganizationInfo,
   getProspectId,
   getSignatories
 } from "../selectors/appConfig";
@@ -224,8 +226,17 @@ export function* notifyHost() {
   }
 }
 
-export function* entityConfirmation() {
-  const tradeLicenseNumber = yield select(getCompanyTradeLicenseNumber);
+export function* entityConfirmation(tlia) {
+  const { licenseOrCOINumber, licenseOrCOIExpiryDate, dateOfIncorporation } = yield select(
+    getOrganizationInfo
+  );
+
+  const data = {
+    tradeLicenseNumber: licenseOrCOINumber,
+    expiryDate: licenseOrCOIExpiryDate,
+    creationDate: dateOfIncorporation
+  };
+
   try {
     const livelinessData = yield select(getLivelinessData);
     const transactionId = yield select(getTransactionId);
@@ -235,9 +246,15 @@ export function* entityConfirmation() {
       transactionId,
       livelinessData.data,
       livelinessData.datahash,
-      tradeLicenseNumber
+      { ...data, issuingAuthority: parseInt(tlia.displayText) }
     );
-    yield put(validateEntityConfirmSuccess({ success: true, tradeLicenseNumber }));
+    yield put(
+      validateEntityConfirmSuccess({
+        success: true,
+        issuingAuthority: tlia.code,
+        ...data
+      })
+    );
   } catch (error) {
     let message = error?.response?.data?.message;
     if (error?.response?.status === 403 && error?.response?.data?.errorCode === "024") {
@@ -263,7 +280,9 @@ export function* entityConfirmation() {
           screeningType: 403
         })
       );
-      yield put(validateEntityConfirmSuccess({ success: true, tradeLicenseNumber }));
+      yield put(
+        validateEntityConfirmSuccess({ success: true, ...data, issuingAuthority: tlia.code })
+      );
     } else {
       yield put(validateEntityConfirmFail(null));
       const notificationOptions = { title: "Oops", message };
@@ -279,6 +298,11 @@ export function* setLivelinessData({ payload }) {
   try {
     const livelinessData = yield select(getLivelinessData);
     const transactionId = yield select(getTransactionId);
+    const { licenseIssuingAuthority } = yield select(getOrganizationInfo);
+    const { tliaForMOI } = yield select(getDatalist);
+    const filteredlicenseIssuingAuthority = tliaForMOI.filter(
+      tlia => tlia?.value === licenseIssuingAuthority
+    );
     yield call(
       analyzeOcrData.validateAndConfirmIdentity,
       transactionId,
@@ -286,7 +310,15 @@ export function* setLivelinessData({ payload }) {
       livelinessData.datahash
     );
     yield put(validateIdentitySuccess());
-    yield call(entityConfirmation);
+    if (filteredlicenseIssuingAuthority?.length) {
+      yield call(entityConfirmation, filteredlicenseIssuingAuthority[0]);
+    } else {
+      yield put(
+        validateEntityConfirmSuccess({
+          success: true
+        })
+      );
+    }
   } catch (error) {
     if (error?.response?.status === 403 && error?.response?.data?.errorCode === "017") {
       let screenError = screeningStatus.find(
