@@ -13,6 +13,7 @@ import useDecisions from "../../utils/useDecisions";
 import { ContexualHelp, ErrorMessage } from "./../Notifications";
 import { ICONS, Icon } from "../Icons";
 import { InfoTitle } from "../InfoTitle";
+import { getFileUploadErrorMessage } from "../../constants";
 
 const FileIcon = ({ height, width }) => (
   <img src={FileUploadIcon} style={{ height, width }} alt="fileIconPng" />
@@ -48,7 +49,7 @@ export const Upload = ({
     maxSize,
     minSize,
     noDrag: isMobile ? true : false,
-    ...props
+    ...props,
   });
   const hasFile = !!file;
   const { visible } = useDecisions(path);
@@ -56,6 +57,15 @@ export const Upload = ({
   const isError = errorMessage && getIn(touched, field.name);
   const FileIconHeight = isMobile ? "35px" : "44px";
   const FileIconWidth = isMobile ? "32px" : "40px";
+
+  const handleErrorMessage = (error) => {
+    const errorMessages = {
+      "file-invalid-type": getFileUploadErrorMessage.INVALID_FILE_TYPE,
+      "file-too-small": getFileUploadErrorMessage.FILE_TOO_SMALL,
+      "file-too-large": getFileUploadErrorMessage.FILE_TOO_BIG,
+    };
+    return errorMessages[error.code] || error?.message;
+  };
 
   return (
     visible && (
@@ -102,10 +112,10 @@ export const Upload = ({
                     </div>
                   ) : fileRejections?.length > 0 ? (
                     fileRejections?.map(({ file, errors }) =>
-                      errors?.map(e => {
+                      errors?.map((e) => {
                         return (
                           <div key={file} className={cx(classes.subcontent, classes.error)}>
-                            {e?.message}
+                            {handleErrorMessage(e)}
                           </div>
                         );
                       })

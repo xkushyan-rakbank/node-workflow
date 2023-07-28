@@ -796,3 +796,9 @@ export const rakValuePackages = {
   [RAKvalue_PLUS]: "RAKvalue SME Plus",
   [RAKvalue_MAX]: "RAKvalue SME MAX"
 };
+
+export const getFileUploadErrorMessage = {
+  FILE_TOO_SMALL: "The file size is too small. Please upload a file that is at least 10KB",
+  FILE_TOO_BIG: "The file size is too big. Please upload a file less than or equal to 5MB",
+  INVALID_FILE_TYPE: "The file format is not supported. Please upload a valid file"
+}
