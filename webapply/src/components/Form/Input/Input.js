@@ -36,6 +36,7 @@ const InputBase = ({
   showCounter = true,
   showEditIcon = false,
   iconColor = "grey",
+  infoIcon,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -105,7 +106,8 @@ const InputBase = ({
         <FieldDescription
           title={fieldDescription}
           fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
-          fieldMaxLength={InputProps.inputProps?.maxLength}
+          fieldMaxLength={InputProps.inputProps?.maxLength} 
+          showTitleIcon={infoIcon}
         />
       )}
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { ReactComponent as InformationIcon } from "../assets/icons/information.svg";
 
 const useStyles = makeStyles({
   wrapper: {
@@ -12,17 +13,29 @@ const useStyles = makeStyles({
     "& div": {
       display: "flex",
       alignItems: "center",
-      whiteSpace: "pre-line"
-    }
-  }
+      whiteSpace: "pre-line",
+    },
+  },
+  informationDisclaimer: {
+    display: "flex",
+    alignItems: "center",
+    whiteSpace: "pre-line",
+    marginRight: "auto",
+    gap: "8px",
+  },
 });
 
-export const FieldDescription = ({ title, fieldValueLength, fieldMaxLength }) => {
+export const FieldDescription = ({ title, fieldValueLength, fieldMaxLength, showTitleIcon }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.wrapper}>
-      <div>{title}</div>
+      {title && (
+        <div className={classes.informationDisclaimer}>
+         {showTitleIcon && <InformationIcon />} 
+         {title}
+        </div>
+      )}
       {fieldMaxLength && (
         <div>
           {fieldValueLength}&nbsp;/&nbsp;{fieldMaxLength}
