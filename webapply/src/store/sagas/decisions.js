@@ -10,7 +10,8 @@ import {
   enableInputField,
   hideInputFeild,
   setLabel,
-  showInputField
+  showInputField,
+  decisionsLoading
 } from "../actions/decisions";
 import {
   getAppConfig,
@@ -92,9 +93,11 @@ export function* makeDecisions({ payload }) {
     const prospectId = yield select(getProspectId);
     const headers = yield select(getAuthorizationHeader);
     const { onValuesChanged, inputFields: decision_input } = payload;
+    yield put(decisionsLoading(true));
     //api call
     const response = yield call(decisionsAPIClient.make, prospectId, decision_input, headers);
     yield call(setDecisions, response.data, onValuesChanged);
+    yield put(decisionsLoading(false));
   } catch (error) {
     log(error);
   }

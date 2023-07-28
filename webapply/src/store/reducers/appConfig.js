@@ -25,9 +25,11 @@ import {
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
+import { DECISIONS_LOADING } from "../actions/decisions";
 
 export const initialState = {
   loading: false,
+  decisionLoading: false,
   uiConfig: {},
   prospect: {
     applicationInfo: {
@@ -183,6 +185,10 @@ export default handleActions(
     [UPDATE_RO_EMAIL]: (state, action) => ({
       ...state,
       roEmail: action.payload
+    }),
+    [DECISIONS_LOADING]: (state, action) => ({
+      ...state,
+      decisionLoading: action.payload
     })
   },
   initialState

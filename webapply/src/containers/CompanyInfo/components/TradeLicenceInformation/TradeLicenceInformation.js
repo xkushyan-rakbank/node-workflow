@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import { addDays, format, isValid } from "date-fns";
 import {
@@ -13,8 +13,13 @@ import {
   MAX_LICENSE_NUMBER_LENGTH
 } from "../../constants";
 import { DATE_FORMAT } from "../../../../constants";
+import { useSelector } from "react-redux";
+import { isDecisionLoading } from "../../../../store/selectors/appConfig";
 
 export const TradeLicenceInformation = ({ values }) => {
+  const countryOfIncorporationRef = useRef();
+  const waitingForDecision = useSelector(isDecisionLoading);
+
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
   return (
@@ -32,6 +37,7 @@ export const TradeLicenceInformation = ({ values }) => {
          enter the company registration details as shown on other company documents.`}
       />
       <Field
+        innerRef={countryOfIncorporationRef}
         name="countryOfIncorporation"
         label="Country of incorporation"
         path="prospect.organizationInfo.countryOfIncorporation"
@@ -40,6 +46,10 @@ export const TradeLicenceInformation = ({ values }) => {
         component={SelectAutocomplete}
         tabIndex="0"
         filterOptions={options => {
+          if (waitingForDecision) {
+            // Return a single "Loading..." option when waiting for a decision
+            return [{ label: "Loading...", value: null }];
+          }
           const checkLicenceIssuing = blackListedAuthoritiesForUAE[values.licenseIssuingAuthority];
           if (checkLicenceIssuing) {
             return options.filter(item => item.code !== COUNTRY_CODE_UAE);

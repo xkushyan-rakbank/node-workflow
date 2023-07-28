@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
@@ -52,6 +52,14 @@ const SelectAutocompleteBase = ({
 
     return onChange(value, renderValue);
   };
+
+  useEffect(() => {
+    if (disabled) {
+      if (props.innerRef && props.innerRef.current) {
+        props.innerRef.current.onMenuClose();
+      }
+    }
+  }, [disabled]);
 
   return (
     <FormControl classes={{ root: classes.formControlRoot }} variant="filled">
