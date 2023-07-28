@@ -20,7 +20,7 @@ import {
 } from "../../../../../store/selectors/appConfig";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { NAME_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
-import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
+import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
 
 export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
@@ -43,6 +43,10 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
     "prospect.prospectDocuments.stakeholderAdditionalInfo.backgroundDetails.cv";
 
   const cv = useFindDocument(documents, documentKeyToCheck);
+
+  useEffect(() => {
+    dispatch(initDocumentUpload());
+  }, []);
 
   const initialValues = {
     highestEducationAttained: "",

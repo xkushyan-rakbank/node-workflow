@@ -95,7 +95,7 @@ export function createUploader(prospectId, data, source, headers) {
   let emit;
   const chan = eventChannel(emitter => {
     emit = emitter;
-    return () => { };
+    return () => {};
   });
   const onUploadProgress = ({ total, loaded }) => {
     const percentage = Math.round((loaded * 100) / total);
@@ -441,7 +441,10 @@ export function* uploadDocuments({ payload }) {
     // find the respective document section from documentList
     const documentSection = get(documentList, payload.documentSection);
     const index = payload.index;
-    const uploadedList = get(prospect, `documents.${payload.saveProspectPath || payload.documentSection}`);
+    const uploadedList = get(
+      prospect,
+      `documents.${payload.saveProspectPath || payload.documentSection}`
+    );
     const newUplaodedLsit = uploadedList && uploadedList.length ? uploadedList : null;
     const documentSectionArray =
       documentSection && documentSection.length ? documentSection : documentSection.documents;
@@ -475,15 +478,35 @@ export function* uploadDocuments({ payload }) {
           fileName: response.data.fileName,
           fileDescription: fieldData.name,
           fileSize: fieldData.size,
-          submittedDt: new Date().toISOString()
+          submittedDt: new Date().toISOString(),
+          isSingleDocUpdated: true
         });
       }
     }
     if (uploadedDocuments.length) {
+      let pathToUpdate = payload.saveProspectPath || payload.documentSection;
+      let valueToUpdate;
+      if (pathToUpdate === "companyDocuments") {
+        pathToUpdate = "prospect.documents";
+        valueToUpdate = {
+          isCompanyDocUpdate: true,
+          companyDocuments: uploadedDocuments
+        };
+      } else {
+        let pathToUpdateParts = pathToUpdate.split(".");
+        const documentsKey = pathToUpdateParts[pathToUpdateParts.length - 1];
+        pathToUpdate = `prospect.documents.${pathToUpdateParts.slice(
+          0,
+          pathToUpdateParts.length - 1
+        )}`;
+        valueToUpdate = {
+          [documentsKey]: uploadedDocuments,
+          isDocUpdate: true
+        };
+      }
       yield put(
         updateProspect({
-          [`prospect.documents.${payload.saveProspectPath ||
-            payload.documentSection}`]: uploadedDocuments
+          [pathToUpdate]: valueToUpdate
         })
       );
     }
