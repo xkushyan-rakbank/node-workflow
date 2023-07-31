@@ -441,16 +441,28 @@ export function* uploadDocuments({ payload }) {
     // find the respective document section from documentList
     const documentSection = get(documentList, payload.documentSection);
     const index = payload.index;
-    const uploadedList = get(
+    const savePath = payload.saveProspectPath || payload.documentSection;
+    const uploadedProspectList = get(
       prospect,
       `documents.${payload.saveProspectPath || payload.documentSection}`
     );
+    let uploadedList = [];
+    if (!savePath.includes("personalBankStatements") && !savePath.includes("companyAddressProof")) {
+      uploadedList = [];
+    } else {
+      uploadedList = uploadedProspectList;
+    }
     const newUplaodedLsit = uploadedList && uploadedList.length ? uploadedList : null;
     const documentSectionArray =
       documentSection && documentSection.length ? documentSection : documentSection.documents;
-    const uploadedDocuments = newUplaodedLsit || [];
+    let uploadedDocuments = newUplaodedLsit || [];
     for (let docPath in payload.docs) {
       const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
+      if (savePath === "companyDocuments") {
+        uploadedDocuments = uploadedProspectList.filter(
+          eachItem => eachItem.documentKey !== docPath
+        );
+      }
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
         const documentUniq =
@@ -492,6 +504,8 @@ export function* uploadDocuments({ payload }) {
           isCompanyDocUpdate: true,
           companyDocuments: uploadedDocuments
         };
+      } else if (pathToUpdate.includes("additionalDocuments")) {
+        valueToUpdate = uploadedDocuments;
       } else {
         let pathToUpdateParts = pathToUpdate.split(".");
         const documentsKey = pathToUpdateParts[pathToUpdateParts.length - 1];
