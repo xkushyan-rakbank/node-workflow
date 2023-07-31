@@ -6,6 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     left: 0,
     flexWrap: "nowrap",
     marginTop: "21px",
+    justifyContent: "center",
     [theme.breakpoints.up("sm")]: {
       justifyContent: "flex-end",
     },

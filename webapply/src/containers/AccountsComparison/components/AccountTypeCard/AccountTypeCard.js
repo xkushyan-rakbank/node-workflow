@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 import React from "react";
-import { useStyles } from "./styled";
 import { Button } from "@material-ui/core";
 import cx from "classnames";
 import { ReactComponent as NavigationLeft } from "../../../../assets/icons/whiteArrow.svg";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ContainedButton } from "../../../../components/Buttons/ContainedButton";
+import { useStyles } from "./styled";
 //import { ReactComponent as CheckIcon } from "../../../../assets/images/icons/circle_checked_o.svg";
 export const AccountTypeCardComponent = ({
   Icon,
@@ -28,8 +28,11 @@ export const AccountTypeCardComponent = ({
       </div>
       {applyNowButton !== "" && (
         <ContainedButton
-          className={classes.stickyBtn}
-          withRightArrow={!isSticky}
+          classes={{
+            buttonStyle: classes.accountTypeCardBtn,
+            labelStyle: classes.accountTypeCardBtnLabel
+          }}
+          withRightArrow
           label={applyNowButton}
           handleClick={() => handleSetAccountType(accountTypeName)}
         />

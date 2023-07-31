@@ -3,37 +3,37 @@ import {
   contentWidth,
   sideNavWidthLG,
   sideNavWidthMD,
-  sideNavWidthXL,
+  sideNavWidthXL
 } from "../../../../constants/styles";
 import { STANDART } from "../../../../utils/useBlobColor/constants";
 
 const blobImages = {
   [`${STANDART}S`]: require("../../../../assets/images/bg-blobs/red-mobile-small-blob.svg"),
-  [`${STANDART}M`]: require("../../../../assets/images/bg-blobs/red-mobile-small-blob.svg"),
+  [`${STANDART}M`]: require("../../../../assets/images/bg-blobs/red-mobile-small-blob.svg")
 };
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column"
   },
   section: {
     [theme.breakpoints.up("sm")]: {
       width: contentWidth,
       marginLeft: "auto",
-      marginRight: "auto",
-    },
+      marginRight: "auto"
+    }
   },
   externalLink: {
     color: "#888888",
-    textDecoration: "underline",
+    textDecoration: "underline"
   },
   landingPageHeader: {
     marginBottom: "40px",
     "& h3": {
       fontSize: "1.25rem",
-      fontWeight: 501,
-      paddingBottom: "8px",
+      fontWeight: 500,
+      marginBottom: "8px",
       paddingTop: "150px",
       color: "#1F1F1F",
     },
@@ -47,14 +47,15 @@ export const useStyles = makeStyles((theme) => ({
       "& h3": {
         fontSize: "1.75rem",
         fontWeight: 500,
-        // margin: 0,
-        paddingBottom: "4px",
+        margin: 0,
+        marginBottom: "8px",
         color: "#1F1F1F",
+        paddingTop: "80px",
       },
       "& p": {
         fontSize: "1.25rem",
         fontWeight: 400,
-        // margin: 0,
+        margin: 0,
         color: "#757575",
       },
     },
@@ -81,12 +82,12 @@ export const useStyles = makeStyles((theme) => ({
   accountInfoLandingPageHeader: {
     "&.small-menu-show": {
       display: "none",
-    },
+    }
   },
 
   videoBg: {
     position: "absolute",
-    height: "100vh",
+    // height: "100vh",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     right: "0",
@@ -107,18 +108,26 @@ export const useStyles = makeStyles((theme) => ({
     display: "block",
   },
   blobMobile: {
-    [theme.breakpoints.only("xs")]: {
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "42%",
-      zIndex: 2,
-      backgroundImage: ({ color }) => `url(${blobImages[`${color}S`]})`,
-      backgroundSize: "cover",
-      backgroundRepeat: "no-repeat",
-      transform: "rotate(360deg)",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    display: "block",
+    zIndex: 2,
+    height: "260px",
+    backgroundImage: ({ color }) => `url(${blobImages[`${color}S`]})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center bottom",
+    "@media (max-width: 375px) and (height: 548px)": {
+      height: "260px!important",
     },
+    [theme.breakpoints.only("xs")]: {
+      height: "340px"
+    },
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   },
   blob: {
     position: "absolute",
@@ -126,7 +135,7 @@ export const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0,
     height: "100%",
-    width: sideNavWidthMD,
+    width: "400px",
     pointerEvents: "none",
     [theme.breakpoints.only("xs")]: {
       display: "none",
@@ -141,7 +150,7 @@ export const useStyles = makeStyles((theme) => ({
   stickyDiv: {
     position: "sticky",
     top: "8.85%",
-    zIndex: 55,
+    zIndex: 1111,
     overflow: "hidden",
     background: "#fff",
 
@@ -165,16 +174,19 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: "16px",
       },
     },
+    [theme.breakpoints.up("sm")]: {
+      top: "75px"
+    }
   },
   featureSectionMobile: {
     marginTop: "80px",
-    [theme.breakpoints.between("sm", "md")]: {
-      display: "none",
-    },
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
   },
 
   featureSection: {
-    marginTop: "80px",
+    // marginTop: "40px",
 
     [theme.breakpoints.only("xs")]: {
       display: "none",
@@ -190,154 +202,172 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: "9px",
 
     [theme.breakpoints.up("sm")]: {
-      fontSize: "1.75rem",
+      fontSize: "1.5rem",
       fontWeight: 500,
-      lineHeight: "36px",
-      color: "#1F1F1F",
-      padding: "0 40px",
+      lineHeight: "32px",
+      color: "#8D0C10",
+      padding: "18px 0px 18px 24px",
       margin: 0,
-      marginBottom: "18px",
     },
   },
-  featureList: {
-    display: "flex",
-    padding: "24px 0px",
-    justifyContent: "space-between",
-    alignItems: "center",
-    "& div:first-child": {
-      textAlign: "left !important",
-      paddingLeft: "20px",
-      color: "#1F1F1F",
-      fontSize: "12px",
-      fontWeight: 500,
-      lineHeight: "16px",
-    },
-    "& div": {
-      flexGrow: 1,
-      flexBasis: "auto",
-      textAlign: "center",
-      fontSize: "12px",
-      padding: "0px 24px",
-      whiteSpace: "pre-line",
-    },
-    "&:nth-of-type(odd)": {
-      backgroundColor: "#F7F8F9",
-      borderRadius: "10px",
-    },
-    [theme.breakpoints.only("xs")]: {
-      "& div:nth-child(4)": {
-        display: "none",
-      },
-    },
-
-    [theme.breakpoints.up("sm")]: {
+  featureListWrapper: {
+    [theme.breakpoints.down("sm")]: {
       display: "flex",
-      padding: "24px 0px",
+      padding: "17px 20px",
       justifyContent: "space-between",
       alignItems: "center",
       "& div:first-child": {
         textAlign: "left !important",
-        paddingLeft: "24px",
+        paddingLeft: "20px",
         color: "#1F1F1F",
-        fontSize: "16px",
+        fontSize: "12px",
         fontWeight: 500,
-        lineHeight: "24px",
+        lineHeight: "16px",
       },
       "& div": {
         flexGrow: 1,
         flexBasis: "auto",
         textAlign: "center",
-        fontSize: "inherit",
+        fontSize: "12px",
         padding: "0px 24px",
         whiteSpace: "pre-line",
       },
+
       "&:nth-of-type(odd)": {
-        backgroundColor: "#F7F8F9",
-        borderRadius: "10px",
-      },
+        backgroundColor: "#F7F8F9"
+      }
+    }
+  },
+  featureList: {
+    padding: "22px 20px",
+    background: "rgba(245, 245, 245, 0.50)",
+    textAlign: "center",
+    whiteSpace: "pre-wrap",
+    "&:first-child": {
+      textAlign: "left",
+      whiteSpace: "break-spaces"
     },
+    "&:nth-child(2)": {
+      background: "rgba(253, 231, 232, 0.20)"
+    },
+    "&:nth-child(3)": {
+      background: "rgba(253, 231, 232, 0.60)"
+    },
+    "&:last-child": {
+      background: "#FDE7E8"
+    },
+    [theme.breakpoints.only("md")]: {
+      padding: "20px 15px",
+      "& img": {
+        width: "20px",
+        height: "20px"
+      }
+    },
+    [theme.breakpoints.up("lg")]: {
+      padding: "22px 20px",
+      color: "#1F1F1F",
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: "24px",
+      "& img": {
+        width: "24px",
+        height: "24px"
+      }
+    }
   },
   infoText: {
     marginTop: "24px",
-    whiteSpace: "pre-line",
+    whiteSpace: "pre-wrap",
   },
   featureInfo: {
     color: "#847F7F",
-    fontSize: "0.75rem",
+    fontSize: "0.875rem",
     fontWeight: 400,
     lineHeight: "16px",
     margin: 0,
-    marginTop: "24px",
+    marginTop: "40px",
     "& p": {
-      margin: 0,
+      margin: 0
     },
     "& a": {
       color: "#8D0C10",
-      textDecoration: "underline",
-    },
+      textDecoration: "underline"
+    }
   },
   accountsInfoBannerContentWrapper: {
     position: "absolute",
     zIndex: 111,
     top: "10%",
-
-    [theme.breakpoints.only("xs")]: {
-      "& h2": {
-        display: "none",
-      },
-      "& img": {
-        display: "none",
-      },
-      "& p": {
-        fontSize: "1.5rem",
-        fontStyle: "normal",
-        fontWeight: 600,
-        color: "#FFFFFF",
-        paddingLeft: "31px",
-        lineHeight: "32px",
-        paddingRight: "35px",
-      },
-    },
-    [theme.breakpoints.up("sm")]: {
-      top: "45%",
-      transform: "translateY(-50%)",
-      "& h2": {
+    "& h2": {
+      display: "none",
+      [theme.breakpoints.up("sm")]: {
+        display: "block",
         fontSize: "2.5rem",
         fontWeight: 500,
         lineHeight: "48px",
         color: "#FFFFFF",
         margin: 0,
-        paddingLeft: "40px",
+        paddingLeft: "40px"
+      }
+    },
+    "& img": {
+      display: "none",
+      [theme.breakpoints.between("sm", "md")]: {
+        display: "block",
+        width: "250px",
+        height: "60px",
+        paddingLeft: "10px"
       },
-      "& img": {
+      [theme.breakpoints.up("md")]: {
+        display: "block",
         width: "333px",
         height: "75px",
         flexShrink: 0,
-        paddingLeft: "10px",
+        paddingLeft: "10px"
+      }
+    },
+    "& p": {
+      fontSize: "1.5rem",
+      fontStyle: "normal",
+      fontWeight: 600,
+      color: "#FFFFFF",
+      paddingLeft: "31px",
+      lineHeight: "32px",
+      paddingRight: "35px",
+      margin: 0,
+      marginTop: "16px",
+      [theme.breakpoints.between("sm", "md")]: {
+        marginTop: "58px",
+        fontSize: "1.75rem",
+        lineHeight: "28px",
+        whiteSpace: "pre-line"
       },
-      "& p": {
-        margin: 0,
+      [theme.breakpoints.up("md")]: {
         marginTop: "58px",
         fontSize: "2rem",
         fontWeight: 500,
         lineHeight: "40px",
-        color: "#FFFFFF",
-        whiteSpace: "pre-line",
         alignText: "center",
         paddingLeft: "40px",
-      },
+        whiteSpace: "pre-line"
+      }
+    },
+    [theme.breakpoints.up("sm")]: {
+      top: "45%",
+      transform: "translateY(-50%)"
     },
   },
   welcomeText: {
-    textAlign: "center",
+    textAlign: "center"
   },
   accountInfoNav: {
     position: "fixed",
-    top: 40,
+    top: 16,
     width: "100%",
-    [theme.breakpoints.only("xs")]: {
-      zIndex: 137,
-    },
+    zIndex: 137,
+    [theme.breakpoints.up("sm")]: {
+      top: 40
+    }
   },
   accountInfoNavLinks: {
     display: "flex",
@@ -377,30 +407,38 @@ export const useStyles = makeStyles((theme) => ({
   accountInfoMain: {
     position: "absolute",
     zIndex: 111,
+    display: "flex",
+    flexDirection: "column",
 
+    [theme.breakpoints.down("xs")]: {
+      left: "50%!important",
+      transform: "translateX(-50%)",
+      width: "80%",
+      textAlign: "center",
+
+      alignItems: "center",
+      justifyContent: "center"
+    },
     "& h2": {
       fontSize: "1.75rem",
       lineHeight: "36px",
       color: "#FFFFFF",
-      width: "350px",
+      width: "100%",
       fontWeight: 700,
-
-      [theme.breakpoints.up("sm")]: {
+      margin: 0,
+      //ipad devices pro devices
+      [theme.breakpoints.between("sm", "lg")]: {
         left: "65%",
-        width: "708px",
-        margin: 0,
+        // width: "708px",
+        letterSpacing: " -5.5px",
+        fontSize: "4rem",
+        lineHeight: "80px",
+      },
+      [theme.breakpoints.up("lg")]: {
+        left: "65%",
+        // width: "708px",
         letterSpacing: " -5.5px",
         fontSize: "6.8rem",
-        lineHeight: "100px",
-      },
-
-      //ipad devices pro devices
-      [theme.breakpoints.between("sm", "md")]: {
-        left: "65%",
-        width: "708px",
-        margin: 0,
-        letterSpacing: " -5.5px",
-        fontSize: "4.8rem",
         lineHeight: "100px",
       },
     },
@@ -433,22 +471,25 @@ export const useStyles = makeStyles((theme) => ({
   },
   btnWrapper: {
     display: "flex",
-    marginTop: "80px",
-    [theme.breakpoints.between("md", "lg")]: {
+    marginTop: "20px",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    gap: "16px",
+    fontSize: "20px",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "28px",
+    [theme.breakpoints.between("sm", "md")]: {
       marginTop: "50px",
+      flexDirection: "row"
     },
-    [theme.breakpoints.only("xs")]: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "16px",
-      fontSize: "20px",
-      fontStyle: "normal",
-      fontWeight: 500,
-      lineHeight: "28px",
-    },
+    [theme.breakpoints.up("md")]: {
+      marginTop: "80px",
+      gap: "30px",
+      flexDirection: "row"
+    }
   },
   accountBtn: {
-    marginRight: 30,
     fontSize: "1.5rem",
     fontWeight: 400,
     lineHeight: "32px",
@@ -471,7 +512,7 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
 
     [theme.breakpoints.up("sm")]: {
-      height: "200px",
+      height: "205px",
       backgroundColor: "#FFFFFF",
       position: "fixed",
       top: 0,
@@ -490,6 +531,10 @@ export const useStyles = makeStyles((theme) => ({
     gap: "12px",
     paddingTop: "11px",
     paddingLeft: "26px",
+    marginTop: "40px",
+    "@media (max-width: 375px) and (height: 548px)": {
+      marginTop: "16px!important",
+    },
     [theme.breakpoints.only("xs")]: {
       paddingTop: "0px",
     },
@@ -498,7 +543,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   navButton: {
-    width: "144px",
+    // width: "144px",
     height: "40px",
     borderRadius: "21px",
     border: "1px solid #FFF",
@@ -508,6 +553,11 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     lineHeight: "1rem",
     color: "#fff",
-    textTransform: "none",
+    textTransform: "none"
   },
+  termsAndConditionWrapper: {
+    margin: 0,
+    marginBottom: "10px",
+    marginTop: "6px"
+  }
 }));

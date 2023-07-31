@@ -46,10 +46,18 @@ export const useStyles = makeStyles((theme) => ({
     padding: "40px 0 24px 0",
   },
   videoSubTitle: {
-    fontSize: "20px",
+    fontSize: "1rem",
     fontWeight: "400",
     lineHeight: "28px",
     color: "#757575",
+    margin: 0,
+    marginBottom: "32px",
+    [theme.breakpoints.between("sm", "lg")]: {
+      fontSize: "1.125rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.25rem"
+    }
   },
   info: {
     fontSize: 20,

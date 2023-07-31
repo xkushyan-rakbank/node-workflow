@@ -3,19 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles(theme => ({
   root: {
     minWidth: "550px",
-    border: "none",
     boxShadow: "none",
-    "&:not(:last-child)": {
-      borderBottom: 0
-    },
-    "&:nth-child(even)": {
-      backgroundColor: "rgba(239, 242, 244, .5)"
-    },
+    borderRadius: "20px",
+    border: "2px solid #E9E9E9",
+    marginBottom: "24px",
     "&:before": {
       display: "none"
     },
     "&$expanded": {
-      margin: "auto"
+      marginBottom: "24px"
     },
     [theme.breakpoints.only("xs")]: {
       minWidth: "100%"
@@ -45,8 +41,8 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 16
   },
   iconSize: {
-    width: "24px",
-    height: "24px"
+    width: "20px",
+    height: "10px"
   },
   iconStyle: {
     position: "relative",
@@ -55,9 +51,12 @@ export const useStyles = makeStyles(theme => ({
   },
   text: {
     paddingBottom: "5px",
-    fontSize: "16px",
+    fontSize: "0.875rem",
     [theme.breakpoints.only("xs")]: {
       paddingBottom: 0
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem"
     }
   },
   textEllipsis: {
