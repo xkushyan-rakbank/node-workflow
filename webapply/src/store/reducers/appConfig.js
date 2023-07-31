@@ -29,7 +29,7 @@ import { DECISIONS_LOADING } from "../actions/decisions";
 
 export const initialState = {
   loading: false,
-  decisionLoading: false,
+  decisionLoading: {},
   uiConfig: {},
   prospect: {
     applicationInfo: {

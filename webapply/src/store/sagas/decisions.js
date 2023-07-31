@@ -93,11 +93,11 @@ export function* makeDecisions({ payload }) {
     const prospectId = yield select(getProspectId);
     const headers = yield select(getAuthorizationHeader);
     const { onValuesChanged, inputFields: decision_input } = payload;
-    yield put(decisionsLoading(true));
+    yield put(decisionsLoading({ [decision_input.decision_input[0]?.input_key]: true }));
     //api call
     const response = yield call(decisionsAPIClient.make, prospectId, decision_input, headers);
     yield call(setDecisions, response.data, onValuesChanged);
-    yield put(decisionsLoading(false));
+    yield put(decisionsLoading({ [decision_input.decision_input[0]?.input_key]: false }));
   } catch (error) {
     log(error);
   }

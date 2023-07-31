@@ -46,7 +46,7 @@ export const TradeLicenceInformation = ({ values }) => {
         component={SelectAutocomplete}
         tabIndex="0"
         filterOptions={options => {
-          if (waitingForDecision) {
+          if (waitingForDecision["prospect.organizationInfo.licenseIssuingAuthority"]) {
             // Return a single "Loading..." option when waiting for a decision
             return [{ label: "Loading...", value: null }];
           }
