@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
@@ -46,6 +46,8 @@ export const CompanyInfo = ({
   const dispatch = useDispatch();
   const conditionalSchema = useDynamicValidation();
   const { industry, subCategory } = useSelector(getOrganizationInfo);
+
+  console.log(industry, subCategory);
   const classes = useStyles();
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
@@ -81,20 +83,22 @@ export const CompanyInfo = ({
     industries:
       get(industries, "[0].industry[0].length", 0) > 0
         ? industries[0].industry.map((item, index) => ({
-          industry: item,
-          subCategory: industries[0].subCategory[index],
-          id: uniqueId()
-        }))
+            industry: item,
+            subCategory: industries[0].subCategory[index],
+            id: uniqueId()
+          }))
         : industries.map(item => ({
-          ...item,
-          id: uniqueId()
-        })),
-    ...(industry && {
-      "prospect.organizationInfo.industryMultiSelect.industry": industry && industry[0]
-    }),
-    ...(subCategory && {
-      "prospect.organizationInfo.industryMultiSelect.subCategory": subCategory && subCategory[0]
-    })
+            ...item,
+            id: uniqueId()
+          })),
+    ...(industry &&
+      industry[0] && {
+        "prospect.organizationInfo.industryMultiSelect.industry": industry[0]
+      }),
+    ...(subCategory &&
+      subCategory[0] && {
+        "prospect.organizationInfo.industryMultiSelect.subCategory": subCategory[0]
+      })
   };
 
   const companyInfoSchema = {
@@ -206,7 +210,7 @@ export const CompanyInfo = ({
                 display="block"
                 label="Next"
                 disabled={!(props.isValid && props.dirty)}
-              // handleClick={() => handleClick(props)}
+                // handleClick={() => handleClick(props)}
               />
             </div>
           </Form>
