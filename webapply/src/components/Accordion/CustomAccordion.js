@@ -131,7 +131,6 @@ export const Accordion = ({
 
   const handleChange = panel => (event, newExpanded) => {
     !isTouched && dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
-    console.log(newExpanded, "newExpanded handleChange", id);
     setExpanded(newExpanded ? panel : false);
   };
 
