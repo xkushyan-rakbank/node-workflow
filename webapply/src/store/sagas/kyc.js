@@ -401,8 +401,8 @@ export function* getCurrentKYCStatus() {
       dateOfIncorporation
     } = yield select(getOrganizationInfo);
     const { tliaForMOI } = yield select(getDatalist);
-    const { confirmEntity } = yield select(getKyc);
-    const filteredlicenseIssuingAuthority = tliaForMOI.filter(
+
+    const foundLicenseIssuingAuthority = tliaForMOI.find(
       tlia => tlia?.value === licenseIssuingAuthority
     );
 
@@ -419,7 +419,7 @@ export function* getCurrentKYCStatus() {
     });
     if (
       stageInfoMap["CONFIRM_ENTITY"] ||
-      (!filteredlicenseIssuingAuthority?.length && confirmEntity.status)
+      (!foundLicenseIssuingAuthority && stageInfoMap["CONFIRM_DATA_ELEMENT"])
     ) {
       yield call(putOcrData, transactionId);
       yield put(loadConfirmEntity({ success: true, ...data }));
