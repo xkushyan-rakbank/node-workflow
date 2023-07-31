@@ -1,6 +1,6 @@
 /* eslint-disable no-dupe-keys */
 import { makeStyles } from "@material-ui/core/styles";
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   accountTypeTitle: {
     color: "#1F1F1F",
     fontSize: "0.875rem",
@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
       marginBottom: "8px",
     },
   },
-  accountTypeTitleSticky: { fontSize: "1.5rem" },
+  accountTypeTitleSticky: { fontSize: "1.75rem", marginBottom: 0 },
   accountTypeDesc: {
     color: "#757575",
     fontSize: "0.75rem",
@@ -32,8 +32,8 @@ export const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.up("sm")]: {
       color: "#757575",
-      fontSize: "1.25rem",
-      fontWeight: 400,
+      fontSize: "1rem",
+      fontWeight: 600,
       lineHeight: "28px",
       margin: 0,
       textAlign: "inherit",
@@ -59,12 +59,27 @@ export const useStyles = makeStyles((theme) => ({
   btnWrapper: {
     justifyContent: "center",
   },
-  stickyBtn: {
-    minHeight: "10px",
-    padding: "16px",
-    [theme.breakpoints.up("sm")]: {
-      minHeight: "10px",
-      padding: "9px 24px",
+  accountTypeCardBtn: {
+    minHeight: "auto",
+    height: "auto",
+    padding: "10px  20px",
+    borderRadius: "50px",
+    [theme.breakpoints.only("sm")]: {
+      padding: "12px 20px",
     },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.25rem",
+      padding: "12px 40px"
+    }
   },
+  accountTypeCardBtnLabel: {
+    fontSize: "0.875rem",
+    [theme.breakpoints.only("sm")]: {
+      whiteSpace: "nowrap",
+      fontSize: "1rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.25rem"
+    }
+  }
 }));

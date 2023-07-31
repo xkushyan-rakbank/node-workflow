@@ -1,45 +1,59 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import { useMediaQuery } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   title: {
-    fontSize: "20px",
+    fontSize: "1.25rem",
     fontWeight: 500,
     lineHeight: "28px",
     color: "#1F1F1F",
+    margin: 0,
+    marginBottom: "32px",
+    [theme.breakpoints.only("sm", "lg")]: {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.75rem",
+    }
   },
   box: {
     height: "auto",
-    backgroundColor: "#F7F8F9",
+    backgroundColor: "#FDE7E8",
     padding: "32px",
     borderRadius: "10px",
-    marginBottom: "30px",
+    marginBottom: "20px",
     gap: "32px",
 
     "& .MuiStepper-root": {
-      padding: "unset !important",
-    },
+      padding: "unset !important"
+    }
   },
   stepper: {
-    backgroundColor: "#F7F8F9",
+    backgroundColor: "#FDE7E8"
   },
   step_label_root: {
-    fontSize: "12px",
+    fontSize: "0.75rem",
+    marginTop: "4px!important"
   },
+  lineBetween: {
+    left: "calc(-50% + 30px)",
+    right: "calc(50% + 30px)"
+  }
 }));
 
 export const SectionSteps = () => {
   const steps = [
-    "Application",
-    "Instant account number",
-    "Quick approvals",
-    "Signature varification",
-    "Account activation",
+    "Your info",
+    "Company details",
+    "Stakeholders",
+    "Business details",
+    "Account preferences",
+    "Submit"
   ];
   const classes = useStyles();
   const isVertical = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
@@ -49,15 +63,15 @@ export const SectionSteps = () => {
         <h3 className={classes.title}>Your new account is just a few steps away...</h3>
         <Stepper
           className={classes.stepper}
-          activeStep={(1, 2, 3, 4, 5)}
+          activeStep={(1, 2, 3, 4, 5, 6)}
           alternativeLabel={!isVertical}
           orientation={isVertical ? "vertical" : "horizontal"}
         >
-          {steps.map((label) => (
+          {steps.map(label => (
             <Step key={label}>
               <StepLabel
                 icon={<CheckCircleOutlineIcon />}
-                classes={{ label: classes.step_label_root }}
+                classes={{ label: classes.step_label_root, alternativeLabel: classes.lineBetween }}
               >
                 {label}
               </StepLabel>

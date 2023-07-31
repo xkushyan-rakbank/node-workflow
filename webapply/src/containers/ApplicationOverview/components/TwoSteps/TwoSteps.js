@@ -1,11 +1,9 @@
 import React from "react";
-import { Divider } from "@material-ui/core";
-import { SectionTitleWithInfo } from "../../../../components/SectionTitleWithInfo";
-import { IconCardsContainer } from "../../../../components/IconCards/IconCardsContainer";
-import { IconCardItem } from "../../../../components/IconCards/IconCardItem";
 import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
-import { SectionSteps } from "../../../../components/SectionSteps";
-
+import { ReactComponent as PassportIcon } from "../../../../assets/icons/PassportIDDoc.svg";
+import { ReactComponent as ProofOfIncomeIcon } from "../../../../assets/icons/proofOfIncome.svg";
+import { ReactComponent as ProofOfAddressDocIcon } from "../../../../assets/icons/proofOfAddressDoc.svg";
+import { ReactComponent as TradeLicenseDocIcon } from "../../../../assets/icons/tradeLicenseDocIcon.svg";
 import { useStyles } from "./styled";
 
 export const TwoSteps = () => {
@@ -19,41 +17,56 @@ export const TwoSteps = () => {
   } = useIconsByAccount();
 
   return (
+    // {/* /* //ro-assist header missing issue fix --- removed manual call */ */}
     <>
-      {/* //ro-assist header missing issue fix --- removed manual call */}
       <div className={classes.firstGroup}>
-        <SectionSteps />
-        <SectionTitleWithInfo
-          title="Documents"
-          info="Have these documents ready before we get started"
-        />
-
+        <p className={classes.infoDesc}>
+          So we can get your account set up, you'll need to have the following documents ready.
+        </p>
+        <p className={classes.infoDesc}>
+          Please ensure that the information you provide is accurate, otherwise you may not be able
+          to proceed with the application.
+        </p>
         <div className={classes.cardsWrapper}>
-          <IconCardsContainer classes={{ iconsWrapper: classes.iconsWrapper }}>
-            <IconCardItem horizontal text="Valid trade licence and constitutional documents ¹">
-              <License alt="trade-license" />
-            </IconCardItem>
-            <IconCardItem
-              horizontal
-              text="Passports and Emirates IDs of signatories and stakeholders ²"
-            >
-              <EmirateId alt="emirates-id" />
-            </IconCardItem>
-            <IconCardItem horizontal text="Proof of address (operation location)">
-              <Passport alt="passport-visa" />
-            </IconCardItem>
-            <IconCardItem horizontal text="Proof of income for stakeholders">
-              <CompanyDocuments alt="company-documents" />
-            </IconCardItem>
-          </IconCardsContainer>
+          <div className={classes.cards}>
+            <TradeLicenseDocIcon alt="trade-license" width="21" height="21" />
+            <p className={classes.cardDesc}>
+              Valid trade licence and constitutional documents
+              <sup className={classes.asteriskText}>1</sup>
+            </p>
+          </div>
+          <div className={classes.cards}>
+            <PassportIcon alt="passport" className={classes.passportIcon} />
+            <p className={classes.cardDesc}>
+              Passports and Emirates IDs of signatories and stakeholders
+              <sup className={classes.asteriskText}>2</sup>
+            </p>
+          </div>
+          <div className={classes.cards}>
+            <ProofOfAddressDocIcon alt="Proof of address" />
+            <p className={classes.cardDesc}>Proof of address (operation location)</p>
+          </div>
+          <div className={classes.cards}>
+            <ProofOfIncomeIcon alt="Proof of income" width="18" />
+            <p className={classes.cardDesc}>Proof of income for stakeholders</p>
+          </div>
         </div>
       </div>
       <div className={classes.note}>
-        ¹ Memorandum of Association / Articles of Association / Partners Agreement / Service
-        Agreement / Share Certificate
-        <br />² Emirates ID not required for non-resident stakeholders
+        <div>
+          <p>
+            <sup className={classes.asteriskText}>1</sup>
+            Memorandum of Association /Articles of Association / Partners Agreement / Service
+            Agreement / Share Certificate
+          </p>
+        </div>
+        <div>
+          <p>
+            <sup className={classes.asteriskText}>2</sup>Emirates ID not required for non-resident
+            stakeholders
+          </p>
+        </div>
       </div>
-      <Divider className={classes.divider} />
     </>
   );
 };

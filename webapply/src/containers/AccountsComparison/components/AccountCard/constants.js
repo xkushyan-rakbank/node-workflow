@@ -22,7 +22,7 @@ export const accountTypesDescription = {
     name: accountTitles.starter,
     accountName: accountNames.starter,
     Icon: Startups,
-    title: "For Startups \nand Entrepreneurs",
+    title: "For start-ups and entrepreneurs",
     description: [
       "Zero balance account",
       "Free remittances & preferential forex rates",
@@ -35,7 +35,7 @@ export const accountTypesDescription = {
     name: accountTitles.currentAccount,
     accountName: accountNames.currentAccount,
     Icon: Businesses,
-    title: "For Growing Businesses",
+    title: "For growing businesses",
     description: [
       "Low balance account",
       "Preferential transaction fees",
@@ -48,7 +48,7 @@ export const accountTypesDescription = {
     name: accountTitles.elite,
     accountName: accountNames.elite,
     Icon: EstablishedBusinesses,
-    title: "For Established Businesses",
+    title: "For established businesses",
     description: [
       "Select free services",
       "Host of lifestyle benefits",

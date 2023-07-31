@@ -29,14 +29,13 @@ const useStyles = makeStyles(theme => ({
   accordionExpanded: { margin: "auto !important" },
   accordionSummaryRoot: {
     marginBottom: -1,
-    minHeight: 56,
+    minHeight: "56px!important",
     padding: 0
   },
   accordionSummaryContent: {
     margin: 0,
     "& .accordionTitle": {
       letterSpacing: "0px",
-      transition: "font-weight 0.25s ease-out",
       "& .title": {
         display: "flex",
         alignItems: "center",
@@ -64,10 +63,9 @@ const useStyles = makeStyles(theme => ({
   },
 
   accordionSummaryContentExpanded: {
-    minHeight: "56px !important",
-    margin: "0px !important",
+    marginTop: "0px !important",
+    marginBottom: "0px !important",
     fontWeight: 600,
-    transition: "font-weight 0.25s ease-out",
     "& .activePanel": {
       display: "inline-block",
       width: "4px",
@@ -77,9 +75,7 @@ const useStyles = makeStyles(theme => ({
     },
     "& .accordionTitle": {
       fontWeight: 600,
-      paddingLeft: "15px",
-
-      transition: "fontWeight 0.25s ease-in-out"
+      paddingLeft: "15px"
     }
   },
   accordionDetails: {
@@ -95,10 +91,14 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     alignItems: "center"
   },
-  expandIcon: {
+  accordionIcon: {
     fill: "#BF0000",
     width: "20px",
-    height: "10px"
+    height: "10px",
+    color: "#BF0000",
+    "& svg": {
+      fill: "#BF0000"
+    }
   },
   success: {
     height: "11px",
@@ -116,7 +116,8 @@ export const Accordion = ({
   subTitle,
   classes: extendedClasses,
   showHelperText,
-  setFormFieldValue = () => {}
+  setFormFieldValue = () => {},
+  expandedByDefault = false
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -130,6 +131,7 @@ export const Accordion = ({
 
   const handleChange = panel => (event, newExpanded) => {
     !isTouched && dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
+    console.log(newExpanded, "newExpanded handleChange", id);
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -137,10 +139,12 @@ export const Accordion = ({
     setFormFieldValue(id, isCompleted);
   }, [id, isCompleted]);
 
+  const byDefaultExpandedAccordion = ["documentLanding"];
+
   return (
     <div className="accordion">
       <MuiAccordion
-        expanded={expanded === id}
+        defaultExpanded={byDefaultExpandedAccordion.includes(id)}
         onChange={handleChange(id)}
         square
         TransitionComponent={Collapse}
@@ -148,10 +152,14 @@ export const Accordion = ({
         classes={{ root: classes.accordionRoot, expanded: classes.accordionExpanded }}
       >
         <MuiAccordionSummary
+          expandIcon={
+            <Icon name={ICONS.arrowDown} alt="arrow-down" className={classes.expandIcon} />
+          }
           classes={{
             root: classes.accordionSummaryRoot,
             expanded: classes.accordionSummaryContentExpanded,
-            content: classes.accordionSummaryContent
+            content: classes.accordionSummaryContent,
+            expandIcon: classes.accordionIcon
           }}
         >
           <div
@@ -180,11 +188,6 @@ export const Accordion = ({
               {isCompleted && (isTouched || isComeback) && (
                 <Check size="16px" className={classes.success} />
               )}
-              <Icon
-                className={classes.expandIcon}
-                alt="collapse-icon"
-                name={expanded ? ICONS.arrowUp : ICONS.arrowDown}
-              />
             </div>
           </div>
         </MuiAccordionSummary>

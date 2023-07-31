@@ -25,7 +25,7 @@ export const accountsInfo = {
   },
   landingPage: {
     title: "Welcome to\n",
-    subtitle: "Get started with your \nbanking needs online,\nin minutes!",
+    subtitle: "Begin your banking \njourney online, \nin a matter of minutes!",
     image: landingQuickApply
   }
 };

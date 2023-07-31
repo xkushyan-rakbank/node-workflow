@@ -6,8 +6,8 @@ export const Youtube = ({ src }) => {
   return (
     <div className={classes.videoBox}>
       <iframe
-        width="560"
-        height="315"
+        width="500"
+        height="280"
         src={src}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

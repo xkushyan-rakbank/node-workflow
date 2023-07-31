@@ -1,4 +1,5 @@
-import checkIc from "../../assets/icons/check.svg";
+import checkIcon from "../../assets/icons/loadingGreen.svg";
+import crossIcon from "../../assets/icons/loadingRed.svg";
 import { accountNames, accountTitles } from "../../constants";
 export const INITIAL_SECTION_POSITION = 0;
 
@@ -34,14 +35,14 @@ export const accountsDataRows = [
   },
   {
     info: ["Free Teller Transactions"]
-    //starter: { text: "-" },
-    //currentAccount: { text: "-" },
+    //starter: { text: { ic: crossIcon } },
+    //currentAccount: { text: { ic: crossIcon } },
     //elite: { ic: checkIc }
   },
   {
     //info: ["Lifestyle benefits"],
     //starter: { ic: checkIc },
-    //currentAccount: { text: "-" },
+    //currentAccount: { text: { ic: crossIcon } },
     //elite: { ic: checkIc }
   },
   {
@@ -52,107 +53,89 @@ export const accountsDataRows = [
   }
 ];
 
-export const featuresDataRows = [
+export const featuresDataList = [
   {
-    name: "Free teller transactions",
-    cellOne: "-",
-    cellTwo: "-",
-    cellThree: { ic: checkIc }
+    info: "Lifestyle benefits",
+    starter: { ic: checkIcon },
+    currentAccount: { ic: crossIcon },
+    elite: { ic: checkIcon }
   },
   {
-    name: "Lifestyle benefits",
-    cellOne: { ic: checkIc },
-    cellTwo: "-",
-    cellThree: { ic: checkIc }
+    info: "Account currency",
+    starter: "AED only",
+    currentAccount: "AED only",
+    elite: "AED only"
   },
   {
-    name: "Account currency",
-    cellOne: "AED only",
-    cellTwo: "AED only",
-    cellThree: "AED only"
+    info: "Foriegn currency",
+    starter: { ic: checkIcon },
+    currentAccount: { ic: checkIcon },
+    elite: { ic: checkIcon }
   }
 ];
 
 export const feesChargesDataRows = [
   {
-    name: "Free teller transactions",
-    cellOne: "zero",
-    cellTwo: "AED 25,000 or equivalent at entity level",
-    cellThree: "AED 500,000  or equivalent at entity level"
+    info: "Monthly average credit balance",
+    starter: "Zero",
+    currentAccount: "AED 25,000\n or equivalent at entity level",
+    elite: "AED 500,000\n  or equivalent at entity level"
   },
   {
-    name: "Monthly fee (if average zero balance is not maintained)",
-    cellOne: "zero",
-    cellTwo: "AED 50",
-    cellThree: "AED 50"
+    info: "Fall back fee (if monthly average credit balance is not maintained)",
+    starter: "Zero",
+    currentAccount: "AED 50",
+    elite: "AED 50"
   },
   {
-    name: "Monthly maintenance fees",
-    cellOne: "AED 99",
-    cellTwo: "AED 50",
-    cellThree: "zero"
+    info: "Monthly maintenance fees*",
+    starter: "AED 103.95",
+    currentAccount: "AED 103.95",
+    elite: "Zero"
   },
   {
-    name: "Monthly digital banking fees",
-    cellOne: "zero",
-    cellTwo: "AED 50",
-    cellThree: "AED 50"
+    info: "Monthly digital banking fees*",
+    starter: "AED 52.5",
+    currentAccount: "AED 52.5",
+    elite: "AED 52.5"
   }
 ];
 export const perksDataRows = [
   {
-    name: "Monthly average credit balance",
-    cellOne: "zero",
-    cellTwo: "AED 25,000 or equivalent at entity level",
-    cellThree: "3"
+    info: "Zero balance account",
+    starter: { ic: checkIcon },
+    currentAccount: { ic: crossIcon },
+    elite: { ic: crossIcon }
   },
   {
-    name: "Monthly fee (if average zero balance is not maintained)",
-    cellOne: { ic: checkIc },
-    cellTwo: "-",
-    cellThree: "-"
+    info: "Free remittances",
+    starter: { ic: checkIcon },
+    currentAccount: { ic: crossIcon },
+    elite: { ic: checkIcon }
   },
   {
-    name: "Monthly maintenance fees",
-    cellOne: { ic: checkIc },
-    cellTwo: "-",
-    cellThree: "-"
+    info: "Preferential FX rates",
+    starter: { ic: checkIcon },
+    currentAccount: { ic: crossIcon },
+    elite: { ic: checkIcon }
   },
   {
-    name: "Dedicated Relationship Manager",
-    cellOne: { ic: checkIc },
-    cellTwo: "-",
-    cellThree: "-"
+    info: "Free accounting package & business insurance",
+    starter: { ic: checkIcon },
+    currentAccount: { ic: crossIcon },
+    elite: { ic: crossIcon }
   },
   {
-    name: "Variety of free services",
-    cellOne: "-",
-    cellTwo: "-",
-    cellThree: { ic: checkIc }
+    info: "Dedicated Relationship Manager",
+    starter: { ic: crossIcon },
+    currentAccount: { ic: checkIcon },
+    elite: { ic: checkIcon }
   },
   {
-    name: "Dedicated Relationship Manager",
-    cellOne: "-",
-    cellTwo: { ic: checkIc },
-    cellThree: { ic: checkIc }
-  },
-  {
-    name: "Priority service (VIP)",
-    cellOne: "-",
-    cellTwo: "-",
-    cellThree: { ic: checkIc }
-  },
-  {
-    name: "Low balance account",
-    cellOne: { ic: checkIc },
-    cellTwo: { ic: checkIc },
-    cellThree: { ic: checkIc }
-  },
-  {
-    name: "Lifestyle perks",
-    cellOne: "-",
-    cellTwo: "-",
-    cellThree: { ic: checkIc }
+    info: "Priority services across branches",
+    starter: { ic: crossIcon },
+    currentAccount: { ic: crossIcon },
+    elite: { ic: checkIcon }
   }
 ];
 

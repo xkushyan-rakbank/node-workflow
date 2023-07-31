@@ -1,46 +1,42 @@
 /* eslint-disable max-len */
-import React, { useContext, useRef, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useRef, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import cx from "classnames";
-import { AccountCard } from "../AccountCard";
-import { useStyles } from "./styled";
 import { Button, Container } from "@material-ui/core";
-import { getAccountType } from "../../../../store/selectors/appConfig";
+import { AccountCard } from "../AccountCard";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
-import { ISLAMIC, detailedAccountRoutesMap } from "../../../../constants";
 import { accountsInfo } from "../../../../components/FormNavigation/AccountInfo/constants";
 import { ReactComponent as BgBlob } from "../../../../assets/images/bg-blobs/bg-blob.svg";
 import { landingVideo } from "../../../../constants/videos";
 import StandardLogo from "../../../../assets/images/logo-standart.svg";
 import StandardRedLogo from "../../../../assets/images/logo-red.svg";
-import { featuresDataRows, feesChargesDataRows, perksDataRows } from "../../constants";
+import { featuresDataList, feesChargesDataRows, perksDataRows } from "../../constants";
 import { AccountFeatureListing } from "./AccountFeatureListing";
 import routes, { smeBaseName } from "../../../../routes";
 import { ExpandMoreButton } from "../../../QuickapplyLanding/components/LandingVideoPlayer/ExpandMoreButton";
 import { sendGoogleAnalyticsMetrics } from "../../../../store/actions/googleAnalytics";
 import { GA_EVENTS } from "../../../../utils/ga";
 import { useBlobColor } from "../../../../utils/useBlobColor/useBlobColor";
-import {
-  feesChargesDataMobile,
-  featuresDataMobile,
-  perksDataMobile,
-} from "../../AccountsMobileData";
+
+import { COMPARED_ACCOUNTS_TYPES } from "../TableCompare/components/StyledTableBodyMobile/constants";
+import { useStyles } from "./styled";
 
 export const AccountsComparisonComponent = ({ handleSetAccountType, servicePricingGuideUrl }) => {
   const blobColor = useBlobColor();
   const classes = useStyles({
-    color: blobColor,
+    color: blobColor
   });
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [mobileAccounts, setMobileAccounts] = useState(COMPARED_ACCOUNTS_TYPES.starter);
+
   const [isAccountTypeSticky, setIsAccountTypeSticky] = useState(false);
 
   const [isFullyScrolled, setIsFullyScrolled] = useState(false);
-  const [featureType, setFeatureType] = useState("");
 
   const accountTypeRef = useRef(null);
   const [accountNavTop, setAccountNavTop] = useState(0);
@@ -89,13 +85,10 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     window.addEventListener("scroll", checkIfScrolled);
   });
 
-  const handleRedirection = (path) => {
+  const handleRedirection = path => {
     pushHistory(path);
   };
 
-  const handleAccountFeatureType = (type) => {
-    setFeatureType(type);
-  };
 
   const queryParams = useLocation().search;
 
@@ -105,7 +98,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN));
   };
 
-  const redirectInToFinance = (url) => {
+  const redirectInToFinance = url => {
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_FINANCE_CHOSEN));
     if (queryParams) {
       window.location.href = url + queryParams;
@@ -122,17 +115,17 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
       //mobile
       const topMobilePercent = 45;
       const heightMobilePercent = 55;
-      const leftMobilePercent = 15;
+      const leftMobilePercent = 25;
       //tablet
       const topTabletPercentage = 20;
-      const leftTabletPercentage = 40;
+      const leftTabletPercentage = 50;
       const heightTabletPercentage = 40;
 
       let topPercentage, leftPercentage, heightPercentage;
 
       if (windowWidth <= 768) {
         topPercentage = topMobilePercent;
-        leftPercentage = leftMobilePercent;
+        // leftPercentage = leftMobilePercent;
         heightPercentage = heightMobilePercent;
       } else {
         topPercentage = topTabletPercentage;
@@ -250,7 +243,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           style={{
             top: `${accountNavTop}`,
             height: `${accountNavHeight}`,
-            left: `${accountNavLeft}`,
+            left: `${accountNavLeft}`
           }}
         >
           <h2>Let’s get down to business</h2>
@@ -281,26 +274,24 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <AccountCard
             handleSetAccountType={handleSetAccountType}
             accountSticky={isAccountTypeSticky}
-            handleFeatureType={handleAccountFeatureType}
+            mobileAccounts={mobileAccounts}
+            onChangeMobileAccounts={newComparisonData => setMobileAccounts(newComparisonData)}
           />
         </div>
         <AccountFeatureListing
           title={"Features"}
-          featureData={featuresDataRows}
-          featureDataMobile={featuresDataMobile(featureType)}
-          featureType={featureType}
+          featureData={featuresDataList}
+          mobileAccountsData={mobileAccounts}
         />
         <AccountFeatureListing
           title={"Perks"}
           featureData={perksDataRows}
-          featureDataMobile={perksDataMobile(featureType)}
-          featureType={featureType}
+          mobileAccountsData={mobileAccounts}
         />
         <AccountFeatureListing
           title={"Fees & charges"}
           featureData={feesChargesDataRows}
-          featureDataMobile={feesChargesDataMobile(featureType)}
-          featureType={featureType}
+          mobileAccountsData={mobileAccounts}
         />
         <div className={classes.featureInfo}>
           <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>
