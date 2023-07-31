@@ -46,8 +46,6 @@ export const CompanyInfo = ({
   const dispatch = useDispatch();
   const conditionalSchema = useDynamicValidation();
   const { industry, subCategory } = useSelector(getOrganizationInfo);
-
-  console.log(industry, subCategory);
   const classes = useStyles();
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
