@@ -25,7 +25,9 @@ function* SyncSession({ payload }) {
         fullname,
         isIslamicBanking,
         companyCategory,
-        tradeLicenseNo,
+        licenseOrCOINumber,
+        licenseOrCOIExpiryDate,
+        dateOfIncorporation,
         accountType
       },
       webMobileRefId,
@@ -51,7 +53,9 @@ function* SyncSession({ payload }) {
         "prospect.applicantInfo.fullName": fullname,
         "prospect.applicationInfo.islamicBanking": isIslamicBanking,
         "prospect.organizationInfo.companyCategory": companyCategory,
-        "prospect.organizationInfo.licenseOrCOINumber": tradeLicenseNo,
+        "prospect.organizationInfo.licenseOrCOINumber": licenseOrCOINumber,
+        "prospect.organizationInfo.licenseOrCOIExpiryDate": licenseOrCOIExpiryDate,
+        "prospect.organizationInfo.dateOfIncorporation": dateOfIncorporation,
         "prospect.applicationInfo.accountType": accountType
       })
     );

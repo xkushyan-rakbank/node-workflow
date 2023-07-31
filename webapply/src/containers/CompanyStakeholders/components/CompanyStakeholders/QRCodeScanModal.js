@@ -15,7 +15,6 @@ import {
   getAccountType,
   getApplicantFullName,
   getAuthorizationHeader,
-  getCompanyTradeLicenseNumber,
   getIsIslamicBanking,
   getOrganizationInfo,
   getProspectId
@@ -35,8 +34,13 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   const transactionId = useSelector(getTransactionId);
   const userToken = useSelector(getUserToken);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
-  const { companyCategory } = useSelector(getOrganizationInfo);
-  const tradeLicenseNo = useSelector(getCompanyTradeLicenseNumber);
+  const {
+    licenseOrCOINumber,
+    licenseOrCOIExpiryDate,
+    dateOfIncorporation,
+    companyCategory
+  } = useSelector(getOrganizationInfo);
+
   const accountType = useSelector(getAccountType);
 
   const [linkData, setLinkdata] = useState();
@@ -121,7 +125,9 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
         fullname,
         isIslamicBanking,
         companyCategory,
-        tradeLicenseNo,
+        licenseOrCOINumber,
+        licenseOrCOIExpiryDate,
+        dateOfIncorporation,
         accountType,
         kycTransaction: {
           id: transactionId,
