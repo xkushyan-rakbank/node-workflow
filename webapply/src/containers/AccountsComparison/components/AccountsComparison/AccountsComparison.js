@@ -89,7 +89,6 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     pushHistory(path);
   };
 
-
   const queryParams = useLocation().search;
 
   const handleClick = () => {
@@ -294,6 +293,19 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           mobileAccountsData={mobileAccounts}
         />
         <div className={classes.featureInfo}>
+          <p>* For Business Current Account customers with</p>
+          <ul>
+            <li>
+              {
+                "monthly average credit balance >= AD 250,000.00, Monthly Account Maintenance fee is waived, but Digital Banking Fee is applicable,"
+              }
+            </li>
+            <li>
+              {
+                "monthly average credit balance < AED 250,000.00, Monthly Account Maintenance fee is applicable, but Digital Banking Fee is not applicable."
+              }
+            </li>
+          </ul>
           <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>
           <p>
             See our{" "}
