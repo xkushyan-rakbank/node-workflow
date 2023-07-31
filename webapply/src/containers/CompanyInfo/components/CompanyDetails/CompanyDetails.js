@@ -45,7 +45,7 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
         triggerDecisionsForCompanyCategory("2_SPLL");
         dispatch(
           updateProspect({
-            "prospect.organizationInfo.companyCategory": "SLLC"
+            "prospect.organizationInfo.companyCategory": "2_SPLL"
           })
         );
       } else {
@@ -53,7 +53,7 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
         triggerDecisionsForCompanyCategory("1_SP");
         dispatch(
           updateProspect({
-            "prospect.organizationInfo.companyCategory": "SOLE"
+            "prospect.organizationInfo.companyCategory": "1_SP"
           })
         );
       }
