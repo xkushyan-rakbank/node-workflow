@@ -49,6 +49,16 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
     }
   }, []);
 
+  const retainOriginalFileName = (uploadFileName) => {
+    if (uploadFileName && typeof uploadFileName === "string") {
+      const fileRegex = /(?<=Constitutional_Documents_).+$/;
+      const match = uploadFileName.match(fileRegex);
+      return match ? match[0] : uploadFileName;
+    } else {
+      return uploadFileName;
+    }
+  };
+
   return (
     <>
       <Field
@@ -59,13 +69,13 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
         accept={TL_ACCEPTED_FILE_TYPES}
         fileSize={TL_COI_FILE_SIZE}
-        onDrop={acceptedFile =>
+        onDrop={(acceptedFile) =>
           handleDropFile(acceptedFile, "tradeLicenseOrCOI", touched, setTouched, setFieldValue)
         }
         file={values.tradeLicenseOrCOI}
         onDelete={() => setFieldValue("tradeLicenseOrCOI", "")}
         component={Upload}
-        content={values?.tradeLicenseOrCOI?.fileName}
+        content={retainOriginalFileName(values?.tradeLicenseOrCOI?.fileName)}
         isUploading={isUploading["tradeLicenseOrCOI"]}
         mobilecontentPlaceholder={"Upload your File"}
       />
