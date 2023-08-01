@@ -431,6 +431,8 @@ export function* getDocumentList() {
   }
 }
 
+const unixTimestamp = Math.floor(Date.now() / 1000);
+
 export function* uploadDocuments({ payload }) {
   try {
     const prospectId = yield select(getProspectId);
@@ -459,24 +461,23 @@ export function* uploadDocuments({ payload }) {
     for (let docPath in payload.docs) {
       const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
       if (savePath === "companyDocuments") {
-        uploadedDocuments = uploadedProspectList.filter(
-          eachItem => eachItem.documentKey !== docPath
-        );
+        uploadedDocuments = uploadedList.filter(eachItem => eachItem.documentKey !== docPath);
       }
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
         const documentUniq =
           index !== undefined ? `${docItem.documentTitle}-${index}` : `${docItem.documentTitle}`;
+        const docExtension = fieldData.name.split(".").pop();
         let generateName = [
           BBG_COMPANY_INFO_MODULEID,
           prospectId,
           docItem.documentType,
-          fieldData.name
+          unixTimestamp
         ];
         const fileData = {
           documentType: fieldData.type,
           documentTitle: documentUniq,
-          fileName: generateName.join("_"),
+          fileName: `${generateName.join("_")}.${docExtension}`,
           fileFormat: fieldData.type,
           fileSize: fieldData.size,
           file: fieldData
