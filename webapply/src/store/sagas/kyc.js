@@ -409,7 +409,8 @@ export function* getCurrentKYCStatus() {
     const data = {
       tradeLicenseNumber: licenseOrCOINumber,
       expiryDate: licenseOrCOIExpiryDate,
-      creationDate: dateOfIncorporation
+      creationDate: dateOfIncorporation,
+      issuingAuthority: licenseIssuingAuthority
     };
 
     const stageInfo = stagesResponse.stageInfo;

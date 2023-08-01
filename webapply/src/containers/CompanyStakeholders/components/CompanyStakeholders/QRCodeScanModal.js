@@ -38,7 +38,8 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
     licenseOrCOINumber,
     licenseOrCOIExpiryDate,
     dateOfIncorporation,
-    companyCategory
+    companyCategory,
+    licenseIssuingAuthority
   } = useSelector(getOrganizationInfo);
 
   const accountType = useSelector(getAccountType);
@@ -128,6 +129,7 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
         licenseOrCOINumber,
         licenseOrCOIExpiryDate,
         dateOfIncorporation,
+        licenseIssuingAuthority,
         accountType,
         kycTransaction: {
           id: transactionId,

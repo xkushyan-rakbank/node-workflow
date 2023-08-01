@@ -28,6 +28,7 @@ function* SyncSession({ payload }) {
         licenseOrCOINumber,
         licenseOrCOIExpiryDate,
         dateOfIncorporation,
+        licenseIssuingAuthority,
         accountType
       },
       webMobileRefId,
@@ -56,6 +57,7 @@ function* SyncSession({ payload }) {
         "prospect.organizationInfo.licenseOrCOINumber": licenseOrCOINumber,
         "prospect.organizationInfo.licenseOrCOIExpiryDate": licenseOrCOIExpiryDate,
         "prospect.organizationInfo.dateOfIncorporation": dateOfIncorporation,
+        "prospect.organizationInfo.licenseIssuingAuthority": licenseIssuingAuthority,
         "prospect.applicationInfo.accountType": accountType
       })
     );
