@@ -461,7 +461,7 @@ export function* uploadDocuments({ payload }) {
     for (let docPath in payload.docs) {
       const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
       if (savePath === "companyDocuments") {
-        uploadedDocuments = uploadedList.filter(eachItem => eachItem.documentKey !== docPath);
+        uploadedDocuments = uploadedProspectList.filter(eachItem => eachItem.documentKey !== docPath);
       }
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {

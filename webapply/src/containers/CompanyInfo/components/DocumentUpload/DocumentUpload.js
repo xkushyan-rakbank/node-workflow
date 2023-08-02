@@ -49,15 +49,6 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
     }
   }, []);
 
-  const retainOriginalFileName = (uploadFileName) => {
-    if (uploadFileName && typeof uploadFileName === "string") {
-      const fileRegex = /(?<=Constitutional_Documents_).+$/;
-      const match = uploadFileName.match(fileRegex);
-      return match ? match[0] : uploadFileName;
-    } else {
-      return uploadFileName;
-    }
-  };
 
   return (
     <>
@@ -73,9 +64,12 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           handleDropFile(acceptedFile, "tradeLicenseOrCOI", touched, setTouched, setFieldValue)
         }
         file={values.tradeLicenseOrCOI}
-        onDelete={() => setFieldValue("tradeLicenseOrCOI", "")}
+        onDelete={() => {
+          setTouched({ ...touched, ...{ tradeLicenseOrCOI: true } });
+          setFieldValue("tradeLicenseOrCOI", "");
+        }}
         component={Upload}
-        content={retainOriginalFileName(values?.tradeLicenseOrCOI?.fileName)}
+        content={values?.tradeLicenseOrCOI}
         isUploading={isUploading["tradeLicenseOrCOI"]}
         mobilecontentPlaceholder={"Upload your File"}
       />
@@ -92,9 +86,11 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
             handleDropFile(acceptedFile, "moa", touched, setTouched, setFieldValue)
           }
           file={values.moa}
-          onDelete={() => setFieldValue("moa", "")}
+          onDelete={() => { setTouched({...touched, ...{ moa: true}});
+         setFieldValue("moa", "")
+        }}
           component={Upload}
-          content={values?.moa?.fileName}
+          content={values?.moa}
           isUploading={isUploading["moa"]}
           mobilecontentPlaceholder={"Upload your File"}
         />
