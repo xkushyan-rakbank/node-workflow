@@ -26,6 +26,10 @@ export const useStyles = makeStyles({
     padding: 0,
     "&:hover": {
       backgroundColor: "#FFF"
+    },
+    "&.Mui-disabled": {
+      background: "#F2F2F2",
+      color: "#9B9CA0"
     }
   },
   filledInputError: {
@@ -47,5 +51,8 @@ export const useStyles = makeStyles({
     fontSize: "0.875rem",
     color: "#585A61 !important",
     width: "100%"
+  },
+  disabledAdornment: {
+    opacity: "0.5"
   }
 });

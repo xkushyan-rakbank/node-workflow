@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     padding: 0,
     minHeight: "56px",
     height: "auto",
-    backgroundColor: ({ disabled }) => (disabled ? "rgba(242, 242, 242, 0.5)" : "#FFF"),
+    backgroundColor: ({ disabled }) => (disabled ? "#F2F2F2" : "#FFF"),
     borderRadius: "12px",
     borderWidth: "1px",
     borderStyle: "solid",
@@ -28,6 +28,10 @@ export const useStyles = makeStyles(theme => ({
     "& + fieldset": {
       borderRadius: "8px ",
       border: "solid 1px rgba(194, 194, 194, 0.56)"
+    },
+    "&.Mui-disabled": {
+      background: "#F2F2F2",
+      color: "#9B9CA0"
     }
   },
   valueContainer: {
@@ -105,7 +109,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   filledLabel: {
-    color: "#585A61",
+    color: ({ disabled }) => (disabled ? "#9B9CA0" : "#585A61"),
     fontSize: "1rem",
     fontWeight: 400,
     lineHeight: "22px",

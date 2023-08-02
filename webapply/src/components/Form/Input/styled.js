@@ -198,6 +198,10 @@ export const useStyles = makeStyles(theme => {
         "&:focus::-moz-placeholder": placeholderVisible,
         "&:focus:-ms-input-placeholder": placeholderVisible,
         "&:focus::-ms-input-placeholder": placeholderVisible
+      },
+      "&.Mui-disabled": {
+        background: "#F2F2F2",
+        color: "#9B9CA0"
       }
     },
     inputMultiline: {

@@ -1,27 +1,33 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
-  congratulionIcon: {
+  congratulationIcon: {
     marginBottom: "60px"
   },
   trackApplicationBtn: {
     backgroundColor: "#1F1F1F",
-    margin: "24px 0 40px",
+    // margin: "24px 0 40px",
     padding: "20px 40px",
     borderRadius: "100px",
     fontSize: "1.5rem",
     fontWeight: 400,
-    lineHeight: "32px"
+    lineHeight: "32px",
+    alignSelf: "flex-start",
+    marginBottom: "40px"
+  },
+  congratulationsTextWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "40px"
   },
   applicationDetailWrapper: {
     display: "flex",
     flexDirection: "column",
+    gap: "8px",
     padding: "24px",
-    gap: "24px",
     borderRadius: "10px",
     backgroundColor: "#fff",
-    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
-    marginBottom: "40px"
+    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
   },
   applicationNumber: {
     color: "#1F1F1F",
@@ -49,5 +55,10 @@ export const useStyles = makeStyles(theme => ({
   infoIcon: {
     width: "16px !important",
     height: "16px !important"
+  },
+  successTextWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "4px"
   }
 }));

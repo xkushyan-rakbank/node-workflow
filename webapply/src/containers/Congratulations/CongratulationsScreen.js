@@ -12,9 +12,11 @@ import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 import { ICONS, Icon } from "../../components/Icons";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
+import { useLayoutParams } from "../FormLayout";
 
 export const CongratulationsScreen = () => {
   useFormNavigation([true, true, formStepper]);
+  useLayoutParams(false, false, false);
 
   const pushHistory = useTrackingHistory();
 
@@ -36,38 +38,41 @@ export const CongratulationsScreen = () => {
         height={125}
         src={submitted}
         alt="checked"
-        className={classes.congratulionIcon}
+        className={classes.congratulationIcon}
       />
-      <SectionTitleWithInfo
-        title={"Congratulations!"}
-        info={`You've successfully submitted your ${accountTypeLabel} account application.`}
-      />
-      <ContainedButton
-        withRightArrow
-        justifyContent="flex-start"
-        label="Track my application"
-        className={classes.trackApplicationBtn}
-        handleClick={() => navigateToDashboard()}
-      />
-      <div className={classes.applicationDetailWrapper}>
-        <div>
-          <p className={classes.applicationNumber}>{prospectId}</p>
-          <p className={classes.applicationDesc}>Your application reference number </p>
-        </div>
-        <DisclaimerNote
-          className={classes.infoWrapper}
-          text={
-            "You can look up your application at any time by using the above reference number. We may also ask for this number if you contact Customer Care about your application."
-          }
-          customIcon={<Icon name={ICONS.info} className={classes.infoIcon} alt="infoIcon" />}
+      <div className={classes.congratulationsTextWrapper}>
+        <SectionTitleWithInfo
+          title={"Thank you!"}
+          info={`You've successfully submitted your ${accountTypeLabel} account application.`}
         />
+        <div className={classes.applicationDetailWrapper}>
+          <div>
+            <p className={classes.applicationNumber}>{prospectId}</p>
+            <p className={classes.applicationDesc}>Your application reference number </p>
+          </div>
+          <DisclaimerNote
+            className={classes.infoWrapper}
+            text={
+              "You'll need this reference number if you contact Customer Care about your application."
+            }
+            customIcon={<Icon name={ICONS.info} className={classes.infoIcon} alt="infoIcon" />}
+          />
+        </div>
+
         <div>
           <p className={classes.applicationNumber}>Here’s what happens next...</p>
           <p className={classes.applicationDesc}>
-            We will call you within 1 business day and aim to provide account details within 3 days
+            Leave the rest to us! We'll be in touch soon to finalise your application.
           </p>
         </div>
-        <div className={classes.horizontalLine}></div>
+
+        <ContainedButton
+          withRightArrow
+          justifyContent="flex-start"
+          label="Track my application"
+          className={classes.trackApplicationBtn}
+          handleClick={() => navigateToDashboard()}
+        />
       </div>
     </>
   );
