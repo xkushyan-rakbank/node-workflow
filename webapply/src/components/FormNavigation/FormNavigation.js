@@ -17,7 +17,7 @@ import { useStyles } from "./styled";
 
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
 import SaveAndClose from "../SaveAndClose";
-import { VIEW_IDS } from "../../constants";
+import { SaveAndCloseViewIds, VIEW_IDS } from "../../constants";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -38,7 +38,7 @@ export const FormNavigationComponent = () => {
 
   const saveScreensToExclude = [VIEW_IDS.StakeholdersInfo];
 
-  const showSaveClose = Object.values(VIEW_IDS).some(
+  const showSaveClose = Object.values(SaveAndCloseViewIds).some(
     (screen) => pathname.includes(screen) && !saveScreensToExclude.includes(screen)
   );
 

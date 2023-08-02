@@ -6,7 +6,7 @@ import { HeaderTitle } from "../../../components/HeaderTitle";
 import { Notifications } from "../../../components/Notification";
 import { ApplicationStatus } from "../../../components/ApplicationStatus/ApplicationStatus";
 
-import { ERROR_MESSAGES, VIEW_IDS } from "../../../constants";
+import { ERROR_MESSAGES, SaveAndCloseViewIds, VIEW_IDS } from "../../../constants";
 import { useBlobColor } from "../../../utils/useBlobColor/useBlobColor";
 import { LayoutContext } from "../LayoutProvider";
 
@@ -38,7 +38,7 @@ export const FormLayoutComponent = ({
 
   const saveScreensToExclude = [VIEW_IDS.StakeholdersInfo];
 
-  const showSaveClose = Object.values(VIEW_IDS).some(
+  const showSaveClose = Object.values(SaveAndCloseViewIds).some(
     (screen) => pathname.includes(screen) && !saveScreensToExclude.includes(screen)
   );
 

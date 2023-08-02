@@ -802,3 +802,17 @@ export const getFileUploadErrorMessage = {
   FILE_TOO_BIG: "The file size is too big. Please upload a file less than or equal to 5MB",
   INVALID_FILE_TYPE: "The file format is not supported. Please upload a valid file"
 }
+
+export const SaveAndCloseViewIds = [
+  VIEW_IDS.CompanyInfo,
+  VIEW_IDS.StakeholdersInfoPreview,
+  VIEW_IDS.ConsentInfo,
+  VIEW_IDS.CompanyAdditionalInfo,
+  VIEW_IDS.StakeholdersAdditionalInfo,
+  VIEW_IDS.AccountInfo,
+  VIEW_IDS.SubmitApplication,
+  VIEW_IDS.AccountServices,
+  VIEW_IDS.FinalQuestions,
+  VIEW_IDS.UploadDocuments,
+  VIEW_IDS.SelectServices,
+];
