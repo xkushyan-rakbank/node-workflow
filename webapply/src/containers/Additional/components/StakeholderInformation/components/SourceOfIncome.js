@@ -301,7 +301,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                         file={values.tradeLicense}
                         onDelete={() => setFieldValue("tradeLicense", "")}
                         component={Upload}
-                        content={values?.tradeLicense?.fileName}
+                        content={values?.tradeLicense}
                         isUploading={isUploading["tradeLicense"]}
                         mobilecontentPlaceholder={"Upload your File"}
                       />
@@ -352,7 +352,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                                   setFieldValue
                                 )
                               }
-                              content={values?.proofOfIncome[index]?.fileName}
+                              content={values?.proofOfIncome[index]}
                               isUploading={isUploading[index]}
                               mobilecontentPlaceholder={"Upload your file"}
                             />

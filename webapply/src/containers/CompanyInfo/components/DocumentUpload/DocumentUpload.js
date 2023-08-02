@@ -7,7 +7,7 @@ import {
   MOA_ACCEPTED_FILE_TYPES,
   MOA_FILE_SIZE,
   TL_ACCEPTED_FILE_TYPES,
-  TL_COI_FILE_SIZE
+  TL_COI_FILE_SIZE,
 } from "../../../../constants";
 import { uploadDocuments } from "../../../../store/actions/uploadDocuments";
 
@@ -28,7 +28,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
       dispatch(
         uploadDocuments({
           docs: {
-            [path]: file
+            [path]: file,
           },
           documentSection: "companyDocuments",
           onSuccess: () => {
@@ -43,12 +43,11 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           onFailure: () => {
             setFieldValue(name, "");
             setIsUploading({ [name]: false });
-          }
+          },
         })
       );
     }
   }, []);
-
 
   return (
     <>
@@ -82,13 +81,14 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           type="file"
           accept={MOA_ACCEPTED_FILE_TYPES}
           fileSize={MOA_FILE_SIZE}
-          onDrop={acceptedFile =>
+          onDrop={(acceptedFile) =>
             handleDropFile(acceptedFile, "moa", touched, setTouched, setFieldValue)
           }
           file={values.moa}
-          onDelete={() => { setTouched({...touched, ...{ moa: true}});
-         setFieldValue("moa", "")
-        }}
+          onDelete={() => {
+            setTouched({ ...touched, ...{ moa: true } });
+            setFieldValue("moa", "");
+          }}
           component={Upload}
           content={values?.moa}
           isUploading={isUploading["moa"]}

@@ -89,8 +89,8 @@ export const Upload = ({
                   <div className={classes.content}>
                     {/* Drag and drop file here or upload from your computer */}
                     {showUploadSuccessIcon}
-                    {props.content ? (
-                      <p>{props.content}</p>
+                    {props?.content ? (
+                      <p>{props?.content?.fileDescription ||props?.content?.fileName}</p>
                     ) : (
                       `${
                         isMobile && mobilecontentPlaceholder

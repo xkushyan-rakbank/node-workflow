@@ -224,7 +224,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                     handleDropFile(acceptedFile, "cv", touched, setTouched, setFieldValue)
                   }
                   file={values.cv}
-                  content={values?.cv?.fileName}
+                  content={values?.cv}
                   onDelete={() => setFieldValue("cv", "")}
                   component={Upload}
                   isUploading={isUploading["cv"]}
