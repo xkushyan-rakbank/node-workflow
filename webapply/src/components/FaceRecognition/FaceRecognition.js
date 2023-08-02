@@ -158,10 +158,10 @@ export const FaceRecognition = ({
   useEffect(() => {
     if (
       confirmEntity?.success &&
-      licenseOrCOINumber !== confirmEntity?.tradeLicenseNumber &&
-      licenseOrCOIExpiryDate !== confirmEntity?.expiryDate &&
-      dateOfIncorporation !== confirmEntity?.creationDate &&
-      licenseIssuingAuthority !== confirmEntity?.issuingAuthority
+      (licenseOrCOINumber !== confirmEntity?.tradeLicenseNumber ||
+        licenseOrCOIExpiryDate !== confirmEntity?.expiryDate ||
+        dateOfIncorporation !== confirmEntity?.creationDate ||
+        licenseIssuingAuthority !== confirmEntity?.issuingAuthority)
     ) {
       dispatch(resetConfirmEntity());
     }
