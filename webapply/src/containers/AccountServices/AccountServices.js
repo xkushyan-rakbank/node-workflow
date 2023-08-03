@@ -190,6 +190,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         values.marketingChannel?.length > 0 ? values["marketingChannel"] : undefined;
       await setFieldValue("marketingChannel", marketingChannel);
     }
+    if (name === "debitCardApplied") {
+      dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": value }));
+    }
   };
 
   const handleClickNextStep = useCallback(
