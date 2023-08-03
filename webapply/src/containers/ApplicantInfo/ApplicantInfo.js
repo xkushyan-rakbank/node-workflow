@@ -9,6 +9,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE, Personas } from "../../constants";
 import routes from "../../routes";
 import { setAccessToken, updateProspect } from "../../store/actions/appConfig";
+import { setIsFromInvitationLink } from "../../store/actions/applicantInfoForm";
 
 //ro-assist-brd3-16
 const useQuery = () => {
@@ -29,22 +30,53 @@ export const ApplicantInfoContainer = ({
   dataList,
   roCode,
   isLemniskEnable,
-  prospect,
+  prospect
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
+  const location = useLocation();
   const query = useQuery();
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(false);
 
-  useEffect(() => {
-    receiveAppConfig();
-  }, [receiveAppConfig]);
+  const invitationParams = location.state?.invitationParams || null;
+  const { applicantInfo: { persona } = {} } = prospect || {};
+
+  // useEffect(() => {
+  //   receiveAppConfig();
+  // }, [receiveAppConfig]);
 
   useEffect(() => {
     resetScreeningError();
   }, [resetScreeningError]);
+
+  useEffect(() => {
+    const shouldRedirect = !invitationParams && !persona;
+    if (shouldRedirect) {
+      pushHistory(routes.quickapplyLanding);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (invitationParams && !persona) {
+      dispatch(setIsFromInvitationLink());
+
+      const {
+        persona: invitationPersona,
+        accounttype: invitationAccountType,
+        isislamic: invitationIsIslamic
+      } = invitationParams || {};
+
+      dispatch(
+        updateProspect({
+          "prospect.applicantInfo.persona": invitationPersona,
+          "prospect.applicationInfo.accountType": invitationAccountType,
+          "prospect.applicationInfo.islamicBanking": invitationIsIslamic === "true"
+        })
+      );
+    }
+  }, [invitationParams, persona]);
 
   const findInDataList = () => {
     dataListCheck();
@@ -147,6 +179,7 @@ export const ApplicantInfoContainer = ({
       roCode={roCode}
       isLemniskEnable={isLemniskEnable}
       persona={prospect.applicantInfo?.persona}
+      invitationParams={invitationParams}
     />
   );
 };

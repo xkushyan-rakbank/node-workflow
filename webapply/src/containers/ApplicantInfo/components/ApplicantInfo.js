@@ -91,7 +91,8 @@ export const ApplicantInfoComponent = ({
   roCode,
   isLemniskEnable,
   isDisableNextstep,
-  persona
+  persona: personaFromStore,
+  invitationParams
 }) => {
   const classes = useStyles();
   //ro-assist-brd3-16
@@ -109,6 +110,17 @@ export const ApplicantInfoComponent = ({
     }
   };
 
+  const {
+    name = "",
+    company = "",
+    email = "",
+    mobile = "",
+    rocode = "",
+    alliancecode = allianceCodeFromQuery,
+    alliancecodeFromDataList: allianceCodeDisplayText,
+    persona = personaFromStore
+  } = invitationParams || {};
+
   return (
     <>
       <SectionTitleWithInfo
@@ -119,21 +131,21 @@ export const ApplicantInfoComponent = ({
       />
       <Formik
         initialValues={{
-          fullName: "",
-          companyFullName: "",
-          email: "",
+          fullName: name,
+          companyFullName: company,
+          email: email,
           countryCode: UAE_CODE,
-          mobileNo: "",
-          roCode: "",
-          allianceCode: allianceCodeFromQuery,
-          allianceCodeFromDataList: allianceCodeDisplyText,
+          mobileNo: mobile,
+          roCode: rocode,
+          allianceCode: alliancecode,
+          allianceCodeFromDataList: allianceCodeDisplayText,
           persona
         }}
         validationSchema={aplicantInfoSchema}
         validateOnChange={false}
         onSubmit={values => onSubmit(removeUnWantedKeys(["allianceCodeFromDataList"], values))}
       >
-        {({ values }) => (
+        {({ isValid }) => (
           <Form>
             {isConfigLoading ? (
               <SkeletonLoader />
@@ -150,6 +162,7 @@ export const ApplicantInfoComponent = ({
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
                 fieldDescription="Enter your full name as shown on your passport."
+                isLoadDefaultValueFromStore={false}
               />
             )}
             {isConfigLoading ? (
@@ -167,6 +180,7 @@ export const ApplicantInfoComponent = ({
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
                 fieldDescription="This should be the same as shown on your trade licence."
+                isLoadDefaultValueFromStore={false}
               />
             )}
             {isConfigLoading ? (
@@ -186,6 +200,8 @@ export const ApplicantInfoComponent = ({
                 fieldDescription={
                   "This email will be used to open the account.\n We'll send a one-time password (OTP) to it for verification."
                 }
+                isLoadDefaultValueFromStore={false}
+                disabled={invitationParams?.mobile}
               />
             )}
             {isConfigLoading ? (
@@ -221,6 +237,7 @@ export const ApplicantInfoComponent = ({
                   fieldDescription={
                     "This number will be used to open the account.\nWe'll send a one-time password (OTP) to it for verification."
                   }
+                  isLoadDefaultValueFromStore={false}
                 />
               </InputGroup>
             )}
@@ -252,10 +269,11 @@ export const ApplicantInfoComponent = ({
                     placeholder="Agent code"
                     contextualHelpText="Enter the Agent code of the Bank staff whom you are in touch with"
                     component={Input}
-                    disabled={roCode !== ""}
+                    disabled={invitationParams?.rocode || roCode !== ""}
                     InputProps={{
                       inputProps: { tabIndex: 0 }
                     }}
+                    isLoadDefaultValueFromStore={false}
                   />
                 )}
                 {!roCode && (
@@ -277,12 +295,13 @@ export const ApplicantInfoComponent = ({
                       }
                       label="Partner code (optional)"
                       placeholder="Partner code"
-                      disabled={allianceCodeFromQuery !== ""}
+                      disabled={invitationParams?.alliancecode || allianceCodeFromQuery !== ""}
                       component={Input}
                       contextualHelpText="If you were referred by one of our Partners, enter the code shared by them"
                       InputProps={{
                         inputProps: { tabIndex: 0 }
                       }}
+                      isLoadDefaultValueFromStore={false}
                     />
                   </>
                 )}
@@ -292,18 +311,18 @@ export const ApplicantInfoComponent = ({
             <Grid container direction="row" justify="flex-end" alignItems="center">
               {/* message */}
               <div className="linkContainer">
-                <BackLink
-                  path={
-                    personaSelectionRoutesMap[accountType][
-                      isIslamicBanking ? ISLAMIC : CONVENTIONAL
-                    ]
-                  }
-                />
+                {!invitationParams?.isislamic && (
+                  <BackLink
+                    path={
+                      personaSelectionRoutesMap[accountType][
+                        isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                      ]
+                    }
+                  />
+                )}
                 <SubmitButton
                   disabled={
-                    !values.fullName ||
-                    !values.email ||
-                    !values.mobileNo ||
+                    !isValid ||
                     (!reCaptchaToken && isRecaptchaEnable) ||
                     !isDisableNextstep
                   }

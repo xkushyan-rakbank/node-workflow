@@ -56,6 +56,7 @@ const Agents = lazy(() => import("./containers/AgentPages"));
 const PersonaSelection = lazy(() => import("./containers/PersonaSelection"));
 
 const WebToMobilePage = lazy(() => import("./containers/WebToMobilePage"));
+const ApplicationInvitation = lazy(() => import("./containers/ApplicationInvitation"));
 
 const AdditionalCompanyInformation = lazy(() =>
   import("./containers/Additional/components/CompanyInformation")
@@ -75,11 +76,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
 
-  useEffect(() => {
-    if (history.location.pathname === routes.applicantInfo) {
-      history.push(routes.quickapplyLanding);
-    }
-  }, []);
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -203,6 +199,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
               <Route path={routes.webToMobile} component={WebToMobilePage} />
+              <Route path={routes.applicationInvitation} component={ApplicationInvitation} />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />

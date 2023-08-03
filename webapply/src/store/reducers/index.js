@@ -20,6 +20,7 @@ import sdkConfig from "./sdkConfig";
 import webToMobile from "./webToMobile";
 import termsAndConditions from "./termsAndConditions";
 import additionalInfo from "./additionalInfo";
+import applicantInfo from "./applicantInfo";
 
 const reducers = history =>
   combineReducers({
@@ -43,7 +44,8 @@ const reducers = history =>
     sdkConfig,
     webToMobile,
     termsAndConditions,
-    additionalInfo
+    additionalInfo,
+    applicantInfo
   });
 
 export default reducers;

@@ -35,5 +35,6 @@ export default {
   additionalCompanyInformation: `${smeBaseName}/CompanyAdditionalInfo`,
   accountServices: `${smeBaseName}/AccountInfo`,
   reviewAndSubmit: `${smeBaseName}/SubmitApplication`,
-  congratulations: `${smeBaseName}/Congratulations`
+  congratulations: `${smeBaseName}/Congratulations`,
+  applicationInvitation: `${smeBaseName}/ApplicationInvitation`
 };

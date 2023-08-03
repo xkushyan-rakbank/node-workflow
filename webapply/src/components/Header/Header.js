@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import cx from "classnames";
 
@@ -26,13 +26,15 @@ const HeaderComponent = ({ className, isOtpVerified }) => {
   //ro-assist-brd3-16
   const queryParams = useLocation().search;
 
+  const { isFromInvitationLink } = useSelector(state => state.applicantInfo);
+
   const logoClassName = cx(classes.logo, "small-menu-hide");
 
   return (
     <>
       <header className={cx(classes.header, className)}>
         <Link
-          to={routes.quickapplyLanding + queryParams}
+          to={isFromInvitationLink ? "#" : routes.quickapplyLanding + queryParams}
           className={cx({ [classes.disabled]: isOtpVerified })}
         >
           {(() => {
