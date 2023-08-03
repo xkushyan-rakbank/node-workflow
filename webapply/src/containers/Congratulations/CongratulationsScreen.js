@@ -33,17 +33,12 @@ export const CongratulationsScreen = () => {
 
   return (
     <>
-      <img
-        width={120}
-        height={125}
-        src={submitted}
-        alt="checked"
-        className={classes.congratulationIcon}
-      />
+      <img src={submitted} alt="checked" className={classes.congratulationIcon} />
       <div className={classes.congratulationsTextWrapper}>
         <SectionTitleWithInfo
           title={"Thank you!"}
           info={`You've successfully submitted your ${accountTypeLabel} account application.`}
+          smallInfo
         />
         <div className={classes.applicationDetailWrapper}>
           <div>
