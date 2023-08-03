@@ -34,8 +34,8 @@ const HeaderComponent = ({ className, isOtpVerified }) => {
     <>
       <header className={cx(classes.header, className)}>
         <Link
-          to={isFromInvitationLink ? "#" : routes.quickapplyLanding + queryParams}
-          className={cx({ [classes.disabled]: isOtpVerified })}
+          to={routes.quickapplyLanding + queryParams}
+          className={cx({ [classes.disabled]: isOtpVerified || isFromInvitationLink })}
         >
           {(() => {
             switch (logoType) {
