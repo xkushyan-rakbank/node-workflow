@@ -60,7 +60,8 @@ export const CompanyStakeholdersComponent = ({
     kycUploadedDocs,
     actionType,
     confirmEntityError,
-    ageRestrictionError
+    ageRestrictionError,
+    loadKYCDocuments
   } = useSelector(getKyc);
   const transactionId = useSelector(getTransactionId);
 
@@ -301,8 +302,10 @@ export const CompanyStakeholdersComponent = ({
         />
       </Modal>
       <OverlayLoader
-        open={loading}
-        text={"Scanning your documents....this might take few moments"}
+        open={loadKYCDocuments || loading}
+        text={
+          loadKYCDocuments ? "Loading" : "Scanning your documents....this might take few moments"
+        }
       />
 
       <InfoModal

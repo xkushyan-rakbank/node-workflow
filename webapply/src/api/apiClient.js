@@ -163,13 +163,13 @@ export const decisions = {
 };
 
 export const createKYCTransaction = {
-  send: (prospectId, individualId, headers) =>
+  send: (prospectId, individualId, reuseExistingTransaction, headers) =>
     httpClient
       .request({
         url: buildURI("createKYCTransactionUri"), //webapply/products/sme/kyc-transactions
         method: "POST",
         ...headers,
-        data: { prospectId, individualId }
+        data: { prospectId, individualId, reuseExistingTransaction }
       })
       .then(response => {
         const {

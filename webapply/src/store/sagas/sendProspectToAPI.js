@@ -50,8 +50,7 @@ import {
   VIEW_IDS,
   STEP_STATUS,
   AUTO_SAVE_INTERVAL,
-  applicationError,
-  AUTO_SAVE_DISABLED_VIEW_IDS
+  applicationError
 } from "../../constants";
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
@@ -62,12 +61,7 @@ export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
   while (true) {
     const actions = yield flush(chan);
-    const newProspect = yield select(getProspect);
-    const viewId = newProspect?.applicationInfo?.viewId;
-    if (
-      actions.length &&
-      !(AUTO_SAVE_DISABLED_VIEW_IDS.includes(viewId) && actions[0]?.payload?.saveType === "auto")
-    ) {
+    if (actions.length) {
       const action = actions.find(act => act.payload.saveType === CONTINUE) || actions[0];
       yield call(sendProspectToAPI, action);
     }
@@ -139,6 +133,7 @@ function* saveProspectData() {
       authToken &&
       [
         VIEW_IDS.CompanyInfo,
+        VIEW_IDS.StakeholdersInfo,
         VIEW_IDS.StakeholdersInfoPreview,
         VIEW_IDS.ConsentInfo,
         VIEW_IDS.CompanyAdditionalInfo,
@@ -245,11 +240,11 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
 
     const newCompletedSteps = step
       ? completedSteps.map(completedStep => {
-        if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
-          return { ...completedStep, status: STEP_STATUS.COMPLETED };
-        }
-        return completedStep;
-      })
+          if (completedStep.flowId === step.flowId && completedStep.step === step.activeStep) {
+            return { ...completedStep, status: STEP_STATUS.COMPLETED };
+          }
+          return completedStep;
+        })
       : completedSteps;
 
     newProspect.applicationInfo.saveType = saveType;
@@ -278,10 +273,10 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
       yield put(updateAccountNumbers(data.accountInfo));
       data.accountInfo.forEach(
         (_, index) =>
-        (newProspect.accountInfo[index] = {
-          ...newProspect.accountInfo[index],
-          accountNo: data.accountInfo[index].accountNo
-        })
+          (newProspect.accountInfo[index] = {
+            ...newProspect.accountInfo[index],
+            accountNo: data.accountInfo[index].accountNo
+          })
       );
     }
 

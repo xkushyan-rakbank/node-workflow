@@ -26,7 +26,8 @@ import {
   LOAD_EID_DOCUMENTS,
   LOAD_PASSPORT_DOCUMENTS,
   LOAD_CONFIRM_ENTITY,
-  ANALYSE_OCR_AGE_RESTRICTION
+  ANALYSE_OCR_AGE_RESTRICTION,
+  SET_LOADING
 } from "../actions/kyc";
 import { handleActions } from "../../utils/redux-utils";
 import { GET_KYC_STATUS_ERROR } from "../actions/kyc";
@@ -59,11 +60,16 @@ export const initialState = {
   notifyHostError: null,
   notifyHostSuccess: false,
   kycLoadedStatus: null,
-  ageRestrictionError: ""
+  ageRestrictionError: "",
+  loadKYCDocuments: false
 };
 
 export default handleActions(
   {
+    [SET_LOADING]: (state, { payload }) => ({
+      ...state,
+      loadKYCDocuments: payload
+    }),
     [CREATE_KYC_TRANSACTION_SUCCESS]: (state, { payload }) => ({
       ...state,
       loading: false,

@@ -26,11 +26,11 @@ import {
   GET_KYC_STATUS,
   getKycSuccess,
   getKycError,
-  analyseOcrAgeRestriction
+  analyseOcrAgeRestriction,
+  setLoading
 } from "../actions/kyc";
 import {
   getAuthorizationHeader,
-  getCompanyTradeLicenseNumber,
   getDatalist,
   getOrganizationInfo,
   getProspectId,
@@ -67,8 +67,17 @@ export function* createKycTransactionSaga() {
     const headers = yield select(getAuthorizationHeader);
     const prospectId = yield select(getProspectId);
     const individualId = "SID1";
-    const response = yield call(createKYCTransaction.send, prospectId, individualId, headers);
+    const reuseExistingTransaction = true;
+    yield put(setLoading(true));
+    const response = yield call(
+      createKYCTransaction.send,
+      prospectId,
+      individualId,
+      reuseExistingTransaction,
+      headers
+    );
     yield put(KycTransactionSuccess(response.data));
+    yield call(getCurrentKYCStatus);
   } catch (error) {
     log(error);
   }
@@ -209,6 +218,8 @@ export function* notifyHost() {
       } = notifyHostResponse;
       signatoryInfo[0].editedFullName =
         signatoryDetails[0].editedFullName || signatoryInfo[0].fullName;
+
+      // const signatory = merge(signatoryDetails, signatoryInfo);
       //Name on card for account info screen
       yield put(
         updateProspect({
@@ -366,6 +377,14 @@ function* getPassportDocuments(transactionId) {
   }
 }
 
+function* getConfirmEntityStatus(transactionId) {
+  try {
+    return yield call(getOCRDataStatus.getOCRStageData, transactionId, "CONFIRM_ENTITY");
+  } catch (error) {
+    log(error);
+  }
+}
+
 const extractOCRData = payload => {
   let eidFront = payload.documentDetails.find(eachDoc => eachDoc.documentType === "EID_FRONT")
     ?.documentContent;
@@ -418,12 +437,34 @@ export function* getCurrentKYCStatus() {
     stageInfo.forEach(eachStage => {
       stageInfoMap[eachStage.stage] = eachStage.isCompleted;
     });
-    if (
-      stageInfoMap["CONFIRM_ENTITY"] ||
-      (!foundLicenseIssuingAuthority && stageInfoMap["CONFIRM_DATA_ELEMENT"])
-    ) {
+    const checkEntitySuccess = inputData => {
+      if (!inputData) {
+        return false;
+      }
+      const { tradeLicenseNumber, issuingAuthority, expiryDate, creationDate } = inputData;
+      const issuingAuthorityCode =
+        tliaForMOI.find(tlia => tlia?.displayText === issuingAuthority)?.code || issuingAuthority;
+      if (
+        tradeLicenseNumber !== data.tradeLicenseNumber ||
+        expiryDate !== data.expiryDate ||
+        creationDate !== data.creationDate ||
+        issuingAuthorityCode !== data.issuingAuthority
+      ) {
+        return false;
+      }
+      return true;
+    };
+    if (!foundLicenseIssuingAuthority && stageInfoMap["CONFIRM_DATA_ELEMENT"]) {
       yield call(putOcrData, transactionId);
+      yield call(getConfirmEntityStatus, transactionId);
       yield put(loadConfirmEntity({ success: true, ...data }));
+    } else if (stageInfoMap["CONFIRM_ENTITY"]) {
+      yield call(putOcrData, transactionId);
+      const response = yield call(getConfirmEntityStatus, transactionId);
+      const isEntitySuccess = checkEntitySuccess(response.inputData);
+      if (isEntitySuccess) {
+        yield put(loadConfirmEntity({ success: true, ...data }));
+      }
     } else if (stageInfoMap["PASSPORT_OCR"]) {
       yield call(putOcrData, transactionId);
     } else if (stageInfoMap["EID_OCR"]) {
@@ -432,6 +473,7 @@ export function* getCurrentKYCStatus() {
       yield put(loadEidDocuments(eidOcrDetails));
     }
     yield put(getKycSuccess(true));
+    yield put(setLoading(false));
   } catch (error) {
     yield put(getKycError(error));
     log(error);

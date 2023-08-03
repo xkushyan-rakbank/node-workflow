@@ -41,6 +41,13 @@ export const GET_KYC_STATUS_SUCCESS = "GET_KYC_STATUS_SUCCESS";
 export const GET_KYC_STATUS_ERROR = "GET_KYC_STATUS_ERROR";
 export const ANALYSE_OCR_AGE_RESTRICTION = "ANALYSE_OCR_AGE_RESTRICTION";
 
+export const SET_LOADING = "SET_LOADING";
+
+export const setLoading = payload => ({
+  type: SET_LOADING,
+  payload
+});
+
 export const createKycTransaction = () => ({
   type: CREATE_KYC_TRANSACTION
 });
