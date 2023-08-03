@@ -6,10 +6,14 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "25px"
   },
   packageSelectionWrapper: {
-    padding: "30px",
+    padding: "20px",
     borderRadius: "10px",
     border: "1px solid #cccccc",
-    margin: "40px 0"
+    margin: "20px 0",
+    [theme.breakpoints.up("lg")]: {
+      padding: "30px",
+      margin: "40px 0",
+    }
   },
   accountServiceAccordionRoot: {
     borderTop: "none"
@@ -91,16 +95,15 @@ export const useStyles = makeStyles(theme => ({
   infoLabelValue: {
     display: "flex",
     alignItems: "start",
-    gap: "10px",
-    marginBottom: "8px",
+    gap: "24px",
     "& label": {
       color: "#757575",
       fontSize: "0.875rem",
       fontStyle: "normal",
       fontWeight: 400,
       lineHeight: "20px",
-      width: "120px",
-      minWidth: "120px"
+      width: "190px",
+      minWidth: "188px"
     },
     "& p": {
       color: "#525252",
@@ -126,7 +129,8 @@ export const useStyles = makeStyles(theme => ({
   infoListWrapper: {
     display: "flex",
     flexDirection: "column",
-    flex: 1
+    flex: 1,
+    gap: "8px"
   },
   iconWrapper: {
     display: "flex",
@@ -147,5 +151,8 @@ export const useStyles = makeStyles(theme => ({
   },
   noWrapText: {
     whiteSpace: "nowrap"
+  },
+  stakeholdersDetailWrapper: {
+    paddingTop: "0px!important"
   }
 }));

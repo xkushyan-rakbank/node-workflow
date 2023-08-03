@@ -3,13 +3,20 @@ import { useStyles } from "../styled";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import { InformationSection } from "./InformationSection";
 import routes from "../../../routes";
+import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 
 export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
   const classes = useStyles();
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
-        title={"Company Information"}
+        title={
+          <StakeholdersDetail
+            name={fieldValues.companyName}
+            isStakeholder={false}
+            className={classes.stakeholdersDetailWrapper}
+          />
+        }
         id={"companyInformation"}
         classes={{
           accordionRoot: classes.accountServiceAccordionRoot,
@@ -18,7 +25,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           accordionDetails: classes.accordionDetails
         }}
       >
-        <InformationSection title={"Primary information"}>
+        <InformationSection title={"Essential info"}>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Applicant name:</label> <p>{fieldValues.applicantName}</p>
@@ -35,8 +42,6 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
               <label>Line of business:</label>
               <p>{fieldValues.lineOfBusiness}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Licence number:</label>
               <p>{fieldValues.licenseOrCOINumber}</p>
@@ -56,7 +61,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           </div>
         </InformationSection>
         <InformationSection
-          title={"Additional information"}
+          title={"KYC details"}
           showEditIcon={true}
           routeTo={routes.additionalCompanyInformation}
         >
@@ -73,8 +78,6 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
               <label>Countries of business dealing:</label>
               <p>{fieldValues?.countriesOfBusinessDealing}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Mailing address:</label>
               <p>{fieldValues.mailingAddress && addressFormat(fieldValues.mailingAddress)}</p>
@@ -95,25 +98,23 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           </div>
         </InformationSection>
         <InformationSection
-          title={"Tax Information"}
+          title={"Tax declaration"}
           showEditIcon={true}
           routeTo={routes.additionalCompanyInformation}
         >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
-              <label>Is your company dealing in Designated Business Categories?</label>
+              <label>Designated business dealings:</label>
               <p>{fieldValues.dnfbpField}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Is your company a US entity?</label>
+              <label>US entity:</label>
               <p>{fieldValues.isCompanyUSEntity}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Company NFE Status:</label>
+              <label>NFE status:</label>
               <p>{fieldValues.isNonFinancialInstitution}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Is your company a financial institution?</label>
               <p>{fieldValues.isFinancialInstitution}</p>

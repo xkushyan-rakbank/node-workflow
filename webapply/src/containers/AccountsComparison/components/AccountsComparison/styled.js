@@ -559,5 +559,25 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     marginBottom: "10px",
     marginTop: "6px"
+  },
+  featureDataInfo: {
+    margin: "40px 0 16px",
+    "& p": {
+      color: "#3B3A3A",
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: "24px",
+      margin: 0
+    },
+    "& ul": {
+      marginBottom: 0,
+      paddingLeft: "15px"
+    },
+    "& li": {
+      color: "#3B3A3A",
+      fontSize: "0.875rem",
+      fontWeight: 400,
+      lineHeight: "20px"
+    }
   }
 }));

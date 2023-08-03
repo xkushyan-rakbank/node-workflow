@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import cx from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -6,12 +7,13 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-     paddingTop: "30px"
+      paddingTop: "30px"
     }
   },
   nameInitialWrapper: {
     height: "54px",
     width: "54px",
+    minWidth: "54px",
     borderRadius: "50px",
     padding: "10px",
     background: "#FDE7E8",
@@ -20,9 +22,10 @@ const useStyles = makeStyles(theme => ({
     color: "#757575",
     textAlign: "center",
     lineHeight: "54px",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("md")]: {
       height: "32px",
       width: "32px",
+      minWidth: "32px",
       lineHeight: "unset"
     }
   },
@@ -49,20 +52,20 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const StakeholdersDetail = ({ name, companyCategory }) => {
+const StakeholdersDetail = ({ className, name, companyCategory, isStakeholder = true }) => {
   const classes = useStyles();
 
   const initial = name?.charAt(0)?.toUpperCase();
   const isSoleProprietor = (companyCategory === "1_SP" || companyCategory === "2_SPLL") && "(me)";
 
   return (
-    <div className={classes.stakeholderWrapper}>
+    <div className={cx(classes.stakeholderWrapper, className)}>
       <div className={classes.nameInitialWrapper}>{initial}</div>
       <div className={classes.detailWrapper}>
         <h5>
           {name}&nbsp;{isSoleProprietor}
         </h5>
-        <p>Stakeholder: 100%</p>
+        {isStakeholder && <p>Stakeholder: 100%</p>}
       </div>
     </div>
   );

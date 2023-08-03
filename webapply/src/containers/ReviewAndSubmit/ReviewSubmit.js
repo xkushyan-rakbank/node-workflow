@@ -112,7 +112,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     [displayFields, internationalBankAccountNumberList]
   );
 
-  const formatDate = useCallback(date => (date ? format(new Date(date), "dd/MM/yyyy") : ""), [
+  const formatDate = useCallback(date => (date ? format(new Date(date), "do, MMM yyyy") : ""), [
     displayFields
   ]);
 

@@ -4,6 +4,7 @@ import { useStyles } from "../styled";
 import { InformationSection } from "./InformationSection";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import routes from "../../../routes";
+import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 export const StakeholderAdditionalReview = ({
   fieldValues,
   addressFormat,
@@ -15,7 +16,13 @@ export const StakeholderAdditionalReview = ({
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
-        title={"Stakeholder information"}
+        title={
+          <StakeholdersDetail
+            name={fieldValues.signatoryFullName}
+            isStakeholder={true}
+            className={classes.stakeholdersDetailWrapper}
+          />
+        }
         id={"stakeholderInformation"}
         classes={{
           accordionRoot: classes.accountServiceAccordionRoot,
@@ -24,7 +31,7 @@ export const StakeholderAdditionalReview = ({
           accordionDetails: classes.accordionDetails
         }}
       >
-        <InformationSection title={"Primary information"}>
+        <InformationSection title={"Essential info"}>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Full name:</label> <p>{fieldValues.signatoryFullName}</p>
@@ -45,8 +52,6 @@ export const StakeholderAdditionalReview = ({
               <label>Personal email:</label>
               <p className={classes.noWrapText}>{fieldValues.email}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Mobile number:</label>
               <p className={classes.noWrapText}>
@@ -78,7 +83,7 @@ export const StakeholderAdditionalReview = ({
           </div>
         </InformationSection>
         <InformationSection
-          title={"Additional information"}
+          title={"KYC details"}
           showEditIcon={true}
           routeTo={routes.additionalStakeholderInformation}
         >
@@ -96,10 +101,6 @@ export const StakeholderAdditionalReview = ({
               <p>{fieldValues.sourceOfIncome}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>CV:</label>
-              <p>{fieldValues.cv}</p>
-            </div>
-            <div className={classes.infoLabelValue}>
               <label>Linkedin:</label>
               <p>{truncateString(fieldValues.linkedInURL, 40) || "N/A"}</p>
             </div>
@@ -107,8 +108,10 @@ export const StakeholderAdditionalReview = ({
               <label>Background info:</label>
               <p>{truncateString(fieldValues.backgroundInfo, 100) || "N/A"}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
+            <div className={classes.infoLabelValue}>
+              <label>CV:</label>
+              <p>{fieldValues.cv}</p>
+            </div>
             <div className={classes.infoLabelValue}>
               <label>IBAN type:</label>
               <p>{truncateString(ibanTypeLabel, 100) || "N/A"}</p>
@@ -147,15 +150,13 @@ export const StakeholderAdditionalReview = ({
         >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
-              <label>{fieldValues.signatoryFullName} is a tax resident of the United States?</label>
+              <label>US tax resident:</label>
               <p>No</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Country of Tax Residency:</label>
+              <label>Tax residence:</label>
               <p>{fieldValues.countryOfTaxResidency}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>TIN number:</label>
               <p>{fieldValues.TIN}</p>

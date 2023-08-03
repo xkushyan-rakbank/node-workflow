@@ -45,11 +45,11 @@ export const ProductInformationReview = ({ fieldValues }) => {
               <p>{fieldValues.branch && `${fieldValues.branch}, ${fieldValues.branchEmirate}`}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Do you want to earn interest on this account?</label>
+              <label>Earn interest on account:</label>
               <p>{fieldValues.receiveInterest}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Would you like to apply for a business debit card?</label>
+              <label>Business debit card:</label>
               <p>{fieldValues.debitCardApplied}</p>
             </div>
             {fieldValues.debitCardApplied === "Yes" && (
@@ -58,23 +58,20 @@ export const ProductInformationReview = ({ fieldValues }) => {
                 <p>{fieldValues.nameOnDebitCard}</p>
               </div>
             )}
-
             <div className={classes.infoLabelValue}>
-              <label>Do you want a chequebook for the company?</label>
+              <label>Company chequebook:</label>
               <p>{fieldValues.chequeBookApplied}</p>
             </div>
-          </div>
-          <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
-              <label>How would you like to get your bank statements?</label>
+              <label>Bank statement delivery:</label>
               <p style={{ display: "flex", alignItems: "center" }}>{bankStatementType()} </p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Would you like to get transaction notifications on your mobile?</label>
+              <label>Mobile notifications:</label>
               <p>{fieldValues.mobileInstructions}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Would you like to be the first to hear about the latest offers?</label>
+              <label>Get promos and offers:</label>
               <p>
                 {fieldValues.marketing}&nbsp;
                 {fieldValues.marketing === "Yes" && fieldValues.marketingChannel
@@ -83,10 +80,7 @@ export const ProductInformationReview = ({ fieldValues }) => {
               </p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>
-                Can we contact you for surveys or feedback, either directly or through a third
-                party?
-              </label>
+              <label>Contact for surveys and feedback:</label>
               <p>{fieldValues.surveys}</p>
             </div>
             <div className={classes.infoLabelValue}>

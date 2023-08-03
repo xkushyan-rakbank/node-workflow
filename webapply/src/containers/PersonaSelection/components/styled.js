@@ -15,12 +15,9 @@ export const useStyles = makeStyles(theme => ({
   },
   roleSelectionButton: {
     boxSizing: "border-box",
-    [theme.breakpoints.up("lg")]: {
-      width: contentWidth,
-      padding: "24px"
-    },
-    [theme.breakpoints.up("sm")]: {
-      padding: "24px"
+    [theme.breakpoints.up("md")]: {
+      padding: "24px",
+      width: "708px"
     },
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
@@ -71,5 +68,9 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       marginTop: "40px"
     }
+  },
+  subTitleList: {
+    paddingLeft: "15px",
+    margin: 0
   }
 }));

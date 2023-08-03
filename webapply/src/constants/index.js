@@ -518,8 +518,8 @@ export const ACTION_TYPES = {
 export const Personas = {
   SOLE: {
     key: "SOLE",
-    title: "I’m a sole proprietor",
-    subTitle: "I own this business",
+    title: "I’m a sole proprietor (Individual)",
+    subTitle: ["I own this business"],
     url: routes.applicantInfo,
     urlType: "2.0",
     companyCategoryCode: "1_SP",
@@ -528,7 +528,7 @@ export const Personas = {
   SLLC: {
     key: "SLLC",
     title: "I'm sole proprietor with an LLC",
-    subTitle: "I do business as a limited liability company (LLC)",
+    subTitle: ["I do business as a limited liability company (LLC)"],
     url: routes.applicantInfo,
     urlType: "2.0",
     companyCategoryCode: "2_SPLL",
@@ -537,8 +537,12 @@ export const Personas = {
   NOTA: {
     key: "NOTA",
     title: "None of the above",
-    subTitle:
-      "I'm a partner in the business, have Power of Attorney, or am applying on behalf of someone else.",
+    subTitle: [
+      "I'm a partner in the business",
+      "I have Power of Attorney",
+      "I'm applying on behalf of someone else.",
+      "Company as a stakeholder"
+    ],
     url: process.env.REACT_APP_BAU_URL || "/",
     urlType: "bau",
     companyCategoryCode: "3_OTHER",

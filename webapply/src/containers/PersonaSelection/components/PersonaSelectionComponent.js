@@ -9,8 +9,8 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
     <div className={classes.container} data-testid="persona-selection">
       <div className={classes.section}>
         <SectionTitleWithInfo
-          title={"Which best describes you?"}
-          info="Tell us about your position within the business"
+          title={"Let's get to know you"}
+          info="Tell us about your role in the business"
           smallInfo
         />
         <div className={classes.btnContainer}>
@@ -23,7 +23,18 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
               >
                 <div className={classes.buttonText}>
                   <div className={classes.title}>{persona.title}</div>
-                  <span className={classes.subTitle}> {persona.subTitle}</span>
+                  {persona.subTitle.length === 1 && (
+                    <span className={classes.subTitle}> {persona.subTitle[0]}</span>
+                  )}
+                  {persona.subTitle.length > 1 && (
+                    <ul className={classes.subTitleList}>
+                      {persona.subTitle.map((persona, index) => (
+                        <li className={classes.subTitle} key={index}>
+                          {persona}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
                 <div>
                   <NavigationLeft key="navigationArrowLeft" alt="blackArrowLeft" />
