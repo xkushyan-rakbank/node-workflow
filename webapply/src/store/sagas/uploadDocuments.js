@@ -431,7 +431,7 @@ export function* getDocumentList() {
   }
 }
 
-const unixTimestamp = Math.floor(Date.now() / 1000);
+const unixTimestamp = () => Date.now();
 
 export function* uploadDocuments({ payload }) {
   try {
@@ -470,16 +470,12 @@ export function* uploadDocuments({ payload }) {
         const documentUniq =
           index !== undefined ? `${docItem.documentTitle}-${index}` : `${docItem.documentTitle}`;
         const docExtension = fieldData.name.split(".").pop();
-        let generateName = [
-          BBG_COMPANY_INFO_MODULEID,
-          prospectId,
-          docItem.documentType,
-          unixTimestamp
-        ];
+        let generateName = [BBG_COMPANY_INFO_MODULEID, prospectId, docItem.documentType];
+        let appendTimeStamp = (index !== undefined ? `_${index + 1}` : "") + `_${unixTimestamp()}`;
         const fileData = {
           documentType: fieldData.type,
           documentTitle: documentUniq,
-          fileName: `${generateName.join("_")}.${docExtension}`,
+          fileName: `${generateName.join("_")}${appendTimeStamp}.${docExtension}`,
           fileFormat: fieldData.type,
           fileSize: fieldData.size,
           file: fieldData
