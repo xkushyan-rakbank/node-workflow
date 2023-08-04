@@ -218,3 +218,39 @@ export const yesNoAskMeLaterOptions = [
     label: "Ask me later"
   }
 ];
+
+export const accountTypeOptions = [
+  {
+    code: "RAKStarter",
+    key: "RAKStarter",
+    value: "RAKStarter",
+    label: "RAK Starter"
+  },
+  {
+    code: "Current Account",
+    key: "Current Account",
+    value: "Current Account",
+    label: "Current Account"
+  },
+  {
+    code: "RAKelite",
+    key: "RAKelite",
+    value: "RAKelite",
+    label: "Business Elite"
+  }
+];
+
+export const productVariantOptions = [
+  {
+    code: "islamic",
+    key: "islamic",
+    value: true,
+    label: "Islamic"
+  },
+  {
+    code: "conventional",
+    key: "conventional",
+    value: false,
+    label: "Conventional"
+  }
+];
