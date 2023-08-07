@@ -1,23 +1,23 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { contentWidth } from "../../../constants/styles";
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "25px"
+    marginTop: "25px",
   },
   section: {
     [theme.breakpoints.up("sm")]: {
       width: contentWidth,
       marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginRight: "auto",
+    },
   },
   additionalSelectionButton: {
     boxSizing: "border-box",
     [theme.breakpoints.up("sm")]: {
-      width: contentWidth
+      width: contentWidth,
     },
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
@@ -27,27 +27,27 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "row",
     padding: "24px",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   additionalbtnSelected: {
     "&:hover": {
-      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
+      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     },
-    cursor: "pointer"
+    cursor: "pointer",
   },
   buttonText: {
     display: "flex",
     flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
-      width: 450
-    }
+      width: 450,
+    },
   },
   title: {
     fontSize: 20,
     fontWeight: 600,
     [theme.breakpoints.only("xs")]: {
-      fontSize: 16
-    }
+      fontSize: 16,
+    },
   },
   subTitle: {
     marginTop: 3,
@@ -55,11 +55,11 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 16,
     color: theme.palette.text.secondary,
     [theme.breakpoints.only("xs")]: {
-      fontSize: 10
-    }
+      fontSize: 10,
+    },
   },
   btnContainer: {
-    marginTop: "60px"
+    marginTop: "60px",
   },
   actionButton: {
     width: "105px",
@@ -69,16 +69,16 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     fontWeight: 500,
     padding: 20,
-    letterSpacing: "normal"
+    letterSpacing: "normal",
   },
   btnAdd: {
     background: "#FFFFFF",
     color: "#1F1F1F",
-    marginRight: "16px"
+    marginRight: "16px",
   },
   buttonWrap: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   completedWrapper: {
     display: "flex",
@@ -87,25 +87,25 @@ export const useStyles = makeStyles(theme => ({
     height: "32px",
     borderRadius: "10px",
     fontSize: "12px",
-    marginRight: "16px"
+    marginRight: "16px",
   },
   success: {
     background: "#ECF9F2",
     color: "#157947",
-    minWidth: "98px"
+    minWidth: "98px",
   },
   incompleted: {
     background: "#FDE7E8",
     color: "#8D0C10",
-    minWidth: "99px"
+    minWidth: "99px",
   },
   additionalCompanyInfoContainer: {
     marginTop: "25px",
     [theme.breakpoints.up("sm")]: {
       display: "flex",
       flexDirection: "column",
-      justifyContent: "space-between"
-    }
+      justifyContent: "space-between",
+    },
   },
   infoContainer: {
     display: "flex",
@@ -117,13 +117,13 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "16px",
     borderRadius: "10px",
     border: "1px solid #E6E6E6",
-    marginTop: "15px"
+    marginTop: "15px",
   },
   infoIcon: {
     fill: "#757575",
     height: "16px",
     width: "16px",
-    marginRight: "8px"
+    marginRight: "8px",
   },
   companyNameinfoContainer: {
     display: "flex",
@@ -135,14 +135,14 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "24px",
     [theme.breakpoints.up("sm")]: {
       fontSize: "20px",
-      lineHeight: "24px"
-    }
+      lineHeight: "24px",
+    },
   },
   companyInfoDetailWrapper: {
     marginTop: "40px",
     borderRadius: "10px",
     padding: "24px",
-    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
+    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
   },
   sectionLabel: {
     fontWeight: 400,
@@ -150,7 +150,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "22px",
     color: "#1F1F1F",
     margin: 0,
-    marginBottom: "16px"
+    marginBottom: "16px",
   },
   addMoreButton: {
     border: "1px solid #1F1F1F",
@@ -161,26 +161,26 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "16px",
     lineHeight: "22px",
     textTransform: "none",
-    width: "max-content"
+    width: "max-content",
   },
   removeButton: {
     // position: "absolute",
     right: "5px",
     bottom: "5px",
     marginTop: "5px",
-    padding: 0
+    padding: 0,
   },
   percentageText: {
     color: "#1F1F1F",
     fontSize: "12px",
     fontWeight: 400,
-    marginRight: "6px"
+    marginRight: "2px",
   },
   amountText: {
     color: "#1F1F1F",
     fontSize: "12px",
     fontWeight: 600,
-    marginLeft: "6px"
+    marginLeft: "6px",
   },
   definitionLink: {
     fontWeight: 400,
@@ -190,45 +190,45 @@ export const useStyles = makeStyles(theme => ({
     color: "#000000",
     marginRight: "18px",
     "&:hover": {
-      textDecoration: "underline"
-    }
+      textDecoration: "underline",
+    },
   },
   radioButtonRoot: {
     border: "1px solid #cccccc",
     borderRadius: "50px",
     marginTop: "10px",
-    marginLeft: 0
+    marginLeft: 0,
   },
   radioLabelRoot: {
     fontSize: "16px",
     fontWeight: 500,
     lineHeight: "24px",
-    paddingRight: "15px"
+    paddingRight: "15px",
   },
   activePassiveDesc: {
     color: "#757575",
     fontWeight: 400,
     fontSize: "12px",
-    lineHeight: "16px"
+    lineHeight: "16px",
   },
   taxDeclarationQuestionare: {
-    marginTop: "30px"
+    marginTop: "30px",
   },
   virtualOrPhysicalAddressSelection: {
     padding: "1px 24px",
     background: "#F4F8FC",
     borderRadius: "10px",
     marginTop: "16px",
-    marginBottom: "16px"
+    marginBottom: "16px",
   },
   customLabel: {
-    margin: "12px 0 10px"
+    margin: "12px 0 10px",
   },
   customUrlLabel: {
-    margin: "0px"
+    margin: "0px",
   },
   supplierSection: {
-    marginTop: "40px"
+    marginTop: "40px",
   },
   sectionLabelWithInfo: {
     display: "flex",
@@ -239,8 +239,8 @@ export const useStyles = makeStyles(theme => ({
       fontSize: "12px",
       lineHeight: "16px",
       marginTop: "4px",
-      color: "#757575"
-    }
+      color: "#757575",
+    },
   },
   orSelection: {
     display: "block",
@@ -257,24 +257,24 @@ export const useStyles = makeStyles(theme => ({
       height: "1px",
       position: "relative",
       verticalAlign: "middle",
-      width: "50px"
+      width: "50px",
     },
 
     "&::before": {
-      right: "16px"
+      right: "16px",
     },
 
     "&::after": {
-      left: "16px"
-    }
+      left: "16px",
+    },
   },
   horizontalLine: {
     height: "1px",
     background: "#E6E6E6",
-    margin: "30px 0"
+    margin: "30px 0",
   },
   anotherCountryTaxOption: {
-    flexDirection: "column"
+    flexDirection: "column",
   },
   uploadModalErrorWrapper: {
     display: "flex",
@@ -287,14 +287,24 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: "20px",
-    borderRadius: "10px"
+    borderRadius: "10px",
   },
   errorIcon: {
     width: "13px",
     height: "13px",
-    marginRight: "8px"
+    marginRight: "8px",
   },
   textAreaStyle: {
-    borderRadius: 0
-  }
+    borderRadius: 0,
+  },
+
+  sliderContainer: {
+    paddingLeft: "0px",
+    paddingRight: "25px",
+    display: "flex",
+    flexDirection: "column",
+  },
+  slideValuePrice: {
+    position: "relative",
+  },
 }));
