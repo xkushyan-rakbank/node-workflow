@@ -30,7 +30,7 @@ export const useStyles = makeStyles((theme) => ({
       fontStyle: "unset",
       borderRadius: "21px",
       fontSize: "1rem",
-      fontWeight: 600,
+      fontWeight: 500,
       lineHeight: "22px",
       color: "#000",
       border: "1px solid #000",

@@ -390,7 +390,7 @@ export const useStyles = makeStyles(theme => ({
   },
   trackNSwitchAccountBtn: {
     fontSize: "1rem",
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: "22px",
     borderRadius: "21px",
     textTransform: "none",

@@ -11,14 +11,14 @@ const useStyles = makeStyles(theme => ({
     fontSize: "1.25rem",
     fontWeight: 500,
     lineHeight: "28px",
-    color: "#1F1F1F",
+    color: "#434343;",
     margin: 0,
     marginBottom: "32px",
     [theme.breakpoints.only("sm", "lg")]: {
-      fontSize: "1.5rem",
+      fontSize: "1.5rem"
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "1.75rem",
+      fontSize: "1.75rem"
     }
   },
   box: {
@@ -37,12 +37,23 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: "#FDE7E8"
   },
   step_label_root: {
+    fontFamily: "DM Sans",
+    fontWeight: 400,
     fontSize: "0.75rem",
-    marginTop: "4px!important"
+    marginTop: "4px!important",
+    color: "#1F1F1F",
+    "&.MuiStepLabel-completed": {
+      fontWeight: 400,
+      color: "#1F1F1F"
+    }
   },
   lineBetween: {
     left: "calc(-50% + 30px)",
     right: "calc(50% + 30px)"
+  },
+  completedLabel: {
+    fontWeight: 400,
+    color: "#1F1F1F"
   }
 }));
 
@@ -53,7 +64,7 @@ export const SectionSteps = () => {
     "Stakeholders",
     "Business details",
     "Account preferences",
-    "Submit"
+    "Application summary"
   ];
   const classes = useStyles();
   const isVertical = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
@@ -71,7 +82,11 @@ export const SectionSteps = () => {
             <Step key={label}>
               <StepLabel
                 icon={<CheckCircleOutlineIcon />}
-                classes={{ label: classes.step_label_root, alternativeLabel: classes.lineBetween }}
+                classes={{
+                  label: classes.step_label_root,
+                  alternativeLabel: classes.lineBetween,
+                  completed: classes.completedLabel
+                }}
               >
                 {label}
               </StepLabel>

@@ -1,5 +1,4 @@
 import React from "react";
-import { useIconsByAccount } from "../../../../utils/useIconsByAccount";
 import { ReactComponent as PassportIcon } from "../../../../assets/icons/PassportIDDoc.svg";
 import { ReactComponent as ProofOfIncomeIcon } from "../../../../assets/icons/proofOfIncome.svg";
 import { ReactComponent as ProofOfAddressDocIcon } from "../../../../assets/icons/proofOfAddressDoc.svg";
@@ -8,24 +7,13 @@ import { useStyles } from "./styled";
 
 export const TwoSteps = () => {
   const classes = useStyles();
-  const {
-    license: License,
-    passport: Passport,
-    companyDocuments: CompanyDocuments,
-
-    emiratesId: EmirateId
-  } = useIconsByAccount();
 
   return (
     // {/* /* //ro-assist header missing issue fix --- removed manual call */ */}
     <>
       <div className={classes.firstGroup}>
         <p className={classes.infoDesc}>
-          So we can get your account set up, you'll need to have the following documents ready.
-        </p>
-        <p className={classes.infoDesc}>
-          Please ensure that the information you provide is accurate, otherwise you may not be able
-          to proceed with the application.
+          For a successful application, please ensure that the information you provide is as accurate as possible.
         </p>
         <div className={classes.cardsWrapper}>
           <div className={classes.cards}>

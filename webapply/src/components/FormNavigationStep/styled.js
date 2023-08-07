@@ -42,7 +42,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   activeStepItem: {
-    fontWeight: "600",
+    fontWeight: "400",
     color: "#fff",
     "&:last-child:after": {
       height: "100%"

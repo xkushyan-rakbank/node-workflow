@@ -15,7 +15,7 @@ const Button = styled("button")({
   display: "inline-flex",
   alignItems: "center",
   fontSize: "16px",
-  fontWeight: 600,
+  fontWeight: 500,
   border: "none",
   cursor: "pointer",
   padding: "0",

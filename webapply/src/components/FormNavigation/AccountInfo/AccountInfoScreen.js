@@ -82,7 +82,7 @@ export const AccountInfoScreen = ({
             <ContainedButton
               withRightArrow
               justify="flex-start"
-              label="Start application"
+              label="Let's start"
               handleClick={handleStart}
             />
           </div>
@@ -91,7 +91,7 @@ export const AccountInfoScreen = ({
             <ContainedButton
               withRightArrow
               justify="flex-start"
-              label="Start application"
+              label="Let's start"
               handleClick={handleStart}
             />
           </div>

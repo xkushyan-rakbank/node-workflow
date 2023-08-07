@@ -48,6 +48,50 @@
     url("assets/fonts/OpenSans-Bold.svg#svgFontName") format("svg");
 }
 
+/* dm-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/dm-sans-v11-latin-regular.eot'); /* IE9 Compat Modes */
+  src: url('assets/fonts/dm-sans-v11-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('assets/fonts/dm-sans-v11-latin-regular.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('assets/fonts/dm-sans-v11-latin-regular.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+       url('assets/fonts/dm-sans-v11-latin-regular.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+       url('assets/fonts/dm-sans-v11-latin-regular.svg#DMSans') format('svg'); /* Legacy iOS */
+}
+
+/* dm-sans-500 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  src: url('assets/fonts/dm-sans-v11-latin-500.eot'); /* IE9 Compat Modes */
+  src: url('assets/fonts/dm-sans-v11-latin-500.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('assets/fonts/dm-sans-v11-latin-500.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('assets/fonts/dm-sans-v11-latin-500.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+       url('assets/fonts/dm-sans-v11-latin-500.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+       url('assets/fonts/dm-sans-v11-latin-500.svg#DMSans') format('svg'); /* Legacy iOS */
+}
+
+/* dm-sans-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: url('assets/fonts/dm-sans-v11-latin-700.eot'); /* IE9 Compat Modes */
+  src: url('assets/fonts/dm-sans-v11-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('assets/fonts/dm-sans-v11-latin-700.woff2') format('woff2'), /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+       url('assets/fonts/dm-sans-v11-latin-700.woff') format('woff'), /* Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+ */
+       url('assets/fonts/dm-sans-v11-latin-700.ttf') format('truetype'), /* Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+ */
+       url('assets/fonts/dm-sans-v11-latin-700.svg#DMSans') format('svg'); /* Legacy iOS */
+}
+
+
+
 $mobileResolution: 768;
 $tabletResolution: 1023;
 $normalScrollHeight: 740;
@@ -57,7 +101,8 @@ $normalScrollHeight: 740;
 */
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: "DM Sans";
+  font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
@@ -181,7 +226,7 @@ a {
 
 .MuiFormHelperText-root {
   color: #ea2b1e !important;
-  font-family: "Open Sans", sans-serif;
+  font-family: "DM Sans";
 }
 
 .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline {
