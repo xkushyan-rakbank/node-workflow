@@ -16,7 +16,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   accountServiceAccordionRoot: {
-    borderTop: "none"
+    borderTop: "none",
+    minHeight: "40px!important"
+  },
+  accountServiceAccordionSummaryRoot: {
+    minHeight: "40px!important"
   },
   accountServiceAccordionSummaryContent: {
     "& .accordionTitle": {
@@ -38,9 +42,12 @@ export const useStyles = makeStyles(theme => ({
   },
   accordionDetails: {
     borderTop: "1px solid #E6E6E6",
-    paddingTop: "30px",
-    marginTop: "24px",
-    marginBottom: "0px"
+    paddingTop: "20px",
+    marginTop: "16px",
+    marginBottom: "0px",
+    [theme.breakpoints.up("lg")]: {
+      paddingTop: "30px",
+    }
   },
   infoIcon: {
     width: "20px",

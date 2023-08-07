@@ -17,8 +17,8 @@ export const useStyles = makeStyles(theme => ({
     boxSizing: "border-box",
     [theme.breakpoints.up("md")]: {
       padding: "24px",
-      width: "708px"
     },
+    maxWidth: "708px",
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
     borderRadius: "10px",
@@ -47,7 +47,7 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: "0.875rem",
-    fontWeight: 600,
+    fontWeight: 500,
     [theme.breakpoints.up("sm")]: {
       fontSize: "1rem"
     }

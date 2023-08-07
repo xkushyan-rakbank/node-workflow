@@ -9,20 +9,24 @@ export const InformationSection = ({ title, children, showEditIcon = false, rout
   const pushHistory = useTrackingHistory();
   return (
     <div className={cx(classes.infoSection, { [classes.bgColorChange]: routeTo })}>
-      <div className={classes.infoSectionTitleWrapper}>
-        <p className={classes.infoSectionTitle}>{title}</p>
-        {showEditIcon && (
-          <div
-            className={cx(classes.iconWrapper, { [classes.disabledEditInfo]: !routeTo })}
-            onClick={() => pushHistory(routeTo)}
-          >
-            <Icon name={ICONS.editIcon} className={classes.closeIcon} />
-            <span>Edit</span>
+      {title && (
+        <>
+          <div className={classes.infoSectionTitleWrapper}>
+            <p className={classes.infoSectionTitle}>{title}</p>
+            {showEditIcon && (
+              <div
+                className={cx(classes.iconWrapper, { [classes.disabledEditInfo]: !routeTo })}
+                onClick={() => pushHistory(routeTo)}
+              >
+                <Icon name={ICONS.editIcon} className={classes.closeIcon} />
+                <span>Edit</span>
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {title && <div className={classes.divider}></div>}
+          <div className={classes.divider}></div>
+        </>
+      )}
       <div className={classes.infoWrapper}>{children}</div>
     </div>
   );

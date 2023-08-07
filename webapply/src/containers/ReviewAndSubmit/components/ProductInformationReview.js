@@ -28,7 +28,8 @@ export const ProductInformationReview = ({ fieldValues }) => {
           accordionRoot: classes.accountServiceAccordionRoot,
           accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
           accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
-          accordionDetails: classes.accordionDetails
+          accordionDetails: classes.accordionDetails,
+          accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
         }}
       >
         <InformationSection

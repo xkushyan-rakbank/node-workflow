@@ -65,7 +65,7 @@ const useStyles = makeStyles(theme => ({
   accordionSummaryContentExpanded: {
     marginTop: "0px !important",
     marginBottom: "0px !important",
-    fontWeight: 600,
+    fontWeight: 500,
     "& .activePanel": {
       display: "inline-block",
       width: "4px",
@@ -74,7 +74,7 @@ const useStyles = makeStyles(theme => ({
       borderRadius: "2px"
     },
     "& .accordionTitle": {
-      fontWeight: 600,
+      fontWeight: 500,
       paddingLeft: "15px"
     }
   },

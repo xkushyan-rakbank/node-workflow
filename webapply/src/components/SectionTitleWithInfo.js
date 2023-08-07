@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles(theme => ({
   title: {
     fontSize: "1.25rem",
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: "32px",
     color: "#1F1F1F",
     margin: 0,
