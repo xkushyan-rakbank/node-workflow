@@ -77,6 +77,10 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     dispatch(updateProspect({ "prospect.accountInfo.accountType": accountType }));
   }, [accountType]);
 
+  useEffect(() => {
+    dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": true }));
+  }, []);
+
   const labelTextForGoGreenOption = (
     <span style={{ display: "flex", alignItems: "center" }}>
       <p style={{ margin: "0px" }}>
