@@ -39,21 +39,21 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
 
   function handleBlur(ev) {
     const { value } = ev.target;
-    if (loadedPersona === "SOLE") {
+    if (loadedPersona === "SP") {
       if (value.trim().match(REGEX_LLC_PATTERN)) {
-        setFieldValue("companyCategory", "2_SPLL");
-        triggerDecisionsForCompanyCategory("2_SPLL");
+        setFieldValue("companyCategory", "SLLC");
+        triggerDecisionsForCompanyCategory("SLLC");
         dispatch(
           updateProspect({
-            "prospect.organizationInfo.companyCategory": "2_SPLL"
+            "prospect.organizationInfo.companyCategory": "SLLC"
           })
         );
       } else {
-        setFieldValue("companyCategory", "1_SP");
-        triggerDecisionsForCompanyCategory("1_SP");
+        setFieldValue("companyCategory", "SOLE");
+        triggerDecisionsForCompanyCategory("SOLE");
         dispatch(
           updateProspect({
-            "prospect.organizationInfo.companyCategory": "1_SP"
+            "prospect.organizationInfo.companyCategory": "SOLE"
           })
         );
       }
@@ -61,7 +61,7 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
   }
 
   const onChange = (value, renderValue) => {
-    if (value === "3_OTHER") {
+    if (value === "OTHER") {
       setIsOpen(true);
       setMessage(renderValue.displayText);
     } else {

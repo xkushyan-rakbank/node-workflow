@@ -56,7 +56,7 @@ const StakeholdersDetail = ({ className, name, companyCategory, isStakeholder = 
   const classes = useStyles();
 
   const initial = name?.charAt(0)?.toUpperCase();
-  const isSoleProprietor = (companyCategory === "1_SP" || companyCategory === "2_SPLL") && "(me)";
+  const isSoleProprietor = (companyCategory === "SOLE" || companyCategory === "SLLC") && "(me)";
 
   return (
     <div className={cx(classes.stakeholderWrapper, className)}>

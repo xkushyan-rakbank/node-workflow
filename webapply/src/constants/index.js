@@ -516,26 +516,26 @@ export const ACTION_TYPES = {
 };
 
 export const Personas = {
-  SOLE: {
-    key: "SOLE",
+  SP: {
+    key: "SP",
     title: "I’m a sole proprietor (Individual)",
     subTitle: ["I own this business"],
     url: routes.applicantInfo,
     urlType: "2.0",
-    companyCategoryCode: "1_SP",
+    companyCategoryCode: "SOLE",
     order: 1
   },
-  SLLC: {
-    key: "SLLC",
+  SPLL: {
+    key: "SPLL",
     title: "I'm sole proprietor with an LLC",
     subTitle: ["I do business as a limited liability company (LLC)"],
     url: routes.applicantInfo,
     urlType: "2.0",
-    companyCategoryCode: "2_SPLL",
+    companyCategoryCode: "SLLC",
     order: 2
   },
-  NOTA: {
-    key: "NOTA",
+  OTHER: {
+    key: "OTHER",
     title: "None of the above",
     subTitle: [
       "I'm a partner in the business",
@@ -545,7 +545,7 @@ export const Personas = {
     ],
     url: process.env.REACT_APP_BAU_URL || "/",
     urlType: "bau",
-    companyCategoryCode: "3_OTHER",
+    companyCategoryCode: "OTHER",
     order: 3
   }
 };
