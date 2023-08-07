@@ -62,9 +62,9 @@ export const featuresDataList = [
   },
   {
     info: "Account currency",
-    starter: "AED only",
-    currentAccount: "AED only",
-    elite: "AED only"
+    starter: "AED",
+    currentAccount: "AED",
+    elite: "AED"
   },
   {
     info: "Foriegn currency",
@@ -85,19 +85,19 @@ export const feesChargesDataRows = [
     info: "Fall back fee (if monthly average credit balance is not maintained)",
     starter: "Zero",
     currentAccount: "AED 50",
-    elite: "AED 50"
+    elite: "AED 262.5"
   },
   {
     info: "Monthly maintenance fees*",
-    starter: "AED 103.95",
-    currentAccount: "AED 103.95",
+    starter: "AED 99",
+    currentAccount: "AED 50",
     elite: "Zero"
   },
   {
     info: "Monthly digital banking fees*",
-    starter: "AED 52.5",
-    currentAccount: "AED 52.5",
-    elite: "AED 52.5"
+    starter: "Zero",
+    currentAccount: "AED 50",
+    elite: "AED 50"
   }
 ];
 export const perksDataRows = [
@@ -120,13 +120,13 @@ export const perksDataRows = [
     elite: { ic: checkIcon }
   },
   {
-    info: "Free accounting package & business insurance",
+    info: "Free accounting packages and business insurance",
     starter: { ic: checkIcon },
     currentAccount: { ic: crossIcon },
     elite: { ic: crossIcon }
   },
   {
-    info: "Dedicated Relationship Manager",
+    info: "Dedicated Relationship manager",
     starter: { ic: crossIcon },
     currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }

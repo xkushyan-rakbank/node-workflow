@@ -32,8 +32,8 @@ export const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.up("sm")]: {
       color: "#757575",
-      fontSize: "1rem",
-      fontWeight: 600,
+      fontSize: "0.875rem",
+      fontWeight: 500,
       lineHeight: "28px",
       margin: 0,
       textAlign: "inherit",

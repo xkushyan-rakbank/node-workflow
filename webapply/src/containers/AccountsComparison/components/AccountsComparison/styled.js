@@ -239,6 +239,10 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   featureList: {
+    color: "#1F1F1F",
+    fontSize: "1rem",
+    fontWeight: 500,
+    lineHeight: "24px",
     padding: "22px 20px",
     background: "rgba(245, 245, 245, 0.50)",
     textAlign: "center",
@@ -264,11 +268,6 @@ export const useStyles = makeStyles(theme => ({
       }
     },
     [theme.breakpoints.up("lg")]: {
-      padding: "22px 20px",
-      color: "#1F1F1F",
-      fontSize: "1rem",
-      fontWeight: 500,
-      lineHeight: "24px",
       "& img": {
         width: "24px",
         height: "24px"
@@ -329,7 +328,7 @@ export const useStyles = makeStyles(theme => ({
     "& p": {
       fontSize: "1.5rem",
       fontStyle: "normal",
-      fontWeight: 600,
+      fontWeight: 500,
       color: "#FFFFFF",
       paddingLeft: "31px",
       lineHeight: "32px",
@@ -540,7 +539,7 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up("sm")]: {
       display: "none",
-    },
+    }
   },
   navButton: {
     // width: "144px",

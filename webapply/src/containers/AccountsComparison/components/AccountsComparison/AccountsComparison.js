@@ -293,7 +293,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           mobileAccountsData={mobileAccounts}
         />
         <div className={classes.featureDataInfo}>
-          <p>* For Business Current Account customers with</p>
+          <p>*RAKstarter Business Current Account Customer with:</p>
           <ul>
             <li>
               {
@@ -310,7 +310,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         <div className={classes.featureInfo}>
           <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>
           <p>
-            See our{" "}
+            See our
             <a target="_blank" rel="noopener noreferrer" href={servicePricingGuideUrl}>
               Service & Price guide.
             </a>
