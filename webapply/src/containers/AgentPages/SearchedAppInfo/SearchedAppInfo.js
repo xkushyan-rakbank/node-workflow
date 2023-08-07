@@ -52,7 +52,9 @@ export const SearchedAppInfoContainer = ({
     updateProspectId(match.params.id);
 
     return getProspectInfo(match.params.id).then(
-      () => pushDisplayScreenToHistory(prospectOverview),
+      prospect => {
+        pushDisplayScreenToHistory(prospect);
+      },
       () => {}
     );
   }, [

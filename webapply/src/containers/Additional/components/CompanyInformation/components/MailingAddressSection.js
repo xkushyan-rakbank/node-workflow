@@ -304,6 +304,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
                                 textAlign: "right",
                                 marginBottom: index === 0 ? "25px" : ""
                               }}
+                              key={index}
                             >
                               <Field
                                 name={`addressProof[${index}]`}

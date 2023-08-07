@@ -61,9 +61,6 @@ export const MyApplications = () => {
         dispatch(getProspectInfoPromisify(prospectId)).then(
           prospect => {
             dispatch(getDocumentsList());
-            if (prospect.viewId === "/StakeholdersInfo") {
-              prospect.viewId = "/StakeholdersInfoPreview";
-            }
             pushDisplayScreenToHistory(prospect);
           },
           () => {}

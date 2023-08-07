@@ -6,7 +6,7 @@ import { Otp } from "../../Otp";
 import { useStyles } from "./../styled";
 import { getApplicantInfo } from "../../../store/selectors/appConfig";
 
-export const ComeBackVerificationComponent = ({ redirectRoute, otpType }) => {
+export const ComeBackVerificationComponent = ({ redirectRoute, otpType, roInviteProp }) => {
   const classes = useStyles();
   const { mobileNo, email, countryCode } = useSelector(getApplicantInfo);
 
@@ -23,6 +23,7 @@ export const ComeBackVerificationComponent = ({ redirectRoute, otpType }) => {
             : `We sent a 6-digit OTP to ${email}. Please enter it below. Don't see the email? Try checking your spam or junk folder.`
         }
         changeText={otpType === "sms" ? "Change mobile number" : "Change email"}
+        roInviteProp={roInviteProp}
       />
     </div>
   );

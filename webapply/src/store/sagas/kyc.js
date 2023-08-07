@@ -442,8 +442,8 @@ export function* getCurrentKYCStatus() {
         return false;
       }
       const { tradeLicenseNumber, issuingAuthority, expiryDate, creationDate } = inputData;
-      const issuingAuthorityCode =
-        tliaForMOI.find(tlia => tlia?.displayText === issuingAuthority)?.code || issuingAuthority;
+      const issuingAuthorityCode = tliaForMOI.find(tlia => tlia?.displayText === issuingAuthority)
+        ?.code;
       if (
         tradeLicenseNumber !== data.tradeLicenseNumber ||
         expiryDate !== data.expiryDate ||
@@ -456,8 +456,11 @@ export function* getCurrentKYCStatus() {
     };
     if (!foundLicenseIssuingAuthority && stageInfoMap["CONFIRM_DATA_ELEMENT"]) {
       yield call(putOcrData, transactionId);
-      yield call(getConfirmEntityStatus, transactionId);
-      yield put(loadConfirmEntity({ success: true, ...data }));
+      const moiIssuingAuthority = tliaForMOI.find(tlia => tlia?.code === data.issuingAuthority)
+        ?.displayText;
+      if (!moiIssuingAuthority) {
+        yield put(loadConfirmEntity({ success: true, ...data }));
+      }
     } else if (stageInfoMap["CONFIRM_ENTITY"]) {
       yield call(putOcrData, transactionId);
       const response = yield call(getConfirmEntityStatus, transactionId);

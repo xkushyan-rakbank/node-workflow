@@ -17,6 +17,7 @@ import {
 import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { OverlayLoader } from "../Loader";
+import { checkLoginStatus } from "../../store/selectors/loginSelector";
 
 const localizedMessagesLiveness = {
   record_button: "Record",
@@ -133,6 +134,7 @@ export const FaceRecognition = ({
     livenessChecklist
   });
   const { identityValidation, faceLivelinessFeedback, confirmEntity } = useSelector(getKyc);
+  const isAgent = useSelector(checkLoginStatus);
   const {
     licenseOrCOINumber,
     licenseOrCOIExpiryDate,
@@ -183,11 +185,20 @@ export const FaceRecognition = ({
     startLivenessCheck({ onResult });
   };
 
+  const sendInviteLink = () => {
+    //TODO: send link
+  };
+
   return (
     <Fragment>
       <div className={classes.fieldDescription}>{fieldDescription}</div>
       {!isStepActive && <div className={classes.disabledReason}>{disabledReason}</div>}
-      <div className={cx(classes.facseScanContainer, !isStepActive ? classes.disableUpload : "")}>
+      <div
+        className={cx(
+          classes.facseScanContainer,
+          !isStepActive && !isAgent ? classes.disableUpload : ""
+        )}
+      >
         <div className={classes.contentContainer}>
           <FaceScanIcon height="44" width="40" alt="faceRecognitionIcon" />
           <div className={classes.contentWrapper}>
@@ -200,12 +211,21 @@ export const FaceRecognition = ({
             <SuccessIcon />
             <span>Completed</span>
           </div>
+        ) : isAgent ? (
+          <Button
+            color="primary"
+            variant="contained"
+            className={classes.actionButton}
+            onClick={sendInviteLink}
+          >
+            Send link
+          </Button>
         ) : (
           <Button
             color="primary"
             variant="contained"
             className={classes.actionButton}
-            disabled={!isStepActive}
+            disabled={!isAgent || !isStepActive}
             onClick={startFaceScan}
           >
             Start

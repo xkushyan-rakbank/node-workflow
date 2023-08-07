@@ -36,5 +36,7 @@ export default {
   accountServices: `${smeBaseName}/AccountInfo`,
   reviewAndSubmit: `${smeBaseName}/SubmitApplication`,
   congratulations: `${smeBaseName}/Congratulations`,
-  applicationInvitation: `${smeBaseName}/ApplicationInvitation`
+  applicationInvitation: `${smeBaseName}/ApplicationInvitation`,
+  efrInvite: `${smeBaseName}/efrInvite`,
+  efrOTPVerification: `${smeBaseName}/efrOTPVerification`
 };

@@ -17,8 +17,9 @@ import { OtpChannel } from "../../constants";
 import { triggerDecisions } from "../../store/actions/decisions";
 import { getDocumentsList } from "../../store/actions/uploadDocuments";
 import routes from "../../routes";
+import { updateProspectId } from "../../store/actions/appConfig";
 
-export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
+export const Otp = ({ redirectRoute, otpType, title, info, changeText, roInviteProp }) => {
   const dispatch = useDispatch();
   const { attempts, verificationError, isVerified, isPending, isGenerating } = useSelector(getOtp);
   const prospectId = useSelector(getProspectId);
@@ -38,7 +39,11 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
   //if user is verified
   useEffect(() => {
     if (isVerified) {
-      if (otpType === OtpChannel.Sms && redirectRoute !== routes.MyApplications) {
+      if (
+        otpType === OtpChannel.Sms &&
+        redirectRoute !== routes.MyApplications &&
+        redirectRoute !== routes.efrOTPVerification
+      ) {
         dispatch(smsOtpVerified());
         const otpData = { ...applicantInfo };
         otpData.action = "generate";
@@ -68,9 +73,18 @@ export const Otp = ({ redirectRoute, otpType, title, info, changeText }) => {
         }
       }
 
-      pushHistory(redirectRoute, true);
+      if (!roInviteProp) {
+        pushHistory(redirectRoute, true);
+      }
     }
   }, [isVerified, pushHistory, redirectRoute]);
+
+  useEffect(() => {
+    if (roInviteProp && isVerified) {
+      dispatch(updateProspectId(roInviteProp.prospectId));
+      roInviteProp.getProspectInfo();
+    }
+  }, [isVerified]);
 
   useEffect(() => {
     if (verificationError) {

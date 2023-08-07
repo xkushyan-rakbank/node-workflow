@@ -20,6 +20,7 @@ import {
 
 import { receiveAppConfig } from "./store/actions/appConfig";
 import { prospectAutoSave } from "./store/actions/sendProspectToAPI";
+import { EFROTPVerification } from "./containers/ComeBackVerification";
 
 import { theme } from "./theme";
 import "./App.scss";
@@ -57,6 +58,7 @@ const PersonaSelection = lazy(() => import("./containers/PersonaSelection"));
 
 const WebToMobilePage = lazy(() => import("./containers/WebToMobilePage"));
 const ApplicationInvitation = lazy(() => import("./containers/ApplicationInvitation"));
+const EFRInvitation = lazy(() => import("./containers/EFRInvitation"));
 
 const AdditionalCompanyInformation = lazy(() =>
   import("./containers/Additional/components/CompanyInformation")
@@ -75,7 +77,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     receiveAppConfig();
     prospectAutoSave();
   }, [receiveAppConfig, prospectAutoSave]);
-
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -200,6 +201,12 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
               <Route path={routes.webToMobile} component={WebToMobilePage} />
               <Route path={routes.applicationInvitation} component={ApplicationInvitation} />
+              <Route path={routes.efrInvite} component={EFRInvitation} />
+              <OTPGeneratedProtectedRoute
+                exact
+                path={routes.efrOTPVerification}
+                component={EFROTPVerification}
+              />
               <Route path="*" component={NotFoundPage} />
             </Switch>
             <SessionExpiration />
