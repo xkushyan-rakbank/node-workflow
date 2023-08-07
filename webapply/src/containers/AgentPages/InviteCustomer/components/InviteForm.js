@@ -90,7 +90,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0, maxLength: 100 }
                 }}
-                fieldDescription="Enter your full name as shown on your passport."
+                fieldDescription="Enter customers full name as shown on passport."
               />
               <Field
                 name="company"
