@@ -96,7 +96,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   className="testingClass"
                   showEditIcon={true}
                   fieldDescription={"Please ensure the full name is per your passport"}
-                  infoIcon={true}
                 />
               </Grid>
               <Grid item xs={12}>

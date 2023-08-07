@@ -88,8 +88,9 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 placeholder="Customer Name"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 100 }
                 }}
+                fieldDescription="Enter your full name as shown on your passport."
               />
               <Field
                 name="company"
@@ -97,8 +98,9 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 placeholder="Name of the company"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 255 }
                 }}
+                fieldDescription="This should be the same as shown on customers trade licence."
               />
               <Field
                 name="custEmail"
@@ -108,6 +110,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
+                fieldDescription="This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
               />
               <InputGroup>
                 <LinkedField
@@ -132,6 +135,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                     inputProps: { tabIndex: 0 }
                   }}
                   isLoadDefaultValueFromStore={false}
+                  fieldDescription="This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
                 />
               </InputGroup>
               <Field

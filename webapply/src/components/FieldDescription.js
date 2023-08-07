@@ -13,16 +13,16 @@ const useStyles = makeStyles({
     "& div": {
       display: "flex",
       alignItems: "center",
-      whiteSpace: "pre-line",
-    },
+      whiteSpace: "pre-line"
+    }
   },
   informationDisclaimer: {
     display: "flex",
     alignItems: "center",
     whiteSpace: "pre-line",
     marginRight: "auto",
-    gap: "8px",
-  },
+    gap: "8px"
+  }
 });
 
 export const FieldDescription = ({ title, fieldValueLength, fieldMaxLength, showTitleIcon }) => {
@@ -32,8 +32,8 @@ export const FieldDescription = ({ title, fieldValueLength, fieldMaxLength, show
     <div className={classes.wrapper}>
       {title && (
         <div className={classes.informationDisclaimer}>
-         {showTitleIcon && <InformationIcon />} 
-         {title}
+          <InformationIcon />
+          {title}
         </div>
       )}
       {fieldMaxLength && (
