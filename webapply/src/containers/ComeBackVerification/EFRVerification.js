@@ -9,6 +9,7 @@ import { getOtp } from "../../store/selectors/otp";
 import { getProspectInfoPromisify } from "../../store/actions/retrieveApplicantInfo";
 import { getDocumentsList } from "../../store/actions/uploadDocuments";
 import { useDisplayScreenBasedOnViewId } from "../../utils/useDisplayScreenBasedOnViewId";
+import { setRoEFRInvite } from "../../store/actions/otp";
 
 export const EFROTPVerification = () => {
   useFormNavigation([true, false]);
@@ -22,6 +23,7 @@ export const EFROTPVerification = () => {
     dispatch(getProspectInfoPromisify(prospectId)).then(
       prospect => {
         dispatch(getDocumentsList());
+        dispatch(setRoEFRInvite(true));
         pushDisplayScreenToHistory(prospect);
       },
       () => {}

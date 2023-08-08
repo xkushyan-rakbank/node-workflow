@@ -8,7 +8,8 @@ import {
   VERIFY_CODE_FAILED,
   VERIFY_CLEAR_ERROR,
   RESET_OTP,
-  SET_OTP_MODE
+  SET_OTP_MODE,
+  SET_RO_EFR
 } from "../actions/otp";
 import { APPLICANT_INFO_FORM } from "../actions/applicantInfoForm";
 import { handleActions, composeActions } from "../../utils/redux-utils";
@@ -23,7 +24,8 @@ export const initialState = {
   otpTokenValidityInSec: "",
   otpTokenValidUntil: "",
   generatedAt: Date.now(),
-  attempts: 0
+  attempts: 0,
+  isRoInviteEFR: false
 };
 
 export default handleActions(
@@ -87,6 +89,10 @@ export default handleActions(
     [SET_OTP_MODE]: (state, action) => ({
       ...state,
       mode: action.payload
+    }),
+    [SET_RO_EFR]: (state, action) => ({
+      ...state,
+      isRoInviteEFR: action.payload
     })
   },
   initialState

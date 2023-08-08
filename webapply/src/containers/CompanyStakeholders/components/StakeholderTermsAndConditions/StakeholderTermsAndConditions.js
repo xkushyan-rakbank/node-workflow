@@ -16,6 +16,7 @@ import { getAccountType, getIsIslamicBanking } from "../../../../store/selectors
 import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
+import { getIsRoInviteEfr } from "../../../../store/selectors/otp";
 
 export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +29,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const accountType = useSelector(getAccountType);
   const isIslamic = useSelector(getIsIslamicBanking);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const isRoInviteEFR = useSelector(getIsRoInviteEfr);
 
   const goToAdditional = useCallback(() => {
     setIsLoading(true);
@@ -83,7 +85,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
               termsAndConditions.authorisation
             )
           }
-          label="Next"
+          label={isRoInviteEFR ? "Done" : "Next"}
           justify="flex-end"
         />
       </div>

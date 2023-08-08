@@ -10,6 +10,7 @@ export const VERIFY_CODE_FAILED = "OTP/VERIFY_CODE_FAILED";
 export const VERIFY_CLEAR_ERROR = "VERIFY_CLEAR_ERROR";
 export const RESET_OTP = "RESET_OTP";
 export const SET_OTP_MODE = "SET_OTP_MODE";
+export const SET_RO_EFR = "SET_RO_EFR";
 
 export const generateOtpCode = payload => ({
   type: GENERATE_OTP_CODE,
@@ -73,4 +74,9 @@ export const generateOtpCodePromisify = payload => ({
     action: payload.action,
     mode: payload.mode
   }
+});
+
+export const setRoEFRInvite = payload => ({
+  type: SET_RO_EFR,
+  payload
 });
