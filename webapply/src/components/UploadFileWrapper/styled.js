@@ -24,10 +24,6 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   previewContainer: {
-    width: "100%",
-    borderTop: "1px solid #E6E6E6",
-    paddingTop: "16px",
-    marginTop: "16px",
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: "20px",
@@ -137,7 +133,8 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 500,
     fontSize: "12px",
     lineHeight: "16px",
-    color: "#157947"
+    display: "flex",
+    gap: "2px"
   },
   contentWrapper: {
     marginLeft: "20px",
@@ -149,16 +146,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   previewMobile: {
-    borderLeft: "1px solid #E6E6E6",
-    paddingLeft: "16px",
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: "20px",
     color: "#8D0C10",
     cursor: "pointer",
-    [theme.breakpoints.up("sm")]: {
-      paddingLeft: "16px",
-    },
   },
   success: {
     marginLeft: "5px",
@@ -166,4 +158,30 @@ export const useStyles = makeStyles(theme => ({
       marginRight: "16px",
     },
   },
+  emriatesIDTile: {
+    display: 'flex',
+    flexDirection: "row",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "column"
+    }
+  
+  },
+  successContent: {
+    marginBottom: "7px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "unset",
+    gap: "20px",
+    paddingBottom: "15px",
+    [theme.breakpoints.up("sm")]: {
+      marginBottom: "7px",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "550px",
+    }
+  },
+
 }));

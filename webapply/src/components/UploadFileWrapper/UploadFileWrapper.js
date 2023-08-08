@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from "react";
 import cx from "classnames";
-import { Button } from "@material-ui/core";
-import { isMobile } from "react-device-detect";
+import { Button, useMediaQuery } from "@material-ui/core";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
-import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
+import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
+import {ReactComponent as PreviewEye } from "../../assets/icons/previewEye.svg"
 import { PreviewDataModal } from "../../containers/CompanyStakeholders/components/CompanyStakeholders/PreviewDataModal";
 
 export const UploadFileWrapper = ({
@@ -26,7 +26,15 @@ export const UploadFileWrapper = ({
 }) => {
   const classes = useStyles();
   const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const isMobileDevice = useMediaQuery("max-width: 767px") || window.innerWidth <= 768;
 
+  const truncatedLabel =(label) => {
+    if(!label.includes('|')) {
+      return <div className={classes.emriatesIDTile}>{label}</div>;
+    }
+    const splitLabel = label.split('|').map(part => part.length > 30 ? part.substring(0, 25) + "..." : part);
+    return <div className={classes.emriatesIDTile}>{splitLabel.join(' | ')}</div>;
+  }
   return (
     <>
       <Fragment>
@@ -35,33 +43,51 @@ export const UploadFileWrapper = ({
         <div className={cx(classes.documentContainer, !isStepActive ? classes.disableUpload : "")}>
           <div className={classes.uploadContainer}>
             <div className={classes.contentContainer}>
-              <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
+              {isSuccess ? (
+                <SuccessIcon />
+              ) : (
+                <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
+              )}
               <div className={classes.contentWrapper}>
-                <div className={classes.content}>
+                <div className={cx(!isSuccess ? classes.content : classes.successContent)}>
                   {uploadedContent
-                    ? uploadedContent
+                    ? truncatedLabel(uploadedContent)
                     : `${
-                        isMobile && mobileLabel
+                        isMobileDevice && mobileLabel
                           ? mobileLabel
                           : "Drag and drop file here or upload from your computer"
                       }`}
+                  {isSuccess ? (
+                    <div className={cx(classes.subcontent, classes.successText)}>
+                      {isMobileDevice && showPreview && (
+                        <>
+                          <PreviewEye />
+                          <div
+                            className={classes.previewMobile}
+                            onClick={() => setShowPreviewModal(true)}
+                          >
+                            Preview
+                          </div>
+                        </>
+                      )}
+                      {!isMobileDevice && showPreview && (
+                        <>
+                          <div className={cx(classes.subcontent, classes.successText)}>
+                            <PreviewEye />
+                            <div
+                              className={classes.previewContainer}
+                              onClick={() => setShowPreviewModal(true)}
+                            >
+                              Preview
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <div className={classes.subcontent}>{helperText}</div>
+                  )}
                 </div>
-                {isSuccess ? (
-                  <div className={cx(classes.subcontent, classes.successText)}>
-                    <SuccessIcon />
-                    <span className={classes.success}>{successText}</span>
-                    {isMobile && showPreview && (
-                      <div
-                        className={classes.previewMobile}
-                        onClick={() => setShowPreviewModal(true)}
-                      >
-                        Preview
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.subcontent}>{helperText}</div>
-                )}
               </div>
             </div>
 
@@ -101,11 +127,6 @@ export const UploadFileWrapper = ({
               )}
             </div>
           </div>
-          {showPreview && !isMobile && (
-            <div className={classes.previewContainer} onClick={() => setShowPreviewModal(true)}>
-              Preview
-            </div>
-          )}
         </div>
       </Fragment>
       {showPreviewModal && (

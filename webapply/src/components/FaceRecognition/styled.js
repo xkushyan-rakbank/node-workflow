@@ -106,7 +106,9 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "98px",
     background: "#ECF9F2",
     borderRadius: "10px",
-    fontSize: "12px"
+    fontSize: "12px",
+    color: '#157947',
+    fontWeight: 500
   },
   contentWrapper: {
     marginLeft: "20px",

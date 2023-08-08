@@ -8,7 +8,8 @@ import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import FileUploadIcon from "../../assets/icons/fileUpload.svg";
-import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
+// import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
+import {ReactComponent as Check} from "../../assets/icons/loadingGreen.svg"
 import useDecisions from "../../utils/useDecisions";
 import { ContexualHelp, ErrorMessage } from "./../Notifications";
 import { ICONS, Icon } from "../Icons";
@@ -72,7 +73,7 @@ export const Upload = ({
       <Fragment>
         <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
           <div className={classes.fieldDescription}>
-            {fieldDescription}
+            {/* {fieldDescription} */}
             {showUploadInfoIcon && (
               <Icon name={ICONS.info} className={classes.uploadInfoIcon} alt="info" />
             )}
@@ -81,7 +82,14 @@ export const Upload = ({
 
         <div className={classes.uplaodContainer}>
           <div className={classes.main} {...getRootProps()}>
-            <FileIcon height={FileIconHeight} width={FileIconWidth} alt="companyIconSvg" />
+           <div className={classes.row}> 
+            {hasFile && showUploadSuccessIcon ? (
+              <Check size="14px" className={classes.success} />
+            ) : (
+              <FileIcon height={FileIconHeight} width={FileIconWidth} alt="companyIconSvg" />
+            )}
+
+            </div>
             <div className={classes.contentContainer}>
               <section>
                 <div className={classes.contentWrapper}>
@@ -90,7 +98,7 @@ export const Upload = ({
                     {/* Drag and drop file here or upload from your computer */}
                     {showUploadSuccessIcon}
                     {props?.content ? (
-                      <p>{props?.content?.fileDescription ||props?.content?.fileName}</p>
+                      <p>{props?.content?.fileDescription || props?.content?.fileName}</p>
                     ) : (
                       `${
                         isMobile && mobilecontentPlaceholder
@@ -101,15 +109,7 @@ export const Upload = ({
                   </div>
 
                   {hasFile && showUploadSuccessIcon ? (
-                    <div className={classes.row}>
-                      <Check size="14px" className={classes.success} />
-                      <div
-                        className={cx(classes.subcontent, classes.success)}
-                        style={{ marginLeft: "5px" }}
-                      >
-                        Uploaded
-                      </div>
-                    </div>
+                    <></>
                   ) : fileRejections?.length > 0 ? (
                     fileRejections?.map(({ file, errors }) =>
                       errors?.map((e) => {

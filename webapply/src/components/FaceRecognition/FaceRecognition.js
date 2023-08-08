@@ -14,11 +14,11 @@ import {
   resetConfirmEntity,
   setLivelinessData
 } from "../../store/actions/kyc";
-import { ReactComponent as SuccessIcon } from "../../assets/icons/credit_score.svg";
+import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { OverlayLoader } from "../Loader";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
-
+import {ReactComponent as CheckIcon} from "../../assets/icons/credit_score.svg"
 const localizedMessagesLiveness = {
   record_button: "Record",
   result_close_button: "Close",
@@ -200,7 +200,11 @@ export const FaceRecognition = ({
         )}
       >
         <div className={classes.contentContainer}>
+          {confirmEntity?.success && isStepActive ? (
+            <SuccessIcon />
+          ): 
           <FaceScanIcon height="44" width="40" alt="faceRecognitionIcon" />
+          }
           <div className={classes.contentWrapper}>
             <div className={classes.content}>Face verification</div>
             <div className={classes.subcontent}>{helperText}</div>
@@ -208,7 +212,7 @@ export const FaceRecognition = ({
         </div>
         {confirmEntity?.success && isStepActive ? (
           <div className={classes.completedWrapper}>
-            <SuccessIcon />
+            <CheckIcon />
             <span>Completed</span>
           </div>
         ) : isAgent ? (
