@@ -40,11 +40,6 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
         }
       })
     );
-    dispatch(
-      termsAndConditionsAccepted({
-        kfs: true
-      })
-    );
   };
 
   return (

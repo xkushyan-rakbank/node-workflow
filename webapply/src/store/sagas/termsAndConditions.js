@@ -116,13 +116,12 @@ export function* sendKfsMail() {
       bccIds,
       docModificationInfo
     };
+    yield call(kfsAcknowledgement.sendMail, body, headers);
     yield put(
       termsAndConditionsAccepted({
         kfs: true
       })
     );
-    const response = yield call(kfsAcknowledgement.sendMail, body, headers);
-    console.log(response);
   } catch (error) {
     log(error);
   }
