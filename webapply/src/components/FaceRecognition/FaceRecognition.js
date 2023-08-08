@@ -225,7 +225,7 @@ export const FaceRecognition = ({
             color="primary"
             variant="contained"
             className={classes.actionButton}
-            disabled={!isAgent || !isStepActive}
+            disabled={!isAgent && !isStepActive}
             onClick={startFaceScan}
           >
             Start
