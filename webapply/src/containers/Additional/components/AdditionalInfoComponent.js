@@ -11,6 +11,7 @@ import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import { ReactComponent as ErrorIcon } from "../../../assets/icons/credit_score_error.svg";
+import { Footer } from "../../../components/Footer";
 
 const AdditionalInfoButton = ({ status, onClick, disabled, text }) => {
   const classes = useStyles();
@@ -112,15 +113,15 @@ export default function AdditionalInfoComponent() {
           />
         </div>
       </div>
-      <div className="linkContainer">
-        <BackLink path={routes.StakeholderTermsAndConditions} />
+      <Footer>
+        <BackLink path={routes.StakeholderTermsAndConditions} isTypeButton={true} />
         <NextStepButton
           label="Next"
           justify="flex-end"
           disabled={!isNextButtonEnabled}
           onClick={() => handleAdditionalInfoNextStep()}
         />
-      </div>
+      </Footer>
     </div>
   );
 }

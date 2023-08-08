@@ -24,6 +24,7 @@ import { accountTypeOptions, productVariantOptions } from "../../../../constants
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../CompanyInfo/constants";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";
+import { Footer } from "../../../../components/Footer";
 
 const inviteSchema = Yup.object({
   custName: Yup.string()
@@ -164,10 +165,10 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 tabIndex="0"
               />
 
-              <div className="linkContainer">
-                <BackLink path={routes.login} />
+              <Footer>
+                <BackLink path={routes.login} isTypeButton={true} />
                 <SubmitButton justify="flex-end" label="Submit" disabled={!isValid || isLoading} />
-              </div>
+              </Footer>
             </Form>
           );
         }}

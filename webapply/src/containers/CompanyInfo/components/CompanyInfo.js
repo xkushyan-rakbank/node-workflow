@@ -30,6 +30,7 @@ import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { useFindDocument } from "../../../utils/useFindDocument";
+import { Footer } from "../../../components/Footer";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
@@ -162,7 +163,7 @@ export const CompanyInfo = ({
   }
 
   return (
-    <>
+    <div className={classes.companyInfoWrapper}>
       <SectionTitleWithInfo
         title={"Tell us about your company"}
         info="This will help us get your account set up properly"
@@ -175,34 +176,36 @@ export const CompanyInfo = ({
         onSubmit={onUploadSuccess}
       >
         {props => (
-          <Form>
-            <div>
+          <Form className={classes.companyInfoSectionForm}>
+            <div className={classes.companyInfoSectionWrapper}>
               <SectionTitle
                 title={"Upload company documents"}
                 classes={{ wrapper: classes.title }}
               />
+              <Divider className={classes.divider} />
               <DocumentUpload {...props} />
             </div>
-            <Divider className={classes.divider} />
-            <div>
+            <div className={classes.companyInfoSectionWrapper}>
               <SectionTitle title={"Company details"} classes={{ wrapper: classes.title }} />
+              <Divider className={classes.divider} />
               <CompanyDetails {...props} />
             </div>
-            <Divider className={classes.divider} />
-            <div>
+
+            <div className={classes.companyInfoSectionWrapper}>
               <SectionTitle title={"Industry"} classes={{ wrapper: classes.title }} />
+              <Divider className={classes.divider} />
               <Industry datalistId={datalistId} {...props} />
             </div>
-            <Divider className={classes.divider} />
-            <div>
+            <div className={classes.companyInfoSectionWrapper}>
               <SectionTitle
                 title={"Trade licence information"}
                 classes={{ wrapper: classes.title }}
               />
+              <Divider className={classes.divider} />
               <TradeLicenceInformation {...props} />
             </div>
-            <div className={`linkContainer ${!isComeFromROScreens ? "oneElement" : ""}`}>
-              {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
+            <Footer extraClasses={!isComeFromROScreens ? "oneElement" : ""}>
+              {isComeFromROScreens && <BackLink path={routes.searchProspect} isTypeButton={true} />}
               <NextStepButton
                 justify="flex-end"
                 display="block"
@@ -210,10 +213,10 @@ export const CompanyInfo = ({
                 disabled={!(props.isValid && props.dirty)}
                 // handleClick={() => handleClick(props)}
               />
-            </div>
+            </Footer>
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };

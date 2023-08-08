@@ -1,10 +1,11 @@
 import React, { memo } from "react";
+import cx from "classnames";
 import { Link } from "react-router-dom";
 import { styled } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core";
 
 import { theme } from "../../theme";
-
-import { ReactComponent as Icon } from "./../../assets/icons/backArrow.svg";
+import { ICONS, Icon } from "../Icons";
 
 export const ArrowBack = styled(Icon)({
   width: "18px"
@@ -25,13 +26,76 @@ export const Text = styled("span")({
 Text.defaultProps = {
   style: theme.palette.text
 };
-
-const BackLinkBase = ({ text = "Back", className = "", path, ...props }) => (
-  <Root className={className} to={path} replace {...props}>
-    <ArrowBack alt="back" />
-    <Text>{text}</Text>
-  </Root>
-);
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
+    fontSize: "0.875rem",
+    fontWeight: 600,
+    textDecoration: "underline",
+    color: "#1F1F1F",
+    "& .arrowIcon": {
+      fill: "#1F1F1F",
+      "& path": {
+        fill: "#1F1F1F"
+      }
+    }
+  },
+  linkContainerBtn: {
+    display: "flex",
+    padding: "10px 40px",
+    background: "#fff",
+    alignItems: "center",
+    gap: "8px",
+    borderRadius: "100px",
+    border: "1px solid #3B3A3A",
+    color: "#3B3A3A",
+    fontSize: "1rem",
+    fontWeight: 500,
+    lineHeight: "28px",
+    textDecoration: "none",
+    "& .arrowIcon": {
+      fill: "#3B3A3A",
+      "& path": {
+        fill: "#3B3A3A"
+      }
+    },
+    "&:hover": {
+      color: "#ffffff",
+      backgroundColor: "#1F1F1F",
+      "& svg": {
+        fill: "#ffffff",
+        "& path": {
+          fill: "#ffffff"
+        }
+      }
+    },
+    [theme.breakpoints.only("md")]: {
+      fontSize: "1.125rem",
+      padding: "12px 30px",
+      lineHeight: "20px"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.25rem",
+      padding: "12px 45px",
+    }
+  }
+}));
+const BackLinkBase = ({ text = "Back", className = "", path, isTypeButton = false, ...props }) => {
+  const classes = useStyles();
+  return (
+    <Link
+      className={cx(classes.root, { [classes.linkContainerBtn]: isTypeButton })}
+      to={path}
+      replace
+      {...props}
+    >
+      <Icon className="arrowIcon" alt="collapse-icon" name={ICONS.arrowLeft} />
+      <span>{text}</span>
+    </Link>
+  );
+};
 
 const areEqual = (prevProps, nextProps) =>
   prevProps.text === nextProps.text &&

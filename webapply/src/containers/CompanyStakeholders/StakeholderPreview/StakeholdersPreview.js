@@ -26,6 +26,7 @@ import { BackLink } from "../../../components/Buttons/BackLink";
 import { MAX_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { getRequiredMessage } from "../../../utils/getValidationMessage";
 import { NAME_REGEX } from "../../../utils/validation";
+import { Footer } from "../../../components/Footer";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -188,8 +189,8 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                 />
               </Grid>
             </Grid>
-            <div className="linkContainer">
-              <BackLink path={routes.stakeholdersInfo} />
+            <Footer>
+              <BackLink path={routes.stakeholdersInfo} isTypeButton={true} />
               <NextStepButton
                 label="Next"
                 type="button"
@@ -197,7 +198,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                 onClick={() => handleClickStakeholderPreviewNextStep()}
                 disabled={!(props.isValid && props.dirty)}
               />
-            </div>
+            </Footer>
           </Form>
         )}
       </Formik>

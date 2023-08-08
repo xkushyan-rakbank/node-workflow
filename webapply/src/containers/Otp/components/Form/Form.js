@@ -11,6 +11,7 @@ import { Input } from "../Input";
 import { MAX_NUMBER_VALIDATION_ERRORS, MAX_ATTEMPT_ALLOWED } from "../../constants";
 
 import { useStyles } from "./styled";
+import { Footer } from "../../../../components/Footer";
 
 export const Form = ({
   applicantInfo,
@@ -74,14 +75,14 @@ export const Form = ({
               </div>
             </div>
 
-            <div className={classes.linkContainer}>
+            <Footer extraClasses={"oneElement"}>
               <SubmitButton
                 disabled={!isValid || isPending || isGenerating}
                 justify="flex-end"
                 label={"Next"}
                 submitButtonClassName={classes.submitButton}
               />
-            </div>
+            </Footer>
           </FormikForm>
         )}
       </Formik>

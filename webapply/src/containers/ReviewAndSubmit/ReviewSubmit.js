@@ -29,6 +29,7 @@ import { OverlayLoader } from "../../components/Loader";
 import { useViewId } from "../../utils/useViewId";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { rakValuePackages } from "../../constants";
+import { Footer } from "../../components/Footer";
 
 export const ReviewSubmit = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -453,15 +454,15 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
             }}
           </Formik>
         </div>
-        <div className="linkContainer">
-          <BackLink path={routes.accountServices} />
+        <Footer>
+          <BackLink path={routes.accountServices} isTypeButton={true} />
           <NextStepButton
             label="Submit"
             justifycontent="flex-end"
             disabled={false}
             onClick={() => handleReviewSubmit()}
           />
-        </div>
+        </Footer>
       </div>
       <OverlayLoader open={isLoading} text={"Loading..."} />
     </>

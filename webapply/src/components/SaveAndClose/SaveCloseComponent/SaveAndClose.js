@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import cx from "classnames";
 import Button from "@material-ui/core/Button/Button";
 import { ConfirmDialog } from "../../Modals";
 import { useStyles } from "./styled";
@@ -8,7 +9,11 @@ import { NEXT } from "../../../constants";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { CircularProgress, Typography } from "@material-ui/core";
 
-export const SaveAndClose = ({ prospectSaveOnClick }) => {
+export const SaveAndClose = ({
+  prospectSaveOnClick,
+  extraClasses,
+  isSmallDeviceSaveCloseBtn = false
+}) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
 
@@ -53,14 +58,22 @@ export const SaveAndClose = ({ prospectSaveOnClick }) => {
   }, [setIsDisplayConfirmDialog]);
 
   return (
-    <div className={classes.saveCloseContainer}>
+    <div
+      className={cx(
+        classes.saveCloseContainer,
+        {
+          [classes.hideSaveCloseBtn]: isSmallDeviceSaveCloseBtn
+        },
+        extraClasses
+      )}
+    >
       <div className={classes.saveButtonContainer}>
         <Button
           className={classes.saveCloseBtn}
           variant="outlined"
           onClick={handleSaveAndCloseClick}
         >
-          Save and Close
+          Save & close
         </Button>
         <ConfirmDialog
           title={null}

@@ -17,25 +17,25 @@ export const TwoSteps = () => {
         </p>
         <div className={classes.cardsWrapper}>
           <div className={classes.cards}>
-            <TradeLicenseDocIcon alt="trade-license" width="21" height="21" />
+            <TradeLicenseDocIcon alt="trade-license" width="21" height="24" />
             <p className={classes.cardDesc}>
               Valid trade licence and constitutional documents
               <sup className={classes.asteriskText}>1</sup>
             </p>
           </div>
           <div className={classes.cards}>
-            <PassportIcon alt="passport" className={classes.passportIcon} />
+            <PassportIcon alt="passport" className={classes.passportIcon} height="24" />
             <p className={classes.cardDesc}>
               Passports and Emirates IDs of signatories and stakeholders
               <sup className={classes.asteriskText}>2</sup>
             </p>
           </div>
           <div className={classes.cards}>
-            <ProofOfAddressDocIcon alt="Proof of address" />
+            <ProofOfAddressDocIcon alt="Proof of address" height="24" />
             <p className={classes.cardDesc}>Proof of address (operation location)</p>
           </div>
           <div className={classes.cards}>
-            <ProofOfIncomeIcon alt="Proof of income" width="18" />
+            <ProofOfIncomeIcon alt="Proof of income" width="18" height="24" />
             <p className={classes.cardDesc}>Proof of income for stakeholders</p>
           </div>
         </div>

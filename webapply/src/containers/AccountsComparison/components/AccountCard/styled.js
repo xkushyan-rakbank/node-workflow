@@ -52,7 +52,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   accountTypeSticky: {
-    height: "165px",
+    // height: "165px",
     padding: "16px 10px",
     width: "50%",
 

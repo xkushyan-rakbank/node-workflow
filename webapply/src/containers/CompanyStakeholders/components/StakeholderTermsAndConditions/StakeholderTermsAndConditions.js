@@ -17,6 +17,7 @@ import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 import { getIsRoInviteEfr } from "../../../../store/selectors/otp";
+import { Footer } from "../../../../components/Footer";
 
 export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +74,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
       <StakeholderAuthorisations wcmData={wcmData} />
       <TermsAndConditions wcmData={wcmData} />
 
-      <div className="linkContainer">
+      <Footer extraClasses={"oneElement"}>
         <NextStepButton
           isDisplayLoader={isLoading}
           type="button"
@@ -88,7 +89,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
           label={isRoInviteEFR ? "Done" : "Next"}
           justify="flex-end"
         />
-      </div>
+      </Footer>
     </>
   );
 };

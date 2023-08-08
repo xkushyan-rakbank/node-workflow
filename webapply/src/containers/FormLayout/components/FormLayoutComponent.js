@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
+import cx from "classnames";
 
 import { FormNavigation } from "../../../components/FormNavigation";
-import { checkIsShowSmallMenu } from "../../../components/FormNavigation/utils";
+import { checkIsShowSmallMenu, isFooterFixed } from "../../../components/FormNavigation/utils";
 import { HeaderTitle } from "../../../components/HeaderTitle";
 import { Notifications } from "../../../components/Notification";
 import { ApplicationStatus } from "../../../components/ApplicationStatus/ApplicationStatus";
@@ -44,10 +45,14 @@ export const FormLayoutComponent = ({
       <FormNavigation />
       <div className={classes.formWrapper}>
         <div className={classes.formInner}>
-          {showSaveClose && <SaveAndClose />}
+          {showSaveClose && <SaveAndClose isSmallDeviceSaveCloseBtn={true}/>}
           {pathname.includes("application-overview") && <HeaderButtonGroup />}
 
-          <div className={classes.mainContainer}>
+          <div
+            className={cx(classes.mainContainer, {
+              [classes.paddingBottomForm]: isFooterFixed(pathname)
+            })}
+          >
             {isDisplayHeader && <HeaderTitle withoutMarginBottom />}
 
             <Notifications />

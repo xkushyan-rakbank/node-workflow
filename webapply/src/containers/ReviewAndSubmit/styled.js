@@ -82,7 +82,7 @@ export const useStyles = makeStyles(theme => ({
     color: "#1F1F1F",
     fontSize: "1rem",
     fontStyle: "normal",
-    fontWeight: 600,
+    fontWeight: 500,
     lineHeight: "24px",
     margin: 0
   },
@@ -116,7 +116,7 @@ export const useStyles = makeStyles(theme => ({
       color: "#525252",
       fontSize: "0.875rem",
       fontStyle: "normal",
-      fontWeight: 600,
+      fontWeight: 500,
       lineHeight: "20px",
       margin: 0,
       wordBreak: "break-word"

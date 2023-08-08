@@ -1,6 +1,21 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
+  companyInfoWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "40px"
+  },
+  companyInfoSectionWrapper: {
+    padding: "30px",
+    borderRadius: "10px",
+    border: "1px solid #CCC"
+  },
+  companyInfoSectionForm: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "40px"
+  },
   pageTitle: {
     fontSize: "28px",
     lineHeight: 1.17
@@ -9,11 +24,9 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "40px"
   },
   title: {
-    fontSize: "20px",
-    fontWeight: 600,
-    color: theme.palette.text.color,
-    marginTop: "40px",
-    marginBottom: "26px !important"
+    fontSize: "1.25rem",
+    fontWeight: 500,
+    color: "#1F1F1F"
   },
   subTitle: {
     fontSize: "20px",
@@ -55,7 +68,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   divider: {
-    margin: "40px 0px",
+    width: "100%",
+    margin: "14px 0px 32px",
     color: "#E6E6E6"
   }
 }));

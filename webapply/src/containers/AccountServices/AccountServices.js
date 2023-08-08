@@ -44,6 +44,7 @@ import { ContexualHelp } from "../../components/Notifications";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useViewId } from "../../utils/useViewId";
 import { ConfirmationDialog } from "./components/confirmationModal";
+import { Footer } from "../../components/Footer";
 
 export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -552,15 +553,15 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     </div>
                   </Accordion>
                 </div>
-                <div className="linkContainer">
-                  <BackLink path={routes.additionalInfoComponent} />
+                <Footer>
+                  <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton
                     label="Next"
                     justify="flex-end"
                     disabled={!isValidAccountInfoValidation}
                     isDisplayLoader={isLoading}
                   />
-                </div>
+                </Footer>
               </Form>
             );
           }}

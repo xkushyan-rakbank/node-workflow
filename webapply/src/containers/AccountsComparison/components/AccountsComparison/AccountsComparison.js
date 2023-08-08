@@ -122,9 +122,9 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
 
       let topPercentage, leftPercentage, heightPercentage;
 
-      if (windowWidth <= 768) {
+      if (windowWidth < 768) {
         topPercentage = topMobilePercent;
-        // leftPercentage = leftMobilePercent;
+        leftPercentage = leftMobilePercent;
         heightPercentage = heightMobilePercent;
       } else {
         topPercentage = topTabletPercentage;

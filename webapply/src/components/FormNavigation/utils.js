@@ -20,3 +20,13 @@ export const checkIsShowSmallMenu = pathname =>
     ...applicationOverviewRoutes,
     ...applicationPersona
   ].includes(pathname);
+
+export const isFooterFixed = pathname => {
+  return ![
+    ...applicationOverviewRoutes,
+    ...applicationPersona,
+    routes.verifyMobileOtp,
+    routes.verifyEmailOtp,
+    routes.congratulations
+  ].includes(pathname);
+};

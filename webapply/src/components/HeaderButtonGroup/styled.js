@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   trackNSwitchAccountBtn: {
-    width: "144px",
+    minWidth: "144px",
     height: "40px",
     borderRadius: "21px",
     border: "1px solid black",

@@ -35,6 +35,7 @@ import { AGE_RESTRICTION, DOC_TYPE_EID, DOC_TYPE_PASSPORT } from "../../../../co
 import { UploadFileModal } from "./UploadFileModal";
 import { ScanViaMobile } from "./MobileScan";
 import { InfoModal } from "../../../../components/Modals/InfoModal";
+import { Footer } from "../../../../components/Footer";
 
 export const CompanyStakeholdersComponent = ({
   fullName,
@@ -272,8 +273,8 @@ export const CompanyStakeholdersComponent = ({
         </div>
       )}
 
-      <div className={classes.linkContainer}>
-        {!sessionType ? <BackLink path={routes.companyInfo} /> : <div></div>}
+      <Footer extraClasses={!sessionType ? "" : "oneElement"}>
+        {!sessionType && <BackLink path={routes.companyInfo} isTypeButton={true} />}
         <NextStepButton
           type="button"
           handleClick={handleClickNextStep}
@@ -284,7 +285,7 @@ export const CompanyStakeholdersComponent = ({
           label={sessionType ? "Done" : "Next"}
           justify="flex-end"
         />
-      </div>
+      </Footer>
       <Modal open={openEidScanner}>
         <OCRScanner
           scanType={1}

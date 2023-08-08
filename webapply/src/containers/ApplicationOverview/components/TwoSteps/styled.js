@@ -121,18 +121,13 @@ export const useStyles = makeStyles(theme => ({
     padding: "24px 30px",
     borderRadius: "20px",
     border: "2px solid #E9E9E9",
-    [theme.breakpoints.up("sm")]: {
-      width: "240px"
-    },
-    // "& svg": {
-    //   width: "24px",
-    //   height: "24px"
-    // }
+    width: "240px",
+    [theme.breakpoints.up("md")]: {
+      minWidth: "0px",
+      flex: "1 1 0",
+      padding: "24px 18px",
+    }
   },
-  // passportIcon: {
-  //   width: "16px",
-  //   height: "16px"
-  // },
   cardDesc: {
     color: "#000",
     fontSize: "16px",

@@ -20,6 +20,7 @@ import { getRequiredMessage, getInvalidMessage } from "../../../utils/getValidat
 import { UAE_CODE } from "../../../constants";
 
 import { useStyles } from "./../styled";
+import { Footer } from "../../../components/Footer";
 
 export const MAX_LENGTH_EMAIL = 50;
 
@@ -129,7 +130,7 @@ export const ComeBackLoginComponent = ({
               </Grid>
             </div>
             <Grid container direction="row" justify="flex-end" alignItems="center">
-              <div className={cx(classes.btnWrapper, "linkContainer")}>
+              <Footer extraClasses={"oneElement"}>
                 <SubmitButton
                   disabled={
                     !values.email || !values.mobileNo || (isRecaptchaEnable && !recaptchaToken)
@@ -138,7 +139,7 @@ export const ComeBackLoginComponent = ({
                   justify="flex-end"
                   label="Next Step"
                 />
-              </div>
+              </Footer>
             </Grid>
           </Form>
         )}

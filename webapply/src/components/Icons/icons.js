@@ -28,6 +28,8 @@ import { ReactComponent as Bolt } from "../../assets/icons/bolt.svg";
 import { ReactComponent as KycAnnexure } from "../../assets/icons/kyc_annexure.svg";
 import { ReactComponent as ArrowUp } from "../../assets/icons/arrowUp.svg";
 import { ReactComponent as EditIcon } from "../../assets/icons/editIcon.svg";
+import { ReactComponent as ArrowLeft } from "../../assets/icons/arrowLeft.svg";
+import { ReactComponent as ArrowRight } from "../../assets/icons/arrowRight.svg";
 
 export const iconComponents = {
   done: Done,
@@ -59,7 +61,9 @@ export const iconComponents = {
   bolt: Bolt,
   kycAnnexure: KycAnnexure,
   arrowUp: ArrowUp,
-  editIcon: EditIcon
+  editIcon: EditIcon,
+  arrowLeft: ArrowLeft,
+  arrowRight: ArrowRight
 };
 
 export const ICONS = {
@@ -92,5 +96,7 @@ export const ICONS = {
   bolt: "bolt",
   kycAnnexure: "kycAnnexure",
   arrowUp: "arrowUp",
-  editIcon: "editIcon"
+  editIcon: "editIcon",
+  arrowLeft: "arrowLeft",
+  arrowRight: "arrowRight"
 };

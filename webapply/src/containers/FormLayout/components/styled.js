@@ -17,6 +17,9 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     },
+    [theme.breakpoints.up("sm")]: {
+      height: "100vh"
+    },
     [theme.breakpoints.up("xl")]: {
       marginLeft: "auto",
       marginRight: "auto",
@@ -109,5 +112,8 @@ export const useStyles = makeStyles(theme => ({
   },
   mainContainerFullHeight: {
     padding: "0 50px 0"
+  },
+  paddingBottomForm: {
+    paddingBottom: "150px"
   }
 }));

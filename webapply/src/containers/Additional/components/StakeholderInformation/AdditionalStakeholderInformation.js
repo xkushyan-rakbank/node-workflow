@@ -24,6 +24,7 @@ import { updateStakeholderInfoStatus } from "../../../../store/actions/additiona
 import { getSignatories, isFieldTouched } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
+import { Footer } from "../../../../components/Footer";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -140,14 +141,14 @@ export const AdditionalStakeholderInformation = ({
                     />
                   </div>
                 </div>
-                <div className="linkContainer">
+                <Footer extraClasses={"oneElement"}>
                   <NextStepButton
                     justify="flex-end"
                     label="Continue"
                     disabled={!isValidStakeholderInfo}
                     isDisplayLoader={isLoading}
                   />
-                </div>
+                </Footer>
               </div>
             </Form>
           );

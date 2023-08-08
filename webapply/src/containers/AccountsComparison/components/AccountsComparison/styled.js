@@ -135,7 +135,7 @@ export const useStyles = makeStyles(theme => ({
     bottom: 0,
     left: 0,
     height: "100%",
-    width: "400px",
+    width: "350px",
     pointerEvents: "none",
     [theme.breakpoints.only("xs")]: {
       display: "none",
@@ -511,7 +511,7 @@ export const useStyles = makeStyles(theme => ({
     boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
 
     [theme.breakpoints.up("sm")]: {
-      height: "195px",
+      height: "203px",
       backgroundColor: "#FFFFFF",
       position: "fixed",
       top: 0,

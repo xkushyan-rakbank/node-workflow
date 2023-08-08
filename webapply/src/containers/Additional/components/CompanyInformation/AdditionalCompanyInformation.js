@@ -23,6 +23,7 @@ import { useStyles } from "../styled";
 import { updateCompanyAdditionalInfoStatus } from "../../../../store/actions/additionalInfo";
 import { isFieldTouched } from "../../../../store/selectors/appConfig";
 import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
+import { Footer } from "../../../../components/Footer";
 
 export const AddCompanyInformation = ({
   companyName,
@@ -123,14 +124,14 @@ export const AddCompanyInformation = ({
                     <TaxDeclarationsSection id={"isTaxDeclarationCompleted"} {...props} />
                   </div>
                 </div>
-                <div className="linkContainer">
+                <Footer extraClasses={"oneElement"}>
                   <NextStepButton
                     justify="flex-end"
                     label="Continue"
                     disabled={!isValidForm}
                     isDisplayLoader={isLoading}
                   />
-                </div>
+                </Footer>
               </div>
             </Form>
           );

@@ -4,6 +4,7 @@ import { Form, Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 import {
   AutoSaveField as Field,
@@ -28,15 +29,56 @@ import { NAME_REGEX, NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/val
 import { InfoCard } from "./InfoCard";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
+import { ContexualHelp } from "../../../components/Notifications";
+import { Footer } from "../../../components/Footer";
 
 const useStyles = makeStyles(theme => ({
-  header: {
-    marginBottom: "16px",
+  applicantInfoComponentWrapper: {
+    display: "flex",
+    padding: "20px",
+    flexDirection: "column",
+    gap: "20px",
+    borderRadius: "10px",
+    border: "1px solid #CCC",
     [theme.breakpoints.up("sm")]: {
-      marginBottom: "40px",
-      paddingTop: "40px",
-    },
+      padding: "30px"
+    }
   },
+  header: {
+    borderBottom: "1px solid #E6E6E6",
+    paddingBottom: "24px"
+  },
+  outsideLabel: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "24px",
+    color: "#1F1F1F"
+  },
+  inputWithoutLabel: {
+    padding: "20px 12px"
+  },
+  helperIcon: {
+    color: "#525252",
+    width: "20px",
+    height: "20px"
+  },
+  roCodeWrapper: {
+    marginTop: "24px",
+    "& > div": {
+      marginBottom: "24px"
+    }
+  },
+  roCodeFormControl: {
+    margin: 0,
+    marginTop: "8px"
+  },
+  applicantInfoForm: {
+    paddingBottom: "10px"
+  }
 }));
 
 const aplicantInfoSchema = Yup.object({
@@ -122,10 +164,10 @@ export const ApplicantInfoComponent = ({
   } = invitationParams || {};
 
   return (
-    <>
+    <div className={classes.applicantInfoComponentWrapper}>
       <SectionTitleWithInfo
-        title={"Let's kick things off with an intro"}
-        info=" Give us a few details so we can keep track of your application"
+        title={"Tell us more"}
+        info="Let's get a few more details."
         smallInfo
         className={classes.header}
       />
@@ -143,7 +185,9 @@ export const ApplicantInfoComponent = ({
         }}
         validationSchema={aplicantInfoSchema}
         validateOnChange={false}
+        validateOnMount={true}
         onSubmit={values => onSubmit(removeUnWantedKeys(["allianceCodeFromDataList"], values))}
+        className={classes.applicantInfoForm}
       >
         {({ isValid }) => (
           <Form>
@@ -198,7 +242,7 @@ export const ApplicantInfoComponent = ({
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
                 fieldDescription={
-                  "This email will be used to open the account.\n We'll send a one-time password (OTP) to it for verification."
+                  "This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
                 }
                 isLoadDefaultValueFromStore={false}
                 disabled={invitationParams?.mobile}
@@ -235,7 +279,7 @@ export const ApplicantInfoComponent = ({
                   isLemnisk={true}
                   lemniskCall={value => lemniskCall(value)}
                   fieldDescription={
-                    "This number will be used to open the account.\nWe'll send a one-time password (OTP) to it for verification."
+                    "This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
                   }
                   isLoadDefaultValueFromStore={false}
                 />
@@ -257,62 +301,68 @@ export const ApplicantInfoComponent = ({
               </Grid>
             )}
 
-            <Grid container spacing={3}>
+            <Grid container spacing={3} className={classes.roCodeWrapper}>
               <Grid item sm={6} xs={12}>
-                {isConfigLoading ? (
-                  <SkeletonLoader />
-                ) : (
-                  <Field
-                    name="roCode"
-                    path="prospect.applicantInfo.roCode"
-                    label="Agent code (optional)"
-                    placeholder="Agent code"
-                    contextualHelpText="Enter the Agent code of the Bank staff whom you are in touch with"
-                    component={Input}
-                    disabled={invitationParams?.rocode || roCode !== ""}
-                    InputProps={{
-                      inputProps: { tabIndex: 0 }
-                    }}
-                    isLoadDefaultValueFromStore={false}
-                  />
-                )}
-                {!roCode && (
-                  <InfoCard message="You only need to enter this if you have received it from a RAKBANK sales agent." />
-                )}
+                <label className={classes.outsideLabel}>
+                  Agent code (optional)
+                  <ContexualHelp
+                    title={"Enter the Agent code of the Bank staff whom you are in touch with"}
+                    placement="right"
+                    isDisableHoverListener={false}
+                  >
+                    <HelpOutlineIcon className={classes.helperIcon} />
+                  </ContexualHelp>
+                </label>
+                <Field
+                  name="roCode"
+                  path="prospect.applicantInfo.roCode"
+                  label=""
+                  component={Input}
+                  disabled={roCode !== ""}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                  classes={{
+                    formControlRoot: classes.roCodeFormControl,
+                    input: classes.inputWithoutLabel
+                  }}
+                />
               </Grid>
               <Grid item sm={6} xs={12}>
-                {isConfigLoading ? (
-                  <SkeletonLoader />
-                ) : (
-                  <>
-                    {/* //ro-assist-brd3-16 */}
-                    <Field
-                      name={
-                        allianceCodeFromQuery !== "" ? "allianceCodeFromDataList" : "allianceCode"
-                      }
-                      path={
-                        allianceCodeFromQuery !== "" ? null : "prospect.applicantInfo.allianceCode"
-                      }
-                      label="Partner code (optional)"
-                      placeholder="Partner code"
-                      disabled={invitationParams?.alliancecode || allianceCodeFromQuery !== ""}
-                      component={Input}
-                      contextualHelpText="If you were referred by one of our Partners, enter the code shared by them"
-                      InputProps={{
-                        inputProps: { tabIndex: 0 }
-                      }}
-                      isLoadDefaultValueFromStore={false}
-                    />
-                  </>
-                )}
+                <label className={classes.outsideLabel}>
+                  Partner code (optional)
+                  <ContexualHelp
+                    title={
+                      "If you were referred by one of our Partners, enter the code shared by them"
+                    }
+                    placement="bottom"
+                    isDisableHoverListener={false}
+                  >
+                    <HelpOutlineIcon className={classes.helperIcon} />
+                  </ContexualHelp>
+                </label>
+                <Field
+                  name={allianceCodeFromQuery !== "" ? "allianceCodeFromDataList" : "allianceCode"}
+                  path={allianceCodeFromQuery !== "" ? null : "prospect.applicantInfo.allianceCode"}
+                  disabled={allianceCodeFromQuery !== ""}
+                  component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0 }
+                  }}
+                  classes={{
+                    formControlRoot: classes.roCodeFormControl,
+                    input: classes.inputWithoutLabel
+                  }}
+                />
               </Grid>
             </Grid>
 
             <Grid container direction="row" justify="flex-end" alignItems="center">
               {/* message */}
-              <div className="linkContainer">
+              <Footer>
                 {!invitationParams?.isislamic && (
                   <BackLink
+                    isTypeButton={true}
                     path={
                       personaSelectionRoutesMap[accountType][
                         isIslamicBanking ? ISLAMIC : CONVENTIONAL
@@ -322,19 +372,17 @@ export const ApplicantInfoComponent = ({
                 )}
                 <SubmitButton
                   disabled={
-                    !isValid ||
-                    (!reCaptchaToken && isRecaptchaEnable) ||
-                    !isDisableNextstep
+                    !isValid || (!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep
                   }
                   isDisplayLoader={isLoading}
                   justify="flex-end"
                   label="Next"
                 />
-              </div>
+              </Footer>
             </Grid>
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };

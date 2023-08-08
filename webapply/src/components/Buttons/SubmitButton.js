@@ -9,8 +9,16 @@ export const ButtonWrapper = styled(Grid)({
 });
 //using this button in KFS Dialog
 export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
-  fontWeight: 600,
+  fontWeight: 500,
   letterSpacing: "normal",
+  minWidth: "130px",
+  [theme.breakpoints.only("md")]: {
+    fontSize: "1.125rem",
+    height: "unset",
+    minHeight: "auto",
+    padding: "12px 30px",
+    lineHeight: "20px"
+  },
 
   "&:disabled": {
     color: theme.palette.common.white

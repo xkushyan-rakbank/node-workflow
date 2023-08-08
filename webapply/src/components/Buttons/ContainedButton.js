@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button/Button";
 import { ReactComponent as Arrow } from "./../../assets/icons/whiteArrow.svg";
 import { ReactComponent as Loader } from "./../../assets/icons/loader.svg";
 import { theme } from "../../theme";
+import { ICONS, Icon } from "../Icons";
 
 const styles = {
   "@keyframes rotate": {
@@ -14,43 +15,45 @@ const styles = {
     },
   },
   buttonStyle: {
-    minHeight: "56px",
+    minHeight: "50px",
+    height: "50px",
     borderRadius: "100px",
     outline: "none ",
-    fontSize: "16px",
+    fontSize: "1rem",
     textTransform: "none",
-    padding: "15px 32px",
+    padding: "10px 40px",
     backgroundColor: "#3b3a3a",
-    height: "50px",
     "&:hover": {
       backgroundColor: "rgba(0, 0, 0, 0.7)",
     },
+    [theme.breakpoints.only("md")]: {
+      fontSize: "1.125rem",
+      padding: "12px 30px",
+      lineHeight: "20px"
+    },
 
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("lg")]: {
       minHeight: "56px",
-      borderRadius: "28px",
-      outline: "none ",
-      fontSize: "18px",
-      textTransform: "none",
-      padding: "15px 32px",
-      backgroundColor: "#3b3a3a",
-      "&:hover": {
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-      },
-      height: "unset",
+      height: "50px",
+      fontSize: "1.25rem",
+      padding: "12px 45px",
     },
   },
   labelStyle: {
-    fontSize: "16px",
-    lineHeight: "24px",
+    fontSize: "1rem",
+    lineHeight: "20px",
     textAlign: "left",
     color: "#ffffff",
     justifyContent: "space-between",
     textTransform: "none",
+    [theme.breakpoints.only("sm")]: {
+      fontSize: "1.125rem",
+      lineHeight: "20px"
+    },
 
-    [theme.breakpoints.up("sm")]: {
-      fontSize: "18px",
-      lineHeight: "24px",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.25rem",
+      lineHeight: "28px",
       textAlign: "left",
       color: "#ffffff",
       justifyContent: "space-between",
@@ -61,14 +64,14 @@ const styles = {
     width: "24px",
     height: "24px",
     margin: "0 auto",
-    animation: "$rotate 2s linear infinite",
+    animation: "$rotate 2s linear infinite"
   },
   arrow: {
-    width: "24px",
-    height: "24px",
+    fill: "#FFF",
+    width: "12px",
+    height: "10px",
     verticalAlign: "top",
-    marginLeft: 18,
-    marginRight: -10,
+    marginLeft: 8,
   },
   disabledBtnStyle: {
     backgroundColor: "#CCCCCC",
@@ -98,7 +101,7 @@ const BaseButton = ({
     classes={{
       root: cx(classes.buttonStyle, className),
       label: classes.labelStyle,
-      disabled: classes.disabledBtnStyle,
+      disabled: classes.disabledBtnStyle
     }}
     disabled={isDisplayLoader || disabled}
     onClick={handleClick}
@@ -110,7 +113,7 @@ const BaseButton = ({
     ) : (
       [
         label,
-        withRightArrow && <Arrow key="arrow" className={classes.arrow} alt="rightArrowWhite" />,
+        withRightArrow && <Icon className={classes.arrow} alt="rightArrowWhite" name={ICONS.arrowRight} />
       ]
     )}
   </Button>
