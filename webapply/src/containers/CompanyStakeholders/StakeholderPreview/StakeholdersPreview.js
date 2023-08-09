@@ -77,7 +77,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       </div>
       <h3 className={classes.mainTitle}>Did we get everything?</h3>
       <p className={cx(classes.subTitle, classes["mb-40"])}>
-        Take a minute to review the details we pulled from your documents
+        Take a minute to review the details we pulled from your documents. You won't be able to make any changes after this step.
       </p>
       <Formik initialValues={initialValues} validationSchema={previewValidation}>
         {props => (
@@ -93,7 +93,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 100 }
                   }}
-                  disabled={false}
+                  disabled={true}
                   className="testingClass"
                   showEditIcon={true}
                   fieldDescription={"Please ensure the full name is per your passport"}

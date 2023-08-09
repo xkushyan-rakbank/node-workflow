@@ -53,6 +53,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   applicationDesc: {
+    color: "#757575",
     fontSize: "0.875rem",
     fontWeight: 400,
     lineHeight: "20px",
@@ -66,7 +67,10 @@ export const useStyles = makeStyles(theme => ({
     color: "#757575",
     fontSize: "0.75rem",
     fontWeight: 400,
-    lineHeight: "16px"
+    lineHeight: "16px",
+    "& span": {
+      fontWeight: "400!important",
+    }
   },
   infoIcon: {
     width: "16px !important",

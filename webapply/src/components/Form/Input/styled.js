@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => {
     },
     disabled: {
       "& fieldset": {
-        backgroundColor: "rgba(242, 242, 242, 0.5)"
+        backgroundColor: "#F2F2F2"
       }
     },
     inputGroupWrapper: {
@@ -175,6 +175,9 @@ export const useStyles = makeStyles(theme => {
       },
       "&.Mui-focused": {
         backgroundColor: "#FFF"
+      },
+      "&.Mui-disabled": {
+        backgroundColor: "#F2F2F2"
       }
     },
     input: {

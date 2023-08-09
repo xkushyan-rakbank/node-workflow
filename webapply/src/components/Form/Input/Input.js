@@ -2,7 +2,6 @@ import React, { useState, memo } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import EditIcon from "@material-ui/icons/Edit";
 import { getIn } from "formik";
 import cx from "classnames";
 
@@ -13,6 +12,7 @@ import { checkBrowserIsIE } from "../../../utils/checkBrowserIsIE";
 import { areEqualFieldProps } from "../utils";
 
 import { useStyles } from "./styled";
+import { ICONS, Icon } from "../../Icons";
 
 const InputBase = ({
   contextualHelpText,
@@ -41,6 +41,7 @@ const InputBase = ({
 }) => {
   const classes = useStyles({ classes: extendedClasses });
   const [hasFocus, setFocus] = useState(false);
+  const [isFieldEditable, setIsFieldEditable] = useState(disabled);
 
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -54,14 +55,18 @@ const InputBase = ({
           {...props}
           label={label}
           variant="filled"
-          className={cx(classes.textField, { [classes.disabled]: disabled })}
+          className={cx(classes.textField, { [classes.disabled]: isFieldEditable })}
           placeholder={placeholder}
-          disabled={disabled}
+          disabled={isFieldEditable}
           error={!!isError}
           InputProps={{
             endAdornment: showEditIcon ? (
               <InputAdornment position="end">
-                <EditIcon style={{ color: iconColor }} />
+                <Icon
+                  name={ICONS.editIcon}
+                  className={classes.closeIcon}
+                  onClick={() => setIsFieldEditable(false)}
+                />
               </InputAdornment>
             ) : null,
             ...InputProps,
@@ -106,7 +111,7 @@ const InputBase = ({
         <FieldDescription
           title={fieldDescription}
           fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
-          fieldMaxLength={InputProps.inputProps?.maxLength} 
+          fieldMaxLength={InputProps.inputProps?.maxLength}
           showTitleIcon={infoIcon}
         />
       )}
