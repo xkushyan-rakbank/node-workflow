@@ -10,18 +10,28 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "8px",
     fontStyle: "normal",
     textAlign: "left",
-
-    [theme.breakpoints.up("sm")]: {
-      textAlign: "inherit",
+    [theme.breakpoints.only("sm")]: {
+      textAlign: "center",
       color: "#1F1F1F",
+      fontSize: "1.25rem",
+      lineHeight: "22px",
+    },
+
+    [theme.breakpoints.up("md")]: {
+      textAlign: "center",
       fontSize: "1.75rem",
-      fontWeight: 500,
       lineHeight: "36px",
-      margin: 0,
-      marginBottom: "8px",
+    }
+  },
+  accountTypeTitleSticky: {
+    fontSize: "1.25rem",
+    lineHeight: "22px",
+    marginBottom: 0,
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.75rem",
+      lineHeight: "36px"
     },
   },
-  accountTypeTitleSticky: { fontSize: "1.75rem", marginBottom: 0 },
   accountTypeDesc: {
     color: "#757575",
     fontSize: "0.75rem",

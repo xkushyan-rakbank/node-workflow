@@ -9,7 +9,12 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { Upload } from "../../../../../components/Upload";
-import { MOA_FILE_SIZE, TL_ACCEPTED_FILE_TYPES, TL_COI_FILE_SIZE } from "../../../../../constants";
+import {
+  MOA_FILE_SIZE,
+  SUPPORTED_FILE_FORMAT_TEXT,
+  TL_ACCEPTED_FILE_TYPES,
+  TL_COI_FILE_SIZE
+} from "../../../../../constants";
 
 import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
@@ -284,9 +289,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                         path="prospect.prospectDocuments.additionalStakeholderDocument.tradeLicense"
                         type="file"
                         fieldDescription="Upload Trade licence"
-                        helperText={
-                          "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                        }
+                        helperText={SUPPORTED_FILE_FORMAT_TEXT}
                         accept={TL_ACCEPTED_FILE_TYPES}
                         fileSize={TL_COI_FILE_SIZE}
                         onDrop={acceptedFile =>
@@ -324,9 +327,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                               path={`prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome[${index}]`}
                               type="file"
                               fieldDescription={"Proof of income"}
-                              helperText={
-                                "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                              }
+                              helperText={SUPPORTED_FILE_FORMAT_TEXT}
                               accept={TL_ACCEPTED_FILE_TYPES}
                               fileSize={TL_COI_FILE_SIZE}
                               component={Upload}

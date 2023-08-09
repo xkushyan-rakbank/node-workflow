@@ -806,3 +806,5 @@ export const getFileUploadErrorMessage = {
   FILE_TOO_BIG: "The file size is too big. Please upload a file less than or equal to 5MB",
   INVALID_FILE_TYPE: "The file format is not supported. Please upload a valid file"
 };
+
+export const SUPPORTED_FILE_FORMAT_TEXT = "Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min.";

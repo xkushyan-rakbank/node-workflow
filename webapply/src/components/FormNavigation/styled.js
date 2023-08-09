@@ -220,7 +220,7 @@ export const useStyles = makeStyles(theme => ({
     color: "#fff",
     fontSize: 32,
     lineHeight: "36px",
-    fontWeight: 600,
+    fontWeight: 500,
     fontFamily: "Open Sans",
     whiteSpace: "pre-line",
   },

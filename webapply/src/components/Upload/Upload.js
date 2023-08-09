@@ -103,7 +103,7 @@ export const Upload = ({
                       `${
                         isMobile && mobilecontentPlaceholder
                           ? mobilecontentPlaceholder
-                          : "Drag and drop file here or upload from your computer"
+                          : "Scan or upload from your computer"
                       }`
                     )}
                   </div>

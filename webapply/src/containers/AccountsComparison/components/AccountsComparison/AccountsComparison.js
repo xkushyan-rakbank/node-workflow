@@ -310,7 +310,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         <div className={classes.featureInfo}>
           <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>
           <p>
-            See our
+            See our&nbsp;
             <a target="_blank" rel="noopener noreferrer" href={servicePricingGuideUrl}>
               Service & Price guide.
             </a>

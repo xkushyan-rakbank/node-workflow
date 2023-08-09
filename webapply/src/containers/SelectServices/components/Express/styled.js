@@ -59,7 +59,7 @@ export const useStyles = makeStyles({
     borderRadius: "28px",
     textTransform: "none",
     fontSize: "16px",
-    fontWeight: 600,
+    fontWeight: 500,
     letterSpacing: "normal",
     marginRight: "70px",
     "@media (max-width: 767px)": {

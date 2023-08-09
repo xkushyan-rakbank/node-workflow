@@ -55,7 +55,7 @@ export const useStyles = makeStyles(theme => ({
     transition: theme.transitions.create("all"),
     "& h2": {
       fontSize: "46px",
-      fontWeight: "600",
+      fontWeight: "500",
       marginBottom: "20px",
       marginTop: "0",
       color: "#373737",

@@ -5,42 +5,62 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "24px",
+    padding: "16px",
     border: "1px dashed #86868B",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     borderRadius: "10px",
-    "@media (max-width: 425px)": {
-      flexDirection: "column"
+    marginTop: "8px",
+    [theme.breakpoints.up("sm")]: {
+      padding: "24px",
     }
   },
   uploadContainer: {
     width: "100%",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    [theme.breakpoints.down("xs")]: {
-      flexDirection: "column"
+    gap: "24px",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row"
     }
   },
   previewContainer: {
     fontWeight: 500,
-    fontSize: "14px",
+    fontSize: "0.875rem",
     lineHeight: "20px",
-    color: "#8D0C10",
+    color: "#5E080B",
     cursor: "pointer"
+  },
+  previewBtn: {
+    minWidth: "105px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "start",
+    },
+    "& svg": {
+      marginRight: "2px"
+    }
   },
   btnWrapper: {
     display: "flex",
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "16px",
+    [theme.breakpoints.up("sm")]: {
       flexDirection: "row",
-      justifyContent: "center",
-      marginTop: "20px"
+      gap: "8px",
     }
   },
+  scanUploadbtnWrapper: {
+    display: "flex",
+    gap: "8px",
+
+  },
   actionButton: {
-    width: "105px",
+    minWidth: "105px",
     height: "40px",
     borderRadius: "21px",
     textTransform: "capitalize",
@@ -55,16 +75,6 @@ export const useStyles = makeStyles(theme => ({
     "&:disabled": {
       color: "#FFFFFF",
       backgroundColor: "#1F1F1F !important"
-    },
-    "&:first-child": {
-      marginRight: "8px",
-      [theme.breakpoints.down("xs")]: {
-        marginRight: "32px",
-        marginBottom: "8px"
-      }
-    },
-    "@media (max-width: 372px)": {
-      marginLeft: 0
     }
   },
   btnRemove: {
@@ -74,25 +84,29 @@ export const useStyles = makeStyles(theme => ({
   contentContainer: {
     display: "flex",
     alignItems: "center",
+    gap: "20px",
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column",
       width: "inherit"
     }
   },
   content: {
-    fontSize: "16px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "7px",
+    fontSize: "1rem",
     color: "#1F1F1F",
-    marginBottom: "7px",
+    fontWeight: 500,
     [theme.breakpoints.down("xs")]: {
-      whiteSpace: "nowrap",
       overflow: "hidden",
       textOverflow: "ellipsis",
       textAlign: "center"
     }
   },
   subcontent: {
-    fontSize: "12px",
+    fontSize: "0.75rem",
     color: "#757575",
+    fontWeight: 400,
     [theme.breakpoints.down("xs")]: {
       display: "flex",
       flexDirection: "row",
@@ -101,10 +115,9 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   fieldDescription: {
-    fontSize: "12px",
-    fontWeight: "400",
-    color: "#757575",
-    marginBottom: "8px"
+    fontSize: "0.875rem",
+    fontWeight: "500",
+    color: "#1F1F1F",
   },
   disableUpload: {
     pointerEvents: "none",
@@ -112,22 +125,15 @@ export const useStyles = makeStyles(theme => ({
     opacity: "0.5"
   },
   disabledReason: {
-    border: "1px solid #E6E6E6",
-    padding: "16px",
     color: "#757575",
     fontWeight: 400,
-    fontSize: "12px",
+    fontSize: "0.75rem",
     lineHeight: "16px",
     borderRadius: "10px",
-    marginBottom: "8px"
   },
   fileUploadIcon: {
     width: "32px",
     height: "35px",
-    [theme.breakpoints.up("sm")]: {
-      height: "44px",
-      width: "40px",
-    },
   },
   successText: {
     fontWeight: 500,
@@ -137,12 +143,9 @@ export const useStyles = makeStyles(theme => ({
     gap: "2px"
   },
   contentWrapper: {
-    marginLeft: "20px",
-    paddingTop: "24px",
     [theme.breakpoints.down("xs")]: {
       marginLeft: "unset",
       textAlign: "center",
-      width: "85%"
     }
   },
   previewMobile: {
@@ -159,13 +162,12 @@ export const useStyles = makeStyles(theme => ({
     },
   },
   emriatesIDTile: {
-    display: 'flex',
+    display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     [theme.breakpoints.up("sm")]: {
       flexDirection: "column"
     }
-  
   },
   successContent: {
     marginBottom: "7px",

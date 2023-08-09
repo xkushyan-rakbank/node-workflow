@@ -5,7 +5,7 @@ import { Button, useMediaQuery } from "@material-ui/core";
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
-import {ReactComponent as PreviewEye } from "../../assets/icons/previewEye.svg"
+import { ReactComponent as PreviewEye } from "../../assets/icons/previewEye.svg";
 import { PreviewDataModal } from "../../containers/CompanyStakeholders/components/CompanyStakeholders/PreviewDataModal";
 
 export const UploadFileWrapper = ({
@@ -28,13 +28,15 @@ export const UploadFileWrapper = ({
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const isMobileDevice = useMediaQuery("max-width: 767px") || window.innerWidth <= 768;
 
-  const truncatedLabel =(label) => {
-    if(!label.includes('|')) {
+  const truncatedLabel = label => {
+    if (!label.includes("|")) {
       return <div className={classes.emriatesIDTile}>{label}</div>;
     }
-    const splitLabel = label.split('|').map(part => part.length > 30 ? part.substring(0, 25) + "..." : part);
-    return <div className={classes.emriatesIDTile}>{splitLabel.join(' | ')}</div>;
-  }
+    const splitLabel = label
+      .split("|")
+      .map(part => (part.length > 30 ? part.substring(0, 25) + "..." : part));
+    return <div className={classes.emriatesIDTile}>{splitLabel.join(" | ")}</div>;
+  };
   return (
     <>
       <Fragment>
@@ -49,50 +51,31 @@ export const UploadFileWrapper = ({
                 <FileIcon className={classes.fileUploadIcon} alt="companyIconSvg" />
               )}
               <div className={classes.contentWrapper}>
-                <div className={cx(!isSuccess ? classes.content : classes.successContent)}>
+                <div className={classes.content}>
                   {uploadedContent
                     ? truncatedLabel(uploadedContent)
                     : `${
                         isMobileDevice && mobileLabel
                           ? mobileLabel
-                          : "Drag and drop file here or upload from your computer"
+                          : "Scan or upload from your computer"
                       }`}
-                  {isSuccess ? (
-                    <div className={cx(classes.subcontent, classes.successText)}>
-                      {isMobileDevice && showPreview && (
-                        <>
-                          <PreviewEye />
-                          <div
-                            className={classes.previewMobile}
-                            onClick={() => setShowPreviewModal(true)}
-                          >
-                            Preview
-                          </div>
-                        </>
-                      )}
-                      {!isMobileDevice && showPreview && (
-                        <>
-                          <div className={cx(classes.subcontent, classes.successText)}>
-                            <PreviewEye />
-                            <div
-                              className={classes.previewContainer}
-                              onClick={() => setShowPreviewModal(true)}
-                            >
-                              Preview
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  ) : (
-                    <div className={classes.subcontent}>{helperText}</div>
-                  )}
+                  {!isSuccess && <div className={classes.subcontent}>{helperText}</div>}
                 </div>
               </div>
             </div>
-
-            <div className={classes.btnWrapper}>
-              {isSuccess ? (
+            {isSuccess ? (
+              <div className={classes.btnWrapper}>
+                {showPreview && (
+                  <div className={classes.previewBtn}>
+                    <PreviewEye />
+                    <div
+                      className={classes.previewContainer}
+                      onClick={() => setShowPreviewModal(true)}
+                    >
+                      Preview
+                    </div>
+                  </div>
+                )}
                 <Button
                   color="primary"
                   variant="outlined"
@@ -102,30 +85,29 @@ export const UploadFileWrapper = ({
                 >
                   Remove
                 </Button>
-              ) : (
-                <>
-                  {" "}
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    className={cx(classes.actionButton, classes.btnScanUpload)}
-                    disabled={!isStepActive}
-                    onClick={handleScan}
-                  >
-                    Scan
-                  </Button>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    className={cx(classes.actionButton, classes.btnScanUpload)}
-                    disabled={!isStepActive}
-                    onClick={handleUpload}
-                  >
-                    Upload
-                  </Button>
-                </>
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className={classes.scanUploadbtnWrapper}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  className={cx(classes.actionButton, classes.btnScanUpload)}
+                  disabled={!isStepActive}
+                  onClick={handleScan}
+                >
+                  Scan
+                </Button>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  className={cx(classes.actionButton, classes.btnScanUpload)}
+                  disabled={!isStepActive}
+                  onClick={handleUpload}
+                >
+                  Upload
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </Fragment>

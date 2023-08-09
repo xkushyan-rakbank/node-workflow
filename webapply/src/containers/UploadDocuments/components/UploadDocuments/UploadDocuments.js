@@ -9,6 +9,7 @@ import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import routes from "../../../../routes";
 
 import { useStyles } from "./styled";
+import { Footer } from "../../../../components/Footer";
 
 export const UploadDocumentsComponent = ({
   isLoadingDocuments,
@@ -57,7 +58,7 @@ export const UploadDocumentsComponent = ({
         </>
       )}
 
-      <div className="linkContainer">
+      <Footer>
         <BackLink path={routes.finalQuestions} />
         <SubmitButton
           disabled={isDisabledNextStep}
@@ -66,7 +67,7 @@ export const UploadDocumentsComponent = ({
           label="Next Step"
           justify="flex-end"
         />
-      </div>
+      </Footer>
     </>
   );
 };

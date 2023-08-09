@@ -18,7 +18,7 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "21px",
     textTransform: "capitalize",
     fontSize: "16px",
-    fontWeight: 600,
+    fontWeight: 500,
     padding: 20,
     letterSpacing: "normal",
     "@media (max-width: 372px)": {

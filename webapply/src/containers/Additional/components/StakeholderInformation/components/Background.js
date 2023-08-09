@@ -7,7 +7,11 @@ import cx from "classnames";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
-import { TL_ACCEPTED_FILE_TYPES, TL_COI_FILE_SIZE } from "../../../../../constants";
+import {
+  SUPPORTED_FILE_FORMAT_TEXT,
+  TL_ACCEPTED_FILE_TYPES,
+  TL_COI_FILE_SIZE
+} from "../../../../../constants";
 import { Upload } from "../../../../../components/Upload";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 
@@ -217,7 +221,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                   type="file"
                   path="prospect.prospectDocuments.additionalStakeholderDocument.cv"
                   fieldDescription="CV"
-                  helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
+                  helperText={SUPPORTED_FILE_FORMAT_TEXT}
                   accept={TL_ACCEPTED_FILE_TYPES}
                   fileSize={TL_COI_FILE_SIZE}
                   onDrop={acceptedFile =>

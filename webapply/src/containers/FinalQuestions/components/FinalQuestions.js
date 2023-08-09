@@ -9,6 +9,7 @@ import { ContinueButton } from "../../../components/Buttons/ContinueButton";
 import routes from "../../../routes";
 
 import { useStyles } from "./styled";
+import { Footer } from "../../../components/Footer";
 
 export const FinalQuestions = ({
   signatories,
@@ -61,7 +62,7 @@ export const FinalQuestions = ({
           />
         ))}
       </div>
-      <div className={classes.linkContainer}>
+      <Footer>
         <BackLink path={routes.stakeholdersInfo} />
         <NextStepButton
           disabled={!isAllStepsCompleted}
@@ -69,7 +70,7 @@ export const FinalQuestions = ({
           handleClick={goToUploadDocument}
           label="Next Step"
         />
-      </div>
+      </Footer>
     </>
   );
 };

@@ -8,6 +8,7 @@ import { USER_NAME_REGEX, PASSWORD_REGEX } from "../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
+import { Footer } from "../../../../components/Footer";
 
 const loginSchema = Yup.object({
   username: Yup.string()
@@ -53,13 +54,13 @@ export const LoginComponent = ({ submitForm, isLoading }) => {
                 inputProps: { tabIndex: 0 }
               }}
             />
-            <div className="linkContainer">
+            <Footer extraClasses={"oneElement"}>
               <SubmitButton
                 justify="flex-end"
                 label="Next Step"
                 disabled={Object.values(values).some(value => !value) || isLoading}
               />
-            </div>
+            </Footer>
           </Form>
         )}
       </Formik>

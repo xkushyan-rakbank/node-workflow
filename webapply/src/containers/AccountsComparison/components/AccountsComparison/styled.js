@@ -149,21 +149,12 @@ export const useStyles = makeStyles(theme => ({
   },
   stickyDiv: {
     position: "sticky",
-    top: "8.85%",
+    top: "76px",
     zIndex: 1111,
     overflow: "hidden",
     background: "#fff",
 
     [theme.breakpoints.only("xs")]: {
-      paddingTop: "24px",
-      "& .MuiGrid-container:first-child": {
-        display: "none",
-        position: "inherit",
-      },
-
-      "& .MuiGrid-container:nth-child(2)": {
-        paddingTop: "12px !important",
-      },
       "& .MuiInputBase": {
         display: "flex",
         gap: "20px",
@@ -231,6 +222,16 @@ export const useStyles = makeStyles(theme => ({
         fontSize: "12px",
         padding: "0px 24px",
         whiteSpace: "pre-line",
+        "& img": {
+          width: "20px",
+          height: "20px",
+          [theme.breakpoints.up("lg")]: {
+            "& img": {
+              width: "24px",
+              height: "24px"
+            }
+          }
+        },
       },
 
       "&:nth-of-type(odd)": {
@@ -260,14 +261,14 @@ export const useStyles = makeStyles(theme => ({
     "&:last-child": {
       background: "#FDE7E8"
     },
+    "& img": {
+      width: "20px",
+      height: "20px"
+    },
     [theme.breakpoints.only("md")]: {
       padding: "20px 15px",
-      "& img": {
-        width: "20px",
-        height: "20px"
-      }
     },
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       "& img": {
         width: "24px",
         height: "24px"

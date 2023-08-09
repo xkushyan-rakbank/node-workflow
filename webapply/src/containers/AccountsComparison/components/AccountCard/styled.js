@@ -14,7 +14,7 @@ export const useStyles = makeStyles(theme => ({
 
     [theme.breakpoints.up("sm")]: {
       display: "flex",
-      gap: "20px",
+      gap: "24px",
       border: 0,
       background: "#FFF",
       flexDirection: "column",
@@ -52,21 +52,26 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   accountTypeSticky: {
-    // height: "165px",
+    height: "165px",
     padding: "16px 10px",
-    width: "50%",
+    gap: "16px",
 
     [theme.breakpoints.up("sm")]: {
       height: "auto",
       padding: "24px 24px",
       width: "unset",
-      gap: "12px"
     }
   },
 
   mobileAccountCard: {
     [theme.breakpoints.up("sm")]: {
       display: "none"
+    }
+  },
+  desktopAccountCard: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex",
     }
   }
 }));

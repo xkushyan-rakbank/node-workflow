@@ -8,6 +8,7 @@ import { FormTitle } from "./FormTitle";
 import routes from "../../../routes";
 
 import { useStyles } from "./styled";
+import { Footer } from "../../../components/Footer";
 
 export const SelectServices = ({
   activeStep,
@@ -39,7 +40,7 @@ export const SelectServices = ({
         singleSignatory={singleSignatory}
       />
 
-      <div className={classes.linkContainer}>
+      <Footer>
         <BackLink path={routes.uploadDocuments} />
         <NextStepButton
           handleClick={handleClickNextStep}
@@ -48,7 +49,7 @@ export const SelectServices = ({
           justify="flex-end"
           disabled={isNextButtonDisabled}
         />
-      </div>
+      </Footer>
     </>
   );
 };

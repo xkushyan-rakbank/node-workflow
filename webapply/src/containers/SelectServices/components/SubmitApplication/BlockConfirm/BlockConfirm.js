@@ -23,6 +23,7 @@ import {
   NONE_VISITED,
   MAX_PROMO_CODE_LENGTH
 } from "../constants";
+import { Footer } from "../../../../../components/Footer";
 
 const blockConfirmSchema = Yup.object({
   isInformationProvided: Yup.boolean().oneOf([true], "Required"),
@@ -132,14 +133,14 @@ export const BlockConfirmComponent = ({ isIslamicBanking, handleSubmit, isAgent 
               />
             </div>
           )}
-          <div className="linkContainer">
+          <Footer>
             <BackLink path={routes.selectServices} />
             <SubmitButton
               disabled={!isAgent && !isAllLinksVisited}
               label="Submit"
               justify="flex-end"
             />
-          </div>
+          </Footer>
         </Form>
       )}
     </Formik>

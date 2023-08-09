@@ -14,6 +14,7 @@ export const theme = createMuiTheme({
     duration: 0.3
   },
   typography: {
+    fontFamily: "DM Sans",
     useNextVariants: true
   },
   palette: {

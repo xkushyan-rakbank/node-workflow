@@ -7,6 +7,7 @@ import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FaceScanIcon } from "../../assets/icons/face_scan.svg";
+import { ReactComponent as InformationIcon } from "../../assets/icons/information.svg";
 import useFaceScan from "../../experience-web-lib/ocrScanner/useFaceScan";
 import { getKyc } from "../../store/selectors/kyc";
 import {
@@ -236,11 +237,12 @@ export const FaceRecognition = ({
           </Button>
         )}
       </div>
-      <p className={classes.disclaimerInfo}>
-        {`Please note: ${
+      <div className={classes.disclaimerInfoWrapper}>
+        <InformationIcon />
+        <p className={classes.disclaimerInfo}>{` ${
           isMobile ? 'By tapping on the "Start" button' : 'By selecting "Start"'
-        }, you give us permission to retrieve your data for facial recognition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority and we strictly adhere to applicable regulations and security measures.`}
-      </p>
+        }, you give us permission to retrieve your data for facial recognition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority and we strictly adhere to applicable regulations and security measures.`}</p>
+      </div>
       {identityValidation && (
         <div className={classes.uploadModalErrorWrapper}>
           <ErrorOutlineIcon className={classes.errorIcon} />

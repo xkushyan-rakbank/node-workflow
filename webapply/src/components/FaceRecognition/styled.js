@@ -3,22 +3,26 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles(theme => ({
   facseScanContainer: {
     display: "flex",
+    flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "24px",
     border: "1px dashed #86868B",
     boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
     borderRadius: "10px",
-    [theme.breakpoints.down("sm")]: {
-      flexDirection: "column"
+    marginTop: "8px",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row"
     }
   },
   contentContainer: {
     display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      flexDirection: "column"
-    },
-    alignItems: "center"
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "20px",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row"
+    }
   },
   actionButton: {
     width: "105px",
@@ -41,22 +45,23 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   content: {
-    fontSize: "16px",
+    fontSize: "1rem",
     color: "#1F1F1F",
-    marginBottom: "7px"
+    fontWeight: 500
   },
   subcontent: {
-    fontSize: "12px",
+    fontSize: "0.75rem",
     color: "#757575",
-    [theme.breakpoints.down("sm")]: {
-      textAlign: "center"
+    fontWeight: 400,
+    textAlign: "center",
+    [theme.breakpoints.up("sm")]: {
+      textAlign: "left"
     }
   },
   fieldDescription: {
-    fontSize: "12px",
-    fontWeight: "400",
-    color: "#757575",
-    marginBottom: "8px"
+    fontSize: "0.875rem",
+    fontWeight: "500",
+    color: "#1F1F1F"
   },
   disableUpload: {
     PointerEvent: "none",
@@ -64,21 +69,26 @@ export const useStyles = makeStyles(theme => ({
     opacity: "0.5"
   },
   disabledReason: {
-    border: "1px solid #E6E6E6",
-    padding: "16px",
     color: "#757575",
     fontWeight: 400,
-    fontSize: "12px",
+    fontSize: "0.75rem",
     lineHeight: "16px",
-    borderRadius: "10px",
-    marginBottom: "8px"
+    borderRadius: "10px"
+  },
+  disclaimerInfoWrapper: {
+    display: "flex",
+    gap: "8px",
+    marginTop: "8px",
+    "& svg": {
+      width: "30px"
+    }
   },
   disclaimerInfo: {
-    marginTop: "8px",
     fontWeight: 400,
-    fontSize: "12px",
+    fontSize: "0.75rem",
     lineHeight: "16px",
-    color: "#757575"
+    color: "#757575",
+    margin: 0
   },
   uploadModalErrorWrapper: {
     display: "flex",
@@ -107,16 +117,16 @@ export const useStyles = makeStyles(theme => ({
     background: "#ECF9F2",
     borderRadius: "10px",
     fontSize: "12px",
-    color: '#157947',
+    color: "#157947",
     fontWeight: 500
   },
   contentWrapper: {
-    marginLeft: "20px",
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: "unset",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "7px",
+    [theme.breakpoints.up("sm")]: {
+      alignItems: "self-start"
     }
   }
 }));

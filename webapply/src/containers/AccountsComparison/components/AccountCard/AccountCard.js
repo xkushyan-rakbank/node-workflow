@@ -12,16 +12,15 @@ export const AccountCardComponent = props => {
 
   return (
     <>
-      <Grid container>
+      <Grid container className={classes.desktopAccountCard}>
         {Object.keys(accountTypesDescription).map((keyName, i) => (
           <Grid
             item
             sm={3}
             key={i}
-            className={cx(
-              classes.accountTypeWrapper,
-              props.accountSticky ? classes.accountTypeSticky : classes.accountType
-            )}
+            className={cx(classes.accountTypeWrapper, classes.accountType, {
+              [classes.accountTypeSticky]: props.accountSticky
+            })}
           >
             <AccountTypeCard
               {...accountTypesDescription[keyName]}

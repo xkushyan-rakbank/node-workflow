@@ -6,6 +6,7 @@ import { Upload } from "../../../../components/Upload";
 import {
   MOA_ACCEPTED_FILE_TYPES,
   MOA_FILE_SIZE,
+  SUPPORTED_FILE_FORMAT_TEXT,
   TL_ACCEPTED_FILE_TYPES,
   TL_COI_FILE_SIZE,
 } from "../../../../constants";
@@ -56,7 +57,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         path="prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
         type="file"
         fieldDescription="Trade licence/Certificate of Incorporation"
-        helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
+        helperText={SUPPORTED_FILE_FORMAT_TEXT}
         accept={TL_ACCEPTED_FILE_TYPES}
         fileSize={TL_COI_FILE_SIZE}
         onDrop={(acceptedFile) =>
@@ -77,7 +78,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           name="moa"
           path="prospect.prospectDocuments.companyDocument.moa"
           fieldDescription="Memorandum of Association / Articles of Association / Partners Agreement / Service Agreement / Share Certificate"
-          helperText={"Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"}
+          helperText={SUPPORTED_FILE_FORMAT_TEXT}
           type="file"
           accept={MOA_ACCEPTED_FILE_TYPES}
           fileSize={MOA_FILE_SIZE}

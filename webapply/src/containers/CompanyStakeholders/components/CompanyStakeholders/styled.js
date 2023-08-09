@@ -51,6 +51,7 @@ export const useStyles = makeStyles(theme => ({
   verifyMobileWrapper: {
     display: "flex",
     alignItems: "center",
+    gap: "24px",
     padding: "24px",
     background: "#F7F8F9",
     borderRadius: "10px",
@@ -64,8 +65,8 @@ export const useStyles = makeStyles(theme => ({
   descriptionWrapper: {
     display: "flex",
     alignItems: "center",
+    gap: "20px",
     "& div": {
-      marginLeft: "24px",
       "& h6": {
         fontSize: "16px",
         fontWeight: 500,
@@ -86,8 +87,8 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   verifyMobileIcon: {
-    width: "18px",
-    height: "22px",
+    width: "30px",
+    height: "24px",
     "@media (max-width: 425px)": {
       width: "40px",
       height: "44px"
@@ -95,7 +96,7 @@ export const useStyles = makeStyles(theme => ({
   },
   continueBtn: {
     height: "40px",
-    width: "206px",
+    minWidth: "206px",
     borderRadius: "21px",
     border: "1px solid #1F1F1F",
     background: "transparent",
@@ -115,10 +116,7 @@ export const useStyles = makeStyles(theme => ({
   horizontalLine: {
     height: "1px",
     background: "#E6E6E6",
-    margin: "40px 0"
-  },
-  uploadComponent: {
-    marginTop: "24px"
+    margin: "24px 0"
   },
   ocrScannerMainContainer: {
     backgroundColor: "#282c34",
@@ -223,11 +221,11 @@ export const useStyles = makeStyles(theme => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "contain",
-    objectFit: "contain", 
+    objectFit: "contain",
     background: "#D9D9D9",
     [theme.breakpoints.up("sm")]: {
-      height: "min(400px, 50vh)",
-    },
+      height: "min(400px, 50vh)"
+    }
   },
   previewPDF: {
     backgroundColor: "#D9D9D9",
@@ -414,15 +412,29 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "20px",
     textDecoration: "none"
   },
-  linkContainer: {
+  linkContainer1: {
+    position: "fixed",
+    zIndex: 1,
+    bottom: "0px",
+    left: "0px",
+    right: "0px",
+    margin: "0px",
+    padding: "14px 82px 14px 0px",
+    background: "#FFF",
+    boxShadow: " 0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
+    gap: "24px",
     [theme.breakpoints.down("xs")]: {
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      paddingLeft: "10px",
+      paddingRight: "10px"
     },
-    marginTop: "42px",
-    marginBottom: "42px",
+    [theme.breakpoints.only("sm")]: {
+      paddingLeft: "10px",
+      paddingRight: "10px"
+    },
     "& > div": {
       width: "auto",
       margin: "0"
@@ -467,5 +479,16 @@ export const useStyles = makeStyles(theme => ({
   },
   circle: {
     strokeLinecap: "round"
+  },
+  companyStakeholdersWrapper: {
+    display: "flex",
+    padding: "30px",
+    flexDirection: "column",
+    gap: "32px",
+    borderRadius: "10px",
+    border: "1px solid #CCC"
+  },
+  stakeholderContainer: {
+    paddingTop: "0!important"
   }
 }));

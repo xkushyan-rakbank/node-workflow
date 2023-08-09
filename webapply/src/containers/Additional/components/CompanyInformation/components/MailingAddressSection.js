@@ -14,7 +14,11 @@ import {
   SelectAutocomplete
 } from "../../../../../components/Form";
 import { Upload } from "../../../../../components/Upload";
-import { MOA_FILE_SIZE, TL_ACCEPTED_FILE_TYPES } from "../../../../../constants";
+import {
+  MOA_FILE_SIZE,
+  SUPPORTED_FILE_FORMAT_TEXT,
+  TL_ACCEPTED_FILE_TYPES
+} from "../../../../../constants";
 import { TL_COI_FILE_SIZE } from "../../../../../constants";
 import { useStyles } from "../../styled";
 import { virtualOrPhysicalAddressOptions } from "../../../../../constants/options";
@@ -311,9 +315,7 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
                                 path={`prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof[${index}]`}
                                 type="file"
                                 fieldDescription="Proof of Company Address"
-                                helperText={
-                                  "Supported formats are PDF, JPG and PNG | 5MB maximum | 10KB minimum"
-                                }
+                                helperText={SUPPORTED_FILE_FORMAT_TEXT}
                                 accept={TL_ACCEPTED_FILE_TYPES}
                                 fileSize={TL_COI_FILE_SIZE}
                                 onDrop={acceptedFile =>

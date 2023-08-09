@@ -19,6 +19,7 @@ import {
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../../constants";
 import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
+import { Footer } from "../../../../../components/Footer";
 
 const searchProspectSchema = Yup.object({
   fullName: Yup.string()
@@ -134,7 +135,7 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
           </Grid>
         </Grid>
 
-        <div className="linkContainer">
+        <Footer extraClasses={"oneElement"}>
           <SubmitButton
             justify="flex-end"
             label="Search"
@@ -142,7 +143,7 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
               isLoading || Object.keys(omit(values, ["countryCode"])).every(key => !values[key])
             }
           />
-        </div>
+        </Footer>
       </Form>
     )}
   </Formik>

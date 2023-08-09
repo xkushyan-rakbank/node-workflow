@@ -11,14 +11,15 @@ export const ScanViaMobile = ({ disabled, getKycStatus }) => {
       <div className={classes.verifyMobileWrapper}>
         <div className={classes.descriptionWrapper}>
           <VerifyMobileIcon
-            alt="Continue verification on mobile"
+            alt="Continue verification on mobile browser"
             className={classes.verifyMobileIcon}
           />
           <div>
             <h6>Continue verification on mobile browser</h6>
             <p>
-              You can do this if you have documents on your phone or want to use your phone's camera
-              to scan your face.
+              You can upload or scan your documents and complete the face verification step via your
+              phone. This is faster and more convenient for most people. When done, you'll be able
+              to return to this desktop session to continue the application.
             </p>
           </div>
         </div>

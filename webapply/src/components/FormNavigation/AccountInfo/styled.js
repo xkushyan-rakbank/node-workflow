@@ -27,8 +27,7 @@ export const useStyles = makeStyles(theme => ({
     color: "#fff",
     fontSize: "48px",
     lineHeight: "1.17",
-    fontWeight: 600,
-    fontFamily: "Open Sans",
+    fontWeight: 500,
     marginBottom: 20,
     "& + button": {
       marginTop: 60,

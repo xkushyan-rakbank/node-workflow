@@ -9,6 +9,7 @@ import routes from "../../../../routes";
 
 import { searchedAppInfoSteps, CONFIRM_MESSAGE } from "./../constants";
 import { useStyles } from "./../styled";
+import { Footer } from "../../../../components/Footer";
 
 export const SearchedAppInfoComponent = ({
   fullName,
@@ -55,7 +56,7 @@ export const SearchedAppInfoComponent = ({
           })}
         </div>
       </FormCard>
-      <div className="linkContainer">
+      <Footer>
         <BackLink path={routes.searchProspect} />
         <SubmitButton
           label="Edit"
@@ -63,7 +64,7 @@ export const SearchedAppInfoComponent = ({
           handleClick={redirectUserPage}
           disabled={isDisabled}
         />
-      </div>
+      </Footer>
 
       <ConfirmDialog
         title={"Are you sure?"}
