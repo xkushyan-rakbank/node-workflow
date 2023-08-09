@@ -47,6 +47,7 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     [theme.breakpoints.only("xs")]: {
       fontSize: 16,
+      width: "50%"
     },
   },
   subTitle: {
@@ -62,18 +63,19 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "60px",
   },
   actionButton: {
-    width: "105px",
-    height: "40px",
-    borderRadius: "21px",
+    width: "120px",
+    height: "45px",
+    borderRadius: "10px",
     textTransform: "capitalize",
     fontSize: "14px",
     fontWeight: 500,
     padding: 20,
     letterSpacing: "normal",
+    padding: "8px",
   },
   btnAdd: {
-    background: "#FFFFFF",
-    color: "#1F1F1F",
+    background: "#E6E6E6",
+    color: "#332600",
     marginRight: "16px",
   },
   buttonWrap: {
@@ -90,14 +92,27 @@ export const useStyles = makeStyles((theme) => ({
     marginRight: "16px",
   },
   success: {
+    display: "flex",
     background: "#ECF9F2",
     color: "#157947",
     minWidth: "98px",
+    padding: "8px",
+    borderRadius: "10px",
+    alignItems: "center",
+    gap: "4px",
+    fontWeight: 500
+    
   },
   incompleted: {
-    background: "#FDE7E8",
-    color: "#8D0C10",
+    display: "flex",
+    background: "#FFF2CC",
+    color: "#664D00",
     minWidth: "99px",
+    padding: "8px",
+    borderRadius: "10px",
+    alignItems: "center",
+    gap: "4px",
+    fontWeight: 500,
   },
   additionalCompanyInfoContainer: {
     marginTop: "25px",
@@ -307,4 +322,23 @@ export const useStyles = makeStyles((theme) => ({
   slideValuePrice: {
     position: "relative",
   },
+  helperIcon: {
+    color: "#525252",
+    width: "20px",
+    height: "20px"
+  },
+  sectionContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "20px",
+    alignItems: "center",
+    [theme.breakpoints.up("sm")]: {
+     gap: "8px"
+    },
+  },
+  inProgress: {
+    background: "#E6E6E6",
+    color: "##332600",
+    minWidth: "98px",
+  }
 }));

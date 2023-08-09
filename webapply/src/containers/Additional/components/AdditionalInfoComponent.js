@@ -10,10 +10,12 @@ import { NextStepButton } from "../../../components/Buttons/NextStepButton";
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
-import { ReactComponent as ErrorIcon } from "../../../assets/icons/credit_score_error.svg";
 import { Footer } from "../../../components/Footer";
+import { ContexualHelp } from "../../../components/Notifications";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import {ReactComponent as ClockIcon } from "../../../assets/icons/clock.svg"
 
-const AdditionalInfoButton = ({ status, onClick, disabled, text }) => {
+const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, helperText }) => {
   const classes = useStyles();
 
   const getStatusText = () => {
@@ -29,18 +31,29 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text }) => {
   return (
     <div className={cx(classes.additionalSelectionButton, classes.additionalbtnSelected)}>
       <div className={classes.buttonText}>
-        <div className={classes.title}>{text}</div>
+        <div className={classes.sectionContainer}>
+          <div className={classes.title}>{text}</div>
+          {showHelper && (
+            <ContexualHelp
+              title={helperText}
+              placement="right"
+              isDisableHoverListener={false}
+            >
+              <HelpOutlineIcon className={classes.helperIcon} />
+            </ContexualHelp>
+          )}
+        </div>
       </div>
       <div className={classes.buttonWrap}>
         {!status ? (
           <Button
             color="primary"
-            variant="outlined"
             className={cx(classes.actionButton, classes.btnAdd)}
             onClick={onClick}
             disabled={disabled}
+            startIcon={<ClockIcon />}
           >
-            Add
+            Start
           </Button>
         ) : (
           <div
@@ -49,7 +62,7 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text }) => {
               status === "inProgress" ? classes.incompleted : classes.success
             )}
           >
-            {status === "inProgress" ? <ErrorIcon /> : <SuccessIcon />}
+            {status === "inProgress" ? <ClockIcon /> : <SuccessIcon />}
             <span>{getStatusText()}</span>
           </div>
         )}
@@ -92,12 +105,16 @@ export default function AdditionalInfoComponent() {
           className={classes.btnContainer}
           onClick={() => navigateTo(routes.additionalCompanyInformation)}
         >
-          <AdditionalInfoButton
-            status={companyAdditionalInfoStatus}
-            onClick={() => navigateTo(routes.additionalCompanyInformation)}
-            disabled={false}
-            text="Company information"
-          />
+          <div>
+            <AdditionalInfoButton
+              status={companyAdditionalInfoStatus}
+              onClick={() => navigateTo(routes.additionalCompanyInformation)}
+              disabled={false}
+              text="Company information"
+              showHelper={true}
+              helperText="Details about your buyers and suppliers, financial turnover, addresses and tax declarations help us better understand your company and business needs."
+            />
+          </div>
         </div>
         <div
           className={classes.btnContainer}
@@ -110,6 +127,8 @@ export default function AdditionalInfoComponent() {
             onClick={() => navigateTo(routes.additionalStakeholderInformation)}
             disabled={!isStakeholderEnabled}
             text="Stakeholder information"
+            showHelper={true}
+            helperText="Stakeholders include proprietors, shareholders, partners, signatories and those who hold power of attorney. Information about your individual stakholders helps us better understand your company and business needs. Note that all sections are required."
           />
         </div>
       </div>
