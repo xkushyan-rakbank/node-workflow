@@ -17,7 +17,8 @@ export const SearchedAppInfoContainer = ({
   signatoryInfo,
   getProspectInfo,
   updateProspectId,
-  resetProspect
+  resetProspect,
+  getDocumentsList
 }) => {
   useFormNavigation([false, false, searchProspectStepper]);
   useLayoutParams(true);
@@ -53,6 +54,7 @@ export const SearchedAppInfoContainer = ({
 
     return getProspectInfo(match.params.id).then(
       prospect => {
+        getDocumentsList();
         pushDisplayScreenToHistory(prospect);
       },
       () => {}

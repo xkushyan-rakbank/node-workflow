@@ -9,6 +9,7 @@ import {
 } from "../../../store/selectors/searchProspect";
 import { getProspectOverviewPromisify } from "../../../store/actions/searchProspect";
 import { SearchedAppInfoContainer } from "./SearchedAppInfo";
+import { getDocumentsList } from "../../../store/actions/uploadDocuments";
 
 const mapStateToProps = state => ({
   searchResults: getSearchResults(state),
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getProspectOverview: getProspectOverviewPromisify,
   getProspectInfo: getProspectInfoPromisify,
+  getDocumentsList,
   updateProspectId,
   resetProspect
 };
