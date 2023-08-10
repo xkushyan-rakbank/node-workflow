@@ -276,7 +276,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             </div>
             <div
               onClick={() =>
-                redirectInToFinance(process.env.REACT_APP_API_PATH + smeBaseName + "/finances")
+                redirectInToFinance(process.env.REACT_APP_BAU_URL + smeBaseName + "/finances")
               }
             >
               <ExpandMoreButton label="Business Finance" className={classes.accountBtn} />
