@@ -31,11 +31,17 @@ import {
 import { useStyles } from "./styled";
 import { OCRScanner } from "./OCRScanner";
 import { OverlayLoader } from "../../../../components/Loader";
-import { AGE_RESTRICTION, DOC_TYPE_EID, DOC_TYPE_PASSPORT, SUPPORTED_FILE_FORMAT_TEXT } from "../../../../constants";
+import {
+  AGE_RESTRICTION,
+  DOC_TYPE_EID,
+  DOC_TYPE_PASSPORT,
+  SUPPORTED_FILE_FORMAT_TEXT
+} from "../../../../constants";
 import { UploadFileModal } from "./UploadFileModal";
 import { ScanViaMobile } from "./MobileScan";
 import { InfoModal } from "../../../../components/Modals/InfoModal";
 import { Footer } from "../../../../components/Footer";
+import { checkLoginStatus } from "../../../../store/selectors/loginSelector";
 
 export const CompanyStakeholdersComponent = ({
   fullName,
@@ -49,6 +55,7 @@ export const CompanyStakeholdersComponent = ({
   getKycStatus
 }) => {
   const { sdkConfig } = useSelector(getSdkConfig);
+  const isAgent = useSelector(checkLoginStatus);
 
   const {
     loading,
@@ -187,7 +194,7 @@ export const CompanyStakeholdersComponent = ({
       <p className={classes.subTitle}>
         We just need to check your identity by verifying some documents.
       </p>
-      {isDesktop && (
+      {isDesktop && !isAgent && (
         <ScanViaMobile
           disabled={
             !isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success
