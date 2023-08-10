@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -39,6 +39,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   const [isFullyScrolled, setIsFullyScrolled] = useState(false);
 
   const accountTypeRef = useRef(null);
+  const businessButton = useRef(null);
   const [accountNavTop, setAccountNavTop] = useState(0);
   const [accountNavLeft, setAccountNavLeft] = useState(0);
   const [accountNavHeight, setAccountNavHeight] = useState(0);
@@ -47,6 +48,9 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
+  }, []);
+
+  useLayoutEffect(() => {
     if (window.scrollY === 0) {
       document.body.classList.add("no-scroll");
     }
@@ -63,7 +67,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
       setIsFullyScrolled(false);
     }
   };
-  useEffect(() => {
+  useLayoutEffect(() => {
     const accountTypeDiv = accountTypeRef?.current;
     const observer = new IntersectionObserver(
       ([e]) => {
@@ -71,18 +75,37 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
       },
       { threshold: 1 }
     );
-    if (accountTypeDiv) {
-      observer.observe(accountTypeDiv);
-    }
+    observer.observe(accountTypeDiv);
     // clean up the observer
     return () => {
       observer.unobserve(accountTypeDiv);
     };
   }, [accountTypeRef]);
 
+  useLayoutEffect(() => {
+    const businessButtonref = businessButton?.current;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        if (e.intersectionRatio === 0) {
+          document.body.classList.remove("no-scroll");
+        }
+      },
+      { threshold: 1 }
+    );
+    observer.observe(businessButtonref);
+    // clean up the observer
+    return () => {
+      observer.unobserve(businessButtonref);
+    };
+  }, [businessButton]);
+
   useEffect(() => {
     checkIfScrolled();
     window.addEventListener("scroll", checkIfScrolled);
+
+    return () => {
+      window.removeEventListener("scroll", checkIfScrolled);
+    };
   });
 
   const handleRedirection = path => {
@@ -247,7 +270,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         >
           <h2>Let’s get down to business</h2>
           <p>How can we help you?</p>
-          <div className={classes.btnWrapper}>
+          <div className={classes.btnWrapper} id="businessAccountButton" ref={businessButton}>
             <div onClick={handleClick}>
               <ExpandMoreButton label="Business Account" className={classes.accountBtn} />
             </div>
