@@ -67,7 +67,7 @@ export const featuresDataList = [
     elite: "AED"
   },
   {
-    info: "Foriegn currency",
+    info: "Foreign currency",
     starter: { ic: checkIcon },
     currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }

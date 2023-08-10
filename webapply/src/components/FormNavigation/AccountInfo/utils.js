@@ -16,7 +16,7 @@ export const getTitleByPathname = (pathname, accountType) => {
     return get(accountsInfo, [accountType, "title"], "");
 
   if (applicationOverviewRoutes.includes(pathname))
-    return "Opening an account has never been this simple.";
+    return "Open your account in a few simple steps.";
 
   return {
     [routes.MyApplications]: "Your  applications, at a glance",
