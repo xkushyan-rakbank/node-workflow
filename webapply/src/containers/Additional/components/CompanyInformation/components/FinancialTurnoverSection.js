@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -113,6 +113,14 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
     },
   });
 
+  const [sliderValue, setSliderValue] = useState(0);
+
+  useEffect(() => {
+    if (anualCashDepositAED !== sliderValue) {
+      setSliderValue(parseFloat(anualCashDepositAED) || 0);
+    }
+  }, [anualCashDepositAED]);
+
   const initialValues = {
     annualFinTurnoverAmtInAED,
     anualCashDepositAED,
@@ -151,10 +159,8 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
 
   const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
 
-  const marks = useMemo(() => {
+  const marks = (amount) => {
     const values = [];
-    const amount = annualFinTurnoverAmtInAED || 0;
-    
     if (annualFinTurnoverAmtInAED) {
       for (let percentage = 0; percentage <= 10; percentage++) {
         const value = (percentage / 10) * amount;
@@ -162,7 +168,7 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
       }
     }
     return values;
-  }, [annualFinTurnoverAmtInAED]);
+  };
 
   return (
     <>
@@ -184,6 +190,7 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
           }
 
           function handleSliderChange(ev, newValue) {
+            setSliderValue(newValue || 0)
             const calculateValue = calculateAmountPercentage(values, newValue).totalAmount;
             setFieldValue("anualCashDepositAED", calculateValue?.toString());
           }
@@ -205,7 +212,12 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
                   inputComponent: FormatDecimalNumberInput,
                   // 9 digits + 2 ','(commas)
                   inputProps: { maxLength: 11, tabIndex: 0 },
-                  onBlur: (e) => handleChange(e, handleBlur),
+                  onChange: (e) => {
+                    handleChange(e, handleBlur);
+                    setFieldValue('annualFinTurnoverAmtInAED', e.target.value);
+                    setSliderValue(0);
+                    handleSliderChange()
+                  },
                 }}
               />
               <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
@@ -215,15 +227,14 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
                   <Field
                     name="anualCashDepositAED"
                     path="prospect.companyAdditionalInfo.anualCashDepositAED"
-                  value={values?.anualCashDepositAED ? parseFloat(values.anualCashDepositAED) : values.annualFinTurnoverAmtInAED}
-                  component={Slider}
-                  max={parseInt(values?.annualFinTurnoverAmtInAED)}
-                  onChange={handleSliderChange}
+                    value={sliderValue}
+                    component={Slider}
+                    max={parseInt(values?.annualFinTurnoverAmtInAED)}
+                    onChange={handleSliderChange}
                     disabled={
-                      !values?.annualFinTurnoverAmtInAED || 
-                      values.annualFinTurnoverAmtInAED < 1001 
+                      !values?.annualFinTurnoverAmtInAED || values.annualFinTurnoverAmtInAED < 1001
                     }
-                    marks={values.annualFinTurnoverAmtInAED < 1001  ? [] : marks}
+                    marks={values.annualFinTurnoverAmtInAED < 1001 ? [] : marks(values?.annualFinTurnoverAmtInAED)}
                   />
                 </SliderThemeProvider>
               </div>
