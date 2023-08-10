@@ -127,6 +127,14 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
               id={id}
               setFormFieldValue={setFormFieldValue}
               isCompleted={IsValidForm}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              showHelperText={
+                "For regulatory reasons, we need to know if you pay taxes in any country other than the UAE. If you have a Tax Identification Number(TIN), enter it in field provided below."
+              }
             >
               <DisclaimerNote text="“RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support”" />
               <div className={classes.taxDeclarationQuestionare}>
@@ -182,6 +190,8 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                       placeholder="Select a reason if TIN is not available"
                       datalistId="TINReason"
                       component={SelectAutocomplete}
+                      infoTitle={"We need to know this for regulatory reasons."}
+                      infoIcon={true}
                     />
                   </Grid>
                   {hideRemarks && (

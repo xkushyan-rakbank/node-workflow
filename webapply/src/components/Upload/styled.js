@@ -102,9 +102,9 @@ export const useStyles = makeStyles(theme => ({
   },
   fieldDescription: {
     display: "flex",
-    fontSize: "12px",
-    fontWeight: "400",
-    color: "#757575",
+    fontSize: "0.875rem",
+    fontWeight: "500",
+    color: "#1F1F1F",
     marginBottom: "8px",
     width: "fit-content",
   },

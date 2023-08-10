@@ -224,6 +224,13 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
             id={id}
             setFormFieldValue={setFormFieldValue}
             isCompleted={IsValidForm}
+            classes={{
+              accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+              accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded
+            }}
+            showHelperText={
+              "We need this information to verify and understand the source(s) of your business income. You can provide your IBAN or upload bank statements as proof of income."
+            }
           >
             <>
               <Grid container>
@@ -284,37 +291,35 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                       />
                     </Grid>
                     <Grid item sm={12} xs={12}>
-                      <Field
-                        name="tradeLicense"
-                        path="prospect.prospectDocuments.additionalStakeholderDocument.tradeLicense"
-                        type="file"
-                        fieldDescription="Upload Trade licence"
-                        helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                        accept={TL_ACCEPTED_FILE_TYPES}
-                        fileSize={TL_COI_FILE_SIZE}
-                        onDrop={acceptedFile =>
-                          handleDropFile(
-                            acceptedFile,
-                            "tradeLicense",
-                            touched,
-                            setTouched,
-                            setFieldValue
-                          )
-                        }
-                        file={values.tradeLicense}
-                        onDelete={() => setFieldValue("tradeLicense", "")}
-                        component={Upload}
-                        content={values?.tradeLicense}
-                        isUploading={isUploading["tradeLicense"]}
-                        mobilecontentPlaceholder={"Upload your File"}
-                      />
+                      <div style={{ marginBottom: "20px" }}>
+                        <Field
+                          name="tradeLicense"
+                          path="prospect.prospectDocuments.additionalStakeholderDocument.tradeLicense"
+                          type="file"
+                          fieldDescription="Upload Trade licence"
+                          helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                          accept={TL_ACCEPTED_FILE_TYPES}
+                          fileSize={TL_COI_FILE_SIZE}
+                          onDrop={acceptedFile =>
+                            handleDropFile(
+                              acceptedFile,
+                              "tradeLicense",
+                              touched,
+                              setTouched,
+                              setFieldValue
+                            )
+                          }
+                          file={values.tradeLicense}
+                          onDelete={() => setFieldValue("tradeLicense", "")}
+                          component={Upload}
+                          content={values?.tradeLicense}
+                          isUploading={isUploading["tradeLicense"]}
+                          mobilecontentPlaceholder={"Upload your File"}
+                        />
+                      </div>
                     </Grid>
                   </>
                 )}
-
-                <Grid item sm={12} xs={12}>
-                  <div className={classes.horizontalLine} />
-                </Grid>
                 <Grid container spacing={3} style={{ marginBottom: "20px" }}>
                   <FieldArray name="proofOfIncome">
                     {({ push, remove, arrayHelpers }) => (

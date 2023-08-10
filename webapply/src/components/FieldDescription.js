@@ -30,12 +30,14 @@ export const FieldDescription = ({ title, fieldValueLength, fieldMaxLength, show
 
   return (
     <div className={classes.wrapper}>
-      {title && (
-        <div className={classes.informationDisclaimer}>
-          <InformationIcon />
-          {title}
-        </div>
-      )}
+      <div className={classes.informationDisclaimer}>
+        {title && (
+          <>
+            <InformationIcon />
+            {title}
+          </>
+        )}
+      </div>
       {fieldMaxLength && (
         <div>
           {fieldValueLength}&nbsp;/&nbsp;{fieldMaxLength}

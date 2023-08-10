@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
       height: "14px"
     },
     "& span": {
-      fontWeight: 500,
+      fontWeight: 400,
       fontSize: "14px",
       lineHeight: "20px",
       color: "#525252",

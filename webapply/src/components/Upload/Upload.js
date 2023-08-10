@@ -73,7 +73,7 @@ export const Upload = ({
       <Fragment>
         <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
           <div className={classes.fieldDescription}>
-            {/* {fieldDescription} */}
+            {fieldDescription}
             {showUploadInfoIcon && (
               <Icon name={ICONS.info} className={classes.uploadInfoIcon} alt="info" />
             )}

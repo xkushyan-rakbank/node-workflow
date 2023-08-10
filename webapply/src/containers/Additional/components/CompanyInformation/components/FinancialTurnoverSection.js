@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import cx from "classnames";
 
 import { createMuiTheme } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
@@ -11,7 +12,6 @@ import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { AutoSaveField as Field, Input, NumberFormat } from "../../../../../components/Form";
 
 import { useStyles } from "../../styled";
-import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { getCompanyAdditionalInfo } from "../../../../../store/selectors/appConfig";
 
@@ -22,7 +22,7 @@ function calculateAmountFromPercentage(percent, total) {
   return (percent * total) / 100;
 }
 
-const FormatDecimalNumberInput = (props) => (
+const FormatDecimalNumberInput = props => (
   <NumberFormat
     allowNegative={false}
     thousandsGroupStyle="thousand"
@@ -45,14 +45,8 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
           padding: "50px 0 20px",
           backgroundColor: "transparent !important",
         },
-        mark: {
-          padding: "0px 20px",
-        },
         dragging: {
           backgroundColor: "transparent",
-        },
-        markActive: {
-          color: "red",
         },
         thumb: {
           backgroundColor: "transparent",
@@ -63,14 +57,16 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
             backgroundColor: "transparent",
             backgroundRepeat: "no-repeat",
             backgroundImage: `${sliderThumbIcon}`,
-          }, 
+            outline: "none",
+            boxShadow: "none"
+          },
           "&::after": {
             top: "-25px !important",
             left: "-25px !important",
             right: "-25px !important",
             bottom: "-25px !important",
-            marginBottom: 9,
-            marginLeft: 6,
+            marginBottom: 0,
+            marginLeft: 0,
             boxShadow: "none",
             backgroundColor: "transparent",
             backgroundRepeat: "no-repeat",
@@ -78,8 +74,8 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
           },
         },
         active: {
-          height: 15,
-          width: 15,
+          height: 12,
+          width: 12,
           boxShadow: "none",
           backgroundColor: "transparent",
           backgroundRepeat: "no-repeat",
@@ -149,7 +145,7 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
     const percentValue = calculatePercent(sliderValue, annualFinTurnoverAmtInAED).toFixed();
 
     if (percentValue > 100 || isNaN(percentValue) || !isFinite(percentValue)) {
-      return { formattedAmount: '', percentValue: '', totalAmount: '' };
+      return { formattedAmount: "", percentValue: "", totalAmount: "" };
     }
 
     const totalAmount = calculateAmountFromPercentage(percentValue, annualFinTurnoverAmtInAED);
@@ -200,6 +196,14 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
               id={id}
               setFormFieldValue={setFormFieldValue}
               isCompleted={isValid}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              showHelperText={
+                "Annual turnover and cash projection details are required for internal checks and calculations."
+              }
             >
               <Field
                 name="annualFinTurnoverAmtInAED"
@@ -220,8 +224,9 @@ export const FinancialTurnoverSection = ({ setFieldValue: setFormFieldValue, id 
                   },
                 }}
               />
-              <p className={classes.sectionLabel}>What is your estimated annual cash deposit?</p>
-              <DisclaimerNote text="Just drag the slider to provide your cash and non-cash component" />
+              <p className={cx(classes.sectionLabel, classes.boldLabel)}>
+                What is your estimated annual cash deposit?
+              </p>
               <div className={classes.sliderContainer}>
                 <SliderThemeProvider theme={FinancialSlider}>
                   <Field

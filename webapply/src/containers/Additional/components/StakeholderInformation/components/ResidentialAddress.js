@@ -8,8 +8,10 @@ import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../.
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
 import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
+import { useStyles } from "../../styled";
 
 export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id }) => {
+  const classes = useStyles();
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
 
   const initialValues = {
@@ -54,6 +56,13 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id }) => 
             id={id}
             setFormFieldValue={setFormFieldValue}
             isCompleted={isValidForm}
+            classes={{
+              accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+              accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded
+            }}
+            showHelperText={
+              "Enter your residential address(where you are located) and provide at least 1 supporting document."
+            }
           >
             <Grid container spacing={3}>
               <Grid item sm={6} xs={12}>

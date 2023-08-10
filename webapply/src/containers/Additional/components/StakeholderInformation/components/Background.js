@@ -144,10 +144,17 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
       {({ touched, setTouched, setFieldValue, values, isValid, errors }) => {
         return (
           <Accordion
-            title={"Background"}
+            title={"Professional background"}
             isCompleted={isValid}
             id={id}
             setFormFieldValue={setFormFieldValue}
+            classes={{
+              accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+              accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded
+            }}
+            showHelperText={
+              "We ask for educational and professional background information as part of our due-diligence process. Verifying the identities of the people associated with your business is standard."
+            }
           >
             <>
               <p className={classes.sectionLabel}>Education and employment</p>

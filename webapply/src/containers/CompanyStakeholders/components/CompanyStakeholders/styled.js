@@ -186,13 +186,18 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   uploadModalTitle: {
+    color: "#1F1F1F",
     margin: "0px",
-    marginBottom: "24px",
-    width: "224px",
-    fontSize: "16px",
-    fontStlye: "normal",
+    marginBottom: "18px",
+    fontSize: "1rem",
+    fontStyle: "normal",
     fontWeight: 500,
-    lineHeight: "24px"
+    lineHeight: "24px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.75rem",
+      lineHeight: "36px",
+      marginBottom: "24px",
+    }
   },
   uploadModalSaveBtn: {
     marginTop: "40px",

@@ -10,7 +10,6 @@ import { useFormNavigation } from "../../../../components/FormNavigation/FormNav
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 import { useViewId } from "../../../../utils/useViewId";
 import { BackLink } from "../../../../components/Buttons/BackLink";
-import { ICONS, Icon } from "../../../../components/Icons";
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import StakeholdersDetail from "../../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 
@@ -119,29 +118,17 @@ export const AdditionalStakeholderInformation = ({
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
-                <div>
-                  <BackLink path={routes.additionalInfoComponent} />
-                  <div className={classes.infoContainer}>
-                    <Icon className={classes.infoIcon} alt="collapse-icon" name={ICONS.info} />
-                    We need the information below to understand your business needs.
+                <div className={classes.companyInfoDetailWrapper}>
+                  <div className={classes.companyNameinfoContainer}>
+                    <StakeholdersDetail name={stakeholderName} companyCategory={companyCategory} />
                   </div>
-                  <div className={classes.companyInfoDetailWrapper}>
-                    <div className={classes.companyNameinfoContainer}>
-                      <StakeholdersDetail
-                        name={stakeholderName}
-                        companyCategory={companyCategory}
-                      />
-                    </div>
-                    <Background id={"backgroundInfoSection"} {...props} />
-                    {showSOF && <SourceOfIncome id={"sourceOfIncomeSection"} {...props} />}
-                    <ResidentialAddress id={"residentialAddressSection"} {...props} />
-                    <StakeholderTaxDeclarations
-                      id={"stakeholderTaxDeclarationSection"}
-                      {...props}
-                    />
-                  </div>
+                  <Background id={"backgroundInfoSection"} {...props} />
+                  {showSOF && <SourceOfIncome id={"sourceOfIncomeSection"} {...props} />}
+                  <ResidentialAddress id={"residentialAddressSection"} {...props} />
+                  <StakeholderTaxDeclarations id={"stakeholderTaxDeclarationSection"} {...props} />
                 </div>
-                <Footer extraClasses={"oneElement"}>
+                <Footer>
+                  <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton
                     justify="flex-end"
                     label="Continue"

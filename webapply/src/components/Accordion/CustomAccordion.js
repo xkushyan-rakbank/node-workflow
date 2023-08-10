@@ -8,7 +8,7 @@ import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import cx from "classnames";
 
-import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
+import { ReactComponent as Check } from "../../assets/icons/loadingGreen.svg";
 import { ICONS, Icon } from "../Icons";
 import { updateProspect } from "../../store/actions/appConfig";
 import { isFieldTouched } from "../../store/selectors/appConfig";
@@ -57,7 +57,8 @@ const useStyles = makeStyles(theme => ({
         width: "20px",
         height: "20px",
         fontSize: "1.25rem",
-        color: "#525252"
+        color: "#525252",
+        fontWeight: "400"
       }
     }
   },
@@ -101,9 +102,9 @@ const useStyles = makeStyles(theme => ({
     }
   },
   success: {
-    height: "11px",
-    width: "14px",
-    marginRight: "24px"
+    height: "24px",
+    width: "24px",
+    marginRight: "8px"
   }
 }));
 
@@ -166,6 +167,9 @@ export const Accordion = ({
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="activePanel"></span>
+              {isCompleted && (isTouched || isComeback) && (
+                <Check size="16px" className={classes.success} />
+              )}
               <div className="accordionTitle">
                 <p className="title">
                   {title}
@@ -182,12 +186,7 @@ export const Accordion = ({
                 {subTitle && <p className="subTitle">{subTitle}</p>}
               </div>
             </div>
-            <div>
-              {expanded === "isTaxDeclarationCompleted" && showDefinition}
-              {isCompleted && (isTouched || isComeback) && (
-                <Check size="16px" className={classes.success} />
-              )}
-            </div>
+            <div>{expanded === "isTaxDeclarationCompleted" && showDefinition}</div>
           </div>
         </MuiAccordionSummary>
         <MuiAccordionDetails classes={{ root: classes.accordionDetails }}>

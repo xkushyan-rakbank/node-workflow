@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Grid } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import { FieldArray, Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, Grid } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
 
@@ -201,6 +201,14 @@ export const MailingAddressSection = ({ setFieldValue: setFormFieldValue, id }) 
               id={id}
               setFormFieldValue={setFormFieldValue}
               isCompleted={IsValidForm}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              showHelperText={
+                "We need to know where your company receives mail and if you have a virtual or physical office"
+              }
             >
               <Grid container spacing={3}>
                 <Grid item sm={12} xs={12}>

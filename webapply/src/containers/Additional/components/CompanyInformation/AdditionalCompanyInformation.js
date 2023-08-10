@@ -100,31 +100,25 @@ export const AddCompanyInformation = ({
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>
-                <div>
-                  <BackLink path={routes.additionalInfoComponent} />
-                  <div className={classes.infoContainer}>
-                    <Icon className={classes.infoIcon} alt="collapse-icon" name={ICONS.info} />
-                    We need the information below to understand your business needs.
+                <div className={classes.companyInfoDetailWrapper}>
+                  <div className={classes.companyNameinfoContainer}>
+                    <ColoredAvatar fullName={companyName} color={"#FDE7E8"}>
+                      {companyName?.charAt(0)?.toUpperCase()}
+                    </ColoredAvatar>
+                    {companyName}
                   </div>
-                  <div className={classes.companyInfoDetailWrapper}>
-                    <div className={classes.companyNameinfoContainer}>
-                      <ColoredAvatar fullName={companyName} color={"#FDE7E8"}>
-                        {companyName?.charAt(0)?.toUpperCase()}
-                      </ColoredAvatar>
-                      {companyName}
-                    </div>
-                    <BusinessRelationship
-                      topCustomers={topCustomers}
-                      topSuppliers={topSuppliers}
-                      id={"isBusinessRelationshipCompleted"}
-                      {...props}
-                    />
-                    <FinancialTurnoverSection id={"isFinancialTurnoverCompleted"} {...props} />
-                    <MailingAddressSection id={"isMailingAddressCompleted"} {...props} />
-                    <TaxDeclarationsSection id={"isTaxDeclarationCompleted"} {...props} />
-                  </div>
+                  <BusinessRelationship
+                    topCustomers={topCustomers}
+                    topSuppliers={topSuppliers}
+                    id={"isBusinessRelationshipCompleted"}
+                    {...props}
+                  />
+                  <FinancialTurnoverSection id={"isFinancialTurnoverCompleted"} {...props} />
+                  <MailingAddressSection id={"isMailingAddressCompleted"} {...props} />
+                  <TaxDeclarationsSection id={"isTaxDeclarationCompleted"} {...props} />
                 </div>
-                <Footer extraClasses={"oneElement"}>
+                <Footer>
+                  <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton
                     justify="flex-end"
                     label="Continue"

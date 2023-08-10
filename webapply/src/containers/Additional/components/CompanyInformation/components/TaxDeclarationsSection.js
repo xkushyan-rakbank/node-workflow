@@ -120,6 +120,14 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
               id={id}
               setFormFieldValue={setFormFieldValue}
               isCompleted={IsValidForm}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              showHelperText={
+                "Your company's tax information is required for our internal checks. You can find more details for each section by tapping on the information icon."
+              }
             >
               <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
               <div className={classes.taxDeclarationQuestionare}>

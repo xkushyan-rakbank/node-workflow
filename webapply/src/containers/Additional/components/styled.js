@@ -154,10 +154,9 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   companyInfoDetailWrapper: {
-    marginTop: "40px",
     borderRadius: "10px",
     padding: "24px",
-    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+    border: "1px solid #E6E6E6",
   },
   sectionLabel: {
     fontWeight: 400,
@@ -167,12 +166,15 @@ export const useStyles = makeStyles((theme) => ({
     margin: 0,
     marginBottom: "16px",
   },
+  boldLabel: {
+    fontWeight: 500
+  },
   addMoreButton: {
     border: "1px solid #1F1F1F",
     borderRadius: "21px",
     padding: "9px 24px",
     color: "#1F1F1F",
-    fontWeight: 600,
+    fontWeight: 500,
     fontSize: "16px",
     lineHeight: "22px",
     textTransform: "none",
@@ -248,7 +250,7 @@ export const useStyles = makeStyles((theme) => ({
   sectionLabelWithInfo: {
     display: "flex",
     flexDirection: "column",
-    marginBottom: "0px",
+    marginBottom: "16px",
     "& span": {
       fontWeight: 400,
       fontSize: "12px",
@@ -333,12 +335,30 @@ export const useStyles = makeStyles((theme) => ({
     gap: "20px",
     alignItems: "center",
     [theme.breakpoints.up("sm")]: {
-     gap: "8px"
+      gap: "8px"
     },
   },
   inProgress: {
     background: "#E6E6E6",
     color: "##332600",
     minWidth: "98px",
+  },
+  additionalInfoAccordionSummaryContent: {
+    "& .accordionTitle": {
+      "& .title": {
+        fontWeight: 400
+      }
+    }
+  },
+  additionalInfoAccordionSummaryContentExpanded: {
+    "& .accordionTitle": {
+      paddingLeft: 0,
+      "& .title": {
+        fontWeight: 500
+      }
+    },
+    "& .activePanel": {
+      display: "none"
+    }
   }
 }));

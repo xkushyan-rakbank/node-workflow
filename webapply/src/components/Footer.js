@@ -16,16 +16,18 @@ import {
 } from "../constants/styles";
 
 const useStyles = makeStyles({
-  linkContainerNew: {
+  footerWrapper: {
+    width: "100%",
     position: "fixed",
     zIndex: 1,
     bottom: "0px",
-    left: "0px",
     right: "0px",
     margin: "0px",
-    padding: "14px 82px 14px 0px",
     background: "#FFF",
-    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
+    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
+  },
+  linkContainerNew: {
+    padding: "14px 82px 14px 0px",
     display: "flex",
     gap: "24px",
     alignItems: "center",
@@ -71,7 +73,10 @@ const useStyles = makeStyles({
       paddingLeft: sideNavWidthLG
     },
     [theme.breakpoints.up("xl")]: {
-      paddingLeft: sideNavWidthXL
+      paddingLeft: `calc((100vw - 1920px) / 2 + ${sideNavWidthXL}px)`,
+      marginLeft: "auto",
+      marginRight: "auto",
+      maxWidth: "1920px"
     }
   },
   linkContainerWithSaveCloseBtn: {
@@ -118,13 +123,15 @@ export const Footer = ({ children, extraClasses }) => {
   const showSaveClose = Object.values(VIEW_IDS).some(screen => pathname.includes(screen));
 
   return (
-    <div
-      className={cx(classes.linkContainerNew, {
-        [classes.linkContainerWithSaveCloseBtn]: showSaveClose
-      })}
-    >
-      {showSaveClose && <SaveAndClose extraClasses={classes.hideSaveCloseBtnFooterMobile} />}
-      <div className={cx(classes.formActionButtons, extraClasses)}>{children}</div>
+    <div className={classes.footerWrapper}>
+      <div
+        className={cx(classes.linkContainerNew, {
+          [classes.linkContainerWithSaveCloseBtn]: showSaveClose
+        })}
+      >
+        {showSaveClose && <SaveAndClose extraClasses={classes.hideSaveCloseBtnFooterMobile} />}
+        <div className={cx(classes.formActionButtons, extraClasses)}>{children}</div>
+      </div>
     </div>
   );
 };

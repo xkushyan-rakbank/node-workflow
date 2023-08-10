@@ -7,6 +7,7 @@ import { TopCustomers } from "./TopCustomers";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../utils/validation";
 import { TopSuppliers } from "./TopSuppliers";
+import { useStyles } from "../../styled";
 
 const additionalCompanyInfoSchema = Yup.object().shape({
   topCustomers: Yup.array().of(
@@ -39,6 +40,7 @@ export const BusinessRelationship = ({
   setFieldValue: setFormFieldValue,
   id
 }) => {
+  const classes = useStyles();
   const initialValues = {
     topCustomers,
     topSuppliers
@@ -60,6 +62,14 @@ export const BusinessRelationship = ({
               id={id}
               setFormFieldValue={setFormFieldValue}
               isCompleted={initialIsValid && props.isValid}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              showHelperText={
+                "Provide the details for a minimum of 1 buyer and 1 supplier. Depending on the details entered earlier, we may have pre-filled some fields for you"
+              }
             >
               <TopCustomers topCustomers={topCustomers} {...props} />
               <TopSuppliers topSuppliers={topSuppliers} {...props} />
