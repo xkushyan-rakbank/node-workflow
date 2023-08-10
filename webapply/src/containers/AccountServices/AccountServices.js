@@ -57,9 +57,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const { licenseIssuingAuthority } = useSelector(getOrganizationInfo);
   const {
-    emirate: emiratesList,
     licenseIssuingAuthority: licenseIssuingAuthorityList,
-    TLIAEmirate: TLIAEmiratesList
+    TLIAEmirate: TLIAEmiratesList,
+    branchCity: branchCityList
   } = useSelector(getDatalist);
   const isIslamic = useSelector(getIsIslamicBanking);
   const accountType = useSelector(getAccountType);
@@ -132,7 +132,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }
   };
 
-  const matchedEmirateList = emiratesList?.filter(
+  const matchedEmirateList = branchCityList?.filter(
     emirate =>
       TLIAEmiratesList?.find(
         ({ value }) =>
