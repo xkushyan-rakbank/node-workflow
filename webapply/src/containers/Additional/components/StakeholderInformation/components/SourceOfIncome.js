@@ -81,9 +81,9 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
     IBANType: Yup.string().required(getRequiredMessage("IBAN type")),
     IBAN: Yup.string()
-      .required(getRequiredMessage("IBAN"))
       .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
-      .max(23, "IBAN must have a maximum of 23 characters"),
+      .max(23, "IBAN must have a maximum of 23 characters")
+      .required(getRequiredMessage("IBAN")),
 
     companyNameforSOF: Yup.string().when("IBANType", {
       is: IBANType => IBANType === "BARO",

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
 import cx from "classnames";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import { isEmpty, isNull } from "lodash";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
 import {
@@ -71,6 +72,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
       .max(100, "Mother’s maiden name is too long. Please enter upto 100 characters.")
       .min(3, "Mother’s maiden name is too short. Please enter atleast 3 characters."),
     linkedInURL: Yup.string()
+      .nullable()
       .min(27, "LinkedIn URL is too short. Please enter a valid LinkedIn profile URL.")
       .max(250, "LinkedIn URL is too long. Please enter upto 250 characters.")
       .matches(
@@ -78,6 +80,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
         "Invalid LinkedIn URL format. Please enter a valid LinkedIn profile URL."
       ),
     backgroundInfo: Yup.string()
+      .nullable()
       .min(100, "Background information is too short.")
       .max(2000, "Background information is too long. Please enter upto 2000 characters."),
     cv: Yup.string(),
@@ -142,6 +145,10 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
       isInitialValid={initialIsValid}
     >
       {({ touched, setTouched, setFieldValue, values, isValid, errors }) => {
+        const isBackgroundDetailsEmpty =
+          isNull(values?.backgroundInfo) &&
+          values?.linkedInURL?.length === 0 &&
+          isEmpty(values?.cv);
         return (
           <Accordion
             title={"Professional background"}
@@ -217,7 +224,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
                   Background details
                   <span>Please provide ONE of the below.</span>
                 </label>
-                {errors.common && showGenaralErr && (
+                {errors.common && (showGenaralErr || isBackgroundDetailsEmpty) && (
                   <div className={classes.uploadModalErrorWrapper}>
                     <ErrorOutlineIcon className={classes.errorIcon} />
                     {errors.common}

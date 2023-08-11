@@ -131,7 +131,7 @@ export const AdditionalStakeholderInformation = ({
                   <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton
                     justify="flex-end"
-                    label="Continue"
+                    label="Next"
                     disabled={!isValidStakeholderInfo}
                     isDisplayLoader={isLoading}
                   />

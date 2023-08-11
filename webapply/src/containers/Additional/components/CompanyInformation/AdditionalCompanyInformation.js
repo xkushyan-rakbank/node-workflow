@@ -121,7 +121,7 @@ export const AddCompanyInformation = ({
                   <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton
                     justify="flex-end"
-                    label="Continue"
+                    label="Next"
                     disabled={!isValidForm}
                     isDisplayLoader={isLoading}
                   />
