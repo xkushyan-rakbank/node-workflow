@@ -13,40 +13,35 @@ export const useStyles = makeStyles({
     backgroundColor: "#ffffff",
     "@media (max-width: 420px)": {
       height: "320px",
-      overflow: "hidden",
+      overflow: "hidden"
     },
     "@media (max-width: 372px)": {
-      height: "370px",
-    },
+      height: "370px"
+    }
   },
   noTitlePaper: {
     top: "35%",
     position: "fixed",
-    right: "65px",
     width: "780px",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
     [theme.breakpoints.between("lg", "xl")]: {
-      top: "35%",
-      position: "fixed",
-      right: "50%",
-      left: "25%",
-      width: "780px",
+      transform: "translateX(-50%)",
+      right: "unset",
+      left: "50%",
+      width: "780px"
     },
 
     "@media (max-width: 1280px)": {
-      top: "35%",
-      position: "fixed",
-      right: "120px",
-      width: "780px",
+      width: "780px"
     },
     "@media (max-width: 1024px)": {
       top: 0,
       position: "relative",
       right: "0px",
-      width: "auto",
-    },
+      width: "auto"
+    }
   },
   title: {
     padding: "40px 40px 20px 40px",
