@@ -28,7 +28,8 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 500,
         fontSize: "20px",
         lineHeight: "28px",
-        color: "#000"
+        color: "#000",
+        alignItems: "self-end"
       }
     }
   },
@@ -46,7 +47,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "16px",
     marginBottom: "0px",
     [theme.breakpoints.up("lg")]: {
-      paddingTop: "30px",
+      paddingTop: "30px"
     }
   },
   infoIcon: {
@@ -161,5 +162,11 @@ export const useStyles = makeStyles(theme => ({
   },
   stakeholdersDetailWrapper: {
     paddingTop: "0px!important"
+  },
+  smallTitle: {
+    color: "#1F1F1F",
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: "24px"
   }
 }));

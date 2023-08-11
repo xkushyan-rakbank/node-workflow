@@ -113,9 +113,35 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     [displayFields, internationalBankAccountNumberList]
   );
 
-  const formatDate = useCallback(date => (date ? format(new Date(date), "do, MMM, yyyy") : ""), [
-    displayFields
-  ]);
+  const getOrdinalofDate = date => {
+    if (date > 3 && date < 21) return "th";
+    switch (date % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  };
+  const formatDate = useCallback(
+    date => {
+      if (date) {
+        const dateValue = new Date(date).getDate();
+        const month = format(new Date(date), "MMM");
+        const year = format(new Date(date), "yyyy");
+        return (
+          <>
+            {dateValue}
+            <sup>{getOrdinalofDate(dateValue)}</sup>, {month}, {year}
+          </>
+        );
+      }
+    },
+    [displayFields]
+  );
 
   const formatFinancialValues = useCallback(
     value => {
@@ -263,8 +289,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         licenseIssuingAuthority: getLicenseIssuingAuthorityText(
           organizationInfo?.licenseIssuingAuthority
         ),
-        dateOfIncorporation: formatDate(organizationInfo?.dateOfIncorporation),
-        licenseOrCOIExpiryDate: formatDate(organizationInfo?.licenseOrCOIExpiryDate),
+        dateOfIncorporation: organizationInfo?.dateOfIncorporation,
+        licenseOrCOIExpiryDate: organizationInfo?.licenseOrCOIExpiryDate,
         countriesOfBusinessDealing:
           companyAdditionalInfo &&
           getCountriesOfBusinessDealing(
@@ -288,17 +314,14 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         signatoryFullName: signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
-        dateOfBirth: formatDate(signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth),
+        dateOfBirth: signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth,
         mothersMaidenName: (signatoryInfo && signatoryInfo[0]?.mothersMaidenName) || "N/A",
         eidNumber: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidNumber,
-        eidExpiryDt: formatDate(
-          signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidExpiryDt
-        ),
+        eidExpiryDt: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidExpiryDt,
         passportNumber:
           signatoryInfo && signatoryInfo[0]?.kycDetails.passportDetails[0].passportNumber,
-        passportExpiryDate: formatDate(
-          signatoryInfo && signatoryInfo[0]?.kycDetails.passportDetails[0].passportExpiryDate
-        ),
+        passportExpiryDate:
+          signatoryInfo && signatoryInfo[0]?.kycDetails.passportDetails[0].passportExpiryDate,
         education:
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.highestEducationAttained
@@ -412,11 +435,13 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                   <CompanyAdditionalReview
                     fieldValues={displayFields}
                     addressFormat={formatAddress}
+                    formatDate={formatDate}
                   />
 
                   <StakeholderAdditionalReview
                     fieldValues={displayFields}
                     addressFormat={formatAddress}
+                    formatDate={formatDate}
                     truncateString={truncateString}
                     ibanTypeLabel={getIBANTypeLabel(displayFields.IBANType)}
                   />
@@ -424,7 +449,11 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
                   <div className={classes.packageSelectionWrapper}>
                     <Accordion
-                      title={"Codes (for bank use)"}
+                      title={
+                        <>
+                          Codes <span className={classes.smallTitle}>(for bank use)</span>
+                        </>
+                      }
                       id={"codesBankUse"}
                       classes={{
                         accordionRoot: classes.accountServiceAccordionRoot,

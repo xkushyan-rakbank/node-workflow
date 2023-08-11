@@ -39,7 +39,7 @@ export const accountTypesDescription = {
     description: [
       "Low balance account",
       "Preferential transaction fees",
-      "Dedicated Relationship Manager "
+      "Dedicated relationship Manager "
     ],
     buttonText: accountTypes.currentAccount.name,
     applyNowButton: "Apply now"

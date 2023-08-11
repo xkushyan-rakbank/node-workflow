@@ -5,7 +5,7 @@ import { InformationSection } from "./InformationSection";
 import routes from "../../../routes";
 import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 
-export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
+export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate }) => {
   const classes = useStyles();
   return (
     <div className={classes.packageSelectionWrapper}>
@@ -53,11 +53,11 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
             </div>
             <div className={classes.infoLabelValue}>
               <label>Date of incorporation:</label>
-              <p>{fieldValues.dateOfIncorporation}</p>
+              <p>{formatDate(fieldValues.dateOfIncorporation)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Licence expiry date:</label>
-              <p>{fieldValues.licenseOrCOIExpiryDate}</p>
+              <p>{formatDate(fieldValues.licenseOrCOIExpiryDate)}</p>
             </div>
           </div>
         </InformationSection>

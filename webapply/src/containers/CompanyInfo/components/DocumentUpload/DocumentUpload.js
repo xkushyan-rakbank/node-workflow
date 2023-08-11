@@ -56,7 +56,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         name="tradeLicenseOrCOI"
         path="prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
         type="file"
-        fieldDescription="Trade licence/Certificate of Incorporation"
+        fieldDescription="Trade licence/Certificate of incorporation"
         helperText={SUPPORTED_FILE_FORMAT_TEXT}
         accept={TL_ACCEPTED_FILE_TYPES}
         fileSize={TL_COI_FILE_SIZE}

@@ -126,7 +126,7 @@ export const perksDataRows = [
     elite: { ic: crossIcon }
   },
   {
-    info: "Dedicated Relationship manager",
+    info: "Dedicated relationship manager",
     starter: { ic: crossIcon },
     currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }

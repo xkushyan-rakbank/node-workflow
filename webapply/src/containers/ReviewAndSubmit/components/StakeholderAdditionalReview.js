@@ -8,6 +8,7 @@ import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStak
 export const StakeholderAdditionalReview = ({
   fieldValues,
   addressFormat,
+  formatDate,
   truncateString,
   ibanTypeLabel
 }) => {
@@ -43,7 +44,7 @@ export const StakeholderAdditionalReview = ({
             </div>
             <div className={classes.infoLabelValue}>
               <label>Date of Birth:</label>
-              <p>{fieldValues.dateOfBirth}</p>
+              <p>{formatDate(fieldValues.dateOfBirth)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Mother’s maiden name:</label>
@@ -72,14 +73,14 @@ export const StakeholderAdditionalReview = ({
             </div>
             <div className={classes.infoLabelValue}>
               <label>EID expiry date:</label>
-              <p>{fieldValues.eidExpiryDt}</p>
+              <p>{formatDate(fieldValues.eidExpiryDt)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Passport number:</label>
               <p>{fieldValues.passportNumber}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Passport expiry:</label> <p>{fieldValues.passportExpiryDate}</p>
+              <label>Passport expiry:</label> <p>{formatDate(fieldValues.passportExpiryDate)}</p>
             </div>
           </div>
         </InformationSection>

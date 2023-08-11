@@ -55,7 +55,6 @@ export const useStyles = makeStyles(theme => ({
     padding: "24px",
     background: "#F7F8F9",
     borderRadius: "10px",
-    marginBottom: "40px",
     marginTop: "16px",
     "@media (max-width: 425px)": {
       flexDirection: "column",
@@ -260,8 +259,8 @@ export const useStyles = makeStyles(theme => ({
     color: "#757575",
     [theme.breakpoints.up("sm")]: {
       fontSize: "20px",
-      lineHeight: "28px",
-    },
+      lineHeight: "28px"
+    }
   },
   previewImgWrapper: {
     marginTop: "24px"
@@ -491,7 +490,8 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     gap: "32px",
     borderRadius: "10px",
-    border: "1px solid #CCC"
+    border: "1px solid #CCC",
+    marginTop: "40px"
   },
   stakeholderContainer: {
     paddingTop: "0!important"
