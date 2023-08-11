@@ -5,17 +5,19 @@ import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../c
 import { MAX_COMPANY_FULL_NAME_LENGTH, REGEX_LLC_PATTERN } from "../../constants";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { triggerDecisions } from "../../../../store/actions/decisions";
-import { getApplicantInfo } from "../../../../store/selectors/appConfig";
+import { getApplicantInfo, getCompanyDocuments } from "../../../../store/selectors/appConfig";
 import { ConfirmDialog } from "../../../../components/Modals";
 import useRedirectionUrl from "../../../../utils/useRedirectionUrl";
 
-export const CompanyDetails = ({ setFieldValue, values }) => {
+export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState(false);
   const [loadedPersona, setLoadedPersona] = useState(null);
   const dispatch = useDispatch();
   const applicantInfo = useSelector(getApplicantInfo);
   const { redirectToExternalURL } = useRedirectionUrl();
+
+  const companyDocuments = useSelector(getCompanyDocuments) || [];
 
   useEffect(() => {
     setLoadedPersona(applicantInfo.persona);
@@ -61,6 +63,18 @@ export const CompanyDetails = ({ setFieldValue, values }) => {
   }
 
   const onChange = (value, renderValue) => {
+    if (value === "SOLE") {
+      const path = "prospect.prospectDocuments.companyDocument.moa";
+      const updatedCompanyDocs = companyDocuments.filter(eachDoc => eachDoc.documentKey !== path);
+      dispatch(
+        updateProspect({
+          "prospect.documents.companyDocuments": updatedCompanyDocs
+        })
+      );
+      setTouched({ ...touched, ...{ moa: false } });
+      setFieldValue("moa", null);
+      dispatch(updateProspect([path], null));
+    }
     if (value === "OTHER") {
       setIsOpen(true);
       setMessage(renderValue.displayText);

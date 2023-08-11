@@ -173,49 +173,55 @@ export const CompanyInfo = ({
         initialValues={initialValues}
         validationSchema={conditionalSchema(companyInfoSchema)}
         validateOnChange={true}
+        validateOnMount={true}
         onSubmit={onUploadSuccess}
       >
-        {props => (
-          <Form className={classes.companyInfoSectionForm}>
-            <div className={classes.companyInfoSectionWrapper}>
-              <SectionTitle
-                title={"Upload company documents"}
-                classes={{ wrapper: classes.title }}
-              />
-              <Divider className={classes.divider} />
-              <DocumentUpload {...props} />
-            </div>
-            <div className={classes.companyInfoSectionWrapper}>
-              <SectionTitle title={"Company details"} classes={{ wrapper: classes.title }} />
-              <Divider className={classes.divider} />
-              <CompanyDetails {...props} />
-            </div>
+        {props => {
+          const isCompanyInfoValid = conditionalSchema(companyInfoSchema).isValidSync(props.values);
+          return (
+            <Form className={classes.companyInfoSectionForm}>
+              <div className={classes.companyInfoSectionWrapper}>
+                <SectionTitle
+                  title={"Upload company documents"}
+                  classes={{ wrapper: classes.title }}
+                />
+                <Divider className={classes.divider} />
+                <DocumentUpload {...props} />
+              </div>
+              <div className={classes.companyInfoSectionWrapper}>
+                <SectionTitle title={"Company details"} classes={{ wrapper: classes.title }} />
+                <Divider className={classes.divider} />
+                <CompanyDetails {...props} />
+              </div>
 
-            <div className={classes.companyInfoSectionWrapper}>
-              <SectionTitle title={"Industry"} classes={{ wrapper: classes.title }} />
-              <Divider className={classes.divider} />
-              <Industry datalistId={datalistId} {...props} />
-            </div>
-            <div className={classes.companyInfoSectionWrapper}>
-              <SectionTitle
-                title={"Trade licence information"}
-                classes={{ wrapper: classes.title }}
-              />
-              <Divider className={classes.divider} />
-              <TradeLicenceInformation {...props} />
-            </div>
-            <Footer extraClasses={!isComeFromROScreens ? "oneElement" : ""}>
-              {isComeFromROScreens && <BackLink path={routes.searchProspect} isTypeButton={true} />}
-              <NextStepButton
-                justify="flex-end"
-                display="block"
-                label="Next"
-                disabled={!(props.isValid && props.dirty)}
-                // handleClick={() => handleClick(props)}
-              />
-            </Footer>
-          </Form>
-        )}
+              <div className={classes.companyInfoSectionWrapper}>
+                <SectionTitle title={"Industry"} classes={{ wrapper: classes.title }} />
+                <Divider className={classes.divider} />
+                <Industry datalistId={datalistId} {...props} />
+              </div>
+              <div className={classes.companyInfoSectionWrapper}>
+                <SectionTitle
+                  title={"Trade licence information"}
+                  classes={{ wrapper: classes.title }}
+                />
+                <Divider className={classes.divider} />
+                <TradeLicenceInformation {...props} />
+              </div>
+              <Footer extraClasses={!isComeFromROScreens ? "oneElement" : ""}>
+                {isComeFromROScreens && (
+                  <BackLink path={routes.searchProspect} isTypeButton={true} />
+                )}
+                <NextStepButton
+                  justify="flex-end"
+                  display="block"
+                  label="Next"
+                  disabled={!isCompanyInfoValid}
+                  // handleClick={() => handleClick(props)}
+                />
+              </Footer>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );
