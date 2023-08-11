@@ -473,7 +473,10 @@ export function* getCurrentKYCStatus() {
     } else if (stageInfoMap["EID_OCR"]) {
       const eidDocuments = yield call(getEidDocuments, transactionId);
       const eidOcrDetails = extractOCRData(eidDocuments);
-      yield put(loadEidDocuments(eidOcrDetails));
+      const isDocValid = checkDocumentValid(eidOcrDetails?.efrResponse);
+      if (isDocValid) {
+        yield put(loadEidDocuments(eidOcrDetails));
+      }
     }
     yield put(getKycSuccess(true));
     yield put(setLoading(false));

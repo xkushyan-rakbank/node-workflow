@@ -104,8 +104,8 @@ export const CompanyStakeholdersComponent = ({
 
   useEffect(() => {
     if (analysedEidData.age) {
-      const age = getOcrFieldValueBySource(analysedEidData?.age, "mrz");
-      if (age < 18) {
+      const age = getOcrFieldValueBySource(analysedEidData?.age);
+      if (age && age < 18) {
         dispatch(analyseOcrAgeRestriction(AGE_RESTRICTION));
       }
     }

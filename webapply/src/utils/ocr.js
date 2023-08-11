@@ -10,8 +10,8 @@ export const checkDocumentSideValid = (optionalData, personalNumber) => {
 };
 
 export const checkDocumentValid = node => {
-  if (node?.documentMismatch[0]?.value === "0") {
-    return false;
+  if (node?.documentMismatch[0]?.value === "1") {
+    return true;
   }
-  return true;
+  return false;
 };
