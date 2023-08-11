@@ -22,7 +22,7 @@ export const ProductInformationReview = ({ fieldValues }) => {
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
-        title={"Product Information"}
+        title={"Product information"}
         id={"productInformation"}
         classes={{
           accordionRoot: classes.accountServiceAccordionRoot,

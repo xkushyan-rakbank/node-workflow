@@ -32,7 +32,7 @@ export const StakeholderAdditionalReview = ({
           accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
         }}
       >
-        <InformationSection title={"Essential info"}>
+        <InformationSection title={"Essential information"}>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Full name:</label> <p>{fieldValues.signatoryFullName}</p>
@@ -84,7 +84,7 @@ export const StakeholderAdditionalReview = ({
           </div>
         </InformationSection>
         <InformationSection
-          title={"KYC details"}
+          title={"Your personal Information"}
           showEditIcon={true}
           routeTo={routes.additionalStakeholderInformation}
         >
@@ -145,7 +145,7 @@ export const StakeholderAdditionalReview = ({
           </div>
         </InformationSection>
         <InformationSection
-          title={"Tax Information"}
+          title={"Tax declarations"}
           showEditIcon={true}
           routeTo={routes.additionalStakeholderInformation}
         >

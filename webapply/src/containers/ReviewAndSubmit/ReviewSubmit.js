@@ -113,7 +113,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     [displayFields, internationalBankAccountNumberList]
   );
 
-  const formatDate = useCallback(date => (date ? format(new Date(date), "do, MMM yyyy") : ""), [
+  const formatDate = useCallback(date => (date ? format(new Date(date), "do, MMM, yyyy") : ""), [
     displayFields
   ]);
 
@@ -424,7 +424,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
                   <div className={classes.packageSelectionWrapper}>
                     <Accordion
-                      title={"Codes-Bank use"}
+                      title={"Codes (for bank use)"}
                       id={"codesBankUse"}
                       classes={{
                         accordionRoot: classes.accountServiceAccordionRoot,

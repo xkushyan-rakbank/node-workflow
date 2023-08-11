@@ -26,7 +26,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
         }}
       >
-        <InformationSection title={"Essential info"}>
+        <InformationSection title={"Essential information"}>
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Applicant name:</label> <p>{fieldValues.applicantName}</p>
@@ -62,7 +62,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           </div>
         </InformationSection>
         <InformationSection
-          title={"KYC details"}
+          title={"Your business information"}
           showEditIcon={true}
           routeTo={routes.additionalCompanyInformation}
         >
@@ -99,7 +99,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat }) => {
           </div>
         </InformationSection>
         <InformationSection
-          title={"Tax declaration"}
+          title={"Tax declarations"}
           showEditIcon={true}
           routeTo={routes.additionalCompanyInformation}
         >
