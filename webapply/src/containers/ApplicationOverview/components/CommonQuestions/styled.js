@@ -50,6 +50,8 @@ export const useStyles = makeStyles(theme => ({
     marginRight: "20px"
   },
   text: {
+    color: "#1F1F1F",
+    fontWeight: 400,
     paddingBottom: "5px",
     fontSize: "0.875rem",
     [theme.breakpoints.only("xs")]: {

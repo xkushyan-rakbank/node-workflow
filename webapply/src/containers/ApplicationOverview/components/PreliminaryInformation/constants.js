@@ -1,3 +1,5 @@
+import React from "react";
+import { Link } from "react-router-dom";
 import routes from "../../../../routes";
 
 export const questions = [
@@ -5,8 +7,17 @@ export const questions = [
     // eslint-disable-next-line
     question: 'What should I expect on "Submitting" the completed application?',
     answer: {
-      __html:
-        "a. You will instantly get an inactive account number on successful submission of application.<br />b. Our team will reach out to you in one business day to fix an appointment.<br />c. On submission of the signed form Bank will activate the account within 5 business days subject to internal policies and guidelines."
+      __html: (
+        <>
+          a. You will instantly get an inactive account number on successful submission of
+          application.
+          <br />
+          b. Our team will reach out to you in one business day to fix an appointment.
+          <br />
+          c. On submission of the signed form Bank will activate the account within 5 business days
+          subject to internal policies and guidelines.
+        </>
+      )
     },
     id: 5
   },
@@ -14,15 +25,25 @@ export const questions = [
     question: "Once I start the application, can I come back later and complete it?",
     answer: {
       // eslint-disable-next-line max-len
-      __html: `Yes. You can continue your application from where you left using <a href="${routes.comeBackLogin}" target="_blank">the link</a> sent to your email id.`
+      __html: (
+        <>
+          Yes. You can continue your application from where you left using&nbsp;
+          <Link to={routes.comeBackLogin} target="_blank">the link</Link>
+          &nbsp;sent to your email id.
+        </>
+      )
     },
     id: 1
   },
   {
     question: "Will my Account be opened once I submit the application?",
     answer: {
-      __html:
-        "You will get your account number on successful submission of application. This account will be activated once the bank approves the same."
+      __html: (
+        <>
+          You will get your account number on successful submission of application. This account
+          will be activated once the bank approves the same.
+        </>
+      )
     },
     id: 2
   },
@@ -37,7 +58,11 @@ export const questions = [
     question: "How do I check the status of my submitted application?",
     answer: {
       // eslint-disable-next-line max-len
-      __html: `You can check the status of your application by accessing <a href="${routes.comeBackLogin}" target="_blank">the link</a> sent to your email Id.`
+      __html: (
+        <>
+          You can check the status of your application by accessing <Link to={routes.comeBackLogin} target="_blank">the link</Link> sent to your email Id.
+        </>
+      )
     },
     id: 4
   }
