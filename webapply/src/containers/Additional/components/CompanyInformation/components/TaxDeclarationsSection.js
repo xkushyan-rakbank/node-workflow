@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
@@ -16,6 +17,7 @@ import useGeneratePdf from "../../../../CompanyStakeholders/components/Stakehold
 import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
 import { GLOBAL_INTERMEDIARY_REGEX } from "../../../../../utils/validation";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 const wcmData = {
   productVariantContent: [
@@ -27,6 +29,7 @@ const wcmData = {
 };
 export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
 
@@ -49,6 +52,14 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
     if (target === "isFinancialInstitution") {
       const globalintermediaryId = values["globalintermediaryId"] || undefined;
       await setFieldValue("globalintermediaryId", globalintermediaryId);
+      if (value === "no") {
+        await setFieldValue("globalintermediaryId", "");
+        dispatch(
+          updateProspect({
+            ["prospect.companyAdditionalInfo.globalintermediaryId"]: ""
+          })
+        );
+      }
     }
   };
 
@@ -88,7 +99,7 @@ export const TaxDeclarationsSection = ({ setFieldValue: setFormFieldValue, id })
   const initialValues = {
     dnfbpField: "no",
     isCompanyUSEntity: "no",
-    isFinancialInstitution: "na",
+    isFinancialInstitution: "",
     isNonFinancialInstitution: "active",
     globalintermediaryId: ""
   };
