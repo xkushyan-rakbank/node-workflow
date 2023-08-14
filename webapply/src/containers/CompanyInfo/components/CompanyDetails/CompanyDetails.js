@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
@@ -62,8 +62,8 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
     }
   }
 
-  const onChange = (value, renderValue) => {
-    if (value === "SOLE") {
+  useEffect(() => {
+    if (values.companyCategory === "SOLE") {
       const path = "prospect.prospectDocuments.companyDocument.moa";
       const updatedCompanyDocs = companyDocuments.filter(eachDoc => eachDoc.documentKey !== path);
       dispatch(
@@ -75,6 +75,9 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
       setFieldValue("moa", null);
       dispatch(updateProspect([path], null));
     }
+  }, [values.companyCategory]);
+
+  const onChange = (value, renderValue) => {
     if (value === "OTHER") {
       setIsOpen(true);
       setMessage(renderValue.displayText);
