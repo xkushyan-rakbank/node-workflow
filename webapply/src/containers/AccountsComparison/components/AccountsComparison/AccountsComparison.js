@@ -320,7 +320,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <ul>
             <li>
               {
-                "Monthly average credit balance >= AED 250,000.00, Monthly Account Maintenance fee is waived, but Digital Banking Fee is applicable,"
+                "Monthly average credit balance >= AED 250,000.00, Monthly Account Maintenance fee is waived, but Digital Banking Fee is applicable."
               }
             </li>
             <li>

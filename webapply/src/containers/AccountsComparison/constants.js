@@ -84,20 +84,20 @@ export const feesChargesDataRows = [
   {
     info: "Fall back fee (if monthly average credit balance is not maintained)",
     starter: "Zero",
-    currentAccount: "AED 50",
-    elite: "AED 262.5"
+    currentAccount: "AED 52.50",
+    elite: "AED 262.50"
   },
   {
     info: "Monthly maintenance fees*",
-    starter: "AED 99",
-    currentAccount: "AED 50",
+    starter: "AED 103.95",
+    currentAccount: "AED 52.50",
     elite: "Zero"
   },
   {
     info: "Monthly digital banking fees*",
-    starter: "Zero",
-    currentAccount: "AED 50",
-    elite: "AED 50"
+    starter: "AED 52.50",
+    currentAccount: "AED 52.50",
+    elite: "AED 52.50"
   }
 ];
 export const perksDataRows = [
