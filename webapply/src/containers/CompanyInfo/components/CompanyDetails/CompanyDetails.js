@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../components/Form";
@@ -8,6 +8,7 @@ import { triggerDecisions } from "../../../../store/actions/decisions";
 import { getApplicantInfo, getCompanyDocuments } from "../../../../store/selectors/appConfig";
 import { ConfirmDialog } from "../../../../components/Modals";
 import useRedirectionUrl from "../../../../utils/useRedirectionUrl";
+import useDecisions from "../../../../utils/useDecisions";
 
 export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,7 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
   const { redirectToExternalURL } = useRedirectionUrl();
 
   const companyDocuments = useSelector(getCompanyDocuments) || [];
+  const { visible: moaVisible } = useDecisions("prospect.prospectDocuments.companyDocument.moa");
 
   useEffect(() => {
     setLoadedPersona(applicantInfo.persona);
@@ -62,20 +64,24 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
     }
   }
 
+  const removeMoaDoc = async () => {
+    const path = "prospect.prospectDocuments.companyDocument.moa";
+    const updatedCompanyDocs = companyDocuments.filter(eachDoc => eachDoc.documentKey !== path);
+    dispatch(
+      updateProspect({
+        "prospect.documents.companyDocuments": updatedCompanyDocs
+      })
+    );
+    setTouched({ ...touched, ...{ moa: false } });
+    await setFieldValue("moa", null);
+    dispatch(updateProspect([path], null));
+  };
+
   useEffect(() => {
-    if (values.companyCategory === "SOLE") {
-      const path = "prospect.prospectDocuments.companyDocument.moa";
-      const updatedCompanyDocs = companyDocuments.filter(eachDoc => eachDoc.documentKey !== path);
-      dispatch(
-        updateProspect({
-          "prospect.documents.companyDocuments": updatedCompanyDocs
-        })
-      );
-      setTouched({ ...touched, ...{ moa: false } });
-      setFieldValue("moa", null);
-      dispatch(updateProspect([path], null));
+    if (!moaVisible) {
+      removeMoaDoc();
     }
-  }, [values.companyCategory]);
+  }, [moaVisible, dispatch]);
 
   const onChange = (value, renderValue) => {
     if (value === "OTHER") {
