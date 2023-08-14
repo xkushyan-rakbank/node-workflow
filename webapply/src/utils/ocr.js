@@ -1,5 +1,5 @@
 export const getOcrFieldValueBySource = node => {
-  const nodeValue = node?.find(x => x?.source === "mrz" || x?.visual === "visual");
+  const nodeValue = node?.find(x => x?.source === "mrz" || x?.source === "visual");
   return nodeValue?.value || "";
 };
 
