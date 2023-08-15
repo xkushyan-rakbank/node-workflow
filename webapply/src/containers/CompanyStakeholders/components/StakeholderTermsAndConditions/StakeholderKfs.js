@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Button, CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
@@ -20,6 +20,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
+  const [isKfsProgress, setKfsProgress] = useState(termsAndConditions?.kfs)
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -29,8 +30,10 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
     setKfsDialog(false);
   };
 
+
   const handleAccept = () => {
     setKfsDialog(false);
+    setKfsProgress(true)
     dispatch(sendKfsMail());
     dispatch(
       updateProspect({
@@ -38,7 +41,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
           ...signatoryInfo[0]?.consentInfo,
           kfsConsent: { accept: true }
         }
-      })
+      }),
     );
   };
 
@@ -59,9 +62,13 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
           )}
         </div>
         {!termsAndConditions.kfs ? (
-          <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
-            Read and Accept
-          </Button>
+          !isKfsProgress ? (
+            <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
+              Read and Accept
+            </Button>
+          ) : (
+            <CircularProgress size={14} value={null} />
+          )
         ) : (
           <Button variant="outlined" className={classes.readBtn}>
             Read
