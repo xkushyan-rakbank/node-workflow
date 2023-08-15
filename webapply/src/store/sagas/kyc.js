@@ -454,7 +454,12 @@ export function* getCurrentKYCStatus() {
       }
       return true;
     };
-    if (!foundLicenseIssuingAuthority && stageInfoMap["CONFIRM_DATA_ELEMENT"]) {
+    console.log(foundLicenseIssuingAuthority, "isinde");
+    if (
+      !foundLicenseIssuingAuthority &&
+      stageInfoMap["CONFIRM_DATA_ELEMENT"] &&
+      !stageInfoMap["CONFIRM_ENTITY"]
+    ) {
       yield call(putOcrData, transactionId);
       const moiIssuingAuthority = tliaForMOI.find(tlia => tlia?.code === data.issuingAuthority)
         ?.displayText;
