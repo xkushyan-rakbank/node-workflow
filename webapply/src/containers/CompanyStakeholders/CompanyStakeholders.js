@@ -50,9 +50,7 @@ export const CompanyStakeholdersContainer = ({
   useViewId(true);
 
   useEffect(() => {
-    if (!transactionId) {
-      createKycTransaction();
-    }
+    createKycTransaction();
   }, []);
 
   useEffect(() => {
