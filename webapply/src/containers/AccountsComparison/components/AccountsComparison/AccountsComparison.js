@@ -115,6 +115,17 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   const queryParams = useLocation().search;
 
   const handleClick = () => {
+    /**
+     * overwrite current entry in history to store the scroll position
+     * so that on navagition back it comes back to this state
+     * */
+
+    let stateData = {
+      path: window.location.href,
+      scrollTop: 0
+    };
+    window.history.pushState(stateData, "");
+
     document.body.classList.remove("no-scroll");
     accountTypeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN));

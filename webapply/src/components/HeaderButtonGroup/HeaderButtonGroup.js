@@ -15,8 +15,8 @@ export const HeaderButtonGroup = () => {
   const queryParams = useLocation().search;
   const isIslamic = useSelector(getIsIslamicBanking);
 
-  const handleRedirection = path => {
-    pushHistory(path);
+  const handleRedirection = (path, replaceHistory = false) => {
+    pushHistory(path, replaceHistory);
   };
 
   return (
@@ -36,7 +36,8 @@ export const HeaderButtonGroup = () => {
           handleRedirection(
             isIslamic
               ? applicationOverviewRoutesMap[accountType][CONVENTIONAL] + queryParams
-              : applicationOverviewRoutesMap[accountType][ISLAMIC] + queryParams
+              : applicationOverviewRoutesMap[accountType][ISLAMIC] + queryParams,
+            true
           )
         }
       >
