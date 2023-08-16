@@ -83,6 +83,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     IBAN: Yup.string()
       .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
       .max(23, "IBAN must have a maximum of 23 characters")
+      .typeError(getRequiredMessage("IBAN"))
       .required(getRequiredMessage("IBAN")),
 
     companyNameforSOF: Yup.string().when("IBANType", {

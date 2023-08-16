@@ -215,7 +215,7 @@ export const CompanyInfo = ({
                   justify="flex-end"
                   display="block"
                   label="Next"
-                  disabled={!isCompanyInfoValid}
+                  // disabled={!isCompanyInfoValid}
                   // handleClick={() => handleClick(props)}
                 />
               </Footer>

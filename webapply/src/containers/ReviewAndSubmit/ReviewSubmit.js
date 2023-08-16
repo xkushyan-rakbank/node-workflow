@@ -488,7 +488,6 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           <NextStepButton
             label="Submit"
             justifycontent="flex-end"
-            disabled={false}
             onClick={() => handleReviewSubmit()}
           />
         </Footer>

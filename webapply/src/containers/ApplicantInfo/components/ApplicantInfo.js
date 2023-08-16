@@ -372,7 +372,7 @@ export const ApplicantInfoComponent = ({
                 )}
                 <SubmitButton
                   disabled={
-                    !isValid || (!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep
+                    (!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep
                   }
                   isDisplayLoader={isLoading}
                   justify="flex-end"
