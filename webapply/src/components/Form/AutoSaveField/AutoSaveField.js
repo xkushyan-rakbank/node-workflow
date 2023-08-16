@@ -6,9 +6,10 @@ import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
-import { getDatalist } from "../../../store/selectors/appConfig";
+import { getDatalist, isDecisionLoading } from "../../../store/selectors/appConfig";
 import { OthersOption } from "../../../constants/options";
 import useDecisions from "../../../utils/useDecisions";
+import { OverlayLoader } from "../../Loader";
 
 export const AutoSaveField = ({
   isVisible = true,
@@ -44,6 +45,8 @@ export const AutoSaveField = ({
   );
   const timer = useRef(null);
   const { visible, enabled, label: decisionLabel, makeDecisions } = useDecisions(path, decisionKey);
+  const decisonLoad = useSelector(isDecisionLoading);
+
   useEffect(() => {
     if (!isLoadedDefaultValueFromStore && path) {
       const value = get(appConfig, path);
@@ -117,15 +120,18 @@ export const AutoSaveField = ({
   };
 
   return (
-    (visible || isVisible) && (
-      <Field
-        onChange={handleChange}
-        disabled={!enabled}
-        name={name}
-        options={options}
-        {...rest}
-        label={decisionLabel || label}
-      />
-    )
+    <>
+      <OverlayLoader open={decisonLoad[path]} text="Loading" />
+      {(visible || isVisible) && (
+        <Field
+          onChange={handleChange}
+          disabled={!enabled}
+          name={name}
+          options={options}
+          {...rest}
+          label={decisionLabel || label}
+        />
+      )}
+    </>
   );
 };
