@@ -64,8 +64,8 @@ export const ApplicantInfoContainer = ({
 
       const {
         persona: invitationPersona,
-        accounttype: invitationAccountType,
-        isislamic: invitationIsIslamic
+        accountType: invitationAccountType,
+        isIslamic: invitationIsIslamic
       } = invitationParams || {};
 
       dispatch(

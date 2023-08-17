@@ -153,12 +153,12 @@ export const ApplicantInfoComponent = ({
   };
 
   const {
-    name = "",
-    company = "",
-    email = "",
-    mobile = "",
-    rocode = "",
-    alliancecode = allianceCodeFromQuery,
+    custName = "",
+    companyName = "",
+    custEmail = "",
+    custMobileNum = "",
+    roCode: rocode = "",
+    // roAgentId = allianceCodeFromQuery,
     alliancecodeFromDataList: allianceCodeDisplayText,
     persona = personaFromStore
   } = invitationParams || {};
@@ -173,13 +173,13 @@ export const ApplicantInfoComponent = ({
       />
       <Formik
         initialValues={{
-          fullName: name,
-          companyFullName: company,
-          email: email,
+          fullName: custName,
+          companyFullName: companyName,
+          email: custEmail,
           countryCode: UAE_CODE,
-          mobileNo: mobile,
-          roCode: rocode,
-          allianceCode: alliancecode,
+          mobileNo: custMobileNum,
+          roCode: rocode || roCode,
+          allianceCode: allianceCodeFromQuery,
           allianceCodeFromDataList: allianceCodeDisplayText,
           persona
         }}
@@ -245,7 +245,7 @@ export const ApplicantInfoComponent = ({
                   "This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
                 }
                 isLoadDefaultValueFromStore={false}
-                disabled={invitationParams?.mobile}
+                disabled={invitationParams?.custMobileNum}
               />
             )}
             {isConfigLoading ? (
@@ -360,7 +360,7 @@ export const ApplicantInfoComponent = ({
             <Grid container direction="row" justify="flex-end" alignItems="center">
               {/* message */}
               <Footer>
-                {!invitationParams?.isislamic && (
+                {!invitationParams?.isIslamic && (
                   <BackLink
                     isTypeButton={true}
                     path={
@@ -371,9 +371,7 @@ export const ApplicantInfoComponent = ({
                   />
                 )}
                 <SubmitButton
-                  disabled={
-                    (!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep
-                  }
+                  disabled={(!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep}
                   isDisplayLoader={isLoading}
                   justify="flex-end"
                   label="Next"
