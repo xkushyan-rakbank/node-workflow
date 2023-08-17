@@ -31,7 +31,11 @@ export default function useDecisions(path, decisionKey) {
     //setting it to the form
     Object.keys(newValues).length &&
       Object.keys(newValues).forEach(key => {
-        setFieldValue(key, newValues[key]);
+        if (newValues[key] === " ") {
+          setFieldValue(key, "");
+        } else {
+          setFieldValue(key, newValues[key]);
+        }
       });
   };
 
