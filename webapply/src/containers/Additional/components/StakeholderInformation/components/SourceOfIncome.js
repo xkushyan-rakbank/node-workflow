@@ -80,12 +80,15 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
   const sourceOfIncomeValidationSchema = Yup.object().shape({
     sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
     IBANType: Yup.string().required(getRequiredMessage("IBAN type")),
-    IBAN: Yup.string()
-      .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
-      .max(23, "IBAN must have a maximum of 23 characters")
-      .typeError(getRequiredMessage("IBAN"))
-      .required(getRequiredMessage("IBAN")),
-
+    IBAN: Yup.string().when("IBANType", {
+      is: (IBANType) => IBANType !== "NOIB",
+      then: Yup.string()
+        .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
+        .max(23, "IBAN must have a maximum of 23 characters")
+        .typeError(getRequiredMessage("IBAN"))
+        .required(getRequiredMessage("IBAN")),
+      otherwise: Yup.string().nullable().notRequired()
+    }),
     companyNameforSOF: Yup.string().when("IBANType", {
       is: IBANType => IBANType === "BARO",
       then: Yup.string()
@@ -209,6 +212,15 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     );
   };
 
+  const removeIbanNumber = (values, setFieldValue) => {
+    setFieldValue("IBAN", null);
+    dispatch(
+      updateProspect({
+        "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN": "",
+      })
+    );
+};
+
   return (
     <Formik
       initialValues={initialValues}
@@ -219,6 +231,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
       {({ values, setFieldValue, touched, setTouched, isValid, ...props }) => {
         const IsValidForm = sourceOfIncomeValidationSchema.isValidSync(values);
         const isBARO = values.IBANType === "BARO";
+        const noIBAN = values.IBANType === "NOIB";
         return (
           <Accordion
             title={"Source of income"}
@@ -264,8 +277,16 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                     label="IBAN type"
                     placeholder="IBAN type"
                     component={SelectAutocomplete}
+                    onChange={(selectedValue) => {
+                      setFieldValue("IBANType", selectedValue);
+                      if(selectedValue === "NOIB"){
+                        removeIbanNumber(selectedValue, setFieldValue)
+                      }
+                      
+                    }}
                   />
                 </Grid>
+                {!noIBAN && (
                 <Grid item sm={12} xs={12}>
                   <Field
                     name="IBAN"
@@ -275,8 +296,10 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                     path={`${basePath}.IBAN`}
                     component={IBANField}
                     shrink={true}
+                    disabled={noIBAN}
                   />
                 </Grid>
+                )}
                 {isBARO && (
                   <>
                     <Grid item sm={12} xs={12}>
