@@ -38,11 +38,13 @@ function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBa
       const storeAppConfig = yield select(getAppConfig);
       const prospectValue = get(storeAppConfig, decision.output_key);
       const defaultValue = get(appConfig, decision.output_key);
+      // converting " " -> "" due to limitation in the decisons table to add null/""
+      const decisionValue = decision.output_value[0] === " " ? "" : decision.output_value[0];
       if (isComeBack && prospectValue === defaultValue) {
-        changedFieldValues[decision.output_key] = decision.output_value[0];
+        changedFieldValues[decision.output_key] = decisionValue;
       }
       if (!isComeBack) {
-        changedFieldValues[decision.output_key] = decision.output_value[0];
+        changedFieldValues[decision.output_key] = decisionValue;
       }
       break;
     }
