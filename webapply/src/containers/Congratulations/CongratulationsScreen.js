@@ -13,10 +13,12 @@ import { ICONS, Icon } from "../../components/Icons";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
 import { useLayoutParams } from "../FormLayout";
+import { useViewId } from "../../utils/useViewId";
 
 export const CongratulationsScreen = () => {
   useFormNavigation([true, true, formStepper]);
   useLayoutParams(false, false, false);
+  useViewId();
 
   const pushHistory = useTrackingHistory();
 
