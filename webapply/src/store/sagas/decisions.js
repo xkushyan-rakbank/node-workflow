@@ -34,12 +34,16 @@ function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBa
       return yield put(disableInputFeild(decision.output_key));
     case "SET_LABEL_TEXT":
       return yield put(setLabel(decision.output_key, decision.output_value[0]));
-    case "SET_FIELD_VALUE": {
+    case "SET_FIELD_VALUE":
+    case "RESET_FIELD_VALUE": {
       const storeAppConfig = yield select(getAppConfig);
       const prospectValue = get(storeAppConfig, decision.output_key);
       const defaultValue = get(appConfig, decision.output_key);
+      let decisionValue = decision.output_value[0];
       // converting " " -> "" due to limitation in the decisons table to add null/""
-      const decisionValue = decision.output_value[0] === " " ? "" : decision.output_value[0];
+      if (decision.action_type === "RESET_FIELD_VALUE") {
+        decisionValue = "";
+      }
       if (isComeBack && prospectValue === defaultValue) {
         changedFieldValues[decision.output_key] = decisionValue;
       }
