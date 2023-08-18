@@ -81,13 +81,15 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
     IBANType: Yup.string().required(getRequiredMessage("IBAN type")),
     IBAN: Yup.string().when("IBANType", {
-      is: (IBANType) => IBANType !== "NOIB",
+      is: IBANType => IBANType !== "NOIB",
       then: Yup.string()
         .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
         .max(23, "IBAN must have a maximum of 23 characters")
         .typeError(getRequiredMessage("IBAN"))
         .required(getRequiredMessage("IBAN")),
-      otherwise: Yup.string().nullable().notRequired()
+      otherwise: Yup.string()
+        .nullable()
+        .notRequired()
     }),
     companyNameforSOF: Yup.string().when("IBANType", {
       is: IBANType => IBANType === "BARO",
@@ -212,21 +214,38 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     );
   };
 
-  const removeIbanNumber = (values, setFieldValue) => {
-    setFieldValue("IBAN", null);
+  const removeTradeLicenseDoc = (setFieldValue, touched, setTouched) => {
+    const path = `prospect.documents.stakeholdersDocuments.0_${[
+      signatoryName
+    ]}.additionalDocuments`;
+    setFieldValue("tradeLicense", "");
+    setTouched({ ...touched, ...{ tradeLicense: false } });
+
     dispatch(
       updateProspect({
-        "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN": "",
+        [path]: [],
+        "prospect.prospectDocuments.additionalStakeholderDocument.tradeLicense": ""
       })
     );
-};
+  };
+
+  const removeIbanNumber = (values, setFieldValue, touched, setTouched) => {
+    setFieldValue("IBAN", null);
+    removeTradeLicenseDoc(setFieldValue, touched, setTouched);
+
+    dispatch(
+      updateProspect({
+        "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN": ""
+      })
+    );
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={sourceOfIncomeValidationSchema}
       isInitialValid={initialIsValid}
-      onSubmit={() => { }}
+      onSubmit={() => {}}
     >
       {({ values, setFieldValue, touched, setTouched, isValid, ...props }) => {
         const IsValidForm = sourceOfIncomeValidationSchema.isValidSync(values);
@@ -277,28 +296,27 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
                     label="IBAN type"
                     placeholder="IBAN type"
                     component={SelectAutocomplete}
-                    onChange={(selectedValue) => {
+                    onChange={selectedValue => {
                       setFieldValue("IBANType", selectedValue);
-                      if(selectedValue === "NOIB"){
-                        removeIbanNumber(selectedValue, setFieldValue)
+                      if (selectedValue === "NOIB") {
+                        removeIbanNumber(selectedValue, setFieldValue, touched, setTouched);
                       }
-                      
                     }}
                   />
                 </Grid>
                 {!noIBAN && (
-                <Grid item sm={12} xs={12}>
-                  <Field
-                    name="IBAN"
-                    label="IBAN of your UAE bank"
-                    placeholder="IBAN of your UAE bank"
-                    isLoadDefaultValueFromStore={true}
-                    path={`${basePath}.IBAN`}
-                    component={IBANField}
-                    shrink={true}
-                    disabled={noIBAN}
-                  />
-                </Grid>
+                  <Grid item sm={12} xs={12}>
+                    <Field
+                      name="IBAN"
+                      label="IBAN of your UAE bank"
+                      placeholder="IBAN of your UAE bank"
+                      isLoadDefaultValueFromStore={true}
+                      path={`${basePath}.IBAN`}
+                      component={IBANField}
+                      shrink={true}
+                      disabled={noIBAN}
+                    />
+                  </Grid>
                 )}
                 {isBARO && (
                   <>
