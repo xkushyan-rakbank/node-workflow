@@ -254,3 +254,18 @@ export const productVariantOptions = [
     label: "Conventional"
   }
 ];
+
+export const YesNaList = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: "Yes",
+    label: "Yes"
+  },
+  {
+    code: "NA",
+    key: "NA",
+    value: "NA",
+    label: "NA"
+  }
+];

@@ -358,7 +358,7 @@ export const useStyles = makeStyles((theme) => ({
       }
     },
     "& .activePanel": {
-      display: "none"
+      display: "none!important"
     }
   }
 }));

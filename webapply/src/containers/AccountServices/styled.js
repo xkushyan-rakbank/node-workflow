@@ -6,7 +6,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "25px"
   },
   questionareWrapper: {
-    marginBottom: "20px",
+    marginBottom: "10px",
     "&:last-child": {
       marginBottom: "0px"
     }
@@ -19,8 +19,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "16px",
     lineHeight: "22px",
     color: "#1F1F1F",
-    margin: 0,
-    marginBottom: "16px"
+    margin: 0
   },
   sectionLabelWithInfo: {
     display: "flex",
@@ -65,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
     "& h3": {
       color: "#1F1F1F",
       fontSize: "20px",
-      fontWeight: 600,
+      fontWeight: 500,
       lineHeight: "32px",
       margin: 0
     },
@@ -252,5 +251,63 @@ export const useStyles = makeStyles(theme => ({
       width: "24px",
       height: "24px"
     }
+  },
+  generalDetailsGrid: {
+    marginTop: 0,
+    marginBottom: 0
+  },
+  verificationDetailsWrapper: {
+    padding: "20px 10px",
+    borderRadius: "10px",
+    border: "1px solid #CCC",
+    marginBottom: "8px",
+    marginTop: "18px"
+  },
+  verificationDetailsGrid: {
+    width: "100%",
+    margin: "0 auto"
+  },
+  verificationDetailsInfoWrapper: {
+    display: "flex",
+    alignItems: "center",
+    gap: "4px",
+    fontSize: "0.75rem",
+    fontWeight: 400,
+    lineHeight: "16px",
+    color: "#757575"
+  },
+  verifyDetailInfoIcon: {
+    width: "16px",
+    height: "16px",
+    fill: "#757575"
+  },
+  addMoreButton: {
+    border: "1px solid #1F1F1F",
+    borderRadius: "21px",
+    padding: "9px 24px",
+    color: "#1F1F1F",
+    fontWeight: 500,
+    fontSize: "16px",
+    lineHeight: "22px",
+    textTransform: "none",
+    width: "max-content",
+    margin: "24px 0"
+  },
+  textAreaRoot: {
+    marginBottom: 0
+  },
+  title: {
+    fontWeight: 500,
+    fontSize: "20px",
+    lineHeight: "28px",
+    color: "#000",
+    margin: 0,
+    marginBottom: "30px"
+  },
+  kycSection: {
+    marginTop: "32px"
+  },
+  rmVerificationRemarksTextarea: {
+    margin: "24px 0"
   }
 }));

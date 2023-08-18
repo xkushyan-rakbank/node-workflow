@@ -11,5 +11,25 @@ export const useStyles = makeStyles({
     "& .Mui-focused fieldset": {
       borderColor: "#373737 !important"
     }
+  },
+  filledInput: {
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: "22px",
+    letterSpacing: "0.08px",
+    color: "#2C2C2C",
+    backgroundColor: "#FFF",
+    borderRadius: "12px",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: "#BCBDC0",
+    padding: 0,
+    "&:hover": {
+      backgroundColor: "#FFF"
+    },
+    "&.Mui-disabled": {
+      background: "#F2F2F2",
+      color: "#9B9CA0"
+    }
   }
 });

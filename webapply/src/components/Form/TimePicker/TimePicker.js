@@ -45,19 +45,23 @@ const TimePickerBase = ({
             openTo={openTo}
             margin="normal"
             format={format}
-            inputVariant="outlined"
+            inputVariant="filled"
             variant="inline"
             placeholder={placeholder}
             error={false}
             InputProps={{
-              ...InputProps
+              ...InputProps,
+              disableUnderline: true,
+              classes: {
+                root: classes.filledInput
+              }
             }}
             KeyboardButtonProps={{
               "aria-label": "change time"
             }}
             {...field}
             {...timePickerProps}
-            InputAdornmentProps={{ position: "start" }}
+            InputAdornmentProps={{ position: "end" }}
             value={field.value || disableValue}
             onChange={onChange}
             classes={{

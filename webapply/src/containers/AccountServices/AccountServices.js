@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -45,6 +45,9 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useViewId } from "../../utils/useViewId";
 import { ConfirmationDialog } from "./components/confirmationModal";
 import { Footer } from "../../components/Footer";
+import { KycAnnexureDetails } from "./components/KycAnnexureDetails";
+import { checkLoginStatus } from "../../store/selectors/loginSelector";
+import { scrollToDOMNode } from "../../components/VerticalPagination";
 
 export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -54,6 +57,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   useViewId(true);
 
   const pushHistory = useTrackingHistory();
+
+  const refToTopOfAccountService = useRef(null);
+  const isAgent = useSelector(checkLoginStatus);
 
   const { licenseIssuingAuthority } = useSelector(getOrganizationInfo);
   const {
@@ -157,7 +163,29 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     marketing: "",
     marketingChannel: [],
     nameOnDebitCard: "",
-    surveys: ""
+    surveys: "",
+    audioVideoKycVerification: "NA",
+    eidPing: "NA",
+    isVisitConducted: "NA",
+    verificationDetails: [
+      {
+        verificationDate: "",
+        verificationTime: "",
+        verificationConductedBy: "",
+        verificationStatus: "SATF",
+        verificationRemarks: ""
+      }
+    ],
+    visitDetails: [
+      {
+        conductedDate: "",
+        conductedTime: "",
+        visitConductedBy: "",
+        visitConductedAt: "",
+        counterfeitProducts: "",
+        sisterCompanyTradeLicense: ""
+      }
+    ]
   };
 
   const accountInfoValidation = Yup.object().shape({
@@ -218,13 +246,14 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     [pushHistory, sendProspectToAPI]
   );
 
-  const handleGoToPackage = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleGoToPackage = event => {
     setShowConfirmationPopup(false);
+    event.preventDefault();
+    scrollToDOMNode(refToTopOfAccountService);
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} ref={refToTopOfAccountService}>
       <div className={classes.section}>
         <ConfirmationDialog
           title={"Sure you don't want an add-on?"}
@@ -232,7 +261,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
             "Upgrading to a RAKvalue package can save you tons of time and money, making it that much easier to run your business."
           }
           handleContinueWithoutAddon={() => handleClickNextStep(true)}
-          handleGoToPackage={handleGoToPackage}
+          handleGoToPackage={event => handleGoToPackage(event)}
           handleClose={() => setShowConfirmationPopup(false)}
           isOpen={showConfirmationPopup}
         />
@@ -553,6 +582,26 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     </div>
                   </Accordion>
                 </div>
+                {isAgent && (
+                  <div className={classes.packageSelectionWrapper}>
+                    <Accordion
+                      title={"KYC Annexure"}
+                      id={"KYCAnnexure "}
+                      classes={{
+                        accordionRoot: classes.accountServiceAccordionRoot,
+                        accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                        accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                        accordionDetails: classes.accordionDetails
+                      }}
+                    >
+                      <KycAnnexureDetails
+                        formValues={values}
+                        setFormValues={setFieldValue}
+                        {...props}
+                      />
+                    </Accordion>
+                  </div>
+                )}
                 <Footer>
                   <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton

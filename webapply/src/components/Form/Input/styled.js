@@ -208,7 +208,8 @@ export const useStyles = makeStyles(theme => {
       }
     },
     inputMultiline: {
-      padding: 0
+      padding: 0,
+      borderRadius: 0
     },
     iePlaceholder: {
       position: "absolute",

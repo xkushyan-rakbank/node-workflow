@@ -2,6 +2,7 @@ import React from "react";
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { KeyboardTimePicker } from "@material-ui/pickers";
+import { ReactComponent as CalenderIcon } from "../../../assets/icons/calendar.svg";
 
 const keyboardTimePickerTheme = createMuiTheme({
   overrides: {
@@ -65,8 +66,7 @@ const keyboardTimePickerTheme = createMuiTheme({
         marginLeft: -8,
         padding: "5px 8px 3px 3px",
         height: "100%",
-        maxHeight: "none",
-        borderRight: "1px solid rgba(194, 194, 194, 0.56)"
+        maxHeight: "none"
       }
     },
     MuiInputLabel: {
@@ -109,6 +109,6 @@ const keyboardTimePickerTheme = createMuiTheme({
 
 export const StyledKeyboardTimePicker = props => (
   <ThemeProvider theme={keyboardTimePickerTheme}>
-    <KeyboardTimePicker {...props} />
+    <KeyboardTimePicker keyboardIcon={<CalenderIcon />} {...props} />
   </ThemeProvider>
 );

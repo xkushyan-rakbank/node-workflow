@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     padding: "20px",
     flexDirection: "column",
-    gap: "20px",
+    gap: "30px",
     borderRadius: "10px",
     border: "1px solid #CCC",
     [theme.breakpoints.up("sm")]: {
