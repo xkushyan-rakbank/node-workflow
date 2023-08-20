@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 
@@ -34,49 +34,50 @@ const additionalCompanyInfoSchema = Yup.object().shape({
   )
 });
 
-export const BusinessRelationship = ({
-  topCustomers,
-  topSuppliers,
-  setFieldValue: setFormFieldValue,
-  id
-}) => {
-  const classes = useStyles();
-  const initialValues = {
-    topCustomers,
-    topSuppliers
-  };
-  const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
+// eslint-disable-next-line react/display-name
+export const BusinessRelationship = forwardRef(
+  ({ topCustomers, topSuppliers, setFieldValue: setFormFieldValue, id, refs }) => {
+    const classes = useStyles();
+    const initialValues = {
+      topCustomers,
+      topSuppliers
+    };
+    const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
+    const { businessRef, bussinesAcordionRef } = refs;
 
-  return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={additionalCompanyInfoSchema}
-      onSubmit={() => {}}
-      validateOnChange={false}
-    >
-      {props => {
-        return (
-          <Form>
-            <Accordion
-              title={"Business relationships"}
-              id={id}
-              setFormFieldValue={setFormFieldValue}
-              isCompleted={initialIsValid && props.isValid}
-              classes={{
-                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
-                accordionSummaryContentExpanded:
-                  classes.additionalInfoAccordionSummaryContentExpanded
-              }}
-              showHelperText={
-                "Provide the details for a minimum of 1 buyer and 1 supplier. Depending on the details entered earlier, we may have pre-filled some fields for you"
-              }
-            >
-              <TopCustomers topCustomers={topCustomers} {...props} />
-              <TopSuppliers topSuppliers={topSuppliers} {...props} />
-            </Accordion>
-          </Form>
-        );
-      }}
-    </Formik>
-  );
-};
+    return (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={additionalCompanyInfoSchema}
+        // onSubmit={handleFormSubmit}
+        validateOnChange={false}
+        innerRef={businessRef}
+      >
+        {props => {
+          return (
+            <Form>
+              <Accordion
+                title={"Business relationships"}
+                id={id}
+                setFormFieldValue={setFormFieldValue}
+                isCompleted={initialIsValid && props.isValid}
+                classes={{
+                  accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                  accordionSummaryContentExpanded:
+                    classes.additionalInfoAccordionSummaryContentExpanded
+                }}
+                showHelperText={
+                  "Provide the details for a minimum of 1 buyer and 1 supplier. Depending on the details entered earlier, we may have pre-filled some fields for you"
+                }
+                acordionRef={bussinesAcordionRef}
+              >
+                <TopCustomers topCustomers={topCustomers} {...props} />
+                <TopSuppliers topSuppliers={topSuppliers} {...props} />
+              </Accordion>
+            </Form>
+          );
+        }}
+      </Formik>
+    );
+  }
+);

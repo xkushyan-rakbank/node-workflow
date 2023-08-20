@@ -118,7 +118,8 @@ export const Accordion = ({
   classes: extendedClasses,
   showHelperText,
   setFormFieldValue = () => {},
-  expandedByDefault = false
+  expandedByDefault = false,
+  acordionRef
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -140,7 +141,6 @@ export const Accordion = ({
   }, [id, isCompleted]);
 
   const byDefaultExpandedAccordion = ["documentLanding"];
-
   return (
     <div className="accordion">
       <MuiAccordion
@@ -161,6 +161,7 @@ export const Accordion = ({
             content: classes.accordionSummaryContent,
             expandIcon: classes.accordionIcon
           }}
+          ref={acordionRef}
         >
           <div
             className={cx(classes.accordionSummaryWrapper, classes.customAccordionSummaryWrapper)}
