@@ -43,7 +43,7 @@ export const BusinessRelationship = forwardRef(
       topSuppliers
     };
     const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
-    const { businessRef, bussinesAcordionRef } = refs;
+    const { businessFormRef, bussinesAccordionRef } = refs;
 
     return (
       <Formik
@@ -51,7 +51,7 @@ export const BusinessRelationship = forwardRef(
         validationSchema={additionalCompanyInfoSchema}
         // onSubmit={handleFormSubmit}
         validateOnChange={false}
-        innerRef={businessRef}
+        innerRef={businessFormRef}
       >
         {props => {
           return (
@@ -69,7 +69,7 @@ export const BusinessRelationship = forwardRef(
                 showHelperText={
                   "Provide the details for a minimum of 1 buyer and 1 supplier. Depending on the details entered earlier, we may have pre-filled some fields for you"
                 }
-                acordionRef={bussinesAcordionRef}
+                accordionRef={bussinesAccordionRef}
               >
                 <TopCustomers topCustomers={topCustomers} {...props} />
                 <TopSuppliers topSuppliers={topSuppliers} {...props} />

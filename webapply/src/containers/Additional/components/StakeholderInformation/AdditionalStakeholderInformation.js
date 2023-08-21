@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,6 +44,18 @@ export const AdditionalStakeholderInformation = ({
   const isComeback = useSelector(getIsComeback);
   const { showSOF } = useSelector(getSignatories)[0];
   const signatoryInfo = useSelector(getSignatories);
+
+  const backgroundFormRef = useRef(null);
+  const backgroundAccordionRef = useRef(null);
+
+  const sourceOfIncomeFormRef = useRef(null);
+  const sourceOfIncomeAccordionRef = useRef(null);
+
+  const residentialFormRef = useRef(null);
+  const residentialAccordionRef = useRef(null);
+
+  const stakeHolderFormRef = useRef(null);
+  const stakeHolderTaxAccordionRef = useRef(null);
 
   useEffect(() => {
     !showSOF &&
@@ -103,6 +115,52 @@ export const AdditionalStakeholderInformation = ({
     );
   };
 
+  const handleFormAcordions = (formRef, accordionRef, isCompleted) => {
+    let isAccordionOpen = accordionRef?.current?.getAttribute("aria-expanded") === "true";
+
+    if (formRef) {
+      formRef.submitForm();
+    }
+
+    if (!isCompleted && !isAccordionOpen) {
+      accordionRef.current.click();
+    }
+  };
+
+  const handleNextClickAction = validationResults => {
+    try {
+      let forms = {
+        background: {
+          formRef: backgroundFormRef.current,
+          accordionRef: backgroundAccordionRef,
+          isCompleted: validationResults?.backgroundInfoSection
+        },
+        sourceOfIncome: {
+          formRef: sourceOfIncomeFormRef.current,
+          accordionRef: sourceOfIncomeAccordionRef,
+          isCompleted: validationResults?.sourceOfIncomeSection
+        },
+        residential: {
+          formRef: residentialFormRef.current,
+          accordionRef: residentialAccordionRef,
+          isCompleted: validationResults?.residentialAddressSection
+        },
+        taxDeclaration: {
+          formRef: stakeHolderFormRef.current,
+          accordionRef: stakeHolderTaxAccordionRef,
+          isCompleted: validationResults?.stakeholderTaxDeclarationSection
+        }
+      };
+
+      Object.keys(forms).forEach(formName => {
+        const { formRef, accordionRef, isCompleted } = forms[formName];
+        handleFormAcordions(formRef, accordionRef, isCompleted);
+      });
+    } catch (validationError) {
+      console.error(validationError);
+    }
+  };
+
   return (
     <>
       <Formik
@@ -122,18 +180,36 @@ export const AdditionalStakeholderInformation = ({
                   <div className={classes.companyNameinfoContainer}>
                     <StakeholdersDetail name={stakeholderName} companyCategory={companyCategory} />
                   </div>
-                  <Background id={"backgroundInfoSection"} {...props} />
-                  {showSOF && <SourceOfIncome id={"sourceOfIncomeSection"} {...props} />}
-                  <ResidentialAddress id={"residentialAddressSection"} {...props} />
-                  <StakeholderTaxDeclarations id={"stakeholderTaxDeclarationSection"} {...props} />
+                  <Background
+                    id={"backgroundInfoSection"}
+                    refs={{ backgroundFormRef, backgroundAccordionRef }}
+                    {...props}
+                  />
+                  {showSOF && (
+                    <SourceOfIncome
+                      id={"sourceOfIncomeSection"}
+                      refs={{ sourceOfIncomeFormRef, sourceOfIncomeAccordionRef }}
+                      {...props}
+                    />
+                  )}
+                  <ResidentialAddress
+                    id={"residentialAddressSection"}
+                    refs={{ residentialFormRef, residentialAccordionRef }}
+                    {...props}
+                  />
+                  <StakeholderTaxDeclarations
+                    id={"stakeholderTaxDeclarationSection"}
+                    refs={{ stakeHolderFormRef, stakeHolderTaxAccordionRef }}
+                    {...props}
+                  />
                 </div>
                 <Footer>
                   <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
                   <NextStepButton
                     justify="flex-end"
                     label="Next"
-                    disabled={!isValidStakeholderInfo}
                     isDisplayLoader={isLoading}
+                    onClick={() => handleNextClickAction(props?.values)}
                   />
                 </Footer>
               </div>

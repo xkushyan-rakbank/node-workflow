@@ -45,7 +45,7 @@ export const IBANField = props => (
   />
 );
 
-export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
+export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) => {
   const classes = useStyles();
   const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails";
@@ -76,6 +76,8 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
     proofOfIncome: proofOfIncome || [""],
     tradeLicense: tradeLicense[0] || ""
   };
+
+  const { sourceOfIncomeFormRef, sourceOfIncomeAccordionRef } = refs;
 
   const sourceOfIncomeValidationSchema = Yup.object().shape({
     sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
@@ -245,7 +247,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
       initialValues={initialValues}
       validationSchema={sourceOfIncomeValidationSchema}
       isInitialValid={initialIsValid}
-      onSubmit={() => {}}
+      innerRef={sourceOfIncomeFormRef}
     >
       {({ values, setFieldValue, touched, setTouched, isValid, ...props }) => {
         const IsValidForm = sourceOfIncomeValidationSchema.isValidSync(values);
@@ -264,6 +266,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id }) => {
             showHelperText={
               "We need this information to verify and understand the source(s) of your business income. You can provide your IBAN or upload bank statements as proof of income."
             }
+            accordionRef={sourceOfIncomeAccordionRef}
           >
             <>
               <Grid container>

@@ -35,13 +35,13 @@ import { updateProspect } from "../../../../../store/actions/appConfig";
 
 // eslint-disable-next-line react/display-name
 export const MailingAddressSection = forwardRef(
-  ({ setFieldValue: setFormFieldValue, id, isActive, refs }) => {
+  ({ setFieldValue: setFormFieldValue, id, refs }) => {
     const classes = useStyles();
     const [isVirtualAddress, setIsVirtualAddress] = useState(true);
     const [isUploading, setIsUploading] = useState({});
     const dispatch = useDispatch();
 
-    const {mailAddressingRef, mailAddressAcordionRef} = refs;
+    const { mailAddressFormRef, mailAddressAccordionRef } = refs;
     const handleAddressTypeSelection = event => {
       if (event.target.value !== "virtual") {
         setIsVirtualAddress(false);
@@ -190,8 +190,7 @@ export const MailingAddressSection = forwardRef(
         validationSchema={mailingAddressSchema}
         validateOnChange={true}
         validateOnBlur={true}
-        innerRef={mailAddressingRef}
-        // onSubmit={() => {}}
+        innerRef={mailAddressFormRef}
       >
         {({
           values,
@@ -224,7 +223,7 @@ export const MailingAddressSection = forwardRef(
                 showHelperText={
                   "We need to know where your company receives mail and if you have a virtual or physical office"
                 }
-                acordionRef={mailAddressAcordionRef}
+                accordionRef={mailAddressAccordionRef}
               >
                 <Grid container spacing={3}>
                   <Grid item sm={12} xs={12}>

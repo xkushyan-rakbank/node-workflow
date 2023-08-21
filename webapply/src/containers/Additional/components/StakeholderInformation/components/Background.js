@@ -28,7 +28,7 @@ import { NAME_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
 
-export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
+export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { employmentType } = useSelector(getDatalist);
@@ -48,6 +48,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
     "prospect.prospectDocuments.stakeholderAdditionalInfo.backgroundDetails.cv";
 
   const cv = useFindDocument(documents, documentKeyToCheck);
+  const { backgroundFormRef, backgroundAccordionRef } = refs;
 
   useEffect(() => {
     dispatch(initDocumentUpload());
@@ -140,9 +141,10 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
   return (
     <Formik
       initialValues={initialValues}
-      validateOnChange={true}
+      validateOnChange={false}
       validationSchema={backgroundSchema}
       isInitialValid={initialIsValid}
+      innerRef={backgroundFormRef}
     >
       {({ touched, setTouched, setFieldValue, values, isValid, errors }) => {
         const isBackgroundDetailsEmpty =
@@ -162,6 +164,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id }) => {
             showHelperText={
               "We ask for educational and professional background information as part of our due-diligence process. Verifying the identities of the people associated with your business is standard."
             }
+            accordionRef={backgroundAccordionRef}
           >
             <>
               <p className={classes.sectionLabel}>Education and employment</p>

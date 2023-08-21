@@ -43,17 +43,17 @@ export const AddCompanyInformation = ({
   const isComeback = useSelector(getIsComeback);
 
   const [isLoading, setIsLoading] = useState(false);
-  const businessRef = useRef(null);
-  const bussinesAcordionRef = useRef(null);
+  const businessFormRef = useRef(null);
+  const bussinesAccordionRef = useRef(null);
 
-  const mailAddressingRef = useRef(null);
-  const mailAddressAcordionRef = useRef(null);
+  const mailAddressFormRef = useRef(null);
+  const mailAddressAccordionRef = useRef(null);
 
-  const financialRef = useRef(null);
-  const financialAcordionRef = useRef(null);
+  const financialFormRef = useRef(null);
+  const financialAccordionRef = useRef(null);
 
-  const taxDeclarationDef = useRef(null);
-  const taxDeclarationAcordionRef = useRef(null);
+  const taxDeclarationFormRef = useRef(null);
+  const taxDeclarationAccordionRef = useRef(null);
 
   useEffect(() => {
     !companyAdditionalInfoStatus && dispatch(updateCompanyAdditionalInfoStatus("inProgress"));
@@ -95,11 +95,11 @@ export const AddCompanyInformation = ({
     );
   };
 
-  const handleFormAcordions = async (ref, accordionRef, isCompleted) => {
+  const handleFormAcordions = (formRef, accordionRef, isCompleted) => {
     let isAccordionOpen = accordionRef?.current.getAttribute("aria-expanded") === "true";
 
-    if (ref) {
-      ref.submitForm();
+    if (formRef) {
+      formRef.submitForm();
     }
 
     if (!isCompleted && !isAccordionOpen) {
@@ -107,31 +107,35 @@ export const AddCompanyInformation = ({
     }
   };
 
-  const handleNextClickAction = async validationResults => {
+  const handleNextClickAction = validationResults => {
     try {
-      handleFormAcordions(
-        businessRef.current,
-        bussinesAcordionRef,
-        validationResults?.isBusinessRelationshipCompleted
-      );
+      let forms = {
+        business: {
+          formRef: businessFormRef.current,
+          accordionRef: bussinesAccordionRef,
+          isCompleted: validationResults?.isBusinessRelationshipCompleted
+        },
+        mailAddress: {
+          formRef: mailAddressFormRef.current,
+          accordionRef: mailAddressAccordionRef,
+          isCompleted: validationResults?.isMailingAddressCompleted
+        },
+        financial: {
+          formRef: financialFormRef.current,
+          accordionRef: financialAccordionRef,
+          isCompleted: validationResults?.isFinancialTurnoverCompleted
+        },
+        taxDeclarations: {
+          formRef: taxDeclarationFormRef.current,
+          accordionRef: taxDeclarationAccordionRef,
+          isCompleted: validationResults?.isTaxDeclarationCompleted
+        }
+      };
 
-      handleFormAcordions(
-        mailAddressingRef.current,
-        mailAddressAcordionRef,
-        validationResults?.isMailingAddressCompleted
-      );
-
-      handleFormAcordions(
-        financialRef.current,
-        financialAcordionRef,
-        validationResults?.isFinancialTurnoverCompleted
-      );
-
-      handleFormAcordions(
-        taxDeclarationDef.current,
-        taxDeclarationAcordionRef,
-        validationResults?.isTaxDeclarationCompleted
-      );
+      Object.keys(forms).forEach(formName => {
+        const { formRef, accordionRef, isCompleted } = forms[formName];
+        handleFormAcordions(formRef, accordionRef, isCompleted);
+      });
     } catch (validationError) {
       // console.error(validationError);
     }
@@ -164,23 +168,23 @@ export const AddCompanyInformation = ({
                     topCustomers={topCustomers}
                     topSuppliers={topSuppliers}
                     id={"isBusinessRelationshipCompleted"}
-                    refs={{ businessRef, bussinesAcordionRef }}
+                    refs={{ businessFormRef, bussinesAccordionRef }}
                     {...props}
                   />
                   <FinancialTurnoverSection
                     id={"isFinancialTurnoverCompleted"}
-                    refs={{ financialRef, financialAcordionRef }}
+                    refs={{ financialFormRef, financialAccordionRef }}
                     {...props}
                   />
                   <MailingAddressSection
                     id={"isMailingAddressCompleted"}
-                    refs={{ mailAddressingRef, mailAddressAcordionRef }}
+                    refs={{ mailAddressFormRef, mailAddressAccordionRef }}
                     {...props}
                   />
                   <TaxDeclarationsSection
                     id={"isTaxDeclarationCompleted"}
                     {...props}
-                    refs={{ taxDeclarationDef, taxDeclarationAcordionRef }}
+                    refs={{ taxDeclarationFormRef, taxDeclarationAccordionRef }}
                   />
                 </div>
                 <Footer>

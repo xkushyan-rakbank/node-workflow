@@ -34,7 +34,7 @@ export const TaxDeclarationsSection = forwardRef(
     const dispatch = useDispatch();
     const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
     const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
-    const { taxDeclarationDef, taxDeclarationAcordionRef } = refs;
+    const { taxDeclarationFormRef, taxDeclarationAccordionRef } = refs;
 
     const definitionContext = (
       <a
@@ -116,8 +116,7 @@ export const TaxDeclarationsSection = forwardRef(
         validateOnBlur={true}
         validateOnMount={true}
         isInitialValid={initialIsValid}
-        onSubmit={() => {}}
-        innerRef={taxDeclarationDef}
+        innerRef={taxDeclarationFormRef}
       >
         {({ values, setFieldValue, isValid, ...props }) => {
           const IsValidForm = taxDeclarationSchema.isValidSync(values);
@@ -143,7 +142,7 @@ export const TaxDeclarationsSection = forwardRef(
                 showHelperText={
                   "Your company's tax information is required for our internal checks. You can find more details for each section by tapping on the information icon."
                 }
-                acordionRef={taxDeclarationAcordionRef}
+                accordionRef={taxDeclarationAccordionRef}
               >
                 <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
                 <div className={classes.taxDeclarationQuestionare}>

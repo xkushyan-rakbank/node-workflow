@@ -10,7 +10,7 @@ import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/vali
 import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { useStyles } from "../../styled";
 
-export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id }) => {
+export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
 
@@ -41,12 +41,14 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id }) => 
     emirateCity: Yup.string().required(getRequiredMessage("Emirate or city"))
   });
 
+  const { residentialFormRef, residentialAccordionRef } = refs;
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={residentialAddressSchema}
       validateOnChange={true}
-      onSubmit={() => {}}
+      innerRef={residentialFormRef}
     >
       {({ values }) => {
         const isValidForm = residentialAddressSchema.isValidSync(values);
@@ -63,6 +65,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id }) => 
             showHelperText={
               "Enter your residential address(where you are located) and provide at least 1 supporting document."
             }
+            accordionRef={residentialAccordionRef}
           >
             <Grid container spacing={3}>
               <Grid item sm={6} xs={12}>
