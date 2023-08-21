@@ -5,6 +5,8 @@ export const LOGIN_INFO_FORM_SUCCESS = "LOGIN_INFO_FORM_SUCCESS";
 export const LOGIN_INFO_FORM_ERROR = "LOGIN_INFO_FORM_ERROR";
 export const LOGOUT = "LOGOUT";
 
+export const RESET_LOGIN_INFO = "RESET_LOGIN_INFO";
+
 export const loginInfoFormPromisify = response => ({
   type: LOGIN_INFO_FORM,
   [WAIT_FOR_ACTION]: LOGIN_INFO_FORM_SUCCESS,
@@ -22,4 +24,8 @@ export const loginInfoFormError = error => {
 
 export const logout = () => {
   return { type: LOGOUT };
+};
+
+export const resetLogin = () => {
+  return { type: RESET_LOGIN_INFO };
 };
