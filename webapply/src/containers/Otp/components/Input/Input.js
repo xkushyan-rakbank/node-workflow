@@ -27,7 +27,7 @@ const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
   const handleChange = useCallback(
     event => {
       const { value, name } = event.target;
-      if (!value || (isNumeric(value) && value < 10 && value.toString().length === 1)) {
+      if (!value || (isNumeric(value) && value < 10)) {
         const newCodeIndex = parseInt(name, 10);
         const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
 
@@ -63,7 +63,7 @@ const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
     <Grid key={index} className={classes.squareInput}>
       <TextField
         autoFocus={index === 0}
-        type="number"
+        type="text"
         name={`${index}`}
         variant="outlined"
         inputProps={{ inputMode: "numeric", maxLength: 1, ref: bindNodeRef(index) }}
@@ -71,6 +71,7 @@ const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
         onChange={handleChange}
         onKeyUp={handleKeyUp}
         value={value}
+        autocomplete="one-time-code"
       />
     </Grid>
   ));
