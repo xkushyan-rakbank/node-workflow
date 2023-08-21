@@ -8,6 +8,7 @@ import routes from "./../../routes";
 import { useLayoutParams } from "../FormLayout";
 import { OtpChannel, UAE_CODE } from "../../constants";
 import { setOtpMode } from "../../store/actions/otp";
+import { logout } from "../../store/actions/loginForm";
 
 export const ComeBackLoginContainer = ({
   generateOtpCode,
@@ -23,6 +24,10 @@ export const ComeBackLoginContainer = ({
   useFormNavigation([true, false]);
   useLayoutParams();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(logout());
+  }, []);
 
   useEffect(() => {
     resetProspect();
