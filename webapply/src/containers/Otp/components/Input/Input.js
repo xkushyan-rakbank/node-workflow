@@ -27,7 +27,7 @@ const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
   const handleChange = useCallback(
     event => {
       const { value, name } = event.target;
-      if (!value || (isNumeric(value) && value < 10)) {
+      if (!value || (isNumeric(value) && value < 10 && value.toString().length === 1)) {
         const newCodeIndex = parseInt(name, 10);
         const newCode = code.map((item, index) => (newCodeIndex === index ? value : item));
 
