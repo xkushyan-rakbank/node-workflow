@@ -4,7 +4,11 @@ import { Form, Formik } from "formik";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { TopCustomers } from "./TopCustomers";
-import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import {
+  getInvalidMessage,
+  getNotTrimmedMessage,
+  getRequiredMessage
+} from "../../../../../utils/getValidationMessage";
 import { SPECIAL_CHARACTERS_REGEX, checkIsTrimmed } from "../../../../../utils/validation";
 import { TopSuppliers } from "./TopSuppliers";
 import { useStyles } from "../../styled";
@@ -17,7 +21,7 @@ const additionalCompanyInfoSchema = Yup.object().shape({
         .max(255, "Maximum ${max} characters allowed")
         .required(getRequiredMessage("Customer name"))
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name"))
-        .test("space validation", getInvalidMessage("Customer name"), checkIsTrimmed),
+        .test("space validation", getNotTrimmedMessage("Customer name"), checkIsTrimmed),
       country: Yup.string().required(getRequiredMessage("Country"))
     })
   ),
@@ -28,7 +32,7 @@ const additionalCompanyInfoSchema = Yup.object().shape({
         // eslint-disable-next-line no-template-curly-in-string
         .max(255, "Maximum ${max} characters allowed")
         .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name"))
-        .test("space validation", getInvalidMessage("Supplier name"), checkIsTrimmed),
+        .test("space validation", getNotTrimmedMessage("Supplier name"), checkIsTrimmed),
       country: Yup.string().required(getRequiredMessage("Country"))
     })
   )

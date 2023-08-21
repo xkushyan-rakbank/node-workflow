@@ -24,7 +24,7 @@ const InputBase = ({
   field: { onBlur, ...field },
   shrink,
   infoTitle,
-  form: { errors, touched },
+  form: { errors, touched, ...form },
   classes: extendedClasses,
   InputProps,
   ErrorMessageComponent = ErrorMessage,
@@ -89,6 +89,7 @@ const InputBase = ({
             }
           }}
           onBlur={event => {
+            form.setFieldValue(field.name, field.value.trim());
             if (isLemnisk) {
               {
                 lemniskCall(field.value);
