@@ -119,7 +119,7 @@ export const Accordion = ({
   showHelperText,
   setFormFieldValue = () => {},
   expandedByDefault = false,
-  acordionRef
+  accordionRef,
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -161,7 +161,7 @@ export const Accordion = ({
             content: classes.accordionSummaryContent,
             expandIcon: classes.accordionIcon
           }}
-          ref={acordionRef}
+          ref={accordionRef}
         >
           <div
             className={cx(classes.accordionSummaryWrapper, classes.customAccordionSummaryWrapper)}
