@@ -35,7 +35,7 @@ export const useDisplayScreenBasedOnViewId = () => {
       let url = `${smeBaseName}${viewId}`;
       if (isSubmit) {
         if (!isROScreens) {
-          url = isRetrieveMode ? routes.ApplicationSubmitted : routes.reUploadDocuments;
+          url = isRetrieveMode ? routes.ApplicationSubmitted : routes.additionalInformation;
         } else {
           /* istanbul ignore else */
           if (isEditRedirect) {
@@ -51,11 +51,13 @@ export const useDisplayScreenBasedOnViewId = () => {
       }
       if (
         !isROScreens &&
-        [PROSPECT_STATUSES.DOCUMENTS_NEEDED, PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS].includes(
-          prospectStatus
-        )
+        [
+          PROSPECT_STATUSES.DOCUMENTS_NEEDED,
+          PROSPECT_STATUSES.NEED_ADDITIONAL_DOCUMENTS,
+          PROSPECT_STATUSES.ADDITIONAL_INFO_REQUIRED
+        ].includes(prospectStatus)
       ) {
-        url = routes.reUploadDocuments;
+        url = routes.additionalInformation;
       }
 
       history.push(url);

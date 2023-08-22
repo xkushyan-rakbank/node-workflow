@@ -488,6 +488,16 @@
       "kycVerificationLocation": "",
       "kycVerificationotherLocation": ""
     },
+    "notifyApplicationRequest": {
+      "additionalInfoDetailsFromBPM": [],
+      "additionalDocumentDetailsFromBPM": []
+    },
+    "additionalDataForBPM": {
+      "additionalInfoBPM": [
+      ],
+      "additionalDocumentsBPM": [
+      ]
+    },
     "freeFieldsInfo": {
       "freeField1": "",
       "freeField2": "",

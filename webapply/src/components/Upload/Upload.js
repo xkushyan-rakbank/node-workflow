@@ -9,7 +9,7 @@ import { isMobile } from "react-device-detect";
 import { useStyles } from "./styled";
 import FileUploadIcon from "../../assets/icons/fileUpload.svg";
 // import { ReactComponent as Check } from "../../assets/icons/credit_score.svg";
-import {ReactComponent as Check} from "../../assets/icons/loadingGreen.svg"
+import { ReactComponent as Check } from "../../assets/icons/loadingGreen.svg";
 import useDecisions from "../../utils/useDecisions";
 import { ContexualHelp, ErrorMessage } from "./../Notifications";
 import { ICONS, Icon } from "../Icons";
@@ -50,7 +50,7 @@ export const Upload = ({
     maxSize,
     minSize,
     noDrag: isMobile ? true : false,
-    ...props,
+    ...props
   });
   const hasFile = !!file;
   const { visible } = useDecisions(path);
@@ -59,11 +59,11 @@ export const Upload = ({
   const FileIconHeight = isMobile ? "35px" : "44px";
   const FileIconWidth = isMobile ? "32px" : "40px";
 
-  const handleErrorMessage = (error) => {
+  const handleErrorMessage = error => {
     const errorMessages = {
       "file-invalid-type": getFileUploadErrorMessage.INVALID_FILE_TYPE,
       "file-too-small": getFileUploadErrorMessage.FILE_TOO_SMALL,
-      "file-too-large": getFileUploadErrorMessage.FILE_TOO_BIG,
+      "file-too-large": getFileUploadErrorMessage.FILE_TOO_BIG
     };
     return errorMessages[error.code] || error?.message;
   };
@@ -82,13 +82,12 @@ export const Upload = ({
 
         <div className={classes.uplaodContainer}>
           <div className={classes.main} {...getRootProps()}>
-           <div className={classes.row}> 
-            {hasFile && showUploadSuccessIcon ? (
-              <Check size="14px" className={classes.success} />
-            ) : (
-              <FileIcon height={FileIconHeight} width={FileIconWidth} alt="companyIconSvg" />
-            )}
-
+            <div className={classes.row}>
+              {hasFile && showUploadSuccessIcon ? (
+                <Check size="14px" className={classes.success} />
+              ) : (
+                <FileIcon height={FileIconHeight} width={FileIconWidth} alt="companyIconSvg" />
+              )}
             </div>
             <div className={classes.contentContainer}>
               <section>
@@ -97,7 +96,7 @@ export const Upload = ({
                   <div className={classes.content}>
                     {/* Drag and drop file here or upload from your computer */}
                     {showUploadSuccessIcon}
-                    {props?.content ? (
+                    {props?.content && props?.content?.fileName ? (
                       <p>{props?.content?.fileDescription || props?.content?.fileName}</p>
                     ) : (
                       `${
@@ -112,7 +111,7 @@ export const Upload = ({
                     <></>
                   ) : fileRejections?.length > 0 ? (
                     fileRejections?.map(({ file, errors }) =>
-                      errors?.map((e) => {
+                      errors?.map(e => {
                         return (
                           <div key={file} className={cx(classes.subcontent, classes.error)}>
                             {handleErrorMessage(e)}

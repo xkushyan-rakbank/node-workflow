@@ -16,6 +16,7 @@ export const GET_DOCUMENTS_LIST = "GET_DOCUMENTS_LIST";
 export const SAVE_DOCUMENT_LIST = "SAVE_DOCUMENT_LIST";
 export const UPLOAD_DOCUMENTS = "UPLOAD_DOCUMENTS";
 export const DOCUMENTS_UPLOAD_COMPLETED = "DOCUMENTS_UPLOAD_COMPLETED";
+export const UPLOAD_ADDITIONAL_DOCUMENTS = "UPLOAD_ADDITIONAL_DOCUMENTS";
 
 export const saveAndRetrieveDocDetails = () => ({
   type: SAVE_AND_RETRIEVE_DOC_UPLOADER
@@ -63,6 +64,11 @@ export const getDocumentsList = () => ({ type: GET_DOCUMENTS_LIST });
 export const saveDocumentList = payload => ({ type: SAVE_DOCUMENT_LIST, payload });
 
 export const uploadDocuments = payload => ({ type: UPLOAD_DOCUMENTS, payload });
+
+export const uploadAdditionalDocuments = payload => ({
+  type: UPLOAD_ADDITIONAL_DOCUMENTS,
+  payload
+});
 
 export const documentsUploadCompleted = payload => ({
   type: DOCUMENTS_UPLOAD_COMPLETED,

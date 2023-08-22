@@ -139,7 +139,8 @@ export const IDENTITY_VERIFICATION_FAIL = "Verification failed";
 export const PROSPECT_STATUSES = {
   ASSESSING: "Assessing",
   DOCUMENTS_NEEDED: "Documents needed",
-  NEED_ADDITIONAL_DOCUMENTS: "Need Additional Information/Documents"
+  NEED_ADDITIONAL_DOCUMENTS: "Need Additional Information/Documents",
+  ADDITIONAL_INFO_REQUIRED: "Additional Info Required"
 };
 
 export const ERROR_MESSAGES = {
@@ -208,6 +209,7 @@ export const CREAT_PROSPECT_KEYS = [
   "documents",
   "prospectStatusInfo",
   "kycAnnexure",
+  "notifyApplicationRequest",
   "freeFieldsInfo"
 ];
 

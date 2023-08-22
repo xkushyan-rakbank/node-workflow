@@ -53,7 +53,8 @@ import {
   saveDocumentUplaodAuthToken,
   saveDocumentList,
   UPLOAD_DOCUMENTS,
-  GET_DOCUMENTS_LIST
+  GET_DOCUMENTS_LIST,
+  UPLOAD_ADDITIONAL_DOCUMENTS
 } from "../actions/uploadDocuments";
 import {
   SEND_PROSPECT_TO_API_FAIL,
@@ -531,6 +532,49 @@ export function* uploadDocuments({ payload }) {
   }
 }
 
+export function* uploadAdditionalDocuments({ payload }) {
+  try {
+    const prospectId = yield select(getProspectId);
+    const headers = yield select(getDocuploaderHeader);
+    const token = yield select(getDocumentUplaoderjwtToken);
+    const fieldData = payload.docs;
+    let uploadedDocuments = [];
+    const index = payload.index;
+    const docItem = payload.docItem;
+
+    if (fieldData.name) {
+      const documentUniq = index !== undefined ? `${docItem}-${index}` : `${docItem}`;
+      const docExtension = fieldData.name.split(".").pop();
+      let generateName = [BBG_COMPANY_INFO_MODULEID, prospectId, docItem];
+      let appendTimeStamp = (index !== undefined ? `_${index + 1}` : "") + `_${unixTimestamp()}`;
+      const fileData = {
+        documentType: fieldData.type,
+        documentTitle: documentUniq,
+        fileName: `${generateName.join("_")}${appendTimeStamp}.${docExtension}`,
+        fileFormat: fieldData.type,
+        fileSize: fieldData.size,
+        file: fieldData
+      };
+      //await documents.upload(fileData, token, prospectId, headers);
+      const response = yield call(documents.upload, fileData, token, prospectId, headers);
+      uploadedDocuments.push({
+        documentKey: documentUniq,
+        documentType: fieldData.type,
+        fileFormat: fieldData.type,
+        fileName: response.data.fileName,
+        fileDescription: fieldData.name,
+        fileSize: fieldData.size,
+        submittedDt: new Date().toISOString(),
+        isSingleDocUpdated: true
+      });
+      payload.onSuccess(response.data.fileName);
+    }
+  } catch (error) {
+    payload.onFailure();
+    log(error);
+  }
+}
+
 export default function* uploadDocumentsSaga() {
   yield all([
     takeLatest(SAVE_AND_RETRIEVE_DOC_UPLOADER, saveProspectAndGetProspectDocumentsSaga),
@@ -542,6 +586,7 @@ export default function* uploadDocumentsSaga() {
     takeEvery(ADD_MULTI_DOCUMENT, addMultiDocumentSaga),
     takeEvery(INIT_DOCUMENT_UPLOAD, initDocumentUpload),
     takeEvery(GET_DOCUMENTS_LIST, getDocumentList),
-    takeEvery(UPLOAD_DOCUMENTS, uploadDocuments)
+    takeEvery(UPLOAD_DOCUMENTS, uploadDocuments),
+    takeEvery(UPLOAD_ADDITIONAL_DOCUMENTS, uploadAdditionalDocuments)
   ]);
 }
