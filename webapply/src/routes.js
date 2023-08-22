@@ -38,5 +38,7 @@ export default {
   congratulations: `${smeBaseName}/Congratulations`,
   applicationInvitation: `${smeBaseName}/ApplicationInvitation`,
   efrInvite: `${smeBaseName}/efrInvite`,
-  efrOTPVerification: `${smeBaseName}/efrOTPVerification`
+  efrOTPVerification: `${smeBaseName}/efrOTPVerification`,
+  additionalDetails: `${smeBaseName}/AdditionalDetails`,
+  additionalInformation: `${smeBaseName}/AdditionalInformation`
 };

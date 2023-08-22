@@ -12,7 +12,8 @@ import {
   updateProspect,
   UPDATE_VIEW_ID,
   saveSignatoryModel,
-  saveOrganizationInfoModel
+  saveOrganizationInfoModel,
+  UPDATE_ADDITIONAL_INFO
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
@@ -22,7 +23,8 @@ import {
   getAccountType,
   getProspect,
   getLeadSource,
-  getRoCode
+  getRoCode,
+  getAdditionalInfoDetailsForBPM
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -94,10 +96,41 @@ export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   }
 }
 
+function* updateAdditionInfo({ payload }) {
+  try {
+    const additionalInfoDetailsForBPM = yield select(getAdditionalInfoDetailsForBPM);
+    console.log(additionalInfoDetailsForBPM, "additionalInfoDetailsForBPM");
+    // Create a copy of the original array
+    const updatedInfoBPM = [...additionalInfoDetailsForBPM];
+
+    // Check if a matching QueryUniqueID exists in updatedInfoBPM
+    const existingIndex = updatedInfoBPM.findIndex(
+      info => info.QueryUniqueID === payload.QueryUniqueID
+    );
+
+    if (existingIndex !== -1) {
+      // If it exists, update the QueryResponse in the copy
+      updatedInfoBPM[existingIndex].QueryResponse = payload.QueryResponse;
+    } else {
+      // If it doesn't exist, add a new object to the copy
+      updatedInfoBPM.push({
+        QueryUniqueID: payload.QueryUniqueID,
+        QueryResponse: payload.QueryResponse
+      });
+    }
+    yield put(
+      updateProspect({ "prospect.additionalDataForBPM.additionalInfoBPM": updatedInfoBPM })
+    );
+  } catch (e) {
+    log(e);
+  }
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
     takeLatest(UPDATE_PROSPECT, updateProspectSaga),
-    takeLatest(UPDATE_VIEW_ID, updateViewIdSaga)
+    takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
+    takeLatest(UPDATE_ADDITIONAL_INFO, updateAdditionInfo)
   ]);
 }

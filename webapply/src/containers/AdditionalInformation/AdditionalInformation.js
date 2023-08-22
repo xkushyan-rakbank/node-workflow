@@ -26,33 +26,8 @@ import { Footer } from "../../components/Footer";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import routes from "../../routes";
-import { updateProspect } from "../../store/actions/appConfig";
+import { updateAdditionalInfo, updateProspect } from "../../store/actions/appConfig";
 import { initDocumentUpload, uploadAdditionalDocuments } from "../../store/actions/uploadDocuments";
-
-function updateAdditionalInfoBPM(newInfo, additionalInfoBPM) {
-  // Create a copy of the original array
-  const updatedInfoBPM = [...additionalInfoBPM];
-  console.log(updatedInfoBPM);
-
-  // Check if a matching QueryUniqueID exists in updatedInfoBPM
-  const existingIndex = updatedInfoBPM.findIndex(
-    info => info.QueryUniqueID === newInfo.QueryUniqueID
-  );
-
-  if (existingIndex !== -1) {
-    // If it exists, update the QueryResponse in the copy
-    updatedInfoBPM[existingIndex].QueryResponse = newInfo.QueryResponse;
-  } else {
-    // If it doesn't exist, add a new object to the copy
-    updatedInfoBPM.push({
-      QueryUniqueID: newInfo.QueryUniqueID,
-      QueryResponse: newInfo.QueryResponse
-    });
-  }
-
-  // Return the updated copy of additionalInfoBPM
-  return updatedInfoBPM;
-}
 
 function updateAdditionalDocBPM(newInfo, additionalDocBPM) {
   // Create a copy of the original array
@@ -87,7 +62,6 @@ export function AdditionalInformation({ stakeholderName }) {
   const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
   const additionalDocumentDetailsForBPM = useSelector(getAdditionalDocumentDetailsForBPM);
 
-  console.log(additionalInfoDetailsForBPM, "additionalInfoDetailsForBPM");
   useEffect(() => {
     dispatch(initDocumentUpload());
   }, []);
@@ -101,13 +75,11 @@ export function AdditionalInformation({ stakeholderName }) {
     additionalInfoDetailsFromBPM.forEach(eachDoc => {
       infoList[`info_${eachDoc.queryUniqueID}`] = "";
     });
-    setAdditionalDoc(docList);
     setAdditionalInfo(infoList);
-  }, [additionalDocumentDetailsFromBPM]);
+    setAdditionalDoc(docList);
+  }, []);
 
   useEffect(() => {
-    console.log(additionalDocumentDetailsForBPM, "additionalDocumentDetailsForBPM");
-    console.log(additionalInfoDetailsForBPM, "additionalDocumentDetailsForBPM");
     const docFiles = {};
     if (additionalDocumentDetailsForBPM.length) {
       additionalDocumentDetailsForBPM.forEach(eachDoc => {
@@ -124,6 +96,7 @@ export function AdditionalInformation({ stakeholderName }) {
           documentUniqueId: DocUniqueID
         });
       });
+      setAdditionalDoc(docFiles);
     }
     const infoList = {};
 
@@ -138,12 +111,8 @@ export function AdditionalInformation({ stakeholderName }) {
         infoList[`info_${QueryUniqueID}`].push(QueryResponse);
         console.log(infoList, "infoListinfoList");
       });
+      setAdditionalInfo(infoList);
     }
-    setAdditionalInfo(infoList);
-    setAdditionalDoc(docFiles);
-
-    console.log("docFiles", docFiles);
-    console.log("infoList", infoList);
   }, []);
 
   const initialValues = {
@@ -196,21 +165,15 @@ export function AdditionalInformation({ stakeholderName }) {
     [additionalDocumentDetailsForBPM]
   );
 
-  const onChange = (ev, info, setFieldValue) => {
-    // clearTimeout(timeOutId);
+  const onChange = useCallback((ev, info, setFieldValue, values) => {
     const { name, value } = ev.target;
-    setFieldValue([name], value);
+    setFieldValue(name, value);
     const newInfo = {
       QueryUniqueID: info.queryUniqueID,
       QueryResponse: value
     };
-    let payload = updateAdditionalInfoBPM(newInfo, additionalInfoDetailsForBPM);
-    console.log(newInfo, additionalInfoDetailsForBPM, payload, "newInfo");
-    dispatch(updateProspect({ "prospect.additionalDataForBPM.additionalInfoBPM": payload }));
-
-    // const timeOutId = setTimeout(() => {
-    // }, 2000);
-  };
+    dispatch(updateAdditionalInfo(newInfo));
+  }, []);
 
   return additionalDoc ? (
     <Formik
@@ -254,7 +217,7 @@ export function AdditionalInformation({ stakeholderName }) {
                       InputProps={{
                         inputProps: { tabIndex: 0, maxLength: 200000, minLength: 100 }
                       }}
-                      onChange={ev => onChange(ev, info, setFieldValue)}
+                      onChange={ev => onChange(ev, info, setFieldValue, values)}
                       component={Input}
                       classes={{
                         formControlRoot: classes.customUrlLabel,

@@ -72,6 +72,11 @@ const ReviewAndSubmit = lazy(() => import("./containers/ReviewAndSubmit"));
 
 const CongratulationsScreen = lazy(() => import("./containers/Congratulations"));
 
+const AdditionalInformation = lazy(() => import("./containers/AdditionalInformation"));
+const AdditionaInfoInvite = lazy(() =>
+  import("./containers/AdditionalInformation/AdditionaInfoInvite")
+);
+
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -202,6 +207,11 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <Route path={routes.webToMobile} component={WebToMobilePage} />
               <Route path={routes.applicationInvitation} component={ApplicationInvitation} />
               <Route path={routes.efrInvite} component={EFRInvitation} />
+              <Route path={routes.additionalDetails} component={AdditionaInfoInvite} />
+              <ProspectProtectedRoute
+                path={routes.additionalInformation}
+                component={AdditionalInformation}
+              />
               <OTPGeneratedProtectedRoute
                 exact
                 path={routes.efrOTPVerification}

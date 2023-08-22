@@ -23,5 +23,9 @@ export const ctaStatuses = {
   "Need Additional Information/Documents": {
     buttonText: "Upload Document",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  "Additional Info Required": {
+    buttonText: "Upload Document",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
   }
 };
