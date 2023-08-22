@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { FieldArray } from "formik";
 import { Button, Grid } from "@material-ui/core";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import IconButton from "@material-ui/core/IconButton";
 import {
   DatePicker,
   AutoSaveField as Field,
@@ -168,7 +170,7 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
               inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
             }}
             component={Input}
-            fieldDescription={"Special characters -  . % and spaces allowed."}
+            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
           />
         </Grid>
@@ -195,7 +197,7 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
               inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
             }}
             component={Input}
-            fieldDescription={"Special characters -  . % and spaces allowed."}
+            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
           />
         </Grid>
@@ -210,13 +212,13 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
               inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
             }}
             component={Input}
-            fieldDescription={"Special characters -  . % and spaces allowed."}
+            fieldDescription="Special characters - \ . % and spaces allowed."
           />
         </Grid>
         <Grid item sm={12} xs={12}>
           <Field
             name="rmGeneralremarks"
-            label="General remarks (RM))"
+            label="General remarks (RM)"
             placeholder="General remarks (RM)"
             multiline
             minRows="6"
@@ -224,7 +226,7 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
               inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
             }}
             component={Input}
-            fieldDescription={"Special characters -  . % and spaces allowed."}
+            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.textAreaRoot }}
           />
         </Grid>
@@ -256,7 +258,7 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
               inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
             }}
             component={Input}
-            fieldDescription={"Special characters -  . % and spaces allowed."}
+            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.rmVerificationRemarksTextarea }}
           />
         </div>
@@ -265,72 +267,81 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
           render={arrayHelpers => (
             <>
               {formValues.verificationDetails.map((item, index) => (
-                <div className={classes.verificationDetailsWrapper} key={index}>
-                  <Grid container spacing={3} className={classes.verificationDetailsGrid}>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`verificationDetails[${index}].verificationDate`}
-                        label="Date of verification"
-                        component={DatePicker}
-                        inputAdornmentPosition="end"
-                        InputProps={{
-                          disableUnderline: true,
-                          inputProps: { tabIndex: 0 }
-                        }}
-                      />
+                <>
+                  <div className={classes.verificationDetailsWrapper} key={index}>
+                    <Grid container spacing={3} className={classes.verificationDetailsGrid}>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`verificationDetails[${index}].verificationDate`}
+                          label="Date of verification"
+                          component={DatePicker}
+                          inputAdornmentPosition="end"
+                          InputProps={{
+                            disableUnderline: true,
+                            inputProps: { tabIndex: 0 }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`verificationDetails[${index}].verificationTime`}
+                          label="Time of verification"
+                          component={TimePicker}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`verificationDetails[${index}].verificationConductedBy`}
+                          label="Verification conducted by"
+                          placeholder="Verification conducted by"
+                          component={Input}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`verificationDetails[${index}].verificationStatus`}
+                          path={`prospect.kycAnnexure.verificationDetails[${index}].verificationStatus`}
+                          label="Verification status"
+                          placeholder="Verfiication status"
+                          datalistId="verificationStatus"
+                          component={SelectAutocomplete}
+                          isLoadDefaultValueFromStore={false}
+                          onChange={selectedValue => {
+                            setFormValues("verificationStatus", selectedValue);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={12} xs={12}>
+                        <Field
+                          name={`verificationDetails[${index}].verificationRemarks`}
+                          label="Verification remarks"
+                          placeholder="Verification remarks"
+                          multiline
+                          minRows="6"
+                          InputProps={{
+                            inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
+                          }}
+                          component={Input}
+                          fieldDescription="Special characters - \ . % and spaces allowed."
+                          classes={{ formControlRoot: classes.rmVerificationRemarksTextarea }}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`verificationDetails[${index}].verificationTime`}
-                        label="Time of verification"
-                        component={TimePicker}
-                        InputProps={{
-                          inputProps: { tabIndex: 0 }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`verificationDetails[${index}].verificationConductedBy`}
-                        label="Verification conducted by"
-                        placeholder="Verification conducted by"
-                        component={Input}
-                        InputProps={{
-                          inputProps: { tabIndex: 0 }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`verificationDetails[${index}].verificationStatus`}
-                        path={`prospect.kycAnnexure.verificationDetails[${index}].verificationStatus`}
-                        label="Verification status"
-                        placeholder="Verfiication status"
-                        datalistId="verificationStatus"
-                        component={SelectAutocomplete}
-                        isLoadDefaultValueFromStore={false}
-                        onChange={selectedValue => {
-                          setFormValues("verificationStatus", selectedValue);
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={12} xs={12}>
-                      <Field
-                        name={`verificationDetails[${index}].verificationRemarks`}
-                        label="Verification remarks"
-                        placeholder="Verification remarks"
-                        multiline
-                        minRows="6"
-                        InputProps={{
-                          inputProps: { tabIndex: 0, maxLength: 5000, minLength: 100 }
-                        }}
-                        component={Input}
-                        fieldDescription={"Special characters -  . % and spaces allowed."}
-                        classes={{ formControlRoot: classes.rmVerificationRemarksTextarea }}
-                      />
-                    </Grid>
-                  </Grid>
-                </div>
+                  </div>
+                  {formValues.verificationDetails.length > 1 && index > 0 && (
+                    <div className={classes.addMoreKycButtonWrapper}>
+                      <IconButton aria-label="delete" style={{ padding: 0 }}>
+                        <HighlightOffIcon />
+                      </IconButton>
+                    </div>
+                  )}
+                </>
               ))}
               <div className={classes.verificationDetailsInfoWrapper}>
                 <Icon name={ICONS.info} className={classes.verifyDetailInfoIcon} alt="info" />
@@ -396,92 +407,101 @@ export const KycAnnexureDetails = ({ formValues, setFormValues }) => {
           render={arrayHelpers => (
             <>
               {formValues.visitDetails.map((item, index) => (
-                <div className={classes.verificationDetailsWrapper} key={index}>
-                  <Grid container spacing={3} className={classes.verificationDetailsGrid}>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`visitDetails[${index}].conductedDate`}
-                        label="Conducted date"
-                        component={DatePicker}
-                        inputAdornmentPosition="end"
-                        InputProps={{
-                          disableUnderline: true,
-                          inputProps: { tabIndex: 0 }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`visitDetails[${index}].conductedTime`}
-                        label="Conducted time"
-                        component={TimePicker}
-                        InputProps={{
-                          inputProps: { tabIndex: 0 }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`visitDetails[${index}].visitConductedBy`}
-                        label="Visit conducted by"
-                        placeholder="Visit conducted by"
-                        component={Input}
-                        InputProps={{
-                          inputProps: { tabIndex: 0 }
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <Field
-                        name={`visitDetails[${index}].visitConductedAt`}
-                        label="Visit conducted at"
-                        path={`prospect.kycAnnexure.visitDetails[${index}].visitConductedAt`}
-                        placeholder="Visit conducted at"
-                        datalistId="visitConductedAt"
-                        component={SelectAutocomplete}
-                        isLoadDefaultValueFromStore={false}
-                      />
-                    </Grid>
-
-                    {isCounterfeitProductQuestionVisible(
-                      formValues.visitDetails[index].visitConductedAt
-                    ) && (
-                      <Grid item sm={12} xs={12} style={{ marginBottom: "24px" }}>
-                        <div className={classes.questionareWrapper}>
-                          <label className={classes.sectionLabel}>
-                            Did you notice counterfeit products at the time of visit?
-                          </label>
-                          <Field
-                            typeRadio
-                            options={yesNoOptions}
-                            name={`visitDetails[${index}].counterfeitProducts`}
-                            path={`prospect.kycAnnexure.visitDetails[${index}].counterfeitProducts`}
-                            component={InlineRadioGroup}
-                            customIcon={false}
-                            classes={{
-                              root: classes.radioButtonRoot,
-                              label: classes.radioLabelRoot
-                            }}
-                            radioColor="primary"
-                            onChange={kycAnnexureRadioHandler}
-                          />
-                        </div>
+                <>
+                  <div className={classes.verificationDetailsWrapper} key={index}>
+                    <Grid container spacing={3} className={classes.verificationDetailsGrid}>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`visitDetails[${index}].conductedDate`}
+                          label="Conducted date"
+                          component={DatePicker}
+                          inputAdornmentPosition="end"
+                          InputProps={{
+                            disableUnderline: true,
+                            inputProps: { tabIndex: 0 }
+                          }}
+                        />
                       </Grid>
-                    )}
-                    <Grid item sm={12} xs={12} style={{ marginBottom: "10px" }}>
-                      <Field
-                        name={`visitDetails[${index}].sisterCompanyTradeLicense`}
-                        type="file"
-                        fieldDescription="Upload sister company trade license"
-                        helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                        accept={TL_ACCEPTED_FILE_TYPES}
-                        fileSize={TL_COI_FILE_SIZE}
-                        component={Upload}
-                        mobilecontentPlaceholder={"Upload your File"}
-                      />
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`visitDetails[${index}].conductedTime`}
+                          label="Conducted time"
+                          component={TimePicker}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`visitDetails[${index}].visitConductedBy`}
+                          label="Visit conducted by"
+                          placeholder="Visit conducted by"
+                          component={Input}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <Field
+                          name={`visitDetails[${index}].visitConductedAt`}
+                          label="Visit conducted at"
+                          path={`prospect.kycAnnexure.visitDetails[${index}].visitConductedAt`}
+                          placeholder="Visit conducted at"
+                          datalistId="visitConductedAt"
+                          component={SelectAutocomplete}
+                          isLoadDefaultValueFromStore={false}
+                        />
+                      </Grid>
+
+                      {isCounterfeitProductQuestionVisible(
+                        formValues.visitDetails[index].visitConductedAt
+                      ) && (
+                        <Grid item sm={12} xs={12} style={{ marginBottom: "24px" }}>
+                          <div className={classes.questionareWrapper}>
+                            <label className={classes.sectionLabel}>
+                              Did you notice counterfeit products at the time of visit?
+                            </label>
+                            <Field
+                              typeRadio
+                              options={yesNoOptions}
+                              name={`visitDetails[${index}].counterfeitProducts`}
+                              path={`prospect.kycAnnexure.visitDetails[${index}].counterfeitProducts`}
+                              component={InlineRadioGroup}
+                              customIcon={false}
+                              classes={{
+                                root: classes.radioButtonRoot,
+                                label: classes.radioLabelRoot
+                              }}
+                              radioColor="primary"
+                              onChange={kycAnnexureRadioHandler}
+                            />
+                          </div>
+                        </Grid>
+                      )}
+                      <Grid item sm={12} xs={12} style={{ marginBottom: "10px" }}>
+                        <Field
+                          name={`visitDetails[${index}].sisterCompanyTradeLicense`}
+                          type="file"
+                          fieldDescription="Upload sister company trade license"
+                          helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                          accept={TL_ACCEPTED_FILE_TYPES}
+                          fileSize={TL_COI_FILE_SIZE}
+                          component={Upload}
+                          mobilecontentPlaceholder={"Upload your File"}
+                        />
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </div>
+                  </div>
+                  {formValues.visitDetails.length > 1 && index > 0 && (
+                    <div className={classes.addMoreKycButtonWrapper}>
+                      <IconButton aria-label="delete" style={{ padding: 0 }}>
+                        <HighlightOffIcon />
+                      </IconButton>
+                    </div>
+                  )}
+                </>
               ))}
               <div className={classes.verificationDetailsInfoWrapper}>
                 <Icon name={ICONS.info} className={classes.verifyDetailInfoIcon} alt="info" />

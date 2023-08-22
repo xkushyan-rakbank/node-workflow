@@ -38,14 +38,16 @@ export const FormLayoutComponent = ({
 
   const showSaveClose = Object.values(VIEW_IDS).some(screen => pathname.includes(screen));
 
-  return pathname === routes.quickapplyLanding || pathname === "/" ? (
+  return pathname === routes.quickapplyLanding ||
+    pathname === "/" ||
+    pathname === `${routes.quickapplyLanding}/` ? (
     <>{children}</>
   ) : (
     <div className={classes.formLayout}>
       <FormNavigation />
       <div className={classes.formWrapper}>
         <div className={classes.formInner}>
-          {showSaveClose && <SaveAndClose isSmallDeviceSaveCloseBtn={true}/>}
+          {showSaveClose && <SaveAndClose isSmallDeviceSaveCloseBtn={true} />}
           {pathname.includes("application-overview") && <HeaderButtonGroup />}
 
           <div

@@ -309,5 +309,9 @@ export const useStyles = makeStyles(theme => ({
   },
   rmVerificationRemarksTextarea: {
     margin: "24px 0"
+  },
+  addMoreKycButtonWrapper: {
+    textAlign: "right",
+    margin: "5px 0"
   }
 }));

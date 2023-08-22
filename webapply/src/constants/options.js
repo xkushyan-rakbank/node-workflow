@@ -44,7 +44,7 @@ export const YesNoNaList = [
     code: "Na",
     key: "Na",
     value: "NA",
-    label: "NA"
+    label: "N/A"
   }
 ];
 export const MEETINGCONDUCTEDLIST = [
@@ -266,6 +266,6 @@ export const YesNaList = [
     code: "NA",
     key: "NA",
     value: "NA",
-    label: "NA"
+    label: "N/A"
   }
 ];
