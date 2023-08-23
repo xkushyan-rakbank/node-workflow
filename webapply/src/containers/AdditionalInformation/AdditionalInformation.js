@@ -93,7 +93,6 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
 
         // Push the current item to the corresponding array
         infoList[`info_${QueryUniqueID}`].push(QueryResponse);
-        console.log(infoList, "infoListinfoList");
       });
       setAdditionalInfo(infoList);
     }

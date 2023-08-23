@@ -101,7 +101,6 @@ export default function AdditionalDocument({
     const isDocTypeExist = additionalDocumentDetailsForBPM.filter(
       eachDoc => eachDoc.DocUniqueID === item.DocUniqueID
     );
-    console.log(isDocTypeExist, item, additionalDocumentDetailsForBPM, values[name]);
     if (isDocTypeExist.length === 1) {
       isMinLength && setFieldValue(name, [""]);
     } else {
