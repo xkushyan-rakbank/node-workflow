@@ -271,9 +271,9 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
                 label="Background information"
                 placeholder="Background information"
                 multiline
-                minRows="9"
+                rows="9"
                 InputProps={{
-                  inputProps: { tabIndex: 0, maxLength: 2000, minLength: 100 }
+                  inputProps: { tabIndex: 0, maxLength: 2000, minLength: 100 },
                 }}
                 component={Input}
                 fieldDescription={

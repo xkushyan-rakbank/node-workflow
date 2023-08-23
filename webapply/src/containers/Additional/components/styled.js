@@ -313,6 +313,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   textAreaStyle: {
     borderRadius: 0,
+    paddingTop: "10px",
+    height: "200px",
+    maxWidth: "100%"
   },
 
   sliderContainer: {
