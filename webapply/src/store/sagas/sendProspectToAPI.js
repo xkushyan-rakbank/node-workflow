@@ -57,13 +57,38 @@ import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/s
 import { SCREENING_FAIL_REASONS } from "../../constants";
 import { pageProspectPaylodMap } from "../../constants/config";
 
+function checkIsAutoSaveViewId(viewId) {
+  return [
+    VIEW_IDS.CompanyInfo,
+    VIEW_IDS.StakeholdersInfo,
+    VIEW_IDS.StakeholdersInfoPreview,
+    VIEW_IDS.ConsentInfo,
+    VIEW_IDS.CompanyAdditionalInfo,
+    VIEW_IDS.StakeholdersAdditionalInfo,
+    VIEW_IDS.AccountInfo,
+    VIEW_IDS.SubmitApplication,
+    VIEW_IDS.AdditionaData,
+    VIEW_IDS.AccountServices,
+    VIEW_IDS.FinalQuestions,
+    VIEW_IDS.UploadDocuments,
+    VIEW_IDS.UploadDocuments,
+    VIEW_IDS.SelectServices
+  ].includes(viewId);
+}
+
 export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
+
   while (true) {
     const actions = yield flush(chan);
     if (actions.length) {
+      const newProspect = yield select(getProspect);
+      const viewId = newProspect.applicationInfo.viewId;
+      const isAutosaveViewId = checkIsAutoSaveViewId(viewId);
       const action = actions.find(act => act.payload.saveType === CONTINUE) || actions[0];
-      yield call(sendProspectToAPI, action);
+      if (isAutosaveViewId) {
+        yield call(sendProspectToAPI, action);
+      }
     }
     yield delay(1000);
   }
@@ -127,32 +152,13 @@ function* saveProspectData() {
     const isScreeningError = screeningError.error;
     const viewId = newProspect.applicationInfo.viewId;
     const authToken = yield select(getAuthToken);
-
-    const isSaveEnabled =
-      !isScreeningError &&
-      authToken &&
-      [
-        VIEW_IDS.CompanyInfo,
-        VIEW_IDS.StakeholdersInfo,
-        VIEW_IDS.StakeholdersInfoPreview,
-        VIEW_IDS.ConsentInfo,
-        VIEW_IDS.CompanyAdditionalInfo,
-        VIEW_IDS.StakeholdersAdditionalInfo,
-        VIEW_IDS.AccountInfo,
-        VIEW_IDS.SubmitApplication,
-        VIEW_IDS.AccountServices,
-        VIEW_IDS.FinalQuestions,
-        VIEW_IDS.UploadDocuments,
-        VIEW_IDS.SelectServices
-      ].includes(viewId);
-
+    const isSaveEnabled = !isScreeningError && authToken && checkIsAutoSaveViewId(viewId);
     return { isSaveEnabled, newProspect };
   } catch (e) {
     log(e);
     return { isSaveEnabled: false, newProspect: null };
   }
 }
-
 export function* prospectSaveOnClick() {
   try {
     const { isSaveEnabled, newProspect } = yield call(saveProspectData);
