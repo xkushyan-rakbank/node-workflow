@@ -89,7 +89,7 @@ const InputBase = ({
             }
           }}
           onBlur={event => {
-            form.setFieldValue(field.name, field.value.trim());
+            form.setFieldValue(field.name, field?.value?.trim());
             if (isLemnisk) {
               {
                 lemniskCall(field.value);
