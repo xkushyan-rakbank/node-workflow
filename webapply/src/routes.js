@@ -40,5 +40,5 @@ export default {
   efrInvite: `${smeBaseName}/efrInvite`,
   efrOTPVerification: `${smeBaseName}/efrOTPVerification`,
   additionalDetails: `${smeBaseName}/AdditionalDetails`,
-  additionalInformation: `${smeBaseName}/AdditionalInformation`
+  additionalInformation: `${smeBaseName}/AdditionalData`
 };
