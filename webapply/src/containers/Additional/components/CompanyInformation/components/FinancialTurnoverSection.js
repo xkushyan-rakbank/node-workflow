@@ -50,8 +50,8 @@ export const FinancialTurnoverSection = forwardRef(
             color: "#525252",
             height: 12,
             margin: "20px 0",
-            padding: "50px 0 20px",
-            backgroundColor: "transparent !important"
+            padding: "50px 0 20px !important",
+            backgroundColor: "transparent !important",
           },
           dragging: {
             backgroundColor: "transparent"
@@ -102,10 +102,8 @@ export const FinancialTurnoverSection = forwardRef(
             borderRadius: 10
           },
           markLabel: {
-            top: "2px",
-            paddingBottom: "5px",
-            paddingLeft: "15px",
-            marginRight: "12px"
+            top: "2px !important",
+            paddingBottom: "5px"
           },
           markActive: {
             opacity: 0
@@ -194,8 +192,8 @@ export const FinancialTurnoverSection = forwardRef(
             }
 
             function handleSliderChange(ev, newValue) {
-              setSliderValue(newValue || 0);
               const calculateValue = calculateAmountPercentage(values, newValue).totalAmount;
+              setSliderValue(calculateValue || 0);
               setFieldValue("anualCashDepositAED", calculateValue?.toString());
             }
             return (

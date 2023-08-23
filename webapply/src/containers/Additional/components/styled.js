@@ -319,8 +319,7 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   sliderContainer: {
-    paddingLeft: "0px",
-    paddingRight: "25px",
+    padding: "0px 15px",
     display: "flex",
     flexDirection: "column",
   },
