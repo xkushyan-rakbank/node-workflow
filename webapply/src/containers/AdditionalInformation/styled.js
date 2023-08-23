@@ -1,6 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
+  heading: {
+    color: "var(--color-text-primary-on-light, #1F1F1F)",
+    fontSize: "1.75rem",
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: "2.25rem",
+    margin: "3rem 0"
+  },
   additionalInformationWrapper: {
     display: "flex",
     padding: "20px",

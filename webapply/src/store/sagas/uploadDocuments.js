@@ -53,8 +53,7 @@ import {
   saveDocumentUplaodAuthToken,
   saveDocumentList,
   UPLOAD_DOCUMENTS,
-  GET_DOCUMENTS_LIST,
-  UPLOAD_ADDITIONAL_DOCUMENTS
+  GET_DOCUMENTS_LIST
 } from "../actions/uploadDocuments";
 import {
   SEND_PROSPECT_TO_API_FAIL,
@@ -450,17 +449,29 @@ export function* uploadDocuments({ payload }) {
       `documents.${payload.saveProspectPath || payload.documentSection}`
     );
     let uploadedList = [];
-    if (!savePath.includes("personalBankStatements") && !savePath.includes("companyAddressProof")) {
+    if (
+      !savePath.includes("personalBankStatements") &&
+      !savePath.includes("companyAddressProof") &&
+      !savePath.includes("otherDocuments")
+    ) {
       uploadedList = [];
     } else {
       uploadedList = uploadedProspectList;
     }
     const newUplaodedLsit = uploadedList && uploadedList.length ? uploadedList : null;
-    const documentSectionArray =
-      documentSection && documentSection.length ? documentSection : documentSection.documents;
+    const documentSectionArray = payload.otherDocuments
+      ? []
+      : documentSection && documentSection.length
+      ? documentSection
+      : documentSection.documents;
+
     let uploadedDocuments = newUplaodedLsit || [];
+
     for (let docPath in payload.docs) {
-      const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
+      let docItem =
+        payload.otherDocuments || documentSectionArray.find(doc => doc.documentTitle === docPath);
+
+      // const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
       if (savePath === "companyDocuments") {
         uploadedDocuments = uploadedProspectList
           ? uploadedProspectList.filter(eachItem => eachItem.documentKey !== docPath)
@@ -483,6 +494,7 @@ export function* uploadDocuments({ payload }) {
         };
         //await documents.upload(fileData, token, prospectId, headers);
         const response = yield call(documents.upload, fileData, token, prospectId, headers);
+        payload.onSuccess(response.data.fileName);
         uploadedDocuments.push({
           documentKey: documentUniq,
           documentType: fieldData.type,
@@ -503,6 +515,11 @@ export function* uploadDocuments({ payload }) {
         valueToUpdate = {
           isCompanyDocUpdate: true,
           companyDocuments: uploadedDocuments
+        };
+      } else if (pathToUpdate === "otherDocuments") {
+        pathToUpdate = "prospect.documents";
+        valueToUpdate = {
+          otherDocuments: uploadedDocuments
         };
       } else {
         let pathToUpdateParts = pathToUpdate.split(".");
@@ -525,50 +542,6 @@ export function* uploadDocuments({ payload }) {
         })
       );
     }
-    payload.onSuccess();
-  } catch (error) {
-    payload.onFailure();
-    log(error);
-  }
-}
-
-export function* uploadAdditionalDocuments({ payload }) {
-  try {
-    const prospectId = yield select(getProspectId);
-    const headers = yield select(getDocuploaderHeader);
-    const token = yield select(getDocumentUplaoderjwtToken);
-    const fieldData = payload.docs;
-    let uploadedDocuments = [];
-    const index = payload.index;
-    const docItem = payload.docItem;
-
-    if (fieldData.name) {
-      const documentUniq = index !== undefined ? `${docItem}-${index}` : `${docItem}`;
-      const docExtension = fieldData.name.split(".").pop();
-      let generateName = [BBG_COMPANY_INFO_MODULEID, prospectId, docItem];
-      let appendTimeStamp = (index !== undefined ? `_${index + 1}` : "") + `_${unixTimestamp()}`;
-      const fileData = {
-        documentType: fieldData.type,
-        documentTitle: documentUniq,
-        fileName: `${generateName.join("_")}${appendTimeStamp}.${docExtension}`,
-        fileFormat: fieldData.type,
-        fileSize: fieldData.size,
-        file: fieldData
-      };
-      //await documents.upload(fileData, token, prospectId, headers);
-      const response = yield call(documents.upload, fileData, token, prospectId, headers);
-      uploadedDocuments.push({
-        documentKey: documentUniq,
-        documentType: fieldData.type,
-        fileFormat: fieldData.type,
-        fileName: response.data.fileName,
-        fileDescription: fieldData.name,
-        fileSize: fieldData.size,
-        submittedDt: new Date().toISOString(),
-        isSingleDocUpdated: true
-      });
-      payload.onSuccess(response.data.fileName);
-    }
   } catch (error) {
     payload.onFailure();
     log(error);
@@ -586,7 +559,6 @@ export default function* uploadDocumentsSaga() {
     takeEvery(ADD_MULTI_DOCUMENT, addMultiDocumentSaga),
     takeEvery(INIT_DOCUMENT_UPLOAD, initDocumentUpload),
     takeEvery(GET_DOCUMENTS_LIST, getDocumentList),
-    takeEvery(UPLOAD_DOCUMENTS, uploadDocuments),
-    takeEvery(UPLOAD_ADDITIONAL_DOCUMENTS, uploadAdditionalDocuments)
+    takeEvery(UPLOAD_DOCUMENTS, uploadDocuments)
   ]);
 }

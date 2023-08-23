@@ -55,7 +55,7 @@ export const Upload = ({
   const hasFile = !!file;
   const { visible } = useDecisions(path);
   const errorMessage = getIn(errors, field.name);
-  const isError = errorMessage && getIn(touched, field.name);
+  const isError = errorMessage && (getIn(touched, field.name) || touched[field.name]);
   const FileIconHeight = isMobile ? "35px" : "44px";
   const FileIconWidth = isMobile ? "32px" : "40px";
 

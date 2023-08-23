@@ -35,6 +35,15 @@ export const formStepper = [
   { step: 6, title: "Submit", path: routes.reviewAndSubmit }
 ];
 
+export const additionInfoStepper = [
+  {
+    step: 1,
+    title: "Additional information",
+    path: routes.additionalInformation,
+    relatedPath: [routes.comeBackLoginVerification]
+  }
+];
+
 export const agentFormStepper = [
   { step: 1, title: "Search Applications", path: routes.searchProspect },
   { step: 2, title: "Send Invite", path: routes.inviteCustomer }
@@ -210,6 +219,7 @@ export const CREAT_PROSPECT_KEYS = [
   "prospectStatusInfo",
   "kycAnnexure",
   "notifyApplicationRequest",
+  "additionalDataForBPM",
   "freeFieldsInfo"
 ];
 
@@ -499,6 +509,7 @@ export const VIEW_IDS = {
   StakeholdersAdditionalInfo: "/StakeholdersAdditionalInfo",
   AccountInfo: "/AccountInfo",
   SubmitApplication: "/SubmitApplication",
+  AdditionaData: "/AdditionalData",
   //V1 proespect view ids
   FinalQuestions: "/FinalQuestions",
   UploadDocuments: "/UploadDocuments",
