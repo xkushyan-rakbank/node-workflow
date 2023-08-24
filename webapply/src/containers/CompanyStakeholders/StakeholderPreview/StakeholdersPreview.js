@@ -23,7 +23,11 @@ import { useFormNavigation } from "../../../components/FormNavigation/FormNaviga
 import { useLayoutParams } from "../../FormLayout";
 import { useViewId } from "../../../utils/useViewId";
 import { BackLink } from "../../../components/Buttons/BackLink";
-import { MAX_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
+import {
+  MAX_FULL_NAME_LENGTH,
+  MAX_MOTHER_MAIDEN_NAME_LENGTH,
+  MIN_MOTHER_NAME_LENGTH
+} from "../../CompanyInfo/constants";
 import { getRequiredMessage } from "../../../utils/getValidationMessage";
 import { NAME_REGEX } from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
@@ -38,6 +42,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
   const initialValues = {
     fullName: "",
+    mothersMaidenName: "",
     nationality: "",
     dateOfBirth: "",
     eidNumber: "",
@@ -51,12 +56,24 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       .required(getRequiredMessage("Fullname"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, "Please remove any special character from your name")
+      .matches(NAME_REGEX, "Please remove any special character from your name"),
+    mothersMaidenName: Yup.string()
+      .required(getRequiredMessage("Mother's maiden name"))
+      .min(
+        MIN_MOTHER_NAME_LENGTH,
+        `Mother's maiden name is too short. Please enter at least ${MIN_MOTHER_NAME_LENGTH} characters`
+      )
+      .max(
+        MAX_MOTHER_MAIDEN_NAME_LENGTH,
+        `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
+      )
+      .matches(NAME_REGEX, "Please enter a valid mother's maiden name as per your passport")
   });
 
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
+  const isMotherMaidenNamePresent = values => values?.mothersMaidenName.length > 0;
   const handleClickStakeholderPreviewNextStep = useCallback(() => {
     setIsLoading(true);
     return sendProspectToAPI(NEXT).then(
@@ -97,6 +114,22 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   className="testingClass"
                   showEditIcon={true}
                   fieldDescription={"Please ensure the full name is per your passport"}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Field
+                  isLoadDefaultValueFromStore={true}
+                  name="mothersMaidenName"
+                  path="prospect.signatoryInfo[0].mothersMaidenName"
+                  label="Mother's maiden name"
+                  component={Input}
+                  InputProps={{
+                    inputProps: { tabIndex: 0, maxLength: 100 }
+                  }}
+                  disabled={!isMotherMaidenNamePresent(props?.values)}
+                  className="testingClass"
+                  showEditIcon={!isMotherMaidenNamePresent(props?.values)}
+                  fieldDescription={"Enter Mother's maiden name as per your passport"}
                 />
               </Grid>
               <Grid item xs={12}>

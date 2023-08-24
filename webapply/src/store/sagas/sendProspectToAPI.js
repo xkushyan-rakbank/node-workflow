@@ -222,8 +222,8 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
         const { debitCardInfo } = prospect[key][0];
         nodePayload = [{ debitCardInfo }];
       } else {
-        const { editedFullName, debitCardInfo } = prospect[key][0];
-        nodePayload = [{ editedFullName, debitCardInfo }];
+        const { editedFullName, debitCardInfo, mothersMaidenName } = prospect[key][0];
+        nodePayload = [{ editedFullName, debitCardInfo, mothersMaidenName }];
       }
 
       break;

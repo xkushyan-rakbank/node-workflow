@@ -12,6 +12,8 @@ export const MAX_INDUSTRIES_LENGTH = 12;
 export const MAX_FULL_NAME_LENGTH = 100;
 export const MAX_DEBIT_CARD_NAME_LENGTH = 19;
 export const MIN_DEBIT_CARD_NAME_LENGTH = 1;
+export const MIN_MOTHER_NAME_LENGTH = 3;
+export const MAX_MOTHER_MAIDEN_NAME_LENGTH = 100;
 
 export const COMPANY_INFO_PAGE_ID = "companyInfo";
 
