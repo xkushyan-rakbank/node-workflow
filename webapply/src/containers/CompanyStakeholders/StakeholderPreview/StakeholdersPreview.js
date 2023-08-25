@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core";
 import { format, isValid } from "date-fns";
 import cx from "classnames";
 import * as Yup from "yup";
+import { useSelector } from "react-redux";
 
 import { useStyles } from "../components/CompanyStakeholders/styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
@@ -31,6 +32,7 @@ import {
 import { getRequiredMessage } from "../../../utils/getValidationMessage";
 import { NAME_REGEX } from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
+import { getProspect } from "../../../store/selectors/appConfig";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -38,6 +40,8 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   useViewId(true);
+
+  const { signatoryInfo } = useSelector(getProspect);
 
   const [isLoading, setIsLoading] = useState(false);
   const initialValues = {
@@ -94,10 +98,15 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       </div>
       <h3 className={classes.mainTitle}>Did we get everything?</h3>
       <p className={cx(classes.subTitle, classes["mb-40"])}>
-        Take a minute to review the details we pulled from your documents. You won't be able to make any changes after this step.
+        Take a minute to review the details we pulled from your documents. You won't be able to make
+        any changes after this step.
       </p>
-      <Formik initialValues={initialValues} validationSchema={previewValidation}>
-        {props => (
+      <Formik
+        initialValues={initialValues}
+        validationSchema={previewValidation}
+        onSubmit={handleClickStakeholderPreviewNextStep}
+      >
+        {(props) => (
           <Form>
             <Grid container>
               <Grid item xs={12}>
@@ -108,7 +117,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Name"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 100 }
+                    inputProps: { tabIndex: 0, maxLength: 100 },
                   }}
                   disabled={true}
                   className="testingClass"
@@ -124,9 +133,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Mother's maiden name"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 100 }
+                    inputProps: { tabIndex: 0, maxLength: 100 },
                   }}
-                  disabled={!isMotherMaidenNamePresent(props?.values)}
+                  disabled={signatoryInfo[0]?.mothersMaidenName ? true : false}
                   className="testingClass"
                   showEditIcon={!isMotherMaidenNamePresent(props?.values)}
                   fieldDescription={"Enter Mother's maiden name as per your passport"}
@@ -141,7 +150,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Nationality"
                   component={SelectAutocomplete}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0 },
                   }}
                   disabled={true}
                 />
@@ -156,7 +165,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   inputAdornmentPosition="end"
                   changeProspect={changeDateProspectHandler}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0 },
                   }}
                   disabled={true}
                 />
@@ -171,10 +180,8 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   component={EmiratesID}
                   changeProspect={(prospect, value) => ({
                     ...prospect,
-                    ["prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"]: value.replace(
-                      /-/g,
-                      ""
-                    )
+                    ["prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"]:
+                      value.replace(/-/g, ""),
                   })}
                 />
               </Grid>
@@ -187,7 +194,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   component={DatePicker}
                   changeProspect={changeDateProspectHandler}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0 },
                   }}
                   inputAdornmentPosition="end"
                   disabled={true}
@@ -201,7 +208,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Passport number"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0 },
                   }}
                   disabled={true}
                 />
@@ -214,7 +221,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Passport expiry"
                   component={DatePicker}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0 },
                   }}
                   changeProspect={changeDateProspectHandler}
                   disabled={true}
@@ -224,13 +231,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             </Grid>
             <Footer>
               <BackLink path={routes.stakeholdersInfo} isTypeButton={true} />
-              <NextStepButton
-                label="Next"
-                type="button"
-                justify="flex-end"
-                onClick={() => handleClickStakeholderPreviewNextStep()}
-                disabled={!(props.isValid && props.dirty)}
-              />
+              <NextStepButton label="Next" type="submit" justify="flex-end" />
             </Footer>
           </Form>
         )}
