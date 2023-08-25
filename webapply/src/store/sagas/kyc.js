@@ -332,33 +332,35 @@ export function* setLivelinessData({ payload }) {
     }
   } catch (error) {
     if (error?.response?.status === 403 && error?.response?.data?.errorCode === "017") {
-      let screenError = screeningStatus.find(
-        ({ screeningType }) => screeningType === error?.response?.status
-      );
-      let buttons = [
-        {
-          external: false,
-          link: routes.quickapplyLanding,
-          label: "Go to home page"
-        }
-      ];
-      if (buttons !== undefined) {
-        screenError = { ...screenError, ...buttons };
-      }
-
-      yield put(
-        setScreeningError({
-          ...screenError,
-          text: EFR_CHECK_ERROR,
-          icon: "",
-          screeningType: 403
-        })
-      );
+      yield call(screeningError, error?.response?.status);
     }
     let message = error?.response?.data?.message;
     yield put(validateIdentityFail(message));
     log(error);
   }
+}
+
+function* screeningError(status) {
+  let screenError = screeningStatus.find(({ screeningType }) => screeningType === status);
+  let buttons = [
+    {
+      external: false,
+      link: routes.quickapplyLanding,
+      label: "Go to home page"
+    }
+  ];
+  if (buttons !== undefined) {
+    screenError = { ...screenError, ...buttons };
+  }
+
+  yield put(
+    setScreeningError({
+      ...screenError,
+      text: EFR_CHECK_ERROR,
+      icon: "",
+      screeningType: 403
+    })
+  );
 }
 
 function* getEidDocuments(transactionId) {
@@ -434,9 +436,17 @@ export function* getCurrentKYCStatus() {
 
     const stageInfo = stagesResponse.stageInfo;
     let stageInfoMap = {};
+    let isLimitExceeded = false;
     stageInfo.forEach(eachStage => {
       stageInfoMap[eachStage.stage] = eachStage.isCompleted;
+      if (eachStage.isLimitExceeded) {
+        isLimitExceeded = true;
+      }
     });
+    if (isLimitExceeded) {
+      yield call(screeningError, 403);
+      return;
+    }
     const checkEntitySuccess = inputData => {
       if (!inputData) {
         return false;
@@ -454,7 +464,6 @@ export function* getCurrentKYCStatus() {
       }
       return true;
     };
-    console.log(foundLicenseIssuingAuthority, "isinde");
     if (
       !foundLicenseIssuingAuthority &&
       stageInfoMap["CONFIRM_DATA_ELEMENT"] &&
