@@ -63,40 +63,41 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   }, []);
 
   //useEffect to load on comeback
-  useEffect(() => {
-    const docFiles = {};
-    if (additionalDocumentDetailsForBPM.length) {
-      additionalDocumentDetailsForBPM.forEach(eachDoc => {
-        const { DocUniqueID, DocResponse } = eachDoc;
-        if (!docFiles[`doc_${DocUniqueID}`]) {
-          docFiles[`doc_${DocUniqueID}`] = [];
-        }
+  // TODO: rework when autosave has to be implemented
+  //   useEffect(() => {
+  //     const docFiles = {};
+  //     if (additionalDocumentDetailsForBPM.length) {
+  //       additionalDocumentDetailsForBPM.forEach(eachDoc => {
+  //         const { DocUniqueID, DocResponse } = eachDoc;
+  //         if (!docFiles[`doc_${DocUniqueID}`]) {
+  //           docFiles[`doc_${DocUniqueID}`] = [];
+  //         }
 
-        // Push the current item to the corresponding array
-        docFiles[`doc_${DocUniqueID}`].push({
-          file: DocResponse,
-          fileName: DocResponse,
-          fieldDescription: DocResponse,
-          documentUniqueId: DocUniqueID
-        });
-      });
-      setAdditionalDoc(docFiles);
-    }
-    const infoList = {};
+  //         // Push the current item to the corresponding array
+  //         docFiles[`doc_${DocUniqueID}`].push({
+  //           file: DocResponse,
+  //           fileName: DocResponse,
+  //           fieldDescription: DocResponse,
+  //           documentUniqueId: DocUniqueID
+  //         });
+  //       });
+  //       setAdditionalDoc(docFiles);
+  //     }
+  //     const infoList = {};
 
-    if (additionalInfoDetailsForBPM.length) {
-      additionalInfoDetailsForBPM.forEach(eachDoc => {
-        const { QueryUniqueID, QueryResponse } = eachDoc;
-        if (!infoList[`info_${QueryUniqueID}`]) {
-          infoList[`info_${QueryUniqueID}`] = [];
-        }
+  //     if (additionalInfoDetailsForBPM.length) {
+  //       additionalInfoDetailsForBPM.forEach(eachDoc => {
+  //         const { QueryUniqueID, QueryResponse } = eachDoc;
+  //         if (!infoList[`info_${QueryUniqueID}`]) {
+  //           infoList[`info_${QueryUniqueID}`] = [];
+  //         }
 
-        // Push the current item to the corresponding array
-        infoList[`info_${QueryUniqueID}`].push(QueryResponse);
-      });
-      setAdditionalInfo(infoList);
-    }
-  }, []);
+  //         // Push the current item to the corresponding array
+  //         infoList[`info_${QueryUniqueID}`].push(QueryResponse);
+  //       });
+  //       setAdditionalInfo(infoList);
+  //     }
+  //   }, []);
 
   const initialValues = {
     ...(additionInfo && additionInfo),
