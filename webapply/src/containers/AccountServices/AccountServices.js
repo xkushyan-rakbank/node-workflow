@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
-import { formStepper, NEXT } from "../../constants";
+import { formStepper, NEXT, TL_COI_FILE_SIZE } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -30,10 +30,17 @@ import {
 } from "../../constants/options";
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicePackage } from "./components/SelectServicePackage";
-import { getAccountInfo, getRakValuePackage } from "../../store/selectors/appConfig";
-import { getRequiredMessage } from "../../utils/getValidationMessage";
+import {
+  getAccountInfo,
+  getApplicantInfo,
+  getDocuments,
+  getKycAnnexureDetails,
+  getRakValuePackage,
+  getSignatories
+} from "../../store/selectors/appConfig";
+import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
-import { NAME_REGEX } from "../../utils/validation";
+import { NAME_REGEX, TOTAL_EXPERIENCE_YRS_REGEX } from "../../utils/validation";
 import {
   getAccountType,
   getDatalist,
@@ -48,6 +55,8 @@ import { Footer } from "../../components/Footer";
 import { KycAnnexureDetails } from "./components/KycAnnexureDetails";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { scrollToDOMNode } from "../../components/VerticalPagination";
+import { initDocumentUpload } from "../../store/actions/uploadDocuments";
+import { useFindDocument } from "../../utils/useFindDocument";
 
 export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -73,6 +82,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const accountInfo = useSelector(getAccountInfo);
   const rakValuePackage = useSelector(getRakValuePackage);
 
+  const signatoryName = useSelector(getSignatories)[0]?.editedFullName;
+  const allianceCodeData = useSelector(getApplicantInfo).allianceCode;
+
   const statementsVia = accountInfo.eStatements ? true : false;
 
   const accountEmirateCity = accountInfo.accountEmirateCity;
@@ -85,6 +97,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   }, [accountType]);
 
   useEffect(() => {
+    dispatch(initDocumentUpload());
     dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": true }));
   }, []);
 
@@ -147,6 +160,28 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       )?.displayText === emirate.value
   );
 
+  const kycAnnexureDocuments = useSelector(getDocuments).kycAnnexureDocuments;
+  const kycAnnexureDetails = useSelector(getKycAnnexureDetails);
+  const signatoryEIDinfoReportDocs = useFindDocument(
+    kycAnnexureDocuments,
+    "signatoryEIDinfoReport"
+  );
+
+  useEffect(() => {
+    if (kycAnnexureDetails && kycAnnexureDetails.visitDetails) {
+      kycAnnexureDetails.visitDetails.forEach((item, index) => {
+        const sisterCompanyDoc = kycAnnexureDocuments.filter(doc => {
+          let documentKey = `visitDetails[${index}].sisterCompanyTradeLicense-${index}`;
+          return doc.documentKey.includes(documentKey);
+        });
+        if (sisterCompanyDoc[0]) {
+          sisterCompanyDoc[0]["documentKey"] = sisterCompanyDoc[0]?.fileName;
+        }
+        item.sisterCompanyTradeLicense = sisterCompanyDoc[0];
+      });
+    }
+  }, []);
+
   const initialValues = {
     rakValuePackage: "",
     accountCurrency: "AED",
@@ -164,25 +199,42 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     marketingChannel: [],
     nameOnDebitCard: "",
     surveys: "",
+    companyCifId: "",
+    retailCifId: "",
+    workItemNumber: "",
+    leadNumber: "",
+    sourcingCode: "",
+    allianceCode: allianceCodeData || "",
+    skillBasedCategory: "",
+    roName: "",
+    businessModel: "",
+    signatoryName: signatoryName || "",
+    ownerAdditionalInfo: "",
+    generalRemarksRO: "",
+    generalRemarksRM: "",
     audioVideoKycVerification: "NA",
-    eidPing: "NA",
-    isVisitConducted: "NA",
-    verificationDetails: [
+    verificationRemarksRM: "",
+    verificationDetails: (kycAnnexureDetails?.verificationDetails?.length > 0 &&
+      kycAnnexureDetails?.verificationDetails) || [
       {
-        verificationDate: "",
-        verificationTime: "",
+        kycVerificationDate: "",
+        kycVerificationTime: "",
         verificationConductedBy: "",
         verificationStatus: "SATF",
         verificationRemarks: ""
       }
     ],
-    visitDetails: [
+    signatoryEIDinfo: "NA",
+    signatoryEIDinfoReport: signatoryEIDinfoReportDocs[0] || "",
+    isVisitConducted: "NA",
+    visitDetails: (kycAnnexureDetails?.visitDetails?.length > 0 &&
+      kycAnnexureDetails?.visitDetails) || [
       {
-        conductedDate: "",
-        conductedTime: "",
+        kycVisitDate: "",
+        kycVisitTime: "",
         visitConductedBy: "",
         visitConductedAt: "",
-        counterfeitProducts: "",
+        noticeToCounterfeit: "",
         sisterCompanyTradeLicense: ""
       }
     ]
@@ -214,6 +266,88 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     surveys: Yup.string().required("This field is required")
   });
 
+  const kycAnnexureSchema = accountInfoValidation.shape({
+    skillBasedCategory: Yup.string().required(getRequiredMessage("Skill based category")),
+    businessModel: Yup.string()
+      .required(getRequiredMessage("Business model"))
+      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Business model"))
+      .max(5000, "Business model is too long. Please enter upto 5000 characters."),
+    signatoryName: Yup.string().required(getRequiredMessage("Name of the signatory")),
+    ownerAdditionalInfo: Yup.string()
+      .nullable()
+      .notRequired()
+      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Additional Information of owner"))
+      .max(5000, "Additional Information of owner is too long. Please enter upto 5000 characters."),
+    generalRemarksRO: Yup.string()
+      .nullable()
+      .notRequired()
+      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("General remarks (RO)"))
+      .max(5000, "General remarks (RO) is too long. Please enter upto 5000 characters."),
+    generalRemarksRM: Yup.string()
+      .nullable()
+      .notRequired()
+      .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("General remarks (RM)"))
+      .max(5000, "General remarks (RM) is too long. Please enter upto 5000 characters."),
+    isVisitConducted: Yup.string().required(getRequiredMessage("Is visit conducted")),
+    verificationDetails: Yup.array().of(
+      Yup.object().shape({
+        verificationStatus: Yup.string(),
+        verificationRemarks: Yup.string().when("verificationStatus", {
+          is: verificationStatus => {
+            return verificationStatus === "FAIL" || verificationStatus === "REFR";
+          },
+          then: Yup.string()
+            .nullable()
+            .required(getRequiredMessage("Verification remarks"))
+            // eslint-disable-next-line no-template-curly-in-string
+            .max(5000, "Maximum ${max} characters allowed")
+            .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Verification remarks"))
+        })
+      })
+    ),
+    signatoryEIDinfo: Yup.string(),
+    signatoryEIDinfoReport: Yup.mixed().when("signatoryEIDinfo", {
+      is: signatoryEIDinfo => signatoryEIDinfo === "Yes",
+      then: Yup.mixed()
+        .test("required", getRequiredMessage("Upload ping verification report"), file => {
+          if (file) return true;
+          return false;
+        })
+        .test("fileSize", "The file is too large", file => {
+          return (
+            file &&
+            (file === true ||
+              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+          );
+        })
+    }),
+    visitDetails: Yup.array().of(
+      Yup.object().shape({
+        kycVisitDate: Yup.date()
+          .nullable()
+          .typeError(getInvalidMessage("Conducted date"))
+          .required(getRequiredMessage("Conducted date")),
+        visitConductedAt: Yup.string().required(getRequiredMessage("Visit conducted at")),
+        sisterCompanyTradeLicense: Yup.mixed().when("visitConductedAt", {
+          is: visitConductedAt => visitConductedAt === "SISC",
+          then: Yup.mixed()
+            .test("required", getRequiredMessage("Sister company trade license"), file => {
+              if (file) return true;
+              return false;
+            })
+            .test("fileSize", "The file is too large", file => {
+              return (
+                file &&
+                (file === true ||
+                  (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                    file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+              );
+            })
+        })
+      })
+    )
+  });
   const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
@@ -273,7 +407,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         <Formik
           initialValues={initialValues}
           onSubmit={() => handleClickNextStep(false)}
-          validationSchema={accountInfoValidation}
+          validationSchema={isAgent ? kycAnnexureSchema : accountInfoValidation}
           validateOnChange={true}
           validateOnMount={true}
         >
@@ -286,7 +420,10 @@ export const AccountServices = ({ sendProspectToAPI }) => {
               values,
               setFieldValue
             });
-            const isValidAccountInfoValidation = accountInfoValidation.isValidSync(values);
+            const isValidAccountInfoValidation = isAgent
+              ? kycAnnexureSchema.isValidSync(values)
+              : accountInfoValidation.isValidSync(values);
+
             return (
               <Form>
                 <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
@@ -480,7 +617,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           label: classes.radioLabelRoot,
                           parent: classes.radioConatiner
                         }}
-                        radioColor={!values.statementsVia ? "fff" : "#00CA2C"}
+                        radioColor={!values.statementsVia ? "#fff" : "#00CA2C"}
                         onChange={accountServiceChangeHandler}
                       />
                     </div>
@@ -595,8 +732,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       }}
                     >
                       <KycAnnexureDetails
-                        formValues={values}
-                        setFormValues={setFieldValue}
+                        values={values}
+                        setFieldValue={setFieldValue}
                         {...props}
                       />
                     </Accordion>

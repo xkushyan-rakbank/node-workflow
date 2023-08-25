@@ -434,7 +434,9 @@
     "documents": {
       "companyDocuments": [],
       "stakeholdersDocuments": null,
-      "companyAddressProof": null
+      "companyAddressProof": null,
+      "otherDocuments": [],
+      "kycAnnexureDocuments": []
     },
     "prospectStatusInfo": {
       "statusType": "",
@@ -450,8 +452,15 @@
     "kycAnnexure": {
       "workItemNumber": "",
       "companyName": "",
+      "sourcingCode": "",
+      "allianceCode": "",
+      "companyCifId": 0,
+      "retailCifId": 0,
+      "leadNumber": "",
       "skillBasedCategory": "",
       "signatoryName": "",
+      "businessModel": "",
+      "ownerAdditionalInfo": "",
       "signatoryDetails": [
         {
           "signatoryName": "",
@@ -459,32 +468,52 @@
           "backgroundInfo": ""
         }
       ],
-      "businessModel": "",
-      "isUltimateBeneficiary": "",
+      "generalRemarksRM": "",
+      "generalRemarksRO": "",
+      "verificationRemarksRM": "",
+      "audioVideoKycVerification": "NA",
+      "verificationDetails": [
+        {
+          "kycVerificationDate": "",
+          "kycVerificationTime": "",
+          "verificationConductedBy": "",
+          "verificationStatus": "",
+          "verificationRemarks": ""
+        }
+      ],
+      "isUltimateBeneficiary": "Yes",
       "bankDetails": [
         {
           "bankName": "",
-          "isStatementAvailable": "",
+          "isStatementAvailable": "Yes",
           "bankStatementRemark": "",
           "bankStatementFrom": "",
           "bankStatementTo": ""
         }
       ],
-      "antiMoneyLaundering": "yes",
-      "poaCountry": [""],
-      "riskIndustries": [""],
-      "clientDealingCountry": [""],
-      "audioVideoKycVerification": "NA",
-      "signatoryEIDinfo": "yes",
+      "antiMoneyLaundering": "Yes",
+      "poaCountry": [],
+      "riskIndustries": [],
+      "clientDealingCountry": [],
+      "signatoryEIDinfo": "Yes",
+      "isVisitConducted": "NA",
+      "visitDetails": [
+          {
+            "kycVisitDate": "",
+            "kycVisitTime": "",
+            "visitConductedBy": "",
+            "visitConductedAt": "",
+            "noticeToCounterfeit": ""
+          }
+  
+      ],
       "signatoryEIDinfoRemarks": "",
       "goAmlRegistration": "NA",
       "goAmlRegistrationNumber": "",
       "goAmlIndustry": [],
-      "noticeToCounterfeit": "",
+      
       "roName": "",
       "roEmployeeId": "",
-      "kycVerificationDate": "",
-      "kycVerificationTime": "",
       "kycVerificationLocation": "",
       "kycVerificationotherLocation": ""
     },

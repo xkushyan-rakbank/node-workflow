@@ -452,7 +452,8 @@ export function* uploadDocuments({ payload }) {
     if (
       !savePath.includes("personalBankStatements") &&
       !savePath.includes("companyAddressProof") &&
-      !savePath.includes("otherDocuments")
+      !savePath.includes("otherDocuments") &&
+      !savePath.includes("kycAnnexureDocuments")
     ) {
       uploadedList = [];
     } else {
@@ -480,7 +481,7 @@ export function* uploadDocuments({ payload }) {
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
         const documentUniq =
-          index !== undefined ? `${docItem.documentTitle}-${index}` : `${docItem.documentTitle}`;
+          index === undefined ? `${docItem.documentTitle}` : `${docItem.documentTitle}-${index}`;
         const docExtension = fieldData.name.split(".").pop();
         let generateName = [BBG_COMPANY_INFO_MODULEID, prospectId, docItem.documentType];
         let appendTimeStamp = (index !== undefined ? `_${index + 1}` : "") + `_${unixTimestamp()}`;
@@ -520,6 +521,11 @@ export function* uploadDocuments({ payload }) {
         pathToUpdate = "prospect.documents";
         valueToUpdate = {
           otherDocuments: uploadedDocuments
+        };
+      } else if (pathToUpdate === "kycAnnexureDocuments") {
+        pathToUpdate = "prospect.documents";
+        valueToUpdate = {
+          kycAnnexureDocuments: uploadedDocuments
         };
       } else {
         let pathToUpdateParts = pathToUpdate.split(".");

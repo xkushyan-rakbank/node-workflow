@@ -370,6 +370,69 @@ export const prospect = {
     stakeholdersDocuments: null,
     otherDocuments: []
   },
+  kycAnnexure: {
+    workItemNumber: "",
+    companyName: "",
+    sourcingCode: "",
+    allianceCode: "",
+    companyCifId: 0,
+    retailCifId: 0,
+    leadNumber: "",
+    skillBasedCategory: "",
+    signatoryName: "",
+    businessModel: "",
+    ownerAdditionalInfo: "",
+    signatoryDetails: [
+      {
+        signatoryName: "",
+        education: "",
+        backgroundInfo: ""
+      }
+    ],
+    generalRemarksRM: "",
+    generalRemarksRO: "",
+    verificationRemarksRM: "",
+    audioVideoKycVerification: "",
+    verificationDetails: [
+      {
+        kycVerificationDate: "",
+        kycVerificationTime: "",
+        verificationConductedBy: "",
+        verificationStatus: "",
+        verificationRemarks: ""
+      }
+    ],
+    isUltimateBeneficiary: "",
+    bankDetails: [
+      {
+        bankName: "",
+        isStatementAvailable: "",
+        bankStatementRemark: "",
+        bankStatementFrom: "",
+        bankStatementTo: ""
+      }
+    ],
+    antiMoneyLaundering: "",
+    poaCountry: [],
+    riskIndustries: [],
+    clientDealingCountry: [],
+    signatoryEIDinfo: "",
+    isVisitConducted: "",
+    visitDetails: [
+      {
+        kycVisitDate: "",
+        kycVisitTime: "",
+        visitConductedBy: "",
+        visitConductedAt: "",
+        noticeToCounterfeit: ""
+      }
+    ],
+    signatoryEIDinfoRemarks: "",
+    roName: "",
+    roEmployeeId: "",
+    kycVerificationLocation: "",
+    kycVerificationotherLocation: ""
+  },
   prospectStatusInfo: {
     statusType: "",
     statusCode: "",
@@ -397,6 +460,13 @@ export const pageProspectPaylodMap = {
   "/ConsentInfo": ["signatoryInfo"],
   "/CompanyAdditionalInfo": ["companyAdditionalInfo", "documents"],
   "/StakeholdersAdditionalInfo": ["signatoryInfo", "documents"],
-  "/AccountInfo": ["accountInfo", "signatoryInfo", "channelServicesInfo", "applicationInfo"],
+  "/AccountInfo": [
+    "accountInfo",
+    "signatoryInfo",
+    "channelServicesInfo",
+    "applicationInfo",
+    "kycAnnexure",
+    "documents"
+  ],
   "/AdditionalData": ["documents", "additionalDataForBPM"]
 };

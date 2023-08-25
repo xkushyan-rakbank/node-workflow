@@ -35,6 +35,7 @@ import {
   getApplicationInfo,
   getSignatories
 } from "../selectors/appConfig";
+import { checkLoginStatus } from "../selectors/loginSelector";
 import { getCompletedSteps } from "../selectors/completedSteps";
 import { getScreeningError } from "../selectors/sendProspectToAPI";
 import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
@@ -189,7 +190,7 @@ export function* prospectAutoSave() {
   }
 }
 
-const getRequestPayloadForNode = (key, prospect, viewId) => {
+const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
   let nodePayload;
   switch (key) {
     case "organizationInfo": {
@@ -228,6 +229,21 @@ const getRequestPayloadForNode = (key, prospect, viewId) => {
 
       break;
     }
+    case "kycAnnexure": {
+      if (isAgent) {
+        nodePayload = prospect[key];
+      }
+      break;
+    }
+    case "documents": {
+      if (viewId === "/AccountInfo" && isAgent) {
+        nodePayload = prospect[key];
+      } else {
+        nodePayload = "";
+      }
+      nodePayload = prospect[key];
+      break;
+    }
     default:
       nodePayload = prospect[key];
   }
@@ -241,6 +257,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     const completedSteps = yield select(getCompletedSteps);
     const applicationInfo = yield select(getApplicationInfo);
     const signatoryInfo = yield select(getSignatories);
+    const isAgent = yield select(checkLoginStatus);
 
     const viewId = applicationInfo.viewId;
 
@@ -265,7 +282,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     payloadKeys &&
       payloadKeys.forEach(key => {
         if (newProspect[key]) {
-          createProspectPayload[key] = getRequestPayloadForNode(key, newProspect, viewId);
+          createProspectPayload[key] = getRequestPayloadForNode(key, newProspect, viewId, isAgent);
         }
       });
 
