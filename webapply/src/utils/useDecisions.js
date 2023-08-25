@@ -37,6 +37,9 @@ export default function useDecisions(path, decisionKey) {
 
   // function is triggered when an onChange event is triggered on a decisionTrigger field
   function updatePropspectandUI(value) {
+    if (value === null || value === undefined) {
+      return;
+    }
     dispatch(
       triggerDecisions({
         onValuesChanged: callbackValuesChanged,
