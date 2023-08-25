@@ -28,7 +28,7 @@ export default function AdditionalQuery({ additionalInfoDetailsFromBPM, setField
         <div key={index} className={classes.innerCards}>
           <div className={classes.infoType}>
             <div className={classes.infoCont}>
-              <span className={classes.infoLabel}>Nature of Enquriy :</span>
+              <span className={classes.infoLabel}>Nature of Enquiry :</span>
               <span className={classes.infoValue}>{info.queryCategory}</span>
             </div>
             <div className={classes.infoCont}>
