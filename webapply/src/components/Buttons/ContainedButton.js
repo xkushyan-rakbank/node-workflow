@@ -11,8 +11,8 @@ import { ICONS, Icon } from "../Icons";
 const styles = {
   "@keyframes rotate": {
     "100%": {
-      transform: "rotate(360deg)",
-    },
+      transform: "rotate(360deg)"
+    }
   },
   buttonStyle: {
     minHeight: "50px",
@@ -24,7 +24,7 @@ const styles = {
     padding: "10px 40px",
     backgroundColor: "#3b3a3a",
     "&:hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      backgroundColor: "rgba(0, 0, 0, 0.7)"
     },
     [theme.breakpoints.only("md")]: {
       fontSize: "1.125rem",
@@ -36,8 +36,8 @@ const styles = {
       minHeight: "56px",
       height: "50px",
       fontSize: "1.25rem",
-      padding: "12px 45px",
-    },
+      padding: "12px 45px"
+    }
   },
   labelStyle: {
     fontSize: "1rem",
@@ -57,8 +57,8 @@ const styles = {
       textAlign: "left",
       color: "#ffffff",
       justifyContent: "space-between",
-      textTransform: "none",
-    },
+      textTransform: "none"
+    }
   },
   loader: {
     width: "24px",
@@ -71,11 +71,18 @@ const styles = {
     width: "12px",
     height: "10px",
     verticalAlign: "top",
-    marginLeft: 8,
+    marginLeft: 8
+  },
+  searchApplicantArrow: {
+    fill: "#000",
+    width: "12px",
+    height: "10px",
+    verticalAlign: "top",
+    marginLeft: 8
   },
   disabledBtnStyle: {
-    backgroundColor: "#CCCCCC",
-  },
+    backgroundColor: "#CCCCCC"
+  }
 };
 
 const BaseButton = ({
@@ -88,6 +95,7 @@ const BaseButton = ({
   color = "primary",
   component = "button",
   withRightArrow,
+  isSearchApplicant,
   isDisplayLoader,
   classes,
   name,
@@ -113,7 +121,13 @@ const BaseButton = ({
     ) : (
       [
         label,
-        withRightArrow && <Icon className={classes.arrow} alt="rightArrowWhite" name={ICONS.arrowRight} />
+        withRightArrow && (
+          <Icon
+            className={isSearchApplicant ? classes.searchApplicantArrow : classes.arrow}
+            alt="rightArrowWhite"
+            name={ICONS.arrowRight}
+          />
+        )
       ]
     )}
   </Button>

@@ -84,5 +84,129 @@ export const useStyles = makeStyles({
     lineHeight: "18px",
     color: "#263d4c",
     minHeight: "18px"
+  },
+
+  searchItemContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "2rem",
+    alignSelf: "stretch",
+    marginTop: "2rem"
+  },
+  searchItemCard: {
+    display: "flex",
+    padding: "1.5rem",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    alignSelf: "stretch",
+    borderRadius: "0.625rem",
+    background: "#FFF",
+    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
+    gap: "1rem",
+    border: "1px solid var(--color-dark-grey, #757575)"
+  },
+  searchItemStatus: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%"
+  },
+  preview: {
+    paddingTop: "0 !important"
+  },
+  statusCont: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.62rem"
+  },
+  label: {
+    color: " var(--color-palette-grey-tones-600, #1F1F1F)",
+    fontSize: "0.75rem",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "1rem"
+  },
+  statusDiv: {
+    display: "flex",
+    padding: "0.3125rem",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    gap: "0.625rem",
+    borderRadius: "0.3125rem",
+    background: "var(--color-palette-green-100, #FBD0D1)",
+    color: "var(--color-palette-yellow-900, #332600)",
+    fontSize: "0.75rem",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "1rem"
+  },
+  searchItemDetails: {
+    display: "flex",
+    gap: "3.94rem",
+    width: "100%"
+  },
+  appDetails: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    flexWrap: "wrap",
+    maxWidth: "8.9375rem"
+  },
+  appDetailsHeader: {
+    color: "#000",
+    fontSize: "0.75rem",
+    fontStyle: "normal",
+    fontWeight: "500",
+    lineHeight: "1rem"
+  },
+  appDetailsinfo: {
+    color: "var(--color-palette-grey-tones-500, #525252)",
+    fontSize: "0.75rem",
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: "1.25rem"
+  },
+  reason: {
+    maxWidth: "unset"
+  },
+  remarks: {
+    gap: "0.5rem",
+    maxWidth: "unset"
+  },
+  footer: {
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%"
+  },
+  lineBreak: {
+    height: "0.0625rem",
+    background: "#E6E6E6",
+    width: "100%"
+  },
+  button: {
+    marginTop: "0px !important",
+    borderRadius: "6.25rem",
+    border: "1px solid #000",
+    width: "unset",
+    "& button": {
+      backgroundColor: "transparent !important",
+      boxShadow: "none !important",
+      "& span": {
+        color: "var(--color-black, #3B3A3A) !important",
+        fontSize: "1rem",
+        fontStyle: "normal",
+        fontWeight: "400",
+        lineHeight: "1rem"
+      }
+    }
+  },
+  greencard: {
+    background: "var(--color-palette-green-100, #D9F2E5)"
+  },
+  greycard: {
+    background: "var(--color-palette-grey-tones-100, #E6E6E6)"
+  },
+  yellowcard: {
+    background: "var(--color-palette-yellow-100, #FFF2CC)"
   }
 });

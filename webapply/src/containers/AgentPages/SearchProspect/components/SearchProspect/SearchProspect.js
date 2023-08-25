@@ -3,6 +3,9 @@ import React from "react";
 import { useStyles } from "./styled";
 import { SearchProspectForm } from "../SearchProspectForm/SearchProspectForm";
 import { SearchResults } from "../SearchResults/SearchResults";
+import { Footer } from "../../../../../components/Footer";
+import { BackLink } from "../../../../../components/Buttons/BackLink";
+import routes from "../../../../../routes";
 
 export const SearchProspect = ({
   onSearch,
@@ -24,6 +27,9 @@ export const SearchProspect = ({
           searchErrorDesc={searchErrorDesc}
         />
       )}
+      <Footer hideSaveClose={true}>
+        <BackLink path={routes.login} isTypeButton={true} />
+      </Footer>
     </div>
   );
 };

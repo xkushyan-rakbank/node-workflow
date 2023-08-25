@@ -1,10 +1,16 @@
+/* eslint-disable max-len */
 import React from "react";
-
 import { SearchItem } from "./SearchItem";
 
 import { useStyles } from "./styled";
 
-export const SearchResults = ({ searchResults, searchError, searchErrorDesc }) => {
+export const SearchResults = ({
+  searchResults,
+  searchError = "",
+  searchErrorDesc = "",
+  getProspectInfo = "",
+  loadingProspectId = ""
+}) => {
   const classes = useStyles();
 
   if (!searchResults.length) {
@@ -20,24 +26,17 @@ export const SearchResults = ({ searchResults, searchError, searchErrorDesc }) =
   }
 
   return (
-    <>
-      <h2>Search Results</h2>
-      <div className={classes.wrapper}>
-        <div className={classes.applicationRow}>
-          <div className={classes.column}>
-            <div className={classes.heading}>Applicant{"'"}s Detail</div>
-          </div>
-          <div className={classes.column}>
-            <div className={classes.heading}>Company Detail</div>
-          </div>
-          <div className={classes.column}>
-            <div className={classes.heading}>Status</div>
-          </div>
-        </div>
-        {searchResults.map(application => (
-          <SearchItem key={application.prospectId} application={application} />
-        ))}
-      </div>
-    </>
+    <div className={classes.searchItemContainer}>
+      {searchResults.map((application, index) => {
+        return (
+          <SearchItem
+            application={application}
+            key={application.prospectId}
+            getProspectInfo={getProspectInfo}
+            loadingProspectId={loadingProspectId}
+          />
+        );
+      })}
+    </div>
   );
 };

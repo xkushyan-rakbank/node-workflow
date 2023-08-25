@@ -25,7 +25,13 @@ export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
   }
 }));
 
-export const SubmitButtonBase = ({ justify, submitButtonClassName, type = "submit", ...rest }) => (
+export const SubmitButtonBase = ({
+  justify,
+  submitButtonClassName,
+  type = "submit",
+  isSearchApplicant = false,
+  ...rest
+}) => (
   <ButtonWrapper
     container
     direction="row"
@@ -33,7 +39,7 @@ export const SubmitButtonBase = ({ justify, submitButtonClassName, type = "submi
     alignItems="center"
     className={submitButtonClassName}
   >
-    <Button type={type} withRightArrow {...rest} />
+    <Button type={type} isSearchApplicant={isSearchApplicant} withRightArrow {...rest} />
   </ButtonWrapper>
 );
 

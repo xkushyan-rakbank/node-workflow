@@ -8,7 +8,10 @@ export const notCtaStatuses = {
   "Account activated": "Ready for transaction",
   Declined: "Criteria not met",
   Ineligible: "We will call you soon",
-  NoStatusYet: "We will call you soon"
+  NoStatusYet: "We will call you soon",
+  Success: "Success",
+  "Additional Info Required": "Additional information required",
+  "Sales Agent Update": "Sales Agent Update"
 };
 
 export const ctaStatuses = {
@@ -25,7 +28,16 @@ export const ctaStatuses = {
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
   },
   "Additional Info Required": {
-    buttonText: "Upload Document",
+    buttonText: "Update application",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
   }
+};
+
+export const ctaStatusClass = {
+  Assessing: "greencard",
+  "Account activated": "greencard",
+  Declined: "greycard",
+  Success: "greencard",
+  "Additional Info Required": "yellowcard",
+  "Sales Agent Update": "greycard"
 };

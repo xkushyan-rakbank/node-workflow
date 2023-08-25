@@ -134,16 +134,13 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
             />
           </Grid>
         </Grid>
-
-        <Footer extraClasses={"oneElement"}>
-          <SubmitButton
-            justify="flex-end"
-            label="Search"
-            disabled={
-              isLoading || Object.keys(omit(values, ["countryCode"])).every(key => !values[key])
-            }
-          />
-        </Footer>
+        <SubmitButton
+          justify="flex-end"
+          label="Search"
+          disabled={
+            isLoading || Object.keys(omit(values, ["countryCode"])).every(key => !values[key])
+          }
+        />
       </Form>
     )}
   </Formik>

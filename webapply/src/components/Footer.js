@@ -115,7 +115,7 @@ const useStyles = makeStyles({
   }
 });
 
-export const Footer = ({ children, extraClasses }) => {
+export const Footer = ({ children, extraClasses, hideSaveClose = false }) => {
   const classes = useStyles({
     smallMenu: checkIsShowSmallMenu(pathname)
   });
@@ -129,7 +129,11 @@ export const Footer = ({ children, extraClasses }) => {
           [classes.linkContainerWithSaveCloseBtn]: showSaveClose
         })}
       >
-        {showSaveClose && <SaveAndClose extraClasses={classes.hideSaveCloseBtnFooterMobile} />}
+        {showSaveClose && !hideSaveClose ? (
+          <SaveAndClose extraClasses={classes.hideSaveCloseBtnFooterMobile} />
+        ) : (
+          <span></span>
+        )}
         <div className={cx(classes.formActionButtons, extraClasses)}>{children}</div>
       </div>
     </div>

@@ -52,7 +52,13 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-const StakeholdersDetail = ({ className, name, companyCategory, isStakeholder = true }) => {
+const StakeholdersDetail = ({
+  className,
+  name,
+  companyCategory,
+  isStakeholder = true,
+  referenceNumber = false
+}) => {
   const classes = useStyles();
 
   const initial = name?.charAt(0)?.toUpperCase();
@@ -66,6 +72,7 @@ const StakeholdersDetail = ({ className, name, companyCategory, isStakeholder = 
           {name}&nbsp;{isSoleProprietor}
         </h5>
         {isStakeholder && <p>Stakeholder: 100%</p>}
+        {referenceNumber && <p>{referenceNumber}</p>}
       </div>
     </div>
   );
