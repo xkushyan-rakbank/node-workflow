@@ -57,7 +57,6 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const initialValues = {
     highestEducationAttained: "",
     employmentStatus: employmentType?.filter(item => item.code === "Self-employed")[0]?.value,
-    editedMothersMaidenName: signatoryInfo[0]?.mothersMaidenName || "",
     linkedInURL: "",
     backgroundInfo: "",
     cv: cv[0] || "",
@@ -67,11 +66,6 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const backgroundSchema = Yup.object().shape({
     highestEducationAttained: Yup.string().required(getRequiredMessage("Highest education")),
     employmentStatus: Yup.string().required(getRequiredMessage("Employment type")),
-    editedMothersMaidenName: Yup.string()
-      .required(getRequiredMessage("Mother’s maiden name"))
-      .matches(NAME_REGEX, getInvalidMessage("Mother’s maiden name"))
-      .max(100, "Mother’s maiden name is too long. Please enter upto 100 characters.")
-      .min(3, "Mother’s maiden name is too short. Please enter atleast 3 characters."),
     linkedInURL: Yup.string()
       .nullable()
       .min(27, "LinkedIn URL is too short. Please enter a valid LinkedIn profile URL.")
@@ -133,10 +127,10 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const initialIsValid = backgroundSchema.isValidSync(initialValues);
 
   useEffect(() => {
-    signatoryInfo[0]?.stakeholderAdditionalInfo?.editedMothersMaidenName &&
+    signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.highestEducationAttained &&
       !initialIsValid &&
       setShowGeneralErr(true);
-  }, [signatoryInfo[0]?.stakeholderAdditionalInfo?.editedMothersMaidenName]);
+  }, [signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.highestEducationAttained]);
 
   return (
     <Formik
@@ -178,6 +172,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
                     isSearchable
                     component={SelectAutocomplete}
                     tabIndex="0"
+                    onBlur={(e) => handleBlur(e.target.value, errors)}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12}>
@@ -190,20 +185,6 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
                     component={SelectAutocomplete}
                     tabIndex="0"
                     disabled={true}
-                  />
-                </Grid>
-                <Grid item sm={12} xs={12}>
-                  <Field
-                    name="editedMothersMaidenName"
-                    path={`${basePath}.editedMothersMaidenName`}
-                    label="Mother’s maiden name"
-                    placeholder="Mother’s maiden name"
-                    InputProps={{
-                      inputProps: { tabIndex: 1 },
-                      onBlur: e => handleBlur(e.target.value, errors)
-                    }}
-                    component={Input}
-                    disabled={signatoryInfo[0]?.mothersMaidenName ? true : false}
                   />
                 </Grid>
               </Grid>
