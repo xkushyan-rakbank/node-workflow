@@ -452,7 +452,6 @@ export function* uploadDocuments({ payload }) {
     if (
       !savePath.includes("personalBankStatements") &&
       !savePath.includes("companyAddressProof") &&
-      !savePath.includes("otherDocuments") &&
       !savePath.includes("kycAnnexureDocuments")
     ) {
       uploadedList = [];
