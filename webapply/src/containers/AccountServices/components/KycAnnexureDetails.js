@@ -39,6 +39,9 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
     }
 
     const updatedOtherDocuments = kycAnnexureDocuments.filter(eachDoc => {
+      if (name === "signatoryEIDinfoReport") {
+        return eachDoc.documentKey !== name;
+      }
       return eachDoc.fileName !== item.documentKey;
     });
 
