@@ -137,7 +137,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   }}
                   disabled={signatoryInfo[0]?.mothersMaidenName ? true : false}
                   className="testingClass"
-                  showEditIcon={!isMotherMaidenNamePresent(props?.values)}
+                  showEditIcon={!signatoryInfo[0]?.mothersMaidenName ? true : false}
                   fieldDescription={"Enter Mother's maiden name as per your passport"}
                 />
               </Grid>
