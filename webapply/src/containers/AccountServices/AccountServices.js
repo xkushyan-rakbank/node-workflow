@@ -174,10 +174,11 @@ export const AccountServices = ({ sendProspectToAPI }) => {
           let documentKey = `visitDetails[${index}].sisterCompanyTradeLicense-${index}`;
           return doc.documentKey.includes(documentKey);
         });
-        if (sisterCompanyDoc[0]) {
+        const sisDoc = sisterCompanyDoc && sisterCompanyDoc[0];
+        if (sisDoc) {
           sisterCompanyDoc[0]["documentKey"] = sisterCompanyDoc[0]?.fileName;
         }
-        item.sisterCompanyTradeLicense = sisterCompanyDoc[0];
+        item.sisterCompanyTradeLicense = sisDoc;
       });
     }
   }, []);
