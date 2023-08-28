@@ -292,7 +292,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     verificationDetails: Yup.array().of(
       Yup.object().shape({
         verificationStatus: Yup.string(),
-        verificationRemarks: Yup.string().when("verificationStatus", {
+        verificationRemarks: Yup.mixed().when("verificationStatus", {
           is: verificationStatus => {
             return verificationStatus === "FAIL" || verificationStatus === "REFR";
           },
