@@ -170,7 +170,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   useEffect(() => {
     if (kycAnnexureDetails && kycAnnexureDetails.visitDetails) {
       kycAnnexureDetails.visitDetails.forEach((item, index) => {
-        const sisterCompanyDoc = kycAnnexureDocuments.filter(doc => {
+        const sisterCompanyDoc = kycAnnexureDocuments?.filter(doc => {
           let documentKey = `visitDetails[${index}].sisterCompanyTradeLicense-${index}`;
           return doc.documentKey.includes(documentKey);
         });
