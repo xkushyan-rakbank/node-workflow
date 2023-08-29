@@ -59,7 +59,6 @@ export const TermsAndConditions = ({ wcmData }) => {
             </div>
           )}
         </div>
-        {/* {!termsAndConditions.generalTCs ? ( */}
         <Button
           variant="outlined"
           className={!termsAndConditions.generalTCs ? classes.readAcceptBtn : classes.readBtn}
@@ -67,11 +66,6 @@ export const TermsAndConditions = ({ wcmData }) => {
         >
           {!termsAndConditions.generalTCs ? "Read and Accept" : "Read"}
         </Button>
-        {/* // ) : ( //{" "} */}
-        {/* <Button variant="outlined" className={classes.readBtn}>
-          // Read //{" "}
-        </Button>
-        // )} */}
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
