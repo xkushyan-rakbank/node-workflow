@@ -51,12 +51,12 @@ export const TaxDeclarationsSection = forwardRef(
     const createCompanyTaxRadioHandler = ({ values, setFieldValue }) => async event => {
       const value = JSON.parse(event.target.value);
       const target = event.target.name;
-      await setFieldValue(target, value);
+      setFieldValue(target, value);
       if (target === "isFinancialInstitution") {
         const globalintermediaryId = values["globalintermediaryId"] || undefined;
-        await setFieldValue("globalintermediaryId", globalintermediaryId);
+        setFieldValue("globalintermediaryId", globalintermediaryId);
         if (value === "no") {
-          await setFieldValue("globalintermediaryId", "");
+          setFieldValue("globalintermediaryId", "");
           dispatch(
             updateProspect({
               ["prospect.companyAdditionalInfo.globalintermediaryId"]: ""
