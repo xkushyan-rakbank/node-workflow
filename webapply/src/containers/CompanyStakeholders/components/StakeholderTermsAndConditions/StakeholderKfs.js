@@ -61,19 +61,21 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
             </div>
           )}
         </div>
-        {!termsAndConditions.kfs ? (
-          !isKfsProgress ? (
-            <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
-              Read and Accept
-            </Button>
+        <Button
+          variant="outlined"
+          className={!termsAndConditions.kfs ? classes.readAcceptBtn : classes.readBtn}
+          onClick={openKFSModal}
+        >
+          {!termsAndConditions.kfs ? (
+            !isKfsProgress ? (
+              "Read and Accept"
+            ) : (
+              <CircularProgress size={14} value={null} color="#fff" />
+            )
           ) : (
-            <CircularProgress size={14} value={null} />
-          )
-        ) : (
-          <Button variant="outlined" className={classes.readBtn}>
-            Read
-          </Button>
-        )}
+            "Read"
+          )}
+        </Button>
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
@@ -83,6 +85,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
         height={height}
         pages={pages}
         scrollToEnd={true}
+        isAccepted={isKfsProgress}
       />
     </>
   );

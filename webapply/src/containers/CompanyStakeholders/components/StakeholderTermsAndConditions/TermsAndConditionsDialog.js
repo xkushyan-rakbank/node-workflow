@@ -14,7 +14,8 @@ export default function TermsAndConditionsDialog({
   editedFile,
   height,
   pages,
-  scrollToEnd = false
+  scrollToEnd = false,
+  isAccepted = false
 }) {
   const classes = useStyles();
   const [disabled, setDisabled] = useState(scrollToEnd);
@@ -50,7 +51,7 @@ export default function TermsAndConditionsDialog({
             <Button
               withRightArrow
               className={classes.agreeButton}
-              disabled={disabled}
+              disabled={disabled || isAccepted}
               label="Accept and continue"
               onClick={handleAccept}
             />

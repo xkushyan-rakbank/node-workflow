@@ -135,7 +135,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         return (
           <>
             {dateValue}
-            <sup>{getOrdinalofDate(dateValue)}</sup>, {month}, {year}
+            <sup>{getOrdinalofDate(dateValue)}</sup> {month}, {year}
           </>
         );
       }

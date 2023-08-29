@@ -59,15 +59,19 @@ export const TermsAndConditions = ({ wcmData }) => {
             </div>
           )}
         </div>
-        {!termsAndConditions.generalTCs ? (
-          <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
-            Read and Accept
-          </Button>
-        ) : (
-          <Button variant="outlined" className={classes.readBtn}>
-            Read
-          </Button>
-        )}
+        {/* {!termsAndConditions.generalTCs ? ( */}
+        <Button
+          variant="outlined"
+          className={!termsAndConditions.generalTCs ? classes.readAcceptBtn : classes.readBtn}
+          onClick={openKFSModal}
+        >
+          {!termsAndConditions.generalTCs ? "Read and Accept" : "Read"}
+        </Button>
+        {/* // ) : ( //{" "} */}
+        {/* <Button variant="outlined" className={classes.readBtn}>
+          // Read //{" "}
+        </Button>
+        // )} */}
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
@@ -77,6 +81,7 @@ export const TermsAndConditions = ({ wcmData }) => {
         height={height}
         pages={pages}
         scrollToEnd={false}
+        isAccepted={termsAndConditions.generalTCs}
       />
     </>
   );

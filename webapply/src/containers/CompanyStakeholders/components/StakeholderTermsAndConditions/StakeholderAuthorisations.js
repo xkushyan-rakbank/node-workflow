@@ -65,15 +65,13 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           <li>Account statements check with Central Bank of the UAE (CBUAE)</li>
           <li>Other regulatory authorisations</li>
         </ul>
-        {!termsAndConditions.authorisation ? (
-          <Button variant="outlined" className={classes.readAcceptBtn} onClick={openKFSModal}>
-            Read and Accept
-          </Button>
-        ) : (
-          <Button variant="outlined" className={classes.readBtn}>
-            Read
-          </Button>
-        )}
+        <Button
+          variant="outlined"
+          className={!termsAndConditions.authorisation ? classes.readAcceptBtn : classes.readBtn}
+          onClick={openKFSModal}
+        >
+          {!termsAndConditions.authorisation ? "Read and Accept" : "Read"}
+        </Button>
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
@@ -83,6 +81,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
         height={height}
         pages={pages}
         scrollToEnd={false}
+        isAccepted={termsAndConditions.authorisation}
       />
     </>
   );
