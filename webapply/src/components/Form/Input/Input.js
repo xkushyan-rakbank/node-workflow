@@ -114,6 +114,8 @@ const InputBase = ({
           fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
           fieldMaxLength={InputProps.inputProps?.maxLength}
           showTitleIcon={infoIcon}
+          iconHeight={props?.iconHeight}
+          iconWidth={props?.iconWidth}
         />
       )}
 

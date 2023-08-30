@@ -225,6 +225,8 @@ export const ApplicantInfoComponent = ({
                 lemniskCall={value => lemniskCall(value)}
                 fieldDescription="This should be the same as shown on your trade licence."
                 isLoadDefaultValueFromStore={false}
+                iconWidth={16}
+                iconHeight={16}
               />
             )}
             {isConfigLoading ? (
@@ -246,6 +248,8 @@ export const ApplicantInfoComponent = ({
                 }
                 isLoadDefaultValueFromStore={false}
                 disabled={invitationParams?.custMobileNum}
+                iconWidth={25}
+                iconHeight={25}
               />
             )}
             {isConfigLoading ? (
@@ -282,6 +286,8 @@ export const ApplicantInfoComponent = ({
                     "This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
                   }
                   isLoadDefaultValueFromStore={false}
+                  iconWidth={25}
+                  iconHeight={25}
                 />
               </InputGroup>
             )}

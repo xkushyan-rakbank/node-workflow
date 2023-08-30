@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ReactComponent as InformationIcon } from "../assets/icons/information.svg";
+import { useMediaQuery } from "@material-ui/core";
 
 const useStyles = makeStyles({
   wrapper: {
@@ -25,15 +26,25 @@ const useStyles = makeStyles({
   }
 });
 
-export const FieldDescription = ({ title, fieldValueLength, fieldMaxLength, showTitleIcon }) => {
+export const FieldDescription = ({
+  title,
+  fieldValueLength,
+  fieldMaxLength,
+  showTitleIcon,
+  iconWidth = 14,
+  iconHeight = 14,
+}) => {
   const classes = useStyles();
-
+  const isMobile = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
+  const iconSize = isMobile
+    ? { width: iconWidth, height: iconHeight }
+    : { width: "14px", height: "14px" };
   return (
     <div className={classes.wrapper}>
       <div className={classes.informationDisclaimer}>
         {title && (
           <>
-            <InformationIcon />
+            <InformationIcon {...iconSize} />
             {title}
           </>
         )}

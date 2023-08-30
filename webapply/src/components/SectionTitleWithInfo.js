@@ -5,24 +5,25 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: "1.25rem",
     fontWeight: 500,
-    lineHeight: "32px",
+    lineHeight: "20px",
     color: "#1F1F1F",
     margin: 0,
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.75rem",
       margin: 0,
-      marginBottom: "8px"
+      marginBottom: "8px",
+      lineHeight: "32px",
     }
   },
   info: {
     fontSize: "1rem",
-    lineHeight: "28px",
+    lineHeight: "24px",
     color: "#757575",
     display: "block",
     marginTop: 10,
     fontWeight: 400,
     [theme.breakpoints.only("xs")]: {
-      fontSize: ({ smallInfo }) => (smallInfo ? "0.875rem" : "1.25rem"),
+      fontSize: ({ smallInfo }) => (smallInfo ? "1rem" : "1.25rem"),
       marginTop: ({ smallInfo }) => (smallInfo ? 5 : 10)
     },
     [theme.breakpoints.up("sm")]: {
