@@ -57,9 +57,15 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
     const atleastOneError = values?.topCustomers?.length === 1 && errors?.topCustomers?.[0];
     const morethanOneError =
       errors?.topCustomers && errors?.topCustomers.filter(eachItem => eachItem);
+    let isMoreThanOneErrorValid = false;
+    if (morethanOneError && morethanOneError[0]) {
+      isMoreThanOneErrorValid = Object.keys(morethanOneError[0]).length > 0;
+    }
     return (
-      atleastOneError ||
-      (morethanOneError && morethanOneError.length === values.topCustomers.length)
+      (atleastOneError && Object.keys(atleastOneError).length > 0) ||
+      (morethanOneError &&
+        isMoreThanOneErrorValid &&
+        morethanOneError.length === values.topCustomers.length)
     );
   }, [errors, values]);
 
