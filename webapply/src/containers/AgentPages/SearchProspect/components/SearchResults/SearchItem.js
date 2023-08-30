@@ -20,13 +20,7 @@ import { getProspectInfoPromisify } from "../../../../../store/actions/retrieveA
 import { useDisplayScreenBasedOnViewId } from "../../../../../utils/useDisplayScreenBasedOnViewId";
 import { getDocumentsList } from "../../../../../store/actions/uploadDocuments";
 
-export const SearchItem = ({
-  application,
-  key,
-  getProspectInfo,
-  loadingProspectId,
-  sendInviteEFR
-}) => {
+export const SearchItem = ({ application, key, getProspectInfo, loadingProspectId }) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
