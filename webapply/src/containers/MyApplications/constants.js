@@ -3,17 +3,6 @@ export const LIST_VIEW = "list";
 export const GRID_VIEW = "grid";
 export const RO_LABEL = "The contact details of your sales officer";
 
-export const notCtaStatuses = {
-  Assessing: "We will call you soon",
-  "Account activated": "Ready for transaction",
-  Declined: "Criteria not met",
-  Ineligible: "We will call you soon",
-  NoStatusYet: "We will call you soon",
-  Success: "Success",
-  "Additional Info Required": "Additional information required",
-  "Sales Agent Update": "Sales Agent Update"
-};
-
 export const ctaStatuses = {
   Incomplete: {
     buttonText: "Finish application",
@@ -30,14 +19,54 @@ export const ctaStatuses = {
   "Additional Info Required": {
     buttonText: "Update application",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  "EFR Pending": {
+    buttonText: "Resend EFR link",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
   }
 };
 
 export const ctaStatusClass = {
-  Assessing: "greencard",
-  "Account activated": "greencard",
-  Declined: "greycard",
-  Success: "greencard",
-  "Additional Info Required": "yellowcard",
-  "Sales Agent Update": "greycard"
+  DEC_STOPPED: "greycard",
+  WI_SUBMITTED: "greencard",
+  WI_APPROVED: "greencard",
+  INFO_REQUIRED: "yellowcard",
+  RO_EDIT: "greycard",
+  OPE_EDIT: "greycard",
+  IEL_STOPPED: "greycard",
+  EFR_SUBMITTED: "yellowcard"
+};
+
+export const roActions = {
+  PEN_SUBMITTED: {
+    buttonText: "Finish application",
+    mobileStatus: "You’re half way there! Please log in on a desktop to finish the application."
+  },
+  INFO_REQUIRED: {
+    buttonText: "Update information",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  EFR_SUBMITTED: {
+    buttonText: "Resend EFR link",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  RO_EDIT: {
+    buttonText: "Finish application",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  }
+};
+
+export const custActions = {
+  PEN_SUBMITTED: {
+    buttonText: "Finish application",
+    mobileStatus: "You’re half way there! Please log in on a desktop to finish the application."
+  },
+  INFO_REQUIRED: {
+    buttonText: "Update information",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  EFR_SUBMITTED: {
+    buttonText: "Update information",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  }
 };

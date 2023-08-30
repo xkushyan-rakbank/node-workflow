@@ -2,7 +2,7 @@
 import React from "react";
 import { generatePath } from "react-router";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cx from "classnames";
 import { get } from "lodash";
 
@@ -14,15 +14,20 @@ import { getAppConfig } from "../../../../../store/selectors/appConfig";
 import { getLoginResponse } from "../../../../../store/selectors/loginSelector";
 import StakeholdersDetail from "../../../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
-import { ctaStatusClass, ctaStatuses } from "../../../../MyApplications/constants";
+import { ctaStatusClass, custActions, roActions } from "../../../../MyApplications/constants";
 import { STATUS_LOCKED } from "../../../SearchedAppInfo/constants";
+import { getProspectInfoPromisify } from "../../../../../store/actions/retrieveApplicantInfo";
+import { useDisplayScreenBasedOnViewId } from "../../../../../utils/useDisplayScreenBasedOnViewId";
+import { getDocumentsList } from "../../../../../store/actions/uploadDocuments";
 
 export const SearchItem = ({ application, key, getProspectInfo, loadingProspectId }) => {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const { authorizationToken } = useSelector(getAppConfig);
   const { agentName, agentId, agentRole, deptName, roCode } = useSelector(getLoginResponse);
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
+  const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   function redirectToExternalURL(externalURL) {
     const data = {
@@ -48,6 +53,16 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
   }
 
   const handleNavigation = () => {
+    if (application?.status?.statusType === "INFO_REQUIRED") {
+      dispatch(getProspectInfoPromisify(application.prospectId)).then(
+        prospect => {
+          dispatch(getDocumentsList());
+          pushDisplayScreenToHistory(prospect);
+        },
+        () => {}
+      );
+      return;
+    }
     if (getProspectInfo) {
       return getProspectInfo(application.prospectId, application);
     }
@@ -88,8 +103,8 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
           <span
             className={cx(
               classes.statusDiv,
-              ctaStatusClass[(application?.status?.statusNotes)] &&
-                classes[ctaStatusClass[(application?.status?.statusNotes)]]
+              ctaStatusClass[(application?.status?.statusType)] &&
+                classes[ctaStatusClass[(application?.status?.statusType)]]
             )}
           >
             {application?.status?.statusNotes}
@@ -121,13 +136,30 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         <span className={classes.appDetailsHeader}>Remaks</span>
         <span className={classes.appDetailsinfo}>{declineRemarks}</span>
       </div>
-      {ctaStatuses[(application?.status?.statusNotes)] && (
+      {agentId && roActions[(application?.status?.statusType)] && (
         <>
           <div className={classes.lineBreak}></div>
           <div className={classes.footer}>
             <SubmitButton
               justify="flex-end"
-              label={ctaStatuses[(application?.status?.statusNotes)].buttonText}
+              label={roActions[(application?.status?.statusType)].buttonText}
+              type="button"
+              submitButtonClassName={classes.button}
+              onClick={handleNavigation}
+              disabled={application?.status?.reasonCode === STATUS_LOCKED}
+              isDisplayLoader={loadingProspectId === application.prospectId}
+              isSearchApplicant
+            />
+          </div>
+        </>
+      )}
+      {!agentId && custActions[(application?.status?.statusType)] && (
+        <>
+          <div className={classes.lineBreak}></div>
+          <div className={classes.footer}>
+            <SubmitButton
+              justify="flex-end"
+              label={custActions[(application?.status?.statusType)].buttonText}
               type="button"
               submitButtonClassName={classes.button}
               onClick={handleNavigation}
