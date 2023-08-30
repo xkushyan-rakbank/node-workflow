@@ -20,7 +20,13 @@ import { getProspectInfoPromisify } from "../../../../../store/actions/retrieveA
 import { useDisplayScreenBasedOnViewId } from "../../../../../utils/useDisplayScreenBasedOnViewId";
 import { getDocumentsList } from "../../../../../store/actions/uploadDocuments";
 
-export const SearchItem = ({ application, key, getProspectInfo, loadingProspectId }) => {
+export const SearchItem = ({
+  application,
+  key,
+  getProspectInfo,
+  loadingProspectId,
+  sendInviteEFR
+}) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -72,22 +78,18 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
   };
 
   const declineRoReason =
-    get(
-      application,
-      "application.notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineROMessage"
-    ) || "-";
+    get(application, "notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineROMessage") ||
+    "-";
 
   const declineCustReason =
     get(
       application,
-      "application.notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineCustMessage"
+      "notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineCustMessage"
     ) || "-";
 
   const declineRemarks =
-    get(
-      application,
-      "application.notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineRemarks"
-    ) || "-";
+    get(application, "notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineRemarks") ||
+    "-";
 
   return (
     <div key={key} className={classes.searchItemCard}>
