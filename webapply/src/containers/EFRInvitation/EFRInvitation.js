@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 import { Loader } from "./components/EFRLoading";
 import { OtpChannel, UAE_CODE } from "../../constants";
 import { setOtpMode } from "../../store/actions/otp";
-import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
@@ -14,7 +14,7 @@ import { logout } from "../../store/actions/loginForm";
 export function EFRInvitation({ generateOtpCode }) {
   const location = useLocation();
   const dispatch = useDispatch();
-  const pushHistory = useTrackingHistory();
+  const history = useHistory();
 
   const searchParams = new URLSearchParams(location.search);
   const { mobileNo } = useSelector(getApplicantInfo);
@@ -46,7 +46,7 @@ export function EFRInvitation({ generateOtpCode }) {
       generateOtpCode(loginData).then(
         () => {
           dispatch(setOtpMode(OtpChannel.Sms));
-          pushHistory(routes.efrOTPVerification, true, { prospectId });
+          history.push(routes.efrOTPVerification, { prospectId });
         },
         () => {}
       );

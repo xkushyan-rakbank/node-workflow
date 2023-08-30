@@ -18,9 +18,11 @@ import { log } from "../../../../utils/loggger";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 import { getIsRoInviteEfr } from "../../../../store/selectors/otp";
 import { Footer } from "../../../../components/Footer";
+import { ConfirmDialog } from "../../../../components/Modals";
 
 export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [wcmData, setWcmData] = useState(null);
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
@@ -36,7 +38,13 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
     setIsLoading(true);
     return sendProspectToAPI(NEXT).then(
       isScreeningError => {
-        if (!isScreeningError) pushHistory(routes.additionalInfoComponent, true);
+        if (!isScreeningError) {
+          if (isRoInviteEFR) {
+            setOpenModal(true);
+          } else {
+            pushHistory(routes.additionalInfoComponent, true);
+          }
+        }
       },
       () => setIsLoading(false)
     );
@@ -65,8 +73,23 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
     getTermsandConditions();
   }, []);
 
+  const handleModalClose = () => {
+    setOpenModal(false);
+    pushHistory(routes.comeBackLogin);
+  };
+
   return (
     <>
+      <ConfirmDialog
+        title={"Thank you"}
+        isOpen={openModal}
+        handleReject={() => {}}
+        cancelLabel={"close"}
+        handleClose={() => handleModalClose()}
+        message={
+          "Your EFR face recoginition process has been successfull completed, and you've accepted the KFS terms and conditions."
+        }
+      />
       <h3 className={classes.mainTitle}>Time for the small print</h3>
       <p className={classes.kfsSubTitle}>Please review the terms and conditions to continue</p>
 

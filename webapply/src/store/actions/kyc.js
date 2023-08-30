@@ -43,6 +43,10 @@ export const ANALYSE_OCR_AGE_RESTRICTION = "ANALYSE_OCR_AGE_RESTRICTION";
 
 export const SET_LOADING = "SET_LOADING";
 
+export const SEND_EFR_INVITE = "SEND_EFR_INVITE";
+export const SEND_EFR_INVITE_SUCCESS = "SEND_EFR_INVITE_SUCCESS";
+export const SEND_EFR_INVITE_ERROR = "SEND_EFR_INVITE_ERROR";
+
 export const setLoading = payload => ({
   type: SET_LOADING,
   payload
@@ -194,4 +198,26 @@ export const getKycSuccess = response => {
 
 export const getKycError = response => {
   return { type: GET_KYC_STATUS_ERROR, payload: response };
+};
+
+export const sendEFRInvitePromisify = payload => {
+  const action = {
+    type: SEND_EFR_INVITE,
+    [WAIT_FOR_ACTION]: SEND_EFR_INVITE_SUCCESS,
+    [ERROR_ACTION]: SEND_EFR_INVITE_ERROR,
+    payload
+  };
+  return action;
+};
+
+export const sendEFRInvite = payload => {
+  return { type: SEND_EFR_INVITE, payload };
+};
+
+export const sendEFRInviteSuccess = response => {
+  return { type: SEND_EFR_INVITE_SUCCESS, payload: response };
+};
+
+export const sendEFRInviteError = response => {
+  return { type: SEND_EFR_INVITE_ERROR, payload: response };
 };

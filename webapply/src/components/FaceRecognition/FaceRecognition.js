@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect } from "react";
+/* eslint-disable max-len */
+import React, { Fragment, useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import cx from "classnames";
 import { useSelector } from "react-redux";
@@ -19,7 +20,10 @@ import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.s
 import { getOrganizationInfo } from "../../store/selectors/appConfig";
 import { OverlayLoader } from "../Loader";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
-import {ReactComponent as CheckIcon} from "../../assets/icons/credit_score.svg"
+import { ReactComponent as CheckIcon } from "../../assets/icons/credit_score.svg";
+import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import routes from "../../routes";
+import { ConfirmDialog } from "../Modals";
 const localizedMessagesLiveness = {
   record_button: "Record",
   result_close_button: "Close",
@@ -118,9 +122,12 @@ export const FaceRecognition = ({
   onFaceScanData,
   openFaceScan,
   dispatch,
+  sendInviteEFR,
   ...props
 }) => {
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState(false);
+  const pushHistory = useTrackingHistory();
 
   const {
     isLoading,
@@ -188,10 +195,35 @@ export const FaceRecognition = ({
 
   const sendInviteLink = () => {
     //TODO: send link
+    sendInviteEFR().then(
+      isScreeningError => {
+        console.log("inside");
+        setOpenModal(true);
+      },
+      () => {
+        // pushHistory(routes.stakeholdersPreview, true);
+        // pushHistory(routes.login);
+      }
+    );
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+    pushHistory(routes.searchProspect);
   };
 
   return (
     <Fragment>
+      <ConfirmDialog
+        title={"Email sent to the customer"}
+        isOpen={openModal}
+        handleReject={() => {}}
+        cancelLabel={"close"}
+        handleClose={() => handleModalClose()}
+        message={
+          "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknoweldge and accept the associated Terms & Conditions."
+        }
+      />
       <div className={classes.fieldDescription}>{fieldDescription}</div>
       {!isStepActive && <div className={classes.disabledReason}>{disabledReason}</div>}
       <div
@@ -203,9 +235,9 @@ export const FaceRecognition = ({
         <div className={classes.contentContainer}>
           {confirmEntity?.success && isStepActive ? (
             <SuccessIcon />
-          ): 
-          <FaceScanIcon height="44" width="40" alt="faceRecognitionIcon" />
-          }
+          ) : (
+            <FaceScanIcon height="44" width="40" alt="faceRecognitionIcon" />
+          )}
           <div className={classes.contentWrapper}>
             <div className={classes.content}>Face verification</div>
             <div className={classes.subcontent}>{helperText}</div>

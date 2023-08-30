@@ -6,7 +6,7 @@ import { isEmpty } from "lodash";
 import { isDesktop } from "react-device-detect";
 
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
-import { FaceRecognition } from "../../../../components/FaceRecognition/FaceRecognition";
+import FaceRecognition from "../../../../components/FaceRecognition";
 import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/UploadFileWrapper";
 import StakeholdersDetail from "./StakeholdersDetail";
 import { BackLink } from "../../../../components/Buttons/BackLink";

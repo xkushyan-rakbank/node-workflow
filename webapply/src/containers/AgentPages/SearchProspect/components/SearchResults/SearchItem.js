@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React from "react";
+import React, { useState } from "react";
 import { generatePath } from "react-router";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,11 +19,16 @@ import { STATUS_LOCKED } from "../../../SearchedAppInfo/constants";
 import { getProspectInfoPromisify } from "../../../../../store/actions/retrieveApplicantInfo";
 import { useDisplayScreenBasedOnViewId } from "../../../../../utils/useDisplayScreenBasedOnViewId";
 import { getDocumentsList } from "../../../../../store/actions/uploadDocuments";
+import { sendEFRInvitePromisify } from "../../../../../store/actions/kyc";
+import { setRoEFRInvite } from "../../../../../store/actions/otp";
+import { ConfirmDialog } from "../../../../../components/Modals";
 
 export const SearchItem = ({ application, key, getProspectInfo, loadingProspectId }) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { authorizationToken } = useSelector(getAppConfig);
   const { agentName, agentId, agentRole, deptName, roCode } = useSelector(getLoginResponse);
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
@@ -53,9 +58,29 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
   }
 
   const handleNavigation = () => {
+    if (application?.status?.statusType === "EFR_SUBMITTED") {
+      if (!agentId) {
+        dispatch(setRoEFRInvite(true));
+      } else {
+        setLoading(true);
+
+        dispatch(sendEFRInvitePromisify(application.prospectId)).then(
+          isScreeningError => {
+            setLoading(false);
+
+            setOpenModal(true);
+          },
+          () => {}
+        );
+        return;
+      }
+    }
     if (application?.status?.statusType === "INFO_REQUIRED") {
+      setLoading(true);
       dispatch(getProspectInfoPromisify(application.prospectId)).then(
         prospect => {
+          setLoading(false);
+
           dispatch(getDocumentsList());
           pushDisplayScreenToHistory(prospect);
         },
@@ -87,6 +112,16 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
 
   return (
     <div key={key} className={classes.searchItemCard}>
+      <ConfirmDialog
+        title={"Email sent to the customer"}
+        isOpen={openModal}
+        handleReject={() => {}}
+        cancelLabel={"close"}
+        handleClose={() => setOpenModal(false)}
+        message={
+          "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknoweldge and accept the associated Terms & Conditions."
+        }
+      />
       <div className={classes.searchItemStatus}>
         <StakeholdersDetail
           name={application.applicantInfo?.fullName}
@@ -143,7 +178,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
               submitButtonClassName={classes.button}
               onClick={handleNavigation}
               disabled={application?.status?.reasonCode === STATUS_LOCKED}
-              isDisplayLoader={loadingProspectId === application.prospectId}
+              isDisplayLoader={loading || loadingProspectId === application.prospectId}
               isSearchApplicant
             />
           </div>
@@ -160,7 +195,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
               submitButtonClassName={classes.button}
               onClick={handleNavigation}
               disabled={application?.status?.reasonCode === STATUS_LOCKED}
-              isDisplayLoader={loadingProspectId === application.prospectId}
+              isDisplayLoader={loading || loadingProspectId === application.prospectId}
               isSearchApplicant
             />
           </div>

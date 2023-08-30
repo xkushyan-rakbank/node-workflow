@@ -38,22 +38,26 @@ export const ConfirmDialog = ({
       <DialogContent classes={{ root: classes.content }}>{message}</DialogContent>
       {divider && <div className={classes.divider} />}
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
-        <Button
-          onClick={handleClose}
-          color="primary"
-          variant="outlined"
-          className={classes.actionButton}
-        >
-          {cancelLabel}
-        </Button>
-        <Button
-          onClick={handleConfirm}
-          color="primary"
-          variant="contained"
-          className={cx(classes.actionButton, classes.marginTop12)}
-        >
-          {confirmLabel}
-        </Button>
+        {handleClose && (
+          <Button
+            onClick={handleClose}
+            color="primary"
+            variant="outlined"
+            className={classes.actionButton}
+          >
+            {cancelLabel}
+          </Button>
+        )}
+        {handleConfirm && (
+          <Button
+            onClick={handleConfirm}
+            color="primary"
+            variant="contained"
+            className={cx(classes.actionButton, classes.marginTop12)}
+          >
+            {confirmLabel}
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

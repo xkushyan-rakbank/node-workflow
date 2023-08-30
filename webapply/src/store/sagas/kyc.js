@@ -27,7 +27,10 @@ import {
   getKycSuccess,
   getKycError,
   analyseOcrAgeRestriction,
-  setLoading
+  setLoading,
+  SEND_EFR_INVITE,
+  sendEFRInviteSuccess,
+  sendEFRInviteError
 } from "../actions/kyc";
 import {
   getAuthorizationHeader,
@@ -36,7 +39,12 @@ import {
   getProspectId,
   getSignatories
 } from "../selectors/appConfig";
-import { analyzeOcrData, createKYCTransaction, getOCRDataStatus } from "../../api/apiClient";
+import {
+  analyzeOcrData,
+  createKYCTransaction,
+  getOCRDataStatus,
+  sendEFRInvite
+} from "../../api/apiClient";
 import { getKyc, getLivelinessData, getTransactionId } from "../selectors/kyc";
 import { log } from "../../utils/loggger";
 import {
@@ -61,6 +69,7 @@ import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
 import { resetFormStep } from "../actions/sendProspectToAPI";
 import { updateProspect } from "../actions/appConfig";
+import { getAgentId, getRoCode } from "../selectors/loginSelector";
 
 export function* createKycTransactionSaga() {
   try {
@@ -500,6 +509,26 @@ export function* getCurrentKYCStatus() {
   }
 }
 
+function* sendEfrInvite({ payload }) {
+  try {
+    const roCode = yield select(getRoCode);
+    const roAgentId = yield select(getAgentId);
+    const headers = yield select(getAuthorizationHeader);
+    const prospectId = yield select(getProspectId);
+    const body = {
+      action: "generate",
+      roCode,
+      roAgentId
+    };
+    const pId = prospectId || payload;
+    yield call(sendEFRInvite.sendMail, pId, body, headers);
+    yield put(sendEFRInviteSuccess(true));
+  } catch (error) {
+    yield put(sendEFRInviteError(false));
+    log(error);
+  }
+}
+
 export default function* KycTransactionSaga() {
   yield all([
     takeLatest(CREATE_KYC_TRANSACTION, createKycTransactionSaga),
@@ -508,6 +537,7 @@ export default function* KycTransactionSaga() {
     takeLatest(CHECK_FACE_LIVELINESS, checkFaceLiveliness),
     takeLatest(SET_LIVELINESS_DATA, setLivelinessData),
     takeLatest(NOTIFY_HOST, notifyHost),
-    takeLatest(GET_KYC_STATUS, getCurrentKYCStatus)
+    takeLatest(GET_KYC_STATUS, getCurrentKYCStatus),
+    takeLatest(SEND_EFR_INVITE, sendEfrInvite)
   ]);
 }

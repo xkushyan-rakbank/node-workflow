@@ -403,3 +403,13 @@ export const kfsAcknowledgement = {
         return response.data;
       })
 };
+
+export const sendEFRInvite = {
+  sendMail: (prospectId, body, headers) =>
+    httpClient.request({
+      url: buildURI("sendEFRInvite", prospectId),
+      method: "POST",
+      ...headers,
+      data: body
+    })
+};

@@ -32,7 +32,8 @@ export const endpoints = {
   wtmSyncSession: "/onboarding/products/accounts/webToMobile/auth/token",
   wtmStatusUpdate:
     "/onboarding/products/accounts/prospects/:prospectId/webToMobile/:webToMobileRefId",
-  cpfSendEmailUrl: "/onboarding/cpf/product-config/subproducts/kfs-acknowledgement"
+  cpfSendEmailUrl: "/onboarding/cpf/product-config/subproducts/kfs-acknowledgement",
+  sendEFRInvite: "/onboarding/products/accounts/prospects/:prospectId/efrlink/actions"
 };
 
 export const prospect = {

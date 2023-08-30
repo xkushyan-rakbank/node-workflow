@@ -27,7 +27,9 @@ import {
   LOAD_PASSPORT_DOCUMENTS,
   LOAD_CONFIRM_ENTITY,
   ANALYSE_OCR_AGE_RESTRICTION,
-  SET_LOADING
+  SET_LOADING,
+  SEND_EFR_INVITE_SUCCESS,
+  SEND_EFR_INVITE_ERROR
 } from "../actions/kyc";
 import { handleActions } from "../../utils/redux-utils";
 import { GET_KYC_STATUS_ERROR } from "../actions/kyc";
@@ -61,7 +63,8 @@ export const initialState = {
   notifyHostSuccess: false,
   kycLoadedStatus: null,
   ageRestrictionError: "",
-  loadKYCDocuments: false
+  loadKYCDocuments: false,
+  efrSendInviteStatus: false
 };
 
 export default handleActions(
@@ -284,6 +287,14 @@ export default handleActions(
     [GET_KYC_STATUS_ERROR]: (state, { payload }) => ({
       ...state,
       kycLoadedStatus: payload
+    }),
+    [SEND_EFR_INVITE_SUCCESS]: (state, { payload }) => ({
+      ...state,
+      efrSendInviteStatus: payload
+    }),
+    [SEND_EFR_INVITE_ERROR]: (state, { payload }) => ({
+      ...state,
+      efrSendInviteStatus: payload
     })
   },
   initialState
