@@ -52,7 +52,8 @@ export const getSearchResultsStatuses = createSelector(
   searchResults =>
     searchResults.map(result => ({
       prospectId: result.prospectId,
-      status: result.status.statusNotes
+      status: result.status.statusNotes,
+      statusType: result.status.statusType
     }))
 );
 
