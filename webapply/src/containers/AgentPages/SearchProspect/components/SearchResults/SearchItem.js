@@ -129,7 +129,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         </div>
       </div>
       <div className={cx(classes.appDetails, classes.remarks)}>
-        <span className={classes.appDetailsHeader}>Remaks</span>
+        <span className={classes.appDetailsHeader}>Remarks</span>
         <span className={classes.appDetailsinfo}>{declineRemarks}</span>
       </div>
       {agentId && roActions[(application?.status?.statusType)] && (

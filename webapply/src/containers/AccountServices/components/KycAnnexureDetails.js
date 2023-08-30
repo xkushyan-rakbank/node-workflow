@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@material-ui/core";
 import {
@@ -22,12 +22,18 @@ import { updateProspect } from "../../../store/actions/appConfig";
 import { getDocuments } from "../../../store/selectors/appConfig";
 import { VerificationDetailsList } from "./VerificationDetailsList";
 import { VisitDetailsList } from "./VisitDetailsList";
+import { getLoginResponse } from "../../../store/selectors/loginSelector";
 
 export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const kycAnnexureDocuments = useSelector(getDocuments).kycAnnexureDocuments;
+  const { agentName } = useSelector(getLoginResponse);
   const [isUploading, setIsUploading] = useState(false);
+
+  useEffect(() => {
+    setFieldValue("roName", agentName || "");
+  }, []);
 
   const removeDoc = (indexToRemove, values, name, item, length, setFieldValue) => {
     const isMinLength = length === 1;
@@ -122,7 +128,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="companyCifId"
-            path="prospect.kycAnnexure.companyCifId"
+            path={"prospect.kycAnnexure.companyCifId"}
             label="CIF number (company)"
             component={Input}
             InputProps={{
@@ -134,7 +140,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="retailCifId"
-            path="prospect.kycAnnexure.retailCifId"
+            path={"prospect.kycAnnexure.retailCifId"}
             label="CIF number (sole proprietor)"
             component={Input}
             InputProps={{
@@ -147,7 +153,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           <Field
             name="workItemNumber"
             label="Workitem number"
-            path="prospect.kycAnnexure.workItemNumber"
+            path={"prospect.kycAnnexure.workItemNumber"}
             component={Input}
             InputProps={{
               inputProps: { tabIndex: 0 }
@@ -159,7 +165,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           <Field
             name="leadNumber"
             label="Lead number"
-            path="prospect.kycAnnexure.leadNumber"
+            path={"prospect.kycAnnexure.leadNumber"}
             component={Input}
             InputProps={{
               inputProps: { tabIndex: 0 }
@@ -171,7 +177,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           <Field
             name="sourcingCode"
             label="Sourcing ID"
-            path="prospect.kycAnnexure.sourcingCode"
+            path={"prospect.kycAnnexure.sourcingCode"}
             component={Input}
             InputProps={{
               inputProps: { tabIndex: 0 }
@@ -182,7 +188,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="allianceCode"
-            path="prospect.kycAnnexure.allianceCode"
+            path={"prospect.kycAnnexure.allianceCode"}
             label="Partner code"
             component={Input}
             InputProps={{
@@ -204,7 +210,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="roName"
-            path="prospect.kycAnnexure.roName"
+            path={"prospect.kycAnnexure.roName"}
             label="RO assigned"
             placeholder="RO assigned"
             component={Input}
@@ -234,7 +240,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           <Field
             name="signatoryName"
             label="Name of the signatory"
-            path="prospect.kycAnnexure.signatoryName"
+            path={"prospect.kycAnnexure.signatoryName"}
             component={Input}
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: 100 }
