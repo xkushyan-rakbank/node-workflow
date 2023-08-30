@@ -5,12 +5,17 @@ export const useStyles = makeStyles(theme => ({
   accountTypeWrapper: {
     display: "flex",
     border: "0.5px solid #ADADAD",
-    background: "#FFF",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
     textAlign: "center",
     gap: "16px",
+    "&:nth-child(3)": {
+      background: "rgba(253, 231, 232, 0.20)"
+    },
+    "&:nth-child(4)": {
+      background: "#FCE8E9"
+    },
 
     [theme.breakpoints.up("sm")]: {
       display: "flex",

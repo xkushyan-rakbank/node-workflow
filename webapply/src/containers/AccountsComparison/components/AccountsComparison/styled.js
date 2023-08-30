@@ -39,8 +39,9 @@ export const useStyles = makeStyles(theme => ({
     },
     "& p": {
       fontSize: "1rem",
-      fontWeight: 400,
+      fontWeight: 500,
       color: "#757575",
+      lineHeight: "24px"
     },
 
     [theme.breakpoints.up("sm")]: {
@@ -57,6 +58,7 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 400,
         margin: 0,
         color: "#757575",
+        lineHeight: "28px"
       },
     },
   },
@@ -187,8 +189,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "1.25rem",
     fontWeight: 500,
     lineHeight: "28px",
-    color: "#1F1F1F",
-    padding: "0 19px",
+    color: "#8D0C10",
     margin: 0,
     marginBottom: "9px",
 
@@ -204,7 +205,6 @@ export const useStyles = makeStyles(theme => ({
   featureListWrapper: {
     [theme.breakpoints.down("sm")]: {
       display: "flex",
-      padding: "17px 20px",
       justifyContent: "space-between",
       alignItems: "center",
       "& div:first-child": {
@@ -214,6 +214,21 @@ export const useStyles = makeStyles(theme => ({
         fontSize: "12px",
         fontWeight: 500,
         lineHeight: "16px",
+      },
+      "& div:nth-child(1)": {
+        background: "#F7F8F9",
+        minHeight: "120px",
+        padding: "17px 20px"
+      },
+      "& div:nth-child(2)": {
+        background: "rgba(252, 232, 233, 0.20)",
+        padding: "17px 20px",
+        minHeight: "120px"
+      },
+      "& div:nth-child(3)": {
+        background: "#FCE8E9", 
+        padding: "17px 20px",
+        minHeight: "120px"
       },
       "& div": {
         flexGrow: 1,
@@ -233,10 +248,6 @@ export const useStyles = makeStyles(theme => ({
           }
         },
       },
-
-      "&:nth-of-type(odd)": {
-        backgroundColor: "#F7F8F9"
-      }
     }
   },
   featureList: {
