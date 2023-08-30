@@ -178,6 +178,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
                 setFieldValue={setFieldValue}
                 errors={errors}
               />
+              <span className={classes.informationType}>Required Document(s)</span>
               <AdditionalDocument
                 additionalDocumentDetailsFromBPM={additionalDocumentDetailsFromBPM}
                 additionalDocumentDetailsForBPM={additionalDocumentDetailsForBPM}

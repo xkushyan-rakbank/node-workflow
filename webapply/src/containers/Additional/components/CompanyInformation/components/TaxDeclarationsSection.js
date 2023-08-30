@@ -17,26 +17,16 @@ import {
   InlineRadioGroup
 } from "../../../../../components/Form";
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
-import useGeneratePdf from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/useGeneratePdf";
 import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
 import { GLOBAL_INTERMEDIARY_REGEX } from "../../../../../utils/validation";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 
-const wcmData = {
-  productVariantContent: [
-    {
-      authorizationsConsent:
-        "https://revamp.rakbank.ae/wps/wcm/connect/ea363f59-b3de-4bed-9725-dff6d759b707/KFS083+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ea363f59-b3de-4bed-9725-dff6d759b707-oym18vA"
-    }
-  ]
-};
 // eslint-disable-next-line react/display-name
 export const TaxDeclarationsSection = forwardRef(
   ({ setFieldValue: setFormFieldValue, id, refs }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
     const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
     const { taxDeclarationFormRef, taxDeclarationAccordionRef } = refs;
 
@@ -241,9 +231,9 @@ export const TaxDeclarationsSection = forwardRef(
               <TermsAndConditionsDialog
                 open={openDefinitionDialog}
                 handleClose={() => setOpenDefinitionDialog(false)}
-                editedFile={editedFile}
-                height={height}
-                pages={pages}
+                editedFile={`${process.env.REACT_APP_PUBLIC_URL ||
+                  ""}/TaxDeclarations_Definition.pdf`}
+                pages={[1, 2]}
                 scrollToEnd={false}
               />
             </>

@@ -60,6 +60,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "0.75rem",
     fontStyle: "normal",
     fontWeight: "400",
+    minWidth: "10rem",
     lineHeight: "1.25rem" /* 166.667% */
   },
   infoCont: {

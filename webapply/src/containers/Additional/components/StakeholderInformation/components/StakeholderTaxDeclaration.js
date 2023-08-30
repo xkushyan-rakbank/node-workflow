@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import { Grid } from "@material-ui/core";
 import * as Yup from "yup";
 
-import useGeneratePdf from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/useGeneratePdf";
 import { YesNoListForTaxPayInAnotherCountry } from "../../../../../constants/options";
 import {
   CheckboxGroup,
@@ -20,20 +19,10 @@ import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 
-const wcmData = {
-  productVariantContent: [
-    {
-      authorizationsConsent:
-        "https://revamp.rakbank.ae/wps/wcm/connect/ea363f59-b3de-4bed-9725-dff6d759b707/KFS083+Business+RAKelite+Account+20072022.pdf?MOD=AJPERES&CONVERT_TO=url&CACHEID=ROOTWORKSPACE-ea363f59-b3de-4bed-9725-dff6d759b707-oym18vA"
-    }
-  ]
-};
-
 export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.taxDetails";
 
@@ -220,9 +209,9 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
             <TermsAndConditionsDialog
               open={openDefinitionDialog}
               handleClose={() => setOpenDefinitionDialog(false)}
-              editedFile={editedFile}
-              height={height}
-              pages={pages}
+              editedFile={`${process.env.REACT_APP_PUBLIC_URL ||
+                ""}/TaxDeclarations_Definition.pdf`}
+              pages={[1, 2]}
               scrollToEnd={false}
             />
           </>

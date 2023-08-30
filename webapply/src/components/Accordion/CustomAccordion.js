@@ -119,7 +119,7 @@ export const Accordion = ({
   showHelperText,
   setFormFieldValue = () => {},
   expandedByDefault = false,
-  accordionRef,
+  accordionRef
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -187,7 +187,11 @@ export const Accordion = ({
                 {subTitle && <p className="subTitle">{subTitle}</p>}
               </div>
             </div>
-            <div>{expanded === "isTaxDeclarationCompleted" && showDefinition}</div>
+            <div>
+              {(expanded === "isTaxDeclarationCompleted" ||
+                expanded === "stakeholderTaxDeclarationSection") &&
+                showDefinition}
+            </div>
           </div>
         </MuiAccordionSummary>
         <MuiAccordionDetails classes={{ root: classes.accordionDetails }}>
