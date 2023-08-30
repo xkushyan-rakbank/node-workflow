@@ -6,7 +6,11 @@ import * as Yup from "yup";
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { useStyles } from "../../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
-import { ActivePassiveOptions, YesNoList } from "../../../../../constants/options";
+import {
+  ActivePassiveOptions,
+  YesNoList,
+  entityTypeOptionList
+} from "../../../../../constants/options";
 import {
   AutoSaveField as Field,
   GlobalIntermediaryID,
@@ -78,7 +82,7 @@ export const TaxDeclarationsSection = forwardRef(
       isFinancialInstitution: Yup.string()
         .nullable()
         .required()
-        .oneOf(["yes", "no"], "Is your company a Financial Instituion is required"),
+        .oneOf(["yes", "no"], "Please confirm your entity type is required"),
       globalintermediaryId: Yup.string().when("isFinancialInstitution", {
         is: "yes",
         then: Yup.string()
@@ -124,8 +128,9 @@ export const TaxDeclarationsSection = forwardRef(
             values,
             setFieldValue
           });
-          const hideGIINField = values.isFinancialInstitution === "yes";
+          const showGIINField = values.isFinancialInstitution === "yes";
           const isCompanyUSEntityVisible = values.isCompanyUSEntity === "yes";
+          const showNonFinancialInstitution = values.isFinancialInstitution === "no";
           return (
             <>
               <Accordion
@@ -178,12 +183,10 @@ export const TaxDeclarationsSection = forwardRef(
                   </div>
                 )}
                 <div className={classes.taxDeclarationQuestionare}>
-                  <label className={classes.sectionLabel}>
-                    Is your company a financial institution?
-                  </label>
+                  <label className={classes.sectionLabel}>Please confirm your entity type?</label>
                   <Field
                     typeRadio
-                    options={YesNoList}
+                    options={entityTypeOptionList}
                     name="isFinancialInstitution"
                     path={"prospect.companyAdditionalInfo.isFinancialInstitution"}
                     component={InlineRadioGroup}
@@ -193,13 +196,13 @@ export const TaxDeclarationsSection = forwardRef(
                     radioColor="primary"
                   />
                 </div>
-                {hideGIINField && (
+                {showGIINField && (
                   <div className={classes.taxDeclarationQuestionare}>
                     <label className={classes.sectionLabel}>
                       GIIN (Global Intermediary Identification Number)
                     </label>
                     <Field
-                      isVisible={hideGIINField}
+                      isVisible={showGIINField}
                       name="globalintermediaryId"
                       path={"prospect.companyAdditionalInfo.globalintermediaryId"}
                       label={"Enter GIIN"}
@@ -207,31 +210,33 @@ export const TaxDeclarationsSection = forwardRef(
                     />
                   </div>
                 )}
-                <div className={classes.taxDeclarationQuestionare}>
-                  <label className={classes.sectionLabel}>
-                    Is your company an active or passive non-financial entity (NFE)?
-                  </label>
-                  <Field
-                    name="isNonFinancialInstitution"
-                    path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
-                    typeRadio
-                    options={ActivePassiveOptions}
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    onChange={companyTaxRadioFieldHandler}
-                    radioColor="primary"
-                  />
-                  <p className={classes.activePassiveDesc}>
-                    Active Non-Financial Entity (Active NFE): An entity generating more than 50% of
-                    its yearly income through its operational activities.
-                  </p>
-                  <p className={classes.activePassiveDesc}>
-                    Passive Non-Financial Entity (Passive NFE): An entity generating more than 50%
-                    of its yearly income through dividends, interest, rents, or other
-                    passively-earned income on a regular basis, without additional effort.
-                  </p>
-                </div>
+                {showNonFinancialInstitution && (
+                  <div className={classes.taxDeclarationQuestionare}>
+                    <label className={classes.sectionLabel}>
+                      Is your company an active or passive non-financial entity (NFE)?
+                    </label>
+                    <Field
+                      name="isNonFinancialInstitution"
+                      path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
+                      typeRadio
+                      options={ActivePassiveOptions}
+                      component={InlineRadioGroup}
+                      customIcon={false}
+                      classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                      onChange={companyTaxRadioFieldHandler}
+                      radioColor="primary"
+                    />
+                    <p className={classes.activePassiveDesc}>
+                      Active Non-Financial Entity (Active NFE): An entity generating more than 50%
+                      of its yearly income through its operational activities.
+                    </p>
+                    <p className={classes.activePassiveDesc}>
+                      Passive Non-Financial Entity (Passive NFE): An entity generating more than 50%
+                      of its yearly income through dividends, interest, rents, or other
+                      passively-earned income on a regular basis, without additional effort.
+                    </p>
+                  </div>
+                )}
               </Accordion>
               <TermsAndConditionsDialog
                 open={openDefinitionDialog}

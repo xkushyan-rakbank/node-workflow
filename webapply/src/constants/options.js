@@ -73,13 +73,13 @@ export const ActivePassiveOptions = [
     code: "Active",
     key: "Active",
     value: "active",
-    label: "Active"
+    label: "Active NFE"
   },
   {
     code: "Passive",
     key: "Passive",
     value: "passive",
-    label: "Passive"
+    label: "Passive NFE"
   }
 ];
 
@@ -267,5 +267,20 @@ export const YesNaList = [
     key: "NA",
     value: "NA",
     label: "N/A"
+  }
+];
+
+export const entityTypeOptionList = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: "yes",
+    label: "Financial institution"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: "no",
+    label: "Non financial entity"
   }
 ];
