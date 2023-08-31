@@ -11,10 +11,12 @@ export const useStyles = makeStyles(theme => ({
     textAlign: "center",
     gap: "16px",
     "&:nth-child(3)": {
-      background: "rgba(253, 231, 232, 0.20)"
+      background: "rgba(253, 231, 232, 0.20)",
+      border: "0.5px solid #E6E6E6"
     },
     "&:nth-child(4)": {
-      background: "#FCE8E9"
+      background: "#FCE8E9",
+      border: "0.5px solid #E6E6E6"
     },
 
     [theme.breakpoints.up("sm")]: {
