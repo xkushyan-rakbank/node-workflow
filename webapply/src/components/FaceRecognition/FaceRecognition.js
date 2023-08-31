@@ -24,6 +24,8 @@ import { ReactComponent as CheckIcon } from "../../assets/icons/credit_score.svg
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { ConfirmDialog } from "../Modals";
+import { ReactComponent as Loader } from "./../../assets/icons/loader.svg";
+
 const localizedMessagesLiveness = {
   record_button: "Record",
   result_close_button: "Close",
@@ -127,6 +129,7 @@ export const FaceRecognition = ({
 }) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const pushHistory = useTrackingHistory();
 
   const {
@@ -194,15 +197,16 @@ export const FaceRecognition = ({
   };
 
   const sendInviteLink = () => {
-    //TODO: send link
+    setLoading(true);
     sendInviteEFR().then(
       isScreeningError => {
-        console.log("inside");
         setOpenModal(true);
+        setLoading(false);
       },
       () => {
         // pushHistory(routes.stakeholdersPreview, true);
         // pushHistory(routes.login);
+        setLoading(false);
       }
     );
   };
@@ -254,8 +258,9 @@ export const FaceRecognition = ({
             variant="contained"
             className={classes.actionButton}
             onClick={sendInviteLink}
+            isDisplayLoader={loading}
           >
-            Send link
+            {loading ? <Loader className={classes.loader} alt="loading" /> : "Send link"}
           </Button>
         ) : (
           <Button

@@ -128,5 +128,11 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       alignItems: "self-start"
     }
+  },
+  loader: {
+    width: "24px",
+    height: "24px",
+    margin: "0 auto",
+    animation: "$rotate 2s linear infinite"
   }
 }));
