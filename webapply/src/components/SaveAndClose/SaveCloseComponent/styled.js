@@ -8,9 +8,6 @@ export const useStyles = makeStyles({
   saveCloseContainer: {
     display: "flex",
     flexDirection: "column",
-    position: "absolute",
-    top: "2vh",
-    right: "1vh",
     [theme.breakpoints.up("sm")]: {
       position: "static",
       padding: 0,
@@ -26,11 +23,10 @@ export const useStyles = makeStyles({
   },
 
   saveCloseBtn: {
-    width: "125px",
-    height: "40px",
-    color: "white",
-    borderColor: "white",
-    borderRadius: "21px",
+    width: "139px",
+    height: "18px",
+    border: "none",
+    color: "#830000",
 
     [theme.breakpoints.up("sm")]: {
       border: "none",
@@ -38,10 +34,10 @@ export const useStyles = makeStyles({
     },
 
     "& .MuiButton-label": {
-      fontSize: "0.75rem",
+      fontSize: "0.875rem",
       fontStyle: "normal",
-      fontWeight: 400,
-      lineHeight: "16px",
+      fontWeight: 600,
+      lineHeight: "18px",
       textTransform: "none",
       [theme.breakpoints.up("sm")]: {
         color: "#830000",

@@ -44,17 +44,27 @@ const useStyles = makeStyles(theme => ({
   },
   linkContainerBtn: {
     display: "flex",
-    padding: "10px 40px",
     background: "#fff",
-    alignItems: "center",
-    gap: "8px",
-    borderRadius: "100px",
-    border: "1px solid #3B3A3A",
-    color: "#3B3A3A",
-    fontSize: "1rem",
-    fontWeight: 500,
-    lineHeight: "28px",
+    border: "none",
     textDecoration: "none",
+    gap: "5px",
+    fontSize: "0.875rem",
+    fontWeight: 600,
+    lineHeight: "18px",
+    fontStyle: "normal",
+
+    [theme.breakpoints.up("sm")]: {
+      padding: "10px 40px",
+      alignItems: "center",
+      gap: "8px",
+      borderRadius: "100px",
+      border: "1px solid #3B3A3A",
+      color: "#3B3A3A",
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: "28px",
+    },
+
     "& .arrowIcon": {
       fill: "#3B3A3A",
       "& path": {

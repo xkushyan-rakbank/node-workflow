@@ -16,8 +16,6 @@ import { useBlobColor } from "../../utils/useBlobColor/useBlobColor";
 import { useStyles } from "./styled";
 
 import { ReactComponent as BgBlob } from "../../assets/images/bg-blobs/bg-blob.svg";
-import SaveAndClose from "../SaveAndClose";
-import { SaveAndCloseViewIds, VIEW_IDS } from "../../constants";
 
 const Chat = lazy(() => import("../../containers/WebChat/Chat"));
 
@@ -36,7 +34,6 @@ export const FormNavigationComponent = () => {
     smallMenu: checkIsShowSmallMenu(pathname)
   });
 
-  const showSaveClose = Object.values(VIEW_IDS).some(screen => pathname.includes(screen));
 
   if (!navContext) {
     return null;
@@ -98,11 +95,6 @@ export const FormNavigationComponent = () => {
               </ul>
             ) : (
               <>
-                {showSaveClose && (
-                  <div className={classes.saveAndCloseMobile}>
-                    <SaveAndClose />
-                  </div>
-                )}
                 <ul>
                   {navigationSteps.map(step => (
                     <FormNavigationStep
