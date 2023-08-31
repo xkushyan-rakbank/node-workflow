@@ -132,70 +132,48 @@ export default function AdditionalDocument({
     return val;
   };
 
-  return additionalDocumentDetailsFromBPM.map((additionalFile, index) => {
-    const documentUniqueId = `doc_${additionalFile.documentUniqueId}`;
-    return (
-      <div key={index} className={classes.innerCards}>
-        <div className={classes.infoCont}>
-          <span className={classes.infoLabel}>Document type:</span>
-          <span className={classes.infoValue}>{additionalFile.documentType}</span>
-        </div>
-        <div className={classes.infoCont}>
-          <span className={classes.infoLabel}>Query:</span>
-          <span className={classes.infoValue}>{additionalFile.documentRemarks}</span>
-        </div>
-        <FieldArray name={documentUniqueId}>
-          {({ push, remove, arrayHelpers }) => (
-            <>
-              {values[documentUniqueId].map((item, key) => (
-                <div key={key} className={classes.fileUpload}>
-                  <Field
-                    name={`doc_${additionalFile.documentUniqueId}.${key}`}
-                    type="file"
-                    fieldDescription={additionalFile.documentType}
-                    helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                    accept={TL_ACCEPTED_FILE_TYPES}
-                    fileSize={TL_COI_FILE_SIZE}
-                    component={Upload}
-                    showInfoIcon={true}
-                    // infoTitle={"You can select multiple options"}
-                    // infoIcon={true}
-                    onDrop={acceptedFile =>
-                      handleDropFile(
-                        acceptedFile,
-                        `doc_${additionalFile.documentUniqueId}.${key}`,
-                        touched,
-                        setTouched,
-                        setFieldValue,
-                        key,
-                        additionalFile
-                      )
-                    }
-                    file={values[documentUniqueId][key]}
-                    onDelete={() =>
-                      removeDoc(
-                        key,
-                        values,
-                        `doc_${additionalFile.documentUniqueId}`,
-                        item,
-                        values[documentUniqueId].length,
-                        setFieldValue
-                      )
-                    }
-                    content={getFileName(values[documentUniqueId][key], item)}
-                    isUploading={isUploading[`doc_${additionalFile.documentUniqueId}.${key}`]}
-                    mobilecontentPlaceholder={"Upload your file"}
-                  />
-                  {key > 0 && (
-                    <IconButton
-                      aria-label="delete"
-                      style={{
-                        padding: 0,
-                        marginTop: "5px",
-                        width: "100%",
-                        justifyContent: "end"
-                      }}
-                      onClick={() =>
+  return additionalDocumentDetailsFromBPM ? (
+    additionalDocumentDetailsFromBPM.map((additionalFile, index) => {
+      const documentUniqueId = `doc_${additionalFile.documentUniqueId}`;
+      return (
+        <div key={index} className={classes.innerCards}>
+          <div className={classes.infoCont}>
+            <span className={classes.infoLabel}>Document type:</span>
+            <span className={classes.infoValue}>{additionalFile.documentType}</span>
+          </div>
+          <div className={classes.infoCont}>
+            <span className={classes.infoLabel}>Query:</span>
+            <span className={classes.infoValue}>{additionalFile.documentRemarks}</span>
+          </div>
+          <FieldArray name={documentUniqueId}>
+            {({ push, remove, arrayHelpers }) => (
+              <>
+                {values[documentUniqueId].map((item, key) => (
+                  <div key={key} className={classes.fileUpload}>
+                    <Field
+                      name={`doc_${additionalFile.documentUniqueId}.${key}`}
+                      type="file"
+                      fieldDescription={additionalFile.documentType}
+                      helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                      accept={TL_ACCEPTED_FILE_TYPES}
+                      fileSize={TL_COI_FILE_SIZE}
+                      component={Upload}
+                      showInfoIcon={true}
+                      // infoTitle={"You can select multiple options"}
+                      // infoIcon={true}
+                      onDrop={acceptedFile =>
+                        handleDropFile(
+                          acceptedFile,
+                          `doc_${additionalFile.documentUniqueId}.${key}`,
+                          touched,
+                          setTouched,
+                          setFieldValue,
+                          key,
+                          additionalFile
+                        )
+                      }
+                      file={values[documentUniqueId][key]}
+                      onDelete={() =>
                         removeDoc(
                           key,
                           values,
@@ -205,27 +183,53 @@ export default function AdditionalDocument({
                           setFieldValue
                         )
                       }
-                    >
-                      <HighlightOffIcon />
-                    </IconButton>
-                  )}
-                </div>
-              ))}
-              {values[documentUniqueId].length < 3 && (
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  className={classes.addMoreButton}
-                  onClick={() => push("")}
-                  disabled={!values[documentUniqueId][0]}
-                >
-                  + Add more
-                </Button>
-              )}
-            </>
-          )}
-        </FieldArray>
-      </div>
-    );
-  });
+                      content={getFileName(values[documentUniqueId][key], item)}
+                      isUploading={isUploading[`doc_${additionalFile.documentUniqueId}.${key}`]}
+                      mobilecontentPlaceholder={"Upload your file"}
+                    />
+                    {key > 0 && (
+                      <IconButton
+                        aria-label="delete"
+                        style={{
+                          padding: 0,
+                          marginTop: "5px",
+                          width: "100%",
+                          justifyContent: "end"
+                        }}
+                        onClick={() =>
+                          removeDoc(
+                            key,
+                            values,
+                            `doc_${additionalFile.documentUniqueId}`,
+                            item,
+                            values[documentUniqueId].length,
+                            setFieldValue
+                          )
+                        }
+                      >
+                        <HighlightOffIcon />
+                      </IconButton>
+                    )}
+                  </div>
+                ))}
+                {values[documentUniqueId].length < 3 && (
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    className={classes.addMoreButton}
+                    onClick={() => push("")}
+                    disabled={!values[documentUniqueId][0]}
+                  >
+                    + Add more
+                  </Button>
+                )}
+              </>
+            )}
+          </FieldArray>
+        </div>
+      );
+    })
+  ) : (
+    <></>
+  );
 }

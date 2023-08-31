@@ -52,12 +52,14 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   useEffect(() => {
     const docList = {};
     const infoList = {};
-    additionalDocumentDetailsFromBPM.forEach(eachDoc => {
-      docList[`doc_${eachDoc.documentUniqueId}`] = [""];
-    });
-    additionalInfoDetailsFromBPM.forEach(eachDoc => {
-      infoList[`info_${eachDoc.queryUniqueID}`] = "";
-    });
+    additionalDocumentDetailsFromBPM &&
+      additionalDocumentDetailsFromBPM.forEach(eachDoc => {
+        docList[`doc_${eachDoc.documentUniqueId}`] = [""];
+      });
+    additionalInfoDetailsFromBPM &&
+      additionalInfoDetailsFromBPM.forEach(eachDoc => {
+        infoList[`info_${eachDoc.queryUniqueID}`] = "";
+      });
     setAdditionalInfo(infoList);
     setAdditionalDoc(docList);
   }, []);
@@ -172,13 +174,17 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
               <div className={classes.companyNameinfoContainer}>
                 <StakeholdersDetail name={stakeholderName} isStakeholder={false} />
               </div>
-              <span className={classes.informationType}>Required information</span>
+              {additionalInfoDetailsFromBPM && (
+                <span className={classes.informationType}>Required information</span>
+              )}
               <AdditionalQuery
                 additionalInfoDetailsFromBPM={additionalInfoDetailsFromBPM}
                 setFieldValue={setFieldValue}
                 errors={errors}
               />
-              <span className={classes.informationType}>Required Document(s)</span>
+              {additionalDocumentDetailsFromBPM && (
+                <span className={classes.informationType}>Required Document(s)</span>
+              )}
               <AdditionalDocument
                 additionalDocumentDetailsFromBPM={additionalDocumentDetailsFromBPM}
                 additionalDocumentDetailsForBPM={additionalDocumentDetailsForBPM}
