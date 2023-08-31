@@ -60,24 +60,32 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     taxesInAnotherCountry: Yup.string()
       .required()
       .oneOf(["yes", "no"], "Do you pay taxes in another country is required"),
-    country: Yup.string().when("taxesInAnotherCountry", {
-      is: "yes",
-      then: Yup.string().required(getRequiredMessage("Country"))
-    }),
-    TIN: Yup.string().when("taxesInAnotherCountry", {
-      is: "yes",
-      then: Yup.string()
-    }),
-    reasonForTINNotAvailable: Yup.string().when(["taxesInAnotherCountry", "TIN"], {
-      is: (taxesInAnotherCountry, TIN) => !TIN && taxesInAnotherCountry === "yes",
-      then: Yup.string().required(getRequiredMessage("Select a reason if TIN is not available"))
-    }),
-    remarks: Yup.string().when("reasonForTINNotAvailable", {
-      is: reasonForTINNotAvailable => reasonForTINNotAvailable === "REA2",
-      then: Yup.string()
-        .required(getRequiredMessage("Remarks"))
-        .max(500, "Maximum ${max} characters allowed")
-    })
+    country: Yup.string()
+      .nullable()
+      .when("taxesInAnotherCountry", {
+        is: "yes",
+        then: Yup.string().required(getRequiredMessage("Country"))
+      }),
+    TIN: Yup.string()
+      .nullable()
+      .when("taxesInAnotherCountry", {
+        is: "yes",
+        then: Yup.string()
+      }),
+    reasonForTINNotAvailable: Yup.string()
+      .nullable()
+      .when(["taxesInAnotherCountry", "TIN"], {
+        is: (taxesInAnotherCountry, TIN) => !TIN && taxesInAnotherCountry === "yes",
+        then: Yup.string().required(getRequiredMessage("Select a reason if TIN is not available"))
+      }),
+    remarks: Yup.string()
+      .nullable()
+      .when("reasonForTINNotAvailable", {
+        is: reasonForTINNotAvailable => reasonForTINNotAvailable === "REA2",
+        then: Yup.string()
+          .required(getRequiredMessage("Remarks"))
+          .max(500, "Maximum ${max} characters allowed")
+      })
   });
 
   const { stakeHolderFormRef, stakeHolderTaxAccordionRef } = refs;

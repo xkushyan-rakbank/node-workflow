@@ -1,7 +1,10 @@
-import React from "react";
-import { Formik } from "formik";
-import { Grid } from "@material-ui/core";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FieldArray, Formik } from "formik";
 import * as Yup from "yup";
+import { Grid } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../../components/Form";
@@ -9,37 +12,153 @@ import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getV
 import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
 import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { useStyles } from "../../styled";
+import { useFindDocument } from "../../../../../utils/useFindDocument";
+import { getDocuments, getSignatories } from "../../../../../store/selectors/appConfig";
+import {
+  MOA_FILE_SIZE,
+  SUPPORTED_FILE_FORMAT_TEXT,
+  TL_ACCEPTED_FILE_TYPES,
+  TL_COI_FILE_SIZE
+} from "../../../../../constants";
+import { uploadDocuments, initDocumentUpload } from "../../../../../store/actions/uploadDocuments";
+import { updateProspect } from "../../../../../store/actions/appConfig";
+import { Upload } from "../../../../../components/Upload";
 
 export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const [isUploading, setIsUploading] = useState(false);
+  const signatoryName = useSelector(getSignatories)[0]?.fullName;
+
+  useEffect(() => {
+    dispatch(initDocumentUpload());
+  }, []);
+
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
+  const documents =
+    useSelector(getDocuments)?.stakeholdersDocuments?.[`0_${signatoryName}`]?.additionalDocuments ??
+    null;
+  const addressProofeKeyToCheck =
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.addressProof";
+  const addressProof = useFindDocument(documents, addressProofeKeyToCheck);
 
   const initialValues = {
     addressLine1: "",
     addressLine2: "",
     country: "AE",
     emirateCity: "",
-    poBox: ""
+    poBox: "",
+    addressProof: addressProof || [""]
   };
 
   const residentialAddressSchema = Yup.object().shape({
     country: Yup.string().required(),
     addressLine1: Yup.string()
+      .nullable()
       .required(getRequiredMessage("Flat, villa or building"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat, villa or building")),
     addressLine2: Yup.string()
+      .nullable()
       .required(getRequiredMessage("Street or location"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street or location")),
     poBox: Yup.string()
+      .nullable()
       .required(getRequiredMessage("P.O. Box number"))
       .max(10, "Maximum ${max} characters allowed")
       .matches(POBOX_REGEX, getInvalidMessage("P.O. Box number")),
-    emirateCity: Yup.string().required(getRequiredMessage("Emirate or city"))
+    emirateCity: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Emirate or city")),
+    addressProof: Yup.array()
+      .of(
+        Yup.mixed()
+          .test("required", getRequiredMessage("Proof of Address"), file => {
+            if (file) return true;
+            return false;
+          })
+          .test("fileSize", "The file is too large", file => {
+            return (
+              file &&
+              (file === true ||
+                (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
+            );
+          })
+      )
+      .min(1, "At least one file is required")
   });
+
+  const handleDropFile = useCallback(
+    (acceptedFiles, name, touched, setTouched, setFieldValue, index) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        let path = "prospect.prospectDocuments.stakeholderAdditionalInfo.addressProof";
+        let saveProspectPath = `stakeholdersDocuments.0_${[signatoryName]}.additionalDocuments`;
+        let proofDoc = { ...isUploading };
+        proofDoc[index || name] = true;
+        setIsUploading(proofDoc);
+        dispatch(
+          uploadDocuments({
+            docs: {
+              [path]: file
+            },
+            documentSection: "stakeholdersDocuments.index_stakeholderName.documents",
+            onSuccess: () => {
+              let fileStore = new File([file], file.name, { type: file.type });
+              fileStore.preview = URL.createObjectURL(fileStore);
+              fileStore = {
+                ...fileStore,
+                ...{ fileName: fileStore.name, fileSize: fileStore.size }
+              };
+
+              setFieldValue(name, fileStore);
+              setTouched({ ...touched, ...{ [name]: true } });
+              proofDoc[index || name] = false;
+              setIsUploading(proofDoc);
+            },
+            onFailure: () => {
+              setFieldValue(name, "");
+              proofDoc[index || name] = false;
+              setIsUploading(proofDoc);
+            },
+            index,
+            saveProspectPath
+          })
+        );
+      }
+    },
+    []
+  );
+
+  const removeAddressProofDocument = (indexToRemove, values, length, setFieldValue) => {
+    const isMinLength = length === 1;
+
+    if (setFieldValue) {
+      setFieldValue(`addressProof[${indexToRemove}]`, null);
+    } else {
+      isMinLength && setFieldValue("addressProof", [""]);
+      values["addressProof"].splice(indexToRemove, 1);
+      dispatch(
+        updateProspect({
+          "prospect.prospectDocuments.additionalStakeholderDocument.addressProof": isMinLength
+            ? []
+            : values["addressProof"]
+        })
+      );
+    }
+    const path = `prospect.documents.stakeholdersDocuments.0_${[
+      signatoryName
+    ]}.additionalDocuments`;
+    documents.splice(indexToRemove, 1);
+    dispatch(
+      updateProspect({
+        [path]: isMinLength ? [] : documents
+      })
+    );
+  };
 
   const { residentialFormRef, residentialAccordionRef } = refs;
 
@@ -50,7 +169,16 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
       validateOnChange={true}
       innerRef={residentialFormRef}
     >
-      {({ values }) => {
+      {({
+        values,
+        setFieldValue,
+        touched,
+        setTouched,
+        isValid,
+        dirty,
+        setFieldTouched,
+        ...props
+      }) => {
         const isValidForm = residentialAddressSchema.isValidSync(values);
         return (
           <Accordion
@@ -124,6 +252,77 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                   component={SelectAutocomplete}
                   disabled={true}
                 />
+              </Grid>
+              <Grid item sm={12}>
+                <FieldArray name="addressProof">
+                  {({ push, remove, arrayHelpers }) => (
+                    <Grid item sm={12} xs={12}>
+                      {values.addressProof.map((file, index) => (
+                        <div key={index} style={{ marginBottom: "20px" }}>
+                          <Field
+                            name={`addressProof[${index}]`}
+                            // eslint-disable-next-line max-len
+                            path={`prospect.prospectDocuments.additionalStakeholderDocument.addressProof[${index}]`}
+                            type="file"
+                            fieldDescription={"Proof of Address"}
+                            helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                            accept={TL_ACCEPTED_FILE_TYPES}
+                            fileSize={TL_COI_FILE_SIZE}
+                            component={Upload}
+                            showInfoIcon={true}
+                            onDrop={acceptedFile =>
+                              handleDropFile(
+                                acceptedFile,
+                                `addressProof[${index}]`,
+                                touched,
+                                setTouched,
+                                setFieldValue,
+                                index
+                              )
+                            }
+                            file={values.addressProof[index]}
+                            onDelete={() =>
+                              removeAddressProofDocument(
+                                index,
+                                values,
+                                values.addressProof.length,
+                                setFieldValue
+                              )
+                            }
+                            content={values?.addressProof[index]}
+                            isUploading={isUploading[index]}
+                            mobilecontentPlaceholder={"Upload your file"}
+                          />
+                          {index > 0 && (
+                            <IconButton
+                              aria-label="delete"
+                              style={{
+                                padding: 0,
+                                marginTop: "5px",
+                                width: "100%",
+                                justifyContent: "end"
+                              }}
+                              onClick={() => removeAddressProofDocument(index, values)}
+                            >
+                              <HighlightOffIcon />
+                            </IconButton>
+                          )}
+                        </div>
+                      ))}
+                      {values.addressProof.length < 3 && (
+                        <Button
+                          color="primary"
+                          variant="outlined"
+                          className={classes.addMoreButton}
+                          onClick={() => push("")}
+                          disabled={!values.addressProof[0]}
+                        >
+                          + Add more
+                        </Button>
+                      )}
+                    </Grid>
+                  )}
+                </FieldArray>
               </Grid>
             </Grid>
           </Accordion>

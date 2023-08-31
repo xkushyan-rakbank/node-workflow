@@ -64,7 +64,9 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   };
 
   const backgroundSchema = Yup.object().shape({
-    highestEducationAttained: Yup.string().required(getRequiredMessage("Highest education")),
+    highestEducationAttained: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Highest education")),
     employmentStatus: Yup.string().required(getRequiredMessage("Employment type")),
     linkedInURL: Yup.string()
       .nullable()

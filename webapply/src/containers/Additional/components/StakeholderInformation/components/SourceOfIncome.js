@@ -81,7 +81,9 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) =
 
   const sourceOfIncomeValidationSchema = Yup.object().shape({
     sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
-    IBANType: Yup.string().required(getRequiredMessage("IBAN type")),
+    IBANType: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("IBAN type")),
     IBAN: Yup.string().when("IBANType", {
       is: IBANType => IBANType !== "NOIB",
       then: Yup.string()
@@ -96,6 +98,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) =
     companyNameforSOF: Yup.string().when("IBANType", {
       is: IBANType => IBANType === "BARO",
       then: Yup.string()
+        .typeError(getRequiredMessage("Company name"))
         .required(getRequiredMessage("Company name"))
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
