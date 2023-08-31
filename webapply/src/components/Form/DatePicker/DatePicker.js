@@ -29,7 +29,8 @@ const DatePickerBase = ({
   disableFuture = false,
   onChange = value => setFieldValue(field.name, value),
   inputAdornmentPosition = "start",
-  InputProps
+  InputProps,
+  showIcon
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -86,7 +87,7 @@ const DatePickerBase = ({
             }}
           />
         </MuiPickersUtilsProvider>
-        {infoTitle && <InfoTitle title={infoTitle} />}
+        {infoTitle && <InfoTitle title={infoTitle} showIcon={showIcon} />}
 
         {isError && <ErrorMessage error={errorMessage} />}
       </FormControl>

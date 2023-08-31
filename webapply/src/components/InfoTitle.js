@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 import { makeStyles, styled } from "@material-ui/core/styles";
+import {ReactComponent as InformationIcon} from "../assets/icons/information.svg"
 
 import { Icon, ICONS } from "./Icons";
 
@@ -23,11 +24,12 @@ const useStyles = makeStyles({
   }
 });
 
-const IconStyled = styled(Icon)({
-  margin: "1px 6.4px 0 0",
-  width: "16px",
-  height: "16px",
-  fill: "#86868b",
+const IconStyled = styled(InformationIcon)({
+  margin: "1px 1px 2px 1px",
+  width: "12px",
+  height: "12px",
+  paddingRight: "5px",
+  paddingTop: "5px",
   flexShrink: 0
 });
 

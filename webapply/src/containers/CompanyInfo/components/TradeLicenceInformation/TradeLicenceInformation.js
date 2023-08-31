@@ -35,6 +35,7 @@ export const TradeLicenceInformation = ({ values }) => {
         infoTitle={`This should be the same as shown on your trade licence.
         If your company does not have a UAE trade licence,
          enter the company registration details as shown on other company documents.`}
+        infoIcon
       />
       <Field
         innerRef={countryOfIncorporationRef}
@@ -66,6 +67,8 @@ export const TradeLicenceInformation = ({ values }) => {
         InputProps={{
           inputProps: { maxLength: MAX_LICENSE_NUMBER_LENGTH, tabIndex: 0 }
         }}
+        iconWidth={12}
+        iconHeight={12}
       />
       <Grid item container spacing={3}>
         <Grid item sm={6} xs={12}>
@@ -94,6 +97,7 @@ export const TradeLicenceInformation = ({ values }) => {
             maxDate={addDays(new Date(), 0)}
             inputAdornmentPosition="end"
             infoTitle="The date when your company was legally formed or started."
+            showIcon
             disableUnderline={true}
             InputProps={{
               disableUnderline: true,
