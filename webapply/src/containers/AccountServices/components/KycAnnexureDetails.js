@@ -188,7 +188,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="allianceCode"
-            path={"prospect.kycAnnexure.allianceCode"}
+            path={"prospect.applicantInfo.allianceCode"}
             label="Partner code"
             component={Input}
             InputProps={{

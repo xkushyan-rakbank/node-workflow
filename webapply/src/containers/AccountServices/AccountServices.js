@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { Grid } from "@material-ui/core";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 import { formStepper, NEXT, TL_COI_FILE_SIZE } from "../../constants";
@@ -38,9 +39,18 @@ import {
   getRakValuePackage,
   getSignatories
 } from "../../store/selectors/appConfig";
-import { getInvalidMessage, getRequiredMessage } from "../../utils/getValidationMessage";
+import {
+  getInvalidMessage,
+  getRequiredMessage,
+  getROInvalidMessage
+} from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
-import { NAME_REGEX, TOTAL_EXPERIENCE_YRS_REGEX } from "../../utils/validation";
+import {
+  ALPHANUMERIC_REGEX,
+  NAME_REGEX,
+  NUMBER_REGEX,
+  TOTAL_EXPERIENCE_YRS_REGEX
+} from "../../utils/validation";
 import {
   getAccountType,
   getDatalist,
@@ -53,7 +63,7 @@ import { useViewId } from "../../utils/useViewId";
 import { ConfirmationDialog } from "./components/confirmationModal";
 import { Footer } from "../../components/Footer";
 import { KycAnnexureDetails } from "./components/KycAnnexureDetails";
-import { checkLoginStatus } from "../../store/selectors/loginSelector";
+import { checkLoginStatus, getLoginResponse } from "../../store/selectors/loginSelector";
 import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../utils/useFindDocument";
@@ -84,6 +94,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const signatoryName = useSelector(getSignatories)[0]?.editedFullName;
   const allianceCodeData = useSelector(getApplicantInfo).allianceCode;
+  const roCodeData = useSelector(getLoginResponse).roCode;
 
   const statementsVia = accountInfo.eStatements ? true : false;
 
@@ -206,6 +217,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     leadNumber: "",
     sourcingCode: "",
     allianceCode: allianceCodeData || "",
+    roCode: roCodeData || "",
     skillBasedCategory: "",
     roName: "",
     businessModel: "",
@@ -264,7 +276,13 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       is: "yes",
       then: Yup.array().required(getRequiredMessage("Marketing Channel"))
     }),
-    surveys: Yup.string().required("This field is required")
+    surveys: Yup.string().required("This field is required"),
+    allianceCode: Yup.string()
+      .max(50, "Maximum 50 characters allowed")
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
+    roCode: Yup.string()
+      .max(6, "Maximum 6 characters allowed")
+      .matches(NUMBER_REGEX, getROInvalidMessage)
   });
 
   const kycAnnexureSchema = accountInfoValidation.shape({
@@ -718,6 +736,79 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         onChange={radioChangeHandler}
                       />
                     </div>
+                  </Accordion>
+                </div>
+                <div className={classes.packageSelectionWrapper}>
+                  <Accordion
+                    title={
+                      <>
+                        Codes <span className={classes.smallTitle}>(for bank use)</span>
+                      </>
+                    }
+                    id={"codesBankUse"}
+                    classes={{
+                      accordionRoot: classes.accountServiceAccordionRoot,
+                      accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                      accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                      accordionDetails: classes.accordionDetails,
+                      accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
+                    }}
+                  >
+                    <Grid container spacing={3} className={classes.roCodeWrapper}>
+                      <Grid item sm={6} xs={12}>
+                        <label className={classes.outsideLabel}>
+                          Agent code (optional)
+                          <ContexualHelp
+                            title={
+                              "Enter the Agent code of the Bank staff whom you are in touch with"
+                            }
+                            placement="right"
+                            isDisableHoverListener={false}
+                          >
+                            <HelpOutlineIcon className={classes.helperIcon} />
+                          </ContexualHelp>
+                        </label>
+                        <Field
+                          name="roCode"
+                          path="prospect.applicantInfo.roCode"
+                          label=""
+                          component={Input}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                          classes={{
+                            formControlRoot: classes.roCodeFormControl,
+                            input: classes.inputWithoutLabel
+                          }}
+                        />
+                      </Grid>
+                      <Grid item sm={6} xs={12}>
+                        <label className={classes.outsideLabel}>
+                          Partner code (optional)
+                          <ContexualHelp
+                            title={
+                              "If you were referred by one of our Partners, enter the code shared by them"
+                            }
+                            placement="bottom"
+                            isDisableHoverListener={false}
+                          >
+                            <HelpOutlineIcon className={classes.helperIcon} />
+                          </ContexualHelp>
+                        </label>
+                        <Field
+                          name="allianceCode"
+                          path={"prospect.applicantInfo.allianceCode"}
+                          component={Input}
+                          InputProps={{
+                            inputProps: { tabIndex: 0 }
+                          }}
+                          classes={{
+                            formControlRoot: classes.roCodeFormControl,
+                            input: classes.inputWithoutLabel
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
                   </Accordion>
                 </div>
                 {isAgent && (

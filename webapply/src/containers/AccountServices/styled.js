@@ -313,5 +313,33 @@ export const useStyles = makeStyles(theme => ({
   addMoreKycButtonWrapper: {
     textAlign: "right",
     margin: "5px 0"
+  },
+  outsideLabel: {
+    display: "flex",
+    alignItems: "center",
+    gap: "8px",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "24px",
+    color: "#1F1F1F"
+  },
+  inputWithoutLabel: {
+    padding: "20px 12px"
+  },
+  helperIcon: {
+    color: "#525252",
+    width: "20px",
+    height: "20px"
+  },
+  roCodeWrapper: {
+    marginTop: "0px",
+    "& > div": {
+      marginBottom: "15px"
+    }
+  },
+  roCodeFormControl: {
+    margin: 0,
+    marginTop: "8px"
   }
 }));
