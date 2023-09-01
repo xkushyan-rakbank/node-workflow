@@ -466,13 +466,13 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                       <InformationSection title={""}>
                         <div className={classes.infoListWrapper}>
                           <div className={classes.infoLabelValue}>
-                            <label>Agent code:</label> <p>{displayFields.partnerCode}</p>
+                            <label>Agent code:</label> <p>{displayFields.agentCode}</p>
                           </div>
                         </div>
                         <div className={classes.infoListWrapper}>
                           <div className={classes.infoLabelValue}>
                             <label>Partner code:</label>
-                            <p>{displayFields.agentCode}</p>
+                            <p>{displayFields.partnerCode}</p>
                           </div>
                         </div>
                       </InformationSection>
