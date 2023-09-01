@@ -25,9 +25,9 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "8px"
   },
   readBtn: {
-    height: "40px",
-    width: "124px",
-    borderRadius: "21px",
+    height: "60px",
+    width: "100%",
+    borderRadius: "100px",
     border: "1px solid #1F1F1F",
     background: "transparent",
     fontSize: "14px",
@@ -36,13 +36,19 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: "0px",
     color: "#1F1F1F",
     textTransform: "none",
-    padding: "9px 24px",
-    marginTop: "20px"
+    padding: "19px 24px",
+    marginTop: "20px",
+    [theme.breakpoints.up("sm")]: {
+      width: "124px",
+      height: "40px",
+      borderRadius: "21px",
+      padding: "9px 24px",
+    }
   },
   readAcceptBtn: {
-    height: "40px",
-    width: "206px",
-    borderRadius: "21px",
+    height: "60px",
+    width: "100%",
+    borderRadius: "100px",
     background: "#1F1F1F",
     fontSize: "14px",
     fontWeight: 600,
@@ -50,10 +56,17 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: "0px",
     color: "#FFFFFF",
     textTransform: "none",
-    padding: "9px 24px",
+    padding: "19px 24px",
     marginTop: "20px",
     "&:hover": {
       background: "rgba(0, 0, 0, 0.7)"
+    },
+
+    [theme.breakpoints.up("sm")]: {
+      width: "206px",
+      height: "40px",
+      borderRadius: "21px",
+      padding: "9px 24px",
     }
   },
   completedWrapper: {
@@ -86,13 +99,17 @@ export const useStyles = makeStyles(theme => ({
     color: "#1F1F1F"
   },
   authorisationsList: {
-    paddingLeft: "24px",
+    padding: "16px",
     fontWeight: "400",
     fontSize: "14px",
     margin: "0px",
     color: "#757575",
     "& li": {
       marginBottom: "4px"
+    },
+    [theme.breakpoints.up("sm")]: {
+      padding: "unset",
+      paddingLeft: "24px", 
     }
   },
   container: {
