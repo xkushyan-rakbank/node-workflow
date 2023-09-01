@@ -45,7 +45,7 @@ export const IBANField = props => (
   />
 );
 
-export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) => {
+export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
   const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails";
@@ -219,16 +219,17 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) =
     );
   };
 
-  const removeTradeLicenseDoc = (setFieldValue, touched, setTouched) => {
+  const removeTradeLicenseDoc = setFieldValue => {
     const path = `prospect.documents.stakeholdersDocuments.0_${[
       signatoryName
     ]}.additionalDocuments`;
     setFieldValue("tradeLicense", "");
-    setTouched({ ...touched, ...{ tradeLicense: false } });
-
+    const updatedAdditionalDocuments = tradeLicenceDocuments.filter(eachDoc => {
+      return eachDoc.documentKey !== tradeLicenseKeyToCheck;
+    });
     dispatch(
       updateProspect({
-        [path]: [],
+        [path]: updatedAdditionalDocuments,
         "prospect.prospectDocuments.additionalStakeholderDocument.tradeLicense": ""
       })
     );
@@ -241,6 +242,16 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) =
     dispatch(
       updateProspect({
         "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails.IBAN": ""
+      })
+    );
+  };
+
+  const setCompanyNameforSOFEmpty = setFieldValue => {
+    setFieldValue("companyNameforSOF", "");
+    dispatch(
+      updateProspect({
+        "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails.companyNameforSOF":
+          ""
       })
     );
   };
@@ -306,6 +317,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) =
                       setFieldValue("IBANType", selectedValue);
                       if (selectedValue === "NOIB") {
                         removeIbanNumber(selectedValue, setFieldValue, touched, setTouched);
+                        setCompanyNameforSOFEmpty(setFieldValue);
                       }
                     }}
                   />
@@ -358,7 +370,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id , refs}) =
                             )
                           }
                           file={values.tradeLicense}
-                          onDelete={() => setFieldValue("tradeLicense", "")}
+                          onDelete={() => removeTradeLicenseDoc(setFieldValue)}
                           component={Upload}
                           content={values?.tradeLicense}
                           isUploading={isUploading["tradeLicense"]}
