@@ -8,7 +8,13 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "25px",
   },
   section: {
+    border: "1px solid #CCCCCC",
+    padding: "20px 10px",
+    borderRadius: "10px",
     [theme.breakpoints.up("sm")]: {
+      border: "unset",
+      padding: "unset",
+      borderRadius: "unset",
       width: contentWidth,
       marginLeft: "auto",
       marginRight: "auto",
@@ -334,7 +340,7 @@ export const useStyles = makeStyles((theme) => ({
   sectionContainer: {
     display: "flex",
     flexDirection: "row",
-    gap: "20px",
+    gap: "30px",
     alignItems: "center",
     [theme.breakpoints.up("sm")]: {
       gap: "8px"
