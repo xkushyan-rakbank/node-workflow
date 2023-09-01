@@ -35,13 +35,15 @@ import {
   AGE_RESTRICTION,
   DOC_TYPE_EID,
   DOC_TYPE_PASSPORT,
-  SUPPORTED_FILE_FORMAT_TEXT
+  SUPPORTED_FILE_FORMAT_TEXT,
+  WTM_STATUS
 } from "../../../../constants";
 import { UploadFileModal } from "./UploadFileModal";
 import { ScanViaMobile } from "./MobileScan";
-import { InfoModal } from "../../../../components/Modals/InfoModal";
 import { Footer } from "../../../../components/Footer";
 import { checkLoginStatus } from "../../../../store/selectors/loginSelector";
+import { ConfirmDialog } from "../../../../components/Modals";
+import { stopScheduler } from "../../../../store/actions/webToMobile";
 
 export const CompanyStakeholdersComponent = ({
   fullName,
@@ -323,11 +325,16 @@ export const CompanyStakeholdersComponent = ({
         }
       />
 
-      <InfoModal
-        open={openInfo}
-        info={"Your progress has been saved"}
-        text={"Please continue the application on desktop/laptop."}
-        handleClose={handleInfoModalClose}
+      <ConfirmDialog
+        title={"Your progress has been saved"}
+        isOpen={openInfo}
+        handleReject={() => {}}
+        cancelLabel={"close"}
+        handleClose={() => {
+          dispatch(stopScheduler(WTM_STATUS.FINISHED));
+          handleInfoModalClose();
+        }}
+        message={"Please close to continue the application on desktop/laptop."}
       />
 
       {openDocUpload && (

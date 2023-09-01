@@ -81,7 +81,6 @@ export const CompanyStakeholdersContainer = ({
   const handleClickNextStep = useCallback(() => {
     if (sessionType) {
       setOpenInfo(true);
-      dispatch(stopScheduler(WTM_STATUS.FINISHED));
     } else {
       setIsLoading(true);
 
