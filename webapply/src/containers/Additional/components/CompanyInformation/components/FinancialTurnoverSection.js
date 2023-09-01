@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import cx from "classnames";
 
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme, useMediaQuery } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
 import { ThemeProvider as SliderThemeProvider } from "@material-ui/styles";
 
@@ -43,6 +43,8 @@ export const FinancialTurnoverSection = forwardRef(
     const { annualFinTurnoverAmtInAED, anualCashDepositAED } = useSelector(
       getCompanyAdditionalInfo
     );
+
+    const isMobileDevice = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
 
     const { financialFormRef, financialAccordionRef } = refs;
 
@@ -150,6 +152,8 @@ export const FinancialTurnoverSection = forwardRef(
           innerRef={financialFormRef}
         >
           {({ setFieldValue, values, isValid, handleBlur }) => {
+            const [sliderMarks, setSliderMarks] = useState(marks);
+
             function handleChange(ev, blur) {
               const { value } = ev.target;
               const annualTurnover = value ? parseFloat(value.replaceAll(",", "")).toFixed(2) : "";
@@ -177,6 +181,19 @@ export const FinancialTurnoverSection = forwardRef(
                 setFieldValue("anualCashDepositAED", annualCashDepositAmount.toString());
               }
             }, [values.annualFinTurnoverAmtInAED, sliderValue]);
+
+            useEffect(() => {
+
+              if (isMobileDevice) {
+                let newMarks = [];
+                if (sliderValue > 10) newMarks.push({ value: 0, label: "0%" });
+
+                newMarks.push({ value: sliderValue, label: `${sliderValue}%` });
+
+                if (sliderValue < 85) newMarks.push({ value: 100, label: "100%" });
+                setSliderMarks(newMarks);
+              }
+            }, [sliderValue]);
             return (
               <Accordion
                 title={"Financial turnover"}
@@ -204,7 +221,7 @@ export const FinancialTurnoverSection = forwardRef(
                     inputComponent: FormatDecimalNumberInput,
                     // 9 digits + 2 ','(commas)
                     inputProps: { maxLength: 11, tabIndex: 0 },
-                    onChange: (e) => handleChange(e, handleBlur),
+                    onChange: e => handleChange(e, handleBlur)
                   }}
                 />
                 <p className={cx(classes.sectionLabel, classes.boldLabel)}>
@@ -225,7 +242,7 @@ export const FinancialTurnoverSection = forwardRef(
                         !values?.annualFinTurnoverAmtInAED ||
                         values.annualFinTurnoverAmtInAED < 1001
                       }
-                      marks={marks}
+                      marks={sliderMarks}
                     />
                   </SliderThemeProvider>
                 </div>
