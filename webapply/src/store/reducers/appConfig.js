@@ -26,6 +26,7 @@ import {
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
 import { DECISIONS_LOADING } from "../actions/decisions";
+import appConfig from "../../config/appConfig.json";
 
 export const initialState = {
   loading: false,
@@ -91,7 +92,7 @@ export default handleActions(
     }),
     [RESET_PROSPECT]: state => ({
       ...state,
-      prospect: initialState.prospect
+      prospect: appConfig.prospect
     }),
     [UPDATE_PROSPECT_ID]: (state, action) => ({
       ...state,
