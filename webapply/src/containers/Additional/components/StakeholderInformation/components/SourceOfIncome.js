@@ -199,7 +199,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
       setFieldValue(`proofOfIncome[${indexToRemove}]`, null);
     } else {
       isMinLength && setFieldValue("proofOfIncome", [""]);
-      values["proofOfIncome"].splice(indexToRemove, 1);
+      values["proofOfIncome"] && values["proofOfIncome"].splice(indexToRemove, 1);
       dispatch(
         updateProspect({
           "prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome": isMinLength
@@ -224,7 +224,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
       signatoryName
     ]}.additionalDocuments`;
     setFieldValue("tradeLicense", "");
-    const updatedAdditionalDocuments = tradeLicenceDocuments.filter(eachDoc => {
+    const updatedAdditionalDocuments = tradeLicenceDocuments?.filter(eachDoc => {
       return eachDoc.documentKey !== tradeLicenseKeyToCheck;
     });
     dispatch(

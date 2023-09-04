@@ -528,20 +528,19 @@ export function* uploadDocuments({ payload }) {
         valueToUpdate = {
           kycAnnexureDocuments: uploadedDocuments
         };
+      } else if (savePath.includes("additionalDocuments")) {
+        pathToUpdate = `prospect.documents.${savePath}`;
+        valueToUpdate = uploadedDocuments;
       } else {
         let pathToUpdateParts = pathToUpdate.split(".");
         const documentsKey = pathToUpdateParts[pathToUpdateParts.length - 1];
         pathToUpdate = `prospect.documents.${pathToUpdateParts
           .slice(0, pathToUpdateParts.length - 1)
           .join(".")}`;
-        if (pathToUpdate.includes("additionalDocuments")) {
-          valueToUpdate = uploadedDocuments;
-        } else {
-          valueToUpdate = {
-            [documentsKey]: uploadedDocuments,
-            isDocUpdate: true
-          };
-        }
+        valueToUpdate = {
+          [documentsKey]: uploadedDocuments,
+          isDocUpdate: true
+        };
       }
       yield put(
         updateProspect({

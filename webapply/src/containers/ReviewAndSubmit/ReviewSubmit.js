@@ -92,6 +92,10 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     "prospect.prospectDocuments.stakeholderAdditionalInfo.sourceOfIncomeDetails.tradeLicense"
   );
 
+  const residentialAddressProofDocProvided = useFindDocument(
+    tradeLicenceSourceIncomeDocuments,
+    "prospect.prospectDocuments.stakeholderAdditionalInfo.addressProof"
+  );
   const getCountryLabel = useCallback(
     code => countryList?.find(country => country.code === code)?.displayText,
     [displayFields, countryList]
@@ -401,7 +405,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         proofOfIncome: !!proofOfIncomeProvided[0] ? "Provided" : "N/A",
         proofOfAddress: !!proofOfAddressProvided[0] ? "Provided" : "N/A",
         cv: !!cvProvided[0] ? "Provided" : "N/A",
-        sourceOfIncomeTradeLicense: !!tradeLicenceSourceIncomeProvided[0] ? "Provided" : "N/A"
+        sourceOfIncomeTradeLicense: !!tradeLicenceSourceIncomeProvided[0] ? "Provided" : "N/A",
+        residenceProofOfAddress: !!residentialAddressProofDocProvided[0] ? "Provided" : "N/A"
       };
       setDisplayFields(fields);
     }

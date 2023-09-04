@@ -488,3 +488,14 @@ h3 {
     display: block;
   }
 }
+
+.uploadFileDescription {
+  color: #1F1F1F;
+  width: fit-content;
+  display: flex;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  gap: 8px;
+  align-items: center;
+}

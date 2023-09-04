@@ -143,6 +143,9 @@ export const StakeholderAdditionalReview = ({
                 {fieldValues.residentialAddress && addressFormat(fieldValues.residentialAddress)}
               </p>
             </div>
+            <div className={classes.infoLabelValue}>
+              <label>Proof of address:</label> <p>{fieldValues.residenceProofOfAddress}</p>
+            </div>
           </div>
         </InformationSection>
         <InformationSection

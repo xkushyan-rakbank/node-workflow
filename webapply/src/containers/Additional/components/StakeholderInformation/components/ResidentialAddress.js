@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 import { Button, IconButton } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../../components/Form";
@@ -23,6 +24,7 @@ import {
 import { uploadDocuments, initDocumentUpload } from "../../../../../store/actions/uploadDocuments";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { Upload } from "../../../../../components/Upload";
+import { ContexualHelp } from "../../../../../components/Notifications";
 
 export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
@@ -257,6 +259,16 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                 <FieldArray name="addressProof">
                   {({ push, remove, arrayHelpers }) => (
                     <Grid item sm={12} xs={12}>
+                      <label className="uploadFileDescription">
+                        Proof of Address (max up to 3)
+                        <ContexualHelp
+                          title={"Tenancy contract, Utility bills"}
+                          placement="right"
+                          isDisableHoverListener={false}
+                        >
+                          <HelpOutlineIcon className={classes.helperIcon} />
+                        </ContexualHelp>
+                      </label>
                       {values.addressProof.map((file, index) => (
                         <div key={index} style={{ marginBottom: "20px" }}>
                           <Field
@@ -264,7 +276,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                             // eslint-disable-next-line max-len
                             path={`prospect.prospectDocuments.additionalStakeholderDocument.addressProof[${index}]`}
                             type="file"
-                            fieldDescription={"Proof of Address"}
+                            fieldDescription={""}
                             helperText={SUPPORTED_FILE_FORMAT_TEXT}
                             accept={TL_ACCEPTED_FILE_TYPES}
                             fileSize={TL_COI_FILE_SIZE}

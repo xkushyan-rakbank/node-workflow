@@ -235,15 +235,6 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
       }
       break;
     }
-    case "documents": {
-      if (viewId === "/AccountInfo" && isAgent) {
-        nodePayload = prospect[key];
-      } else {
-        nodePayload = "";
-      }
-      nodePayload = prospect[key];
-      break;
-    }
     case "applicantInfo": {
       if (viewId === "/AccountInfo") {
         const { roCode, allianceCode } = prospect[key];
