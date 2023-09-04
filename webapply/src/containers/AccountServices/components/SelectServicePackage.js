@@ -47,8 +47,8 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
         </div>
       </div>
       <Grid container className={classes.packageListWrapper}>
-        <Grid item sm={4} className={classes.packageList}></Grid>
-        <Grid item sm={4} className={classes.packageList}>
+        <Grid item sm={4} xs={6} className={classes.packageList}></Grid>
+        <Grid item sm={4} xs={6} className={classes.packageList}>
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Plus</h2>
             <p>49 AED/month</p>
