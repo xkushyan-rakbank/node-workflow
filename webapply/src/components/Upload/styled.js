@@ -12,9 +12,13 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     cursor: "pointer",
     gap: "24px",
+    minWidth: "274px",
+    maxWidth: "274px",
     [theme.breakpoints.up("sm")]: {
       padding: "24px",
       flexDirection: "row",
+      minWidth: "unset",
+      maxWidth: "unset"
     }
   },
   actionButton: {
