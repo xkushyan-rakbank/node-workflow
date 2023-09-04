@@ -17,7 +17,12 @@ const PdfToPngConverter = ({ file, pages = [] }) => {
     <div>
       <Document file={file} className={classes.previewPDF}>
         {Array.from({ length: pages.length }, (_, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+          <Page
+            key={`page_${index + 1}`}
+            pageNumber={index + 1}
+            devicePixelRatio={1}
+            scale={1.75}
+          />
         ))}
       </Document>
     </div>

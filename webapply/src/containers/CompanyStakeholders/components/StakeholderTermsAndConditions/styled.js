@@ -139,11 +139,12 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   noTitlePaper: {
-    width: "780px",
+    width: "max-content",
     minHeight: "650px",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    maxWidth: "unset"
   },
   actionContainer: {
     display: "flex",
@@ -185,7 +186,6 @@ export const useStyles = makeStyles(theme => ({
       padding: "8px 40px"
     },
     "& .react-pdf__Page__canvas": {
-      width: "100%!important",
       height: "100%!important"
     }
   },

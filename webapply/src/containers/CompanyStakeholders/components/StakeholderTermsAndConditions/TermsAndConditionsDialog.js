@@ -1,6 +1,5 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import React, { useState } from "react";
-import { isDesktop } from "react-device-detect";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { useStyles } from "./styled";
