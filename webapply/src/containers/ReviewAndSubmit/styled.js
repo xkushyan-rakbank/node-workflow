@@ -26,10 +26,15 @@ export const useStyles = makeStyles(theme => ({
     "& .accordionTitle": {
       "& .title": {
         fontWeight: 500,
-        fontSize: "20px",
-        lineHeight: "28px",
+        fontSize: "16px",
+        lineHeight: "24px",
         color: "#000",
-        alignItems: "self-end"
+        alignItems: "self-end",
+        [theme.breakpoints.up("sm")]: {
+          fontWeight: 500,
+          fontSize: "20px",
+          lineHeight: "28px",
+        }
       }
     }
   },
@@ -66,6 +71,7 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "15px",
     background: "#FAFAFA",
     marginBottom: "32px",
+    fontWeight: 500,
     "&:last-child": {
       marginBottom: "0px"
     }
@@ -103,7 +109,10 @@ export const useStyles = makeStyles(theme => ({
   infoLabelValue: {
     display: "flex",
     alignItems: "start",
-    gap: "24px",
+    gap: "10px",
+    [theme.breakpoints.up("sm")]:{
+      gap: "24px", 
+    },
     "& label": {
       color: "#757575",
       fontSize: "0.875rem",
@@ -120,7 +129,11 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 500,
       lineHeight: "20px",
       margin: 0,
-      wordBreak: "break-word"
+      wordBreak: "break-word",
+      whiteSpace: "pre-line",
+      [theme.breakpoints.up("sm")]: {
+        whiteSpace: "unset"
+      }
     }
   },
   eidField: {
@@ -131,14 +144,18 @@ export const useStyles = makeStyles(theme => ({
     padding: 0,
     fontSize: "0.875rem",
     fontStyle: "normal",
-    fontFamily: "Open Sans",
+    fontFamily: "DM Sans",
     fontWeight: 600
   },
   infoListWrapper: {
     display: "flex",
     flexDirection: "column",
     flex: 1,
-    gap: "8px"
+    gap: "8px",
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+     width: "unset"
+    }
   },
   iconWrapper: {
     display: "flex",

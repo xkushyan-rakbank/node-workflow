@@ -1,5 +1,4 @@
 import React from "react";
-import PatternFormat from "react-number-format";
 import { useStyles } from "../styled";
 import { InformationSection } from "./InformationSection";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
@@ -13,6 +12,14 @@ export const StakeholderAdditionalReview = ({
   ibanTypeLabel
 }) => {
   const classes = useStyles();
+
+  const formatEidNumber = number => {
+    const cleanNumber = String(number).replace(/\D/g, "");
+
+    const formattedNumber = cleanNumber.replace(/(\d{3})(\d{4})(\d{7})(\d{1})/, "$1-$2-$3-$4");
+
+    return formattedNumber;
+  };
 
   return (
     <div className={classes.packageSelectionWrapper}>
@@ -30,7 +37,7 @@ export const StakeholderAdditionalReview = ({
           accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
           accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
           accordionDetails: classes.accordionDetails,
-          accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
+          accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot,
         }}
       >
         <InformationSection title={"Essential information"}>
@@ -62,14 +69,7 @@ export const StakeholderAdditionalReview = ({
             </div>
             <div className={classes.infoLabelValue}>
               <label>EID number:</label>
-              <p>
-                <PatternFormat
-                  value={fieldValues.eidNumber}
-                  format="###-####-#######-#"
-                  disabled
-                  className={classes.eidField}
-                />
-              </p>
+              <p className={classes.eidField}>{formatEidNumber(fieldValues.eidNumber)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>EID expiry date:</label>
