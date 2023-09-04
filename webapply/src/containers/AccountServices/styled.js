@@ -115,9 +115,10 @@ export const useStyles = makeStyles((theme) => ({
   packageFeatureWrapper: {
     display: "table",
     textAlign: "center",
-    padding: "22px 20px",
+    padding: "18px 17px",
     paddingTop: "22px!important",
     paddingBottom: "22px!important",
+    width: "30%",
     "&:first-child": {
       background: "rgba(245, 245, 245, 0.50)",
     },
@@ -127,6 +128,11 @@ export const useStyles = makeStyles((theme) => ({
     "&:nth-child(3)": {
       background: "#FDE7E8",
     },
+    [theme.breakpoints.up("sm")]:{
+      width: "unset",
+      padding: "22px 20px",
+    },
+    
   },
   selectedPackageList: {
     border: "2px solid #157947",
@@ -274,27 +280,48 @@ export const useStyles = makeStyles((theme) => ({
   },
   packagefeatureTitle: {
     color: "#8D0C10",
-    fontSize: "1.5rem",
+    fontSize: "1.25rem",
     fontWeight: 500,
-    lineHeight: "32px",
-    margin: "18px 25px",
+    lineHeight: "28px",
+    margin: "18px 0px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
+      lineHeight: "32px",
+      margin: "18px 25px",
+    }
   },
   featureDesc: {
     color: "#1F1F1F",
     textAlign: "left",
-    fontSize: "1rem",
+    fontSize: "0.75rem",
     fontWeight: 500,
-    lineHeight: "24px",
+    lineHeight: "16px",
     margin: 0,
+    width: "100px",
+    [theme.breakpoints.up("sm")]: {
+      color: "#1F1F1F",
+      textAlign: "left",
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: "24px",
+      margin: 0,
+      width: "unset",
+    },
   },
   featureValues: {
     color: "#1F1F1F",
     display: "table-cell",
     verticalAlign: "middle",
-    fontSize: "1rem",
-    fontWeight: 400,
-    lineHeight: "24px",
+    fontSize: "0.75rem",
+    fontWeight: 500,
+    lineHeight: "20px",
     margin: 0,
+    [theme.breakpoints.up("sm")]:{
+      fontSize: "1rem",
+      fontWeight: 400,
+      lineHeight: "24px",
+    }
   },
   featureValueIcon: {
     display: "table-cell",
