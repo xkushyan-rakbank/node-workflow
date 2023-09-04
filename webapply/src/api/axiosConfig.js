@@ -150,7 +150,13 @@ apiClient.interceptors.response.use(
 
     if (jsonData) {
       const { errors, errorType } = jsonData;
-      if (errorType === "ReCaptchaError") {
+      if (errorType === "InvalidCredentialsError") {
+        serverError = new FieldsValidationError(jsonData);
+        notificationOptions = {
+          title: "Failed to login",
+          message: "Invalid credentials"
+        };
+      } else if (errorType === "ReCaptchaError") {
         serverError = new ReCaptchaError(jsonData);
         notificationOptions = { title: "ReCaptchaError", message: errors };
       } else if (errorType === "FieldsValidation") {
