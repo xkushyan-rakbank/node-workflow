@@ -24,6 +24,7 @@ import { useStyles } from "../../styled";
 import { virtualOrPhysicalAddressOptions } from "../../../../../constants/options";
 import {
   MAX_FLAT_NUMBER_LENGTH,
+  MAX_OFFICE_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
 } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
@@ -79,7 +80,7 @@ export const MailingAddressSection = forwardRef(
         then: Yup.string()
           .required(getRequiredMessage("Office or shop number"))
           // eslint-disable-next-line no-template-curly-in-string
-          .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+          .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
           .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office or shop number")),
         otherwise: Yup.string()
           .required(getRequiredMessage("Flat, villa or building"))
@@ -249,7 +250,7 @@ export const MailingAddressSection = forwardRef(
                         }
                         placeholder="Office or shop number"
                         InputProps={{
-                          inputProps: { tabIndex: 1 }
+                          inputProps: { tabIndex: 1, maxLength: 10 }
                         }}
                         component={Input}
                       />
@@ -263,7 +264,7 @@ export const MailingAddressSection = forwardRef(
                         label="Flat, villa or building"
                         placeholder="Flat, villa or building"
                         InputProps={{
-                          inputProps: { tabIndex: 1 }
+                          inputProps: { tabIndex: 1, maxLength: 50 }
                         }}
                         component={Input}
                       />
@@ -276,7 +277,7 @@ export const MailingAddressSection = forwardRef(
                       label="P.O. Box"
                       placeholder="P.O. Box"
                       InputProps={{
-                        inputProps: { tabIndex: 1 }
+                        inputProps: { tabIndex: 1, maxLength: 10 }
                       }}
                       component={Input}
                     />
@@ -290,7 +291,7 @@ export const MailingAddressSection = forwardRef(
                       }
                       placeholder="Street or location"
                       InputProps={{
-                        inputProps: { tabIndex: 1 }
+                        inputProps: { tabIndex: 1, maxLength: 50 }
                       }}
                       component={Input}
                     />

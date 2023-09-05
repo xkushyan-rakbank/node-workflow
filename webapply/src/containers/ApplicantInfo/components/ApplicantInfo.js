@@ -239,7 +239,7 @@ export const ApplicantInfoComponent = ({
                 placeholder="Email"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 50 }
                 }}
                 isLemnisk={true}
                 lemniskCall={value => lemniskCall(value)}
@@ -326,7 +326,7 @@ export const ApplicantInfoComponent = ({
                   component={Input}
                   disabled={roCode !== ""}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0, maxLength: 6 }
                   }}
                   classes={{
                     formControlRoot: classes.roCodeFormControl,
@@ -353,7 +353,7 @@ export const ApplicantInfoComponent = ({
                   disabled={allianceCodeFromQuery !== ""}
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 }
+                    inputProps: { tabIndex: 0, maxLength: 50 }
                   }}
                   classes={{
                     formControlRoot: classes.roCodeFormControl,

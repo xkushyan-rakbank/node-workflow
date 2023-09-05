@@ -21,7 +21,7 @@ export const GlobalIntermediaryID = props => (
   <Input
     label="Global Intermediary Identification No."
     placeholder="XXXXXX-XXXXX-XX-XXX"
-    InputProps={{ inputComponent: TextMask }}
+    InputProps={{ inputComponent: TextMask, inputProps: { tabIndex: 1, maxLength: 19 } }}
     {...props}
   />
 );

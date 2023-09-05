@@ -205,7 +205,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                   label="Flat, villa or building"
                   placeholder="Flat, villa or building"
                   InputProps={{
-                    inputProps: { tabIndex: 1 }
+                    inputProps: { tabIndex: 1, maxLength: 50 }
                   }}
                   component={Input}
                 />
@@ -217,7 +217,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                   label="P.O. Box"
                   placeholder="P.O. Box"
                   InputProps={{
-                    inputProps: { tabIndex: 1 }
+                    inputProps: { tabIndex: 1, maxLength: 10 }
                   }}
                   component={Input}
                 />
@@ -229,7 +229,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                   label="Street or location"
                   placeholder="Street or location"
                   InputProps={{
-                    inputProps: { tabIndex: 1 }
+                    inputProps: { tabIndex: 1, maxLength: 50 }
                   }}
                   component={Input}
                 />
