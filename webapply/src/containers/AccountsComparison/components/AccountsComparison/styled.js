@@ -172,7 +172,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   featureSectionMobile: {
-    marginTop: "80px",
+    marginTop: "16px",
     [theme.breakpoints.up("sm")]: {
       display: "none"
     }
