@@ -23,7 +23,7 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
             : ""}
 
           <br />
-          {application.fileDescription}
+          {application.fileName}
         </div>
         <div className={classes.checkListData}>{application.uploadStatus}</div>
         {!STATUS_NOT_ELIGIBLE.includes(application.uploadStatus) && (

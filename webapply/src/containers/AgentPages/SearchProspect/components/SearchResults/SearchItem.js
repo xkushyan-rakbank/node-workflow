@@ -14,7 +14,12 @@ import { getAppConfig } from "../../../../../store/selectors/appConfig";
 import { getLoginResponse } from "../../../../../store/selectors/loginSelector";
 import StakeholdersDetail from "../../../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
-import { ctaStatusClass, custActions, roActions } from "../../../../MyApplications/constants";
+import {
+  ctaStatusClass,
+  ctaStatuses,
+  custActions,
+  roActions
+} from "../../../../MyApplications/constants";
 import { STATUS_LOCKED } from "../../../SearchedAppInfo/constants";
 import { getProspectInfoPromisify } from "../../../../../store/actions/retrieveApplicantInfo";
 import { useDisplayScreenBasedOnViewId } from "../../../../../utils/useDisplayScreenBasedOnViewId";
@@ -167,38 +172,62 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         <span className={classes.appDetailsHeader}>Remarks</span>
         <span className={classes.appDetailsinfo}>{declineRemarks}</span>
       </div>
-      {agentId && roActions[(application?.status?.statusType)] && (
+      {prospectVersion === "v2" ? (
         <>
-          <div className={classes.lineBreak}></div>
-          <div className={classes.footer}>
-            <SubmitButton
-              justify="flex-end"
-              label={roActions[(application?.status?.statusType)].buttonText}
-              type="button"
-              submitButtonClassName={classes.button}
-              onClick={handleNavigation}
-              disabled={application?.status?.reasonCode === STATUS_LOCKED}
-              isDisplayLoader={loading || loadingProspectId === application.prospectId}
-              isSearchApplicant
-            />
-          </div>
+          {agentId && roActions[(application?.status?.statusType)] && (
+            <>
+              <div className={classes.lineBreak}></div>
+              <div className={classes.footer}>
+                <SubmitButton
+                  justify="flex-end"
+                  label={roActions[(application?.status?.statusType)].buttonText}
+                  type="button"
+                  submitButtonClassName={classes.button}
+                  onClick={handleNavigation}
+                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                  isDisplayLoader={loading || loadingProspectId === application.prospectId}
+                  isSearchApplicant
+                />
+              </div>
+            </>
+          )}
+          {!agentId && custActions[(application?.status?.statusType)] && (
+            <>
+              <div className={classes.lineBreak}></div>
+              <div className={classes.footer}>
+                <SubmitButton
+                  justify="flex-end"
+                  label={custActions[(application?.status?.statusType)].buttonText}
+                  type="button"
+                  submitButtonClassName={classes.button}
+                  onClick={handleNavigation}
+                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                  isDisplayLoader={loading || loadingProspectId === application.prospectId}
+                  isSearchApplicant
+                />
+              </div>
+            </>
+          )}
         </>
-      )}
-      {!agentId && custActions[(application?.status?.statusType)] && (
+      ) : (
         <>
-          <div className={classes.lineBreak}></div>
-          <div className={classes.footer}>
-            <SubmitButton
-              justify="flex-end"
-              label={custActions[(application?.status?.statusType)].buttonText}
-              type="button"
-              submitButtonClassName={classes.button}
-              onClick={handleNavigation}
-              disabled={application?.status?.reasonCode === STATUS_LOCKED}
-              isDisplayLoader={loading || loadingProspectId === application.prospectId}
-              isSearchApplicant
-            />
-          </div>
+          {ctaStatuses[(application?.status?.statusNotes)] && (
+            <>
+              <div className={classes.lineBreak}></div>
+              <div className={classes.footer}>
+                <SubmitButton
+                  justify="flex-end"
+                  label={ctaStatuses[(application?.status?.statusNotes)].buttonText}
+                  type="button"
+                  submitButtonClassName={classes.button}
+                  onClick={handleNavigation}
+                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                  isDisplayLoader={loadingProspectId === application.prospectId}
+                  isSearchApplicant
+                />
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

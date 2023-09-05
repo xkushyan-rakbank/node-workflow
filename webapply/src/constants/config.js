@@ -13,7 +13,7 @@ export const endpoints = {
   reuploadDocumentUri: "/rest/v1/banks/RAK/prospectId/:prospectId/documents",
   searchProspectUri: "/onboarding/products/accounts/prospects/search",
   /**TODO: To be pointing 2.0 exp-api */
-  getDocumentByIdUri: "/api/v1/banks/RAK/prospects/:prospectId/documents/:documentKey",
+  getDocumentByIdUri: "/rest/v1/banks/RAK/prospectId/:prospectId/documents/:documentKey",
   screenProspectUri: "/onboarding/products/accounts/prospects/:prospectId/screening",
   otpUri: "/onboarding/accounts/otp",
   /**TODO: To be pointing 2.0 exp-api */

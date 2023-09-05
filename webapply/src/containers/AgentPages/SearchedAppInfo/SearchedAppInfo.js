@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
+import { isEmpty } from "lodash";
 
 import { SearchedAppInfoComponent } from "./components/SearchedAppInfo";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
@@ -8,6 +9,7 @@ import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBa
 import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
 
 import { searchedAppInfoSteps, STEP_1, STATUS_LOCKED, STATUS_FORCE_STOP } from "./constants";
+import { OverlayLoader } from "../../../components/Loader";
 
 export const SearchedAppInfoContainer = ({
   searchResults,
@@ -80,18 +82,21 @@ export const SearchedAppInfoContainer = ({
   const fullName = get(searchResult, "applicantInfo.fullName", "");
 
   return (
-    <SearchedAppInfoComponent
-      fullName={fullName}
-      isDisabled={isDisabled}
-      confirmDialogHandler={confirmDialogHandler}
-      confirmHandler={confirmHandler}
-      redirectUserPage={redirectUserPage}
-      isDisplayConfirmDialog={isDisplayConfirmDialog}
-      createSetStepHandler={createSetStepHandler}
-      step={step}
-      searchResult={searchResult}
-      prospectOverview={prospectOverview}
-      signatoryInfo={signatoryInfo}
-    />
+    <>
+      <OverlayLoader open={isEmpty(prospectOverview)} text={"Loading"} />
+      <SearchedAppInfoComponent
+        fullName={fullName}
+        isDisabled={isDisabled}
+        confirmDialogHandler={confirmDialogHandler}
+        confirmHandler={confirmHandler}
+        redirectUserPage={redirectUserPage}
+        isDisplayConfirmDialog={isDisplayConfirmDialog}
+        createSetStepHandler={createSetStepHandler}
+        step={step}
+        searchResult={searchResult}
+        prospectOverview={prospectOverview}
+        signatoryInfo={signatoryInfo}
+      />
+    </>
   );
 };

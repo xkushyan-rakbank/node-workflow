@@ -343,7 +343,7 @@ export function* deleteOtherDocumentSaga({ payload }) {
 
 export function* downloadDocumentFileSaga({ payload: { prospectId, documentKey, fileName } }) {
   try {
-    const headers = yield select(getAuthorizationHeader);
+    const headers = yield select(getDocuploaderHeader);
     const { data } = yield call(downloadProspectDocument.get, prospectId, documentKey, headers);
     const blob = new Blob([data], { type: data.type });
     yield call(saveAs, blob, fileName);

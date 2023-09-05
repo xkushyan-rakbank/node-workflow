@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
   getOverviewDocuments,
   getProspectOverviewId
 } from "../../../store/selectors/searchProspect";
-import { downloadDocumentFile } from "../../../store/actions/uploadDocuments";
+import { downloadDocumentFile, initDocumentUpload } from "../../../store/actions/uploadDocuments";
 
 import { Documents as DocumentsStep } from "./components/Documents";
 
@@ -18,6 +18,10 @@ export const Documents = props => {
     (documentKey, fileName) => dispatch(downloadDocumentFile(prospectId, documentKey, fileName)),
     [dispatch, prospectId]
   );
+
+  useEffect(() => {
+    dispatch(initDocumentUpload());
+  }, []);
 
   return <DocumentsStep downloadDocument={downloadDocument} docs={docs} {...props} />;
 };

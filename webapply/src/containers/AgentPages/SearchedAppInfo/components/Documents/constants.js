@@ -13,5 +13,5 @@ export const titles = {
   PRINT_DOWNLOAD_TITLE: "Print / Download"
 };
 
-export const STATUS_NOT_ELIGIBLE = ["NotUploaded", "Quarantined"];
+export const STATUS_NOT_ELIGIBLE = ["Quarantined"];
 export const UPLOAD = "Upload ";
