@@ -121,7 +121,7 @@ export const Upload = ({
                     )
                   ) : isDragActive || isUploading ? (
                     <div className={classes.row}>
-                      <CircularProgress size="14px" style={{ marginRight: "8px" }} />
+                      <CircularProgress size="14px" className={classes.isUploadingStatus} />
                       <div className={classes.subcontent}>Uploading...</div>
                     </div>
                   ) : (

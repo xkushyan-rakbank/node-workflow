@@ -12,8 +12,8 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     cursor: "pointer",
     gap: "24px",
-    minWidth: "274px",
-    maxWidth: "274px",
+    minWidth: "210px",
+    maxWidth: "256px",
     [theme.breakpoints.up("sm")]: {
       padding: "24px",
       flexDirection: "row",
@@ -95,6 +95,10 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "unset"
+    }
   },
   success: {
     color: "#157947",
@@ -123,5 +127,12 @@ export const useStyles = makeStyles(theme => ({
     width: "16px",
     height: "16px",
     marginLeft: "8px",
+  },
+  isUploadingStatus: {
+    marginRight: "unset",
+    marginLeft: "8px",
+    [theme.breakpoints.up("sm")]: {
+      marginRight: "8px",
+    },
   },
 }));
