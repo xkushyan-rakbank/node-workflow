@@ -250,6 +250,7 @@ export const ApplicantInfoComponent = ({
                 disabled={invitationParams?.custMobileNum}
                 iconWidth={25}
                 iconHeight={25}
+                contextualHelpText="This email should be unique for a company"
               />
             )}
             {isConfigLoading ? (
@@ -276,7 +277,7 @@ export const ApplicantInfoComponent = ({
                   label="Mobile number"
                   placeholder="Mobile number"
                   component={Input}
-                  contextualHelpText="This number should be unique for a Company"
+                  contextualHelpText="This number should be unique for a company"
                   InputProps={{
                     inputProps: { tabIndex: 0 }
                   }}
