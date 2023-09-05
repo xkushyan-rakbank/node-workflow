@@ -19,7 +19,7 @@ import { ErrorInfo } from "../../../components/InfoNote/ErrorInfo";
 import { uploadDocuments } from "../../../store/actions/uploadDocuments";
 import { EXPERIENCE_BUSINESS_MODAL_LENGTH } from "../../SelectServices/constants";
 import { updateProspect } from "../../../store/actions/appConfig";
-import { getDocuments } from "../../../store/selectors/appConfig";
+import { getDocuments, getSignatories } from "../../../store/selectors/appConfig";
 import { VerificationDetailsList } from "./VerificationDetailsList";
 import { VisitDetailsList } from "./VisitDetailsList";
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
@@ -28,11 +28,12 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const kycAnnexureDocuments = useSelector(getDocuments).kycAnnexureDocuments;
+  const signatoryNameData = useSelector(getSignatories)[0]?.editedFullName;
   const { agentName } = useSelector(getLoginResponse);
   const [isUploading, setIsUploading] = useState(false);
-
   useEffect(() => {
     setFieldValue("roName", agentName || "");
+    setFieldValue("signatoryName", signatoryNameData || "");
   }, []);
 
   const removeDoc = (indexToRemove, values, name, item, length, setFieldValue) => {

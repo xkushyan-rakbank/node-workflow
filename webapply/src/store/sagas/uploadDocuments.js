@@ -524,10 +524,8 @@ export function* uploadDocuments({ payload }) {
           otherDocuments: uploadedDocuments
         };
       } else if (pathToUpdate === "kycAnnexureDocuments") {
-        pathToUpdate = "prospect.documents";
-        valueToUpdate = {
-          kycAnnexureDocuments: uploadedDocuments
-        };
+        pathToUpdate = "prospect.documents.kycAnnexureDocuments";
+        valueToUpdate = uploadedDocuments;
       } else if (savePath.includes("additionalDocuments")) {
         pathToUpdate = `prospect.documents.${savePath}`;
         valueToUpdate = uploadedDocuments;

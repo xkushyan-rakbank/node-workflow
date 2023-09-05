@@ -92,7 +92,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const accountInfo = useSelector(getAccountInfo);
   const rakValuePackage = useSelector(getRakValuePackage);
 
-  const signatoryName = useSelector(getSignatories)[0]?.editedFullName;
+  const signatoryNameData = useSelector(getSignatories)[0]?.editedFullName;
   const allianceCodeData = useSelector(getApplicantInfo).allianceCode;
   const roCodeData = useSelector(getLoginResponse).roCode;
 
@@ -221,7 +221,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     skillBasedCategory: "",
     roName: "",
     businessModel: "",
-    signatoryName: signatoryName || "",
+    signatoryName: signatoryNameData || "",
     ownerAdditionalInfo: "",
     generalRemarksRO: "",
     generalRemarksRM: "",
@@ -774,7 +774,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           label=""
                           component={Input}
                           InputProps={{
-                            inputProps: { tabIndex: 0 }
+                            inputProps: { tabIndex: 0, maxLength: 6 }
                           }}
                           classes={{
                             formControlRoot: classes.roCodeFormControl,
@@ -800,7 +800,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           path={"prospect.applicantInfo.allianceCode"}
                           component={Input}
                           InputProps={{
-                            inputProps: { tabIndex: 0 }
+                            inputProps: { tabIndex: 0, maxLength: 50 }
                           }}
                           classes={{
                             formControlRoot: classes.roCodeFormControl,
