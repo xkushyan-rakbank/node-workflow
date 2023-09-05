@@ -20,7 +20,17 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     lineHeight: "32px",
     alignSelf: "flex-start",
-    marginBottom: "40px"
+    marginBottom: "40px",
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "unset",
+    },
+    alignItems: "center",
+    "& >span:nth-child(1)": {
+      width: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+    },
   },
   congratulationsTextWrapper: {
     display: "flex",
@@ -73,12 +83,51 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   infoIcon: {
-    width: "16px !important",
-    height: "16px !important"
+    width: "32px !important",
+    height: "32px !important",
+
+    [theme.breakpoints.up("sm")]: {
+      width: "16px !important",
+      height: "16px !important"
+    }
   },
   successTextWrapper: {
     display: "flex",
     flexDirection: "column",
-    gap: "4px"
-  }
+    gap: "4px",
+  },
+
+  customHeaderTitle: {
+    "& >h3": {
+      fontSize: "1.5rem",
+      fontStyle: "normal",
+      fontWeight: 500,
+      lineHeight: "32px",
+      color: "#1F1F1F",
+      margin: 0,
+      [theme.breakpoints.up("sm")]: {
+        fontSize: "1.75rem",
+        margin: 0,
+        marginBottom: "8px",
+      },
+    },
+    "& > span:nth-child(2)": {
+      fontSize: "1rem",
+      lineHeight: "24px",
+      color: "#757575",
+      display: "block",
+      marginTop: 10,
+      fontWeight: 500,
+      [theme.breakpoints.only("xs")]: {
+        fontSize: "1rem",
+        marginTop: 5,
+        fontWeight: 400,
+      },
+      [theme.breakpoints.up("sm")]: {
+        fontSize: "1.25rem",
+        margin: 0,
+        fontWeight: 400, 
+      },
+    },
+  },
 }));

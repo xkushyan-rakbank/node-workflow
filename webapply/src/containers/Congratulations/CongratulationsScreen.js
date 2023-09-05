@@ -35,12 +35,12 @@ export const CongratulationsScreen = () => {
 
   return (
     <>
-      <img src={submitted} alt="checked" className={classes.congratulationIcon} />
       <div className={classes.congratulationsTextWrapper}>
         <SectionTitleWithInfo
           title={"Thank you!"}
           info={`You've successfully submitted your ${accountTypeLabel} account application.`}
           smallInfo
+          className={classes.customHeaderTitle}
         />
         <div className={classes.applicationDetailWrapper}>
           <div>
