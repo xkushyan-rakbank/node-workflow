@@ -49,19 +49,20 @@ export const useStyles = makeStyles({
   },
 
   saveCloseLabel: {
-    fontSize: "0.875rem",
+    fontSize: "10px",
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "18px",
-    color: "#FFF",
+    lineHeight: "2px",
+    color: "#757575",
     [theme.breakpoints.up("sm")]: {
-      color: "#757575",
+      fontSize: "0.875rem",
+      lineHeight: "18px",
     },
   },
 
   saveCloseProgressContainer: {
-    marginLeft: "auto",
-    marginTop: "7px",
+    marginLeft: "19px",
+    marginTop: "0px",
     [theme.breakpoints.up("sm")]: {
       marginLeft: "0px",
       marginTop: "0px",
@@ -70,14 +71,23 @@ export const useStyles = makeStyles({
 
   progressLayout: {
     display: "inline-flex",
+    gap: "2px",
+    [theme.breakpoints.up("sm")]: {
+      gap: "unset"
+    }
   },
 
   circularProgress: {
-    color: "white",
-    marginRight: "8px",
-    marginTop: "2px",
+    width: "8px !important",
+    height: "8px !important",
+    color: "black",
     [theme.breakpoints.up("sm")]: {
+      width: "14px !important",
+      height: "14px !important",
+      display: "block",
       color: "black",
+      marginRight: "8px",
+      marginTop: "2px",
     },
   },
 });

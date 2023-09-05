@@ -90,7 +90,7 @@ export const SaveAndClose = ({
       {circularProgress && (
         <div className={classes.saveCloseProgressContainer}>
           <div className={classes.progressLayout}>
-            <CircularProgress size={14} className={classes.circularProgress} value={null} />
+            <CircularProgress className={classes.circularProgress} value={null} />
             <Typography variant="h3" classes={{ root: classes.saveCloseLabel }}>
               Saving your application
             </Typography>
