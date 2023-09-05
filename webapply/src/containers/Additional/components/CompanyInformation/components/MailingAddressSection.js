@@ -89,6 +89,7 @@ export const MailingAddressSection = forwardRef(
           .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat, villa or building"))
       }),
       poBox: Yup.string()
+        .nullable()
         .required(getRequiredMessage("PO Box Number"))
         .max(10, "Maximum ${max} characters allowed")
         .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),

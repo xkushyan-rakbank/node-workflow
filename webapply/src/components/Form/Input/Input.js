@@ -46,6 +46,11 @@ const InputBase = ({
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
   const isIE = checkBrowserIsIE();
+  const fieldInputLength = props.fieldValueLength
+    ? props.fieldValueLength
+    : typeof field.value === "string"
+    ? field.value.length
+    : 0;
 
   return (
     <FormControl classes={{ root: classes.formControlRoot }}>
@@ -108,11 +113,11 @@ const InputBase = ({
 
       {infoTitle && <InfoTitle title={infoTitle} />}
 
-      {showCounter && (fieldDescription || InputProps.inputProps?.maxLength) && (
+      {showCounter && (fieldDescription || InputProps.inputProps?.maxLength || props.maxLength) && (
         <FieldDescription
           title={fieldDescription}
-          fieldValueLength={typeof field.value === "string" ? field.value.length : 0}
-          fieldMaxLength={InputProps.inputProps?.maxLength}
+          fieldValueLength={fieldInputLength}
+          fieldMaxLength={InputProps.inputProps?.maxLength || props.maxLength}
           showTitleIcon={infoIcon}
           iconHeight={props?.iconHeight}
           iconWidth={props?.iconWidth}

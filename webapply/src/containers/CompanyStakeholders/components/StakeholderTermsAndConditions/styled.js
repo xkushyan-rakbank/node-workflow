@@ -39,10 +39,11 @@ export const useStyles = makeStyles(theme => ({
     padding: "19px 24px",
     marginTop: "20px",
     [theme.breakpoints.up("sm")]: {
-      width: "124px",
+      minWidth: "124px",
       height: "40px",
       borderRadius: "21px",
       padding: "9px 24px",
+      width: "fit-content"
     }
   },
   readAcceptBtn: {
@@ -141,6 +142,7 @@ export const useStyles = makeStyles(theme => ({
   noTitlePaper: {
     width: "max-content",
     minHeight: "650px",
+    minWidth: "780px",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
