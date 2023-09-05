@@ -42,7 +42,7 @@ export const IBANField = props => (
     placeholder="IBAN of your UAE bank"
     InputProps={{ inputComponent: TextMask }}
     maxLength={23}
-    fieldValueLength={props.field.value.trim().length}
+    fieldValueLength={props.field.value?.trim().length}
     {...props}
   />
 );

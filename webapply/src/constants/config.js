@@ -375,7 +375,6 @@ export const prospect = {
     workItemNumber: "",
     companyName: "",
     sourcingCode: "",
-    allianceCode: "",
     companyCifId: 0,
     retailCifId: 0,
     leadNumber: "",
