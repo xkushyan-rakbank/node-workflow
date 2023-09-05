@@ -49,51 +49,69 @@ export const useStyles = makeStyles(theme => ({
   appErrorLink: {
     background: "#1F1F1F",
     color: "#FFFFFF",
-    width: "auto",
-    marginRight: "16px",
+    width: "100%",
+
     borderRadius: "100px",
     fontSize: "24px",
     fontWeight: 400,
-    padding: "20px 40px",
+    padding: "10px 30px",
+    fontFamily: "DM Sans",
     textTransform: "inherit",
+    [theme.breakpoints.up("sm")]: {
+      width: "auto",
+      marginRight: "16px",
+      padding: "20px 40px",
+    },
     "&:hover": {
       backgroundColor: "#373737",
-      color: "#fff"
-    }
+      color: "#fff",
+    },
   },
   appErrorStatusMain: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
-    minHeight: "100vh"
+    minHeight: "100vh",
   },
   appErrorStatus: {
-    padding: "40px",
+    display: "flex",
+    flexDirection: "column",
+    padding: "24px",
     justifyContent: "center",
-    width: "788px",
+    width: "310px",
     height: "auto",
     background: "#FFFFFF",
-    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
+    boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+    borderRadius: "10px",
+    [theme.breakpoints.up("sm")]: {
+      padding: "40px",
+      height: "auto",
+      width: "788px",
+    },
   },
   errorMessage: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
   },
   linkErrorWrapper: {
     display: "flex",
     alignItems: "flex-start",
-    marginTop: "40px"
+    marginTop: "40px",
   },
   title: {
     fontWeight: "500",
-    fontSize: "28px",
-    lineHeight: "36px",
+    fontSize: "20px",
+    lineHeight: "28px",
     marginBottom: "8px",
     display: "flex",
     alignItems: "center",
-    color: "#1F1F1F"
+    color: "#1F1F1F",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "28px",
+      lineHeight: "36px",
+    },
   },
   subTitle: {
     fontWeight: "400",
@@ -102,43 +120,50 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     marginRight: "8px",
-    color: "#757575"
+    color: "#757575",
   },
   divider: {
     border: "1px solid #E6E6E6",
-    width: "708px",
-    marginTop: "40px"
+    width: "100%",
+    marginTop: "40px",
+    [theme.breakpoints.up("sm")]: {
+      width: "708px",
+    },
   },
   info: {
     fontWeight: "400",
-    fontSize: "20px",
+    fontSize: "16px",
     lineHeight: "28px",
     marginRight: "8px",
     color: "#757575",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "20px",
+      lineHeight: "28px",
+    },
     "& a": {
       color: "#0000FF",
       textDecoration: "underline",
       "&:hover": {
-        textDecoration: "none"
-      }
-    }
+        textDecoration: "none",
+      },
+    },
   },
   header: {
     position: "absolute",
     top: 30,
     zIndex: 12,
     "& a": {
-      display: "flex"
+      display: "flex",
     },
     [theme.breakpoints.down("sm")]: {
-      maxWidth: "270px"
+      maxWidth: "270px",
     },
     [theme.breakpoints.up("sm")]: {
-      left: 40
+      left: 40,
     },
     [theme.breakpoints.only("xs")]: {
       top: "20px",
-      left: "16px"
-    }
-  }
+      left: "16px",
+    },
+  },
 }));
