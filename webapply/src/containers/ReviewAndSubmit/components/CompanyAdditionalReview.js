@@ -104,10 +104,12 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
           routeTo={routes.additionalCompanyInformation}
         >
           <div className={classes.infoListWrapper}>
-            <div className={classes.infoLabelValue}>
-              <label>Designated business dealings:</label>
-              <p>{fieldValues.dnfbpField}</p>
-            </div>
+            {fieldValues.dnfbpField === "yes" && (
+              <div className={classes.infoLabelValue}>
+                <label>Designated business dealings:</label>
+                <p>{fieldValues.dnfbpField}</p>
+              </div>
+            )}
             <div className={classes.infoLabelValue}>
               <label>US entity:</label>
               <p>{fieldValues.isCompanyUSEntity}</p>

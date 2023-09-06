@@ -459,7 +459,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                           Codes <span className={classes.smallTitle}>(for bank use)</span>
                         </>
                       }
-                      id={"codesBankUse"}
+                      id={"codesBankUseReview"}
                       classes={{
                         accordionRoot: classes.accountServiceAccordionRoot,
                         accordionSummaryContent: classes.accountServiceAccordionSummaryContent,

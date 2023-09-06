@@ -140,7 +140,13 @@ export const Accordion = ({
     setFormFieldValue(id, isCompleted);
   }, [id, isCompleted]);
 
-  const byDefaultExpandedAccordion = ["documentLanding"];
+  const byDefaultExpandedAccordion = [
+    "documentLanding",
+    "companyInformation",
+    "stakeholderInformation",
+    "productInformation",
+    "codesBankUseReview"
+  ];
   return (
     <div className="accordion">
       <MuiAccordion
