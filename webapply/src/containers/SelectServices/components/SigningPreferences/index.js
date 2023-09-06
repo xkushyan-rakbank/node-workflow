@@ -1,12 +1,13 @@
 import { connect } from "react-redux";
 
-import { getOrganizationInfo } from "../../../../store/selectors/appConfig";
+import { getKycAnnexureDetails, getOrganizationInfo } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 
 import { SigningPreferencesComponent } from "./SigningPreferences";
 
 const mapStateToProps = state => ({
-  organizationInfo: getOrganizationInfo(state)
+  organizationInfo: getOrganizationInfo(state),
+  kycAnnexture: getKycAnnexureDetails(state)
 });
 
 const mapDispatchToProps = {
