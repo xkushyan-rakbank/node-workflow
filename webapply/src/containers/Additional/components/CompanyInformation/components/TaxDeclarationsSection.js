@@ -21,6 +21,7 @@ import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
 import { GLOBAL_INTERMEDIARY_REGEX } from "../../../../../utils/validation";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
+import useDecisions from "../../../../../utils/useDecisions";
 
 // eslint-disable-next-line react/display-name
 export const TaxDeclarationsSection = forwardRef(
@@ -28,6 +29,9 @@ export const TaxDeclarationsSection = forwardRef(
     const classes = useStyles();
     const dispatch = useDispatch();
     const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
+    const { visible: dnfbpFieldVisible } = useDecisions(
+      "prospect.companyAdditionalInfo.dnfbpField"
+    );
     const { taxDeclarationFormRef, taxDeclarationAccordionRef } = refs;
 
     const definitionContext = (
@@ -140,22 +144,24 @@ export const TaxDeclarationsSection = forwardRef(
                 accordionRef={taxDeclarationAccordionRef}
               >
                 <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
-                <div className={classes.taxDeclarationQuestionare}>
-                  <label className={classes.sectionLabel}>
-                    Is your company dealing in Designated Business Categories?
-                  </label>
-                  <Field
-                    typeRadio
-                    options={YesNoList}
-                    name="dnfbpField"
-                    path={"prospect.companyAdditionalInfo.dnfbpField"}
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    onChange={companyTaxRadioFieldHandler}
-                    radioColor="primary"
-                  />
-                </div>
+                {dnfbpFieldVisible && (
+                  <div className={classes.taxDeclarationQuestionare}>
+                    <label className={classes.sectionLabel}>
+                      Is your company dealing in Designated Business Categories?
+                    </label>
+                    <Field
+                      typeRadio
+                      options={YesNoList}
+                      name="dnfbpField"
+                      path={"prospect.companyAdditionalInfo.dnfbpField"}
+                      component={InlineRadioGroup}
+                      customIcon={false}
+                      classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                      onChange={companyTaxRadioFieldHandler}
+                      radioColor="primary"
+                    />
+                  </div>
+                )}
                 {isCompanyUSEntityVisible && (
                   <div className={classes.taxDeclarationQuestionare}>
                     <label className={classes.sectionLabel}>Is your company a US entity?</label>

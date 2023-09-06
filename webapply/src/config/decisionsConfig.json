@@ -24,6 +24,7 @@
         "prospect.companyAdditionalInfo.topCustomers[0].name": {"label": ""},
         "prospect.companyAdditionalInfo.topCustomers[0].country": {"label": ""},
         "prospect.companyAdditionalInfo.topSuppliers.title": { "label": "" },
-        "prospect.companyAdditionalInfo.topCustomers.title": { "label": "" }
+        "prospect.companyAdditionalInfo.topCustomers.title": { "label": "" },
+        "prospect.companyAdditionalInfo.dnfbpField": {"showByDefault": true}
     }
 }
