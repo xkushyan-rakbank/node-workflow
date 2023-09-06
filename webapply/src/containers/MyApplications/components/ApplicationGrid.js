@@ -3,7 +3,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { ctaStatuses, notCtaStatuses, RO_LABEL } from "../constants";
-import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
+import { INCOMPLETE, STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 
 import { useStyles } from "./styled";
 
@@ -39,7 +39,9 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
           {app.applicationInfo.roLandlineNo ? app.applicationInfo.roLandlineNo : ""}
         </Typography>
         <Typography variant="subtitle2" component="span" classes={{ root: classes.account }}>
-          {app.applicationInfo.roMobileNo ? app.applicationInfo.roMobileNo : ""}
+          {app.status?.statusNotes !== INCOMPLETE && app.applicationInfo.roMobileNo
+            ? app.applicationInfo.roMobileNo
+            : ""}
         </Typography>
         {app.status
           ? [

@@ -4,7 +4,7 @@ import cx from "classnames";
 import { ctaStatuses, notCtaStatuses, RO_LABEL } from "../constants";
 import { getTitleForAccountType } from "../utils";
 import { WhiteContainedButton } from "./WhiteContainedButton";
-import { STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
+import { INCOMPLETE, STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 import { useStyles } from "./styled";
 
 export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingProspectId }) => {
@@ -34,7 +34,9 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
             {app.applicationInfo.roLandlineNo ? app.applicationInfo.roLandlineNo : ""}
           </div>
           <div className={classes.listAccount}>
-            {app.applicationInfo.roMobileNo ? app.applicationInfo.roMobileNo : ""}
+            {app.status?.statusNotes !== INCOMPLETE && app.applicationInfo.roMobileNo
+              ? app.applicationInfo.roMobileNo
+              : ""}
           </div>
         </div>
         {app.status
