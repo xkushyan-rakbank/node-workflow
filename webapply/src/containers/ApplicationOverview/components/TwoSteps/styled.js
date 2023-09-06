@@ -122,6 +122,9 @@ export const useStyles = makeStyles((theme) => ({
       margin: "24px 0",
       flexWrap: "wrap",
     },
+    [theme.breakpoints.between("sm", "md")]: {
+      flexDirection: "row",
+    },
     [theme.breakpoints.up("md")]: {
       gap: "24px",
       flexDirection: "row",
@@ -142,6 +145,11 @@ export const useStyles = makeStyles((theme) => ({
       width: "240px",
       padding: "24px 30px",
       borderRadius: "20px",
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "35%", 
+      gap: "15px",
+      padding: "20px 30px",
     },
     [theme.breakpoints.up("md")]: {
       minWidth: "0px",
