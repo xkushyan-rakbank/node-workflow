@@ -32,10 +32,10 @@ export const TradeLicenceInformation = ({ values }) => {
         isSearchable
         component={SelectAutocomplete}
         tabIndex="0"
+        infoIcon={true}
         infoTitle={`This should be the same as shown on your trade licence.
         If your company does not have a UAE trade licence,
          enter the company registration details as shown on other company documents.`}
-        infoIcon
       />
       <Field
         innerRef={countryOfIncorporationRef}

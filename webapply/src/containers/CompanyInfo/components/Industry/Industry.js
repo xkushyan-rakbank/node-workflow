@@ -37,6 +37,7 @@ export const Industry = ({ datalistId, values }) => {
                   }}
                   shrink={true}
                   tabIndex="0"
+                  infoIcon={true}
                   infoTitle="This should be the same as shown on your trade licence."
                 />
                 <Field
@@ -46,6 +47,7 @@ export const Industry = ({ datalistId, values }) => {
                   label="Industry sub-category"
                   component={SelectAutocomplete}
                   datalistId={datalistId}
+                  infoIcon={true}
                   filterOptionsDeps={item.industry}
                   filterOptions={options => {
                     // All previous industries with selected industry
