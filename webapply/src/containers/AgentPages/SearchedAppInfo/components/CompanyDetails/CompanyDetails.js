@@ -50,7 +50,7 @@ export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
-              {prospectOverview.organizationInfo.licenseNumber}
+              {prospectOverview.organizationInfo.licenseOrCOINumber}
             </div>
           </Grid>
         </Grid>

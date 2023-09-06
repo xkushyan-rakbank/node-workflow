@@ -12,7 +12,6 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     width: "32px",
     height: "32px",
-    color: "#757575",
     marginRight: "16px",
     [theme.breakpoints.up("sm")]: {
       fontSize: "24px",
