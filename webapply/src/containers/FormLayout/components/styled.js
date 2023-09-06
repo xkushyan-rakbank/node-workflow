@@ -102,6 +102,14 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "40vw",
     maxWidth: "100%",
     margin: "40px auto 0px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    [theme.breakpoints.up("sm")]: {
+      display: "unset",
+      flexDirection: "unset",
+      gap: "unset",
+    },
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"
     },
