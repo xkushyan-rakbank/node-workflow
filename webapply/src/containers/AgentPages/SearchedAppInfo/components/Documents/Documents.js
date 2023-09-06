@@ -25,7 +25,7 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
           <br />
           {application.fileName}
         </div>
-        <div className={classes.checkListData}>{application.uploadStatus}</div>
+        <div className={classes.checkListData}>Uploaded</div>
         {!STATUS_NOT_ELIGIBLE.includes(application.uploadStatus) && (
           <div className={classes.checkListData}>
             <LinkButton
