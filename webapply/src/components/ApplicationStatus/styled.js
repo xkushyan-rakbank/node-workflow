@@ -67,6 +67,28 @@ export const useStyles = makeStyles(theme => ({
       color: "#fff",
     },
   },
+  appErrorMultipleLink: {
+    background: "#1F1F1F",
+    color: "#FFFFFF",
+    width: "80%",
+    borderRadius: "25px",
+    fontSize: "16px",
+    fontWeight: 400,
+    padding: "11px",
+    fontFamily: "DM Sans",
+    textTransform: "inherit",
+    [theme.breakpoints.up("sm")]: {
+      width: "auto",
+      marginRight: "16px",
+      padding: "20px 40px",
+      fontSize: "24px",
+      borderRadius: "100px",
+    },
+    "&:hover": {
+      backgroundColor: "#373737",
+      color: "#fff",
+    },
+  },
   appErrorStatusMain: {
     display: "flex",
     justifyContent: "center",

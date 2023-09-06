@@ -48,6 +48,9 @@ export const ApplicationError = ({
       window.location.reload();
     }
   };
+
+  const buttonClass = buttons.length > 1 ? classes.appErrorMultipleLink : classes.appErrorLink;
+
   return (
     <>
       <header className={cx(classes.header, "small-menu-show")}>
@@ -79,7 +82,7 @@ export const ApplicationError = ({
                 <Button
                   key={index}
                   onClick={() => redirectTo(btn.link, btn.external)}
-                  className={classes.appErrorLink}
+                  className={buttonClass}
                 >
                   {btn.label}
                 </Button>
