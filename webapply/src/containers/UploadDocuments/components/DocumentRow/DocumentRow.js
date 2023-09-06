@@ -25,7 +25,8 @@ export const DocumentRowComponent = ({
   document,
   docRemoveWarning = true,
   infoMessage = "",
-  multiDoc = false
+  multiDoc = false,
+  additionalConfigs
 }) => {
   const classes = useStyles();
   const inputEl = useRef(null);
@@ -38,7 +39,7 @@ export const DocumentRowComponent = ({
 
     try {
       setErrorMessage(null);
-      documentValidationSchema.validateSync({ file }, { abortEarly: false });
+      documentValidationSchema(additionalConfigs).validateSync({ file }, { abortEarly: false });
       uploadDocument(file);
     } catch (error) {
       return setErrorMessage(error.message);

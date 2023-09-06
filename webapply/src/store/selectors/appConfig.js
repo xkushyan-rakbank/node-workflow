@@ -165,3 +165,5 @@ export const getIsLemniskEnable = state => {
     ? state.appConfig.lemniskEnable
     : false;
 };
+
+export const getAdditionalConfigs = state => getAppConfig(state).additionalConfigs || {};
