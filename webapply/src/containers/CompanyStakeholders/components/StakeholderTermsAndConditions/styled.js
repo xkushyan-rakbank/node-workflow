@@ -142,11 +142,14 @@ export const useStyles = makeStyles(theme => ({
   noTitlePaper: {
     width: "max-content",
     minHeight: "650px",
-    minWidth: "780px",
+    minWidth: "auto",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
-    maxWidth: "unset"
+    maxWidth: "unset",
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "780px", 
+    }
   },
   actionContainer: {
     display: "flex",
