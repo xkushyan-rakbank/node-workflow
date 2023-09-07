@@ -119,6 +119,12 @@ export const useStyles = makeStyles((theme) => ({
     paddingTop: "22px!important",
     paddingBottom: "22px!important",
     width: "30%",
+    [theme.breakpoints.between("sm","md")]: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "18px 17px"
+    },
     "&:first-child": {
       background: "rgba(245, 245, 245, 0.50)",
     },
