@@ -13,7 +13,8 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
   const headingClassName = cx(classes.checkListData, classes.heading);
   //ro-assist-brd3-1
   const listDocuments = (docs, classes, downloadDocument, docType) => {
-    return get(docs, docType, []).map((application, index) => (
+    const docList = get(docs, docType, []) ? get(docs, docType, []) : [];
+    return docList.map((application, index) => (
       <div className={classes.applicationRow} key={index}>
         <div className={classes.checkListData}>
           {STATUS_NOT_ELIGIBLE.includes(application.uploadStatus)
