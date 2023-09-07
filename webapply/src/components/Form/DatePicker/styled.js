@@ -28,8 +28,7 @@ export const useStyles = makeStyles({
       backgroundColor: "#FFF"
     },
     "&.Mui-disabled": {
-      background: "#F2F2F2",
-      color: "#9B9CA0"
+      background: "#F2F2F2 !important",
     }
   },
   filledInputError: {
