@@ -42,7 +42,7 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
   return (
     <>
       <h4 className={classes.title}>{titles.COMPANY_TITLE}</h4>
-      {get(docs, "companyDocuments", []).length ? (
+      {get(docs || {}, "companyDocuments", [])?.length ? (
         <div className={classes.wrapper}>
           <div className={classes.applicationRow}>
             <div className={headingClassName}>{titles.DOCUMENT_TITLE}</div>

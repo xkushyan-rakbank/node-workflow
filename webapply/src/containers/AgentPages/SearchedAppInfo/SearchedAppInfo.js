@@ -8,7 +8,13 @@ import { useLayoutParams } from "../../FormLayout";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
 import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
 
-import { searchedAppInfoSteps, STEP_1, STATUS_LOCKED, STATUS_FORCE_STOP } from "./constants";
+import {
+  searchedAppInfoSteps,
+  STEP_1,
+  STATUS_LOCKED,
+  STATUS_FORCE_STOP,
+  WI_SUBMITTED
+} from "./constants";
 import { OverlayLoader } from "../../../components/Loader";
 
 export const SearchedAppInfoContainer = ({
@@ -78,7 +84,8 @@ export const SearchedAppInfoContainer = ({
     get(searchResult, "status.reasonCode") === STATUS_LOCKED ||
     get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
       APP_STOP_SCREEN_RESULT ||
-    get(searchResult, "status.statusType") === STATUS_FORCE_STOP;
+    get(searchResult, "status.statusType") === STATUS_FORCE_STOP ||
+    get(searchResult, "status.statusType") === WI_SUBMITTED;
   const fullName = get(searchResult, "applicantInfo.fullName", "");
 
   return (

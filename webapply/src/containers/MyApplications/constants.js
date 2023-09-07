@@ -53,6 +53,10 @@ export const roActions = {
   RO_EDIT: {
     buttonText: "Finish application",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  WI_SUBMITTED: {
+    buttonText: "View Details",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
   }
 };
 
