@@ -206,7 +206,6 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       justifyContent: "space-between",
-      alignItems: "center",
       "& div:first-child": {
         textAlign: "left !important",
         paddingLeft: "20px",
@@ -217,18 +216,15 @@ export const useStyles = makeStyles(theme => ({
       },
       "& div:nth-child(1)": {
         background: "#F7F8F9",
-        minHeight: "120px",
         padding: "17px 20px"
       },
       "& div:nth-child(2)": {
         background: "rgba(252, 232, 233, 0.20)",
         padding: "17px 20px",
-        minHeight: "120px"
       },
       "& div:nth-child(3)": {
         background: "#FCE8E9", 
         padding: "17px 20px",
-        minHeight: "120px"
       },
       "& div": {
         flexGrow: 1,
@@ -237,6 +233,9 @@ export const useStyles = makeStyles(theme => ({
         fontSize: "12px",
         padding: "0px 24px",
         whiteSpace: "pre-line",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         "& img": {
           width: "20px",
           height: "20px",
