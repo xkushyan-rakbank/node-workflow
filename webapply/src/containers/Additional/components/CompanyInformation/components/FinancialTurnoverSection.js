@@ -41,6 +41,8 @@ const marks = (() => {
   return values;
 })();
 
+const isNumeric = str => !isNaN(str) && !isNaN(parseFloat(str));
+
 export const FinancialTurnoverSection = forwardRef(
   ({ setFieldValue: setFormFieldValue, id, refs }) => {
     const classes = useStyles();
@@ -132,7 +134,9 @@ export const FinancialTurnoverSection = forwardRef(
     };
 
     const [sliderValue, setSliderValue] = useState(
-      anualCashDepositAED ? (anualCashDepositAED / annualFinTurnoverAmtInAED).toFixed(2) * 100 : 0
+      isNumeric(anualCashDepositAED)
+        ? (anualCashDepositAED / annualFinTurnoverAmtInAED).toFixed(2) * 100
+        : null
     );
 
     const additionalCompanyInfoSchema = Yup.object({
@@ -172,7 +176,7 @@ export const FinancialTurnoverSection = forwardRef(
             const [annualCashDeposit, setAnnualCashDeposit] = useState(0);
 
             useEffect(() => {
-              if (values.annualFinTurnoverAmtInAED) {
+              if (isNumeric(values.annualFinTurnoverAmtInAED) && sliderValue !== null) {
                 const annualFinTurnoverAmtInAED = parseFloat(values.annualFinTurnoverAmtInAED);
                 const annualCashDepositAmount = calculateAmountFromPercentage(
                   sliderValue,
@@ -183,17 +187,19 @@ export const FinancialTurnoverSection = forwardRef(
               }
             }, [values.annualFinTurnoverAmtInAED, sliderValue]);
 
+            const sliderDisplayValue = sliderValue !== null ? sliderValue : 30;
+
             useEffect(() => {
               if (isMobileDevice) {
                 let newMarks = [];
-                if (sliderValue > 10) newMarks.push({ value: 0, label: "0%" });
+                if (sliderDisplayValue > 10) newMarks.push({ value: 0, label: "0%" });
 
-                newMarks.push({ value: sliderValue, label: `${sliderValue}%` });
+                newMarks.push({ value: sliderDisplayValue, label: `${sliderDisplayValue}%` });
 
-                if (sliderValue < 85) newMarks.push({ value: 100, label: "100%" });
+                if (sliderDisplayValue < 85) newMarks.push({ value: 100, label: "100%" });
                 setSliderMarks(newMarks);
               }
-            }, [sliderValue]);
+            }, [sliderDisplayValue]);
             return (
               <Accordion
                 title={"Financial turnover"}
@@ -232,7 +238,7 @@ export const FinancialTurnoverSection = forwardRef(
                     <Field
                       name="anualCashDepositAED"
                       path="prospect.companyAdditionalInfo.anualCashDepositAED"
-                      value={sliderValue}
+                      value={sliderDisplayValue}
                       component={Slider}
                       step={1}
                       min={0}
@@ -247,12 +253,14 @@ export const FinancialTurnoverSection = forwardRef(
                   </SliderThemeProvider>
                 </div>
                 <div className={classes.slideValuePrice}>
-                  <>
-                    (<span className={classes.percentageText}>{sliderValue}%</span>)
-                    <span className={classes.amountText}>
-                      {numberWithCommas(annualCashDeposit)} AED
-                    </span>
-                  </>
+                  {sliderValue != null && isNumeric(annualFinTurnoverAmtInAED) && (
+                    <>
+                      (<span className={classes.percentageText}>{sliderValue}%</span>)
+                      <span className={classes.amountText}>
+                        {numberWithCommas(annualCashDeposit)} AED
+                      </span>
+                    </>
+                  )}
                 </div>
               </Accordion>
             );
