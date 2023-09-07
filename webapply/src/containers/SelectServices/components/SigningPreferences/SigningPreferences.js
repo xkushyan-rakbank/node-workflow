@@ -83,7 +83,8 @@ export const SigningPreferencesComponent = ({
   createFormChangeHandler,
   updateProspect,
   organizationInfo,
-  singleSignatory
+  singleSignatory,
+  kycAnnexture
 }) => {
   const classes = useStyles();
   return (
@@ -292,6 +293,38 @@ export const SigningPreferencesComponent = ({
                   </>
                 )}
               </FieldArray>
+              <Grid container spacing={3} style={{marginTop:"10px"}}>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="roCode"
+                    path="prospect.applicantInfo.roCode"
+                    label="Agent Code (Optional)"
+                    placeholder="Agent Code"
+                    contextualHelpText="Enter the Agent code of the Bank staff whom you are in touch with"
+                    component={Input}
+                    disabled={kycAnnexture.workItemNumber}
+                    InputProps={{
+                      inputProps: { tabIndex: 0 }
+                    }}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <>
+                    <Field
+                      name="partnerCode"
+                      path= "prospect.applicantInfo.allianceCode"
+                      label="Partner Code (Optional)"
+                      placeholder="Partner Code"
+                      component={Input}
+                      disabled={kycAnnexture.workItemNumber}
+                      contextualHelpText="If you were referred by one of our Partners, enter the code shared by them"
+                      InputProps={{
+                        inputProps: { tabIndex: 0 }
+                      }}
+                    />
+                  </>
+                </Grid>
+              </Grid>
               <div className={classes.buttonWrapper}>
                 <ContinueButton type="submit" />
               </div>

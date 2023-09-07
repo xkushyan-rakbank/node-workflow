@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import cx from "classnames";
 
@@ -9,6 +9,7 @@ import { UPLOADED } from "../../../../constants";
 import { docUpload, addMultiDocument } from "../../../../store/actions/uploadDocuments";
 import { DocumentRow } from "../../DocumentRow";
 import { useStyles } from "../styled";
+import { getAdditionalConfigs } from "../../../../store/selectors/appConfig";
 // import {
 //   getIsEditableStatusSearchInfo,
 //   getProspectStatus
@@ -32,6 +33,7 @@ export const MultiDocumentRow = ({
   const [errorMessage, setErrorMessage] = useState(null);
   // const isApplyEditApplication = useSelector(getIsEditableStatusSearchInfo);
   // const prospectStatusInfo = useSelector(getProspectStatus);
+  const additionalConfigs = useSelector(getAdditionalConfigs)
   const isDisabledUploadForRO = false;
   //isApplyEditApplication && DISABLED_STATUSES_FOR_UPLOAD_DOCUMENTS.includes(prospectStatusInfo);
   useEffect(() => {
@@ -112,7 +114,7 @@ export const MultiDocumentRow = ({
 
     try {
       setErrorMessage(null);
-      documentValidationSchema.validateSync({ file }, { abortEarly: false });
+      documentValidationSchema(additionalConfigs).validateSync({ file }, { abortEarly: false });
       uploadMultiDocument(file);
     } catch (error) {
       return setErrorMessage(error.message);

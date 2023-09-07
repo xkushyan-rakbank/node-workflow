@@ -14,6 +14,7 @@ export const STEP_4 = 4;
 export const STATUS_LOCKED = "locked";
 export const STATUS_FORCE_STOP = "FORCE_STOPPED";
 export const INELIGIBLE = "Ineligible";
+export const INCOMPLETE = "Incomplete";
 
 export const searchedAppInfoSteps = [
   {

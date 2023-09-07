@@ -35,6 +35,7 @@ export const POBOX_REGEX = /^([a-zA-Z0-9])*$/;
 // eslint-disable-next-line max-len
 export const WEBSITE_REGEX = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})$/;
 export const FILE_SIZE = 5 * 1048576;
+export const MIN_FILE_SIZE = 50 * 1024;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
 
 export const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
@@ -60,9 +61,14 @@ export const addPhoneNoValidationToYup = () => {
   });
 };
 
-export const documentValidationSchema = Yup.object().shape({
+export const documentValidationSchema = ({documentMinSize}) => Yup.object().shape({
   file: Yup.mixed()
     .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
+    .test(
+      "minSize",
+      "Please upload correct document. The document size is too less.",
+      value => value && value.size >= documentMinSize
+    )
     .test(
       "type",
       "Supported formats are PDF, JPG and PNG",

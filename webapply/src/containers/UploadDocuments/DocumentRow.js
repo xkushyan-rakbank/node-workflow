@@ -12,7 +12,8 @@ import { getProgress, getUploadErrors } from "../../store/selectors/uploadDocume
 import {
   getProspect,
   getOrganizationInfo,
-  getOrgKYCDetails
+  getOrgKYCDetails,
+  getAdditionalConfigs
 } from "../../store/selectors/appConfig";
 import { sendProspectToAPI } from "../../store/actions/sendProspectToAPI";
 import {
@@ -53,6 +54,7 @@ export const DocumentRow = ({
   const prospect = useSelector(getProspect);
   const organizationInfo = useSelector(getOrganizationInfo);
   const orgKYCDetails = useSelector(getOrgKYCDetails);
+  const additionalConfigs = useSelector(getAdditionalConfigs);
   const [selectedFile, setSelectedFile] = useState(null);
   // const isDisabledUploadForRO =
   //   isApplyEditApplication &&
@@ -244,6 +246,7 @@ export const DocumentRow = ({
       required={required}
       infoMessage={infoMessage}
       multiDoc={multiDoc}
+      additionalConfigs={additionalConfigs}
     />
   );
 };

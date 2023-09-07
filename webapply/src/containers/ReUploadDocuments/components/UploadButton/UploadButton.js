@@ -4,12 +4,14 @@ import { documentValidationSchema } from "../../../../utils/validation";
 import { ReactComponent as FileIcon } from "../../../../assets/icons/file.svg";
 import { ReactComponent as AddIcon } from "../../../../assets/icons/add-icon.svg";
 import { DocumentUploadError } from "../../../../components/DocumentUploadError/DocumentUploadError";
+import { useSelector } from "react-redux";
+import { getAdditionalConfigs } from "../../../../store/selectors/appConfig";
 
 export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
   const classes = useStyles();
   const [error, setError] = useState("");
   const inputEl = useRef(null);
-
+  const additionalConfigs = useSelector(getAdditionalConfigs);
   const uploadButtonClick = () => {
     setError("");
     inputEl.current.click();
@@ -22,7 +24,7 @@ export const UploadButton = ({ uploadDocument, isFirstDocument }) => {
 
     try {
       if (inputEl.current.value) {
-        documentValidationSchema.validateSync({ file });
+        documentValidationSchema(additionalConfigs).validateSync({ file });
         uploadDocument(file);
       }
     } catch (error) {
