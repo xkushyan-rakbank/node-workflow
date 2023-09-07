@@ -26,8 +26,19 @@ const FormatDecimalNumberInput = props => (
     thousandsGroupStyle="thousand"
     thousandSeparator=","
     {...props}
+    isAllowed={values => {
+      const { floatValue } = values;
+      return !floatValue || floatValue <= 999999999.99999999;
+    }}
   />
 );
+
+const reverse = valueString => {
+  return valueString
+    .split("")
+    .reverse()
+    .join("");
+};
 
 const marks = (() => {
   const values = [];
@@ -167,7 +178,9 @@ export const FinancialTurnoverSection = forwardRef(
               setSliderValue(newValue);
             }
             const numberWithCommas = x => {
-              let numberX = x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+              let numberX = reverse(
+                reverse(x.toFixed(2).toString()).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              );
               return numberX;
             };
             const [annualCashDeposit, setAnnualCashDeposit] = useState(0);
@@ -185,7 +198,6 @@ export const FinancialTurnoverSection = forwardRef(
             }, [values.annualFinTurnoverAmtInAED, sliderValue]);
 
             useEffect(() => {
-
               if (isMobileDevice) {
                 let newMarks = [];
                 if (sliderValue > 10) newMarks.push({ value: 0, label: "0%" });
@@ -205,7 +217,7 @@ export const FinancialTurnoverSection = forwardRef(
                 classes={{
                   accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
                   accordionSummaryContentExpanded:
-                    classes.additionalInfoAccordionSummaryContentExpanded,
+                    classes.additionalInfoAccordionSummaryContentExpanded
                 }}
                 showHelperText={
                   "Annual turnover and cash projection details are required for internal checks and calculations."
@@ -222,7 +234,7 @@ export const FinancialTurnoverSection = forwardRef(
                   InputProps={{
                     inputComponent: FormatDecimalNumberInput,
                     // 9 digits + 2 ','(commas)
-                    inputProps: { maxLength: 11, tabIndex: 0 },
+                    inputProps: { tabIndex: 0 },
                     onChange: e => handleChange(e, handleBlur)
                   }}
                 />
