@@ -192,11 +192,11 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
       </HelmetProvider>
       <div
         className={cx(classes.bgContainer)}
-        style={{ backgroundImage: `url(${landingVideo.poster})` }}
+        // style={{ backgroundImage: `url(${landingVideo.poster})` }}
       >
         <div className={classes.blobMobile}></div>
         <video
-          muted
+          muted={true}
           id="video-background"
           className={classes.videoBg}
           key={landingVideo.mp4}

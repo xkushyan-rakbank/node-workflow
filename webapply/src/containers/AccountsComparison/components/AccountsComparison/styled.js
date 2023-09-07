@@ -98,12 +98,17 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       left: "6%",
       top: "unset",
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
     },
 
     [theme.breakpoints.between("sm", "md")]: {
       right: "0%",
       top: "unset",
       left: "unset",
+      height: "100%",
+      objectFit: "cover"
     },
   },
   video: {
