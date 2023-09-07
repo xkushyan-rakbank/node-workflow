@@ -132,9 +132,7 @@ export const FinancialTurnoverSection = forwardRef(
     };
 
     const [sliderValue, setSliderValue] = useState(
-      anualCashDepositAED
-        ? (anualCashDepositAED / annualFinTurnoverAmtInAED).toFixed(2) * 100
-        : parseFloat(11).toFixed()
+      anualCashDepositAED ? (anualCashDepositAED / annualFinTurnoverAmtInAED).toFixed(2) * 100 : 0
     );
 
     const additionalCompanyInfoSchema = Yup.object({
