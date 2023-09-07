@@ -25,6 +25,7 @@ export const SearchedAppInfoContainer = ({
 
   const location = useLocation();
   const receivedFullName = location?.state?.fullName;
+  const isFromV2 = location?.state?.isFromV2;
 
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
@@ -92,6 +93,7 @@ export const SearchedAppInfoContainer = ({
       searchResult={searchResult}
       prospectOverview={prospectOverview}
       signatoryInfo={signatoryInfo}
+      isFromV2={isFromV2}
     />
   );
 };

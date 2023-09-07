@@ -3,7 +3,7 @@ import React from "react";
 import { FormCard } from "../../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../../components/StepComponent/StepComponent";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { BackLink } from "../../../../components/Buttons/BackLink";
+import { BackLink, BackLinkButton } from "../../../../components/Buttons/BackLink";
 import { ConfirmDialog } from "../../../../components/Modals";
 import routes from "../../../../routes";
 
@@ -21,7 +21,8 @@ export const SearchedAppInfoComponent = ({
   isDisabled,
   confirmHandler,
   confirmDialogHandler,
-  step
+  step,
+  isFromV2
 }) => {
   const [firstName, lastName] = fullName.split(/\s/);
   const classes = useStyles();
@@ -56,7 +57,15 @@ export const SearchedAppInfoComponent = ({
         </div>
       </FormCard>
       <div className="linkContainer">
-        <BackLink path={routes.searchProspect} />
+        {isFromV2 ? (
+          <BackLinkButton
+            onClick={() => {
+              window.history.go(-2);
+            }}
+          />
+        ) : (
+          <BackLink path={routes.searchProspect} replace />
+        )}
         <SubmitButton
           label="Edit"
           justify="flex-end"

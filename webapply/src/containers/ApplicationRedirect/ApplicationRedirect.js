@@ -41,8 +41,10 @@ export const ApplicationRedirectPage = ({ setIsApplyEditApplication }) => {
     if (prospectIdFromStore) {
       setIsLoading(false);
       history.push({
-        pathname: generatePath(routes.SearchedAppInfo, { id: prospectIdFromStore }),
-        state: { fullName }
+        pathname: generatePath(routes.SearchedAppInfo, {
+          id: prospectIdFromStore
+        }),
+        state: { fullName, isFromV2: true }
       });
     }
   }, [prospectIdFromStore]);
