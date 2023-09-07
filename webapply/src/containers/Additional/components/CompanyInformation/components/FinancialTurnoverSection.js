@@ -33,13 +33,6 @@ const FormatDecimalNumberInput = props => (
   />
 );
 
-const reverse = valueString => {
-  return valueString
-    .split("")
-    .reverse()
-    .join("");
-};
-
 const marks = (() => {
   const values = [];
   for (let percentage = 0; percentage <= 100; percentage += 10) {
@@ -177,12 +170,7 @@ export const FinancialTurnoverSection = forwardRef(
             function handleSliderChange(ev, newValue) {
               setSliderValue(newValue);
             }
-            const numberWithCommas = x => {
-              let numberX = reverse(
-                reverse(x.toFixed(2).toString()).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              );
-              return numberX;
-            };
+            const numberWithCommas = x => parseFloat(x).toLocaleString();
             const [annualCashDeposit, setAnnualCashDeposit] = useState(0);
 
             useEffect(() => {
