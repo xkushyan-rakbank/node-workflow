@@ -203,8 +203,10 @@ export const getAdditionalInfoDetailsFromBPM = state =>
 export const getAdditionalDocumentDetailsFromBPM = state =>
   getProspect(state).notifyApplicationRequest?.additionalDocumentDetailsFromBPM;
 
-  export const getAdditionalInfoDetailsForBPM = state =>
+export const getAdditionalInfoDetailsForBPM = state =>
   getProspect(state).additionalDataForBPM?.additionalInfoBPM || [];
 
 export const getAdditionalDocumentDetailsForBPM = state =>
   getProspect(state).additionalDataForBPM?.additionalDocumentsBPM || [];
+
+export const getSearchInputDetails = state => getAppConfig(state).searchInfo;

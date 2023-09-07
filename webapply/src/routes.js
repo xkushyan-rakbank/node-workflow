@@ -40,5 +40,6 @@ export default {
   efrInvite: `${smeBaseName}/efrInvite`,
   efrOTPVerification: `${smeBaseName}/efrOTPVerification`,
   additionalDetails: `${smeBaseName}/AdditionalDetails`,
-  additionalInformation: `${smeBaseName}/AdditionalData`
+  additionalInformation: `${smeBaseName}/AdditionalData`,
+  searchItemRedirect: `${smeBaseName}/SearchItemRedirect`
 };

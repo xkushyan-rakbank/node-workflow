@@ -10,7 +10,6 @@ import routes from "../../../../../routes";
 import { BAU_PROSPECT_VERSION } from "../../../../../constants";
 import { useStyles } from "./styled";
 
-import { getAppConfig } from "../../../../../store/selectors/appConfig";
 import { getLoginResponse } from "../../../../../store/selectors/loginSelector";
 import StakeholdersDetail from "../../../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
@@ -34,33 +33,9 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { authorizationToken } = useSelector(getAppConfig);
-  const { agentName, agentId, agentRole, deptName, roCode } = useSelector(getLoginResponse);
+  const { agentId } = useSelector(getLoginResponse);
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
-
-  function redirectToExternalURL(externalURL) {
-    const data = {
-      agentName,
-      agentId,
-      agentRole,
-      deptName,
-      roCode,
-      prospectId: application?.prospectId,
-      authToken: authorizationToken,
-      fullName: application.applicantInfo?.fullName
-    };
-
-    const params = new URLSearchParams();
-
-    for (const key in data) {
-      params.append(key, data[key]);
-    }
-
-    const encodedQuery = params.toString();
-    const url = `${externalURL}?${encodedQuery}`;
-    window.location.href = url;
-  }
 
   const handleNavigation = () => {
     if (application?.status?.statusType === "EFR_SUBMITTED") {
@@ -97,7 +72,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
       return getProspectInfo(application.prospectId, application);
     }
     return prospectVersion === BAU_PROSPECT_VERSION
-      ? redirectToExternalURL(process.env.REACT_APP_BAU_URL + "/business/application-redirect")
+      ? history.push(`${routes.searchItemRedirect}?flow=forward`, { application })
       : history.push(generatePath(routes.SearchedAppInfo, { id: application?.prospectId }));
   };
 

@@ -77,6 +77,10 @@ const AdditionaInfoInvite = lazy(() =>
   import("./containers/AdditionalInformation/AdditionaInfoInvite")
 );
 
+const SearchItemRedirect = lazy(() =>
+  import("./containers/AgentPages/SearchProspect/components/SearchResults/SearchItemRedirect")
+);
+
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
   useEffect(() => {
     receiveAppConfig();
@@ -208,6 +212,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
               <Route path={routes.applicationInvitation} component={ApplicationInvitation} />
               <Route path={routes.efrInvite} component={EFRInvitation} />
               <Route path={routes.additionalDetails} component={AdditionaInfoInvite} />
+              <Route exact path={routes.searchItemRedirect} component={SearchItemRedirect} />
               <ProspectProtectedRoute
                 path={routes.additionalInformation}
                 component={AdditionalInformation}
