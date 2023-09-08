@@ -13,9 +13,27 @@ import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 
 const accountTypeMap = {
-  "Current Account": "KFSDynamicDataForPrint_CurrentAccount",
-  RAKStarter: "KFSDynamicDataForPrint_RAKStarter",
-  RAKelite: "KFSDynamicDataForPrint_RAKElite"
+  kfsUrl: {
+    "Current Account": "KFSDynamicDataForPrint_CurrentAccount",
+    RAKStarter: "KFSDynamicDataForPrint_RAKStarter",
+    RAKelite: "KFSDynamicDataForPrint_RAKElite"
+  },
+  authorizationsConsent_Others: {
+    "Current Account": "Consent_Others",
+    RAKStarter: "Consent_Others",
+    RAKelite: "Consent_Others"
+  },
+  generalTermsAndConditions: {
+    "Current Account": "KFSDynamicDataForPrint_CurrentAccount",
+    RAKStarter: "KFSDynamicDataForPrint_RAKStarter",
+    RAKelite: "KFSDynamicDataForPrint_RAKElite"
+  }
+};
+
+const consentApplicantMap = {
+  "Current Account": "Consent_NameOfApplicant",
+  RAKStarter: "Consent_NameOfApplicant",
+  RAKelite: "Consent_NameOfApplicant"
 };
 
 const CONVENTIONAL = "CONV";
@@ -24,6 +42,7 @@ const DATE = "KDAT";
 const COMPANY_NAME = "CNME";
 const SIGNATORY = "SIGN";
 const FONT_SIZE = 9;
+const APPLICANT_NAME = "APPL";
 
 export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEdit = false) {
   const [editedFile, setEditedFile] = useState(null);
@@ -36,11 +55,18 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
   const accountType = useSelector(getAccountType);
   const isIslamic = useSelector(getIsIslamicBanking);
 
+  const accountTypeData =
+    accountTypeMap[
+      Object.keys(accountTypeMap).filter(key => {
+        return key.includes(path);
+      })
+    ];
+
   const getCoordinates = useCallback(() => {
-    if (!dataList[accountTypeMap[accountType]]) {
+    if (!dataList[accountTypeData[accountType]]) {
       return null;
     }
-    const selectedAccountTypeData = dataList[accountTypeMap[accountType]].find(eachData => {
+    const selectedAccountTypeData = dataList[accountTypeData[accountType]].find(eachData => {
       if (isIslamic) {
         return eachData.code === ISLAMIC;
       } else {
@@ -53,14 +79,41 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
       switch (element.code) {
         case DATE:
           corrdinateDetails[DATE] = JSON.parse(element.displayText);
-
           break;
         case COMPANY_NAME:
           corrdinateDetails[COMPANY_NAME] = JSON.parse(element.displayText);
-
           break;
         case SIGNATORY:
           corrdinateDetails[SIGNATORY] = JSON.parse(element.displayText);
+          break;
+        default:
+          break;
+      }
+    });
+
+    return {
+      pageNumber: JSON.parse(selectedAccountTypeData.displayText).pageNumber,
+      ...corrdinateDetails
+    };
+  }, [dataList]);
+
+  const getConsentApplicantCoordinates = useCallback(() => {
+    if (!dataList[consentApplicantMap[accountType]]) {
+      return null;
+    }
+    const selectedAccountTypeData = dataList[consentApplicantMap[accountType]].find(eachData => {
+      if (isIslamic) {
+        return eachData.code === ISLAMIC;
+      } else {
+        return eachData.code === CONVENTIONAL;
+      }
+    });
+
+    const corrdinateDetails = {};
+    selectedAccountTypeData.subGroup.forEach(element => {
+      switch (element.code) {
+        case APPLICANT_NAME:
+          corrdinateDetails[APPLICANT_NAME] = JSON.parse(element.displayText);
           break;
         default:
           break;
@@ -112,7 +165,17 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
           size: FONT_SIZE,
           ...coordinates[COMPANY_NAME]
         });
+
+        if (path === "authorizationsConsent") {
+          const coordinatesForApplicantName = getConsentApplicantCoordinates();
+          thePage = pages[coordinatesForApplicantName.pageNumber];
+          thePage.drawText(organizationInfo, {
+            size: FONT_SIZE,
+            ...coordinatesForApplicantName[APPLICANT_NAME]
+          });
+        }
       }
+
       const { height } = thePage.getSize();
       setHeight(height * pages.length);
       const pdfBytes = await pdfDoc.save();

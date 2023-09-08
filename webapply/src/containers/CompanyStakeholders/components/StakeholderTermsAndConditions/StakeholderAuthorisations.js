@@ -13,7 +13,7 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData);
+  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData, true);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
