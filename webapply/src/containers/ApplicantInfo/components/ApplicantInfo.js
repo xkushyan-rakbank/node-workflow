@@ -153,11 +153,11 @@ export const ApplicantInfoComponent = ({
   };
 
   const {
-    custName = "",
-    companyName = "",
-    custEmail = "",
-    custMobileNum = "",
-    roCode: rocode = "",
+    name = "",
+    company = "",
+    email = "",
+    mobile = "",
+    rocode = "",
     // roAgentId = allianceCodeFromQuery,
     alliancecodeFromDataList: allianceCodeDisplayText,
     persona = personaFromStore
@@ -173,11 +173,11 @@ export const ApplicantInfoComponent = ({
       />
       <Formik
         initialValues={{
-          fullName: custName,
-          companyFullName: companyName,
-          email: custEmail,
+          fullName: name,
+          companyFullName: company,
+          email,
           countryCode: UAE_CODE,
-          mobileNo: custMobileNum,
+          mobileNo: mobile,
           roCode: rocode || roCode,
           allianceCode: allianceCodeFromQuery,
           allianceCodeFromDataList: allianceCodeDisplayText,
@@ -227,6 +227,7 @@ export const ApplicantInfoComponent = ({
                 isLoadDefaultValueFromStore={false}
                 iconWidth={16}
                 iconHeight={16}
+                disabled={invitationParams?.company}
               />
             )}
             {isConfigLoading ? (
@@ -247,7 +248,7 @@ export const ApplicantInfoComponent = ({
                   "This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
                 }
                 isLoadDefaultValueFromStore={false}
-                disabled={invitationParams?.custMobileNum}
+                disabled={invitationParams?.email}
                 iconWidth={25}
                 iconHeight={25}
                 contextualHelpText="This email should be unique for a company"
@@ -325,7 +326,7 @@ export const ApplicantInfoComponent = ({
                   path="prospect.applicantInfo.roCode"
                   label=""
                   component={Input}
-                  disabled={roCode !== ""}
+                  disabled={roCode !== "" || invitationParams?.rocode}
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 6 }
                   }}
@@ -367,7 +368,7 @@ export const ApplicantInfoComponent = ({
             <Grid container direction="row" justify="flex-end" alignItems="center">
               {/* message */}
               <Footer>
-                {!invitationParams?.isIslamic && (
+                {!invitationParams?.isislamic && (
                   <BackLink
                     isTypeButton={true}
                     path={

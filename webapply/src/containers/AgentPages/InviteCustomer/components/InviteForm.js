@@ -35,15 +35,15 @@ const inviteSchema = Yup.object({
     .required(getRequiredMessage("Email"))
     .max(50, "Maximum 50 characters allowed")
     .email("Please enter a valid email address without any special characters"),
-  company: Yup.string()
+  companyName: Yup.string()
     .required(getRequiredMessage("Company’s full name"))
     // eslint-disable-next-line no-template-curly-in-string
     .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed"),
-  countryCode: Yup.string().required(getRequiredMessage("Country code")),
-  mobileNo: Yup.string()
+  custMobcntCode: Yup.string().required(getRequiredMessage("Country code")),
+  custMobileNum: Yup.string()
     .required(getRequiredMessage("Mobile Number"))
     .phoneNo({
-      codeFieldName: "countryCode",
+      codeFieldName: "custMobcntCode",
       fieldName: "Mobile Number",
       message: "Please enter a valid mobile number"
     }),
@@ -52,7 +52,10 @@ const inviteSchema = Yup.object({
     .matches(NUMBER_REGEX, getROInvalidMessage),
   allianceCode: Yup.string()
     .max(50, "Maximum 50 characters allowed")
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code"))
+    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
+  isIslamic: Yup.boolean().required(),
+  persona: Yup.string().required("Please select your company category"),
+  accountType: Yup.string().required("Please select your account type")
 });
 
 export const InviteForm = ({ submitForm, isLoading }) => {
@@ -69,12 +72,12 @@ export const InviteForm = ({ submitForm, isLoading }) => {
         initialValues={{
           custName: "",
           custEmail: "",
-          company: "",
-          countryCode: UAE_CODE,
-          mobileNo: "",
-          companyCategory: "",
+          companyName: "",
+          custMobcntCode: UAE_CODE,
+          custMobileNum: "",
+          persona: "",
           accountType: "",
-          productVariant: ""
+          isIslamic: ""
         }}
         validationSchema={inviteSchema}
         validateOnChange={true}
@@ -94,7 +97,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 fieldDescription="Enter customers full name as shown on passport."
               />
               <Field
-                name="company"
+                name="companyName"
                 label="Name of the company"
                 placeholder="Name of the company"
                 component={Input}
@@ -115,10 +118,10 @@ export const InviteForm = ({ submitForm, isLoading }) => {
               />
               <InputGroup>
                 <LinkedField
-                  name="countryCode"
+                  name="custMobcntCode"
                   disabled
-                  linkedFieldName="mobileNo"
-                  path="countryCode"
+                  linkedFieldName="custMobileNum"
+                  path="custMobcntCode"
                   required
                   datalistId="countryCode"
                   component={CustomSelect}
@@ -126,9 +129,9 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                   inputProps={{ tabIndex: 0 }}
                 />
                 <LinkedField
-                  name="mobileNo"
-                  linkedFieldName="countryCode"
-                  path="mobileNo"
+                  name="custMobileNum"
+                  linkedFieldName="custMobcntCode"
+                  path="custMobileNum"
                   label="Mobile number"
                   placeholder="Mobile number"
                   component={Input}
@@ -140,10 +143,10 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 />
               </InputGroup>
               <Field
-                name="companyCategory"
+                name="persona"
                 label="Company category"
-                path="companyCategory"
-                datalistId="companyCategory"
+                path="persona"
+                datalistId="personas"
                 isSearchable
                 component={SelectAutocomplete}
                 tabIndex="0"
@@ -157,7 +160,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 tabIndex="0"
               />
               <Field
-                name="productVariant"
+                name="isIslamic"
                 label="Product Variant"
                 isSearchable
                 options={productVariantOptions}

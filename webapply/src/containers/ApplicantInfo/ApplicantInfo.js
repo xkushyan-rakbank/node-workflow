@@ -64,12 +64,14 @@ export const ApplicantInfoContainer = ({
 
       const {
         persona: invitationPersona,
-        accountType: invitationAccountType,
-        isIslamic: invitationIsIslamic
+        accounttype: invitationAccountType,
+        isislamic: invitationIsIslamic,
+        rocode: invitationRoCode
       } = invitationParams || {};
 
       dispatch(
         updateProspect({
+          "prospect.applicantInfo.roCode": invitationRoCode,
           "prospect.applicantInfo.persona": invitationPersona,
           "prospect.applicationInfo.accountType": invitationAccountType,
           "prospect.applicationInfo.islamicBanking": invitationIsIslamic === "true"
@@ -80,8 +82,8 @@ export const ApplicantInfoContainer = ({
 
   const findInDataList = () => {
     dataListCheck();
-    const productCode = query.get("product-name");
-    const lowerCaseProductCode = productCode !== null ? productCode.toLowerCase() : "";
+    const productCode = invitationParams && invitationParams["product-name"];
+    const lowerCaseProductCode = productCode ? productCode.toLowerCase() : "";
     if (dataList["allianceCode"] !== undefined) {
       return dataList["allianceCode"].find(
         element => element.code.toLowerCase() == lowerCaseProductCode
