@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { forwardRef, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import cx from "classnames";
@@ -15,6 +15,8 @@ import { AutoSaveField as Field, Input, NumberFormat } from "../../../../../comp
 import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { getCompanyAdditionalInfo } from "../../../../../store/selectors/appConfig";
+import { ErrorMessage } from "../../../../../components/Notifications";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 function calculateAmountFromPercentage(percent, total) {
   return (percent * total) / 100;
@@ -49,6 +51,7 @@ export const FinancialTurnoverSection = forwardRef(
     const { annualFinTurnoverAmtInAED, anualCashDepositAED } = useSelector(
       getCompanyAdditionalInfo
     );
+    const dispatch = useDispatch();
 
     const isMobileDevice = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
 
@@ -159,7 +162,7 @@ export const FinancialTurnoverSection = forwardRef(
           isInitialValid={initialIsValid}
           innerRef={financialFormRef}
         >
-          {({ setFieldValue, values, isValid, handleBlur }) => {
+          {({ setFieldValue, values, isValid, handleBlur, setFieldTouched , errors, touched}) => {
             const [sliderMarks, setSliderMarks] = useState(marks);
 
             function handleChange(ev, blur) {
@@ -171,9 +174,21 @@ export const FinancialTurnoverSection = forwardRef(
 
             function handleSliderChange(ev, newValue) {
               setSliderValue(newValue);
+              setFieldTouched("anualCashDepositAED");
             }
+
             const numberWithCommas = x => parseFloat(x).toLocaleString();
             const [annualCashDeposit, setAnnualCashDeposit] = useState(0);
+
+            function updateAnnualCashDeposit(annualCashDepositAmount) {
+              setAnnualCashDeposit(annualCashDepositAmount);
+              setFieldValue("anualCashDepositAED", annualCashDepositAmount.toString());
+              dispatch(
+                updateProspect({
+                  "prospect.companyAdditionalInfo.anualCashDepositAED": annualCashDepositAmount.toString()
+                })
+              );
+            }
 
             useEffect(() => {
               if (isNumeric(values.annualFinTurnoverAmtInAED) && sliderValue !== null) {
@@ -182,8 +197,9 @@ export const FinancialTurnoverSection = forwardRef(
                   sliderValue,
                   annualFinTurnoverAmtInAED
                 );
-                setAnnualCashDeposit(annualCashDepositAmount);
-                setFieldValue("anualCashDepositAED", annualCashDepositAmount.toString());
+                updateAnnualCashDeposit(annualCashDepositAmount);
+              } else {
+                updateAnnualCashDeposit("");
               }
             }, [values.annualFinTurnoverAmtInAED, sliderValue]);
 
@@ -236,8 +252,8 @@ export const FinancialTurnoverSection = forwardRef(
                 <div className={classes.sliderContainer}>
                   <SliderThemeProvider theme={FinancialSlider}>
                     <Field
-                      name="anualCashDepositAED"
-                      path="prospect.companyAdditionalInfo.anualCashDepositAED"
+                      name="anualCashDepositSlider"
+                      // path="prospect.companyAdditionalInfo.anualCashDepositAED"
                       value={sliderDisplayValue}
                       component={Slider}
                       step={1}
@@ -253,13 +269,18 @@ export const FinancialTurnoverSection = forwardRef(
                   </SliderThemeProvider>
                 </div>
                 <div className={classes.slideValuePrice}>
-                  {sliderValue != null && isNumeric(annualFinTurnoverAmtInAED) && (
-                    <>
-                      (<span className={classes.percentageText}>{sliderValue}%</span>)
-                      <span className={classes.amountText}>
-                        {numberWithCommas(annualCashDeposit)} AED
-                      </span>
-                    </>
+                  {sliderValue != null &&
+                    isNumeric(annualFinTurnoverAmtInAED) &&
+                    isNumeric(anualCashDepositAED) && (
+                      <>
+                        (<span className={classes.percentageText}>{sliderValue}%</span>)
+                        <span className={classes.amountText}>
+                          {numberWithCommas(annualCashDeposit)} AED
+                        </span>
+                      </>
+                    )}
+                  {errors.anualCashDepositAED && touched.anualCashDepositAED && (
+                    <ErrorMessage error={getRequiredMessage("Annual cash deposit")} />
                   )}
                 </div>
               </Accordion>
