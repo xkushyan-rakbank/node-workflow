@@ -364,7 +364,10 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "40px",
         alignText: "center",
         paddingLeft: "40px",
-        whiteSpace: "pre-line"
+        whiteSpace: "pre-line",
+        "@media (orientation: landscape)": {
+          fontSize: "1.75rem",
+        }
       }
     },
     [theme.breakpoints.up("sm")]: {
