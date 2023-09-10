@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   nameInitialWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     height: "54px",
     width: "54px",
     minWidth: "54px",
