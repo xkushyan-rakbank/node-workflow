@@ -188,10 +188,17 @@ export const useStyles = makeStyles(theme => ({
     overflow: "auto",
     height: "400px",
     [theme.breakpoints.up("sm")]: {
-      padding: "8px 40px"
+      padding: "8px 40px",
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      "overflow-x": "hidden !important",
     },
     "& .react-pdf__Page__canvas": {
-      height: "100%!important"
+      height: "100%!important",
+      [theme.breakpoints.between("sm", "md")]: {
+        width: "100% !important",
+       
+      }
     }
   },
   divider: {
