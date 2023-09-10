@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "@material-ui/core";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isEmpty } from "lodash";
-import { isDesktop } from "react-device-detect";
+import { isDesktop, isTablet } from "react-device-detect";
 
 import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import FaceRecognition from "../../../../components/FaceRecognition";
@@ -196,7 +196,7 @@ export const CompanyStakeholdersComponent = ({
       <p className={classes.subTitle}>
         We just need to check your identity by verifying some documents.
       </p>
-      {isDesktop && !isAgent && (
+      {isDesktop && !isTablet && !isAgent && (
         <ScanViaMobile
           disabled={
             !isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success
