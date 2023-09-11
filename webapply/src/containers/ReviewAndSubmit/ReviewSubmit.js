@@ -152,7 +152,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
       if (value) {
         const fixedValue = parseFloat(value).toFixed(2);
         let numberX = fixedValue.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-        return `${numberX} AED`;
+        return numberX;
       }
     },
     [displayFields]

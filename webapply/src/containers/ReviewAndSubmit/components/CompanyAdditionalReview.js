@@ -68,7 +68,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
         >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
-              <label>Annual financial turnover:</label>
+              <label>Annual financial turnover (AED):</label>
               <p>{fieldValues.annualFinTurnoverAmtInAED}</p>
             </div>
             <div className={classes.infoLabelValue}>
