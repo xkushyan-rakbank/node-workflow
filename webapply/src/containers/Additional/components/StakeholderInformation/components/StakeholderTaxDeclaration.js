@@ -199,8 +199,8 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                       <Field
                         name="remarks"
                         path={`${basePath}.remarks`}
-                        label="Remarks..."
-                        placeholder="Remarks..."
+                        label="Please explain why you are unable to obtain a TIN"
+                        placeholder="Please explain why you are unable to obtain a TIN"
                         multiline
                         minRows="9"
                         InputProps={{
