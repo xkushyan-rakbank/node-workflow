@@ -66,6 +66,7 @@ export const useStyles = makeStyles(theme => ({
     height: theme.spacing(2)
   },
   indicator: {
+    opacity: ({ disabled }) => (disabled ? "0.5" : "1"),
     width: "56px",
     display: "flex",
     alignItems: "center",
