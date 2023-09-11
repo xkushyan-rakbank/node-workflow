@@ -70,7 +70,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
     poBox: Yup.string()
       .nullable()
       .required(getRequiredMessage("P.O. Box number"))
-      .max(10, "Maximum ${max} characters allowed")
+      .max(6, "Maximum ${max} characters allowed")
       .matches(POBOX_REGEX, getInvalidMessage("P.O. Box number")),
     emirateCity: Yup.string()
       .nullable()
@@ -217,7 +217,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                   label="P.O. Box"
                   placeholder="P.O. Box"
                   InputProps={{
-                    inputProps: { tabIndex: 1, maxLength: 10 }
+                    inputProps: { tabIndex: 1, maxLength: 6 }
                   }}
                   component={Input}
                 />

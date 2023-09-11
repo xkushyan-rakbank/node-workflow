@@ -91,7 +91,7 @@ export const MailingAddressSection = forwardRef(
       poBox: Yup.string()
         .nullable()
         .required(getRequiredMessage("PO Box Number"))
-        .max(10, "Maximum ${max} characters allowed")
+        .max(6, "Maximum ${max} characters allowed")
         .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
       emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City")),
       addressProof: Yup.array()
@@ -278,7 +278,7 @@ export const MailingAddressSection = forwardRef(
                       label="P.O. Box"
                       placeholder="P.O. Box"
                       InputProps={{
-                        inputProps: { tabIndex: 1, maxLength: 10 }
+                        inputProps: { tabIndex: 1, maxLength: 6 }
                       }}
                       component={Input}
                     />
