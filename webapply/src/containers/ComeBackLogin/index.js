@@ -6,6 +6,7 @@ import { generateOtpCodePromisify } from "../../store/actions/otp";
 import { setToken } from "../../store/actions/reCaptcha";
 import { resetProspect } from "../../store/actions/appConfig";
 import { getReCaptchaToken } from "../../store/selectors/reCaptcha";
+import { logout } from "../../store/actions/loginForm";
 
 const mapStateToProps = state => ({
   recaptchaToken: getReCaptchaToken(state),
@@ -18,7 +19,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   generateOtpCode: generateOtpCodePromisify,
   setToken,
-  resetProspect
+  resetProspect,
+  logout
 };
 
 export default connect(

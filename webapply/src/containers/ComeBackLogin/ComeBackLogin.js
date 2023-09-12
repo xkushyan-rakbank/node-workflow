@@ -17,7 +17,8 @@ export const ComeBackLoginContainer = ({
   reCaptchaSiteKey,
   isRecaptchaEnable,
   isGenerating,
-  isConfigLoading
+  isConfigLoading,
+  logout
 }) => {
   const pushHistory = useTrackingHistory();
   useFormNavigation([true, false]);
@@ -25,6 +26,7 @@ export const ComeBackLoginContainer = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
+    logout();
     resetProspect();
   }, [resetProspect]);
 
