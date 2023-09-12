@@ -24,7 +24,10 @@ export const useStyles = makeStyles(theme => ({
       textAlign: "center",
       fontSize: 46,
       fontWeight: 600,
-      fontFamily: "Open Sans, sans-serif"
+      fontFamily: "Open Sans, sans-serif",
+      "&:focus-visible": {
+        outline: 'none !important',
+      }, 
     },
     [theme.breakpoints.down("md")]: {
       width: 85,

@@ -13,7 +13,10 @@ const useStyle = makeStyles({
     height: "176px",
     backgroundColor: "#fff",
     padding: 40,
-    borderRadius: "20px"
+    borderRadius: "20px",
+    "&:focus-visible": {
+      outline: 'none !important',
+    }, 
   },
 
   bottom: {
