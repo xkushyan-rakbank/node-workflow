@@ -161,12 +161,18 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
           ...coordinates[DATE]
         });
 
-        thePage.drawText(organizationInfo, {
-          size: FONT_SIZE,
-          ...coordinates[COMPANY_NAME]
-        });
+        if (path !== "authorizationsConsent") {
+          thePage.drawText(organizationInfo, {
+            size: FONT_SIZE,
+            ...coordinates[COMPANY_NAME]
+          });
+        }
 
         if (path === "authorizationsConsent") {
+          thePage.drawText(soleSignatory, {
+            size: FONT_SIZE,
+            ...coordinates[COMPANY_NAME]
+          });
           const coordinatesForApplicantName = getConsentApplicantCoordinates();
           thePage = pages[coordinatesForApplicantName.pageNumber];
           thePage.drawText(organizationInfo, {
