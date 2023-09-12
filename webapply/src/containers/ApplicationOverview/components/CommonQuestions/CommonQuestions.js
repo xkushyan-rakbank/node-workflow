@@ -35,7 +35,7 @@ export const CommonQuestions = ({ questions }) => {
           expanded: classes.expanded
         }}
       >
-        <div className={cx(classes.text, classes.textEllipsis)}>{question.question}</div>
+        <div className={classes.text}>{question.question}</div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
         <div className={cx(classes.text, classes.info)}>{question.answer.__html}</div>
