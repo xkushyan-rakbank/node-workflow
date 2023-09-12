@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { theme } from "../../../../../theme";
 
 export const useStyles = makeStyles({
   wrapper: {
@@ -142,8 +143,13 @@ export const useStyles = makeStyles({
   },
   searchItemDetails: {
     display: "flex",
-    gap: "3.94rem",
-    width: "100%"
+    flexDirection: "column",
+    gap: "1rem",
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      flexDirection: "row",
+      gap: "3.94rem"
+    }
   },
   appDetails: {
     display: "flex",
