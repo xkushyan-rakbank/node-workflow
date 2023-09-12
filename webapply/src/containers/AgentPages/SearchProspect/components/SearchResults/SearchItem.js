@@ -99,7 +99,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         cancelLabel={"close"}
         handleClose={() => setOpenModal(false)}
         message={
-          "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknoweldge and accept the associated Terms & Conditions."
+          "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknowledge and accept the associated Terms & Conditions."
         }
       />
       <div className={classes.searchItemStatus}>

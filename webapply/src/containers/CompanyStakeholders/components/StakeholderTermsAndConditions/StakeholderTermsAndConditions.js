@@ -87,7 +87,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
         cancelLabel={"close"}
         handleClose={() => handleModalClose()}
         message={
-          "Your EFR face recoginition process has been successfull completed, and you've accepted the KFS terms and conditions."
+          "Your EFR face recognition process has been successfully completed, and you've accepted the KFS terms and conditions."
         }
       />
       <h3 className={classes.mainTitle}>Time for the small print</h3>
