@@ -122,7 +122,7 @@ export const AdditionalStakeholderInformation = ({
       formRef.submitForm();
     }
 
-    if (!isCompleted && !isAccordionOpen) {
+    if (!isCompleted && !isAccordionOpen && accordionRef?.current !== null) {
       accordionRef.current.click();
     }
   };
