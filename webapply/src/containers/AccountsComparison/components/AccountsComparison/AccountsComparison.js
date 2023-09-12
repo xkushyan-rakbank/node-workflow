@@ -140,49 +140,6 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     }
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      const windowHeight = window.innerHeight;
-      const windowWidth = window.innerWidth;
-
-      //mobile
-      const topMobilePercent = 45;
-      const heightMobilePercent = 55;
-      const leftMobilePercent = 25;
-      //tablet
-      const topTabletPercentage = 20;
-      const leftTabletPercentage = 50;
-      const heightTabletPercentage = 40;
-
-      let topPercentage, leftPercentage, heightPercentage;
-
-      if (windowWidth < 768) {
-        topPercentage = topMobilePercent;
-        leftPercentage = leftMobilePercent;
-        heightPercentage = heightMobilePercent;
-      } else {
-        topPercentage = topTabletPercentage;
-        leftPercentage = leftTabletPercentage;
-        heightPercentage = heightTabletPercentage;
-      }
-
-      const calculatedTop = (windowHeight * topPercentage) / 100;
-      const calculatedHeight = (windowHeight * heightPercentage) / 100;
-      const calculatedLeft = (windowWidth * leftPercentage) / 100;
-
-      setAccountNavTop(`${calculatedTop}px`);
-      setAccountNavHeight(`${calculatedHeight}px`);
-      setAccountNavLeft(`${calculatedLeft}px`);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
     <>
       <HelmetProvider>
@@ -271,14 +228,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           </div>
         </div>
 
-        <div
-          className={classes.accountInfoMain}
-          style={{
-            top: `${accountNavTop}`,
-            height: `${accountNavHeight}`,
-            left: `${accountNavLeft}`
-          }}
-        >
+        <div className={classes.accountInfoMain}>
           <h2>Let’s get down to business</h2>
           <p>How can we help you?</p>
           <div className={classes.btnWrapper} id="businessAccountButton" ref={businessButton}>

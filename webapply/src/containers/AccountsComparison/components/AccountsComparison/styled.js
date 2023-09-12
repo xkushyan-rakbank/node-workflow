@@ -374,6 +374,17 @@ export const useStyles = makeStyles(theme => ({
       top: "45%",
       transform: "translateY(-50%)"
     },
+    [theme.breakpoints.between("sm", "md")]: {
+      "@media (orientation: landscape)": {
+        top: "45%",
+        transform: "translateY(-50%)" 
+      },
+
+      "@media (orientation: portrait)": {
+        top: "30%",
+        transform: "translateY(-50%)"
+      }
+    },
   },
   welcomeText: {
     textAlign: "center"
@@ -427,16 +438,22 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 111,
     display: "flex",
     flexDirection: "column",
+    top: "50%",
+    left: "50%!important",
+    transform: "translateX(-50%)",
+    width: "80%",
+    textAlign: "center",
 
-    [theme.breakpoints.down("xs")]: {
-      left: "50%!important",
+    alignItems: "center",
+    justifyContent: "center",
+
+    [theme.breakpoints.between("sm", "md")]: {
+      top: "20%",
+      left: "65%!important",
       transform: "translateX(-50%)",
-      width: "80%",
-      textAlign: "center",
-
-      alignItems: "center",
-      justifyContent: "center"
+      width: "80%", 
     },
+
     "& h2": {
       fontSize: "1.75rem",
       lineHeight: "36px",
@@ -445,18 +462,38 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 700,
       margin: 0,
       //ipad devices pro devices
-      [theme.breakpoints.between("sm", "lg")]: {
+      [theme.breakpoints.between("sm", "md")]: {
         left: "65%",
-        // width: "708px",
         letterSpacing: " -5.5px",
-        fontSize: "4rem",
         lineHeight: "80px",
+        "@media (orientation: landscape)": {
+          fontSize: "4.75rem",
+        },
+
+        "@media (orientation: portrait)": {
+          fontSize: "4.75rem",
+        }
+      },
+
+      [theme.breakpoints.between("md", "lg")]: {
+        letterSpacing: " -5.5px",
+        lineHeight: "80px",
+        "@media (orientation: landscape)": {
+          fontSize: "6rem",
+          left: "65%",
+        },
+
+        "@media (orientation: portrait)": {
+          fontSize: "3.75rem",
+          left: "35%",
+        }
+      
       },
       [theme.breakpoints.up("lg")]: {
         left: "65%",
         // width: "708px",
         letterSpacing: " -5.5px",
-        fontSize: "6.8rem",
+        fontSize: "6rem",
         lineHeight: "100px",
       },
     },

@@ -30,6 +30,11 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     cursor: "pointer",
     transition: "border 0.5s ease-in-out",
+    [theme.breakpoints.between("sm", "md")]: {
+      "@media (orientation: portrait)": {
+        width: "560px"
+      },
+    },
     "&:hover": {
       border: "1px solid transparent",
       boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)"
