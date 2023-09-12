@@ -70,18 +70,23 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           className={!termsAndConditions.authorisation ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
         >
-          {!termsAndConditions.authorisation ? "Read and Accept" : "Read"}
+          {!termsAndConditions.authorisation ? "Read and Accept" : "Authorized and Accepted"}
         </Button>
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
         handleClose={handleClose}
-        handleAccept={handleAccept}
+        handleAccept={!termsAndConditions.authorisation ? handleAccept : ""}
         editedFile={editedFile}
         height={height}
         pages={pages}
         scrollToEnd={false}
         isAccepted={termsAndConditions.authorisation}
+        showInstructionText={
+          termsAndConditions.authorisation
+            ? "Your accepted authorization will be sent to your registered email."
+            : ""
+        }
       />
     </>
   );

@@ -64,18 +64,23 @@ export const TermsAndConditions = ({ wcmData }) => {
           className={!termsAndConditions.generalTCs ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
         >
-          {!termsAndConditions.generalTCs ? "Read and Accept" : "Read"}
+          {!termsAndConditions.generalTCs ? "Read and Accept" : "Authorized and Accepted"}
         </Button>
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
         handleClose={handleClose}
-        handleAccept={handleAccept}
+        handleAccept={!termsAndConditions.generalTCs ? handleAccept : ""}
         editedFile={editedFile}
         height={height}
         pages={pages}
         scrollToEnd={false}
         isAccepted={termsAndConditions.generalTCs}
+        showInstructionText={
+          termsAndConditions.generalTCs
+            ? "Your accepted terms and conditions are as provided above."
+            : ""
+        }
       />
     </>
   );

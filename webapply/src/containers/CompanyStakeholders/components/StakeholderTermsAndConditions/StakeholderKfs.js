@@ -73,19 +73,24 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
               <CircularProgress size={14} value={null} color="#fff" />
             )
           ) : (
-            "Read"
+            "Authorized and Accepted"
           )}
         </Button>
       </div>
       <TermsAndConditionsDialog
         open={openKfsDialog}
         handleClose={handleClose}
-        handleAccept={handleAccept}
+        handleAccept={!termsAndConditions.kfs ? handleAccept : ""}
         editedFile={editedFile}
         height={height}
         pages={pages}
         scrollToEnd={true}
         isAccepted={isKfsProgress}
+        showInstructionText={
+          termsAndConditions.kfs
+            ? "Your accepted Key Fact Statement has been sent to your registered email"
+            : ""
+        }
       />
     </>
   );

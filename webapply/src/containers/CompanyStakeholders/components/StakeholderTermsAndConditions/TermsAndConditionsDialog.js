@@ -14,7 +14,8 @@ export default function TermsAndConditionsDialog({
   height,
   pages,
   scrollToEnd = false,
-  isAccepted = false
+  isAccepted = false,
+  showInstructionText = ""
 }) {
   const classes = useStyles();
   const [disabled, setDisabled] = useState(scrollToEnd);
@@ -45,22 +46,27 @@ export default function TermsAndConditionsDialog({
         <PdfPreview file={editedFile} pages={pages} />
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
-        {handleAccept && (
-          <div className={classes.actionContainer}>
-            <Button
-              withRightArrow
-              className={classes.agreeButton}
-              disabled={disabled || isAccepted}
-              label="Accept and continue"
-              onClick={handleAccept}
-            />
-            {scrollToEnd && (
-              <span className={classes.scrollInstruction}>
-                Please scroll all the way through to accept.
-              </span>
-            )}
-          </div>
-        )}
+        <div className={classes.actionContainer}>
+          {handleAccept && (
+            <>
+              <Button
+                withRightArrow
+                className={classes.agreeButton}
+                disabled={disabled || isAccepted}
+                label="Accept and continue"
+                onClick={handleAccept}
+              />
+              {scrollToEnd && (
+                <span className={classes.scrollInstruction}>
+                  Please scroll all the way through to accept.
+                </span>
+              )}
+            </>
+          )}
+          {showInstructionText && (
+            <span className={classes.scrollInstruction}>{showInstructionText}</span>
+          )}
+        </div>
       </DialogActions>
     </Dialog>
   );

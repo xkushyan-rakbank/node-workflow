@@ -83,7 +83,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
       .when("reasonForTINNotAvailable", {
         is: reasonForTINNotAvailable => reasonForTINNotAvailable === "REA2",
         then: Yup.string()
-          .required(getRequiredMessage("Remarks"))
+          .required(getRequiredMessage("Please explain why you are unable to obtain a TIN"))
           .max(500, "Maximum ${max} characters allowed")
       })
   });
