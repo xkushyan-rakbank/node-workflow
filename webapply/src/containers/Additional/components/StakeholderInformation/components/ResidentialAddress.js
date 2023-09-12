@@ -8,7 +8,12 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
-import { Input, AutoSaveField as Field, SelectAutocomplete } from "../../../../../components/Form";
+import {
+  Input,
+  AutoSaveField as Field,
+  SelectAutocomplete,
+  POBoxNumberInput
+} from "../../../../../components/Form";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
 import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
@@ -217,7 +222,11 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                   label="P.O. Box"
                   placeholder="P.O. Box"
                   InputProps={{
-                    inputProps: { tabIndex: 1, maxLength: 6 }
+                    inputComponent: POBoxNumberInput,
+                    inputProps: {
+                      tabIndex: 0,
+                      maxLength: 6
+                    }
                   }}
                   component={Input}
                 />

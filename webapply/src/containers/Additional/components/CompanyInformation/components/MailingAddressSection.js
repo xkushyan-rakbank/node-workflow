@@ -11,6 +11,7 @@ import {
   CheckboxGroup,
   AutoSaveField as Field,
   Input,
+  POBoxNumberInput,
   SelectAutocomplete
 } from "../../../../../components/Form";
 import { Upload } from "../../../../../components/Upload";
@@ -277,10 +278,14 @@ export const MailingAddressSection = forwardRef(
                       path={"prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].poBox"}
                       label="P.O. Box"
                       placeholder="P.O. Box"
-                      InputProps={{
-                        inputProps: { tabIndex: 1, maxLength: 6 }
-                      }}
                       component={Input}
+                      InputProps={{
+                        inputComponent: POBoxNumberInput,
+                        inputProps: {
+                          tabIndex: 0,
+                          maxLength: 6
+                        }
+                      }}
                     />
                   </Grid>
                   <Grid item sm={12} xs={12}>
