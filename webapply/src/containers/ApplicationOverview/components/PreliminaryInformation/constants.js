@@ -44,8 +44,10 @@ export const questions = [
           application within 2 business days subject to internal policies and guidelines.
           <br />
           c. The concerned team will contact you to schedule a visit for signature collection on the
-          Business Account Digital Application Confirmation Form. d. The Account will be activated
-          upon validating your physical Emirates ID and collection of the signed form.
+          Business Account Digital Application Confirmation Form.
+          <br />
+          d. The Account will be activated upon validating your physical Emirates ID and collection
+          of the signed form.
         </>
       )
     },
@@ -65,7 +67,7 @@ export const questions = [
     id: 5
   },
   {
-    question: "What if I need help while filling the application?",
+    question: "What if I need support while filling the application?",
     answer: {
       __html: (
         <>

@@ -43,23 +43,25 @@ export const ApplicationOverviewComponent = () => {
       >
         <PreliminaryInformation />
       </Accordion>
-      <Accordion
-        title={"Frequently asked questions"}
-        id={"frequently_asked_questions"}
-        classes={{
-          accordionRoot: cx(classes.landingAccordionRoot, classes.noborder),
-          accordionExpanded: classes.landingAccordionExpandedRoot,
-          accordionSummaryContent: classes.landingAccordionSummaryContent,
-          accordionSummaryContentExpanded: classes.landingAccordionSummaryContentExpanded,
-          accordionDetails: classes.accordionDetails,
-          accordionIcon: classes.expandIcon
-        }}
-      >
-        <p className={classes.subTitle}>
-          {"Here are the answers to some things you're probably wondering about"}
-        </p>
-        <CommonQuestions questions={questions} />
-      </Accordion>
+      <div style={{ marginBottom: "50px" }}>
+        <Accordion
+          title={"Frequently asked questions"}
+          id={"frequently_asked_questions"}
+          classes={{
+            accordionRoot: cx(classes.landingAccordionRoot, classes.noborder),
+            accordionExpanded: classes.landingAccordionExpandedRoot,
+            accordionSummaryContent: classes.landingAccordionSummaryContent,
+            accordionSummaryContentExpanded: classes.landingAccordionSummaryContentExpanded,
+            accordionDetails: classes.accordionDetails,
+            accordionIcon: classes.expandIcon
+          }}
+        >
+          <p className={classes.subTitle}>
+            {"Here are the answers to some things you're probably wondering about"}
+          </p>
+          <CommonQuestions questions={questions} />
+        </Accordion>
+      </div>
     </>
   );
 };
