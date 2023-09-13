@@ -228,7 +228,9 @@ export const useStyles = makeStyles(theme => {
       fontSize: "1rem",
       fontWeight: 400,
       lineHeight: "22px",
-      letterSpacing: "0.08px"
+      letterSpacing: "0.08px",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap"
     },
     filledLabelShrink: {
       fontWeight: 500,
