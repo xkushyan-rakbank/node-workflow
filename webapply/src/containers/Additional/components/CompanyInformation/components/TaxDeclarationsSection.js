@@ -100,7 +100,7 @@ export const TaxDeclarationsSection = forwardRef(
     const initialValues = {
       dnfbpField: "no",
       isCompanyUSEntity: "no",
-      isFinancialInstitution: "",
+      isFinancialInstitution: "no",
       isNonFinancialInstitution: "active",
       globalintermediaryId: ""
     };
@@ -122,9 +122,6 @@ export const TaxDeclarationsSection = forwardRef(
             values,
             setFieldValue
           });
-          const showGIINField = values.isFinancialInstitution === "yes";
-          const isCompanyUSEntityVisible = values.isCompanyUSEntity === "yes";
-          const showNonFinancialInstitution = values.isFinancialInstitution === "no";
           return (
             <>
               <Accordion
@@ -162,77 +159,31 @@ export const TaxDeclarationsSection = forwardRef(
                     />
                   </div>
                 )}
-                {isCompanyUSEntityVisible && (
-                  <div className={classes.taxDeclarationQuestionare}>
-                    <label className={classes.sectionLabel}>Is your company a US entity?</label>
-                    <Field
-                      typeRadio
-                      options={YesNoList}
-                      name="isCompanyUSEntity"
-                      path={"prospect.companyAdditionalInfo.isCompanyUSEntity"}
-                      component={InlineRadioGroup}
-                      customIcon={false}
-                      classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                      onChange={companyTaxRadioFieldHandler}
-                      radioColor="primary"
-                    />
-                  </div>
-                )}
                 <div className={classes.taxDeclarationQuestionare}>
-                  <label className={classes.sectionLabel}>Please confirm your entity type?</label>
+                  <label className={classes.sectionLabel}>
+                    Is your company an active or passive non-financial entity (NFE)?
+                  </label>
                   <Field
+                    name="isNonFinancialInstitution"
+                    path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
                     typeRadio
-                    options={entityTypeOptionList}
-                    name="isFinancialInstitution"
-                    path={"prospect.companyAdditionalInfo.isFinancialInstitution"}
+                    options={ActivePassiveOptions}
                     component={InlineRadioGroup}
                     customIcon={false}
                     classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                     onChange={companyTaxRadioFieldHandler}
                     radioColor="primary"
                   />
+                  <p className={classes.activePassiveDesc}>
+                    Active Non-Financial Entity (Active NFE): An entity generating more than 50% of
+                    its yearly income through its operational activities.
+                  </p>
+                  <p className={classes.activePassiveDesc}>
+                    Passive Non-Financial Entity (Passive NFE): An entity generating more than 50%
+                    of its yearly income through dividends, interest, rents, or other
+                    passively-earned income on a regular basis, without additional effort.
+                  </p>
                 </div>
-                {showGIINField && (
-                  <div className={classes.taxDeclarationQuestionare}>
-                    <label className={classes.sectionLabel}>
-                      GIIN (Global Intermediary Identification Number)
-                    </label>
-                    <Field
-                      isVisible={showGIINField}
-                      name="globalintermediaryId"
-                      path={"prospect.companyAdditionalInfo.globalintermediaryId"}
-                      label={"Enter GIIN"}
-                      component={GlobalIntermediaryID}
-                    />
-                  </div>
-                )}
-                {showNonFinancialInstitution && (
-                  <div className={classes.taxDeclarationQuestionare}>
-                    <label className={classes.sectionLabel}>
-                      Is your company an active or passive non-financial entity (NFE)?
-                    </label>
-                    <Field
-                      name="isNonFinancialInstitution"
-                      path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
-                      typeRadio
-                      options={ActivePassiveOptions}
-                      component={InlineRadioGroup}
-                      customIcon={false}
-                      classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                      onChange={companyTaxRadioFieldHandler}
-                      radioColor="primary"
-                    />
-                    <p className={classes.activePassiveDesc}>
-                      Active Non-Financial Entity (Active NFE): An entity generating more than 50%
-                      of its yearly income through its operational activities.
-                    </p>
-                    <p className={classes.activePassiveDesc}>
-                      Passive Non-Financial Entity (Passive NFE): An entity generating more than 50%
-                      of its yearly income through dividends, interest, rents, or other
-                      passively-earned income on a regular basis, without additional effort.
-                    </p>
-                  </div>
-                )}
               </Accordion>
               <TermsAndConditionsDialog
                 open={openDefinitionDialog}
