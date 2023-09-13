@@ -98,7 +98,7 @@ export const TaxDeclarationsSection = forwardRef(
     });
 
     const initialValues = {
-      dnfbpField: "no",
+      dnfbpField: "",
       isCompanyUSEntity: "no",
       isFinancialInstitution: "no",
       isNonFinancialInstitution: "active",
