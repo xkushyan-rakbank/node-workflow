@@ -223,8 +223,8 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
         const { debitCardInfo } = prospect[key][0];
         nodePayload = [{ debitCardInfo }];
       } else {
-        const { editedFullName, debitCardInfo, mothersMaidenName } = prospect[key][0];
-        nodePayload = [{ editedFullName, debitCardInfo, mothersMaidenName }];
+        const { editedFullName, debitCardInfo, mothersMaidenName, kycDetails } = prospect[key][0];
+        nodePayload = [{ editedFullName, debitCardInfo, mothersMaidenName, kycDetails }];
       }
 
       break;

@@ -145,7 +145,8 @@ export const Accordion = ({
     "companyInformation",
     "stakeholderInformation",
     "productInformation",
-    "codesBankUseReview"
+    "codesBankUseReview",
+    "checks"
   ];
   return (
     <div className="accordion">

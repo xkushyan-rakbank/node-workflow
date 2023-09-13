@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useCallback, useState } from "react";
 import { Form, Formik } from "formik";
 import { Grid } from "@material-ui/core";
@@ -9,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useStyles } from "../components/CompanyStakeholders/styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { NextStepButton } from "../../../components/Buttons/NextStepButton";
-import { DATE_FORMAT, NEXT, formStepper } from "../../../constants";
+import { DATE_FORMAT, NEXT, UAE, formStepper, operatorLoginScheme } from "../../../constants";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import {
   Input,
@@ -29,10 +30,11 @@ import {
   MAX_MOTHER_MAIDEN_NAME_LENGTH,
   MIN_MOTHER_NAME_LENGTH
 } from "../../CompanyInfo/constants";
-import { getRequiredMessage } from "../../../utils/getValidationMessage";
-import { NAME_REGEX } from "../../../utils/validation";
+import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
+import { NAME_REGEX, EMIRATES_ID_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
 import { getProspect } from "../../../store/selectors/appConfig";
+import { getLoginResponse } from "../../../store/selectors/loginSelector";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -40,6 +42,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   useViewId(true);
+  const { scheme } = useSelector(getLoginResponse);
+
+  const isOperator = scheme === operatorLoginScheme;
 
   const { signatoryInfo } = useSelector(getProspect);
 
@@ -71,13 +76,27 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         MAX_MOTHER_MAIDEN_NAME_LENGTH,
         `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
       )
-      .matches(NAME_REGEX, "Please enter a valid mother's maiden name as per your passport")
+      .matches(NAME_REGEX, "Please enter a valid mother's maiden name as per your passport"),
+    eidNumber: Yup.string().when("residenceCountry", {
+      is: value => value === UAE,
+      then: Yup.string()
+        .required(getRequiredMessage("Emirates ID"))
+        .transform(value => value.replace(/-/g, ""))
+        .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
+    }),
+    passportNumber: Yup.string()
+      .required(getRequiredMessage("Passport number"))
+      .max(12, "Maximum 12 characters allowed")
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Passport number")),
+    passportExpiryDate: Yup.string().required(getRequiredMessage("Passport expiry")),
+    eidExpiryDt: Yup.string().required(getRequiredMessage("Emirates ID expiry")),
+    dateOfBirth: Yup.string().required(getRequiredMessage("Date of birth")),
+    nationality: Yup.string().required(getRequiredMessage("Nationality"))
   });
 
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
-  const isMotherMaidenNamePresent = values => values?.mothersMaidenName.length > 0;
   const handleClickStakeholderPreviewNextStep = useCallback(() => {
     setIsLoading(true);
     return sendProspectToAPI(NEXT).then(
@@ -106,7 +125,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         validationSchema={previewValidation}
         onSubmit={handleClickStakeholderPreviewNextStep}
       >
-        {(props) => (
+        {props => (
           <Form>
             <Grid container>
               <Grid item xs={12}>
@@ -117,11 +136,11 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Name"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 100 },
+                    inputProps: { tabIndex: 0, maxLength: 100 }
                   }}
-                  disabled={true}
+                  disabled={!isOperator}
                   className="testingClass"
-                  showEditIcon={true}
+                  showEditIcon={!isOperator}
                   fieldDescription={"Please ensure the full name is per your passport"}
                 />
               </Grid>
@@ -133,9 +152,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Mother's maiden name"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 100 },
+                    inputProps: { tabIndex: 0, maxLength: 100 }
                   }}
-                  disabled={signatoryInfo[0]?.mothersMaidenName ? true : false}
+                  disabled={signatoryInfo[0]?.mothersMaidenName && !isOperator ? true : false}
                   className="testingClass"
                   showEditIcon={!signatoryInfo[0]?.mothersMaidenName ? true : false}
                   fieldDescription={"Enter Mother's maiden name as per your passport"}
@@ -150,9 +169,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Nationality"
                   component={SelectAutocomplete}
                   InputProps={{
-                    inputProps: { tabIndex: 0 },
+                    inputProps: { tabIndex: 0 }
                   }}
-                  disabled={true}
+                  disabled={!isOperator}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -165,9 +184,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   inputAdornmentPosition="end"
                   changeProspect={changeDateProspectHandler}
                   InputProps={{
-                    inputProps: { tabIndex: 0 },
+                    inputProps: { tabIndex: 0 }
                   }}
-                  disabled={true}
+                  disabled={!isOperator}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -176,12 +195,14 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   path="prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"
                   label="Emirates ID"
                   placeholder="784-1950-1234567-8"
-                  disabled={true}
+                  disabled={!isOperator}
                   component={EmiratesID}
                   changeProspect={(prospect, value) => ({
                     ...prospect,
-                    ["prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"]:
-                      value.replace(/-/g, ""),
+                    ["prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"]: value.replace(
+                      /-/g,
+                      ""
+                    )
                   })}
                 />
               </Grid>
@@ -194,10 +215,10 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   component={DatePicker}
                   changeProspect={changeDateProspectHandler}
                   InputProps={{
-                    inputProps: { tabIndex: 0 },
+                    inputProps: { tabIndex: 0 }
                   }}
                   inputAdornmentPosition="end"
-                  disabled={true}
+                  disabled={!isOperator}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -208,9 +229,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Passport number"
                   component={Input}
                   InputProps={{
-                    inputProps: { tabIndex: 0 },
+                    inputProps: { tabIndex: 0 }
                   }}
-                  disabled={true}
+                  disabled={!isOperator}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -221,10 +242,10 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                   label="Passport expiry"
                   component={DatePicker}
                   InputProps={{
-                    inputProps: { tabIndex: 0 },
+                    inputProps: { tabIndex: 0 }
                   }}
                   changeProspect={changeDateProspectHandler}
-                  disabled={true}
+                  disabled={!isOperator}
                   inputAdornmentPosition="end"
                 />
               </Grid>

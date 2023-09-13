@@ -4,8 +4,9 @@ import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import { InformationSection } from "./InformationSection";
 import routes from "../../../routes";
 import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
+import { operatorLoginScheme } from "../../../constants";
 
-export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate }) => {
+export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate, scheme }) => {
   const classes = useStyles();
   return (
     <div className={classes.packageSelectionWrapper}>
@@ -26,7 +27,11 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
           accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
         }}
       >
-        <InformationSection title={"Essential information"}>
+        <InformationSection
+          title={"Essential information"}
+          showEditIcon={scheme === operatorLoginScheme}
+          routeTo={routes.companyInfo}
+        >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Applicant name:</label> <p>{fieldValues.applicantName}</p>

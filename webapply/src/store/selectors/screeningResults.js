@@ -1,9 +1,16 @@
 import get from "lodash/get";
 import { createSelector } from "reselect";
-import { getOverviewOrganizationInfo, getOverviewApplicationInfo } from "./searchProspect";
+import {
+  getOverviewOrganizationInfo,
+  getOverviewApplicationInfo,
+  getOverviewCompanyAdditionalInfo
+} from "./searchProspect";
 
 export const getOrganizationScreeningResults = state =>
   get(getOverviewOrganizationInfo(state), "screeningInfo.screeningResults", []);
+
+export const getCompanyAdditionalScreeningResults = state =>
+  get(getOverviewCompanyAdditionalInfo(state), "screeningInfo.screeningResults", []);
 
 export const getProspectRiskScore = state => getOverviewApplicationInfo(state).riskScore;
 

@@ -4,12 +4,14 @@ import { InformationSection } from "./InformationSection";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import routes from "../../../routes";
 import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
+import { operatorLoginScheme } from "../../../constants";
 export const StakeholderAdditionalReview = ({
   fieldValues,
   addressFormat,
   formatDate,
   truncateString,
-  ibanTypeLabel
+  ibanTypeLabel,
+  scheme
 }) => {
   const classes = useStyles();
 
@@ -37,10 +39,14 @@ export const StakeholderAdditionalReview = ({
           accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
           accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
           accordionDetails: classes.accordionDetails,
-          accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot,
+          accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
         }}
       >
-        <InformationSection title={"Essential information"}>
+        <InformationSection
+          title={"Essential information"}
+          showEditIcon={scheme === operatorLoginScheme}
+          routeTo={routes.stakeholdersPreview}
+        >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
               <label>Full name:</label> <p>{fieldValues.signatoryFullName}</p>

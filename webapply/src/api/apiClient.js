@@ -157,7 +157,6 @@ export const decisions = {
         ...headers
       })
       .then(response => {
-        console.log(response);
         return response;
       })
 };

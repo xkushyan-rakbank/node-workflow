@@ -7,6 +7,7 @@ export const errorMsgs = {
 export const titles = {
   COMPANY_TITLE: "Company",
   STAKEHOLDER_TITLE: "Stakeholder",
+  COMPANY_ADDITIONAL_INFO: "Company Additional Info",
   CHECK_NAME_TITLE: "Check Name",
   STATUS_TITLE: "Status",
   RESULT_REASON_TITLE: "Result/ Reason"

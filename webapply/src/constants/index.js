@@ -821,3 +821,5 @@ export const getFileUploadErrorMessage = {
 };
 
 export const SUPPORTED_FILE_FORMAT_TEXT = "Supported formats: PDF, JPG, PNG | 5MB max. | 10KB min.";
+
+export const operatorLoginScheme = "DBOP";

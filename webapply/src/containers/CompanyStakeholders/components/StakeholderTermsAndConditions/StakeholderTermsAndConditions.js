@@ -11,7 +11,7 @@ import { TermsAndConditions } from "./TermsAndConditions";
 import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../../FormLayout";
 import { useViewId } from "../../../../utils/useViewId";
-import { formStepper, NEXT } from "../../../../constants";
+import { formStepper, operatorLoginScheme, NEXT } from "../../../../constants";
 import { getAccountType, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
 import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
@@ -19,6 +19,8 @@ import { getTermsAndConditions } from "../../../../store/selectors/termsAndCondi
 import { getIsRoInviteEfr } from "../../../../store/selectors/otp";
 import { Footer } from "../../../../components/Footer";
 import { ConfirmDialog } from "../../../../components/Modals";
+import { BackLink } from "../../../../components/Buttons/BackLink";
+import { getLoginResponse } from "../../../../store/selectors/loginSelector";
 
 export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +35,8 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const isIslamic = useSelector(getIsIslamicBanking);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const isRoInviteEFR = useSelector(getIsRoInviteEfr);
+  const { scheme } = useSelector(getLoginResponse);
+  const isOperator = scheme === operatorLoginScheme;
 
   const goToAdditional = useCallback(() => {
     setIsLoading(true);
@@ -98,6 +102,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
       <TermsAndConditions wcmData={wcmData} />
 
       <Footer extraClasses={"oneElement"}>
+        {isOperator ? <BackLink path={routes.stakeholdersPreview} isTypeButton={true} /> : <></>}
         <NextStepButton
           isDisplayLoader={isLoading}
           type="button"

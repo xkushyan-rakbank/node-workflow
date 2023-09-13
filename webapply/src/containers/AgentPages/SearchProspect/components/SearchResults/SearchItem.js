@@ -7,7 +7,7 @@ import cx from "classnames";
 import { get } from "lodash";
 
 import routes from "../../../../../routes";
-import { BAU_PROSPECT_VERSION } from "../../../../../constants";
+import { BAU_PROSPECT_VERSION, operatorLoginScheme } from "../../../../../constants";
 import { useStyles } from "./styled";
 
 import { getLoginResponse } from "../../../../../store/selectors/loginSelector";
@@ -17,6 +17,7 @@ import {
   ctaStatusClass,
   ctaStatuses,
   custActions,
+  operatorActions,
   roActions
 } from "../../../../MyApplications/constants";
 import { STATUS_LOCKED } from "../../../SearchedAppInfo/constants";
@@ -33,7 +34,8 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { agentId } = useSelector(getLoginResponse);
+  const { agentId, scheme } = useSelector(getLoginResponse);
+  const isOperator = scheme === operatorLoginScheme;
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
@@ -149,6 +151,23 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
       </div>
       {prospectVersion === "v2" ? (
         <>
+          {isOperator && operatorActions[(application?.status?.statusType)] && (
+            <>
+              <div className={classes.lineBreak}></div>
+              <div className={classes.footer}>
+                <SubmitButton
+                  justify="flex-end"
+                  label={operatorActions[(application?.status?.statusType)].buttonText}
+                  type="button"
+                  submitButtonClassName={classes.button}
+                  onClick={handleNavigation}
+                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                  isDisplayLoader={loading || loadingProspectId === application.prospectId}
+                  isSearchApplicant
+                />
+              </div>
+            </>
+          )}
           {agentId && roActions[(application?.status?.statusType)] && (
             <>
               <div className={classes.lineBreak}></div>

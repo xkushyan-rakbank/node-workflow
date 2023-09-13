@@ -29,6 +29,9 @@ export const getFilledOverviewSignatories = createSelector(
 export const getOverviewOrganizationInfo = state =>
   getProspectOverview(state).organizationInfo || [];
 
+export const getOverviewCompanyAdditionalInfo = state =>
+  getProspectOverview(state).companyAdditionalInfo || [];
+
 export const getOverviewApplicationInfo = state => getProspectOverview(state).applicationInfo || {};
 
 export const getIsEditableStatusSearchInfo = state =>

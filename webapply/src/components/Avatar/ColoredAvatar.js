@@ -5,8 +5,7 @@ import cx from "classnames";
 
 const useStyles = makeStyles(theme => ({
   coloredBackground: {
-    background: props => props.color,
-    color: "#757575"
+    background: props => props.color
   },
   coloredAvatar: {
     fontSize: "16px",

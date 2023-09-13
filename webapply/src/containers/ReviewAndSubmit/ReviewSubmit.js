@@ -30,13 +30,17 @@ import { useViewId } from "../../utils/useViewId";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { rakValuePackages } from "../../constants";
 import { Footer } from "../../components/Footer";
+import { checkLoginStatus, getLoginResponse } from "../../store/selectors/loginSelector";
+import ApplicationChecks from "./components/ApplicationChecks";
 
 export const ReviewSubmit = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   useViewId(true);
   const pushHistory = useTrackingHistory();
+  const { scheme } = useSelector(getLoginResponse);
   const classes = useStyles();
+  const isAgent = useSelector(checkLoginStatus);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -441,6 +445,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                     fieldValues={displayFields}
                     addressFormat={formatAddress}
                     formatDate={formatDate}
+                    scheme={scheme}
                   />
 
                   <StakeholderAdditionalReview
@@ -449,6 +454,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                     formatDate={formatDate}
                     truncateString={truncateString}
                     ibanTypeLabel={getIBANTypeLabel(displayFields.IBANType)}
+                    scheme={scheme}
                   />
                   <ProductInformationReview fieldValues={displayFields} />
 
@@ -483,6 +489,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                       </InformationSection>
                     </Accordion>
                   </div>
+
+                  {isAgent ? <ApplicationChecks /> : <></>}
                 </Form>
               );
             }}

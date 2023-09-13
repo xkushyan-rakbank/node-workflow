@@ -25,7 +25,7 @@ export const useStyles = makeStyles({
     fontSize: "14px",
     lineHeight: 1.33,
     color: "#86868b",
-    marginTop: 5,
+    // marginTop: 5,
     wordBreak: "break-word",
     flex: "0 0 33%",
     "@media (max-width: 500px)": {
@@ -72,5 +72,13 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     flex: 1,
     margin: "0 16px"
+  },
+  reviewSubmit: {
+    margin: "15px 0",
+    boxShadow: "none",
+    background: "none"
+  },
+  declined: {
+    background: "#c3bfbf"
   }
 });

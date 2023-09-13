@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-
 import { useViewId } from "../../utils/useViewId";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
-import { NEXT, formStepper } from "../../constants";
+import { NEXT, formStepper, operatorLoginScheme } from "../../constants";
 import routes from "../../routes";
 import { CompanyInfo } from "./components/CompanyInfo";
 import { OverlayLoader } from "../../components/Loader";
+import { getLoginResponse } from "../../store/selectors/loginSelector";
 
 export const CompanyInfoPage = ({
   sendProspectToAPI,
@@ -21,6 +22,7 @@ export const CompanyInfoPage = ({
   useLayoutParams(false, true);
   useViewId(true);
   const pushHistory = useTrackingHistory();
+  const { scheme } = useSelector(getLoginResponse);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +32,13 @@ export const CompanyInfoPage = ({
     return sendProspectToAPI(NEXT).then(
       isScreeningError => {
         /* istanbul ignore else */
-        if (!isScreeningError) pushHistory(routes.stakeholdersInfo, true);
+        if (!isScreeningError) {
+          if (scheme === operatorLoginScheme) {
+            pushHistory(routes.stakeholdersPreview, true);
+          } else {
+            pushHistory(routes.stakeholdersInfo, true);
+          }
+        }
       },
       () => setIsLoading(false)
     );
