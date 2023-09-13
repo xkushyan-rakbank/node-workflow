@@ -84,7 +84,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
         isAccepted={termsAndConditions.authorisation}
         showInstructionText={
           termsAndConditions.authorisation
-            ? "Your accepted authorization will be sent to your registered email."
+            ? "Your accepted authorizations will be sent to your registered email."
             : ""
         }
       />

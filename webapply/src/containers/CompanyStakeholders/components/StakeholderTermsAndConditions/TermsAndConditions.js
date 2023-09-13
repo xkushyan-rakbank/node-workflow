@@ -78,7 +78,7 @@ export const TermsAndConditions = ({ wcmData }) => {
         isAccepted={termsAndConditions.generalTCs}
         showInstructionText={
           termsAndConditions.generalTCs
-            ? "Your accepted terms and conditions are as provided above."
+            ? "Your accepted terms and conditions are provided above."
             : ""
         }
       />

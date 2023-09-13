@@ -83,7 +83,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
       .when("reasonForTINNotAvailable", {
         is: reasonForTINNotAvailable => reasonForTINNotAvailable === "REA2",
         then: Yup.string()
-          .required(getRequiredMessage("Please explain why you are unable to obtain a TIN"))
+          .required(getRequiredMessage("Remarks"))
           .max(500, "Maximum ${max} characters allowed")
       })
   });
@@ -199,7 +199,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                       <Field
                         name="remarks"
                         path={`${basePath}.remarks`}
-                        label="Please explain why you are unable to obtain a TIN"
+                        label="Remarks"
                         placeholder="Please explain why you are unable to obtain a TIN"
                         multiline
                         minRows="9"
