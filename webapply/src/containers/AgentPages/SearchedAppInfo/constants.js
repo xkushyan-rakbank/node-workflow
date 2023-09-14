@@ -15,6 +15,7 @@ export const STATUS_LOCKED = "locked";
 export const STATUS_FORCE_STOP = "FORCE_STOPPED";
 export const INELIGIBLE = "Ineligible";
 export const WI_SUBMITTED = "WI_SUBMITTED";
+export const OPE_EDIT = "OPE_EDIT";
 
 export const searchedAppInfoSteps = [
   {

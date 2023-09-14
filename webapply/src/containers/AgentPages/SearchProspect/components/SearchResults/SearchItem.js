@@ -159,23 +159,6 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
       </div>
       {prospectVersion === "v2" ? (
         <>
-          {isOperator && operatorActions[(application?.status?.statusType)] && (
-            <>
-              <div className={classes.lineBreak}></div>
-              <div className={classes.footer}>
-                <SubmitButton
-                  justify="flex-end"
-                  label={operatorActions[(application?.status?.statusType)].buttonText}
-                  type="button"
-                  submitButtonClassName={classes.button}
-                  onClick={handleNavigation}
-                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
-                  isDisplayLoader={loading || loadingProspectId === application.prospectId}
-                  isSearchApplicant
-                />
-              </div>
-            </>
-          )}
           {agentId && roActions[(application?.status?.statusType)] && (
             <>
               <div className={classes.lineBreak}></div>
@@ -213,23 +196,19 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         </>
       ) : (
         <>
-          (
-          <>
-            <div className={classes.lineBreak}></div>
-            <div className={classes.footer}>
-              <SubmitButton
-                justify="flex-end"
-                label={"View Application"}
-                type="button"
-                submitButtonClassName={classes.button}
-                onClick={handleNavigation}
-                disabled={application?.status?.reasonCode === STATUS_LOCKED}
-                isDisplayLoader={loadingProspectId === application.prospectId}
-                isSearchApplicant
-              />
-            </div>
-          </>
-          )
+          <div className={classes.lineBreak}></div>
+          <div className={classes.footer}>
+            <SubmitButton
+              justify="flex-end"
+              label={"View Application"}
+              type="button"
+              submitButtonClassName={classes.button}
+              onClick={handleNavigation}
+              disabled={application?.status?.reasonCode === STATUS_LOCKED}
+              isDisplayLoader={loadingProspectId === application.prospectId}
+              isSearchApplicant
+            />
+          </div>
         </>
       )}
     </div>

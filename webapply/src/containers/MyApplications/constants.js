@@ -57,6 +57,10 @@ export const roActions = {
   WI_SUBMITTED: {
     buttonText: "View Details",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
+  OPE_EDIT: {
+    buttonText: "Update Application",
+    mobileStatus: "You’re half way there! Please log in on a desktop to finish the application."
   }
 };
 
@@ -72,12 +76,5 @@ export const custActions = {
   EFR_SUBMITTED: {
     buttonText: "Update information",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
-  }
-};
-
-export const operatorActions = {
-  OPE_EDIT: {
-    buttonText: "Update Application",
-    mobileStatus: "You’re half way there! Please log in on a desktop to finish the application."
   }
 };

@@ -1,21 +1,28 @@
 import React, { useState, useEffect, useCallback } from "react";
 import get from "lodash/get";
 import { isEmpty } from "lodash";
+import { useSelector } from "react-redux";
 
 import { SearchedAppInfoComponent } from "./components/SearchedAppInfo";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../FormLayout";
 import { useDisplayScreenBasedOnViewId } from "../../../utils/useDisplayScreenBasedOnViewId";
-import { searchProspectStepper, APP_STOP_SCREEN_RESULT } from "../../../constants";
+import {
+  searchProspectStepper,
+  APP_STOP_SCREEN_RESULT,
+  operatorLoginScheme
+} from "../../../constants";
 
 import {
   searchedAppInfoSteps,
   STEP_1,
   STATUS_LOCKED,
   STATUS_FORCE_STOP,
-  WI_SUBMITTED
+  WI_SUBMITTED,
+  OPE_EDIT
 } from "./constants";
 import { OverlayLoader } from "../../../components/Loader";
+import { getLoginResponse } from "../../../store/selectors/loginSelector";
 
 export const SearchedAppInfoContainer = ({
   searchResults,
@@ -33,6 +40,7 @@ export const SearchedAppInfoContainer = ({
 
   const initialAvailableSteps = searchedAppInfoSteps.map(item => item.step);
   const [step, setStep] = useState(STEP_1);
+  const { scheme } = useSelector(getLoginResponse);
 
   const handleSetStep = nextStep => {
     if (initialAvailableSteps.includes(nextStep)) {
@@ -85,7 +93,8 @@ export const SearchedAppInfoContainer = ({
     get(prospectOverview, "organizationInfo.screeningInfo.statusOverAll") ===
       APP_STOP_SCREEN_RESULT ||
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP ||
-    get(searchResult, "status.statusType") === WI_SUBMITTED;
+    get(searchResult, "status.statusType") === WI_SUBMITTED ||
+    !(get(searchResult, "status.statusType") === OPE_EDIT && scheme === operatorLoginScheme);
   const fullName = get(searchResult, "applicantInfo.fullName", "");
 
   return (
