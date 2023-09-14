@@ -1,33 +1,19 @@
-import React, { forwardRef, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { forwardRef, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { useStyles } from "../../styled";
 import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNote";
-import {
-  ActivePassiveOptions,
-  YesNoList,
-  entityTypeOptionList
-} from "../../../../../constants/options";
-import {
-  AutoSaveField as Field,
-  GlobalIntermediaryID,
-  InlineRadioGroup
-} from "../../../../../components/Form";
+import { ActivePassiveOptions, YesNoList } from "../../../../../constants/options";
+import { AutoSaveField as Field, InlineRadioGroup } from "../../../../../components/Form";
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
-import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
-import { GLOBAL_INTERMEDIARY_REGEX } from "../../../../../utils/validation";
-import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { updateProspect } from "../../../../../store/actions/appConfig";
 import useDecisions from "../../../../../utils/useDecisions";
 
 // eslint-disable-next-line react/display-name
 export const TaxDeclarationsSection = forwardRef(
   ({ setFieldValue: setFormFieldValue, id, refs }) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
     const { visible: dnfbpFieldVisible } = useDecisions(
       "prospect.companyAdditionalInfo.dnfbpField"
@@ -50,18 +36,6 @@ export const TaxDeclarationsSection = forwardRef(
       const value = JSON.parse(event.target.value);
       const target = event.target.name;
       setFieldValue(target, value);
-      if (target === "isFinancialInstitution") {
-        const globalintermediaryId = values["globalintermediaryId"] || undefined;
-        setFieldValue("globalintermediaryId", globalintermediaryId);
-        if (value === "no") {
-          setFieldValue("globalintermediaryId", "");
-          dispatch(
-            updateProspect({
-              ["prospect.companyAdditionalInfo.globalintermediaryId"]: ""
-            })
-          );
-        }
-      }
     };
 
     const taxDeclarationSchema = Yup.object().shape({
@@ -77,15 +51,6 @@ export const TaxDeclarationsSection = forwardRef(
         .nullable()
         .required()
         .oneOf(["yes", "no"], "Please confirm your entity type is required"),
-      globalintermediaryId: Yup.string().when("isFinancialInstitution", {
-        is: "yes",
-        then: Yup.string()
-          .required(getRequiredMessage("GIIN (Global Intermediary Identification Number)"))
-          .matches(
-            GLOBAL_INTERMEDIARY_REGEX,
-            getInvalidMessage("GIIN (Global Intermediary Identification Number)")
-          )
-      }),
       isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {
         is: "no",
         then: Yup.string()
@@ -102,7 +67,6 @@ export const TaxDeclarationsSection = forwardRef(
       isCompanyUSEntity: "no",
       isFinancialInstitution: "no",
       isNonFinancialInstitution: "active",
-      globalintermediaryId: ""
     };
 
     const initialIsValid = taxDeclarationSchema.isValidSync(initialValues);
