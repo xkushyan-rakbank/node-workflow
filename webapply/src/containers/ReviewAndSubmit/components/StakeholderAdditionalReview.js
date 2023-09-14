@@ -113,7 +113,7 @@ export const StakeholderAdditionalReview = ({
               <p>{truncateString(fieldValues.linkedInURL, 40) || "N/A"}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Background info:</label>
+              <label>Work summary:</label>
               <p>{truncateString(fieldValues.backgroundInfo, 100) || "N/A"}</p>
             </div>
             <div className={classes.infoLabelValue}>
@@ -169,11 +169,11 @@ export const StakeholderAdditionalReview = ({
               <p>{fieldValues.countryOfTaxResidency}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>TIN number:</label>
+              <label>TIN or equivalent:</label>
               <p>{fieldValues.TIN}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Reason for TIN not available:</label>
+              <label>Reason for unavailable TIN:</label>
               <p>{truncateString(fieldValues.reasonForTINNotAvailable, 100)}</p>
             </div>
             <div className={classes.infoLabelValue}>

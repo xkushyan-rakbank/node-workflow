@@ -57,6 +57,10 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues.licenseIssuingAuthority}</p>
             </div>
             <div className={classes.infoLabelValue}>
+              <label>Country of incorporation:</label>
+              <p>{fieldValues.countryOfIncorporation}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>Date of incorporation:</label>
               <p>{formatDate(fieldValues.dateOfIncorporation)}</p>
             </div>
@@ -81,7 +85,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues.anualCashDepositAED}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Countries of business dealing:</label>
+              <label>Countries of business:</label>
               <p>{fieldValues?.countriesOfBusinessDealing}</p>
             </div>
             <div className={classes.infoLabelValue}>
@@ -103,33 +107,36 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
             </div>
           </div>
         </InformationSection>
-        <InformationSection
-          title={"Tax declarations"}
-          showEditIcon={true}
-          routeTo={routes.additionalCompanyInformation}
-        >
+        <InformationSection title={"Tax declarations"} showEditIcon={false}>
           <div className={classes.infoListWrapper}>
-            {fieldValues.dnfbpField === "yes" && (
-              <div className={classes.infoLabelValue}>
-                <label>Designated business dealings:</label>
-                <p>{fieldValues.dnfbpField}</p>
-              </div>
-            )}
             <div className={classes.infoLabelValue}>
               <label>US entity:</label>
               <p>{fieldValues.isCompanyUSEntity}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
+              <label>Tax residency:</label>
+              <p>United Arab Emirates</p>
+            </div>
+            <div className={classes.infoLabelValue}>
+              <label>TIN or equivalent:</label>
+              <p>-</p>
+            </div>
+            <div className={classes.infoLabelValue}>
+              <label>Reason for unavailable TIN:</label>
+              <p>Country does not issue TIN</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>NFE status:</label>
               <p>{fieldValues.isNonFinancialInstitution}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Is your company a financial institution?</label>
+              <label>Financial Institution:</label>
               <p>{fieldValues.isFinancialInstitution}</p>
             </div>
+
             <div className={classes.infoLabelValue}>
-              <label>GIIN number:</label>
-              <p>{fieldValues.globalintermediaryId}</p>
+              <label>Designated business dealings:</label>
+              <p style={{ textTransform: "capitalize" }}>{fieldValues.dnfbpField}</p>
             </div>
           </div>
         </InformationSection>

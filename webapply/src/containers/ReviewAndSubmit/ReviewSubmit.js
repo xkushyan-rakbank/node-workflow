@@ -297,6 +297,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         licenseIssuingAuthority: getLicenseIssuingAuthorityText(
           organizationInfo?.licenseIssuingAuthority
         ),
+        countryOfIncorporation:
+          organizationInfo && getCountryLabel(organizationInfo?.countryOfIncorporation),
         dateOfIncorporation: organizationInfo?.dateOfIncorporation,
         licenseOrCOIExpiryDate: organizationInfo?.licenseOrCOIExpiryDate,
         countriesOfBusinessDealing:
@@ -315,10 +317,9 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         isCompanyUSEntity: companyAdditionalInfo?.isCompanyUSEntity ? "Yes" : "No",
         isNonFinancialInstitution:
           companyAdditionalInfo?.isNonFinancialInstitution === "active" ? "Active" : "Passive",
-        globalintermediaryId: companyAdditionalInfo?.globalintermediaryId || "N/A",
         isFinancialInstitution:
           companyAdditionalInfo?.isFinancialInstitution === "yes" ? "Yes" : "No",
-        dnfbpField: companyAdditionalInfo?.dnfbpField === "yes" ? "Yes" : "No",
+        dnfbpField: companyAdditionalInfo?.dnfbpField,
         signatoryFullName: signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
