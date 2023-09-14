@@ -28,8 +28,8 @@ export const ApplicationOverviewComponent = () => {
       >
         <TwoSteps withHeader />
       </Accordion>
-
-      <Accordion
+      {/* Remove how-to-video component until new video replaced *}
+      {/* <Accordion
         title={"How-to video"}
         id={"how-to-video"}
         classes={{
@@ -42,7 +42,7 @@ export const ApplicationOverviewComponent = () => {
         }}
       >
         <PreliminaryInformation />
-      </Accordion>
+      </Accordion> */}
       <div style={{ marginBottom: "50px" }}>
         <Accordion
           title={"Frequently asked questions"}
