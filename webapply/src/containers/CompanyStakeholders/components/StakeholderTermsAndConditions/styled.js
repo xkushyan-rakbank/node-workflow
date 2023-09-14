@@ -184,20 +184,24 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   content: {
-    padding: "8px 17px",
-    overflow: "auto",
+    padding: "unset",
     height: "400px",
+    "overflow-x": "hidden !important", 
     [theme.breakpoints.up("sm")]: {
-      padding: "8px 40px",
+      padding: "8px 17px",
     },
     [theme.breakpoints.between("sm", "md")]: {
       "overflow-x": "hidden !important",
     },
+    [theme.breakpoints.up("md")]: {
+      padding: "8px 17px", 
+    },
     "& .react-pdf__Page__canvas": {
-      height: "100%!important",
+      height: "100% !important",
+      width: "100% !important",
+      overflow: "hidden",
       [theme.breakpoints.between("sm", "md")]: {
         width: "100% !important",
-       
       }
     }
   },
