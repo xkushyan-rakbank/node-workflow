@@ -102,7 +102,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
       <TermsAndConditions wcmData={wcmData} />
 
       <Footer extraClasses={"oneElement"}>
-        {isOperator ? <BackLink path={routes.stakeholdersPreview} isTypeButton={true} /> : <></>}
+        {isOperator ? <BackLink path={routes.stakeholdersPreview} isTypeButton={true} /> : null}
         <NextStepButton
           isDisplayLoader={isLoading}
           type="button"
