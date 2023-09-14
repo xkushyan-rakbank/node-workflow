@@ -211,8 +211,7 @@ export const useStyles = makeStyles((theme) => ({
     textTransform: "none",
     padding: "15px 16px",
     textAlign: "center",
-    color: "#FFFFFF",
-    background: "#1F1F1F",
+    color: "#3B3A3A",
     width: "65%",
     [theme.breakpoints.up("sm")]: {
       background: "unset",
