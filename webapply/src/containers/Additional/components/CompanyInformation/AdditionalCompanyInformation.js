@@ -159,7 +159,7 @@ export const AddCompanyInformation = ({
               <div className={classes.additionalCompanyInfoContainer}>
                 <div className={classes.companyInfoDetailWrapper}>
                   <div className={classes.companyNameinfoContainer}>
-                    <ColoredAvatar fullName={companyName} color={"#FDE7E8"}>
+                    <ColoredAvatar fullName={companyName} color={"#FDE7E8"} textColor={"#757575"}>
                       {companyName?.charAt(0)?.toUpperCase()}
                     </ColoredAvatar>
                     {companyName}

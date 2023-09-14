@@ -5,7 +5,8 @@ import cx from "classnames";
 
 const useStyles = makeStyles(theme => ({
   coloredBackground: {
-    background: props => props.color
+    background: props => props.color,
+    color: props => props.textColor
   },
   coloredAvatar: {
     fontSize: "16px",
@@ -21,8 +22,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ColoredAvatar = ({ color, children }) => {
-  const classes = useStyles({ color });
+export const ColoredAvatar = ({ color, textColor, children }) => {
+  const classes = useStyles({ color, textColor });
   return (
     <Avatar className={cx(classes.coloredBackground, classes.coloredAvatar)}>{children}</Avatar>
   );
