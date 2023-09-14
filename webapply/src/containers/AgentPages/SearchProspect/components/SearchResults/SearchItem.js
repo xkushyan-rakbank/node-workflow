@@ -128,15 +128,23 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         <div className={classes.appDetails}>
           <span className={classes.appDetailsHeader}>Application details</span>
           <span className={classes.appDetailsinfo}>
-            {`${application.applicantInfo?.email || ""} \n +${application.applicantInfo
-              ?.countryCode || ""}${application.applicantInfo?.mobileNo || ""}`}
+            {application.applicantInfo?.email || ""}
+            <br />
+            {`+${application.applicantInfo?.countryCode || ""}${application.applicantInfo
+              ?.mobileNo || ""}`}
           </span>
         </div>
         <div className={classes.appDetails}>
           <span className={classes.appDetailsHeader}>Company details</span>
-          <span
-            className={classes.appDetailsinfo}
-          >{`${application?.organizationInfo?.companyName} \n TL NO. ${application?.organizationInfo?.licenseNumber}`}</span>
+          {application?.organizationInfo ? (
+            <span className={classes.appDetailsinfo}>
+              {application?.organizationInfo?.companyName}
+              <br />
+              {"TL NO." + application?.organizationInfo?.licenseNumber}
+            </span>
+          ) : (
+            <></>
+          )}
         </div>
         <div className={cx(classes.appDetails, classes.reason)}>
           <span className={classes.appDetailsHeader}>Reason</span>
@@ -205,23 +213,23 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         </>
       ) : (
         <>
-          {ctaStatuses[(application?.status?.statusNotes)] && (
-            <>
-              <div className={classes.lineBreak}></div>
-              <div className={classes.footer}>
-                <SubmitButton
-                  justify="flex-end"
-                  label={ctaStatuses[(application?.status?.statusNotes)].buttonText}
-                  type="button"
-                  submitButtonClassName={classes.button}
-                  onClick={handleNavigation}
-                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
-                  isDisplayLoader={loadingProspectId === application.prospectId}
-                  isSearchApplicant
-                />
-              </div>
-            </>
-          )}
+          (
+          <>
+            <div className={classes.lineBreak}></div>
+            <div className={classes.footer}>
+              <SubmitButton
+                justify="flex-end"
+                label={"View Application"}
+                type="button"
+                submitButtonClassName={classes.button}
+                onClick={handleNavigation}
+                disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                isDisplayLoader={loadingProspectId === application.prospectId}
+                isSearchApplicant
+              />
+            </div>
+          </>
+          )
         </>
       )}
     </div>
