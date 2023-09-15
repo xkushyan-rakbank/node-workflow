@@ -66,15 +66,16 @@ export const ApplicantInfoContainer = ({
         persona: invitationPersona,
         accounttype: invitationAccountType,
         isislamic: invitationIsIslamic,
-        rocode: invitationRoCode
+        rocode: invitationRoCode,
+        alliancecode: invitationAllianceCode
       } = invitationParams || {};
-
       dispatch(
         updateProspect({
           "prospect.applicantInfo.roCode": invitationRoCode,
           "prospect.applicantInfo.persona": invitationPersona,
           "prospect.applicationInfo.accountType": invitationAccountType,
-          "prospect.applicationInfo.islamicBanking": invitationIsIslamic === "true"
+          "prospect.applicationInfo.islamicBanking": invitationIsIslamic === "true",
+          "prospect.applicantInfo.allianceCode": invitationAllianceCode
         })
       );
     }

@@ -29,7 +29,7 @@ import { Footer } from "../../../../components/Footer";
 const inviteSchema = Yup.object({
   custName: Yup.string()
     .required("Please enter your name")
-    .max(100, "Maximum 100 characters allowed")
+    .max(50, "Maximum 50 characters allowed")
     .matches(NAME_REGEX, "Please remove any special character from your name"),
   custEmail: Yup.string()
     .required(getRequiredMessage("Email"))
@@ -92,7 +92,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 placeholder="Customer Name"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0, maxLength: 100 }
+                  inputProps: { tabIndex: 0, maxLength: 50 }
                 }}
                 fieldDescription="Enter customers full name as shown on passport."
               />

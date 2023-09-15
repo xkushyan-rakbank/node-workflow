@@ -84,7 +84,7 @@ const useStyles = makeStyles(theme => ({
 const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required("Please enter your name")
-    .max(100, "Maximum 100 characters allowed")
+    .max(50, "Maximum 50 characters allowed")
     .matches(NAME_REGEX, "Please remove any special character from your name"),
   companyFullName: Yup.string()
     .required(getRequiredMessage("Company’s full name"))
@@ -138,7 +138,8 @@ export const ApplicantInfoComponent = ({
 }) => {
   const classes = useStyles();
   //ro-assist-brd3-16
-  const allianceCodeFromQuery = partnerInfo !== undefined ? partnerInfo.code : "";
+  const allianceCodeFromQuery =
+    partnerInfo !== undefined ? partnerInfo.code : invitationParams?.alliancecode;
   const allianceCodeDisplyText = partnerInfo !== undefined ? partnerInfo.displayText : "";
   const [lemniskValue, setLemniskValue] = useState(false);
   const lemniskCall = value => {
@@ -350,8 +351,8 @@ export const ApplicantInfoComponent = ({
                   </ContexualHelp>
                 </label>
                 <Field
-                  name={allianceCodeFromQuery !== "" ? "allianceCodeFromDataList" : "allianceCode"}
-                  path={allianceCodeFromQuery !== "" ? null : "prospect.applicantInfo.allianceCode"}
+                  name={allianceCodeFromQuery !== "" ? "allianceCode" : "allianceCodeFromDataList"}
+                  path="prospect.applicantInfo.allianceCode"
                   disabled={allianceCodeFromQuery !== ""}
                   component={Input}
                   InputProps={{
