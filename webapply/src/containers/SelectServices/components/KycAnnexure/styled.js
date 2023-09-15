@@ -54,7 +54,8 @@ export const useStyles = makeStyles(theme => ({
     "& th": {
       color: "#0B0B0B",
       padding: "10px 12px",
-      background: "white"
+      background: "white",
+      borderRight: "1px solid #cccccc"
     },
     "& td": {
       color: "#0B0B0B",
@@ -77,6 +78,10 @@ export const useStyles = makeStyles(theme => ({
       //   color: "#808080"
       // }
     }
+  },
+  historyTableHeader: {
+    fontWeight: "bold",
+    textAlign: "center"
   }
 }));
 
