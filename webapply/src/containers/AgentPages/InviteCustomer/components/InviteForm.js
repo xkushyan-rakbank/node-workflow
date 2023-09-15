@@ -77,7 +77,8 @@ export const InviteForm = ({ submitForm, isLoading }) => {
           custMobileNum: "",
           persona: "",
           accountType: "",
-          isIslamic: ""
+          isIslamic: "",
+          allianceCode: ""
         }}
         validationSchema={inviteSchema}
         validateOnChange={true}
@@ -166,6 +167,15 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 options={productVariantOptions}
                 component={SelectAutocomplete}
                 tabIndex="0"
+              />
+              <Field
+                name="allianceCode"
+                label="Partner code"
+                path={"prospect.applicantInfo.allianceCode"}
+                component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0, maxLength: 50 }
+                }}
               />
 
               <Footer>

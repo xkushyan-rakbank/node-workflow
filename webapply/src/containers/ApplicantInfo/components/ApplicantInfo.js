@@ -353,7 +353,7 @@ export const ApplicantInfoComponent = ({
                 <Field
                   name={allianceCodeFromQuery !== "" ? "allianceCode" : "allianceCodeFromDataList"}
                   path="prospect.applicantInfo.allianceCode"
-                  disabled={allianceCodeFromQuery !== ""}
+                  disabled={allianceCodeFromQuery !== "" && allianceCodeFromQuery !== undefined}
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 50 }
