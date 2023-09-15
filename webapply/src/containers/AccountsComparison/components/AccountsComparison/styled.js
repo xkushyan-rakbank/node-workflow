@@ -447,11 +447,20 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center",
 
+  
+
     [theme.breakpoints.between("sm", "md")]: {
       top: "20%",
       left: "65%!important",
       transform: "translateX(-50%)",
       width: "80%", 
+
+      "@media (orientation: portrait)": {
+        top: "20%",
+        left: "70%!important",
+        transform: "translateX(-50%)",
+        width: "40vh"
+      },
     },
 
     "& h2": {
