@@ -251,7 +251,10 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
               </Grid>
             </Grid>
             <Footer>
-              <BackLink path={routes.stakeholdersInfo} isTypeButton={true} />
+              <BackLink
+                path={isOperator ? routes.companyInfo : routes.stakeholdersInfo}
+                isTypeButton={true}
+              />
               <NextStepButton label="Next" type="submit" justify="flex-end" />
             </Footer>
           </Form>
