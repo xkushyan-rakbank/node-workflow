@@ -60,7 +60,7 @@ export const SearchedAppInfoComponent = ({
         {isFromV2 ? (
           <BackLinkButton
             onClick={() => {
-              window.history.go(-2);
+              window.history.back();
             }}
           />
         ) : (

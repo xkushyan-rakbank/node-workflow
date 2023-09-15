@@ -40,7 +40,7 @@ export const ApplicationRedirectPage = ({ setIsApplyEditApplication }) => {
   useEffect(() => {
     if (prospectIdFromStore) {
       setIsLoading(false);
-      history.push({
+      history.replace({
         pathname: generatePath(routes.SearchedAppInfo, {
           id: prospectIdFromStore
         }),

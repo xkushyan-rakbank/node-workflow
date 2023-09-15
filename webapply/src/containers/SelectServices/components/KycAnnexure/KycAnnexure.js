@@ -47,6 +47,7 @@ import {
   getMinDateMessage
 } from "../../../../utils/getValidationMessage";
 import { useStyles } from "./styled";
+import { ROContactHistoryTable } from "./ROContactHistoryTable";
 
 export const kycAnnexureDetailsSchema = () =>
   Yup.object({
@@ -652,6 +653,8 @@ export const KycAnnexureComponent = ({
                 />
               </Grid>
             </Grid>
+            <Divider />
+            <ROContactHistoryTable datalist={kycAnnexureDetails.kycRoDetails} />
             <Divider />
             <Grid container>
               <Field
