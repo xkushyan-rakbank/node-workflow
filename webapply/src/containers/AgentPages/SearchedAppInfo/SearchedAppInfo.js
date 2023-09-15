@@ -94,7 +94,7 @@ export const SearchedAppInfoContainer = ({
       APP_STOP_SCREEN_RESULT ||
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP ||
     get(searchResult, "status.statusType") === WI_SUBMITTED ||
-    !(get(searchResult, "status.statusType") === OPE_EDIT && scheme === operatorLoginScheme);
+    (get(searchResult, "status.statusType") === OPE_EDIT && scheme !== operatorLoginScheme);
   const fullName = get(searchResult, "applicantInfo.fullName", "");
 
   return (
