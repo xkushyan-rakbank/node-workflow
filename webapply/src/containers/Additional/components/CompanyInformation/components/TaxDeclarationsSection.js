@@ -37,15 +37,17 @@ export const TaxDeclarationsSection = forwardRef(
       const target = event.target.name;
       setFieldValue(target, value);
     };
-
     const taxDeclarationSchema = Yup.object().shape({
-      dnfbpField: Yup.string()
-        .nullable()
-        .required()
-        .oneOf(
-          ["yes", "no"],
-          "Is your company dealing in Designated Business Categories is required"
-        ),
+      isdnfbpFieldVisible: Yup.string(),
+      dnfbpField: Yup.string().when("isdnfbpFieldVisible", {
+        is: true,
+        then: Yup.string()
+          .nullable()
+          .required("Is your company dealing in Designated Business Categories is required"),
+        otherwise: Yup.string()
+          .nullable()
+          .notRequired()
+      }),
       isCompanyUSEntity: Yup.string().required(),
       isFinancialInstitution: Yup.string()
         .nullable()
@@ -63,6 +65,7 @@ export const TaxDeclarationsSection = forwardRef(
     });
 
     const initialValues = {
+      isdnfbpFieldVisible: dnfbpFieldVisible,
       dnfbpField: "",
       isCompanyUSEntity: "no",
       isFinancialInstitution: "no",
