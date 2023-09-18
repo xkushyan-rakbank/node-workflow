@@ -50,7 +50,7 @@ const inviteSchema = Yup.object({
   roCode: Yup.string()
     .max(6, "Maximum 6 characters allowed")
     .matches(NUMBER_REGEX, getROInvalidMessage),
-  allianceCode: Yup.string()
+  FreeText1: Yup.string()
     .max(50, "Maximum 50 characters allowed")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
   isIslamic: Yup.boolean().required(),
@@ -78,7 +78,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
           persona: "",
           accountType: "",
           isIslamic: "",
-          allianceCode: ""
+          FreeText1: ""
         }}
         validationSchema={inviteSchema}
         validateOnChange={true}
@@ -169,9 +169,8 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 tabIndex="0"
               />
               <Field
-                name="allianceCode"
+                name="FreeText1"
                 label="Partner code"
-                path={"prospect.applicantInfo.allianceCode"}
                 component={Input}
                 InputProps={{
                   inputProps: { tabIndex: 0, maxLength: 50 }
