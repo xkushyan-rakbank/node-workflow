@@ -196,19 +196,40 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
         </>
       ) : agentId ? (
         <>
-          <div className={classes.lineBreak}></div>
-          <div className={classes.footer}>
-            <SubmitButton
-              justify="flex-end"
-              label={"View Application"}
-              type="button"
-              submitButtonClassName={classes.button}
-              onClick={handleNavigation}
-              disabled={application?.status?.reasonCode === STATUS_LOCKED}
-              isDisplayLoader={loadingProspectId === application.prospectId}
-              isSearchApplicant
-            />
-          </div>
+          {ctaStatuses[application.status.statusNotes] && (
+            <>
+              <div className={classes.lineBreak}></div>
+              <div className={classes.footer}>
+                <SubmitButton
+                  justify="flex-end"
+                  label={ctaStatuses[application.status.statusNotes].buttonText}
+                  type="button"
+                  submitButtonClassName={classes.button}
+                  onClick={handleNavigation}
+                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                  isDisplayLoader={loadingProspectId === application.prospectId}
+                  isSearchApplicant
+                />
+              </div>
+            </>
+          )}
+          {agentId && (
+            <>
+              <div className={classes.lineBreak}></div>
+              <div className={classes.footer}>
+                <SubmitButton
+                  justify="flex-end"
+                  label={"View Application"}
+                  type="button"
+                  submitButtonClassName={classes.button}
+                  onClick={handleNavigation}
+                  disabled={application?.status?.reasonCode === STATUS_LOCKED}
+                  isDisplayLoader={loadingProspectId === application.prospectId}
+                  isSearchApplicant
+                />
+              </div>
+            </>
+          )}
         </>
       ) : (
         <></>
