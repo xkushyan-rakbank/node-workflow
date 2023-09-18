@@ -14,6 +14,9 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
 import { useLayoutParams } from "../FormLayout";
 import { useViewId } from "../../utils/useViewId";
+import { ReactComponent as CongratsIcon } from "../../assets/icons/congratsBallon.svg";
+import { ReactComponent as SubmittedForm } from "../../assets/icons/submittedForm.svg";
+import {ReactComponent as Phone} from "../../assets/icons/pinkPhone.svg";
 
 export const CongratulationsScreen = () => {
   useFormNavigation([true, true, formStepper]);
@@ -35,18 +38,23 @@ export const CongratulationsScreen = () => {
 
   return (
     <>
+      <CongratsIcon className={classes.congratulationIcon} />
       <div className={classes.congratulationsTextWrapper}>
         <SectionTitleWithInfo
-          title={"Thank you!"}
+          title={"Congratulations!"}
           info={`You've successfully submitted your ${accountTypeLabel} account application.`}
           smallInfo
           className={classes.customHeaderTitle}
         />
         <div className={classes.applicationDetailWrapper}>
-          <div>
-            <p className={classes.applicationNumber}>{prospectId}</p>
-            <p className={classes.applicationDesc}>Your application reference number </p>
+          <div className={classes.sectionComponet}>
+            <SubmittedForm className={classes.icon} />
+            <div>
+              <p className={classes.applicationNumber}>{prospectId}</p>
+              <p className={classes.applicationDesc}>Your application reference number </p>
+            </div>
           </div>
+
           <DisclaimerNote
             className={classes.infoWrapper}
             text={
@@ -54,13 +62,15 @@ export const CongratulationsScreen = () => {
             }
             customIcon={<Icon name={ICONS.info} className={classes.infoIcon} alt="infoIcon" />}
           />
-        </div>
+           <div className={classes.horizontalLine}></div>
 
-        <div>
-          <p className={classes.applicationNumber}>Here’s what happens next...</p>
-          <p className={classes.applicationDesc}>
-            Leave the rest to us! We'll be in touch soon to finalise your application.
-          </p>
+           <div className={classes.sectionComponet}>
+            <Phone className={classes.icon}/>
+            <div>
+              <p className={classes.applicationNumber}>Here’s what happens next..</p>
+              <p className={classes.applicationDesc}> Leave the rest to us! We'll be in touch soon to finalise your application. </p>
+            </div>
+          </div>
         </div>
 
         <ContainedButton

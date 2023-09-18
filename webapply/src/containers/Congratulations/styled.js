@@ -36,6 +36,9 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     gap: "30px",
+    borderRadius: "20px",
+    background: "#FFF",
+    border: "#DEDEE2",
     [theme.breakpoints.up("lg")]: {
       gap: "40px"
     }
@@ -71,11 +74,12 @@ export const useStyles = makeStyles(theme => ({
   },
   horizontalLine: {
     backgroundColor: "#E6E6E6",
-    height: "1px"
+    height: "1px",
+    marginTop: "16px"
   },
   infoWrapper: {
     color: "#757575",
-    fontSize: "0.75rem",
+    fosectionComponettSize: "0.75rem",
     fontWeight: 400,
     lineHeight: "16px",
     "& span": {
@@ -130,4 +134,22 @@ export const useStyles = makeStyles(theme => ({
       },
     },
   },
+  sectionComponet: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "16px",
+    alignSelf: "strech",
+    paddingTop: "24px"
+  },
+  icon: {
+    width: "42px",
+    height: "42px",
+    minWidth: "32px",
+    minHeight: "32px",
+    [theme.breakpoints.up("sm")]: {
+      width: "38px",
+      height: "38px",
+    }
+  }
 }));
