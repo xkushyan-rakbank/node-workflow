@@ -433,11 +433,39 @@ export function* getDocumentList() {
 
 const unixTimestamp = () => Date.now();
 
+const checkTokenInvalid = token => {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) {
+      return true;
+    }
+    const payload = JSON.parse(atob(parts[1]));
+    if (typeof payload.exp === "number") {
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (payload.exp < currentTime) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  } catch (error) {
+    return true;
+  }
+};
+
 export function* uploadDocuments({ payload }) {
   try {
     const prospectId = yield select(getProspectId);
-    const headers = yield select(getDocuploaderHeader);
-    const token = yield select(getDocumentUplaoderjwtToken);
+    let headers = yield select(getDocuploaderHeader);
+    let token = yield select(getDocumentUplaoderjwtToken);
+    const isInvalidToken = checkTokenInvalid(token);
+    if (isInvalidToken) {
+      yield call(initDocumentUpload);
+      headers = yield select(getDocuploaderHeader);
+      token = yield select(getDocumentUplaoderjwtToken);
+    }
     const documentList = yield select(getDocumentsList);
     const prospect = yield select(getProspect);
     // find the respective document section from documentList
