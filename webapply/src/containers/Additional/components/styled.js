@@ -22,8 +22,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   additionalSelectionButton: {
     boxSizing: "border-box",
+    padding: "16px",
     [theme.breakpoints.up("sm")]: {
       width: contentWidth,
+      padding: "24px",
     },
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
@@ -31,7 +33,6 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "24px",
     display: "flex",
     flexDirection: "row",
-    padding: "24px",
     alignItems: "center",
     justifyContent: "space-between",
   },
@@ -52,7 +53,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: 20,
     fontWeight: 600,
     [theme.breakpoints.only("xs")]: {
-      fontSize: 16,
+      fontSize: 14,
       width: "50%"
     },
   },
@@ -107,7 +108,6 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     gap: "4px",
     fontWeight: 500
-    
   },
   incompleted: {
     display: "flex",
@@ -341,6 +341,9 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     gap: "30px",
+    [theme.breakpoints.only("xs")]: {
+      gap: "20px",
+    },
     alignItems: "center",
     [theme.breakpoints.up("sm")]: {
       gap: "8px"

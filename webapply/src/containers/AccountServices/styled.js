@@ -115,10 +115,11 @@ export const useStyles = makeStyles((theme) => ({
   packageFeatureWrapper: {
     display: "table",
     textAlign: "center",
-    padding: "18px 17px",
+    padding: "18px 11px",
     paddingTop: "22px!important",
     paddingBottom: "22px!important",
-    width: "30%",
+    width: "33.33%",
+    tableLayout: "fixed",
     [theme.breakpoints.between("sm","md")]: {
       display: "flex",
       alignItems: "center",
