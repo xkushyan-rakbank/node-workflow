@@ -194,9 +194,9 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
             </>
           )}
         </>
-      ) : agentId ? (
+      ) : (
         <>
-          {ctaStatuses[application.status.statusNotes] && (
+          {!agentId && ctaStatuses[application.status.statusNotes] && (
             <>
               <div className={classes.lineBreak}></div>
               <div className={classes.footer}>
@@ -231,8 +231,6 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
             </>
           )}
         </>
-      ) : (
-        <></>
       )}
     </div>
   );
