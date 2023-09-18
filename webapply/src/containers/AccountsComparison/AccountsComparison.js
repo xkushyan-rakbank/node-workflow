@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
 import { accountTypes } from "./components/TableCompare/constants";
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
 import { applicationOverviewRoutesMap, CONVENTIONAL, DEFAULT_REFERRAL_NAME } from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { logout } from "../../store/actions/loginForm";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -17,8 +19,13 @@ export const AccountsComparisonContainer = ({
 }) => {
   let query = useQuery();
 
+  const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
   const queryParams = useLocation().search;
+
+  useEffect(() => {
+    dispatch(logout());
+  }, []);
 
   useEffect(() => {
     let referralName = query.get("product-name");
