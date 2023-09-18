@@ -194,7 +194,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
             </>
           )}
         </>
-      ) : (
+      ) : agentId ? (
         <>
           <div className={classes.lineBreak}></div>
           <div className={classes.footer}>
@@ -210,6 +210,8 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
             />
           </div>
         </>
+      ) : (
+        <></>
       )}
     </div>
   );
