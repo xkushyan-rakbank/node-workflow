@@ -11,18 +11,19 @@ export const FormConfirm = ({ otpType, title, info, changeText }) => {
 
   return (
     <div className={classes.container}>
-      {/* <h2 className={classes.heading}>Confirm It’s You</h2> */}
-      <Otp
-        title={title}
-        info={info}
-        changeText={changeText}
-        otpType={otpType}
-        redirectRoute={otpType === OtpChannel.Sms ? routes.verifyEmailOtp : routes.companyInfo}
-        classes={{
-          centeredContainer: classes.centeredContainer,
-          title: classes.title
-        }}
-      />
+      <div className={classes.otpComponent}>
+        <Otp
+          title={title}
+          info={info}
+          changeText={changeText}
+          otpType={otpType}
+          redirectRoute={otpType === OtpChannel.Sms ? routes.verifyEmailOtp : routes.companyInfo}
+          classes={{
+            centeredContainer: classes.centeredContainer,
+            title: classes.title
+          }}
+        />
+      </div>
     </div>
   );
 };

@@ -11,14 +11,25 @@ export default function FormConfirmMobilePage() {
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(true);
 
-  const { mobileNo, countryCode } = useSelector(getApplicantInfo);
+  const { mobileNo } = useSelector(getApplicantInfo);
+  const suffixNumber = `··· [${mobileNo?.substr(-4)}]`;
+
+  const suffixNumberStyle = {
+    color: "#5E080B",
+    fontWeight: 500,
+  };
 
   return (
     <FormConfirm
       otpType={OtpChannel.Sms}
-      title={"Verify your mobile"}
+      title={"Let's verify your mobile number"}
       // eslint-disable-next-line max-len
-      info={`We sent a 6-digit OTP to the number +${countryCode}${mobileNo}. Please enter it below.`}
+      info={
+        <span>
+          We sent a 6-digit OTP to the number ending in{" "}
+          <span style={suffixNumberStyle}>{suffixNumber}</span>. Please enter it below.
+        </span>
+      }
       changeText={"Change mobile number"}
     />
   );

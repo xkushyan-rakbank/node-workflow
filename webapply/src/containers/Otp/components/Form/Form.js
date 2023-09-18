@@ -28,6 +28,7 @@ export const Form = ({
   changeText,
   info,
   title,
+  otpType,
   classes: extendedClasses,
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -38,7 +39,14 @@ export const Form = ({
 
   return (
     <div className={classes.centeredContainer}>
-      <SectionTitleWithInfo className={classes.title} title={title} info={info} smallInfo />
+      <SectionTitleWithInfo
+        className={classes.title}
+        title={title}
+        info={info}
+        smallInfo
+        showInfoIcon
+        otpType={otpType}
+      />
 
       <Formik initialValues={code} onSubmit={submitForm}>
         {() => (
