@@ -225,23 +225,23 @@ export const Footer = ({ children, extraClasses, hideSaveClose = false }) => {
     <div className={classes.footerWrapper}>
       <div
         className={cx(classes.linkContainerNew, {
-          [classes.linkContainerWithSaveCloseBtn]: showSaveClose
+          [classes.linkContainerWithSaveCloseBtn]: showSaveClose && !hideSaveClose
         })}
       >
         {showSaveClose && !hideSaveClose && isOnlyNextButton && (
           <div className={cx(classes.formNextButton, extraClasses)}>
-            <SaveAndClose />
+            <SaveAndClose hideSaveCloseBtn={hideSaveClose} />
             {children}
           </div>
         )}
         {showSaveClose && !hideSaveClose && !isOnlyNextButton && (
           <div className={cx(classes.formActionButtons, extraClasses)}>
-            <SaveAndClose />
+            <SaveAndClose hideSaveCloseBtn={hideSaveClose} />
             <div className={classes.mobileSaveAndBackSeparator}>|</div>
             {children}
           </div>
         )}
-        {!showSaveClose && (
+        {(!showSaveClose || hideSaveClose) && (
           <div className={cx(classes.formNavigationButton, extraClasses)}>{children}</div>
         )}
       </div>

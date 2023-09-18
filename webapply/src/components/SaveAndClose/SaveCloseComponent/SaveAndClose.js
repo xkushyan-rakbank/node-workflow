@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import cx from "classnames";
+import { CircularProgress, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button/Button";
 import { ConfirmDialog } from "../../Modals";
 import { useStyles } from "./styled";
@@ -7,15 +9,17 @@ import { RAK_SAVE_CLOSE_CONFIRM_MESSAGE } from "../../../containers/AccountsComp
 import routes from "../../../routes";
 import { NEXT } from "../../../constants";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
-import { CircularProgress, Typography } from "@material-ui/core";
+import { checkLoginStatus } from "../../../store/selectors/loginSelector";
 
 export const SaveAndClose = ({
   prospectSaveOnClick,
   extraClasses,
-  isSmallDeviceSaveCloseBtn = false
+  isSmallDeviceSaveCloseBtn = false,
+  hideSaveCloseBtn = false
 }) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
+  const isAgent = useSelector(checkLoginStatus);
 
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
   const [circularProgress, setCircularProgess] = useState(false);
@@ -37,10 +41,14 @@ export const SaveAndClose = ({
     setCircularProgess(true);
     prospectSaveOnClick(NEXT)
       .then(() => {
-        if (isMounted) { 
+        if (isMounted) {
           setIsDisplayConfirmDialog(false);
           setCircularProgess(false);
-          pushHistory(routes.comeBackLogin, true);
+          if (isAgent) {
+            pushHistory(routes.searchProspect, true);
+          } else {
+            pushHistory(routes.comeBackLogin, true);
+          }
         }
       })
       .catch((error) => {
@@ -69,7 +77,9 @@ export const SaveAndClose = ({
     >
       <div className={classes.saveButtonContainer}>
         <Button
-          className={classes.saveCloseBtn}
+          className={cx(classes.saveCloseBtn, {
+            [classes.hideSaveCloseBtn]: hideSaveCloseBtn
+          })}
           variant="outlined"
           onClick={handleSaveAndCloseClick}
         >

@@ -27,7 +27,7 @@ export const SearchProspect = ({
           searchErrorDesc={searchErrorDesc}
         />
       )}
-      <Footer hideSaveClose={true}>
+      <Footer hideSaveClose={true} extraClasses={"oneElement"}>
         <BackLink path={routes.login} isTypeButton={true} />
       </Footer>
     </div>

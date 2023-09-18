@@ -56,7 +56,7 @@ export const SearchedAppInfoComponent = ({
           })}
         </div>
       </FormCard>
-      <Footer>
+      <Footer hideSaveClose={true}>
         <BackLink path={routes.searchProspect} />
         <SubmitButton
           label="Edit"
