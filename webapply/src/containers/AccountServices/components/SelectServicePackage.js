@@ -31,7 +31,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
   };
   return (
     <div className={classes.packageSelectionContainer}>
-      <div className={classes.packageSelectionTitle}>
+      {/* <div className={classes.packageSelectionTitle}>
         <div className={classes.headerWithHelperIcon}>
           <h3>Select your package </h3>
           <ContexualHelp
@@ -45,7 +45,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
             <HelpOutlineIcon className={classes.infoIcon} />
           </ContexualHelp>
         </div>
-      </div>
+      </div> */}
       <Grid container className={classes.packageListWrapper}>
         <Grid item sm={4} xs={6} className={classes.packageList}></Grid>
         <Grid item sm={4} xs={6} className={classes.packageList}>

@@ -59,7 +59,18 @@ const useStyles = makeStyles(theme => ({
         fontSize: "1.25rem",
         color: "#525252",
         fontWeight: "400"
-      }
+      },
+      "& .expandedDescription": {
+        fontWeight: 400,
+        fontSize: "14px",
+        lineHeight: "18px",
+        color: "#757575",
+        margin: 0,
+        [theme.breakpoints.up("sm")]: {
+          fontSize: "20px", 
+          lineHeight: "28px",
+        }
+      },
     }
   },
 
@@ -119,7 +130,8 @@ export const Accordion = ({
   showHelperText,
   setFormFieldValue = () => {},
   expandedByDefault = false,
-  accordionRef
+  accordionRef,
+  expandedDescription
 }) => {
   const dispatch = useDispatch();
   const isTouched = useSelector(isFieldTouched(id));
@@ -192,6 +204,9 @@ export const Accordion = ({
                   )}
                 </p>
                 {subTitle && <p className="subTitle">{subTitle}</p>}
+                {expanded === "isSelectPackage" && expandedDescription && (
+                  <p className="expandedDescription">{expandedDescription}</p>
+                )}
               </div>
             </div>
             <div>

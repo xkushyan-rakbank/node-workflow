@@ -445,11 +445,27 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
             return (
               <Form>
-                <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
+                <div className={classes.packageSelectionWrapper}>
+                  <Accordion
+                    title={"Select your package"}
+                    id={"isSelectPackage"}
+                    expandedDescription={
+                      "Simplify your banking with an optional package that offers convenience and perks for your business."
+                    }
+                    classes={{
+                      accordionRoot: classes.accountServiceAccordionRoot,
+                      accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
+                      accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
+                      accordionDetails: classes.accordionDetails
+                    }}
+                  >
+                    <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
+                  </Accordion>
+                </div>
 
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Preferences"}
+                    title={"Product and service preferences"}
                     showHelperText={
                       "Check your account’s currency and select the branch that’s most convenient for you."
                     }
@@ -526,7 +542,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Account settings"}
+                    title={"Authorisation preferences"}
                     id={"authorizations"}
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
@@ -657,7 +673,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     }
                   >
                     <div className={classes.questionareWrapper}>
-                      <label className={classes.sectionLabel}>Which language do you prefer?</label>
+                      <label className={classes.sectionLabel}>
+                        What language would you prefer for RAKBANK communications?
+                      </label>
                       <Field
                         typeRadio
                         options={PreferredLanguageOptions}
