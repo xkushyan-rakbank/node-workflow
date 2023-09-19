@@ -6,7 +6,7 @@ import { accountTypes } from "./components/TableCompare/constants";
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
 import { applicationOverviewRoutesMap, CONVENTIONAL, DEFAULT_REFERRAL_NAME } from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { logout } from "../../store/actions/loginForm";
+import { resetProspect } from "../../store/actions/appConfig";
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -24,7 +24,7 @@ export const AccountsComparisonContainer = ({
   const queryParams = useLocation().search;
 
   useEffect(() => {
-    dispatch(logout());
+    dispatch(resetProspect());
   }, []);
 
   useEffect(() => {

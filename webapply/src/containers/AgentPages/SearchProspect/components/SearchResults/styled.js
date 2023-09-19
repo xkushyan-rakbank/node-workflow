@@ -170,7 +170,8 @@ export const useStyles = makeStyles({
     fontSize: "0.75rem",
     fontStyle: "normal",
     fontWeight: "400",
-    lineHeight: "1.25rem"
+    lineHeight: "1.25rem",
+    whiteSpace: "pre-wrap"
   },
   reason: {
     maxWidth: "unset"
