@@ -61,7 +61,8 @@ import {
   screeningStatusDefault,
   SCREENING_FAIL_REASONS,
   applicationError,
-  AGE_RESTRICTION
+  AGE_RESTRICTION,
+  NEXT
 } from "../../constants";
 import { setScreeningError } from "../actions/sendProspectToAPI";
 import routes from "../../routes";
@@ -70,12 +71,14 @@ import { NotificationsManager } from "../../components/Notification";
 import { resetFormStep } from "../actions/sendProspectToAPI";
 import { updateProspect } from "../actions/appConfig";
 import { getAgentId, getRoCode } from "../selectors/loginSelector";
+import { sendProspectToAPI } from "../actions/sendProspectToAPI";
+
+const individualId = "SID1";
 
 export function* createKycTransactionSaga() {
   try {
     const headers = yield select(getAuthorizationHeader);
     const prospectId = yield select(getProspectId);
-    const individualId = "SID1";
     const reuseExistingTransaction = true;
     yield put(setLoading(true));
     const response = yield call(
@@ -275,6 +278,9 @@ export function* entityConfirmation(tlia) {
         ...data
       })
     );
+
+    // adding this to clear already saved (if any) editedfullname
+    yield put(updateProspect("prospect.signatoryInfo[0].editedFullName", ""));
   } catch (error) {
     let message = error?.response?.data?.message;
     if (error?.response?.status === 403 && error?.response?.data?.errorCode === "024") {
@@ -361,6 +367,14 @@ function* screeningError(status) {
   if (buttons !== undefined) {
     screenError = { ...screenError, ...buttons };
   }
+
+  yield put(
+    updateProspect({
+      "prospect.signatoryInfo[0].isEFRCheckLimitExceeded": true,
+      "prospect.signatoryInfo[0].signatoryId": individualId
+    })
+  );
+  yield put(sendProspectToAPI(NEXT));
 
   yield put(
     setScreeningError({

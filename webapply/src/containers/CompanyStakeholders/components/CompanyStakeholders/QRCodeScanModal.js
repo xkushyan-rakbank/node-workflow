@@ -214,7 +214,10 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
   }, [linkData, pollStatus]);
 
   useEffect(() => {
-    if (pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase()) {
+    if (
+      pollStatus?.toLowerCase() === WTM_STATUS.FINISHED.toLowerCase() ||
+      pollStatus?.toLowerCase() === WTM_STATUS.INACTIVE.toLowerCase()
+    ) {
       getKycStatus()
         .then(() => {
           setIsLoading(false);

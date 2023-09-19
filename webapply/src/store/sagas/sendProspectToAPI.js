@@ -222,6 +222,13 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
       } else if (viewId === "/AccountInfo") {
         const { debitCardInfo } = prospect[key][0];
         nodePayload = [{ debitCardInfo }];
+      } else if (viewId === "/StakeholdersInfo") {
+        if (prospect[key][0]) {
+          const { isEFRCheckLimitExceeded, signatoryId } = prospect[key][0];
+          if (isEFRCheckLimitExceeded) {
+            nodePayload = [{ isEFRCheckLimitExceeded, signatoryId }];
+          }
+        }
       } else {
         const { editedFullName, debitCardInfo, mothersMaidenName, kycDetails } = prospect[key][0];
         nodePayload = [{ editedFullName, debitCardInfo, mothersMaidenName, kycDetails }];

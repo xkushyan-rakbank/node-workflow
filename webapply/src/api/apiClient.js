@@ -232,7 +232,6 @@ export const analyzeOcrData = {
         }
       })
       .then(function(response) {
-        console.log("Liveness Data Response ", response);
         return response.data;
       });
   },
