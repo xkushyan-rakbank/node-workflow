@@ -197,155 +197,158 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
               accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded
             }}
-            showHelperText={
-              "Enter your residential address(where you are located) and provide at least 1 supporting document."
-            }
             accordionRef={residentialAccordionRef}
           >
-            <Grid container spacing={3}>
-              <Grid item sm={6} xs={12}>
-                <Field
-                  name="addressLine1"
-                  path={`${basePath}.addressLine1`}
-                  label="Flat, villa or building"
-                  placeholder="Flat, villa or building"
-                  InputProps={{
-                    inputProps: { tabIndex: 1, maxLength: 50 }
-                  }}
-                  component={Input}
-                />
+            <div>
+              <div className={classes.descriptionSubField}>
+                <p>Enter your residential address (where you are located).</p>
+              </div>
+
+              <Grid container spacing={3}>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="addressLine1"
+                    path={`${basePath}.addressLine1`}
+                    label="Flat, villa or building"
+                    placeholder="Flat, villa or building"
+                    InputProps={{
+                      inputProps: { tabIndex: 1, maxLength: 50 }
+                    }}
+                    component={Input}
+                  />
+                </Grid>
+                <Grid item sm={6} xs={12}>
+                  <Field
+                    name="poBox"
+                    path={`${basePath}.poBox`}
+                    label="P.O. Box"
+                    placeholder="P.O. Box"
+                    InputProps={{
+                      inputComponent: POBoxNumberInput,
+                      inputProps: {
+                        tabIndex: 0,
+                        maxLength: 6
+                      }
+                    }}
+                    component={Input}
+                  />
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                  <Field
+                    name="addressLine2"
+                    path={`${basePath}.addressLine2`}
+                    label="Street or location"
+                    placeholder="Street or location"
+                    InputProps={{
+                      inputProps: { tabIndex: 1, maxLength: 50 }
+                    }}
+                    component={Input}
+                  />
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                  <Field
+                    name="emirateCity"
+                    path={`${basePath}.emirateCity`}
+                    label="Emirate or city"
+                    placeholder="Emirate or city"
+                    datalistId="emirateCity"
+                    component={SelectAutocomplete}
+                  />
+                </Grid>
+                <Grid item sm={12} xs={12}>
+                  <Field
+                    name="country"
+                    path={`${basePath}.country`}
+                    label="Country"
+                    placeholder="Country"
+                    datalistId="country"
+                    component={SelectAutocomplete}
+                    disabled={true}
+                  />
+                </Grid>
+                <Grid item sm={12}>
+                  <FieldArray name="addressProof">
+                    {({ push, remove, arrayHelpers }) => (
+                      <Grid item sm={12} xs={12}>
+                        <label className="uploadFileDescription">
+                          Proof of Address (max up to 3)
+                          <ContexualHelp
+                            title={"Tenancy contract, Utility bills"}
+                            placement="right"
+                            isDisableHoverListener={false}
+                          >
+                            <HelpOutlineIcon className={classes.helperIcon} />
+                          </ContexualHelp>
+                        </label>
+                        {values.addressProof.map((file, index) => (
+                          <div key={index} style={{ marginBottom: "20px" }}>
+                            <Field
+                              name={`addressProof[${index}]`}
+                              // eslint-disable-next-line max-len
+                              path={`prospect.prospectDocuments.additionalStakeholderDocument.addressProof[${index}]`}
+                              type="file"
+                              fieldDescription={""}
+                              helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                              accept={TL_ACCEPTED_FILE_TYPES}
+                              fileSize={TL_COI_FILE_SIZE}
+                              component={Upload}
+                              showInfoIcon={true}
+                              onDrop={acceptedFile =>
+                                handleDropFile(
+                                  acceptedFile,
+                                  `addressProof[${index}]`,
+                                  touched,
+                                  setTouched,
+                                  setFieldValue,
+                                  index
+                                )
+                              }
+                              file={values.addressProof[index]}
+                              onDelete={() =>
+                                removeAddressProofDocument(
+                                  index,
+                                  values,
+                                  values.addressProof.length,
+                                  setFieldValue
+                                )
+                              }
+                              content={values?.addressProof[index]}
+                              isUploading={isUploading[index]}
+                              mobilecontentPlaceholder={"Upload your file"}
+                            />
+                            {index > 0 && (
+                              <IconButton
+                                aria-label="delete"
+                                style={{
+                                  padding: 0,
+                                  marginTop: "5px",
+                                  width: "100%",
+                                  justifyContent: "end"
+                                }}
+                                onClick={() => removeAddressProofDocument(index, values)}
+                              >
+                                <HighlightOffIcon />
+                              </IconButton>
+                            )}
+                          </div>
+                        ))}
+                        {values.addressProof.length < 3 && (
+                          <Button
+                            color="primary"
+                            variant="outlined"
+                            className={classes.addMoreButton}
+                            onClick={() => push("")}
+                            disabled={!values.addressProof[0]}
+                          >
+                            + Add more
+                          </Button>
+                        )}
+                      </Grid>
+                    )}
+                  </FieldArray>
+                </Grid>
               </Grid>
-              <Grid item sm={6} xs={12}>
-                <Field
-                  name="poBox"
-                  path={`${basePath}.poBox`}
-                  label="P.O. Box"
-                  placeholder="P.O. Box"
-                  InputProps={{
-                    inputComponent: POBoxNumberInput,
-                    inputProps: {
-                      tabIndex: 0,
-                      maxLength: 6
-                    }
-                  }}
-                  component={Input}
-                />
-              </Grid>
-              <Grid item sm={12} xs={12}>
-                <Field
-                  name="addressLine2"
-                  path={`${basePath}.addressLine2`}
-                  label="Street or location"
-                  placeholder="Street or location"
-                  InputProps={{
-                    inputProps: { tabIndex: 1, maxLength: 50 }
-                  }}
-                  component={Input}
-                />
-              </Grid>
-              <Grid item sm={12} xs={12}>
-                <Field
-                  name="emirateCity"
-                  path={`${basePath}.emirateCity`}
-                  label="Emirate or city"
-                  placeholder="Emirate or city"
-                  datalistId="emirateCity"
-                  component={SelectAutocomplete}
-                />
-              </Grid>
-              <Grid item sm={12} xs={12}>
-                <Field
-                  name="country"
-                  path={`${basePath}.country`}
-                  label="Country"
-                  placeholder="Country"
-                  datalistId="country"
-                  component={SelectAutocomplete}
-                  disabled={true}
-                />
-              </Grid>
-              <Grid item sm={12}>
-                <FieldArray name="addressProof">
-                  {({ push, remove, arrayHelpers }) => (
-                    <Grid item sm={12} xs={12}>
-                      <label className="uploadFileDescription">
-                        Proof of Address (max up to 3)
-                        <ContexualHelp
-                          title={"Tenancy contract, Utility bills"}
-                          placement="right"
-                          isDisableHoverListener={false}
-                        >
-                          <HelpOutlineIcon className={classes.helperIcon} />
-                        </ContexualHelp>
-                      </label>
-                      {values.addressProof.map((file, index) => (
-                        <div key={index} style={{ marginBottom: "20px" }}>
-                          <Field
-                            name={`addressProof[${index}]`}
-                            // eslint-disable-next-line max-len
-                            path={`prospect.prospectDocuments.additionalStakeholderDocument.addressProof[${index}]`}
-                            type="file"
-                            fieldDescription={""}
-                            helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                            accept={TL_ACCEPTED_FILE_TYPES}
-                            fileSize={TL_COI_FILE_SIZE}
-                            component={Upload}
-                            showInfoIcon={true}
-                            onDrop={acceptedFile =>
-                              handleDropFile(
-                                acceptedFile,
-                                `addressProof[${index}]`,
-                                touched,
-                                setTouched,
-                                setFieldValue,
-                                index
-                              )
-                            }
-                            file={values.addressProof[index]}
-                            onDelete={() =>
-                              removeAddressProofDocument(
-                                index,
-                                values,
-                                values.addressProof.length,
-                                setFieldValue
-                              )
-                            }
-                            content={values?.addressProof[index]}
-                            isUploading={isUploading[index]}
-                            mobilecontentPlaceholder={"Upload your file"}
-                          />
-                          {index > 0 && (
-                            <IconButton
-                              aria-label="delete"
-                              style={{
-                                padding: 0,
-                                marginTop: "5px",
-                                width: "100%",
-                                justifyContent: "end"
-                              }}
-                              onClick={() => removeAddressProofDocument(index, values)}
-                            >
-                              <HighlightOffIcon />
-                            </IconButton>
-                          )}
-                        </div>
-                      ))}
-                      {values.addressProof.length < 3 && (
-                        <Button
-                          color="primary"
-                          variant="outlined"
-                          className={classes.addMoreButton}
-                          onClick={() => push("")}
-                          disabled={!values.addressProof[0]}
-                        >
-                          + Add more
-                        </Button>
-                      )}
-                    </Grid>
-                  )}
-                </FieldArray>
-              </Grid>
-            </Grid>
+            </div>
           </Accordion>
         );
       }}

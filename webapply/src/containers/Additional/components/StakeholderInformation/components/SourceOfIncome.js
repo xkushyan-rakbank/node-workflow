@@ -258,6 +258,21 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
     );
   };
 
+  const sourceOfIncomeInformation = (
+    <div className={classes.descriptionSubField}>
+      <p>
+        Please provide any of the following documents (from the last 3 months) as proof of income:
+      </p>
+      <div className={classes.proofOfIncomePoints}>
+        <ul>
+          <li>Bank statement/credit card statement</li>
+          <li>Salary certificate/labour contract/qualification degree</li>
+          <li>Audited financial report</li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
     <Formik
       initialValues={initialValues}
@@ -279,12 +294,15 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
               accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded
             }}
-            showHelperText={
-              "We need this information to verify and understand the source(s) of your business income. You can provide your IBAN or upload bank statements as proof of income."
-            }
             accordionRef={sourceOfIncomeAccordionRef}
           >
             <>
+              <div className={classes.descriptionSubField}>
+                <p>
+                  To run a standard background check, we need the details of your employment and
+                  qualifications as are relevant to your current position.
+                </p>
+              </div>
               <Grid container>
                 <Grid item sm={12} xs={12}>
                   <Field
@@ -382,6 +400,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
                     </Grid>
                   </>
                 )}
+
                 <Grid container spacing={3} style={{ marginBottom: "20px" }}>
                   <FieldArray name="proofOfIncome">
                     {({ push, remove, arrayHelpers }) => (
@@ -423,6 +442,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
                               content={values?.proofOfIncome[index]}
                               isUploading={isUploading[index]}
                               mobilecontentPlaceholder={"Upload your file"}
+                              notedText={index === 0 ? sourceOfIncomeInformation : null}
                             />
                             {index > 0 && (
                               <IconButton

@@ -394,6 +394,27 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       whiteSpace: "break-spaces"
     }
+  },
+  descriptionSubField: {
+    fontSize: "13px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "20px",
+    color: "#757575",
+    [theme.breakpoints.up("sm")]:{
+      fontSize: "14px",
+    }
+  },
+  proofOfIncomePoints: {
+    fontSize: "13px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "20px",
+    color: "#757575",
+    marginBottom: "24px",
+    [theme.breakpoints.up("sm")]:{
+      fontSize: "14px",
+    } 
   }
 
 }));

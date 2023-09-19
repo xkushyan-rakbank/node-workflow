@@ -157,12 +157,16 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
               accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded
             }}
-            showHelperText={
-              "We ask for educational and professional background information as part of our due-diligence process. Verifying the identities of the people associated with your business is standard."
-            }
             accordionRef={backgroundAccordionRef}
           >
             <>
+              <div className={classes.descriptionSubField}>
+                <p>
+                  To run a standard background check, we need the details of your employment and
+                  qualifications as are relevant to your current position.
+                </p>
+              </div>
+
               <p className={classes.sectionLabel}>Education and employment</p>
               <Grid container spacing={3}>
                 <Grid item sm={12} xs={12}>
@@ -174,7 +178,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
                     isSearchable
                     component={SelectAutocomplete}
                     tabIndex="0"
-                    onBlur={(e) => handleBlur(e.target.value, errors)}
+                    onBlur={e => handleBlur(e.target.value, errors)}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12}>
@@ -256,7 +260,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
                 multiline
                 rows="9"
                 InputProps={{
-                  inputProps: { tabIndex: 0, maxLength: 2000, minLength: 100 },
+                  inputProps: { tabIndex: 0, maxLength: 2000, minLength: 100 }
                 }}
                 component={Input}
                 fieldDescription={

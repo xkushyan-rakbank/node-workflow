@@ -39,6 +39,7 @@ export const Upload = ({
   infoTitle,
   infoIcon = false,
   isUploading = false,
+  notedText,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
@@ -79,6 +80,7 @@ export const Upload = ({
             )}
           </div>
         </ContexualHelp>
+        {notedText}
 
         <div className={classes.uplaodContainer}>
           <div className={classes.main} {...getRootProps()}>
