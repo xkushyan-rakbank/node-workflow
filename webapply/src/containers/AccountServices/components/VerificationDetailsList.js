@@ -72,6 +72,7 @@ export const VerificationDetailsList = ({ values, setFieldValue, ...props }) => 
                         inputProps: { tabIndex: 0 }
                       }}
                       changeProspect={changeDateProspectHandler}
+                      maxDate={new Date()}
                     />
                   </Grid>
                   <Grid item sm={6} xs={12}>
