@@ -116,7 +116,7 @@ export const CompanyInfo = ({
       })
     ),
     moa: Yup.mixed()
-      .test("required", getRequiredMessage("MOA"), file => {
+      .test("required", getRequiredMessage("This field"), file => {
         if (file) return true;
         return false;
       })
@@ -127,35 +127,49 @@ export const CompanyInfo = ({
             (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
         );
       }),
-    licenseIssuingAuthority: Yup.string().required(getRequiredMessage("Trading issuing authority")),
-    countryOfIncorporation: Yup.string().required(getRequiredMessage("Country or incorporation")),
+    licenseIssuingAuthority: Yup.string().required(
+      getRequiredMessage("License Issuance Authority")
+    ),
+    countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
     licenseOrCOINumber: Yup.string()
-      .required(getRequiredMessage("License Or COINumber"))
+      .required(getRequiredMessage("License number"))
       .matches(/^[a-zA-Z0-9./\- ]+$/, {
-        message: "Invalid Format"
+        message: getInvalidMessage("Licence number")
       }),
     licenseOrCOIExpiryDate: Yup.date()
       .nullable()
-      .min(addDays(new Date(), 9), getInvalidMessage("License or COI expiry date"))
-      .typeError(getInvalidMessage("License or COI expiry date"))
+      .test(
+        "minDate",
+        "This expiration date has already passed. Please select a valid date.",
+        value => {
+          if (!value) return false;
+          const inputDate = new Date(value);
+          return inputDate.getTime() >= addDays(new Date(), 9);
+        }
+      )
+      .typeError(getInvalidMessage("License expiry date"))
       .required(getRequiredMessage("License or COI expiry date")),
     dateOfIncorporation: Yup.date()
       .nullable()
       .typeError(getInvalidMessage("Date Of Incorporation"))
       .required(getRequiredMessage("Date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
-      .test("required", getRequiredMessage("Trade License Or COI"), file => {
+      .test("required", getRequiredMessage("This field"), file => {
         if (file) return true;
         return false;
       })
-      .test("fileSize", "The file is too large", file => {
-        return (
-          file &&
-          (file === true ||
-            (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-              file.fileSize <= TL_COI_FILE_SIZE.maxSize))
-        );
-      })
+      .test(
+        "fileSize",
+        "The file size is too big. Please upload a file less than or equal to 10MB.",
+        file => {
+          return (
+            file &&
+            (file === true ||
+              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+          );
+        }
+      )
   };
 
   function onUploadSuccess(props) {

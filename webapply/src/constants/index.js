@@ -134,15 +134,16 @@ const EXIST = "We already have your application. Not to worry, our team is alrea
 const INVALID_ID = "Invalid Prospect ID";
 const COMMON_ERROR =
   "We already have your application. Not to worry, our team is already working on it.";
-export const INVALID_DOCUMENT = "Invalid Document Error";
+export const INVALID_DOCUMENT = "Please scan/upload a valid file.";
 
 export const EID_EXPIRY =
   "Your Emirates ID has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed Emirates ID";
 export const AGE_RESTRICTION =
   "Please ensure that the uploaded EID or passport corresponds to an age above 18 years. Failing to meet this criteria may result in the decline of your application.";
 export const PASSPORT_EXPIRY =
-  "Your passport has expired/ is expiring in next 10 days. Please scan/upload a valid/renewed passport";
-export const DOC_MISMATCH = "Your emirates ID and passport do not match";
+  "Your passport has expired/ is expiring in next 10 days. Please upload a valid/ renewed passport.";
+export const DOC_MISMATCH =
+  "Your Emirates ID and Passport do not match. Please upload a valid Passport or Emirates ID.";
 export const IDENTITY_VERIFICATION_FAIL = "Verification failed";
 
 export const PROSPECT_STATUSES = {

@@ -261,7 +261,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         .required(getRequiredMessage("Name"))
         .max(MAX_DEBIT_CARD_NAME_LENGTH, "Maximum ${max} characters allowed")
         .min(MIN_DEBIT_CARD_NAME_LENGTH, "Minimum ${max} characters required")
-        .matches(NAME_REGEX, "Please remove any special character from your name")
+        .matches(NAME_REGEX, getInvalidMessage("name"))
     }),
     branchId: Yup.string().required(getRequiredMessage("Branch")),
     accountEmirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),

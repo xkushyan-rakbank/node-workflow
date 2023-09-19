@@ -105,7 +105,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
         let path = "prospect.prospectDocuments.stakeholderAdditionalInfo.addressProof";
         let saveProspectPath = `stakeholdersDocuments.0_${[signatoryName]}.additionalDocuments`;
         let proofDoc = { ...isUploading };
-        proofDoc[index || name] = true;
+        proofDoc[`${index}_stakeholder` || name] = true;
         setIsUploading(proofDoc);
         dispatch(
           uploadDocuments({
@@ -123,12 +123,12 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
 
               setFieldValue(name, fileStore);
               setTouched({ ...touched, ...{ [name]: true } });
-              proofDoc[index || name] = false;
+              proofDoc[`${index}_stakeholder` || name] = false;
               setIsUploading(proofDoc);
             },
             onFailure: () => {
               setFieldValue(name, "");
-              proofDoc[index || name] = false;
+              proofDoc[`${index}_stakeholder` || name] = false;
               setIsUploading(proofDoc);
             },
             index,

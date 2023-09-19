@@ -85,7 +85,7 @@ const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required("Please enter your name")
     .max(50, "Maximum 50 characters allowed")
-    .matches(NAME_REGEX, "Please remove any special character from your name"),
+    .matches(NAME_REGEX, getInvalidMessage("name")),
   companyFullName: Yup.string()
     .required(getRequiredMessage("Company’s full name"))
     // eslint-disable-next-line no-template-curly-in-string
@@ -93,14 +93,14 @@ const aplicantInfoSchema = Yup.object({
   email: Yup.string()
     .required(getRequiredMessage("Email"))
     .max(50, "Maximum 50 characters allowed")
-    .email("Please enter a valid email address without any special characters"),
+    .email(getInvalidMessage("email")),
   countryCode: Yup.string().required(getRequiredMessage("Country code")),
   mobileNo: Yup.string()
     .required(getRequiredMessage("Mobile Number"))
     .phoneNo({
       codeFieldName: "countryCode",
       fieldName: "Mobile Number",
-      message: "Please enter a valid mobile number"
+      message: getInvalidMessage("mobile number")
     }),
   roCode: Yup.string()
     .max(6, "Maximum 6 characters allowed")

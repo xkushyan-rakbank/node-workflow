@@ -43,7 +43,7 @@ export const TaxDeclarationsSection = forwardRef(
         is: true,
         then: Yup.string()
           .nullable()
-          .required("Is your company dealing in Designated Business Categories is required"),
+          .required("Designated Business Dealings is required"),
         otherwise: Yup.string()
           .nullable()
           .notRequired()
@@ -69,7 +69,7 @@ export const TaxDeclarationsSection = forwardRef(
       dnfbpField: "",
       isCompanyUSEntity: "no",
       isFinancialInstitution: "no",
-      isNonFinancialInstitution: "active",
+      isNonFinancialInstitution: "active"
     };
 
     const initialIsValid = taxDeclarationSchema.isValidSync(initialValues);
