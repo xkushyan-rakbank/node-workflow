@@ -277,19 +277,31 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           mobileAccountsData={mobileAccounts}
         />
         <div className={classes.featureDataInfo}>
-          <p>*RAKstarter Business Current Account Customer with:</p>
-          <ul>
-            <li>
-              {
-                "Monthly average credit balance >= AED 250,000.00, Monthly Account Maintenance fee is waived, but Digital Banking Fee is applicable."
-              }
-            </li>
-            <li>
-              {
-                "Monthly average credit balance <= AED 250,000.00, Monthly Account Maintenance fee is applicable, but Digital Banking Fee is not applicable."
-              }
-            </li>
-          </ul>
+          <div className={classes.featureInfo}>
+            <p>*Waiver only applies to RAKBANK charges.</p>
+            <p>
+              **Services are part of RAKValue SME PLUS and MAX Packages. Please refer to the{" "}
+              <a target="_blank" rel="noopener noreferrer" href={servicePricingGuideUrl}>
+                Service & Price guide.
+              </a>
+            </p>
+          </div>
+          <br />
+          <div>
+            <p>For RAKstarter and Business Current Account customers:</p>
+            <ul>
+              <li>
+                {
+                  "Monthly average credit balance >= AED 250,000.00, Monthly Account Maintenance fee is waived, but Digital Banking Fee is applicable."
+                }
+              </li>
+              <li>
+                {
+                  "Monthly average credit balance <= AED 250,000.00, Monthly Account Maintenance fee is applicable, but Digital Banking Fee is not applicable."
+                }
+              </li>
+            </ul>
+          </div>
         </div>
         <div className={classes.featureInfo}>
           <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>

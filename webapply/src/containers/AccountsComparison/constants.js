@@ -67,7 +67,7 @@ export const featuresDataList = [
     elite: "AED"
   },
   {
-    info: "Foreign currency",
+    info: "Foreign currency transactions",
     starter: { ic: checkIcon },
     currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }
@@ -88,13 +88,13 @@ export const feesChargesDataRows = [
     elite: "AED 262.50"
   },
   {
-    info: "Monthly maintenance fees*",
+    info: "Monthly maintenance fees",
     starter: "AED 103.95",
     currentAccount: "AED 52.50",
     elite: "Zero"
   },
   {
-    info: "Monthly digital banking fees*",
+    info: "Monthly digital banking fees",
     starter: "AED 52.50",
     currentAccount: "AED 52.50",
     elite: "AED 52.50"
@@ -108,19 +108,19 @@ export const perksDataRows = [
     elite: { ic: crossIcon }
   },
   {
-    info: "Free remittances",
+    info: "Free remittances*",
     starter: { ic: checkIcon },
     currentAccount: { ic: crossIcon },
     elite: { ic: checkIcon }
   },
   {
-    info: "Preferential FX rates",
+    info: "Preferential FX rates**",
     starter: { ic: checkIcon },
     currentAccount: { ic: crossIcon },
     elite: { ic: checkIcon }
   },
   {
-    info: "Free accounting packages and business insurance",
+    info: "Free accounting packages and\nbusiness insurance**",
     starter: { ic: checkIcon },
     currentAccount: { ic: crossIcon },
     elite: { ic: crossIcon }
