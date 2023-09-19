@@ -89,8 +89,10 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
     ) || "-";
 
   const declineRemarks =
-    get(application, "notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineRemarks") ||
-    "-";
+    get(
+      application,
+      "notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineRemarks"
+    )?.replaceAll("<br/>", "\n") || "-";
 
   return (
     <div key={key} className={classes.searchItemCard}>
