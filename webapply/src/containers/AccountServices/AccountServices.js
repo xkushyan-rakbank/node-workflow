@@ -652,7 +652,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           label: classes.radioLabelRoot,
                           parent: classes.radioConatiner
                         }}
-                        radioColor={!values.statementsVia ? "#fff" : "#00CA2C"}
+                        radioColor={!values.statementsVia ? "primary" : "#00CA2C"}
                         onChange={accountServiceChangeHandler}
                       />
                     </div>
