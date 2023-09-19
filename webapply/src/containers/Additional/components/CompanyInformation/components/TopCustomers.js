@@ -23,7 +23,7 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
   const addCustomers = (arrayHelpers, arrayLength) => {
     arrayHelpers.insert(arrayLength, {
       name: "",
-      country: "AE"
+      country: ""
     });
   };
 

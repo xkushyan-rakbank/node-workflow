@@ -21,7 +21,7 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
   const addSupplier = (arrayHelpers, arrayLength) => {
     arrayHelpers.insert(arrayLength, {
       name: "",
-      country: "AE"
+      country: ""
     });
   };
 
