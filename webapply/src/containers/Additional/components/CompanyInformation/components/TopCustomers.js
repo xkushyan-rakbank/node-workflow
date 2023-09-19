@@ -25,10 +25,6 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
       name: "",
       country: "AE"
     });
-    if (values.topCustomers[0].name === "Walk-in Customer") {
-      setFieldValue(`topCustomers[${arrayLength}].name`, "Walk-in Customer");
-      setFieldValue(`topCustomers[${arrayLength}].country`, "AE");
-    }
   };
 
   const removeCustomer = (arrayHelpers, itemIndex) => {
@@ -110,6 +106,16 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
                       datalistId="country"
                       component={SelectAutocomplete}
                       classes={{ formControlRoot: classes.customLabel }}
+                      onChange={value => {
+                        setFieldValue(`topCustomers[${index}].country`, value);
+                        if (
+                          index === 0 &&
+                          value !== "AE" &&
+                          values.topCustomers[0].name === "Walk-in Customer"
+                        ) {
+                          setFieldValue("topCustomers[0].name", "");
+                        }
+                      }}
                     />
                     {values.topCustomers.length > 1 && index > 0 && (
                       <IconButton
