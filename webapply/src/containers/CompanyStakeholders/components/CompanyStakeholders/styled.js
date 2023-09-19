@@ -56,6 +56,7 @@ export const useStyles = makeStyles(theme => ({
     background: "#F7F8F9",
     borderRadius: "10px",
     marginTop: "16px",
+    justifyContent: "space-between",
     "@media (max-width: 425px)": {
       flexDirection: "column",
       padding: "24px 10px"
@@ -64,8 +65,13 @@ export const useStyles = makeStyles(theme => ({
   descriptionWrapper: {
     display: "flex",
     alignItems: "center",
-    gap: "20px",
+    gap: "24px",
     "& div": {
+      display: "flex",
+      flexDirection: "row",
+      gap: "8px",
+      alignItems: "center",
+      justifyContent: "center",
       "& h6": {
         fontSize: "16px",
         fontWeight: 500,
@@ -73,21 +79,12 @@ export const useStyles = makeStyles(theme => ({
         color: "#1F1F1F",
         margin: "0px",
         marginBottom: "4px"
-      },
-      "& p": {
-        fontSize: "14px",
-        fontWeight: 400,
-        lineHeight: "20px",
-        letterSpacing: "0em",
-        textAlign: "left",
-        margin: "0px",
-        color: "#757575"
       }
     }
   },
   verifyMobileIcon: {
-    width: "30px",
-    height: "24px",
+    width: "72px",
+    height: "72px",
     "@media (max-width: 425px)": {
       width: "40px",
       height: "44px"
@@ -97,7 +94,7 @@ export const useStyles = makeStyles(theme => ({
     height: "40px",
     minWidth: "206px",
     borderRadius: "21px",
-    border: "1px solid #1F1F1F",
+    border: "2px solid #1F1F1F",
     background: "transparent",
     fontSize: "14px",
     fontWeight: 600,
@@ -105,7 +102,7 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: "0px",
     textAlign: "center",
     color: "#1F1F1F",
-    textTransform: "none",
+    textTransform: "uppercase",
     padding: "9px 24px",
     whiteSpace: "nowrap",
     "@media (max-width: 425px)": {
@@ -496,5 +493,18 @@ export const useStyles = makeStyles(theme => ({
   },
   stakeholderContainer: {
     paddingTop: "0!important"
+  },
+  helperIcon: {
+    color: "#525252",
+    width: "16px",
+    height: "16px",
+    paddingBottom: "2px"
+  },
+  moveToMobile: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "8px",
+    alignItems: "center",
+    justifyContent: "center"
   }
 }));
