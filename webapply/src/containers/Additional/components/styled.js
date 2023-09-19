@@ -70,7 +70,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "60px",
   },
   actionButton: {
-    width: "120px",
+    width: "auto",
+    minWidth: "69px",
     height: "45px",
     borderRadius: "10px",
     textTransform: "capitalize",
@@ -102,18 +103,22 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     background: "#ECF9F2",
     color: "#157947",
-    minWidth: "98px",
+    minWidth: "50px",
     padding: "8px",
     borderRadius: "10px",
     alignItems: "center",
     gap: "4px",
-    fontWeight: 500
+    fontWeight: 500,
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "98px",
+    }
   },
   incompleted: {
     display: "flex",
-    background: "#FFF2CC",
-    color: "#664D00",
-    minWidth: "99px",
+    background: "#E6E6E6",
+    color: "#332600",
+    width: "auto",
+    minWidth: "69px",
     padding: "8px",
     borderRadius: "10px",
     alignItems: "center",
@@ -371,5 +376,24 @@ export const useStyles = makeStyles((theme) => ({
     "& .activePanel": {
       display: "none!important"
     }
+  },
+  descritionContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  description: {
+    fontSize: "14px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "20px",
+    color: "#757575",
+    width: "100%",
+    textAlign: "left",
+    
+    [theme.breakpoints.up("sm")]: {
+      whiteSpace: "break-spaces"
+    }
   }
+
 }));

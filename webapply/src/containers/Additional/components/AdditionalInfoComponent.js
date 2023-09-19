@@ -13,14 +13,13 @@ import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_scor
 import { Footer } from "../../../components/Footer";
 import { ContexualHelp } from "../../../components/Notifications";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import {ReactComponent as ClockIcon } from "../../../assets/icons/clock.svg"
 
 const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, helperText }) => {
   const classes = useStyles();
 
   const getStatusText = () => {
     if (status === "inProgress") {
-      return "Incomplete";
+      return "Up Next";
     } else if (status === "completed") {
       return "Completed";
     } else {
@@ -34,15 +33,17 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
         <div className={classes.sectionContainer}>
           <div className={classes.title}>{text}</div>
           {showHelper && (
-            <ContexualHelp
-              title={helperText}
-              placement="right"
-              isDisableHoverListener={false}
-            >
+            <ContexualHelp title={helperText} placement="right" isDisableHoverListener={false}>
               <HelpOutlineIcon className={classes.helperIcon} />
             </ContexualHelp>
           )}
         </div>
+        {helperText && (
+          <div className={classes.descritionContainer}>
+            {" "}
+            <p className={classes.description}>{helperText}</p>
+          </div>
+        )}
       </div>
       <div className={classes.buttonWrap}>
         {!status ? (
@@ -51,9 +52,8 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
             className={cx(classes.actionButton, classes.btnAdd)}
             onClick={onClick}
             disabled={disabled}
-            startIcon={<ClockIcon />}
           >
-            Start
+            {disabled === true ? "Up Next" : "Start"}
           </Button>
         ) : (
           <div
@@ -62,7 +62,7 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
               status === "inProgress" ? classes.incompleted : classes.success
             )}
           >
-            {status === "inProgress" ? <ClockIcon /> : <SuccessIcon />}
+            {status === "completed" ? <SuccessIcon /> : null}
             <span>{getStatusText()}</span>
           </div>
         )}
@@ -111,7 +111,6 @@ export default function AdditionalInfoComponent() {
               onClick={() => navigateTo(routes.additionalCompanyInformation)}
               disabled={false}
               text="Company information"
-              showHelper={true}
               helperText="Details about your buyers and suppliers, financial turnover, addresses and tax declarations help us better understand your company and business needs."
             />
           </div>
@@ -127,7 +126,6 @@ export default function AdditionalInfoComponent() {
             onClick={() => navigateTo(routes.additionalStakeholderInformation)}
             disabled={!isStakeholderEnabled}
             text="Stakeholder information"
-            showHelper={true}
             helperText="Stakeholders include proprietors, shareholders, partners, signatories and those who hold power of attorney. Information about your individual stakholders helps us better understand your company and business needs. Note that all sections are required."
           />
         </div>

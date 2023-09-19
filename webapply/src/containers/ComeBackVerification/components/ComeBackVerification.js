@@ -24,7 +24,7 @@ export const ComeBackVerificationComponent = ({ redirectRoute, otpType, roInvite
         info={
           otpType === "sms" ? (
             <span>
-              We sent a 6-digit OTP to the number ending in{" "}
+              We sent a 6-digit OTP to the number{" "}
               <span style={suffixNumberStyle}>
                 +{countryCode}
                 {mobileNo}

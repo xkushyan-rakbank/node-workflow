@@ -11,12 +11,11 @@ export default function FormConfirmMobilePage() {
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(true);
 
-  const { mobileNo } = useSelector(getApplicantInfo);
-  const suffixNumber = `··· [${mobileNo?.substr(-4)}]`;
+  const { mobileNo, countryCode } = useSelector(getApplicantInfo);
 
   const suffixNumberStyle = {
     color: "#5E080B",
-    fontWeight: 500,
+    fontWeight: 500
   };
 
   return (
@@ -26,8 +25,11 @@ export default function FormConfirmMobilePage() {
       // eslint-disable-next-line max-len
       info={
         <span>
-          We sent a 6-digit OTP to the number ending in{" "}
-          <span style={suffixNumberStyle}>{suffixNumber}</span>. Please enter it below.
+          We sent a 6-digit OTP to the number{" "}
+          <span style={suffixNumberStyle}>
+            +{countryCode}{mobileNo}
+          </span>
+          . Please enter it below.
         </span>
       }
       changeText={"Change mobile number"}
