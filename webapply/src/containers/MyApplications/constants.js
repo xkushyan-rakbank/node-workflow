@@ -58,6 +58,10 @@ export const roActions = {
     buttonText: "View Details",
     mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
   },
+  DEC_STOPPED: {
+    buttonText: "View Details",
+    mobileStatus: "We’re almost there! Please log in on a desktop to upload them."
+  },
   OPE_EDIT: {
     buttonText: "Update Application",
     mobileStatus: "You’re half way there! Please log in on a desktop to finish the application."
