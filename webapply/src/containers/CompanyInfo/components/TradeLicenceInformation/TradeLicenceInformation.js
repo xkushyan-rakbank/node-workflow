@@ -70,7 +70,7 @@ export const TradeLicenceInformation = ({ values }) => {
         iconWidth={12}
         iconHeight={12}
       />
-      <Grid item container spacing={3}>
+      <Grid item container spacing={3} direction="row-reverse">
         <Grid item sm={6} xs={12}>
           <Field
             name="licenseOrCOIExpiryDate"

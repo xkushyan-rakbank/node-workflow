@@ -137,7 +137,7 @@ export const CompanyInfo = ({
         message: getInvalidMessage("Licence number")
       }),
     licenseOrCOIExpiryDate: Yup.date()
-      .nullable()
+      .required(getRequiredMessage("License or COI expiry date"))
       .test(
         "minDate",
         "This expiration date has already passed. Please select a valid date.",
@@ -147,12 +147,19 @@ export const CompanyInfo = ({
           return inputDate.getTime() >= addDays(new Date(), 9);
         }
       )
-      .typeError(getInvalidMessage("License expiry date"))
-      .required(getRequiredMessage("License or COI expiry date")),
+      .typeError(getInvalidMessage("License expiry date")),
     dateOfIncorporation: Yup.date()
-      .nullable()
-      .typeError(getInvalidMessage("Date Of Incorporation"))
-      .required(getRequiredMessage("Date Of Incorporation")),
+      .required(getRequiredMessage("Date Of Incorporation"))
+      .test(
+        "maxDate",
+        "The date of incorporation cannot be a future date. Please select a valid date.",
+        value => {
+          if (!value) return false;
+          const inputDate = new Date(value);
+          return inputDate.getTime() < addDays(new Date(), 0);
+        }
+      )
+      .typeError(getInvalidMessage("Date Of Incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
       .test("required", getRequiredMessage("This field"), file => {
         if (file) return true;
@@ -191,7 +198,6 @@ export const CompanyInfo = ({
         onSubmit={onUploadSuccess}
       >
         {props => {
-          const isCompanyInfoValid = conditionalSchema(companyInfoSchema).isValidSync(props.values);
           return (
             <Form className={classes.companyInfoSectionForm}>
               <div className={classes.companyInfoSectionWrapper}>
