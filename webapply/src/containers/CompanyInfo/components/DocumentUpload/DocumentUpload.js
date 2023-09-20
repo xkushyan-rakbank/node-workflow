@@ -44,11 +44,17 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
           onFailure: () => {
             setFieldValue(name, "");
             setIsUploading({ [name]: false });
-          },
+          }
         })
       );
     }
   }, []);
+
+  const uploadDescription = (
+    <div style={{fontWeight: 400, fontSize: "14px", lineHeight: "20px", color: "#757575"}}>
+      <p>Make sure your trade licence or certificate is clear and legible.</p>
+    </div>
+  );
 
   return (
     <>
@@ -72,6 +78,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         content={values?.tradeLicenseOrCOI}
         isUploading={isUploading["tradeLicenseOrCOI"]}
         mobilecontentPlaceholder={"Upload your File"}
+        notedText={uploadDescription}
       />
       <div style={{ marginTop: "21px" }}>
         <Field

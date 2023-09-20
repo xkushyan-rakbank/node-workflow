@@ -187,7 +187,7 @@ export const CompanyInfo = ({
     <div className={classes.companyInfoWrapper}>
       <SectionTitleWithInfo
         title={"Tell us about your company"}
-        info="This will help us get your account set up properly"
+        info="We just need a few details about your company to set up your account. Please complete all fields accurately so that we can process your application as smoothly as possible."
         smallInfo
       />
       <Formik
