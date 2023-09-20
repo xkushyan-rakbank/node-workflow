@@ -64,11 +64,11 @@ export const BusinessRelationship = forwardRef(
                   accordionSummaryContentExpanded:
                     classes.additionalInfoAccordionSummaryContentExpanded
                 }}
-                showHelperText={
-                  "Provide the details for a minimum of 1 buyer and 1 supplier. Depending on the details entered earlier, we may have pre-filled some fields for you"
-                }
                 accordionRef={bussinesAccordionRef}
               >
+                <div className={classes.descriptionSubField}>
+                  <p>We need details about your customers and suppliers to gain a better understanding of your business model. If your business is less than 3 months old, please provide details about your potential customers and suppliers.</p>
+                </div>
                 <TopCustomers topCustomers={topCustomers} {...props} />
                 <TopSuppliers topSuppliers={topSuppliers} {...props} />
               </Accordion>

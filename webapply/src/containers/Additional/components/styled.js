@@ -243,8 +243,6 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "30px",
   },
   virtualOrPhysicalAddressSelection: {
-    padding: "1px 24px",
-    background: "#F4F8FC",
     borderRadius: "10px",
     marginTop: "16px",
     marginBottom: "16px",
@@ -415,6 +413,17 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]:{
       fontSize: "14px",
     } 
-  }
+  },
+  financialDescription: {
+    fontSize: "13px",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "20px",
+    margin: 0,
+    color: "#757575",
+    [theme.breakpoints.up("sm")]:{
+      fontSize: "14px",
+    }
+  },
 
 }));
