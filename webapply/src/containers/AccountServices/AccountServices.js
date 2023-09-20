@@ -278,9 +278,11 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }),
     surveys: Yup.string().required("This field is required"),
     allianceCode: Yup.string()
+      .nullable()
       .max(50, "Maximum 50 characters allowed")
       .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
     roCode: Yup.string()
+      .nullable()
       .max(6, "Maximum 6 characters allowed")
       .matches(NUMBER_REGEX, getROInvalidMessage)
   });

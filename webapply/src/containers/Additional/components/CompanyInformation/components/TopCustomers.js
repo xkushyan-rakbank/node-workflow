@@ -65,6 +65,15 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
     );
   }, [errors, values]);
 
+  const resetCustomerName = setFieldValue => {
+    setFieldValue("topCustomers[0].name", "");
+    dispatch(
+      updateProspect({
+        "prospect.companyAdditionalInfo.topCustomers[0].name": ""
+      })
+    );
+  };
+
   return (
     <>
       <p className={classes.sectionLabel}>
@@ -106,14 +115,10 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
                       datalistId="country"
                       component={SelectAutocomplete}
                       classes={{ formControlRoot: classes.customLabel }}
-                      onChange={value => {
-                        setFieldValue(`topCustomers[${index}].country`, value);
-                        if (
-                          index === 0 &&
-                          value !== "AE" &&
-                          values.topCustomers[0].name === "Walk-in Customer"
-                        ) {
-                          setFieldValue("topCustomers[0].name", "");
+                      onChange={selectedValue => {
+                        setFieldValue(`topCustomers[${index}].country`, selectedValue);
+                        if (index === 0 && values.topCustomers[0].name === "Walk-in customer") {
+                          resetCustomerName(setFieldValue);
                         }
                       }}
                     />
