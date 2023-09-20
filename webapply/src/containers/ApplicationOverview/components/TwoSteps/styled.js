@@ -115,7 +115,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: "8px",
+    gap: "6px",
     alignSelf: "stretch",
     [theme.breakpoints.only("sm")]: {
       flexDirection: "row",

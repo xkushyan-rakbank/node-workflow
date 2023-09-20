@@ -26,13 +26,13 @@ export const TwoSteps = () => {
           <div className={classes.cards}>
             <PassportIcon alt="passport" className={classes.passportIcon} height="24" />
             <p className={classes.cardDesc}>
-              Passports and Emirates IDs of signatories and stakeholders
+               Passports and Emirates ID of stakeholders
               <sup className={classes.asteriskText}>2</sup>
             </p>
           </div>
           <div className={classes.cards}>
             <ProofOfAddressDocIcon alt="Proof of address" height="24" />
-            <p className={classes.cardDesc}>Proof of address (operation location)</p>
+            <p className={classes.cardDesc}>Proof of addresses</p>
           </div>
           <div className={classes.cards}>
             <ProofOfIncomeIcon alt="Proof of income" width="18" height="24" />

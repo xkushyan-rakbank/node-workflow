@@ -23,18 +23,24 @@ const useStyles = makeStyles(theme => ({
   },
   box: {
     height: "auto",
-    backgroundColor: "#FDE7E8",
+    backgroundColor: "#F7F8F9",
     padding: "32px",
     borderRadius: "10px",
     marginBottom: "20px",
-    gap: "32px",
+    gap: "unset",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      gap: "10px", 
+    },
 
     "& .MuiStepper-root": {
       padding: "unset !important"
     }
   },
   stepper: {
-    backgroundColor: "#FDE7E8"
+    backgroundColor: "#F7F8F9"
   },
   step_label_root: {
     fontFamily: "DM Sans",
@@ -60,11 +66,11 @@ const useStyles = makeStyles(theme => ({
 export const SectionSteps = () => {
   const steps = [
     "Your info",
-    "Company details",
-    "Stakeholders",
+    "Company info",
+    "ID verification",
     "Business details",
     "Account preferences",
-    "Application summary"
+    "Review and submit"
   ];
   const classes = useStyles();
   const isVertical = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
