@@ -28,7 +28,7 @@ import { sendEFRInvitePromisify } from "../../../../../store/actions/kyc";
 import { setRoEFRInvite } from "../../../../../store/actions/otp";
 import { ConfirmDialog } from "../../../../../components/Modals";
 
-export const SearchItem = ({ application, key, getProspectInfo, loadingProspectId }) => {
+export const SearchItem = ({ application, prospectId, getProspectInfo, loadingProspectId }) => {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ export const SearchItem = ({ application, key, getProspectInfo, loadingProspectI
     )?.replaceAll("<br/>", "\n") || "-";
 
   return (
-    <div key={key} className={classes.searchItemCard}>
+    <div key={prospectId} className={classes.searchItemCard}>
       <ConfirmDialog
         title={"Email sent to the customer"}
         isOpen={openModal}

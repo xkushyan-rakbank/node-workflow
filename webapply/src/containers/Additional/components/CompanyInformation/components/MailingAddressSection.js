@@ -282,6 +282,7 @@ export const MailingAddressSection = forwardRef(
                       InputProps={{
                         inputComponent: POBoxNumberInput,
                         inputProps: {
+                          inputMode: "numeric",
                           tabIndex: 0,
                           maxLength: 6
                         }

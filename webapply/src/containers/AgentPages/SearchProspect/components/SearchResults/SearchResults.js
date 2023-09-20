@@ -32,6 +32,7 @@ export const SearchResults = ({
           <SearchItem
             application={application}
             key={application.prospectId}
+            prospectId={application.prospectId}
             getProspectInfo={getProspectInfo}
             loadingProspectId={loadingProspectId}
           />

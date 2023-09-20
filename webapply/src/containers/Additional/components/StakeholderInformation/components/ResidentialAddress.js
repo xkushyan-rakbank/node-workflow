@@ -226,6 +226,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                     InputProps={{
                       inputComponent: POBoxNumberInput,
                       inputProps: {
+                        inputMode: "numeric",
                         tabIndex: 0,
                         maxLength: 6
                       }

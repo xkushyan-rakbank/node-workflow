@@ -288,12 +288,17 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   });
 
   const kycAnnexureSchema = accountInfoValidation.shape({
-    skillBasedCategory: Yup.string().required(getRequiredMessage("Skill based category")),
+    skillBasedCategory: Yup.string()
+      .nullable()
+      .notRequired(),
     businessModel: Yup.string()
-      .required(getRequiredMessage("Business model"))
+      .nullable()
+      .notRequired()
       .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Business model"))
       .max(5000, "Business model is too long. Please enter upto 5000 characters."),
-    signatoryName: Yup.string().required(getRequiredMessage("Name of the signatory")),
+    signatoryName: Yup.string()
+      .nullable()
+      .notRequired(),
     ownerAdditionalInfo: Yup.string()
       .nullable()
       .notRequired()
@@ -309,7 +314,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       .notRequired()
       .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("General remarks (RM)"))
       .max(5000, "General remarks (RM) is too long. Please enter upto 5000 characters."),
-    isVisitConducted: Yup.string().required(getRequiredMessage("Is visit conducted")),
+    isVisitConducted: Yup.string()
+      .nullable()
+      .notRequired(),
     verificationDetails: Yup.array().of(
       Yup.object().shape({
         verificationStatus: Yup.string(),
@@ -319,52 +326,46 @@ export const AccountServices = ({ sendProspectToAPI }) => {
           },
           then: Yup.string()
             .nullable()
-            .required(getRequiredMessage("Verification remarks"))
+            .notRequired()
             // eslint-disable-next-line no-template-curly-in-string
             .max(5000, "Maximum ${max} characters allowed")
             .matches(TOTAL_EXPERIENCE_YRS_REGEX, getInvalidMessage("Verification remarks"))
         })
       })
     ),
-    signatoryEIDinfo: Yup.string(),
-    signatoryEIDinfoReport: Yup.mixed().when("signatoryEIDinfo", {
-      is: signatoryEIDinfo => signatoryEIDinfo === "Yes",
-      then: Yup.mixed()
-        .test("required", getRequiredMessage("Upload ping verification report"), file => {
-          if (file) return true;
-          return false;
-        })
-        .test("fileSize", "The file is too large", file => {
-          return (
-            file &&
-            (file === true ||
-              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
-          );
-        })
+    signatoryEIDinfo: Yup.string()
+      .nullable()
+      .notRequired(),
+    signatoryEIDinfoReport: Yup.mixed().test("fileSize", "The file is too large", file => {
+      if (file) {
+        return (
+          file.fileSize >= TL_COI_FILE_SIZE.minSize && file.fileSize <= TL_COI_FILE_SIZE.maxSize
+        );
+      } else {
+        return true;
+      }
     }),
     visitDetails: Yup.array().of(
       Yup.object().shape({
         kycVisitDate: Yup.date()
           .nullable()
           .typeError(getInvalidMessage("Conducted date"))
-          .required(getRequiredMessage("Conducted date")),
-        visitConductedAt: Yup.string().required(getRequiredMessage("Visit conducted at")),
+          .notRequired(),
+        visitConductedAt: Yup.string()
+          .nullable()
+          .notRequired(),
         sisterCompanyTradeLicense: Yup.mixed().when("visitConductedAt", {
           is: visitConductedAt => visitConductedAt === "SISC",
-          then: Yup.mixed()
-            .test("required", getRequiredMessage("Sister company trade license"), file => {
-              if (file) return true;
-              return false;
-            })
-            .test("fileSize", "The file is too large", file => {
+          then: Yup.mixed().test("fileSize", "The file is too large", file => {
+            if (file) {
               return (
-                file &&
-                (file === true ||
-                  (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-                    file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+                file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                file.fileSize <= TL_COI_FILE_SIZE.maxSize
               );
-            })
+            } else {
+              return true;
+            }
+          })
         })
       })
     )
