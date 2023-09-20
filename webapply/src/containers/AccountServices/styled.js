@@ -381,6 +381,12 @@ export const useStyles = makeStyles((theme) => ({
   textAreaRoot: {
     marginBottom: 0,
   },
+  textAreaStyle: {
+    height: "100px",
+    [theme.breakpoints.up("sm")]: {
+      height: "150px"
+    }
+  },
   title: {
     fontWeight: 500,
     fontSize: "20px",

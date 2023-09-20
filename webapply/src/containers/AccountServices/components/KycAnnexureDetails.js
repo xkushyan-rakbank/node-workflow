@@ -228,7 +228,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             label="Business model"
             placeholder="Business model"
             multiline
-            minRows="6"
+            rows="6"
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: EXPERIENCE_BUSINESS_MODAL_LENGTH }
             }}
@@ -256,7 +256,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             label="Additional Information of owner"
             placeholder="Additional Information of owner"
             multiline
-            minRows="6"
+            rows="6"
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
@@ -272,7 +272,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             label="General remarks (RO)"
             placeholder="General remarks (RO)"
             multiline
-            minRows="6"
+            rows="6"
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
@@ -287,7 +287,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             label="General remarks (RM)"
             placeholder="General remarks (RM)"
             multiline
-            minRows="6"
+            rows="6"
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
@@ -320,7 +320,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             label="Remarks on verification (RM)"
             placeholder="Remarks on verification (RM)"
             multiline
-            minRows="6"
+            rows="6"
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
