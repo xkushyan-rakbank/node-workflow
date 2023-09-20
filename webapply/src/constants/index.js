@@ -481,6 +481,11 @@ export const screeningStatus = [
     link: true
   },
   {
+    error: "FI",
+    screeningType: "Company Industry and Sub-Industry Check",
+    link: true
+  },
+  {
     error: 403,
     screeningType: 403,
     link: true
