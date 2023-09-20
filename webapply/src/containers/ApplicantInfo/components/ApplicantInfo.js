@@ -167,8 +167,8 @@ export const ApplicantInfoComponent = ({
   return (
     <div className={classes.applicantInfoComponentWrapper}>
       <SectionTitleWithInfo
-        title={"Tell us more"}
-        info="Let's get a few more details."
+        title={"Your details"}
+        info="Fill in your contact details so we can keep track of your application."
         smallInfo
         className={classes.header}
       />
