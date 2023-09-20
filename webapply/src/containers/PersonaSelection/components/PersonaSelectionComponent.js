@@ -2,15 +2,33 @@ import React from "react";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ReactComponent as NavigationLeft } from "../../../assets/icons/blackNavigationLeftArrow.svg";
 import { useStyles } from "./styled";
+import { Button } from "@material-ui/core";
+import { useTrackingHistory } from "../../../utils/useTrackingHistory";
+import routes from "../../../routes";
 
 export default function RoleSelectionComponent({ handleNavigation, personas }) {
   const classes = useStyles();
+  const pushHistory = useTrackingHistory();
+
+  const handleRedirection = (path, replaceHistory = false) => {
+    pushHistory(path, replaceHistory);
+  };
+
   return (
     <div className={classes.container} data-testid="persona-selection">
       <div className={classes.section}>
+        <div className={classes.trackButtonContainer}>
+          <Button
+            variant="outlined"
+            className={classes.trackNSwitchAccountBtn}
+            onClick={() => handleRedirection(routes.comeBackLogin)}
+          >
+            Track my application
+          </Button>
+        </div>
         <SectionTitleWithInfo
-          title={"Let's get to know you"}
-          info="Tell us about your role in the business"
+          title={"What’s your role in the business?"}
+          // info="Tell us about your role in the business"
           smallInfo
         />
         <div className={classes.btnContainer}>

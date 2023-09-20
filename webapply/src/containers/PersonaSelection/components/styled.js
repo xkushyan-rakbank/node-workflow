@@ -77,5 +77,38 @@ export const useStyles = makeStyles(theme => ({
   subTitleList: {
     paddingLeft: "15px",
     margin: 0
-  }
+  },
+  trackNSwitchAccountBtn: {
+    minWidth: "144px",
+    height: "40px",
+    borderRadius: "21px",
+    border: "1px solid black",
+    fontSize: "0.75rem",
+    textAlign: "center",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "1rem",
+    color: "black",
+    textTransform: "none",
+    [theme.breakpoints.up("sm")]: {
+      width: "229px",
+      height: "40px",
+      textAlign: "unset",
+      fontStyle: "unset",
+      borderRadius: "21px",
+      fontSize: "1rem",
+      fontWeight: 500,
+      lineHeight: "22px",
+      color: "#000",
+      border: "1px solid #000",
+    },
+  },
+  trackButtonContainer: {
+    marginTop: "16px",
+    marginBottom: "20px",
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "40px",
+      marginBottom: "55px",
+    }
+  },
 }));
