@@ -54,10 +54,13 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "40px",
   },
   packageSelectionWrapper: {
-    padding: "30px",
+    padding: "30px 20px",
     borderRadius: "10px",
     border: "1px solid #cccccc",
     margin: "40px 0",
+    [theme.breakpoints.up("sm")]: {
+      padding: "30px", 
+    }
   },
   packageSelectionTitle: {
     marginBottom: "20px",
@@ -213,7 +216,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: "15px 16px",
     textAlign: "center",
     color: "#3B3A3A",
-    width: "65%",
+    width: "75%",
     [theme.breakpoints.up("sm")]: {
       background: "unset",
       borderRadius: "100px",
@@ -231,7 +234,7 @@ export const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: "#ffffff",
       backgroundColor: "#1F1F1F",
-      width: "65%",
+      width: "75%",
       [theme.breakpoints.up("sm")]: {
         width: "80%",
       },
@@ -286,15 +289,16 @@ export const useStyles = makeStyles((theme) => ({
   },
   packagefeatureTitle: {
     color: "#8D0C10",
-    fontSize: "1.25rem",
+    fontSize: "14px",
     fontWeight: 500,
-    lineHeight: "28px",
+    lineHeight: "22px",
     margin: "18px 0px",
     [theme.breakpoints.up("sm")]: {
-      fontSize: "1.5rem",
+      fontSize: "16px",
       fontWeight: 500,
-      lineHeight: "32px",
-      margin: "18px 25px",
+      lineHeight: "24px",
+      // margin: "unset",
+      marginTop: "10px"
     }
   },
   featureDesc: {
@@ -305,6 +309,8 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "16px",
     margin: 0,
     width: "100px",
+    whiteSpace: "break-spaces",
+    display: "inline",
     [theme.breakpoints.up("sm")]: {
       color: "#1F1F1F",
       textAlign: "left",
@@ -447,4 +453,13 @@ export const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  accordionTitle: {
+    color: "#8D0C10",
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "28px",
+    [theme.breakpoints.up("sm")]:{
+      fontSize: "20px",
+    }
+  }
 }));

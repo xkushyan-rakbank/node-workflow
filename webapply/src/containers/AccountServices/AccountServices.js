@@ -67,7 +67,7 @@ import { checkLoginStatus, getLoginResponse } from "../../store/selectors/loginS
 import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../utils/useFindDocument";
-
+import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
@@ -397,6 +397,12 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     scrollToDOMNode(refToTopOfAccountService);
   };
 
+  const accordionTitle = title => (
+    <div className={classes.accordionTitle}>
+      <span>{title}</span>
+    </div>
+  );
+
   return (
     <div className={classes.container} ref={refToTopOfAccountService}>
       <div className={classes.section}>
@@ -439,7 +445,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
               <Form>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Select your package"}
+                    title={accordionTitle("Select your package")}
                     id={"isSelectPackage"}
                     expandedDescription={
                       "Simplify your banking with an optional package that offers convenience and perks for your business."
@@ -457,10 +463,11 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Product and service preferences"}
-                    showHelperText={
+                    title={accordionTitle("Service preferences")}
+                    expandedDescription={
                       "Check your account’s currency and select the branch that’s most convenient for you."
                     }
+                    id={"preferences"}
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,
@@ -534,7 +541,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Authorisation preferences"}
+                    title={accordionTitle("Authorisation preferences")}
                     id={"authorizations"}
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
@@ -542,7 +549,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
-                    showHelperText={
+                    expandedDescription={
                       "Customise your account by sharing your preferences for features and services."
                     }
                   >
@@ -652,7 +659,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={"Communication preferences"}
+                    title={accordionTitle("Communication preferences")}
                     id={"communication"}
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
@@ -660,7 +667,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
-                    showHelperText={
+                    expandedDescription={
                       "Stay connected with RAKBANK and get access to personalised updates and offers."
                     }
                   >
@@ -746,16 +753,18 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         onChange={radioChangeHandler}
                       />
                     </div>
+                    <DisclaimerNote
+                      text={
+                        "Any service updates you make, including your signed documents and attachments, will be sent to your registered email."
+                      }
+                    />
                   </Accordion>
                 </div>
                 <div className={classes.packageSelectionWrapper}>
                   <Accordion
-                    title={
-                      <>
-                        Codes <span className={classes.smallTitle}>(for bank use)</span>
-                      </>
-                    }
+                    title={accordionTitle("Code")}
                     id={"codesBankUse"}
+                    expandedDescription={"For bank use only"}
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,

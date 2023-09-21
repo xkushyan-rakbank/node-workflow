@@ -67,8 +67,8 @@ const useStyles = makeStyles(theme => ({
         color: "#757575",
         margin: 0,
         [theme.breakpoints.up("sm")]: {
-          fontSize: "20px", 
-          lineHeight: "28px",
+          fontSize: "16px", 
+          lineHeight: "24px",
         }
       },
     }
@@ -160,6 +160,15 @@ export const Accordion = ({
     "codesBankUseReview",
     "checks"
   ];
+
+  const expandedDescriptionView = [
+    "isSelectPackage",
+    "preferences",
+    "authorizations",
+    "communication",
+    "codesBankUse"
+  ];
+
   return (
     <div className="accordion">
       <MuiAccordion
@@ -204,7 +213,7 @@ export const Accordion = ({
                   )}
                 </p>
                 {subTitle && <p className="subTitle">{subTitle}</p>}
-                {expanded === "isSelectPackage" && expandedDescription && (
+                {expandedDescriptionView.includes(expanded) && expandedDescription && (
                   <p className="expandedDescription">{expandedDescription}</p>
                 )}
               </div>

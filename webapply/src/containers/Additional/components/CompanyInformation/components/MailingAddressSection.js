@@ -56,7 +56,7 @@ export const MailingAddressSection = forwardRef(
     const addressProof = useFindDocument(documents, documentKeyToCheck) || [""];
 
     const initialValues = {
-      typeOfAddress: "virtual",
+      typeOfAddress: "physical",
       addressLine1: "",
       poBox: "",
       addressLine2: "",
