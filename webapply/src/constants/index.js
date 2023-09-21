@@ -481,6 +481,18 @@ export const screeningStatus = [
     link: true
   },
   {
+    error: "EFR check",
+    screeningType: "EFR Limit Check",
+    link: true,
+    buttons: [
+      {
+        external: true,
+        link: process.env.REACT_APP_BAU_URL,
+        label: "Go to home page"
+      }
+    ]
+  },
+  {
     error: "FI",
     screeningType: "Company Industry and Sub-Industry Check",
     link: true
