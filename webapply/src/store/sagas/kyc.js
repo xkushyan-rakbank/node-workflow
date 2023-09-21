@@ -357,13 +357,15 @@ export function* setLivelinessData({ payload }) {
 
 function* screeningError(status) {
   let screenError = screeningStatus.find(({ screeningType }) => screeningType === status);
-  let buttons = [
-    {
-      external: false,
-      link: routes.quickapplyLanding,
-      label: "Go to home page"
-    }
-  ];
+  let buttons = {
+    buttons: [
+      {
+        external: true,
+        link: process.env.REACT_APP_BAU_URL,
+        label: "Go to home page"
+      }
+    ]
+  };
   if (buttons !== undefined) {
     screenError = { ...screenError, ...buttons };
   }
