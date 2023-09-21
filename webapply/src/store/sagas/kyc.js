@@ -356,20 +356,6 @@ export function* setLivelinessData({ payload }) {
 }
 
 function* screeningError(status) {
-  let screenError = screeningStatus.find(({ screeningType }) => screeningType === status);
-  let buttons = {
-    buttons: [
-      {
-        external: true,
-        link: process.env.REACT_APP_BAU_URL,
-        label: "Go to home page"
-      }
-    ]
-  };
-  if (buttons !== undefined) {
-    screenError = { ...screenError, ...buttons };
-  }
-
   yield put(
     updateProspect({
       "prospect.signatoryInfo[0].isEFRCheckLimitExceeded": true,
@@ -377,15 +363,6 @@ function* screeningError(status) {
     })
   );
   yield put(sendProspectToAPI(NEXT));
-
-  yield put(
-    setScreeningError({
-      ...screenError,
-      text: EFR_CHECK_ERROR,
-      icon: "",
-      screeningType: 403
-    })
-  );
 }
 
 function* getEidDocuments(transactionId) {
@@ -469,7 +446,13 @@ export function* getCurrentKYCStatus() {
       }
     });
     if (isLimitExceeded) {
-      yield call(screeningError, 403);
+      yield put(
+        updateProspect({
+          "prospect.signatoryInfo[0].isEFRCheckLimitExceeded": true,
+          "prospect.signatoryInfo[0].signatoryId": individualId
+        })
+      );
+      yield put(sendProspectToAPI(NEXT));
       return;
     }
     const checkEntitySuccess = inputData => {
