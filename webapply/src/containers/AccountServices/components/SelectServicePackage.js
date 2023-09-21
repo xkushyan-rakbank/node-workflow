@@ -51,7 +51,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
         <Grid item sm={4} xs={6} className={classes.packageList}>
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Plus</h2>
-            <p>49 AED/month</p>
+            <p>51.45 AED/month</p>
           </div>
           <Button
             variant="outlined"
@@ -67,7 +67,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
         <Grid item sm={4} className={classes.packageList}>
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Max</h2>
-            <p>149 AED/month</p>
+            <p>156.56 AED/month</p>
           </div>
           <Button
             variant="outlined"
@@ -193,6 +193,13 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           </Grid>
         );
       })}
+      <div className={classes.disclaimer}>
+        <p>
+          *Preferential USD buy/sell rates will be applicable 2 business days after package
+          activation.
+        </p>
+        <p>**Waiver only applies to RAKBANK charges.</p>
+      </div>
     </div>
   );
 };

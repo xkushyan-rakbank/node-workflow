@@ -4,20 +4,20 @@ export const bankingBenefits = [
   {
     info: "Preferential USD Buy/Sell rates",
     rakValue_plus: "3.660/3.675*",
-    rakValue_max: "3.660/3.675*"
+    rakValue_max: "3.669/3.675**"
   },
   {
-    info: "5 free domestic non RAKBANK\nATM cash withdrawal monthly\n(switch charges)",
+    info: "5 free domestic non RAKBANK\nATM cash withdrawal per month.",
     rakValue_plus: { ic: crossIcon },
     rakValue_max: { ic: checkIcon }
   },
   {
-    info: "4 Free domestic remittances per month",
+    info: "4 free domestic remittances per month**",
     rakValue_plus: { ic: crossIcon },
     rakValue_max: { ic: checkIcon }
   },
   {
-    info: "4 Free international remittances per month*",
+    info: "4 free international remittances per month**",
     rakValue_plus: { ic: checkIcon },
     rakValue_max: { ic: checkIcon }
   }
@@ -41,7 +41,8 @@ export const insuranceBenefits = [
 
 export const otherBenefits = [
   {
-    info: "One stop solution to leverage business operations",
+    info:
+      "Manage invoices, inventory and expenses – with an all-in-one, easy-to-use software solution.",
     rakValue_plus: "Basic",
     rakValue_max: "Advanced"
   }

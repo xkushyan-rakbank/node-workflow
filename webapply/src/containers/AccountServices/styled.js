@@ -461,5 +461,14 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]:{
       fontSize: "20px",
     }
+  },
+  disclaimer: {
+    fontSize: "0.75rem",
+    fontWeight: 500,
+    lineHeight: "1.5rem",
+    color: "#3B3A3A",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem",
+    }
   }
 }));
