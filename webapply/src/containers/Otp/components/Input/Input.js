@@ -71,7 +71,7 @@ const InputBase = ({ onChange, code, inputProps = {} }, ref) => {
         onChange={handleChange}
         onKeyUp={handleKeyUp}
         value={value}
-        autocomplete="one-time-code"
+        autoComplete="one-time-code"
       />
     </Grid>
   ));
