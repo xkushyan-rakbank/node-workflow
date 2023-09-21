@@ -425,5 +425,28 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: "14px",
     }
   },
+  virtualOrPhysicalContainer: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+    alignItems: "center",
+
+    "& .MuiIconButton-label": {
+      width: "24px",
+      height: "24px",
+      borderRadius: "4px",
+      // border: "1px solid #1F1F1F"
+      color: "#1F1F1F"
+    }
+  },
+  virtualOfficeLabel: {
+    fontSize: "14px",
+    fontStyle: "normal",
+    color: "#000",
+    fontWeight: 500,
+    lineHeight: "20px",
+    
+
+  }
 
 }));

@@ -2,13 +2,12 @@ import React, { forwardRef, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldArray, Formik } from "formik";
 import * as Yup from "yup";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Checkbox, Grid } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import {
-  CheckboxGroup,
   AutoSaveField as Field,
   Input,
   POBoxNumberInput,
@@ -22,7 +21,6 @@ import {
 } from "../../../../../constants";
 import { TL_COI_FILE_SIZE } from "../../../../../constants";
 import { useStyles } from "../../styled";
-import { virtualOrPhysicalAddressOptions } from "../../../../../constants/options";
 import {
   MAX_FLAT_NUMBER_LENGTH,
   MAX_OFFICE_NUMBER_LENGTH,
@@ -39,16 +37,15 @@ import { updateProspect } from "../../../../../store/actions/appConfig";
 export const MailingAddressSection = forwardRef(
   ({ setFieldValue: setFormFieldValue, id, refs }) => {
     const classes = useStyles();
-    const [isVirtualAddress, setIsVirtualAddress] = useState(true);
     const [isUploading, setIsUploading] = useState({});
     const dispatch = useDispatch();
 
     const { mailAddressFormRef, mailAddressAccordionRef } = refs;
-    const handleAddressTypeSelection = event => {
-      if (event.target.value !== "virtual") {
-        setIsVirtualAddress(false);
+    const handleAddressTypeSelection = (event, setFieldValue) => {
+      if (event.target.value === "virtual") {
+        setFieldValue("typeOfAddress", "physical");
       } else {
-        setIsVirtualAddress(true);
+        setFieldValue("typeOfAddress", "virtual");
       }
     };
     const documents = useSelector(getDocuments)?.companyAddressProof?.documents ?? null;
@@ -70,7 +67,9 @@ export const MailingAddressSection = forwardRef(
 
     const mailingAddressSchema = Yup.object().shape({
       country: Yup.string().required(),
-      typeOfAddress: Yup.string().required(),
+      typeOfAddress: Yup.string()
+        .nullable()
+        .notRequired(),
       addressLine2: Yup.string()
         .required(getRequiredMessage("Street / location"))
         // eslint-disable-next-line no-template-curly-in-string
@@ -210,7 +209,7 @@ export const MailingAddressSection = forwardRef(
           const hasFileName = values.addressProof[0]?.fileName;
 
           const isAddMoreButtonDisabled = isSingleDocument && !hasFileName;
-
+          const typeOfAddress = values.typeOfAddress;
           return (
             <div>
               <Accordion
@@ -223,189 +222,201 @@ export const MailingAddressSection = forwardRef(
                   accordionSummaryContentExpanded:
                     classes.additionalInfoAccordionSummaryContentExpanded
                 }}
-                showHelperText={
-                  "We need to know where your company receives mail and if you have a virtual or physical office"
-                }
                 accordionRef={mailAddressAccordionRef}
               >
-                <Grid container spacing={3}>
-                  <Grid item sm={12} xs={12}>
-                    <div className={classes.virtualOrPhysicalAddressSelection}>
+                <>
+                  <div className={classes.descriptionSubField}>
+                    <p>
+                      We need to know where your company receives mail and if you have a virtual or
+                      physical office.
+                    </p>
+                  </div>
+                  <Grid container spacing={3}>
+                    <Grid item sm={12} xs={12}>
+                      <div className={classes.virtualOrPhysicalContainer}>
+                        <div className={classes.virtualOrPhysicalAddressSelection}>
+                          <Field
+                            name="typeOfAddress"
+                            datalistId="addressInfo[0].typeOfAddress"
+                            path={"prospect.companyAdditionalInfo.addressInfo[0].typeOfAddress"}
+                            value={typeOfAddress}
+                            component={Checkbox}
+                            typeOfCheckbox="checkbox"
+                            checked={typeOfAddress === "virtual"}
+                            onChange={event => handleAddressTypeSelection(event, setFieldValue)}
+                          />
+                          <label className={classes.virtualOfficeLabel}>
+                            I have a virtual office
+                          </label>
+                        </div>
+                      </div>
+                    </Grid>
+                    <Grid item sm={6} xs={12}>
+                      {typeOfAddress === "physical" && (
+                        <Field
+                          name="addressLine1"
+                          label="Office or shop number"
+                          path={
+                            "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].addressLine1"
+                          }
+                          placeholder="Office or shop number"
+                          InputProps={{
+                            inputProps: { tabIndex: 1, maxLength: 10 }
+                          }}
+                          component={Input}
+                        />
+                      )}
+                      {typeOfAddress === "virtual" && (
+                        <Field
+                          name="addressLine1"
+                          path={
+                            "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].addressLine1"
+                          }
+                          label="Flat, villa or building"
+                          placeholder="Flat, villa or building"
+                          InputProps={{
+                            inputProps: { tabIndex: 1, maxLength: 50 }
+                          }}
+                          component={Input}
+                        />
+                      )}
+                    </Grid>
+                    <Grid item sm={6} xs={12}>
                       <Field
-                        name="typeOfAddress"
-                        datalistId="addressInfo[0].typeOfAddress"
-                        path={"prospect.companyAdditionalInfo.addressInfo[0].typeOfAddress"}
-                        options={virtualOrPhysicalAddressOptions}
-                        component={CheckboxGroup}
-                        typeOfCheckbox="radio"
-                        onSelect={event => handleAddressTypeSelection(event)}
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item sm={6} xs={12}>
-                    {!isVirtualAddress && (
-                      <Field
-                        name="addressLine1"
-                        label="Office or shop number"
+                        name="poBox"
                         path={
-                          "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].addressLine1"
+                          "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].poBox"
                         }
-                        placeholder="Office or shop number"
-                        InputProps={{
-                          inputProps: { tabIndex: 1, maxLength: 10 }
-                        }}
+                        label="P.O. Box"
+                        placeholder="P.O. Box"
                         component={Input}
+                        InputProps={{
+                          inputComponent: POBoxNumberInput,
+                          inputProps: {
+                            tabIndex: 0,
+                            maxLength: 6
+                          }
+                        }}
                       />
-                    )}
-                    {isVirtualAddress && (
+                    </Grid>
+                    <Grid item sm={12} xs={12}>
                       <Field
-                        name="addressLine1"
+                        name="addressLine2"
+                        label="Street or location"
                         path={
-                          "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].addressLine1"
+                          "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].addressLine2"
                         }
-                        label="Flat, villa or building"
-                        placeholder="Flat, villa or building"
+                        placeholder="Street or location"
                         InputProps={{
                           inputProps: { tabIndex: 1, maxLength: 50 }
                         }}
                         component={Input}
                       />
-                    )}
-                  </Grid>
-                  <Grid item sm={6} xs={12}>
-                    <Field
-                      name="poBox"
-                      path={"prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].poBox"}
-                      label="P.O. Box"
-                      placeholder="P.O. Box"
-                      component={Input}
-                      InputProps={{
-                        inputComponent: POBoxNumberInput,
-                        inputProps: {
-                          inputMode: "numeric",
-                          tabIndex: 0,
-                          maxLength: 6
+                    </Grid>
+                    <Grid item sm={12} xs={12}>
+                      <Field
+                        name="emirateCity"
+                        path={
+                          "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].emirateCity"
                         }
-                      }}
-                    />
-                  </Grid>
-                  <Grid item sm={12} xs={12}>
-                    <Field
-                      name="addressLine2"
-                      label="Street or location"
-                      path={
-                        "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].addressLine2"
-                      }
-                      placeholder="Street or location"
-                      InputProps={{
-                        inputProps: { tabIndex: 1, maxLength: 50 }
-                      }}
-                      component={Input}
-                    />
-                  </Grid>
-                  <Grid item sm={12} xs={12}>
-                    <Field
-                      name="emirateCity"
-                      path={
-                        "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].emirateCity"
-                      }
-                      label="Emirate or city"
-                      placeholder="Emirate or city"
-                      datalistId="emirateCity"
-                      component={SelectAutocomplete}
-                    />
-                  </Grid>
-                  <Grid item sm={12} xs={12}>
-                    <Field
-                      name="country"
-                      path={
-                        "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].country"
-                      }
-                      label="Country"
-                      placeholder="Country"
-                      datalistId="country"
-                      component={SelectAutocomplete}
-                      disabled={true}
-                    />
-                  </Grid>
-                  <Grid item sm={12}>
-                    <FieldArray
-                      name="addressProof"
-                      render={arrayHelpers => (
-                        <>
-                          {values.addressProof?.map((item, index) => {
-                            return (
-                              <Grid
-                                item
-                                style={{
-                                  textAlign: "right",
-                                  marginBottom: index === 0 ? "25px" : ""
-                                }}
-                                key={index}
+                        label="Emirate or city"
+                        placeholder="Emirate or city"
+                        datalistId="emirateCity"
+                        component={SelectAutocomplete}
+                      />
+                    </Grid>
+                    <Grid item sm={12} xs={12}>
+                      <Field
+                        name="country"
+                        path={
+                          "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].country"
+                        }
+                        label="Country"
+                        placeholder="Country"
+                        datalistId="country"
+                        component={SelectAutocomplete}
+                        disabled={true}
+                      />
+                    </Grid>
+                    <Grid item sm={12}>
+                      <FieldArray
+                        name="addressProof"
+                        render={arrayHelpers => (
+                          <>
+                            {values.addressProof?.map((item, index) => {
+                              return (
+                                <Grid
+                                  item
+                                  style={{
+                                    textAlign: "right",
+                                    marginBottom: index === 0 ? "25px" : ""
+                                  }}
+                                  key={index}
+                                >
+                                  <Field
+                                    name={`addressProof[${index}]`}
+                                    path={`prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof[${index}]`}
+                                    type="file"
+                                    fieldDescription="Proof of Company Address"
+                                    helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                                    accept={TL_ACCEPTED_FILE_TYPES}
+                                    fileSize={TL_COI_FILE_SIZE}
+                                    onDrop={acceptedFile =>
+                                      handleDropFile(
+                                        acceptedFile,
+                                        `addressProof[${index}]`,
+                                        touched,
+                                        setTouched,
+                                        setFieldValue,
+                                        index
+                                      )
+                                    }
+                                    file={values.addressProof[index]?.fileName}
+                                    onDelete={() =>
+                                      removeAddressProofDocument(
+                                        index,
+                                        values,
+                                        values.addressProof.length,
+                                        setFieldValue
+                                      )
+                                    }
+                                    // () => setFieldValue(`addressProof[${index}]`, null)}
+                                    component={Upload}
+                                    content={values.addressProof[index]}
+                                    isUploading={isUploading[index]}
+                                    mobilecontentPlaceholder={"Upload your file"}
+                                  />
+                                  {values.addressProof.length > 1 && index > 0 && (
+                                    <IconButton
+                                      aria-label="delete"
+                                      style={{ padding: 0, marginTop: "5px" }}
+                                      onClick={() => removeAddressProofDocument(index, values)}
+                                    >
+                                      <HighlightOffIcon />
+                                    </IconButton>
+                                  )}
+                                </Grid>
+                              );
+                            })}
+                            {values.addressProof.length < 3 && (
+                              <Button
+                                disabled={isAddMoreButtonDisabled}
+                                color="primary"
+                                variant="outlined"
+                                className={classes.addMoreButton}
+                                onClick={() =>
+                                  addAddressProofDocument(arrayHelpers, values.addressProof.length)
+                                }
                               >
-                                <Field
-                                  name={`addressProof[${index}]`}
-                                  path={`prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof[${index}]`}
-                                  type="file"
-                                  fieldDescription="Proof of Company Address"
-                                  helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                                  accept={TL_ACCEPTED_FILE_TYPES}
-                                  fileSize={TL_COI_FILE_SIZE}
-                                  onDrop={acceptedFile =>
-                                    handleDropFile(
-                                      acceptedFile,
-                                      `addressProof[${index}]`,
-                                      touched,
-                                      setTouched,
-                                      setFieldValue,
-                                      index
-                                    )
-                                  }
-                                  file={values.addressProof[index]?.fileName}
-                                  onDelete={() =>
-                                    removeAddressProofDocument(
-                                      index,
-                                      values,
-                                      values.addressProof.length,
-                                      setFieldValue
-                                    )
-                                  }
-                                  // () => setFieldValue(`addressProof[${index}]`, null)}
-                                  component={Upload}
-                                  content={values.addressProof[index]}
-                                  isUploading={isUploading[index]}
-                                  mobilecontentPlaceholder={"Upload your file"}
-                                />
-                                {values.addressProof.length > 1 && index > 0 && (
-                                  <IconButton
-                                    aria-label="delete"
-                                    style={{ padding: 0, marginTop: "5px" }}
-                                    onClick={() => removeAddressProofDocument(index, values)}
-                                  >
-                                    <HighlightOffIcon />
-                                  </IconButton>
-                                )}
-                              </Grid>
-                            );
-                          })}
-                          {values.addressProof.length < 3 && (
-                            <Button
-                              disabled={isAddMoreButtonDisabled}
-                              color="primary"
-                              variant="outlined"
-                              className={classes.addMoreButton}
-                              onClick={() =>
-                                addAddressProofDocument(arrayHelpers, values.addressProof.length)
-                              }
-                            >
-                              + Add more
-                            </Button>
-                          )}
-                        </>
-                      )}
-                    />
+                                + Add more
+                              </Button>
+                            )}
+                          </>
+                        )}
+                      />
+                    </Grid>
                   </Grid>
-                </Grid>
+                </>
               </Accordion>
             </div>
           );
