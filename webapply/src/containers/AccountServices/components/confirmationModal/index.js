@@ -41,18 +41,18 @@ export const ConfirmationDialog = ({
           color="primary"
           endIcon={<ArrowForwardIcon />}
           className={classes.actionButton}
-          onClick={handleContinueWithoutAddon}
+          onClick={handleGoToPackage}
         >
-          {continueButtonLabel}
+          {goToPackageButtonLabel}
         </Button>
         <Button
           variant="outlined"
           color="primary"
           endIcon={<ArrowForwardIcon />}
-          className={classes.actionButton}
-          onClick={handleGoToPackage}
+          className={classes.notActiveButton}
+          onClick={handleContinueWithoutAddon}
         >
-          {goToPackageButtonLabel}
+          {continueButtonLabel}
         </Button>
       </DialogActions>
     </Dialog>

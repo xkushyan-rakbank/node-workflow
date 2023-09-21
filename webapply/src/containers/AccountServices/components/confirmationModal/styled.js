@@ -87,10 +87,21 @@ export const useStyles = makeStyles({
     fontSize: "18px",
     textTransform: "none",
     padding: "10px 32px",
+    backgroundColor: "#1F1F1F",
+    color: "white",
     marginRight: "15px",
     "&:hover": {
       backgroundColor: "#1F1F1F",
-      color: "white"
+      color: "white",
     }
+  },
+
+  notActiveButton: {
+    borderRadius: "28px",
+    outline: "none ",
+    fontSize: "18px",
+    textTransform: "none",
+    padding: "10px 32px",
+    marginRight: "15px", 
   }
 });
