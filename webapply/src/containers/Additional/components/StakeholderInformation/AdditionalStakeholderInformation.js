@@ -118,9 +118,6 @@ export const AdditionalStakeholderInformation = ({
   const handleFormAcordions = (formRef, accordionRef, isCompleted) => {
     let isAccordionOpen = accordionRef?.current?.getAttribute("aria-expanded") === "true";
 
-    if (formRef) {
-      formRef.submitForm();
-    }
 
     if (!isCompleted && !isAccordionOpen && accordionRef?.current !== null) {
       accordionRef.current.click();
