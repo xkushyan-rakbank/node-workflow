@@ -347,25 +347,14 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }),
     visitDetails: Yup.array().of(
       Yup.object().shape({
-        kycVisitDate: Yup.date()
-          .nullable()
-          .typeError(getInvalidMessage("Conducted date"))
-          .notRequired(),
-        visitConductedAt: Yup.string()
-          .nullable()
-          .notRequired(),
-        sisterCompanyTradeLicense: Yup.mixed().when("visitConductedAt", {
-          is: visitConductedAt => visitConductedAt === "SISC",
-          then: Yup.mixed().test("fileSize", "The file is too large", file => {
-            if (file) {
-              return (
-                file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-                file.fileSize <= TL_COI_FILE_SIZE.maxSize
-              );
-            } else {
-              return true;
-            }
-          })
+        sisterCompanyTradeLicense: Yup.mixed().test("fileSize", "The file is too large", file => {
+          if (file) {
+            return (
+              file.fileSize >= TL_COI_FILE_SIZE.minSize && file.fileSize <= TL_COI_FILE_SIZE.maxSize
+            );
+          } else {
+            return true;
+          }
         })
       })
     )

@@ -278,6 +278,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             }}
             component={Input}
             fieldDescription="Special characters - \ . % and spaces allowed."
+            classes={{ input: classes.textAreaStyle }}
           />
         </Grid>
         <Grid item sm={12} xs={12}>
@@ -293,7 +294,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             }}
             component={Input}
             fieldDescription="Special characters - \ . % and spaces allowed."
-            classes={{ formControlRoot: classes.textAreaRoot }}
+            classes={{ formControlRoot: classes.textAreaRoot, input: classes.textAreaStyle }}
           />
         </Grid>
       </Grid>
@@ -326,7 +327,10 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             }}
             component={Input}
             fieldDescription="Special characters - \ . % and spaces allowed."
-            classes={{ formControlRoot: classes.rmVerificationRemarksTextarea }}
+            classes={{
+              formControlRoot: classes.rmVerificationRemarksTextarea,
+              input: classes.textAreaStyle
+            }}
           />
         </div>
         <VerificationDetailsList values={values} setFieldValue={setFieldValue} {...props} />
