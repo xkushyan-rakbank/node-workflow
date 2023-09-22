@@ -8,7 +8,7 @@ import {
   personaSelectionRoutes
 } from "../../../constants";
 
-export const BBG = process.env.NODE_ENV === "production" ? "/digitalbank" : "";
+export const BBG = process.env.REACT_APP_SERVER_ENV === "production" ? "/digitalbank" : "";
 
 export const getTitleByPathname = (pathname, accountType) => {
   if (detailedAccountRoutes.includes(pathname))
