@@ -126,6 +126,7 @@ const BaseButton = ({
             className={isSearchApplicant ? classes.searchApplicantArrow : classes.arrow}
             alt="rightArrowWhite"
             name={ICONS.arrowRight}
+            key={"KEY" + name}
           />
         )
       ]

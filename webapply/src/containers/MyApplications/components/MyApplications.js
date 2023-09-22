@@ -35,7 +35,7 @@ export const MyApplications = ({
         classes={{ root: "hide-on-mobile" }}
         direction="row"
         alignItems="center"
-        justify="space-between"
+        justifyContent="space-between"
       >
         <SectionTitleWithInfo className={classes.title} title="My applications" />
       </Grid>

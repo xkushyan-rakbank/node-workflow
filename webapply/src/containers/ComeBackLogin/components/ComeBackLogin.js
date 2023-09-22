@@ -116,7 +116,7 @@ export const ComeBackLoginComponent = ({
                   />
                 </InputGroup>
               )}
-              <Grid container direction="row" justify="flex-start" alignItems="center">
+              <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                 {isRecaptchaEnable && (
                   <ErrorBoundaryForReCaptcha>
                     <ReCaptcha
@@ -129,7 +129,7 @@ export const ComeBackLoginComponent = ({
                 )}
               </Grid>
             </div>
-            <Grid container direction="row" justify="flex-end" alignItems="center">
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center">
               <Footer extraClasses={"oneElement"}>
                 <SubmitButton
                   disabled={

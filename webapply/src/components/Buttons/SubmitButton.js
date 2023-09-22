@@ -35,7 +35,7 @@ export const SubmitButtonBase = ({
   <ButtonWrapper
     container
     direction="row"
-    justify={justify}
+    justifyContent={justify}
     alignItems="center"
     className={submitButtonClassName}
   >

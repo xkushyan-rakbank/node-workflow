@@ -118,10 +118,9 @@ export const AutoSaveField = ({
       makeDecisions && makeDecisions(value);
     }
   };
-
   return (
     <>
-      <OverlayLoader open={decisonLoad[path]} text="Loading" />
+      <OverlayLoader open={decisonLoad[path] || false} text="Loading" />
       {(visible || isVisible) && (
         <Field
           onChange={handleChange}

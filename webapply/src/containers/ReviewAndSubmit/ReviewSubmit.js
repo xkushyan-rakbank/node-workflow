@@ -435,7 +435,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         <div className={classes.section}>
           <SectionTitleWithInfo
             title={"Have one last look over your info"}
-            info="If it's good to go, just hit Submit!"
+            info="Please check through your application to ensure that the information you’ve provided is accurate. If you need to make any changes, just tap ‘Edit’. Once you’re ready, hit ‘Submit’!"
             smallInfo
           />
           <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={true}>
