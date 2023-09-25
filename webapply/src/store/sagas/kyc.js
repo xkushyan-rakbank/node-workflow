@@ -278,9 +278,6 @@ export function* entityConfirmation(tlia) {
         ...data
       })
     );
-
-    // adding this to clear already saved (if any) editedfullname
-    yield put(updateProspect("prospect.signatoryInfo[0].editedFullName", ""));
   } catch (error) {
     let message = error?.response?.data?.message;
     if (error?.response?.status === 403 && error?.response?.data?.errorCode === "024") {
@@ -335,6 +332,9 @@ export function* setLivelinessData({ payload }) {
       livelinessData.data,
       livelinessData.datahash
     );
+    // adding this to clear already saved (if any) editedfullname
+    yield put(updateProspect({ "prospect.signatoryInfo[0].editedFullName": "" }));
+
     yield put(validateIdentitySuccess());
     if (filteredlicenseIssuingAuthority?.length) {
       yield call(entityConfirmation, filteredlicenseIssuingAuthority[0]);
