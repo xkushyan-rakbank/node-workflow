@@ -2,18 +2,28 @@ import React from "react";
 import { generatePath } from "react-router";
 import { Link } from "react-router-dom";
 import cx from "classnames";
+import { useDispatch } from "react-redux";
 
 import routes from "../../../../../routes";
 
 import { useStyles } from "./styled";
+import { updateProspect } from "../../../../../store/actions/appConfig";
 
 export const SearchItem = ({ application }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleSearchItemClick = () => {
+    dispatch(
+      updateProspect({ "prospect.applicationInfo.bccFlag": application.applicationInfo.bccFlag })
+    );
+  };
 
   return (
     <Link
       className={cx(classes.applicationRow)}
       to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
+      onClick={handleSearchItemClick}
     >
       <div className={classes.column}>
         <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
