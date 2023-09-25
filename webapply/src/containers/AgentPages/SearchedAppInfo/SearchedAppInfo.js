@@ -20,7 +20,8 @@ import {
   STATUS_FORCE_STOP,
   WI_SUBMITTED,
   OPE_EDIT,
-  DEC_STOPPED
+  DEC_STOPPED,
+  WI_APPROVED
 } from "./constants";
 import { OverlayLoader } from "../../../components/Loader";
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
@@ -95,6 +96,7 @@ export const SearchedAppInfoContainer = ({
       APP_STOP_SCREEN_RESULT ||
     get(searchResult, "status.statusType") === STATUS_FORCE_STOP ||
     get(searchResult, "status.statusType") === WI_SUBMITTED ||
+    get(searchResult, "status.statusType") === WI_APPROVED ||
     get(searchResult, "status.statusType") === DEC_STOPPED ||
     (get(searchResult, "status.statusType") === OPE_EDIT && scheme !== operatorLoginScheme);
   const fullName = get(searchResult, "applicantInfo.fullName", "");

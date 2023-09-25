@@ -161,13 +161,17 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
       </div>
       {prospectVersion === "v2" ? (
         <>
-          {agentId && roActions[(application?.status?.statusType)] && (
+          {agentId && (
             <>
               <div className={classes.lineBreak}></div>
               <div className={classes.footer}>
                 <SubmitButton
                   justify="flex-end"
-                  label={roActions[(application?.status?.statusType)].buttonText}
+                  label={
+                    roActions[(application?.status?.statusType)]
+                      ? roActions[(application?.status?.statusType)].buttonText
+                      : "View Details"
+                  }
                   type="button"
                   submitButtonClassName={classes.button}
                   onClick={handleNavigation}
