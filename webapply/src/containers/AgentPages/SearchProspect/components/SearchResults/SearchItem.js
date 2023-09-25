@@ -14,7 +14,6 @@ export const SearchItem = ({ application }) => {
     <Link
       className={cx(classes.applicationRow)}
       to={generatePath(routes.SearchedAppInfo, { id: application.prospectId })}
-      onClick={handleSearchItemClick}
     >
       <div className={classes.column}>
         <div className={classes.fullName}>{application.applicantInfo.fullName}</div>
