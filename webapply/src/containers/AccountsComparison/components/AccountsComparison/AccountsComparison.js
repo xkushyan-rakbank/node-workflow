@@ -292,12 +292,12 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             <ul>
               <li>
                 {
-                  "Monthly average credit balance >= AED 250,000.00, Monthly Account Maintenance fee is waived, but Digital Banking Fee is applicable."
+                  "If the monthly average credit balance is greater than or equal to AED 250,000.00 the monthly maintenance fee will be waived, but the Digital Banking fee will apply."
                 }
               </li>
               <li>
                 {
-                  "Monthly average credit balance <= AED 250,000.00, Monthly Account Maintenance fee is applicable, but Digital Banking Fee is not applicable."
+                  "If the monthly average credit balance is less than AED 250,000.00 the monthly maintenance fee will apply, but the Digital Banking fee will be waived."
                 }
               </li>
             </ul>

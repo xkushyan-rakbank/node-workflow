@@ -90,7 +90,7 @@ export const feesChargesDataRows = [
   {
     info: "Monthly maintenance fees",
     starter: "AED 103.95",
-    currentAccount: "AED 52.50",
+    currentAccount: "AED 103.95",
     elite: "Zero"
   },
   {
@@ -127,7 +127,7 @@ export const perksDataRows = [
   },
   {
     info: "Dedicated relationship manager",
-    starter: { ic: crossIcon },
+    starter: { ic: checkIcon },
     currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }
   },
