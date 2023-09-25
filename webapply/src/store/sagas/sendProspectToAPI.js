@@ -11,6 +11,7 @@ import {
   actionChannel,
   flush
 } from "redux-saga/effects";
+import { find } from "lodash";
 
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
@@ -52,6 +53,7 @@ import {
 import { updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
+import { getSearchResults } from "../selectors/searchProspect";
 
 export function* watchRequest() {
   const chan = yield actionChannel(SEND_PROSPECT_REQUEST);
@@ -149,6 +151,9 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     const prospectId = yield select(getProspectId);
     const headers = yield select(getAuthorizationHeader);
     const completedSteps = yield select(getCompletedSteps);
+    const searchApplicationInfo = yield select(getSearchResults);
+
+    const matchedProspect = find(searchApplicationInfo, ["prospectId", prospectId]);
 
     const newCompletedSteps = step
       ? completedSteps.map(completedStep => {
@@ -161,6 +166,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
 
     newProspect.applicationInfo.saveType = saveType;
     newProspect.applicationInfo.actionType = actionType;
+    newProspect.applicationInfo.bccFlag = matchedProspect?.applicationInfo.bccFlag ?? false;
     newProspect.freeFieldsInfo = {
       ...(newProspect.freeFieldsInfo || {}),
       freeField5: JSON.stringify({ completedSteps: newCompletedSteps })
