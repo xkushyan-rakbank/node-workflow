@@ -14,6 +14,7 @@ import { getKyc } from "../../store/selectors/kyc";
 import {
   checkFaceLiveliness,
   resetConfirmEntity,
+  saveFaceLivelinessFeedbackError,
   setLivelinessData
 } from "../../store/actions/kyc";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
@@ -129,6 +130,7 @@ export const FaceRecognition = ({
 }) => {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
+  const [openWarning, setOpenWarning] = useState(false);
   const [loading, setLoading] = useState(false);
   const pushHistory = useTrackingHistory();
 
@@ -159,7 +161,12 @@ export const FaceRecognition = ({
 
   async function executeFeedback(faceLivelinessFeedback) {
     const feedbackResult = await executeLivenessFeedback(faceLivelinessFeedback);
-    dispatch(setLivelinessData(feedbackResult));
+    if (feedbackResult?.data && feedbackResult?.datahash) {
+      dispatch(setLivelinessData(feedbackResult));
+    } else {
+      dispatch(saveFaceLivelinessFeedbackError());
+      setOpenWarning(true);
+    }
   }
 
   useEffect(() => {
@@ -216,6 +223,10 @@ export const FaceRecognition = ({
     pushHistory(routes.searchProspect);
   };
 
+  const handleCloseWarning = () => {
+    setOpenWarning(false);
+  };
+
   return (
     <Fragment>
       <ConfirmDialog
@@ -226,6 +237,16 @@ export const FaceRecognition = ({
         handleClose={() => handleModalClose()}
         message={
           "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknowledge and accept the associated Terms & Conditions."
+        }
+      />
+      <ConfirmDialog
+        title={"Unable to detect the face"}
+        isOpen={openWarning}
+        handleReject={() => {}}
+        cancelLabel={"close"}
+        handleClose={handleCloseWarning}
+        message={
+          "Please ensure that the lighting is good, your face is clear on the camera preview and eyes are fully visible"
         }
       />
       <div className={classes.fieldDescription}>{fieldDescription}</div>
@@ -277,7 +298,7 @@ export const FaceRecognition = ({
       <div className={classes.disclaimerInfoWrapper}>
         <InformationIcon />
         <p className={classes.disclaimerInfo}>{` ${
-          isMobile ? 'By tapping on the "Start" button' : 'By selecting "Start"'
+          isMobile ? "By tapping on the \"Start\" button" : "By selecting \"Start\""
         }, you give us permission to retrieve your data for facial recognition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority and we strictly adhere to applicable regulations and security measures.`}</p>
       </div>
       {identityValidation && (
