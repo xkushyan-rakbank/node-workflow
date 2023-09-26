@@ -197,6 +197,9 @@ export const FaceRecognition = ({
   }, [livenessCheckError]);
 
   const startFaceScan = () => {
+    if (openWarning) {
+      setOpenWarning(false);
+    }
     if (!isLivenessCheckReady) {
       return;
     }
@@ -244,6 +247,8 @@ export const FaceRecognition = ({
         isOpen={openWarning}
         handleReject={() => {}}
         cancelLabel={"close"}
+        confirmLabel="Try Again"
+        handleConfirm={startFaceScan}
         handleClose={handleCloseWarning}
         message={
           "Please ensure that the lighting is good, your face is clear on the camera preview and eyes are fully visible"
@@ -298,7 +303,7 @@ export const FaceRecognition = ({
       <div className={classes.disclaimerInfoWrapper}>
         <InformationIcon />
         <p className={classes.disclaimerInfo}>{` ${
-          isMobile ? "By tapping on the \"Start\" button" : "By selecting \"Start\""
+          isMobile ? 'By tapping on the "Start" button' : 'By selecting "Start"'
         }, you give us permission to retrieve your data for facial recognition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority and we strictly adhere to applicable regulations and security measures.`}</p>
       </div>
       {identityValidation && (
