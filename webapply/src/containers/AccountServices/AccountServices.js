@@ -102,6 +102,12 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+  const formRef = useRef(null);
+  const packageRef = useRef(null);
+  const servicePreferenceRef = useRef(null);
+  const authorizationRef = useRef(null);
+  const communicationRef = useRef(null);
+  const codeRef = useRef(null);
 
   useEffect(() => {
     dispatch(updateProspect({ "prospect.accountInfo.accountType": accountType }));
@@ -110,6 +116,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   useEffect(() => {
     dispatch(initDocumentUpload());
     dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": true }));
+    packageRef.current.click();
   }, []);
 
   const labelTextForGoGreenOption = (
@@ -394,6 +401,11 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const handleGoToPackage = event => {
     setShowConfirmationPopup(false);
     event.preventDefault();
+    let isPackageAccordionOpen = packageRef?.current.getAttribute("aria-expanded") === "true";
+
+    if (!isPackageAccordionOpen) {
+      packageRef.current.click();
+    }
     scrollToDOMNode(refToTopOfAccountService);
   };
 
@@ -402,6 +414,55 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       <span>{title}</span>
     </div>
   );
+
+  const handleFormAcordions = (accordionRef, isIncomplete) => {
+    let isAccordionOpen = accordionRef?.current.getAttribute("aria-expanded") === "true";
+
+    if (isIncomplete && !isAccordionOpen) {
+      accordionRef.current.click();
+    }
+  };
+
+  const handleNextClickAction = validationResults => {
+    try {
+      const servicePreferenceValidation =
+        validationResults.errors.hasOwnProperty("branchId") ||
+        validationResults.errors.hasOwnProperty("accountEmirateCity") ||
+        validationResults.errors.hasOwnProperty("receiveInterest");
+
+      const authorizationValidation =
+        validationResults.errors.hasOwnProperty("chequeBookApplied") ||
+        validationResults.errors.hasOwnProperty("nameOnDebitCard");
+
+      const communicationValidation =
+        validationResults.errors.hasOwnProperty("marketing") ||
+        validationResults.errors.hasOwnProperty("mobileInstructions") ||
+        validationResults.errors.hasOwnProperty("preferredLanguage") ||
+        validationResults.errors.hasOwnProperty("surveys");
+
+      let forms = {
+        servicePrerences: {
+          accordionRef: servicePreferenceRef,
+          isIncomplete: servicePreferenceValidation
+        },
+        authorization: {
+          accordionRef: authorizationRef,
+          isIncomplete: authorizationValidation
+        },
+        communication: {
+          accordionRef: communicationRef,
+          isIncomplete: communicationValidation
+        }
+      };
+
+      Object.keys(forms).forEach(formName => {
+        const { accordionRef, isIncomplete } = forms[formName];
+        handleFormAcordions(accordionRef, isIncomplete);
+      });
+    } catch (validationError) {
+      // console.error(validationError);
+    }
+  };
 
   return (
     <div className={classes.container} ref={refToTopOfAccountService}>
@@ -427,6 +488,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
           validationSchema={isAgent ? kycAnnexureSchema : accountInfoValidation}
           validateOnChange={true}
           validateOnMount={true}
+          innerRef={formRef}
         >
           {({ values, setFieldValue, ...props }) => {
             const accountServiceChangeHandler = createAccountServiceRadioHandler({
@@ -456,6 +518,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
+                    accordionRef={packageRef}
                   >
                     <SelectServicePackage setFormFieldValue={setFieldValue} {...props} />
                   </Accordion>
@@ -474,6 +537,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
+                    accordionRef={servicePreferenceRef}
                   >
                     <Field
                       name="accountCurrency"
@@ -552,6 +616,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     expandedDescription={
                       "Customise your account by sharing your preferences for features and services."
                     }
+                    accordionRef={authorizationRef}
                   >
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
@@ -670,6 +735,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     expandedDescription={
                       "Stay connected with RAKBANK and get access to personalised updates and offers."
                     }
+                    accordionRef={communicationRef}
                   >
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
@@ -772,6 +838,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       accordionDetails: classes.accordionDetails,
                       accordionSummaryRoot: classes.accountServiceAccordionSummaryRoot
                     }}
+                    accordionRef={codeRef}
                   >
                     <Grid container spacing={3} className={classes.roCodeWrapper}>
                       <Grid item sm={6} xs={12}>
@@ -855,7 +922,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                   <NextStepButton
                     label="Next"
                     justify="flex-end"
-                    disabled={!isValidAccountInfoValidation}
+                    onClick={() => handleNextClickAction(props)}
                     isDisplayLoader={isLoading}
                   />
                 </Footer>
