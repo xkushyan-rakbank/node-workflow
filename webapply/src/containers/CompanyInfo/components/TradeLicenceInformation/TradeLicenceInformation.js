@@ -1,6 +1,8 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Grid from "@material-ui/core/Grid";
 import { addDays, format, isValid } from "date-fns";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   SelectAutocomplete,
   AutoSaveField as Field,
@@ -13,15 +15,22 @@ import {
   MAX_LICENSE_NUMBER_LENGTH
 } from "../../constants";
 import { DATE_FORMAT } from "../../../../constants";
-import { useSelector } from "react-redux";
 import { isDecisionLoading } from "../../../../store/selectors/appConfig";
+import { enableInputField } from "../../../../store/actions/decisions";
 
 export const TradeLicenceInformation = ({ values }) => {
   const countryOfIncorporationRef = useRef();
   const waitingForDecision = useSelector(isDecisionLoading);
-
+  const dispatch = useDispatch();
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
+
+  useEffect(() => {
+    if (values.licenseIssuingAuthority === "") {
+      dispatch(enableInputField("prospect.organizationInfo.countryOfIncorporation"));
+    }
+  }, [values.licenseIssuingAuthority]);
+
   return (
     <>
       <Field
@@ -31,6 +40,7 @@ export const TradeLicenceInformation = ({ values }) => {
         datalistId="licenseIssuingAuthority"
         isSearchable
         component={SelectAutocomplete}
+        isClearable={true}
         tabIndex="0"
         infoIcon={true}
         infoTitle={`This should be the same as shown on your trade licence.

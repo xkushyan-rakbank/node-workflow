@@ -272,10 +272,10 @@ export function* getProspectIdInfo({ payload }) {
         }
       }
     }
-    yield put(getProspectInfoSuccess(config.prospect));
     const updatedHeaders = yield select(getAuthorizationHeader);
     const decisionValue = yield call(decisionsAPIClient.get, prospectId, updatedHeaders);
     yield put(setDecisions(decisionValue));
+    yield put(getProspectInfoSuccess(config.prospect));
   } catch (error) {
     log(error);
     yield put(getProspectInfoFail());

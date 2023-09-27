@@ -1,24 +1,17 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, useEffect, useMemo } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
 
 import { ErrorMessage, ContexualHelp } from "./../../../Notifications";
-import { Control, Option, IndicatorsContainer, MultiValue } from "./SelectAutocompleteComponents";
+import { Control, Option, DropdownIndicator, MultiValue } from "./SelectAutocompleteComponents";
 import { areEqualFieldProps } from "../../utils";
 import { useStyles, customStyles } from "./styled";
 import { InfoTitle } from "../../../InfoTitle";
 
-const components = {
-  Control,
-  Option,
-  IndicatorsContainer,
-  MultiValue
-};
-
 const SelectAutocompleteBase = ({
-  extractValue = option => option.value,
-  extractLabel = option => option.label || option.displayText,
+  extractValue = option => option?.value || "",
+  extractLabel = option => option?.label || option?.displayText,
   theme,
   label,
   shrink,
@@ -33,6 +26,7 @@ const SelectAutocompleteBase = ({
   onChange = value => setFieldValue(field.name, value),
   customCheckbox = false,
   infoIcon = false,
+  isClearable = false,
   ...props
 }) => {
   const classes = useStyles({
@@ -52,6 +46,16 @@ const SelectAutocompleteBase = ({
 
     return onChange(value, renderValue);
   };
+
+  const components = useMemo(
+    () => ({
+      Control,
+      Option,
+      MultiValue,
+      [isClearable ? "DropdownIndicator" : "IndicatorsContainer"]: DropdownIndicator
+    }),
+    []
+  );
 
   useEffect(() => {
     if (disabled) {
@@ -100,6 +104,7 @@ const SelectAutocompleteBase = ({
             }
           }}
           getOptionLabel={extractLabel}
+          isClearable={isClearable}
         />
       </ContexualHelp>
       {infoTitle && <InfoTitle title={infoTitle} showIcon={infoIcon} />}

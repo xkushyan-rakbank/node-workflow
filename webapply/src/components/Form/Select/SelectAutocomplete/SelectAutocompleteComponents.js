@@ -6,7 +6,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { TextField, MenuItem, Chip, Checkbox } from "@material-ui/core";
 import { CustomCheckbox } from "../../Checkbox/CustomCheckbox";
 
-const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef}  {...props} />;
+const inputComponent = ({ inputRef, ...props }) => <div ref={inputRef} {...props} />;
 
 export const Control = ({ selectProps, innerRef, children, innerProps }) => (
   <TextField
@@ -63,7 +63,7 @@ export const Option = ({
   </MenuItem>
 );
 
-export const IndicatorsContainer = ({ selectProps }) => (
+export const DropdownIndicator = ({ selectProps }) => (
   <div className={selectProps.classes.indicator}>
     <KeyboardArrowDownIcon />
     <IndicatorSeparator selectProps={selectProps} />
