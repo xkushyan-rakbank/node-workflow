@@ -35,7 +35,7 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 500,
       marginBottom: "8px",
       paddingTop: "150px",
-      color: "#1F1F1F",
+      color: "#1F1F1F"
     },
     "& p": {
       fontSize: "1rem",
@@ -51,7 +51,7 @@ export const useStyles = makeStyles(theme => ({
         margin: 0,
         marginBottom: "8px",
         color: "#1F1F1F",
-        paddingTop: "80px",
+        paddingTop: "80px"
       },
       "& p": {
         fontSize: "1.25rem",
@@ -59,8 +59,8 @@ export const useStyles = makeStyles(theme => ({
         margin: 0,
         color: "#757575",
         lineHeight: "28px"
-      },
-    },
+      }
+    }
   },
   // video: {
   //  [theme.breakpoints.up("sm")]: {
@@ -70,7 +70,7 @@ export const useStyles = makeStyles(theme => ({
   // },
   mainWrapper: {
     // marginTop: "100px",
-    marginBottom: "50px",
+    marginBottom: "50px"
   },
   bgContainer: {
     width: "100%",
@@ -79,11 +79,11 @@ export const useStyles = makeStyles(theme => ({
     overflow: "hidden",
     position: "relative",
     top: 0,
-    right: 0,
+    right: 0
   },
   accountInfoLandingPageHeader: {
     "&.small-menu-show": {
-      display: "none",
+      display: "none"
     }
   },
 
@@ -109,10 +109,10 @@ export const useStyles = makeStyles(theme => ({
       left: "unset",
       height: "100%",
       objectFit: "cover"
-    },
+    }
   },
   video: {
-    display: "block",
+    display: "block"
   },
   blobMobile: {
     position: "absolute",
@@ -127,7 +127,7 @@ export const useStyles = makeStyles(theme => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center bottom",
     "@media (max-width: 375px) and (height: 548px)": {
-      height: "260px!important",
+      height: "260px!important"
     },
     [theme.breakpoints.only("xs")]: {
       height: "340px"
@@ -145,14 +145,14 @@ export const useStyles = makeStyles(theme => ({
     width: "350px",
     pointerEvents: "none",
     [theme.breakpoints.only("xs")]: {
-      display: "none",
+      display: "none"
     },
     [theme.breakpoints.up("lg")]: {
-      width: sideNavWidthLG,
+      width: sideNavWidthLG
     },
     [theme.breakpoints.up("xl")]: {
-      width: sideNavWidthXL,
-    },
+      width: sideNavWidthXL
+    }
   },
   stickyDiv: {
     position: "sticky",
@@ -164,13 +164,13 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       "& .MuiInputBase": {
         display: "flex",
-        gap: "20px",
+        gap: "20px"
       },
 
       "& .MuiGrid-item": {
         width: "50%",
-        marginBottom: "16px",
-      },
+        marginBottom: "16px"
+      }
     },
     [theme.breakpoints.up("sm")]: {
       top: "75px"
@@ -187,8 +187,8 @@ export const useStyles = makeStyles(theme => ({
     // marginTop: "40px",
 
     [theme.breakpoints.only("xs")]: {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   featureSectionTitle: {
     fontSize: "1.25rem",
@@ -377,14 +377,14 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.between("sm", "md")]: {
       "@media (orientation: landscape)": {
         top: "45%",
-        transform: "translateY(-50%)" 
+        transform: "translateY(-50%)"
       },
 
       "@media (orientation: portrait)": {
-        top: "30%",
-        transform: "translateY(-50%)"
+        top: "45%",
+        transform: "translateY(-40%)"
       }
-    },
+    }
   },
   welcomeText: {
     textAlign: "center"
@@ -456,11 +456,11 @@ export const useStyles = makeStyles(theme => ({
       width: "80%", 
 
       "@media (orientation: portrait)": {
-        top: "20%",
+        top: "50%",
         left: "70%!important",
-        transform: "translateX(-50%)",
+        transform: "translate(-50%, -50%)",
         width: "40vh"
-      },
+      }
     },
 
     "& h2": {
@@ -476,11 +476,11 @@ export const useStyles = makeStyles(theme => ({
         letterSpacing: " -5.5px",
         lineHeight: "80px",
         "@media (orientation: landscape)": {
-          fontSize: "4.75rem",
+          fontSize: "4.75rem"
         },
 
         "@media (orientation: portrait)": {
-          fontSize: "4.75rem",
+          fontSize: "4.75rem"
         }
       },
 
@@ -560,7 +560,11 @@ export const useStyles = makeStyles(theme => ({
     padding: "20px 40px !important",
     "&:hover": {
       backgroundColor: "#333333",
-      color: "#fff",
+      color: "#fff"
+    },
+    [theme.breakpoints.between("sm", "md")]: {
+      padding: "20px 10px !important", 
+      width: "100%"
     },
     [theme.breakpoints.only("xs")]: {
       padding: "20px 40px",
