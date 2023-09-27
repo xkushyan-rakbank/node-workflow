@@ -66,7 +66,12 @@ import {
 } from "../../constants";
 import { setScreeningError } from "../actions/sendProspectToAPI";
 import routes from "../../routes";
-import { checkDocumentValid, getOcrFieldValueBySource } from "../../utils/ocr";
+import {
+  checkDocumentValid,
+  checkIsDocTypeEid,
+  checkIsDocTypePassport,
+  getOcrFieldValueBySource
+} from "../../utils/ocr";
 import { NotificationsManager } from "../../components/Notification";
 import { resetFormStep } from "../actions/sendProspectToAPI";
 import { updateProspect } from "../actions/appConfig";
@@ -120,6 +125,10 @@ export function* analyseOcrDataSaga({ payload }) {
     const age = getOcrFieldValueBySource(response?.age);
 
     if (documentType === DOC_TYPE_EID) {
+      if (!checkIsDocTypeEid(response)) {
+        yield put(analyseOcrFail(INVALID_DOCUMENT));
+        return;
+      }
       parseInt(daysToExpiry) <= 10
         ? yield put(analyseOcrFail(EID_EXPIRY))
         : yield put(analyseOcrSuccessEid(response));
@@ -128,6 +137,10 @@ export function* analyseOcrDataSaga({ payload }) {
       }
     }
     if (documentType === DOC_TYPE_PASSPORT) {
+      if (!checkIsDocTypePassport(response)) {
+        yield put(analyseOcrFail(INVALID_DOCUMENT));
+        return;
+      }
       const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2);
       if (nationalityAsInEid !== nationality) {
         yield put(analyseOcrFail(DOC_MISMATCH));

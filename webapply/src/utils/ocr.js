@@ -15,3 +15,17 @@ export const checkDocumentValid = node => {
   }
   return false;
 };
+
+export const checkIsDocTypePassport = node => {
+  if (node?.documentTypeName[0]?.value === "passport") {
+    return true;
+  }
+  return false;
+};
+
+export const checkIsDocTypeEid = node => {
+  if (node?.documentTypeName[0]?.value === "eid") {
+    return true;
+  }
+  return false;
+};
