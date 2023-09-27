@@ -203,7 +203,7 @@ export const FinancialTurnoverSection = forwardRef(
               }
             }, [values.annualFinTurnoverAmtInAED, sliderValue]);
 
-            const sliderDisplayValue = sliderValue !== null ? sliderValue : 30;
+            const sliderDisplayValue = sliderValue !== null ? sliderValue : 50;
 
             useEffect(() => {
               if (isMobileDevice) {
