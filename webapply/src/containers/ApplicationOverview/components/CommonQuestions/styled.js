@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles(theme => ({
   root: {
-    minWidth: "550px",
+    minWidth: "100%",
     boxShadow: "none",
     borderRadius: "20px",
     border: "2px solid #E9E9E9",

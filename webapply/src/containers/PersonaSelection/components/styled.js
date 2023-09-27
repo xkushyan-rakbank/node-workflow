@@ -32,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
     transition: "border 0.5s ease-in-out",
     [theme.breakpoints.between("sm", "md")]: {
       "@media (orientation: portrait)": {
-        width: "560px"
+        maxWidth: "560px"
       },
     },
     "&:hover": {

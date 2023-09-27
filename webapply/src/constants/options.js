@@ -191,10 +191,22 @@ export const PreferredNotificationOptions = [
     label: "SMS"
   },
   {
-    code: "Phone call",
-    key: "Phone call",
+    code: "Call",
+    key: "Call",
     value: "Call",
     label: "Phone call"
+  },
+  {
+    code: "all the above",
+    key: "all the above",
+    value: "all the above",
+    label: "All the above"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: "no",
+    label: "No, I don't want exclusive deals, discounts, cashback promotions or preferential rates."
   }
 ];
 
@@ -282,5 +294,20 @@ export const entityTypeOptionList = [
     key: "No",
     value: "no",
     label: "Non financial entity"
+  }
+];
+
+export const yesNoMobileInstructionsOptions = [
+  {
+    code: "Yes",
+    key: "Yes",
+    value: true,
+    label: "Yes (SMS & email)"
+  },
+  {
+    code: "No",
+    key: "No",
+    value: false,
+    label: "No (SMS only)"
   }
 ];

@@ -86,8 +86,7 @@ const useStyles = makeStyles(theme => ({
       borderRadius: "2px"
     },
     "& .accordionTitle": {
-      fontWeight: 500,
-      paddingLeft: "15px"
+      fontWeight: 500
     }
   },
   accordionDetails: {
@@ -200,7 +199,7 @@ export const Accordion = ({
                 <Check size="16px" className={classes.success} />
               )}
               <div className="accordionTitle">
-                <p className="title">
+                <div className="title">
                   {title}
                   {showHelperText && (
                     <ContexualHelp
@@ -211,7 +210,7 @@ export const Accordion = ({
                       <HelpOutlineIcon className="helperIcon" />
                     </ContexualHelp>
                   )}
-                </p>
+                </div>
                 {subTitle && <p className="subTitle">{subTitle}</p>}
                 {expandedDescriptionView.includes(expanded) && expandedDescription && (
                   <p className="expandedDescription">{expandedDescription}</p>

@@ -1,6 +1,6 @@
-import React, { useCallback, useState, useEffect, useRef } from "react";
+import React, { useCallback, useState, useEffect, useRef, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field as FormikField } from "formik";
 import * as Yup from "yup";
 import { Grid } from "@material-ui/core";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
@@ -27,6 +27,7 @@ import {
   PreferredNotificationOptions,
   SinglyOptionList,
   yesNoAskMeLaterOptions,
+  yesNoMobileInstructionsOptions,
   yesNoOptions
 } from "../../constants/options";
 import { updateProspect } from "../../store/actions/appConfig";
@@ -36,6 +37,7 @@ import {
   getApplicantInfo,
   getDocuments,
   getKycAnnexureDetails,
+  getProspect,
   getRakValuePackage,
   getSignatories
 } from "../../store/selectors/appConfig";
@@ -68,6 +70,25 @@ import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
+
+const marketingChannelSelectionHandlers = {
+  "all the above": ({ isSelected }) =>
+    isSelected ? [["Email", "SMS", "Call", "all the above"], ["Email", "SMS", "Call"]] : [[], []],
+  no: ({ isSelected }) => (isSelected ? [["no"], ["no"]] : [[], []]),
+  default: ({ option, isSelected, currentValues }) => {
+    const newValues = isSelected
+      ? [...currentValues.filter(option => option !== "no"), option] //remove "no", on selection of any channel
+      : currentValues.filter(item => item !== option);
+    const newMarketingOptions = [...newValues];
+
+    // if all marketing channels(Email, Call, SMS) are selected, select all of the above option
+    if (newValues.length === 3) {
+      newMarketingOptions.push("all the above");
+    }
+    return [newMarketingOptions, newValues];
+  }
+};
+
 export const AccountServices = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
@@ -99,6 +120,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const statementsVia = accountInfo.eStatements ? true : false;
 
   const accountEmirateCity = accountInfo.accountEmirateCity;
+  const marketingChannelList = useSelector(getProspect).channelServicesInfo?.marketingChannel;
 
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
@@ -201,6 +223,17 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }
   }, []);
 
+  const getInitialSelectedMarketingChannelOptions = useMemo(() => {
+    const checkIfAllMarketingChannelOptionsChecked = ["Email", "SMS", "Call"].every(option => {
+      return marketingChannelList ? marketingChannelList.includes(option) : false;
+    });
+    if (checkIfAllMarketingChannelOptionsChecked) {
+      return ["Email", "SMS", "Call", "all the above"];
+    } else {
+      return marketingChannelList;
+    }
+  }, []);
+
   const initialValues = {
     rakValuePackage: "",
     accountCurrency: "AED",
@@ -216,6 +249,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     mobileInstructions: "",
     marketing: "",
     marketingChannel: [],
+    marketingChannelOptions: getInitialSelectedMarketingChannelOptions || [],
     nameOnDebitCard: "",
     surveys: "",
     companyCifId: "",
@@ -279,10 +313,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     preferredLanguage: Yup.string().required("This field is required"),
     mobileInstructions: Yup.string().required("This field is required"),
     marketing: Yup.string().required("This field is required"),
-    marketingChannel: Yup.array().when("marketing", {
-      is: "yes",
-      then: Yup.array().required(getRequiredMessage("Marketing Channel"))
-    }),
+    marketingChannelOptions: Yup.array().required(getRequiredMessage("Marketing Channel")),
     surveys: Yup.string().required("This field is required"),
     allianceCode: Yup.string()
       .nullable()
@@ -370,11 +401,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
     await setFieldValue(name, value);
-    if (name === "marketing") {
-      const marketingChannel =
-        values.marketingChannel?.length > 0 ? values["marketingChannel"] : undefined;
-      await setFieldValue("marketingChannel", marketingChannel);
-    }
     if (name === "debitCardApplied") {
       dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": value }));
     }
@@ -409,11 +435,23 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     scrollToDOMNode(refToTopOfAccountService);
   };
 
-  const accordionTitle = title => (
-    <div className={classes.accordionTitle}>
-      <span>{title}</span>
-    </div>
-  );
+  const accordionTitle = title => <span className={classes.accordionTitle}>{title}</span>;
+
+  const marketingChannelCheckboxHandler = ({ values, setFieldValue }) => async event => {
+    const value = event.target.value;
+    const valuesToSet = (marketingChannelSelectionHandlers[value] ||
+      marketingChannelSelectionHandlers.default)({
+      option: value,
+      isSelected: event.target.checked,
+      currentValues: marketingChannelList
+    });
+    setFieldValue("marketingChannelOptions", valuesToSet[0]);
+    dispatch(
+      updateProspect({
+        "prospect.channelServicesInfo.marketingChannel": valuesToSet[1]
+      })
+    );
+  };
 
   const handleFormAcordions = (accordionRef, isIncomplete) => {
     let isAccordionOpen = accordionRef?.current.getAttribute("aria-expanded") === "true";
@@ -496,6 +534,10 @@ export const AccountServices = ({ sendProspectToAPI }) => {
               setFieldValue
             });
             const radioChangeHandler = selectRadioBoolean({
+              values,
+              setFieldValue
+            });
+            const marketingChannelCheckboxFieldHandler = marketingChannelCheckboxHandler({
               values,
               setFieldValue
             });
@@ -755,11 +797,13 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        Would you like to get transaction notifications on your mobile?
+                        You'll automatically get account-related messages (e.g. transactions,
+                        service requests, important notifications) by SMS. Would you also like to
+                        get them by email?
                       </label>
                       <Field
                         typeRadio
-                        options={yesNoOptions}
+                        options={yesNoMobileInstructionsOptions}
                         name="mobileInstructions"
                         path={"prospect.channelServicesInfo.mobileInstructions"}
                         component={InlineRadioGroup}
@@ -771,8 +815,28 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        Would you like to hear about the latest offers from RAKBANK and authorised
-                        third parties?
+                        Unlock unbeatable personalised offers! How do you want to receive your
+                        exclusive deals, great discounts, superior cashback promotions, and unique
+                        preferential rates?
+                      </label>
+                      <FormikField
+                        name="marketingChannelOptions"
+                        options={PreferredNotificationOptions}
+                        component={CheckboxGroup}
+                        customIcon={true}
+                        classes={{
+                          label: classes.radioLabelRoot
+                        }}
+                        isInlineStyle={false}
+                        radioColor="primary"
+                        onSelect={marketingChannelCheckboxFieldHandler}
+                        clickHandled={true}
+                      />
+                    </div>
+                    <div className={classes.questionareWrapper}>
+                      <label className={classes.sectionLabel}>
+                        Would you like to be the first to hear about the latest offers (including
+                        from RAKBANK’s authorised third parties)?
                       </label>
                       <Field
                         typeRadio
@@ -786,23 +850,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         onChange={radioChangeHandler}
                       />
                     </div>
-                    {values.marketing === "yes" && (
-                      <div className={classes.questionareWrapper}>
-                        <label className={classes.sectionLabel}>Receive notifications via:</label>
-                        <Field
-                          name="marketingChannel"
-                          path={"prospect.channelServicesInfo.marketingChannel"}
-                          options={PreferredNotificationOptions}
-                          component={CheckboxGroup}
-                          customIcon={true}
-                          classes={{
-                            label: classes.radioLabelRoot
-                          }}
-                          isInlineStyle={false}
-                          radioColor="primary"
-                        />
-                      </div>
-                    )}
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
                         Would you be open to participating in surveys and feedback?
@@ -900,7 +947,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                 {isAgent && (
                   <div className={classes.packageSelectionWrapper}>
                     <Accordion
-                      title={"KYC Annexure"}
+                      title={accordionTitle("KYC Annexure")}
                       id={"KYCAnnexure "}
                       classes={{
                         accordionRoot: classes.accountServiceAccordionRoot,

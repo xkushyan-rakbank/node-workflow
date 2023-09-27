@@ -35,7 +35,8 @@ export const CheckboxGroup = ({
   disabled = false,
   customIcon = true,
   typeOfCheckbox = "checkbox",
-  isInlineStyle = true
+  isInlineStyle = true,
+  clickHandled
 }) => {
   const CheckboxesWrapper = styled("div")({
     display: "flex",
@@ -83,6 +84,7 @@ export const CheckboxGroup = ({
                 disabled={disabled}
                 checked={(field.value || []).includes(extractValue(item))}
                 classes={extendedClasses}
+                onChange={clickHandled ? () => {} : field.onChange}
               />
             ))}
           </CheckboxesWrapper>
