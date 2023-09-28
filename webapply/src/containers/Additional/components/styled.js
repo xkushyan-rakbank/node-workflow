@@ -18,6 +18,11 @@ export const useStyles = makeStyles((theme) => ({
       width: contentWidth,
       marginLeft: "auto",
       marginRight: "auto",
+      [theme.breakpoints.between("sm", "md")]: {
+        "@media (orientation: portrait)": {
+          width: "unset",
+        }
+      },
     },
   },
   additionalSelectionButton: {
@@ -35,6 +40,11 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    [theme.breakpoints.between("sm", "md")]: {
+      "@media (orientation: portrait)": {
+        width: "unset"
+      }
+    }
   },
   additionalbtnSelected: {
     "&:hover": {
