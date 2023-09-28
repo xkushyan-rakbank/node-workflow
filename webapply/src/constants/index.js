@@ -221,6 +221,7 @@ export const CREAT_PROSPECT_KEYS = [
   "kycAnnexure",
   "notifyApplicationRequest",
   "additionalDataForBPM",
+  "accordionsStatus",
   "freeFieldsInfo"
 ];
 

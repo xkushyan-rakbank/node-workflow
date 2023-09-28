@@ -21,9 +21,10 @@ import { useViewId } from "../../../../utils/useViewId";
 
 import { useStyles } from "../styled";
 import { updateCompanyAdditionalInfoStatus } from "../../../../store/actions/additionalInfo";
-import { isFieldTouched } from "../../../../store/selectors/appConfig";
+import { getAccordionStatuses, isFieldTouched } from "../../../../store/selectors/appConfig";
 import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 import { Footer } from "../../../../components/Footer";
+import { updateProspect } from "../../../../store/actions/appConfig";
 
 export const AddCompanyInformation = ({
   companyName,
@@ -37,10 +38,10 @@ export const AddCompanyInformation = ({
   useViewId(true);
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
+  const accordionStatuses = useSelector(getAccordionStatuses);
+  const statuses = JSON.parse(accordionStatuses);
 
-  const isTouched = useSelector(isFieldTouched("isTaxDeclarationCompleted"));
-  const { companyAdditionalInfoStatus } = useSelector(state => state.additionalInfo);
-  const isComeback = useSelector(getIsComeback);
+  const { companyAdditionalInfoStatus } = statuses;
 
   const [isLoading, setIsLoading] = useState(false);
   const businessFormRef = useRef(null);
@@ -56,7 +57,11 @@ export const AddCompanyInformation = ({
   const taxDeclarationAccordionRef = useRef(null);
 
   useEffect(() => {
-    !companyAdditionalInfoStatus && dispatch(updateCompanyAdditionalInfoStatus("inProgress"));
+    if (!companyAdditionalInfoStatus) {
+      statuses["addionalStakeholderInfoStatus"] = "In Progress";
+      JSON.stringify(statuses);
+      dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+    }
   }, []);
 
   const initialValues = {
@@ -87,7 +92,10 @@ export const AddCompanyInformation = ({
     return sendProspectToAPI(NEXT).then(
       isScreeningError => {
         if (!isScreeningError) {
-          dispatch(updateCompanyAdditionalInfoStatus("completed"));
+          // dispatch(updateCompanyAdditionalInfoStatus("completed"));
+          statuses["addionalStakeholderInfoStatus"] = "completed";
+          JSON.stringify(statuses);
+          dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
           pushHistory(routes.additionalInfoComponent, true);
         }
       },
@@ -150,9 +158,6 @@ export const AddCompanyInformation = ({
         validateOnMount={true}
       >
         {({ isValid, ...props }) => {
-          const isValidForm =
-            formValidationSchema.isValidSync(props.values) && (isTouched || isComeback);
-
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>

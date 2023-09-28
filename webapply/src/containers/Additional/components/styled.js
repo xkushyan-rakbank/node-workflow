@@ -200,6 +200,7 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "22px",
     textTransform: "none",
     width: "max-content",
+    marginTop: "10px"
   },
   removeButton: {
     // position: "absolute",

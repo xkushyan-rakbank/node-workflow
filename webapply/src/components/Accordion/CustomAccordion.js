@@ -11,7 +11,7 @@ import cx from "classnames";
 import { ReactComponent as Check } from "../../assets/icons/loadingGreen.svg";
 import { ICONS, Icon } from "../Icons";
 import { updateProspect } from "../../store/actions/appConfig";
-import { isFieldTouched } from "../../store/selectors/appConfig";
+import { getAccordionStatuses, isFieldTouched } from "../../store/selectors/appConfig";
 import { getIsComeback } from "../../store/selectors/retrieveApplicantInfo";
 import { ContexualHelp } from "../Notifications";
 
@@ -67,10 +67,10 @@ const useStyles = makeStyles(theme => ({
         color: "#757575",
         margin: 0,
         [theme.breakpoints.up("sm")]: {
-          fontSize: "16px", 
-          lineHeight: "24px",
+          fontSize: "16px",
+          lineHeight: "24px"
         }
-      },
+      }
     }
   },
 
@@ -133,17 +133,23 @@ export const Accordion = ({
   expandedDescription
 }) => {
   const dispatch = useDispatch();
-  const isTouched = useSelector(isFieldTouched(id));
   const classes = useStyles({ classes: extendedClasses });
   const [expanded, setExpanded] = useState("");
-  const isComeback = useSelector(getIsComeback);
   const transitionProps = {
     mountOnEnter: false,
     unmountOnExit: false
   };
+  const accordionStatuses = useSelector(getAccordionStatuses);
+  const statuses = JSON.parse(accordionStatuses);
 
   const handleChange = panel => (event, newExpanded) => {
-    !isTouched && dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
+    if (!statuses[id]) {
+      // dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
+      // const statuses = JSON.parse(accordionStatuses);
+      statuses[id] = true;
+      JSON.stringify(statuses);
+      dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+    }
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -195,9 +201,7 @@ export const Accordion = ({
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="activePanel"></span>
-              {isCompleted && (isTouched || isComeback) && (
-                <Check size="16px" className={classes.success} />
-              )}
+              {isCompleted && statuses[id] && <Check size="16px" className={classes.success} />}
               <div className="accordionTitle">
                 <div className="title">
                   {title}

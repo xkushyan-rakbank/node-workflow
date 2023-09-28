@@ -13,6 +13,7 @@ import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_scor
 import { Footer } from "../../../components/Footer";
 import { ContexualHelp } from "../../../components/Notifications";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import { getAccordionStatuses } from "../../../store/selectors/appConfig";
 
 const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, helperText }) => {
   const classes = useStyles();
@@ -79,10 +80,9 @@ export default function AdditionalInfoComponent() {
   const navigateTo = path => {
     pushHistory(path);
   };
-
-  const { companyAdditionalInfoStatus, addionalStakeholderInfoStatus } = useSelector(
-    state => state.additionalInfo
-  );
+  const accordionStatuses = useSelector(getAccordionStatuses);
+  const statuses = JSON.parse(accordionStatuses);
+  const { companyAdditionalInfoStatus, addionalStakeholderInfoStatus } = statuses;
 
   const isNextButtonEnabled =
     companyAdditionalInfoStatus === "completed" && addionalStakeholderInfoStatus === "completed";

@@ -20,9 +20,8 @@ import { SourceOfIncome } from "./components/SourceOfIncome";
 
 import { useStyles } from "../styled";
 import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
-import { getSignatories, isFieldTouched } from "../../../../store/selectors/appConfig";
+import { getAccordionStatuses, getSignatories } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
-import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 import { Footer } from "../../../../components/Footer";
 
 export const AdditionalStakeholderInformation = ({
@@ -39,9 +38,10 @@ export const AdditionalStakeholderInformation = ({
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
-  const isTouched = useSelector(isFieldTouched("stakeholderTaxDeclarationSection"));
+  const accordionStatuses = useSelector(getAccordionStatuses);
+  const statuses = JSON.parse(accordionStatuses);
   const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
-  const isComeback = useSelector(getIsComeback);
+  const { showSOF } = useSelector(getSignatories)[0];
   const signatoryInfo = useSelector(getSignatories);
 
   const backgroundFormRef = useRef(null);
@@ -57,14 +57,24 @@ export const AdditionalStakeholderInformation = ({
   const stakeHolderTaxAccordionRef = useRef(null);
 
   useEffect(() => {
-    !addionalStakeholderInfoStatus && dispatch(updateStakeholderInfoStatus("inProgress"));
+    !showSOF &&
+      dispatch(
+        updateProspect({
+          "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails": {}
+        })
+      );
+    if (!addionalStakeholderInfoStatus) {
+      statuses["addionalStakeholderInfoStatus"] = "In Progress";
+      JSON.stringify(statuses);
+      dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+    }
   }, []);
 
   const initialValues = {
     backgroundInfoSection: "",
     sourceOfIncomeSection: "",
     residentialAddressSection: "",
-    stakeholderTaxDeclarationSection: "",
+    stakeholderTaxDeclarationSection: ""
   };
 
   const formValidationSchema = Yup.object().shape({
@@ -97,6 +107,9 @@ export const AdditionalStakeholderInformation = ({
       isScreeningError => {
         if (!isScreeningError) {
           dispatch(updateStakeholderInfoStatus("completed"));
+          statuses["companyAdditionalInfoStatus"] = "completed";
+          JSON.stringify(statuses);
+          dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
           pushHistory(routes.additionalInfoComponent, true);
         }
       },
@@ -159,8 +172,6 @@ export const AdditionalStakeholderInformation = ({
         validateOnMount={true}
       >
         {props => {
-          const isValidStakeholderInfo =
-            formValidationSchema.isValidSync(props.values) && (isTouched || isComeback);
           return (
             <Form>
               <div className={classes.additionalCompanyInfoContainer}>

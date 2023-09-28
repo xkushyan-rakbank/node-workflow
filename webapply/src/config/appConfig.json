@@ -299,13 +299,14 @@
               "others": ""
             }
           },
-          "taxDetails": {
-            "taxesInAnotherCountry": "",
+          "taxesInAnotherCountry": "no",
+          "taxDetails": [{
             "country": "",
+            "isTINAvailable": "no",
             "TIN": "",
             "reasonForTINNotAvailable": "",
             "remarks": ""
-          }
+          }]
         },
         "contactDetails": {
           "primaryMobileNo": "",
@@ -526,6 +527,7 @@
       "additionalDocumentsBPM": [
       ]
     },
+    "accordionsStatus": "",
     "freeFieldsInfo": {
       "freeField1": "",
       "freeField2": "",
