@@ -92,7 +92,7 @@ export const AddCompanyInformation = ({
       isScreeningError => {
         if (!isScreeningError) {
           // dispatch(updateCompanyAdditionalInfoStatus("completed"));
-          statuses["addionalStakeholderInfoStatus"] = "completed";
+          statuses["companyAdditionalInfoStatus"] = "completed";
           dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
           pushHistory(routes.additionalInfoComponent, true);
         }
