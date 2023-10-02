@@ -20,7 +20,9 @@ export const ComeBackVerificationComponent = ({ redirectRoute, otpType, roInvite
       <Otp
         redirectRoute={redirectRoute}
         otpType={otpType}
-        title={otpType === "sms" ? "Verify your mobile" : "Verify your email"}
+        title={
+          otpType === "sms" ? "Let's verify your mobile number" : "Let's verify your email address"
+        }
         info={
           otpType === "sms" ? (
             <span>

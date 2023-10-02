@@ -80,23 +80,7 @@ export const TradeLicenceInformation = ({ values }) => {
         iconWidth={12}
         iconHeight={12}
       />
-      <Grid item container spacing={3} direction="row-reverse">
-        <Grid item sm={6} xs={12}>
-          <Field
-            name="licenseOrCOIExpiryDate"
-            label="Licence or Certificate of Incorporation expiry date"
-            path="prospect.organizationInfo.licenseOrCOIExpiryDate"
-            placeholder="Licence or Certificate of Incorporation expiry date"
-            inputAdornmentPosition="end"
-            component={DatePicker}
-            InputProps={{
-              disableUnderline: true,
-              inputProps: { tabIndex: 0 }
-            }}
-            minDate={addDays(new Date(), 10)}
-            changeProspect={changeDateProspectHandler}
-          />
-        </Grid>
+      <Grid item container spacing={3}>
         <Grid item sm={6} xs={12}>
           <Field
             name="dateOfIncorporation"
@@ -113,6 +97,22 @@ export const TradeLicenceInformation = ({ values }) => {
               disableUnderline: true,
               inputProps: { tabIndex: 0 }
             }}
+            changeProspect={changeDateProspectHandler}
+          />
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          <Field
+            name="licenseOrCOIExpiryDate"
+            label="Licence or Certificate of Incorporation expiry date"
+            path="prospect.organizationInfo.licenseOrCOIExpiryDate"
+            placeholder="Licence or Certificate of Incorporation expiry date"
+            inputAdornmentPosition="end"
+            component={DatePicker}
+            InputProps={{
+              disableUnderline: true,
+              inputProps: { tabIndex: 0 }
+            }}
+            minDate={addDays(new Date(), 10)}
             changeProspect={changeDateProspectHandler}
           />
         </Grid>
