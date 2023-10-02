@@ -148,7 +148,7 @@ export const Accordion = ({
       // const statuses = JSON.parse(accordionStatuses);
       statuses[id] = true;
       JSON.stringify(statuses);
-      dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
     setExpanded(newExpanded ? panel : false);
   };

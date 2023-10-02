@@ -64,6 +64,7 @@ function checkIsAutoSaveViewId(viewId) {
     VIEW_IDS.StakeholdersInfo,
     VIEW_IDS.StakeholdersInfoPreview,
     VIEW_IDS.ConsentInfo,
+    VIEW_IDS.AdditionalInfo,
     VIEW_IDS.CompanyAdditionalInfo,
     VIEW_IDS.StakeholdersAdditionalInfo,
     VIEW_IDS.AccountInfo,

@@ -2,6 +2,8 @@ import React from "react";
 import cx from "classnames";
 import { Button } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+
 import routes from "../../../routes";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ReactComponent as NavigationLeft } from "../../../assets/icons/blackNavigationLeftArrow.svg";
@@ -12,14 +14,13 @@ import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import { Footer } from "../../../components/Footer";
 import { ContexualHelp } from "../../../components/Notifications";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { getAccordionStatuses } from "../../../store/selectors/appConfig";
 
 const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, helperText }) => {
   const classes = useStyles();
 
   const getStatusText = () => {
-    if (status === "inProgress") {
+    if (status === "In Progress") {
       return "Up Next";
     } else if (status === "completed") {
       return "Completed";
@@ -60,7 +61,7 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
           <div
             className={cx(
               classes.completedWrapper,
-              status === "inProgress" ? classes.incompleted : classes.success
+              status === "In Progress" ? classes.incompleted : classes.success
             )}
           >
             {status === "completed" ? <SuccessIcon /> : null}

@@ -524,6 +524,7 @@ export const VIEW_IDS = {
   StakeholdersInfo: "/StakeholdersInfo",
   StakeholdersInfoPreview: "/StakeholdersInfoPreview",
   ConsentInfo: "/ConsentInfo",
+  AdditionalInfo: "/AdditionalInfo",
   CompanyAdditionalInfo: "/CompanyAdditionalInfo",
   StakeholdersAdditionalInfo: "/StakeholdersAdditionalInfo",
   AccountInfo: "/AccountInfo",

@@ -58,9 +58,8 @@ export const AddCompanyInformation = ({
 
   useEffect(() => {
     if (!companyAdditionalInfoStatus) {
-      statuses["addionalStakeholderInfoStatus"] = "In Progress";
-      JSON.stringify(statuses);
-      dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+      statuses["companyAdditionalInfoStatus"] = "In Progress";
+      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
   }, []);
 
@@ -94,8 +93,7 @@ export const AddCompanyInformation = ({
         if (!isScreeningError) {
           // dispatch(updateCompanyAdditionalInfoStatus("completed"));
           statuses["addionalStakeholderInfoStatus"] = "completed";
-          JSON.stringify(statuses);
-          dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+          dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
           pushHistory(routes.additionalInfoComponent, true);
         }
       },

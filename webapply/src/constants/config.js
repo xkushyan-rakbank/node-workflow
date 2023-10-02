@@ -459,6 +459,7 @@ export const pageProspectPaylodMap = {
   "/StakeholdersInfo": ["signatoryInfo"],
   "/StakeholdersInfoPreview": ["signatoryInfo"],
   "/ConsentInfo": ["signatoryInfo"],
+  "/AdditionalInfo": ["accordionsStatus"],
   "/CompanyAdditionalInfo": ["companyAdditionalInfo", "documents"],
   "/StakeholdersAdditionalInfo": ["signatoryInfo", "documents"],
   "/AccountInfo": [

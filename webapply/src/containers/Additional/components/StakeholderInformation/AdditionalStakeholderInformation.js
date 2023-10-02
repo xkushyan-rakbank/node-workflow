@@ -65,8 +65,7 @@ export const AdditionalStakeholderInformation = ({
       );
     if (!addionalStakeholderInfoStatus) {
       statuses["addionalStakeholderInfoStatus"] = "In Progress";
-      JSON.stringify(statuses);
-      dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
   }, []);
 
@@ -108,8 +107,7 @@ export const AdditionalStakeholderInformation = ({
         if (!isScreeningError) {
           dispatch(updateStakeholderInfoStatus("completed"));
           statuses["companyAdditionalInfoStatus"] = "completed";
-          JSON.stringify(statuses);
-          dispatch(updateProspect({ "prospect.accordionsStatus": statuses }));
+          dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
           pushHistory(routes.additionalInfoComponent, true);
         }
       },

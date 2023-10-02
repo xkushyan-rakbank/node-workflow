@@ -210,3 +210,5 @@ export const getAdditionalDocumentDetailsForBPM = state =>
   getProspect(state).additionalDataForBPM?.additionalDocumentsBPM || [];
 
 export const getSearchInputDetails = state => getAppConfig(state).searchInfo;
+
+export const getAccordionStatuses = state => getProspect(state).accordionsStatus || "{}";
