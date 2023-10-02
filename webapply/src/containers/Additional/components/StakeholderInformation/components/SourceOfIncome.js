@@ -70,68 +70,75 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
 
   const tradeLicense = useFindDocument(tradeLicenceDocuments, tradeLicenseKeyToCheck);
   const proofOfIncome = useFindDocument(sourceOfIncomeDocuments, proofOfIncomeKeyToCheck);
+  const { showSOF } = useSelector(getSignatories)[0];
+  
   const initialValues = {
     sourceOfIncome: [""],
     IBANType: "",
     IBAN: "",
     companyNameforSOF: "",
     proofOfIncome: proofOfIncome || [""],
-    tradeLicense: tradeLicense[0] || ""
+    tradeLicense: tradeLicense[0] || "",
+    showSOF
   };
 
   const { sourceOfIncomeFormRef, sourceOfIncomeAccordionRef } = refs;
-
+  
   const sourceOfIncomeValidationSchema = Yup.object().shape({
     sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
-    IBANType: Yup.string()
-      .nullable()
-      .required(getRequiredMessage("IBAN type")),
-    IBAN: Yup.string().when("IBANType", {
-      is: IBANType => IBANType !== "NOIB",
-      then: Yup.string()
-        .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
-        .max(23, "IBAN must have a maximum of 23 characters")
-        .typeError(getRequiredMessage("IBAN"))
-        .required(getRequiredMessage("IBAN")),
-      otherwise: Yup.string()
-        .nullable()
-        .notRequired()
+    IBANType: Yup.string().when("showSOF", (showSOF, schema) => {
+      return showSOF ? schema.required(getRequiredMessage("IBAN type")) : schema.nullable();
     }),
-    companyNameforSOF: Yup.string().when("IBANType", {
-      is: IBANType => IBANType === "BARO",
-      then: Yup.string()
-        .typeError(getRequiredMessage("Company name"))
-        .required(getRequiredMessage("Company name"))
-        // eslint-disable-next-line no-template-curly-in-string
-        .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
+    IBAN: Yup.string().when(["IBANType", "showSOF"], (IBANType, showSOF, schema) => {
+      return IBANType !== "NOIB" && showSOF
+        ? schema
+            .matches(/^AE\d{21}$/, "Invalid UAE IBAN format")
+            .max(23, "IBAN must have a maximum of 23 characters")
+            .typeError(getRequiredMessage("IBAN"))
+            .required(getRequiredMessage("IBAN"))
+        : schema.nullable().notRequired();
     }),
-    proofOfIncome: Yup.array().of(
-      Yup.mixed()
-        .test("required", getRequiredMessage("Proof of income"), file => {
-          if (file) return true;
-          return false;
-        })
-        .test("fileSize", "The file is too large", file => {
-          return (
-            file &&
-            (file === true ||
-              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
-          );
-        })
-    ),
-    tradeLicense: Yup.mixed().when("IBANType", {
-      is: IBANType => IBANType === "BARO",
-      then: Yup.mixed()
-        .required(getRequiredMessage("TradeLicense"))
-        .test("fileSize", "The file is too large", file => {
-          return (
-            file &&
-            (tradeLicense ||
-              file === true ||
-              (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
-          );
-        })
+    companyNameforSOF: Yup.string().when(["IBANType", "showSOF"], (IBANType, showSOF, schema) => {
+      return IBANType === "BARO" && showSOF
+        ? schema
+            .typeError(getRequiredMessage("Company name"))
+            .required(getRequiredMessage("Company name"))
+            .max(MAX_COMPANY_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
+        : schema.nullable().notRequired();
+    }),
+    proofOfIncome: Yup.array().when("showSOF", (showSOF, schema) => {
+      return showSOF
+        ? schema.of(
+            Yup.mixed()
+              .test("required", getRequiredMessage("Proof of income"), file => {
+                if (file) return true;
+                return false;
+              })
+              .test("fileSize", "The file is too large", file => {
+                return (
+                  file &&
+                  (file === true ||
+                    (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                      file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+                );
+              })
+          )
+        : schema.nullable();
+    }),
+    tradeLicense: Yup.mixed().when(["IBANType", "showSOF"], (IBANType, showSOF, schema) => {
+      return IBANType === "BARO" && showSOF
+        ? schema
+            .required(getRequiredMessage("TradeLicense"))
+            .test("fileSize", "The file is too large", file => {
+              return (
+                file &&
+                (tradeLicense ||
+                  file === true ||
+                  (file.fileSize >= MOA_FILE_SIZE.minSize &&
+                    file.fileSize <= MOA_FILE_SIZE.maxSize))
+              );
+            })
+        : schema.nullable();
     })
   });
 
@@ -325,24 +332,27 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
                     isSearchable
                   />
                 </Grid>
-                <Grid item sm={12} xs={12}>
-                  <Field
-                    name="IBANType"
-                    path={`${basePath}.IBANType`}
-                    datalistId="internationalBankAccountNumber"
-                    label="IBAN type"
-                    placeholder="IBAN type"
-                    component={SelectAutocomplete}
-                    onChange={selectedValue => {
-                      setFieldValue("IBANType", selectedValue);
-                      if (selectedValue === "NOIB") {
-                        removeIbanNumber(selectedValue, setFieldValue, touched, setTouched);
-                        setCompanyNameforSOFEmpty(setFieldValue);
-                      }
-                    }}
-                  />
-                </Grid>
-                {!noIBAN && (
+                {showSOF && (
+                  <Grid item sm={12} xs={12}>
+                    <Field
+                      name="IBANType"
+                      path={`${basePath}.IBANType`}
+                      datalistId="internationalBankAccountNumber"
+                      label="IBAN type"
+                      placeholder="IBAN type"
+                      component={SelectAutocomplete}
+                      onChange={selectedValue => {
+                        setFieldValue("IBANType", selectedValue);
+                        if (selectedValue === "NOIB") {
+                          removeIbanNumber(selectedValue, setFieldValue, touched, setTouched);
+                          setCompanyNameforSOFEmpty(setFieldValue);
+                        }
+                      }}
+                    />
+                  </Grid>
+                )}
+
+                {showSOF && !noIBAN && (
                   <Grid item sm={12} xs={12}>
                     <Field
                       name="IBAN"
@@ -356,7 +366,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
                     />
                   </Grid>
                 )}
-                {isBARO && (
+                {showSOF && isBARO && (
                   <>
                     <Grid item sm={12} xs={12}>
                       <Field
@@ -400,81 +410,82 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
                     </Grid>
                   </>
                 )}
-
-                <Grid container spacing={3} style={{ marginBottom: "20px" }}>
-                  <FieldArray name="proofOfIncome">
-                    {({ push, remove, arrayHelpers }) => (
-                      <Grid item sm={12} xs={12}>
-                        {values.proofOfIncome.map((file, index) => (
-                          <div key={index} style={{ marginBottom: "20px" }}>
-                            <Field
-                              name={`proofOfIncome[${index}]`}
-                              // eslint-disable-next-line max-len
-                              path={`prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome[${index}]`}
-                              type="file"
-                              fieldDescription={"Proof of income"}
-                              helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                              accept={TL_ACCEPTED_FILE_TYPES}
-                              fileSize={TL_COI_FILE_SIZE}
-                              component={Upload}
-                              showInfoIcon={true}
-                              // infoTitle={"You can select multiple options"}
-                              // infoIcon={true}
-                              onDrop={acceptedFile =>
-                                handleDropFile(
-                                  acceptedFile,
-                                  `proofOfIncome[${index}]`,
-                                  touched,
-                                  setTouched,
-                                  setFieldValue,
-                                  index
-                                )
-                              }
-                              file={values.proofOfIncome[index]}
-                              onDelete={() =>
-                                removeProofOfIncome(
-                                  index,
-                                  values,
-                                  values.proofOfIncome.length,
-                                  setFieldValue
-                                )
-                              }
-                              content={values?.proofOfIncome[index]}
-                              isUploading={isUploading[index]}
-                              mobilecontentPlaceholder={"Upload your file"}
-                              notedText={index === 0 ? sourceOfIncomeInformation : null}
-                            />
-                            {index > 0 && (
-                              <IconButton
-                                aria-label="delete"
-                                style={{
-                                  padding: 0,
-                                  marginTop: "5px",
-                                  width: "100%",
-                                  justifyContent: "end"
-                                }}
-                                onClick={() => removeProofOfIncome(index, values)}
-                              >
-                                <HighlightOffIcon />
-                              </IconButton>
-                            )}
-                          </div>
-                        ))}
-                        {values.proofOfIncome.length < 3 && (
-                          <Button
-                            color="primary"
-                            variant="outlined"
-                            className={classes.addMoreButton}
-                            onClick={() => push("")}
-                            disabled={!values.proofOfIncome[0]}
-                          >
-                            + Add more
-                          </Button>
-                        )}
-                      </Grid>
-                    )}
-                  </FieldArray>
-                </Grid>
+                {showSOF && (
+                  <Grid container spacing={3} style={{ marginBottom: "20px" }}>
+                    <FieldArray name="proofOfIncome">
+                      {({ push, remove, arrayHelpers }) => (
+                        <Grid item sm={12} xs={12}>
+                          {values.proofOfIncome.map((file, index) => (
+                            <div key={index} style={{ marginBottom: "20px" }}>
+                              <Field
+                                name={`proofOfIncome[${index}]`}
+                                // eslint-disable-next-line max-len
+                                path={`prospect.prospectDocuments.additionalStakeholderDocument.proofOfIncome[${index}]`}
+                                type="file"
+                                fieldDescription={"Proof of income"}
+                                helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                                accept={TL_ACCEPTED_FILE_TYPES}
+                                fileSize={TL_COI_FILE_SIZE}
+                                component={Upload}
+                                showInfoIcon={true}
+                                // infoTitle={"You can select multiple options"}
+                                // infoIcon={true}
+                                onDrop={acceptedFile =>
+                                  handleDropFile(
+                                    acceptedFile,
+                                    `proofOfIncome[${index}]`,
+                                    touched,
+                                    setTouched,
+                                    setFieldValue,
+                                    index
+                                  )
+                                }
+                                file={values.proofOfIncome[index]}
+                                onDelete={() =>
+                                  removeProofOfIncome(
+                                    index,
+                                    values,
+                                    values.proofOfIncome.length,
+                                    setFieldValue
+                                  )
+                                }
+                                content={values?.proofOfIncome[index]}
+                                isUploading={isUploading[index]}
+                                mobilecontentPlaceholder={"Upload your file"}
+                                notedText={index === 0 ? sourceOfIncomeInformation : null}
+                              />
+                              {index > 0 && (
+                                <IconButton
+                                  aria-label="delete"
+                                  style={{
+                                    padding: 0,
+                                    marginTop: "5px",
+                                    width: "100%",
+                                    justifyContent: "end"
+                                  }}
+                                  onClick={() => removeProofOfIncome(index, values)}
+                                >
+                                  <HighlightOffIcon />
+                                </IconButton>
+                              )}
+                            </div>
+                          ))}
+                          {values.proofOfIncome.length < 3 && (
+                            <Button
+                              color="primary"
+                              variant="outlined"
+                              className={classes.addMoreButton}
+                              onClick={() => push("")}
+                              disabled={!values.proofOfIncome[0]}
+                            >
+                              + Add more
+                            </Button>
+                          )}
+                        </Grid>
+                      )}
+                    </FieldArray>
+                  </Grid>
+                )}
               </Grid>
             </>
           </Accordion>

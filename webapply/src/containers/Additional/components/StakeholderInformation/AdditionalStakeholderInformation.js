@@ -42,7 +42,6 @@ export const AdditionalStakeholderInformation = ({
   const isTouched = useSelector(isFieldTouched("stakeholderTaxDeclarationSection"));
   const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
   const isComeback = useSelector(getIsComeback);
-  const { showSOF } = useSelector(getSignatories)[0];
   const signatoryInfo = useSelector(getSignatories);
 
   const backgroundFormRef = useRef(null);
@@ -58,12 +57,6 @@ export const AdditionalStakeholderInformation = ({
   const stakeHolderTaxAccordionRef = useRef(null);
 
   useEffect(() => {
-    !showSOF &&
-      dispatch(
-        updateProspect({
-          "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails": {}
-        })
-      );
     !addionalStakeholderInfoStatus && dispatch(updateStakeholderInfoStatus("inProgress"));
   }, []);
 
@@ -72,19 +65,15 @@ export const AdditionalStakeholderInformation = ({
     sourceOfIncomeSection: "",
     residentialAddressSection: "",
     stakeholderTaxDeclarationSection: "",
-    showSOF
   };
 
   const formValidationSchema = Yup.object().shape({
     backgroundInfoSection: Yup.boolean()
       .required()
       .oneOf([true]),
-    sourceOfIncomeSection: Yup.mixed().when("showSOF", {
-      is: showSOF => showSOF,
-      then: Yup.boolean()
-        .required()
-        .oneOf([true])
-    }),
+    sourceOfIncomeSection: Yup.boolean()
+      .required()
+      .oneOf([true]),
     residentialAddressSection: Yup.boolean()
       .required()
       .oneOf([true]),
@@ -184,13 +173,11 @@ export const AdditionalStakeholderInformation = ({
                     refs={{ backgroundFormRef, backgroundAccordionRef }}
                     {...props}
                   />
-                  {showSOF && (
-                    <SourceOfIncome
-                      id={"sourceOfIncomeSection"}
-                      refs={{ sourceOfIncomeFormRef, sourceOfIncomeAccordionRef }}
-                      {...props}
-                    />
-                  )}
+                  <SourceOfIncome
+                    id={"sourceOfIncomeSection"}
+                    refs={{ sourceOfIncomeFormRef, sourceOfIncomeAccordionRef }}
+                    {...props}
+                  />
                   <ResidentialAddress
                     id={"residentialAddressSection"}
                     refs={{ residentialFormRef, residentialAccordionRef }}
