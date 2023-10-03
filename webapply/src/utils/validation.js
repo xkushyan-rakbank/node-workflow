@@ -72,3 +72,5 @@ export const documentValidationSchema = Yup.object().shape({
       value => value && SUPPORTED_FORMATS.includes(value.type)
     )
 });
+
+export const ADDRESS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;

@@ -23,10 +23,9 @@ import { TL_COI_FILE_SIZE } from "../../../../../constants";
 import { useStyles } from "../../styled";
 import {
   MAX_FLAT_NUMBER_LENGTH,
-  MAX_OFFICE_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
 } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
-import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
+import { ADDRESS_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { getDocuments } from "../../../../../store/selectors/appConfig";
@@ -74,19 +73,19 @@ export const MailingAddressSection = forwardRef(
         .required(getRequiredMessage("Street / location"))
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street / Location")),
+        .matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
       addressLine1: Yup.string().when("typeOfAddress", {
         is: typeOfAddress => typeOfAddress === "physical",
         then: Yup.string()
           .required(getRequiredMessage("Office or shop number"))
           // eslint-disable-next-line no-template-curly-in-string
-          .max(MAX_OFFICE_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Office or shop number")),
+          .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+          .matches(ADDRESS_REGEX, getInvalidMessage("Office or shop number")),
         otherwise: Yup.string()
           .required(getRequiredMessage("Flat, villa or building"))
           // eslint-disable-next-line no-template-curly-in-string
           .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-          .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat, villa or building"))
+          .matches(ADDRESS_REGEX, getInvalidMessage("Flat, villa or building"))
       }),
       poBox: Yup.string()
         .nullable()
@@ -261,7 +260,7 @@ export const MailingAddressSection = forwardRef(
                           }
                           placeholder="Office or shop number"
                           InputProps={{
-                            inputProps: { tabIndex: 1, maxLength: 10 }
+                            inputProps: { tabIndex: 1, maxLength: 50 }
                           }}
                           component={Input}
                         />
