@@ -48,7 +48,7 @@ export const useDisplayScreenBasedOnViewId = () => {
       ) {
         url = routes.companyInfo;
       }
-      if (!isROScreens && prospectStatus === "INFO_REQUIRED") {
+      if (prospectStatus === "INFO_REQUIRED") {
         url = routes.additionalInformation;
       }
 
