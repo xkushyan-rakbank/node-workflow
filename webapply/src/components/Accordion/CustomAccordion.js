@@ -147,9 +147,14 @@ export const Accordion = ({
 
   useEffect(() => {
     setFormFieldValue(id, isCompleted);
-    statuses[id] = isCompleted;
-    JSON.stringify(statuses);
-    dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+    const updatedStatuses = { ...statuses };
+    updatedStatuses[id] = isCompleted;
+
+    dispatch(
+      updateProspect({
+        "prospect.accordionsStatus": JSON.stringify(updatedStatuses)
+      })
+    );
   }, [id, isCompleted]);
 
   const byDefaultExpandedAccordion = [

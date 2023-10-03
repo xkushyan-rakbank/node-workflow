@@ -147,10 +147,12 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
           isNull(values?.backgroundInfo) &&
           values?.linkedInURL?.length === 0 &&
           isEmpty(values?.cv);
+        const IsValidForm = backgroundSchema.isValidSync(values);
+
         return (
           <Accordion
             title={"Professional background"}
-            isCompleted={isValid}
+            isCompleted={IsValidForm}
             id={id}
             setFormFieldValue={setFormFieldValue}
             classes={{

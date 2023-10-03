@@ -41,7 +41,6 @@ export const AdditionalStakeholderInformation = ({
   const accordionStatuses = useSelector(getAccordionStatuses);
   const statuses = JSON.parse(accordionStatuses);
   const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
-  const { showSOF } = useSelector(getSignatories)[0];
   const signatoryInfo = useSelector(getSignatories);
 
   const backgroundFormRef = useRef(null);
@@ -57,12 +56,6 @@ export const AdditionalStakeholderInformation = ({
   const stakeHolderTaxAccordionRef = useRef(null);
 
   useEffect(() => {
-    !showSOF &&
-      dispatch(
-        updateProspect({
-          "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails": {}
-        })
-      );
     if (!addionalStakeholderInfoStatus) {
       statuses["addionalStakeholderInfoStatus"] = "In Progress";
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
