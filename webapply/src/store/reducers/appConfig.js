@@ -21,7 +21,8 @@ import {
   SET_RO_CODE,
   INITIAL_CHECK,
   KYC_INITIAL_EDIT_CHECK,
-  UPDATE_RO_EMAIL
+  UPDATE_RO_EMAIL,
+  SET_TAT
 } from "../actions/appConfig";
 import { LOGIN_INFO_FORM_SUCCESS, LOGOUT } from "../actions/loginForm";
 import { UAE_CODE } from "../../constants";
@@ -190,6 +191,10 @@ export default handleActions(
     [DECISIONS_LOADING]: (state, action) => ({
       ...state,
       decisionLoading: action.payload
+    }),
+    [SET_TAT]: (state, action) => ({
+      ...state,
+      tat: action.payload
     })
   },
   initialState

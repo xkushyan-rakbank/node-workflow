@@ -53,7 +53,7 @@ import {
   AUTO_SAVE_INTERVAL,
   applicationError
 } from "../../constants";
-import { updateProspect } from "../actions/appConfig";
+import { setTat, updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 import { pageProspectPaylodMap } from "../../constants/config";
@@ -317,6 +317,10 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
           "prospect.signatoryInfo": [{ ...signatoryInfo[0], ...data.signatoryInfo[0] }]
         })
       );
+    }
+
+    if (viewId === "/SubmitApplication") {
+      yield put(setTat(data.TAT));
     }
 
     const { preScreening } = data;

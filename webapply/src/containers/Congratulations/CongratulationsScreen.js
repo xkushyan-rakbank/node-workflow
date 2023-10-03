@@ -18,7 +18,7 @@ import { ReactComponent as CongratsIcon } from "../../assets/icons/congratsBallo
 import { ReactComponent as SubmittedForm } from "../../assets/icons/submittedForm.svg";
 import {ReactComponent as Phone} from "../../assets/icons/pinkPhone.svg";
 
-export const CongratulationsScreen = () => {
+export const CongratulationsScreen = ({TAT}) => {
   useFormNavigation([true, true, formStepper]);
   useLayoutParams(false, false, false);
   useViewId();
@@ -68,7 +68,7 @@ export const CongratulationsScreen = () => {
             <Phone className={classes.icon}/>
             <div>
               <p className={classes.applicationNumber}>Here’s what happens next..</p>
-              <p className={classes.applicationDesc}> Leave the rest to us! We'll be in touch soon to finalise your application. </p>
+              <p className={classes.applicationDesc}>Leave the rest to us! We'll be in touch within {TAT} business days to finalize your application.</p>
             </div>
           </div>
         </div>

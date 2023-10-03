@@ -212,3 +212,7 @@ export const getAdditionalDocumentDetailsForBPM = state =>
 export const getSearchInputDetails = state => getAppConfig(state).searchInfo;
 
 export const getAccordionStatuses = state => getProspect(state).accordionsStatus || "{}";
+
+export const getTat = state => {
+  return typeof state.appConfig.tat !== "undefined" ? state.appConfig.tat : "";
+};
