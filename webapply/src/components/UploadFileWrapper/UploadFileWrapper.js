@@ -7,6 +7,7 @@ import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
 import { ReactComponent as PreviewEye } from "../../assets/icons/previewEye.svg";
 import { PreviewDataModal } from "../../containers/CompanyStakeholders/components/CompanyStakeholders/PreviewDataModal";
+import { isMobile, isTablet } from "react-device-detect";
 
 export const UploadFileWrapper = ({
   fieldDescription,
@@ -26,7 +27,6 @@ export const UploadFileWrapper = ({
 }) => {
   const classes = useStyles();
   const [showPreviewModal, setShowPreviewModal] = useState(false);
-  const isMobileDevice = useMediaQuery("max-width: 767px") || window.innerWidth <= 768;
 
   const truncatedLabel = label => {
     if (!label.includes("|")) {
@@ -55,9 +55,7 @@ export const UploadFileWrapper = ({
                   {uploadedContent
                     ? truncatedLabel(uploadedContent)
                     : `${
-                        isMobileDevice && mobileLabel
-                          ? mobileLabel
-                          : "Scan or upload from your computer"
+                        isMobile && mobileLabel ? mobileLabel : "Scan or upload from your computer"
                       }`}
                   {!isSuccess && <div className={classes.subcontent}>{helperText}</div>}
                 </div>
