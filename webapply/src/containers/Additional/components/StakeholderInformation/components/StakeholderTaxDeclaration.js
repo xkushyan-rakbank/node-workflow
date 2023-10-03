@@ -133,83 +133,94 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
               }}
               accordionRef={stakeHolderTaxAccordionRef}
             >
-              <DisclaimerNote text="“RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support”" />
-              <div className={classes.taxDeclarationQuestionare}>
-                <label className={classes.sectionLabel}>Do you pay taxes in another country?</label>
-                <Field
-                  typeRadio
-                  name="taxesInAnotherCountry"
-                  path={`${basePath}.taxesInAnotherCountry`}
-                  options={YesNoListForTaxPayInAnotherCountry}
-                  component={CheckboxGroup}
-                  onSelect={stakeholderTaxRadioFieldHandler}
-                  customIcon={false}
-                  classes={{
-                    root: classes.radioButtonRoot,
-                    label: classes.radioLabelRoot
-                  }}
-                  isInlineStyle={false}
-                  radioColor="primary"
-                />
-              </div>
-              {hideAnotherCountryTaxField && (
-                <Grid container spacing={3}>
-                  <Grid item sm={12} xs={12}>
-                    <Field
-                      name="country"
-                      path={`${basePath}.country`}
-                      label="Country"
-                      placeholder="Country"
-                      datalistId="country"
-                      component={SelectAutocomplete}
-                      filterOptions={options => {
-                        return options.filter(item => item.code !== "AE");
-                      }}
-                    />
-                  </Grid>
-                  <Grid item sm={12} xs={12}>
-                    <Field
-                      name="TIN"
-                      path={`${basePath}.TIN`}
-                      label="Tax Identification Number (TIN)"
-                      placeholder="Tax Identification Number (TIN)"
-                      InputProps={{
-                        inputProps: { tabIndex: 1 }
-                      }}
-                      component={Input}
-                    />
-                  </Grid>
-                  <Grid item sm={12} xs={12}>
-                    <Field
-                      name="reasonForTINNotAvailable"
-                      path={`${basePath}.reasonForTINNotAvailable`}
-                      label="Select a reason if TIN is not available"
-                      placeholder="Select a reason if TIN is not available"
-                      datalistId="TINReason"
-                      component={SelectAutocomplete}
-                      infoTitle={"We need to know this for regulatory reasons."}
-                      infoIcon={true}
-                    />
-                  </Grid>
-                  {hideRemarks && (
+              <div>
+                <div className={classes.descriptionSubField}>
+                  <p>
+                    For regulatory compliance, we need to know if you pay taxes in any country other
+                    than the UAE. If you have a Tax Identification Number (TIN), enter it in the
+                    field provided below.
+                  </p>
+                </div>
+                <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
+                <div className={classes.taxDeclarationQuestionare}>
+                  <label className={classes.sectionLabel}>
+                    Do you pay taxes in another country?
+                  </label>
+                  <Field
+                    typeRadio
+                    name="taxesInAnotherCountry"
+                    path={`${basePath}.taxesInAnotherCountry`}
+                    options={YesNoListForTaxPayInAnotherCountry}
+                    component={CheckboxGroup}
+                    onSelect={stakeholderTaxRadioFieldHandler}
+                    customIcon={false}
+                    classes={{
+                      root: classes.radioButtonRoot,
+                      label: classes.radioLabelRoot
+                    }}
+                    isInlineStyle={false}
+                    radioColor="primary"
+                  />
+                </div>
+                {hideAnotherCountryTaxField && (
+                  <Grid container spacing={3}>
                     <Grid item sm={12} xs={12}>
                       <Field
-                        name="remarks"
-                        path={`${basePath}.remarks`}
-                        label="Remarks"
-                        placeholder="Please explain why you are unable to obtain a TIN"
-                        multiline
-                        minRows="9"
-                        InputProps={{
-                          inputProps: { tabIndex: 0, maxLength: 500 }
+                        name="country"
+                        path={`${basePath}.country`}
+                        label="Country"
+                        placeholder="Country"
+                        datalistId="country"
+                        component={SelectAutocomplete}
+                        filterOptions={options => {
+                          return options.filter(item => item.code !== "AE");
                         }}
-                        component={Input}
-                        classes={{ input: classes.textAreaStyle }}
                       />
                     </Grid>
-                  )}
-                </Grid>
-              )}
+                    <Grid item sm={12} xs={12}>
+                      <Field
+                        name="TIN"
+                        path={`${basePath}.TIN`}
+                        label="Tax Identification Number (TIN)"
+                        placeholder="Tax Identification Number (TIN)"
+                        InputProps={{
+                          inputProps: { tabIndex: 1 }
+                        }}
+                        component={Input}
+                      />
+                    </Grid>
+                    <Grid item sm={12} xs={12}>
+                      <Field
+                        name="reasonForTINNotAvailable"
+                        path={`${basePath}.reasonForTINNotAvailable`}
+                        label="Select a reason if TIN is not available"
+                        placeholder="Select a reason if TIN is not available"
+                        datalistId="TINReason"
+                        component={SelectAutocomplete}
+                        infoTitle={"We need to know this for regulatory reasons."}
+                        infoIcon={true}
+                      />
+                    </Grid>
+                    {hideRemarks && (
+                      <Grid item sm={12} xs={12}>
+                        <Field
+                          name="remarks"
+                          path={`${basePath}.remarks`}
+                          label="Remarks"
+                          placeholder="Please explain why you are unable to obtain a TIN"
+                          multiline
+                          minRows="9"
+                          InputProps={{
+                            inputProps: { tabIndex: 0, maxLength: 500 }
+                          }}
+                          component={Input}
+                          classes={{ input: classes.textAreaStyle }}
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
+                )}
+              </div>
             </Accordion>
             <TermsAndConditionsDialog
               open={openDefinitionDialog}

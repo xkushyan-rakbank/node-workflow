@@ -164,8 +164,8 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
             <>
               <div className={classes.descriptionSubField}>
                 <p>
-                  To run a standard background check, we need the details of your employment and
-                  qualifications as are relevant to your current position.
+                  To help us understand your professional experience, please provide employment and
+                  qualification details relevant to your current position.
                 </p>
               </div>
 
@@ -258,7 +258,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
                 name="backgroundInfo"
                 path={`${basePath}.backgroundInfo`}
                 label="Background information"
-                placeholder="Background information"
+                placeholder="Share details about your professional experience..."
                 multiline
                 rows="9"
                 InputProps={{

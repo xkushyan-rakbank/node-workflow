@@ -276,7 +276,7 @@ export const FinancialTurnoverSection = forwardRef(
                       isNumeric(anualCashDepositAED) && (
                         <>
                           <span className={classes.percentageText}>
-                            Cash deposit ({sliderValue}%)
+                            Cash sales ({sliderValue}%)
                           </span>
                           <span className={classes.amountText}>
                             {numberWithCommas(annualCashDeposit)} AED

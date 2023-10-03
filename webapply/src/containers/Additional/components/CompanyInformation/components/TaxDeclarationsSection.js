@@ -139,13 +139,14 @@ export const TaxDeclarationsSection = forwardRef(
                     radioColor="primary"
                   />
                   <p className={classes.activePassiveDesc}>
-                    Active Non-Financial Entity (Active NFE): An entity generating more than 50% of
-                    its yearly income through its operational activities.
+                    Active Non-Financial Entity (Active NFE): This generally refers to entities with
+                    trading activities, including manufacturers, wholesalers, retailers, restaurants
+                    and bars, hotels, construction companies, health and social work.
                   </p>
                   <p className={classes.activePassiveDesc}>
-                    Passive Non-Financial Entity (Passive NFE): An entity generating more than 50%
-                    of its yearly income through dividends, interest, rents, or other
-                    passively-earned income on a regular basis, without additional effort.
+                    Passive Non-Financial Entity (Passive NFE): This generally refers to entities
+                    that do not actively engage in trade and instead receive income or dividend
+                    generated from assets, including properties and shares.
                   </p>
                 </div>
               </Accordion>

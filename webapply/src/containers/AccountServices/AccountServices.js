@@ -150,11 +150,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     </span>
   );
 
-  const labelTextForPreferPaper = (
-    <p style={{ margin: "0px" }}>
-      I prefer paper <span style={{ fontSize: "12px" }}>(AED [xx] per month)</span>
-    </p>
-  );
+  const labelTextForPreferPaper = <p style={{ margin: "0px" }}>No, I prefer paper</p>;
 
   const YesNoListForRecieveStatementMode = [
     {
@@ -736,7 +732,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           }
                           placeholder={"Name on card"}
                           InputProps={{
-                            inputProps: { tabIndex: 1 }
+                            inputProps: { tabIndex: 1, maxLength: 19 }
                           }}
                           component={Input}
                           classes={{ formControlRoot: classes.customLabel }}
@@ -745,7 +741,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        Would you like to go paperless and help save the environment?
+                        Would you like to receive your account statements online? It’s a small step
+                        towards a greener planet.
                       </label>
                       <Field
                         typeRadio
