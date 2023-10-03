@@ -165,7 +165,7 @@
       "annualFinTurnoverAmtInAED": null,
       "addressInfo":[ 
         {
-          "typeOfAddress": "virtual",
+          "typeOfAddress": "physical",
           "officeAddressDifferent": "",
           "addressDetails": [{
             "addressFieldDesc": "",
