@@ -560,7 +560,7 @@ export const Personas = {
   },
   SPLL: {
     key: "SPLL",
-    title: "I'm sole proprietor with an LLC",
+    title: "I'm a sole proprietor with an LLC",
     subTitle: ["I do business as a limited liability company (LLC)"],
     url: routes.applicantInfo,
     urlType: "2.0",
