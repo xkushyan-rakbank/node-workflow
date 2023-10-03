@@ -15,8 +15,11 @@ import {
   POBoxNumberInput
 } from "../../../../../components/Form";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { POBOX_REGEX, SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
-import { MAX_STREET_NUMBER_LENGTH } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
+import { ADDRESS_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
+import {
+  MAX_FLAT_NUMBER_LENGTH,
+  MAX_STREET_NUMBER_LENGTH
+} from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
 import { useStyles } from "../../styled";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
 import { getDocuments, getSignatories } from "../../../../../store/selectors/appConfig";
@@ -64,14 +67,14 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
       .nullable()
       .required(getRequiredMessage("Flat, villa or building"))
       // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Flat, villa or building")),
+      .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
+      .matches(ADDRESS_REGEX, getInvalidMessage("Flat, villa or building")),
     addressLine2: Yup.string()
       .nullable()
       .required(getRequiredMessage("Street or location"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Street or location")),
+      .matches(ADDRESS_REGEX, getInvalidMessage("Street or location")),
     poBox: Yup.string()
       .nullable()
       .required(getRequiredMessage("P.O. Box number"))
