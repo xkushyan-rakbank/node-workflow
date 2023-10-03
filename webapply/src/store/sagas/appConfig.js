@@ -13,7 +13,8 @@ import {
   UPDATE_VIEW_ID,
   saveSignatoryModel,
   saveOrganizationInfoModel,
-  UPDATE_ADDITIONAL_INFO
+  UPDATE_ADDITIONAL_INFO,
+  SET_ACCORDION_STATUS
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
@@ -24,7 +25,8 @@ import {
   getProspect,
   getLeadSource,
   getRoCode,
-  getAdditionalInfoDetailsForBPM
+  getAdditionalInfoDetailsForBPM,
+  getAccordionStatuses
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -126,11 +128,23 @@ function* updateAdditionInfo({ payload }) {
   }
 }
 
+function* setAccordionStatus({ payload }) {
+  try {
+    const accordionsStatus = yield select(getAccordionStatuses);
+    const statuses = JSON.parse(accordionsStatus);
+    const updatedStatuses = { ...statuses, ...payload };
+    yield put(updateProspect({ "prospect.accordionsStatus": JSON.stringify(updatedStatuses) }));
+  } catch (e) {
+    log(e);
+  }
+}
+
 export default function* appConfigSaga() {
   yield all([
     takeLatest(RECEIVE_APPCONFIG, receiveAppConfigSaga),
     takeLatest(UPDATE_PROSPECT, updateProspectSaga),
     takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
-    takeLatest(UPDATE_ADDITIONAL_INFO, updateAdditionInfo)
+    takeLatest(UPDATE_ADDITIONAL_INFO, updateAdditionInfo),
+    takeLatest(SET_ACCORDION_STATUS, setAccordionStatus)
   ]);
 }

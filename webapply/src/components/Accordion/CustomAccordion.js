@@ -10,7 +10,7 @@ import cx from "classnames";
 
 import { ReactComponent as Check } from "../../assets/icons/loadingGreen.svg";
 import { ICONS, Icon } from "../Icons";
-import { updateProspect } from "../../store/actions/appConfig";
+import { setAccordionStatus } from "../../store/actions/appConfig";
 import { getAccordionStatuses } from "../../store/selectors/appConfig";
 import { ContexualHelp } from "../Notifications";
 
@@ -143,18 +143,18 @@ export const Accordion = ({
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
+    if (!statuses[id] && isCompleted) {
+      const updatedStatuses = {};
+      updatedStatuses[id] = isCompleted;
+      dispatch(setAccordionStatus(updatedStatuses));
+    }
   };
 
   useEffect(() => {
     setFormFieldValue(id, isCompleted);
-    const updatedStatuses = { ...statuses };
+    const updatedStatuses = {};
     updatedStatuses[id] = isCompleted;
-
-    dispatch(
-      updateProspect({
-        "prospect.accordionsStatus": JSON.stringify(updatedStatuses)
-      })
-    );
+    dispatch(setAccordionStatus(updatedStatuses));
   }, [id, isCompleted]);
 
   const byDefaultExpandedAccordion = [

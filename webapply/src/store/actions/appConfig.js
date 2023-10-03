@@ -23,6 +23,7 @@ export const INITIAL_CHECK = "INITIAL_CHECK";
 export const KYC_INITIAL_EDIT_CHECK = "KYC_INITIAL_EDIT_CHECK";
 export const UPDATE_RO_EMAIL = "UPDATE_RO_EMAIL";
 export const UPDATE_ADDITIONAL_INFO = "UPDATE_ADDITIONAL_INFO";
+export const SET_ACCORDION_STATUS = "SET_ACCORDION_STATUS";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -111,4 +112,8 @@ export const updateRoEmail = payload => {
 
 export const updateAdditionalInfo = payload => {
   return { type: UPDATE_ADDITIONAL_INFO, payload };
+};
+
+export const setAccordionStatus = payload => {
+  return { type: SET_ACCORDION_STATUS, payload };
 };
