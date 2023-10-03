@@ -73,7 +73,7 @@ export const QRCodeScanModal = ({ handleClose, individualId, getKycStatus }) => 
             <li>You&apos;ll be redirected to the mobile website to finish the process.</li>
           </ol>
         </div>
-        <a className={classes.getHelpLink}>Get help</a>
+        {/* <a className={classes.getHelpLink}>Get help</a> */}
       </>
     );
   };
