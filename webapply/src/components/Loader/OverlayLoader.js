@@ -56,6 +56,7 @@ export const OverlayLoader = ({ open, text }) => {
       BackdropProps={{
         timeout: 500
       }}
+      disableRestoreFocus
     >
       <Fade in={open}>
         <Box className={classes.paper}>

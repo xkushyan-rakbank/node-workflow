@@ -79,6 +79,9 @@ export const useStyles = makeStyles(theme => ({
   bgColorChange: {
     background: "#F5F5F5"
   },
+  infoSectionTitleContainer: {
+    width: "100%"
+  },
   infoSectionTitleWrapper: {
     width: "100%",
     display: "flex",
@@ -92,6 +95,13 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 500,
     lineHeight: "24px",
     margin: 0
+  },
+  infoSubTitle: {
+    color: "#757575",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "1.5rem"
   },
   divider: {
     height: "1px",
@@ -185,5 +195,34 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "1rem",
     fontWeight: 400,
     lineHeight: "24px"
+  },
+  showMoreBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#5E080B",
+    fontSize: "0.875rem",
+    fontWeight: 500,
+    lineHeight: "1.25rem",
+    textDecorationLine: "underline",
+    textTransform: "none",
+    padding: "0px",
+    marginTop: "2px",
+    "&:hover": {
+      backgroundColor: "transparent"
+    }
+  },
+  showMoreBtnIcon: {
+    width: "1rem",
+    height: "1rem",
+    fill: "#5E080B",
+    marginLeft: "8px",
+    transform: ({ showMoreBackgroundDetail }) =>
+      showMoreBackgroundDetail ? "rotate(180deg)" : "rotate(0deg)"
+  },
+  infoSubCatLabel: {
+    fontSize: "0.875rem",
+    fontWeight: 500,
+    lineHeight: "20px"
   }
 }));

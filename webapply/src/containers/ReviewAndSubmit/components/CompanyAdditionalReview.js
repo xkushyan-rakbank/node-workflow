@@ -29,6 +29,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
       >
         <InformationSection
           title={"Essential information"}
+          subTitle={"These fields have already been verified and cannot be updated."}
           showEditIcon={scheme === operatorLoginScheme}
           routeTo={routes.companyInfo}
         >
@@ -81,7 +82,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues.annualFinTurnoverAmtInAED}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Estimated cash deposit (AED):</label>
+              <label>Estimated annual cash sales (AED):</label>
               <p>{fieldValues.anualCashDepositAED}</p>
             </div>
             <div className={classes.infoLabelValue}>

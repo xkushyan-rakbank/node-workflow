@@ -1,19 +1,24 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import { Button } from "@material-ui/core";
 import { useStyles } from "../styled";
 import { InformationSection } from "./InformationSection";
 import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import routes from "../../../routes";
 import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 import { operatorLoginScheme } from "../../../constants";
+import { ICONS, Icon } from "../../../components/Icons";
 export const StakeholderAdditionalReview = ({
   fieldValues,
   addressFormat,
   formatDate,
   truncateString,
   ibanTypeLabel,
-  scheme
+  countryLabel,
+  scheme,
+  getTINReasonLabel
 }) => {
-  const classes = useStyles();
+  const [showMoreBackgroundDetail, setShowMoreBackgroundDetail] = useState(false);
+  const classes = useStyles({ showMoreBackgroundDetail });
 
   const formatEidNumber = number => {
     const cleanNumber = String(number).replace(/\D/g, "");
@@ -46,6 +51,7 @@ export const StakeholderAdditionalReview = ({
           title={"Essential information"}
           showEditIcon={scheme === operatorLoginScheme}
           routeTo={routes.stakeholdersPreview}
+          subTitle="These fields have already been verified and cannot be updated."
         >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
@@ -56,7 +62,7 @@ export const StakeholderAdditionalReview = ({
               <p>{fieldValues.signatoryNationality}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Date of Birth:</label>
+              <label>Date of birth:</label>
               <p>{formatDate(fieldValues.dateOfBirth)}</p>
             </div>
             <div className={classes.infoLabelValue}>
@@ -113,8 +119,30 @@ export const StakeholderAdditionalReview = ({
               <p>{truncateString(fieldValues.linkedInURL, 40) || "N/A"}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Work summary:</label>
-              <p>{truncateString(fieldValues.backgroundInfo, 100) || "N/A"}</p>
+              <label>Professional experience:</label>
+              <p>
+                {fieldValues.backgroundInfo
+                  ? showMoreBackgroundDetail
+                    ? fieldValues.backgroundInfo
+                    : fieldValues.backgroundInfo.substring(0, 120)
+                  : "N/A"}
+                {fieldValues.backgroundInfo ? (
+                  <Button
+                    disableRipple={true}
+                    className={classes.showMoreBtn}
+                    onClick={() => setShowMoreBackgroundDetail(!showMoreBackgroundDetail)}
+                  >
+                    {showMoreBackgroundDetail ? "Show less" : "Show more"}
+                    <Icon
+                      name={ICONS.arrowDown}
+                      alt="arrow-down"
+                      className={classes.showMoreBtnIcon}
+                    />
+                  </Button>
+                ) : (
+                  ""
+                )}
+              </p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>CV:</label>
@@ -164,22 +192,46 @@ export const StakeholderAdditionalReview = ({
               <label>US tax resident:</label>
               <p>No</p>
             </div>
-            <div className={classes.infoLabelValue}>
-              <label>Tax residence:</label>
-              <p>{fieldValues.countryOfTaxResidency}</p>
-            </div>
-            <div className={classes.infoLabelValue}>
-              <label>TIN or equivalent:</label>
-              <p>{fieldValues.TIN}</p>
-            </div>
-            <div className={classes.infoLabelValue}>
-              <label>Reason for unavailable TIN:</label>
-              <p>{truncateString(fieldValues.reasonForTINNotAvailable, 100)}</p>
-            </div>
-            <div className={classes.infoLabelValue}>
-              <label>Remarks:</label>
-              <p>{truncateString(fieldValues.remarks, 100)}</p>
-            </div>
+            {Array.isArray(fieldValues.stakeholderTaxDetails)
+              ? fieldValues.stakeholderTaxDetails.map((taxDetail, index) => {
+                  return (
+                    <Fragment key={index}>
+                      <div className={classes.infoSubCatLabel}>Country {index + 1}</div>
+                      <div className={classes.infoLabelValue}>
+                        <label>Tax residence:</label>
+                        <p>
+                          {taxDetail && taxDetail.country
+                            ? countryLabel(taxDetail.country)
+                            : countryLabel("AE")}
+                        </p>
+                      </div>
+                      <div className={classes.infoLabelValue}>
+                        <label>TIN or equivalent:</label>
+                        <p>{taxDetail && taxDetail.TIN ? taxDetail.TIN : "-"}</p>
+                      </div>
+                      <div className={classes.infoLabelValue}>
+                        <label>Reason for unavailable TIN:</label>
+                        <p>
+                          {taxDetail && taxDetail.reasonForTINNotAvailable
+                            ? truncateString(
+                                getTINReasonLabel(taxDetail.reasonForTINNotAvailable),
+                                100
+                              )
+                            : "Not applicable"}
+                        </p>
+                      </div>
+                      <div className={classes.infoLabelValue}>
+                        <label>Remarks:</label>
+                        <p>
+                          {taxDetail && taxDetail.remarks
+                            ? truncateString(taxDetail.remarks, 100)
+                            : "-"}
+                        </p>
+                      </div>
+                    </Fragment>
+                  );
+                })
+              : ""}
           </div>
         </InformationSection>
       </Accordion>

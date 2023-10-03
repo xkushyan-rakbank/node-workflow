@@ -4,24 +4,33 @@ import { useStyles } from "../styled";
 import { ICONS, Icon } from "../../../components/Icons";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 
-export const InformationSection = ({ title, children, showEditIcon = false, routeTo }) => {
+export const InformationSection = ({
+  title,
+  subTitle = "",
+  children,
+  showEditIcon = false,
+  routeTo
+}) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
   return (
     <div className={cx(classes.infoSection, { [classes.bgColorChange]: routeTo })}>
       {title && (
         <>
-          <div className={classes.infoSectionTitleWrapper}>
-            <p className={classes.infoSectionTitle}>{title}</p>
-            {showEditIcon && (
-              <div
-                className={cx(classes.iconWrapper, { [classes.disabledEditInfo]: !routeTo })}
-                onClick={() => pushHistory(routeTo)}
-              >
-                <Icon name={ICONS.editIcon} className={classes.closeIcon} />
-                <span>Edit</span>
-              </div>
-            )}
+          <div className={classes.infoSectionTitleContainer}>
+            <div className={classes.infoSectionTitleWrapper}>
+              <p className={classes.infoSectionTitle}>{title}</p>
+              {showEditIcon && (
+                <div
+                  className={cx(classes.iconWrapper, { [classes.disabledEditInfo]: !routeTo })}
+                  onClick={() => pushHistory(routeTo)}
+                >
+                  <Icon name={ICONS.editIcon} className={classes.closeIcon} />
+                  <span>Edit</span>
+                </div>
+              )}
+            </div>
+            {subTitle && <div className={classes.infoSubTitle}>{subTitle}</div>}
           </div>
 
           <div className={classes.divider}></div>

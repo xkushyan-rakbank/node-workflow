@@ -121,35 +121,9 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     [displayFields, internationalBankAccountNumberList]
   );
 
-  const getOrdinalofDate = date => {
-    if (date > 3 && date < 21) return "th";
-    switch (date % 10) {
-      case 1:
-        return "st";
-      case 2:
-        return "nd";
-      case 3:
-        return "rd";
-      default:
-        return "th";
-    }
-  };
-  const formatDate = useCallback(
-    date => {
-      if (date) {
-        const dateValue = new Date(date).getDate();
-        const month = format(new Date(date), "MMM");
-        const year = format(new Date(date), "yyyy");
-        return (
-          <>
-            {dateValue}
-            <sup>{getOrdinalofDate(dateValue)}</sup> {month}, {year}
-          </>
-        );
-      }
-    },
-    [displayFields]
-  );
+  const formatDate = useCallback(date => (date ? format(new Date(date), "dd/MM/yyyy") : ""), [
+    displayFields
+  ]);
 
   const formatFinancialValues = useCallback(
     value => {
@@ -364,28 +338,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           "N/A",
         residentialAddress:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
-        countryOfTaxResidency:
-          signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.taxesInAnotherCountry === "yes"
-            ? getCountryLabel(
-                signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.country
-              )
-            : getCountryLabel("AE"),
-        TIN:
-          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
-            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.TIN
-            : "N/A",
-        reasonForTINNotAvailable:
-          signatoryInfo &&
-          signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
-            ? getTINReasonLabel(
-                signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.reasonForTINNotAvailable
-              )
-            : "N/A",
-        remarks:
-          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.remarks
-            ? signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails?.remarks
-            : "N/A",
+        stakeholderTaxDetails:
+          (signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails) || [],
 
         nameOnDebitCard:
           signatoryInfo && signatoryInfo[0]?.debitCardInfo?.authSignatoryDetails?.nameOnDebitCard,
@@ -403,7 +357,9 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         chequeBookApplied: accountInfo?.chequeBookApplied ? "Yes" : "No",
         mailStatements: accountInfo?.mailStatements,
         eStatements: accountInfo?.eStatements ? "Physical" : "",
-        mobileInstructions: channelServicesInfo?.mobileInstructions ? "Yes" : "No",
+        signingRights: accountInfo?.signingPreferences,
+        preferredLanguage: accountInfo?.preferredLanguage,
+        mobileInstructions: channelServicesInfo?.mobileInstructions,
         marketing: findMarketingLabel(channelServicesInfo?.marketing),
         marketingChannel: channelServicesInfo?.marketingChannel,
         surveys: channelServicesInfo?.surveys ? "Yes" : "No",
@@ -455,7 +411,9 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                     formatDate={formatDate}
                     truncateString={truncateString}
                     ibanTypeLabel={getIBANTypeLabel(displayFields.IBANType)}
+                    countryLabel={getCountryLabel}
                     scheme={scheme}
+                    getTINReasonLabel={getTINReasonLabel}
                   />
                   <ProductInformationReview fieldValues={displayFields} />
 

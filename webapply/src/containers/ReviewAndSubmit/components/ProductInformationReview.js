@@ -4,6 +4,7 @@ import { Accordion } from "../../../components/Accordion/CustomAccordion";
 import { InformationSection } from "./InformationSection";
 import { ReactComponent as LetsGoGreen } from "../../../assets/icons/letsGoGreenIcon.svg";
 import routes from "../../../routes";
+import { PreferredLanguageOptions, SinglyOptionList } from "../../../constants/options";
 
 export const ProductInformationReview = ({ fieldValues }) => {
   const classes = useStyles();
@@ -18,6 +19,33 @@ export const ProductInformationReview = ({ fieldValues }) => {
       ""
     );
   };
+  const preferredLanguageText = PreferredLanguageOptions.find(
+    option => option.value === fieldValues.preferredLanguage
+  );
+
+  const signingRightsText = SinglyOptionList.find(
+    option => option.value === fieldValues.signingRights
+  );
+
+  const mobileInstructionsText = value => {
+    const labelMap = {
+      true: "SMS & email",
+      false: "SMS only"
+    };
+
+    return labelMap[value] || "";
+  };
+
+  const marketingChannelOptionsLabel = {
+    Email: "Email",
+    SMS: "SMS",
+    Call: "Phone call",
+    no: "No"
+  };
+
+  const getmarketingChannelOptions = options =>
+    options.map(option => marketingChannelOptionsLabel[option]).join(", ");
+
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
@@ -37,6 +65,10 @@ export const ProductInformationReview = ({ fieldValues }) => {
           routeTo={routes.accountServices}
         >
           <div className={classes.infoListWrapper}>
+            <div className={classes.infoLabelValue}>
+              <label>Signing rights:</label> <p>{signingRightsText?.label}</p>
+            </div>
+
             <div className={classes.infoLabelValue}>
               <label>Currency:</label> <p>{fieldValues.accountCurrency}</p>
             </div>
@@ -59,7 +91,7 @@ export const ProductInformationReview = ({ fieldValues }) => {
               </div>
             )}
             <div className={classes.infoLabelValue}>
-              <label>Company chequebook:</label>
+              <label>Company cheque book:</label>
               <p>{fieldValues.chequeBookApplied}</p>
             </div>
             <div className={classes.infoLabelValue}>
@@ -67,17 +99,25 @@ export const ProductInformationReview = ({ fieldValues }) => {
               <p style={{ display: "flex", alignItems: "center" }}>{bankStatementType()} </p>
             </div>
             <div className={classes.infoLabelValue}>
+              <label>Preferred language:</label>
+              <p>{preferredLanguageText?.label}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>Mobile notifications:</label>
-              <p>{fieldValues.mobileInstructions}</p>
+              <p>{mobileInstructionsText(fieldValues.mobileInstructions)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Get promos and offers:</label>
               <p>
-                {fieldValues.marketing}&nbsp;
-                {fieldValues.marketing === "Yes" && fieldValues.marketingChannel
-                  ? `(${fieldValues.marketingChannel.join(", ")})`
-                  : ""}
+                {fieldValues.marketingChannel &&
+                  getmarketingChannelOptions(fieldValues.marketingChannel)}
               </p>
+            </div>
+            <div className={classes.infoLabelValue}>
+              <label>
+                Get early access to our latest offers (and from authorised RAKBANK partners):
+              </label>
+              <p>{fieldValues.marketing}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Contact for surveys and feedback:</label>
