@@ -11,8 +11,7 @@ import cx from "classnames";
 import { ReactComponent as Check } from "../../assets/icons/loadingGreen.svg";
 import { ICONS, Icon } from "../Icons";
 import { updateProspect } from "../../store/actions/appConfig";
-import { getAccordionStatuses, isFieldTouched } from "../../store/selectors/appConfig";
-import { getIsComeback } from "../../store/selectors/retrieveApplicantInfo";
+import { getAccordionStatuses } from "../../store/selectors/appConfig";
 import { ContexualHelp } from "../Notifications";
 
 const useStyles = makeStyles(theme => ({
@@ -143,18 +142,14 @@ export const Accordion = ({
   const statuses = JSON.parse(accordionStatuses);
 
   const handleChange = panel => (event, newExpanded) => {
-    if (!statuses[id]) {
-      // dispatch(updateProspect({ [`prospect.fields.${id}.touched`]: true }));
-      // const statuses = JSON.parse(accordionStatuses);
-      statuses[id] = true;
-      JSON.stringify(statuses);
-      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
-    }
     setExpanded(newExpanded ? panel : false);
   };
 
   useEffect(() => {
     setFormFieldValue(id, isCompleted);
+    statuses[id] = isCompleted;
+    JSON.stringify(statuses);
+    dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
   }, [id, isCompleted]);
 
   const byDefaultExpandedAccordion = [
