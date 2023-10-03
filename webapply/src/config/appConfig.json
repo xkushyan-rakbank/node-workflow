@@ -299,13 +299,14 @@
               "others": ""
             }
           },
-          "taxDetails": {
-            "taxesInAnotherCountry": "",
+          "taxesInAnotherCountry": "",
+          "taxDetails": [{
             "country": "",
+            "isTINAvailable": "no",
             "TIN": "",
             "reasonForTINNotAvailable": "",
             "remarks": ""
-          }
+          }]
         },
         "contactDetails": {
           "primaryMobileNo": "",

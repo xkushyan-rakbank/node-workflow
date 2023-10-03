@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Formik } from "formik";
-import { Grid } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { FieldArray, Formik } from "formik";
+import { Button, Grid, IconButton } from "@material-ui/core";
 import * as Yup from "yup";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
-import { YesNoListForTaxPayInAnotherCountry } from "../../../../../constants/options";
+import {
+  YesNoListForTaxPayInAnotherCountry,
+  enumYesNoOptions
+} from "../../../../../constants/options";
 import {
   CheckboxGroup,
   AutoSaveField as Field,
@@ -18,20 +22,29 @@ import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components
 import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
+import { getSignatories } from "../../../../../store/selectors/appConfig";
+
+const defaulatTaxDetails = {
+  country: "",
+  TIN: "",
+  reasonForTINNotAvailable: "",
+  remarks: "",
+  isTINAvailable: "no"
+};
 
 export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
 
-  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.taxDetails";
+  const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo";
+  const signatories = useSelector(getSignatories);
+
+  const taxDetails = signatories[0]?.stakeholderAdditionalInfo?.taxDetails;
 
   const initialValues = {
-    taxesInAnotherCountry: "no",
-    country: "",
-    TIN: "",
-    reasonForTINNotAvailable: "",
-    remarks: ""
+    taxDetails: taxDetails || [defaulatTaxDetails],
+    taxesInAnotherCountry: "no"
   };
 
   const createStakeholderTaxRadioHandler = ({ values, setFieldValue }) => async event => {
@@ -40,18 +53,14 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     setFieldValue(target, value);
     if (target === "taxesInAnotherCountry") {
       if (value === "no") {
-        setFieldValue("country", "");
-        setFieldValue("TIN", "");
-        setFieldValue("reasonForTINNotAvailable", "");
-        setFieldValue("remarks", "");
+        setFieldValue("taxDetails", []);
         dispatch(
           updateProspect({
-            [`${basePath}.country`]: "",
-            [`${basePath}.TIN`]: "",
-            [`${basePath}.reasonForTINNotAvailable`]: "",
-            [`${basePath}.remarks`]: ""
+            [`${basePath}.taxDetails`]: []
           })
         );
+      } else {
+        setFieldValue("taxDetails", [defaulatTaxDetails]);
       }
     }
   };
@@ -60,32 +69,34 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     taxesInAnotherCountry: Yup.string()
       .required()
       .oneOf(["yes", "no"], "Do you pay taxes in another country is required"),
-    country: Yup.string()
-      .nullable()
-      .when("taxesInAnotherCountry", {
-        is: "yes",
-        then: Yup.string().required(getRequiredMessage("Country"))
-      }),
-    TIN: Yup.string()
-      .nullable()
-      .when("taxesInAnotherCountry", {
-        is: "yes",
-        then: Yup.string()
-      }),
-    reasonForTINNotAvailable: Yup.string()
-      .nullable()
-      .when(["taxesInAnotherCountry", "TIN"], {
-        is: (taxesInAnotherCountry, TIN) => !TIN && taxesInAnotherCountry === "yes",
-        then: Yup.string().required(getRequiredMessage("Select a reason if TIN is not available"))
-      }),
-    remarks: Yup.string()
-      .nullable()
-      .when("reasonForTINNotAvailable", {
-        is: reasonForTINNotAvailable => reasonForTINNotAvailable === "REA2",
-        then: Yup.string()
-          .required(getRequiredMessage("Remarks"))
-          .max(500, "Maximum ${max} characters allowed")
-      })
+    taxDetails: Yup.array().when("taxesInAnotherCountry", {
+      is: "yes",
+      then: Yup.array()
+        .of(
+          Yup.object().shape({
+            country: Yup.string().required(getRequiredMessage("Country")),
+            isTINAvailable: Yup.string().required(getRequiredMessage("Is TIN Available")),
+            TIN: Yup.string().when("isTINAvailable", {
+              is: "yes",
+              then: Yup.string().required("TIN is required")
+            }),
+            reasonForTINNotAvailable: Yup.string().when("isTINAvailable", {
+              is: "no",
+              then: Yup.string().required(
+                getRequiredMessage("Select a reason if TIN is not available")
+              )
+            }),
+            remarks: Yup.string().when("reasonForTINNotAvailable", {
+              is: reasonForTINNotAvailable => reasonForTINNotAvailable === "B-UNABLE GET TIN",
+              then: Yup.string()
+                .required(getRequiredMessage("Remarks"))
+                .max(500, "Maximum ${max} characters allowed")
+            })
+          })
+        )
+        .required("At least one tax detail is required"),
+      otherwise: Yup.array().notRequired()
+    })
   });
 
   const { stakeHolderFormRef, stakeHolderTaxAccordionRef } = refs;
@@ -102,6 +113,17 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     </a>
   );
 
+  const removeTaxDetails = (index, setFieldValue, values) => {
+    let taxDetails = [...values.taxDetails];
+    taxDetails.splice(index, 1);
+    setFieldValue("taxDetails", taxDetails);
+    dispatch(
+      updateProspect({
+        [`${basePath}.taxDetails`]: taxDetails
+      })
+    );
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -116,8 +138,6 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
           setFieldValue
         });
         const hideAnotherCountryTaxField = values.taxesInAnotherCountry === "yes";
-        const hideRemarks =
-          hideAnotherCountryTaxField && values.reasonForTINNotAvailable === "REA2";
         return (
           <>
             <Accordion
@@ -163,62 +183,142 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                   />
                 </div>
                 {hideAnotherCountryTaxField && (
-                  <Grid container spacing={3}>
-                    <Grid item sm={12} xs={12}>
-                      <Field
-                        name="country"
-                        path={`${basePath}.country`}
-                        label="Country"
-                        placeholder="Country"
-                        datalistId="country"
-                        component={SelectAutocomplete}
-                        filterOptions={options => {
-                          return options.filter(item => item.code !== "AE");
-                        }}
-                      />
-                    </Grid>
-                    <Grid item sm={12} xs={12}>
-                      <Field
-                        name="TIN"
-                        path={`${basePath}.TIN`}
-                        label="Tax Identification Number (TIN)"
-                        placeholder="Tax Identification Number (TIN)"
-                        InputProps={{
-                          inputProps: { tabIndex: 1 }
-                        }}
-                        component={Input}
-                      />
-                    </Grid>
-                    <Grid item sm={12} xs={12}>
-                      <Field
-                        name="reasonForTINNotAvailable"
-                        path={`${basePath}.reasonForTINNotAvailable`}
-                        label="Select a reason if TIN is not available"
-                        placeholder="Select a reason if TIN is not available"
-                        datalistId="TINReason"
-                        component={SelectAutocomplete}
-                        infoTitle={"We need to know this for regulatory reasons."}
-                        infoIcon={true}
-                      />
-                    </Grid>
-                    {hideRemarks && (
-                      <Grid item sm={12} xs={12}>
-                        <Field
-                          name="remarks"
-                          path={`${basePath}.remarks`}
-                          label="Remarks"
-                          placeholder="Please explain why you are unable to obtain a TIN"
-                          multiline
-                          minRows="9"
-                          InputProps={{
-                            inputProps: { tabIndex: 0, maxLength: 500 }
-                          }}
-                          component={Input}
-                          classes={{ input: classes.textAreaStyle }}
-                        />
-                      </Grid>
-                    )}
-                  </Grid>
+                  <FieldArray name="taxDetails">
+                    {({ push, remove, arrayHelpers }) => {
+                      return (
+                        <>
+                          {values.taxDetails.map((val, index) => {
+                            const hideRemarks =
+                              hideAnotherCountryTaxField &&
+                              values.taxDetails[index]?.reasonForTINNotAvailable ===
+                                "B-UNABLE GET TIN";
+                            return (
+                              <Grid key={index} container spacing={3}>
+                                {index > 0 && (
+                                  <Grid
+                                    className={classes.horizontalLine}
+                                    item
+                                    sm={12}
+                                    xs={12}
+                                  ></Grid>
+                                )}
+                                <Grid item sm={12} xs={12}>
+                                  <Field
+                                    name={`taxDetails[${index}].country`}
+                                    path={`${basePath}.taxDetails[${index}].country`}
+                                    label="Country"
+                                    placeholder="Country"
+                                    datalistId="country"
+                                    component={SelectAutocomplete}
+                                    filterOptions={options => {
+                                      return options.filter(item => item.code !== "AE");
+                                    }}
+                                  />
+                                </Grid>
+                                <Grid item sm={12} xs={12}>
+                                  <>
+                                    <label className={classes.sectionLabel}>
+                                      Do you have Taxpayer Identification number (TIN)?
+                                    </label>
+                                    <Field
+                                      typeRadio
+                                      name={`taxDetails[${index}].isTINAvailable`}
+                                      path={`${basePath}.taxDetails[${index}].isTINAvailable`}
+                                      options={enumYesNoOptions}
+                                      component={CheckboxGroup}
+                                      onSelect={stakeholderTaxRadioFieldHandler}
+                                      customIcon={false}
+                                      classes={{
+                                        root: classes.radioButtonRoot,
+                                        label: classes.radioLabelRoot
+                                      }}
+                                      isInlineStyle={true}
+                                      radioColor="primary"
+                                    />
+                                  </>
+                                </Grid>
+                                {values.taxDetails[index]?.isTINAvailable === "yes" ? (
+                                  <Grid item sm={12} xs={12}>
+                                    <Field
+                                      name={`taxDetails[${index}].TIN`}
+                                      path={`${basePath}.taxDetails[${index}].TIN`}
+                                      label="Tax Identification Number (TIN)"
+                                      placeholder="Tax Identification Number (TIN)"
+                                      InputProps={{
+                                        inputProps: { tabIndex: 1 }
+                                      }}
+                                      component={Input}
+                                    />
+                                  </Grid>
+                                ) : (
+                                  <>
+                                    <Grid item sm={12} xs={12}>
+                                      <Field
+                                        name={`taxDetails[${index}].reasonForTINNotAvailable`}
+                                        path={`${basePath}.taxDetails[${index}].reasonForTINNotAvailable`}
+                                        label="Select a reason if TIN is not available"
+                                        placeholder="Select a reason if TIN is not available"
+                                        datalistId="TINReason"
+                                        component={SelectAutocomplete}
+                                        infoTitle={"We need to know this for regulatory reasons."}
+                                        infoIcon={true}
+                                      />
+                                    </Grid>
+                                    {hideRemarks && (
+                                      <Grid item sm={12} xs={12}>
+                                        <Field
+                                          name={`taxDetails[${index}].remarks`}
+                                          path={`${basePath}.taxDetails[${index}].remarks`}
+                                          label="Remarks"
+                                          placeholder="Please explain why you are unable to obtain a TIN"
+                                          multiline
+                                          minRows="9"
+                                          InputProps={{
+                                            inputProps: { tabIndex: 0, maxLength: 500 }
+                                          }}
+                                          component={Input}
+                                          classes={{ input: classes.textAreaStyle }}
+                                        />
+                                      </Grid>
+                                    )}
+                                    {index > 0 && (
+                                      <IconButton
+                                        aria-label="delete"
+                                        style={{
+                                          padding: 0,
+                                          marginTop: "5px",
+                                          marginBottom: "20px",
+                                          width: "100%",
+                                          justifyContent: "end"
+                                        }}
+                                        onClick={() =>
+                                          removeTaxDetails(index, setFieldValue, values)
+                                        }
+                                      >
+                                        <HighlightOffIcon />
+                                      </IconButton>
+                                    )}
+                                  </>
+                                )}
+                              </Grid>
+                            );
+                          })}
+
+                          {values.taxDetails.length < 2 && (
+                            <Button
+                              color="primary"
+                              variant="outlined"
+                              className={classes.addMoreButton}
+                              onClick={() => push(defaulatTaxDetails)}
+                              disabled={!values.taxDetails[0]?.country}
+                            >
+                              + Add more
+                            </Button>
+                          )}
+                        </>
+                      );
+                    }}
+                  </FieldArray>
                 )}
               </div>
             </Accordion>
