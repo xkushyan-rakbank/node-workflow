@@ -174,7 +174,7 @@ export const VisitDetailsList = ({
                         accept={TL_ACCEPTED_FILE_TYPES}
                         fileSize={TL_COI_FILE_SIZE}
                         component={Upload}
-                        mobilecontentPlaceholder={"Upload your File"}
+                        mobilecontentPlaceholder={"Upload your file"}
                         file={values.visitDetails[index]?.sisterCompanyTradeLicense}
                         onDrop={acceptedFile =>
                           handleDropFile(

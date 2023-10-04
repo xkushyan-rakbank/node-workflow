@@ -21,7 +21,7 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
 
   const getStatusText = () => {
     if (status === "In Progress") {
-      return "Up Next";
+      return "Up next";
     } else if (status === "completed") {
       return "Completed";
     } else {
@@ -55,13 +55,13 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
             onClick={onClick}
             disabled={disabled}
           >
-            {disabled === true ? "Up Next" : "Start"}
+            {disabled === true ? "Up next" : "Start"}
           </Button>
         ) : (
           <div
             className={cx(
               classes.completedWrapper,
-              status === "In Progress" ? classes.incompleted : classes.success
+              status === "In progress" ? classes.incompleted : classes.success
             )}
           >
             {status === "completed" ? <SuccessIcon /> : null}

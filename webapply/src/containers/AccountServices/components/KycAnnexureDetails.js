@@ -358,7 +358,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           accept={TL_ACCEPTED_FILE_TYPES}
           fileSize={TL_COI_FILE_SIZE}
           component={Upload}
-          mobilecontentPlaceholder={"Upload your File"}
+          mobilecontentPlaceholder={"Upload your file"}
           onDrop={acceptedFile =>
             handleDropFile(
               acceptedFile,

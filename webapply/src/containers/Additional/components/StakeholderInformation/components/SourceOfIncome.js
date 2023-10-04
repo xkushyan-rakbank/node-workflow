@@ -404,7 +404,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
                           component={Upload}
                           content={values?.tradeLicense}
                           isUploading={isUploading["tradeLicense"]}
-                          mobilecontentPlaceholder={"Upload your File"}
+                          mobilecontentPlaceholder={"Upload your file"}
                         />
                       </div>
                     </Grid>

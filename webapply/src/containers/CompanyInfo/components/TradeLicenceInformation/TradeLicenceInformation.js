@@ -70,7 +70,7 @@ export const TradeLicenceInformation = ({ values }) => {
       />
       <Field
         name="licenseOrCOINumber"
-        label="TL number/Certificate of Incorporation number"
+        label="TL number/Certificate of incorporation number"
         path="prospect.organizationInfo.licenseOrCOINumber"
         fieldDescription="Special characters allowed (- / . Space)"
         component={Input}
@@ -103,9 +103,9 @@ export const TradeLicenceInformation = ({ values }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="licenseOrCOIExpiryDate"
-            label="Licence or Certificate of Incorporation expiry date"
+            label="Licence or certificate of incorporation expiry date"
             path="prospect.organizationInfo.licenseOrCOIExpiryDate"
-            placeholder="Licence or Certificate of Incorporation expiry date"
+            placeholder="Licence or certificate of incorporation expiry date"
             inputAdornmentPosition="end"
             component={DatePicker}
             InputProps={{

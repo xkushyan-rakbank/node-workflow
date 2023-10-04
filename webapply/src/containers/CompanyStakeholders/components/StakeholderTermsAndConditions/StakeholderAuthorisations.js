@@ -48,7 +48,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     <>
       <div className={classes.descriptionContent}>
         <div className={classes.kfsDescriptionContent}>
-          <h6 className={classes.kfsTitle}>Authorizations</h6>
+          <h6 className={classes.kfsTitle}>Authorisations</h6>
           {!termsAndConditions.authorisation ? (
             <div className={classes.notAcceptWrapper}>
               <span>Not accepted</span>
@@ -70,7 +70,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           className={!termsAndConditions.authorisation ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
         >
-          {!termsAndConditions.authorisation ? "Read and Accept" : "Authorized and Accepted"}
+          {!termsAndConditions.authorisation ? "Read and accept" : "Accepted"}
         </Button>
       </div>
       <TermsAndConditionsDialog

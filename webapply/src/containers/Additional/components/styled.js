@@ -84,7 +84,7 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "69px",
     height: "45px",
     borderRadius: "10px",
-    textTransform: "capitalize",
+    textTransform: "none",
     fontSize: "14px",
     fontWeight: 500,
     padding: 20,

@@ -68,12 +68,12 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
         >
           {!termsAndConditions.kfs ? (
             !isKfsProgress ? (
-              "Read and Accept"
+              "Read and accept"
             ) : (
               <CircularProgress size={14} value={null} color="#fff" />
             )
           ) : (
-            "Authorized and Accepted"
+            "Accepted"
           )}
         </Button>
       </div>

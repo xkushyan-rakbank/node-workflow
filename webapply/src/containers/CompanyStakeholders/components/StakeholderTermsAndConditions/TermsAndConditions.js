@@ -64,7 +64,7 @@ export const TermsAndConditions = ({ wcmData }) => {
           className={!termsAndConditions.generalTCs ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
         >
-          {!termsAndConditions.generalTCs ? "Read and Accept" : "Authorized and Accepted"}
+          {!termsAndConditions.generalTCs ? "Read and accept" : "Accepted"}
         </Button>
       </div>
       <TermsAndConditionsDialog

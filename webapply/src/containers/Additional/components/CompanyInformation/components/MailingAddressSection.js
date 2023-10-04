@@ -89,9 +89,9 @@ export const MailingAddressSection = forwardRef(
       }),
       poBox: Yup.string()
         .nullable()
-        .required(getRequiredMessage("PO Box Number"))
+        .required(getRequiredMessage("PO box number"))
         .max(6, "Maximum ${max} characters allowed")
-        .matches(POBOX_REGEX, getInvalidMessage("PO Box Number")),
+        .matches(POBOX_REGEX, getInvalidMessage("PO box bumber")),
       emirateCity: Yup.string().required(getRequiredMessage("Emirate/ City")),
       addressProof: Yup.array()
         .of(
@@ -286,8 +286,8 @@ export const MailingAddressSection = forwardRef(
                         path={
                           "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].poBox"
                         }
-                        label="P.O. Box"
-                        placeholder="P.O. Box"
+                        label="P.O. box"
+                        placeholder="P.O. box"
                         component={Input}
                         InputProps={{
                           inputComponent: POBoxNumberInput,
@@ -356,7 +356,7 @@ export const MailingAddressSection = forwardRef(
                                     name={`addressProof[${index}]`}
                                     path={`prospect.prospectDocuments.additionalCompanyDocument.companyAddressProof[${index}]`}
                                     type="file"
-                                    fieldDescription="Proof of Company Address"
+                                    fieldDescription="Proof of company address"
                                     helperText={SUPPORTED_FILE_FORMAT_TEXT}
                                     accept={TL_ACCEPTED_FILE_TYPES}
                                     fileSize={TL_COI_FILE_SIZE}

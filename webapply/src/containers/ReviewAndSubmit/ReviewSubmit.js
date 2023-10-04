@@ -140,7 +140,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     ({ addressLine1, addressLine2, country, emirateCity, poBox }) => {
       let address = "";
       address += addressLine1 ? `${addressLine1},` : "";
-      address += poBox ? ` P.O Box ${poBox},` : "";
+      address += poBox ? ` P.O box ${poBox},` : "";
       address += addressLine2 ? `${addressLine2},` : "";
       address += emirateCity ? ` ${getEmirateCityLabel(emirateCity)},` : "";
       address += country ? ` ${getCountryLabel(country)}` : "";
