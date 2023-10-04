@@ -141,9 +141,14 @@ export const Accordion = ({
   const accordionStatuses = useSelector(getAccordionStatuses);
   const statuses = JSON.parse(accordionStatuses);
 
+  const [initialStatus, setInitialStatus] = useState(false);
+  useEffect(() => {
+    setInitialStatus(statuses[id]);
+  }, []);
+
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
-    if (!statuses[id] && isCompleted) {
+    if (newExpanded && isCompleted) {
       const updatedStatuses = {};
       updatedStatuses[id] = isCompleted;
       dispatch(setAccordionStatus(updatedStatuses));
@@ -152,9 +157,11 @@ export const Accordion = ({
 
   useEffect(() => {
     setFormFieldValue(id, isCompleted);
-    const updatedStatuses = {};
-    updatedStatuses[id] = isCompleted;
-    dispatch(setAccordionStatus(updatedStatuses));
+    if (!isCompleted || initialStatus || expanded) {
+      const updatedStatuses = {};
+      updatedStatuses[id] = isCompleted;
+      dispatch(setAccordionStatus(updatedStatuses));
+    }
   }, [id, isCompleted]);
 
   const byDefaultExpandedAccordion = [

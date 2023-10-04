@@ -71,7 +71,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
   const tradeLicense = useFindDocument(tradeLicenceDocuments, tradeLicenseKeyToCheck);
   const proofOfIncome = useFindDocument(sourceOfIncomeDocuments, proofOfIncomeKeyToCheck);
   const { showSOF } = useSelector(getSignatories)[0];
-  
+
   const initialValues = {
     sourceOfIncome: [""],
     IBANType: "",
@@ -83,9 +83,18 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
   };
 
   const { sourceOfIncomeFormRef, sourceOfIncomeAccordionRef } = refs;
-  
+
   const sourceOfIncomeValidationSchema = Yup.object().shape({
-    sourceOfIncome: Yup.array().required(getRequiredMessage("Source of income")),
+    sourceOfIncome: Yup.array().test(
+      "atLeastOneNonEmptyString",
+      getRequiredMessage("Source of income"),
+      value => {
+        if (!Array.isArray(value)) {
+          return false;
+        }
+        return value.some(str => str && str.trim() !== "");
+      }
+    ),
     IBANType: Yup.string().when("showSOF", (showSOF, schema) => {
       return showSOF ? schema.required(getRequiredMessage("IBAN type")) : schema.nullable();
     }),
