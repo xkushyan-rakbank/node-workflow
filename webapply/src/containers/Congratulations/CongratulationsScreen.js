@@ -16,9 +16,9 @@ import { useLayoutParams } from "../FormLayout";
 import { useViewId } from "../../utils/useViewId";
 import { ReactComponent as CongratsIcon } from "../../assets/icons/congratsBallon.svg";
 import { ReactComponent as SubmittedForm } from "../../assets/icons/submittedForm.svg";
-import {ReactComponent as Phone} from "../../assets/icons/pinkPhone.svg";
+import { ReactComponent as Phone } from "../../assets/icons/pinkPhone.svg";
 
-export const CongratulationsScreen = ({TAT}) => {
+export const CongratulationsScreen = ({ TAT }) => {
   useFormNavigation([true, true, formStepper]);
   useLayoutParams(false, false, false);
   useViewId();
@@ -35,6 +35,9 @@ export const CongratulationsScreen = ({TAT}) => {
   };
 
   const accountTypeLabel = accountType === "Current Account" ? "Current" : accountType;
+  const applicationDesc = `Leave the rest to us! We'll be in touch ${
+    TAT >= 10 ? "with you" : `within ${TAT} business days`
+  } to finalize your application.`;
 
   return (
     <>
@@ -62,13 +65,13 @@ export const CongratulationsScreen = ({TAT}) => {
             }
             customIcon={<Icon name={ICONS.info} className={classes.infoIcon} alt="infoIcon" />}
           />
-           <div className={classes.horizontalLine}></div>
+          <div className={classes.horizontalLine}></div>
 
-           <div className={classes.sectionComponet}>
-            <Phone className={classes.icon}/>
+          <div className={classes.sectionComponet}>
+            <Phone className={classes.icon} />
             <div>
               <p className={classes.applicationNumber}>Here’s what happens next..</p>
-              <p className={classes.applicationDesc}>Leave the rest to us! We'll be in touch within {TAT} business days to finalize your application.</p>
+              <p className={classes.applicationDesc}>{applicationDesc}</p>
             </div>
           </div>
         </div>
