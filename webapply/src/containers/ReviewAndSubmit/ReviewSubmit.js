@@ -293,7 +293,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           companyAdditionalInfo?.isNonFinancialInstitution === "active" ? "Active" : "Passive",
         isFinancialInstitution:
           companyAdditionalInfo?.isFinancialInstitution === "yes" ? "Yes" : "No",
-        dnfbpField: companyAdditionalInfo?.dnfbpField,
+        dnfbpField: companyAdditionalInfo?.dnfbpField ? companyAdditionalInfo?.dnfbpField : "-",
         signatoryFullName: signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),

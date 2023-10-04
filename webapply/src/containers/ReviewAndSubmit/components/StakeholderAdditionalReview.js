@@ -220,7 +220,7 @@ export const StakeholderAdditionalReview = ({
               <TaxInfoSection
                 index={0}
                 country={countryLabel("AE")}
-                tin={""}
+                tin={"-"}
                 reasonForTINNotAvailable={getTINReasonLabel("A-NOT ISSUED")}
                 remarks={""}
                 truncateString={truncateString}
