@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import { useStyles } from "../styled";
 import { InformationSection } from "./InformationSection";
@@ -7,6 +7,7 @@ import routes from "../../../routes";
 import StakeholdersDetail from "../../CompanyStakeholders/components/CompanyStakeholders/StakeholdersDetail";
 import { operatorLoginScheme } from "../../../constants";
 import { ICONS, Icon } from "../../../components/Icons";
+import { TaxInfoSection } from "./TaxInfoSection";
 export const StakeholderAdditionalReview = ({
   fieldValues,
   addressFormat,
@@ -192,46 +193,39 @@ export const StakeholderAdditionalReview = ({
               <label>US tax resident:</label>
               <p>No</p>
             </div>
-            {Array.isArray(fieldValues.stakeholderTaxDetails)
-              ? fieldValues.stakeholderTaxDetails.map((taxDetail, index) => {
-                  return (
-                    <Fragment key={index}>
-                      <div className={classes.infoSubCatLabel}>Country {index + 1}</div>
-                      <div className={classes.infoLabelValue}>
-                        <label>Tax residence:</label>
-                        <p>
-                          {taxDetail && taxDetail.country
-                            ? countryLabel(taxDetail.country)
-                            : countryLabel("AE")}
-                        </p>
-                      </div>
-                      <div className={classes.infoLabelValue}>
-                        <label>TIN or equivalent:</label>
-                        <p>{taxDetail && taxDetail.TIN ? taxDetail.TIN : "-"}</p>
-                      </div>
-                      <div className={classes.infoLabelValue}>
-                        <label>Reason for unavailable TIN:</label>
-                        <p>
-                          {taxDetail && taxDetail.reasonForTINNotAvailable
-                            ? truncateString(
-                                getTINReasonLabel(taxDetail.reasonForTINNotAvailable),
-                                100
-                              )
-                            : "Not applicable"}
-                        </p>
-                      </div>
-                      <div className={classes.infoLabelValue}>
-                        <label>Remarks:</label>
-                        <p>
-                          {taxDetail && taxDetail.remarks
-                            ? truncateString(taxDetail.remarks, 100)
-                            : "-"}
-                        </p>
-                      </div>
-                    </Fragment>
-                  );
-                })
-              : ""}
+            {Array.isArray(fieldValues.stakeholderTaxDetails) &&
+            fieldValues.stakeholderTaxDetails.length > 0 ? (
+              fieldValues.stakeholderTaxDetails.map((taxDetail, index) => {
+                return (
+                  <TaxInfoSection
+                    key={index}
+                    index={0}
+                    country={
+                      taxDetail && taxDetail.country
+                        ? countryLabel(taxDetail.country)
+                        : countryLabel("AE")
+                    }
+                    tin={taxDetail && taxDetail.TIN ? taxDetail.TIN : "-"}
+                    reasonForTINNotAvailable={
+                      taxDetail && taxDetail.reasonForTINNotAvailable
+                        ? getTINReasonLabel(taxDetail.reasonForTINNotAvailable)
+                        : ""
+                    }
+                    remarks={taxDetail && taxDetail.remarks ? taxDetail && taxDetail.remarks : ""}
+                    truncateString={truncateString}
+                  />
+                );
+              })
+            ) : (
+              <TaxInfoSection
+                index={0}
+                country={countryLabel("AE")}
+                tin={""}
+                reasonForTINNotAvailable={getTINReasonLabel("A-NOT ISSUED")}
+                remarks={""}
+                truncateString={truncateString}
+              />
+            )}
           </div>
         </InformationSection>
       </Accordion>
