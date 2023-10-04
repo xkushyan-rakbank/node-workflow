@@ -241,8 +241,12 @@ export function* notifyHost() {
         signatoryInfo,
         documents: { stakeholdersDocuments }
       } = notifyHostResponse;
-      signatoryInfo[0].editedFullName =
-        signatoryDetails[0].editedFullName || signatoryInfo[0].fullName;
+      if (signatoryInfo[0].fullName !== signatoryDetails[0].fullName) {
+        signatoryInfo[0].editedFullName = signatoryInfo[0].fullName;
+      } else {
+        signatoryInfo[0].editedFullName =
+          signatoryDetails[0].editedFullName || signatoryInfo[0].fullName;
+      }
 
       // const signatory = merge(signatoryDetails, signatoryInfo);
       //Name on card for account info screen
