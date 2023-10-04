@@ -149,7 +149,7 @@ export const CompanyInfo = ({
       )
       .typeError(getInvalidMessage("License expiry date")),
     dateOfIncorporation: Yup.date()
-      .required(getRequiredMessage("Date Of Incorporation"))
+      .required(getRequiredMessage("Date Of incorporation"))
       .test(
         "maxDate",
         "The date of incorporation cannot be a future date. Please select a valid date.",
@@ -159,7 +159,7 @@ export const CompanyInfo = ({
           return inputDate.getTime() < addDays(new Date(), 0);
         }
       )
-      .typeError(getInvalidMessage("Date Of Incorporation")),
+      .typeError(getInvalidMessage("Date of incorporation")),
     tradeLicenseOrCOI: Yup.mixed()
       .test("required", getRequiredMessage("This field"), file => {
         if (file) return true;

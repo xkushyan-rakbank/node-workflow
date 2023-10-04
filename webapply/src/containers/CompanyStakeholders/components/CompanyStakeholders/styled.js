@@ -12,8 +12,10 @@ export const useStyles = makeStyles(theme => ({
   },
   subTitle: {
     fontWeight: 400,
-    fontSize: "16px",
+    fontSize: "1.25rem",
     color: "#757575",
+    lineHeight: "1.75rem",
+    fontFamily: "DM Sans",
     margin: 0
   },
   buttonStyle: {
@@ -193,7 +195,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       fontSize: "1.75rem",
       lineHeight: "36px",
-      marginBottom: "24px",
+      marginBottom: "24px"
     }
   },
   uploadModalSaveBtn: {
@@ -243,8 +245,8 @@ export const useStyles = makeStyles(theme => ({
     textAlign: "left",
     [theme.breakpoints.up("sm")]: {
       fontSize: "28px",
-      lineHeight: "36px",
-    },
+      lineHeight: "36px"
+    }
   },
   previewModalSubtitle: {
     margin: "0px",
@@ -506,5 +508,94 @@ export const useStyles = makeStyles(theme => ({
     gap: "8px",
     alignItems: "center",
     justifyContent: "center"
+  },
+  reviewDetails: {
+    display: "flex",
+    padding: "1rem",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "1rem",
+    borderRadius: "0.5rem",
+    background: "#FAFAFA",
+    marginBottom: "2.5rem"
+  },
+  reviewDetailsTitle: {
+    color: "#1F1F1F",
+    fontFamily: "DM Sans",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "1.5rem",
+    margin: 0,
+  },
+  infoLabelValue: {
+    display: "flex",
+    alignItems: "start",
+    gap: "10px",
+    [theme.breakpoints.up("sm")]: {
+      gap: "24px"
+    },
+    "& label": {
+      color: "#757575",
+      fontSize: "0.875rem",
+      fontStyle: "normal",
+      fontWeight: 400,
+      lineHeight: "20px",
+      width: "190px",
+      minWidth: "188px"
+    },
+    "& p": {
+      color: "#525252",
+      fontSize: "0.875rem",
+      fontStyle: "normal",
+      fontWeight: 500,
+      lineHeight: "20px",
+      margin: 0,
+      wordBreak: "break-word",
+      whiteSpace: "pre-line",
+      [theme.breakpoints.up("sm")]: {
+        whiteSpace: "unset"
+      }
+    }
+  },
+  radioButtonRoot: {
+    border: "1px solid #cccccc",
+    borderRadius: "50px",
+    marginTop: "10px",
+    marginLeft: 0
+  },
+  radioLabelRoot: {
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "24px",
+    paddingRight: "15px"
+  },
+  radioConatiner: {
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column"
+    }
+  },
+  informationQuestion: {
+    color: "#1F1F1F",
+    fontFamily: "DM Sans",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "1.5rem"
+  },
+  reviewRemarks: {
+    color: "#757575",
+    fontFamily: "DM Sans",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 400,
+    lineHeight: "1.5rem"
+  },
+  informationGrid: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "1rem",
+    alignSelf: "stretch"
   }
 }));
