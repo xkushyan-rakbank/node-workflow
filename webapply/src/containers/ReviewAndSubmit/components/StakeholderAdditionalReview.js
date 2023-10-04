@@ -199,7 +199,7 @@ export const StakeholderAdditionalReview = ({
                 return (
                   <TaxInfoSection
                     key={index}
-                    index={0}
+                    index={index}
                     country={
                       taxDetail && taxDetail.country
                         ? countryLabel(taxDetail.country)
