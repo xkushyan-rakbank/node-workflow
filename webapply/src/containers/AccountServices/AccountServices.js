@@ -116,6 +116,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const signatoryNameData = useSelector(getSignatories)[0]?.editedFullName;
   const allianceCodeData = useSelector(getApplicantInfo).allianceCode;
   const roCodeData = useSelector(getLoginResponse).roCode;
+  const isROInitited = useSelector(getApplicantInfo).isROInitited;
 
   const statementsVia = accountInfo.eStatements ? true : false;
 
@@ -903,6 +904,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           path="prospect.applicantInfo.roCode"
                           label=""
                           component={Input}
+                          disabled={isROInitited}
                           InputProps={{
                             inputProps: { tabIndex: 0, maxLength: 6 }
                           }}
@@ -929,6 +931,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           name="allianceCode"
                           path={"prospect.applicantInfo.allianceCode"}
                           component={Input}
+                          disabled={isROInitited}
                           InputProps={{
                             inputProps: { tabIndex: 0, maxLength: 50 }
                           }}
