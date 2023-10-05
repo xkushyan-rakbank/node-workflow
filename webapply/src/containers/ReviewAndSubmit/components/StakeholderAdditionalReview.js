@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button } from "@material-ui/core";
 import { useStyles } from "../styled";
 import { InformationSection } from "./InformationSection";
@@ -28,6 +28,29 @@ export const StakeholderAdditionalReview = ({
 
     return formattedNumber;
   };
+
+  const defaultTaxCountry = {
+    country: "AE",
+    TIN: "",
+    isTINAvailable: "",
+    reasonForTINNotAvailable: "A-NOT ISSUED",
+    remarks: ""
+  };
+
+  const stakeholderTaxDetails = useMemo(() => {
+    if (fieldValues.stakeholderTaxDetails) {
+      const taxDetails = [...fieldValues.stakeholderTaxDetails];
+      const found = taxDetails.find(details => details.country === "AE");
+      if (found) {
+        taxDetails.unshift(taxDetails.pop());
+      } else {
+        taxDetails.unshift(defaultTaxCountry);
+      }
+      return taxDetails;
+    } else {
+      return [];
+    }
+  }, [fieldValues.stakeholderTaxDetails]);
 
   return (
     <div className={classes.packageSelectionWrapper}>
@@ -193,9 +216,8 @@ export const StakeholderAdditionalReview = ({
               <label>US tax resident:</label>
               <p>No</p>
             </div>
-            {Array.isArray(fieldValues.stakeholderTaxDetails) &&
-            fieldValues.stakeholderTaxDetails.length > 0 ? (
-              fieldValues.stakeholderTaxDetails.map((taxDetail, index) => {
+            {Array.isArray(stakeholderTaxDetails) && stakeholderTaxDetails.length > 0 ? (
+              stakeholderTaxDetails.map((taxDetail, index) => {
                 return (
                   <TaxInfoSection
                     key={index}
@@ -218,6 +240,7 @@ export const StakeholderAdditionalReview = ({
               })
             ) : (
               <TaxInfoSection
+                hideLabel={true}
                 index={0}
                 country={countryLabel("AE")}
                 tin={"-"}

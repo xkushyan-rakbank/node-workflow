@@ -2,6 +2,7 @@ import React from "react";
 import { useStyles } from "../styled";
 
 export const TaxInfoSection = ({
+  hideLabel,
   index,
   country,
   tin,
@@ -12,7 +13,7 @@ export const TaxInfoSection = ({
   const classes = useStyles();
   return (
     <>
-      <div className={classes.infoSubCatLabel}>Country {index + 1}</div>
+      {!hideLabel && <div className={classes.infoSubCatLabel}>Country {index + 1}</div>}
       <div className={classes.infoLabelValue}>
         <label>Tax residence:</label>
         <p>{country}</p>

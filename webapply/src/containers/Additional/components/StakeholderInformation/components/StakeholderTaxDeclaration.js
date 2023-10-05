@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldArray, Formik } from "formik";
 import { Button, Grid, IconButton } from "@material-ui/core";
@@ -29,7 +29,7 @@ const defaulatTaxDetails = {
   TIN: "",
   reasonForTINNotAvailable: "",
   remarks: "",
-  isTINAvailable: "no"
+  isTINAvailable: ""
 };
 
 export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, id, refs }) => {
@@ -40,7 +40,14 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo";
   const signatories = useSelector(getSignatories);
 
-  const taxDetails = signatories[0]?.stakeholderAdditionalInfo?.taxDetails;
+  const taxDetails = useMemo(() => {
+    const details = [...signatories[0]?.stakeholderAdditionalInfo?.taxDetails];
+    if (details[0] !== "") {
+      const index = details.findIndex(element => element && element.country === "AE");
+      details.splice(index, 1);
+    }
+    return details;
+  }, [signatories]);
 
   const initialValues = {
     taxDetails: taxDetails || [defaulatTaxDetails],
@@ -78,19 +85,22 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
             isTINAvailable: Yup.string().required(getRequiredMessage("Is TIN Available")),
             TIN: Yup.string().when("isTINAvailable", {
               is: "yes",
-              then: Yup.string().required("TIN is required")
+              then: Yup.string().required("TIN is required"),
+              otherwise: Yup.string().nullable()
             }),
             reasonForTINNotAvailable: Yup.string().when("isTINAvailable", {
               is: "no",
               then: Yup.string().required(
                 getRequiredMessage("Select a reason if TIN is not available")
-              )
+              ),
+              otherwise: Yup.string().nullable()
             }),
             remarks: Yup.string().when("reasonForTINNotAvailable", {
               is: reasonForTINNotAvailable => reasonForTINNotAvailable === "B-UNABLE GET TIN",
               then: Yup.string()
                 .required(getRequiredMessage("Remarks"))
-                .max(500, "Maximum ${max} characters allowed")
+                .max(500, "Maximum ${max} characters allowed"),
+              otherwise: Yup.string().nullable()
             })
           })
         )
@@ -188,6 +198,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                       return (
                         <>
                           {values.taxDetails.map((val, index) => {
+                            console.log(index, "index");
                             const hideRemarks =
                               hideAnotherCountryTaxField &&
                               values.taxDetails[index]?.reasonForTINNotAvailable ===
@@ -281,24 +292,22 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                                         />
                                       </Grid>
                                     )}
-                                    {index > 0 && (
-                                      <IconButton
-                                        aria-label="delete"
-                                        style={{
-                                          padding: 0,
-                                          marginTop: "5px",
-                                          marginBottom: "20px",
-                                          width: "100%",
-                                          justifyContent: "end"
-                                        }}
-                                        onClick={() =>
-                                          removeTaxDetails(index, setFieldValue, values)
-                                        }
-                                      >
-                                        <HighlightOffIcon />
-                                      </IconButton>
-                                    )}
                                   </>
+                                )}
+                                {index > 0 && (
+                                  <IconButton
+                                    aria-label="delete"
+                                    style={{
+                                      padding: 0,
+                                      marginTop: "5px",
+                                      marginBottom: "20px",
+                                      width: "100%",
+                                      justifyContent: "end"
+                                    }}
+                                    onClick={() => removeTaxDetails(index, setFieldValue, values)}
+                                  >
+                                    <HighlightOffIcon />
+                                  </IconButton>
                                 )}
                               </Grid>
                             );

@@ -338,6 +338,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           "N/A",
         residentialAddress:
           signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.residentialAddress,
+        taxesInAnotherCountry:
+          signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxesInAnotherCountry,
         stakeholderTaxDetails:
           (signatoryInfo && signatoryInfo[0]?.stakeholderAdditionalInfo?.taxDetails) || [],
 
