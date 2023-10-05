@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldArray, Formik } from "formik";
@@ -41,12 +42,15 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
   const signatories = useSelector(getSignatories);
 
   const taxDetails = useMemo(() => {
+    if (!signatories[0]?.stakeholderAdditionalInfo?.taxDetails) {
+      return null;
+    }
     const details = [...signatories[0]?.stakeholderAdditionalInfo?.taxDetails];
     if (details[0] !== "") {
       const index = details.findIndex(element => element && element.country === "AE");
       details.splice(index, 1);
     }
-    return details;
+    return details.length === 0 ? null : details;
   }, [signatories]);
 
   const initialValues = {
@@ -54,11 +58,11 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     taxesInAnotherCountry: "no"
   };
 
-  const createStakeholderTaxRadioHandler = ({ values, setFieldValue }) => async event => {
+  const createStakeholderTaxRadioHandler = ({ values, setFieldValue, index }, event) => {
     const value = event.target.value;
-    const target = event.target.name;
-    setFieldValue(target, value);
-    if (target === "taxesInAnotherCountry") {
+    const name = event.target.name;
+    setFieldValue(name, value);
+    if (name === "taxesInAnotherCountry") {
       if (value === "no") {
         setFieldValue("taxDetails", []);
         dispatch(
@@ -68,6 +72,26 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
         );
       } else {
         setFieldValue("taxDetails", [defaulatTaxDetails]);
+      }
+    }
+    if (name === `taxDetails[${index}].isTINAvailable`) {
+      if (value === "yes") {
+        setFieldValue(`taxDetails[${index}].reasonForTINNotAvailable`, "");
+        setFieldValue(`taxDetails[${index}].remarks`, "");
+        dispatch(
+          updateProspect({
+            [`${basePath}.taxDetails[${index}].reasonForTINNotAvailable`]: "",
+            [`${basePath}.taxDetails[${index}].remarks`]: ""
+          })
+        );
+      }
+      if (value === "no") {
+        setFieldValue(`taxDetails[${index}].TIN`, "");
+        dispatch(
+          updateProspect({
+            [`${basePath}.taxDetails[${index}].TIN`]: ""
+          })
+        );
       }
     }
   };
@@ -143,10 +167,6 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     >
       {({ values, setFieldValue, isValid, errors }) => {
         const IsValidForm = stakeholderTaxInfoSchema.isValidSync(values);
-        const stakeholderTaxRadioFieldHandler = createStakeholderTaxRadioHandler({
-          values,
-          setFieldValue
-        });
         const hideAnotherCountryTaxField = values.taxesInAnotherCountry === "yes";
         return (
           <>
@@ -182,7 +202,15 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                     path={`${basePath}.taxesInAnotherCountry`}
                     options={YesNoListForTaxPayInAnotherCountry}
                     component={CheckboxGroup}
-                    onSelect={stakeholderTaxRadioFieldHandler}
+                    onSelect={event =>
+                      createStakeholderTaxRadioHandler(
+                        {
+                          values,
+                          setFieldValue
+                        },
+                        event
+                      )
+                    }
                     customIcon={false}
                     classes={{
                       root: classes.radioButtonRoot,
@@ -237,7 +265,16 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                                       path={`${basePath}.taxDetails[${index}].isTINAvailable`}
                                       options={enumYesNoOptions}
                                       component={CheckboxGroup}
-                                      onSelect={stakeholderTaxRadioFieldHandler}
+                                      onSelect={event =>
+                                        createStakeholderTaxRadioHandler(
+                                          {
+                                            values,
+                                            setFieldValue,
+                                            index
+                                          },
+                                          event
+                                        )
+                                      }
                                       customIcon={false}
                                       classes={{
                                         root: classes.radioButtonRoot,
@@ -248,7 +285,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                                     />
                                   </>
                                 </Grid>
-                                {values.taxDetails[index]?.isTINAvailable === "yes" ? (
+                                {values.taxDetails[index]?.isTINAvailable === "yes" && (
                                   <Grid item sm={12} xs={12}>
                                     <Field
                                       name={`taxDetails[${index}].TIN`}
@@ -261,7 +298,8 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                                       component={Input}
                                     />
                                   </Grid>
-                                ) : (
+                                )}
+                                {values.taxDetails[index]?.isTINAvailable === "no" && (
                                   <>
                                     <Grid item sm={12} xs={12}>
                                       <Field
