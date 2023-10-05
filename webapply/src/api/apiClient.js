@@ -411,3 +411,17 @@ export const sendEFRInvite = {
       data: body
     })
 };
+
+export const cpfCustomerConsent = {
+  send: (body, headers) =>
+    httpClient
+      .request({
+        url: buildURI("cpfCustomerConsentUrl"),
+        method: "POST",
+        ...headers,
+        data: body
+      })
+      .then(response => {
+        return response.data;
+      })
+};

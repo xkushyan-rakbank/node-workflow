@@ -6,14 +6,20 @@ import useGeneratePdf from "./useGeneratePdf";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
-import { termsAndConditionsAccepted } from "../../../../store/actions/termsAndConditions";
+import {
+  sendCustomerConsentToCPF,
+  termsAndConditionsAccepted
+} from "../../../../store/actions/termsAndConditions";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../store/selectors/appConfig";
 
 export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("generalTermsAndConditions", wcmData);
+  const { editedFile, height, pages, cpfDocModificationInfo } = useGeneratePdf(
+    "generalTermsAndConditions",
+    wcmData
+  );
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
@@ -28,6 +34,7 @@ export const TermsAndConditions = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
+    dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "TNC_CONSENT"));
     dispatch(
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {

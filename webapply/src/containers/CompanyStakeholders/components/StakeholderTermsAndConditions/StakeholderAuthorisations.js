@@ -5,7 +5,10 @@ import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
-import { termsAndConditionsAccepted } from "../../../../store/actions/termsAndConditions";
+import {
+  sendCustomerConsentToCPF,
+  termsAndConditionsAccepted
+} from "../../../../store/actions/termsAndConditions";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../store/selectors/appConfig";
@@ -13,7 +16,11 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("authorizationsConsent", wcmData, true);
+  const { editedFile, height, pages, cpfDocModificationInfo } = useGeneratePdf(
+    "authorizationsConsent",
+    wcmData,
+    true
+  );
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
@@ -27,6 +34,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
+    dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "AUTH_CONSENT"));
     dispatch(
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {

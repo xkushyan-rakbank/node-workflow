@@ -1,6 +1,10 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
 import { log } from "../../utils/loggger";
-import { SEND_KFS_MAIL, termsAndConditionsAccepted } from "../actions/termsAndConditions";
+import {
+  SEND_CUSTOMER_CONSENT_TO_CPF,
+  SEND_KFS_MAIL,
+  termsAndConditionsAccepted
+} from "../actions/termsAndConditions";
 import {
   getAccountType,
   getApplicantEmail,
@@ -10,7 +14,7 @@ import {
   getRoEmail,
   getSignatories
 } from "../selectors/appConfig";
-import { kfsAcknowledgement } from "../../api/apiClient";
+import { cpfCustomerConsent, kfsAcknowledgement } from "../../api/apiClient";
 import { AccountDetails, CONVENTIONAL, ISLAMIC } from "../../constants";
 
 export function* sendKfsMail({ payload: { docModificationInfo } }) {
@@ -54,6 +58,33 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
   }
 }
 
+export function* sendCustomerConsentToCPF({ payload: { docModificationInfo, consentType } }) {
+  try {
+    const headers = yield select(getAuthorizationHeader);
+    headers.headers["client-id"] = "WBA";
+    const signatories = yield select(getSignatories);
+    const individualId = signatories[0].signatoryId;
+
+    const isIslamic = yield select(getIsIslamicBanking);
+    const body = {
+      processName: consentType,
+      type: isIslamic ? ISLAMIC : CONVENTIONAL,
+      individualId,
+      consentRequests: [
+        {
+          key: consentType,
+          value: "YES"
+        }
+      ],
+      docModificationInfo
+    };
+    yield call(cpfCustomerConsent.send, body, headers);
+  } catch (error) {
+    log(error);
+  }
+}
+
 export default function* termsAndConditionsSaga() {
   yield all([takeLatest(SEND_KFS_MAIL, sendKfsMail)]);
+  yield all([takeLatest(SEND_CUSTOMER_CONSENT_TO_CPF, sendCustomerConsentToCPF)]);
 }

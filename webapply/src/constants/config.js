@@ -33,6 +33,7 @@ export const endpoints = {
   wtmStatusUpdate:
     "/onboarding/products/accounts/prospects/:prospectId/webToMobile/:webToMobileRefId",
   cpfSendEmailUrl: "/onboarding/cpf/product-config/subproducts/kfs-acknowledgement",
+  cpfCustomerConsentUrl: "/onboarding/cpf/consent/customers",
   sendEFRInvite: "/onboarding/products/accounts/prospects/:prospectId/efrlink/actions"
 };
 

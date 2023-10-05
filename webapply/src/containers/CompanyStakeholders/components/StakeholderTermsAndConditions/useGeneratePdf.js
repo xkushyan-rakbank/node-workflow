@@ -155,8 +155,8 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
         const pageNumberToSample = coordinates.pageNumber;
         thePage = pages[pageNumberToSample];
 
-        const drawText = async (text, page, { x, y }) => {
-          const drawTxtMaxWidth = width - 90;
+        const drawText = async (text, page, { x, y }, pageNo = pageNumberToSample) => {
+          const drawTxtMaxWidth = path === "authorizationsConsent" ? width - 280 : width - 90;
           const tnrFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
 
           const textWidth = t => tnrFont.widthOfTextAtSize(t, FONT_SIZE);
@@ -168,7 +168,7 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
           lines.forEach((line, lineNumber) => {
             const lineY = configuredY + (lines.length - (lineNumber + 1)) * lineOffset;
             docModificationInfo.push({
-              pageNumber: parseInt(pageNumberToSample) + 1,
+              pageNumber: parseInt(pageNo) + 1,
               text: line,
               xCoordinate: x,
               yCoordinate: lineY
@@ -194,7 +194,14 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
           drawText(soleSignatory, thePage, { ...coordinates[COMPANY_NAME] });
           const coordinatesForApplicantName = getConsentApplicantCoordinates();
           thePage = pages[coordinatesForApplicantName.pageNumber];
-          drawText(organizationInfo, thePage, { ...coordinates[APPLICANT_NAME] });
+          drawText(
+            organizationInfo,
+            thePage,
+            {
+              ...coordinatesForApplicantName[APPLICANT_NAME]
+            },
+            coordinatesForApplicantName.pageNumber
+          );
         }
         setCPFDocModificationInfo(docModificationInfo);
       }
