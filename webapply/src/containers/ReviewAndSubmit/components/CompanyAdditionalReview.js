@@ -115,7 +115,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues.isCompanyUSEntity}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Tax residency:</label>
+              <label>Tax residence:</label>
               <p>United Arab Emirates</p>
             </div>
             <div className={classes.infoLabelValue}>
