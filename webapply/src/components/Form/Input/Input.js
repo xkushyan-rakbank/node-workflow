@@ -64,6 +64,7 @@ const InputBase = ({
           placeholder={placeholder}
           disabled={isFieldEditable}
           error={!!isError}
+          autoComplete={"off"}
           InputProps={{
             endAdornment: showEditIcon ? (
               <InputAdornment position="end">
