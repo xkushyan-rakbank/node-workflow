@@ -5,6 +5,6 @@ export const termsAndConditionsAccepted = payload => {
   return { type: TERMS_ACCEPTED, payload };
 };
 
-export const sendKfsMail = () => {
-  return { type: SEND_KFS_MAIL };
+export const sendKfsMail = docModificationInfo => {
+  return { type: SEND_KFS_MAIL, payload: { docModificationInfo } };
 };

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState } from "react";
-import { PDFDocument } from "pdf-lib";
+import { PDFDocument, StandardFonts, breakTextIntoLines } from "pdf-lib";
 import { useSelector } from "react-redux";
 import {
   getAccountType,
@@ -49,6 +49,7 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
   const [pdfLink, setPdfLink] = useState();
   const [height, setHeight] = useState();
   const [pages, setPages] = useState();
+  const [cpfDocModificationInfo, setCPFDocModificationInfo] = useState([]);
   const signatoryInfo = useSelector(getSignatories);
   const organizationInfo = useSelector(getCompanyName);
   const dataList = useSelector(getDatalist);
@@ -147,42 +148,57 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
       const pages = pdfDoc.getPages();
       setPages(pages);
       let thePage = pages[0];
+      const { width, height } = thePage.getSize();
       if (enableEdit) {
+        const docModificationInfo = [];
         const coordinates = getCoordinates();
         const pageNumberToSample = coordinates.pageNumber;
         thePage = pages[pageNumberToSample];
-        thePage.drawText(soleSignatory, {
-          size: FONT_SIZE,
-          ...coordinates[SIGNATORY]
-        });
 
-        thePage.drawText(today.toLocaleDateString("en-GB"), {
-          size: FONT_SIZE,
-          ...coordinates[DATE]
-        });
+        const drawText = async (text, page, { x, y }) => {
+          const drawTxtMaxWidth = width - 90;
+          const tnrFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
+
+          const textWidth = t => tnrFont.widthOfTextAtSize(t, FONT_SIZE);
+          const lines = breakTextIntoLines(text, [" "], drawTxtMaxWidth, textWidth);
+
+          const configuredY = y;
+          const lineOffset = 10;
+
+          lines.forEach((line, lineNumber) => {
+            const lineY = configuredY + (lines.length - (lineNumber + 1)) * lineOffset;
+            docModificationInfo.push({
+              pageNumber: parseInt(pageNumberToSample) + 1,
+              text: line,
+              xCoordinate: x,
+              yCoordinate: lineY
+            });
+            page.drawText(line, {
+              x,
+              y: lineY,
+              size: FONT_SIZE,
+              font: tnrFont
+            });
+          });
+        };
+
+        drawText(soleSignatory, thePage, { ...coordinates[SIGNATORY] });
+
+        drawText(today.toLocaleDateString("en-GB"), thePage, { ...coordinates[DATE] });
 
         if (path !== "authorizationsConsent") {
-          thePage.drawText(organizationInfo, {
-            size: FONT_SIZE,
-            ...coordinates[COMPANY_NAME]
-          });
+          drawText(organizationInfo, thePage, { ...coordinates[COMPANY_NAME] });
         }
 
         if (path === "authorizationsConsent") {
-          thePage.drawText(soleSignatory, {
-            size: FONT_SIZE,
-            ...coordinates[COMPANY_NAME]
-          });
+          drawText(soleSignatory, thePage, { ...coordinates[COMPANY_NAME] });
           const coordinatesForApplicantName = getConsentApplicantCoordinates();
           thePage = pages[coordinatesForApplicantName.pageNumber];
-          thePage.drawText(organizationInfo, {
-            size: FONT_SIZE,
-            ...coordinatesForApplicantName[APPLICANT_NAME]
-          });
+          drawText(organizationInfo, thePage, { ...coordinates[APPLICANT_NAME] });
         }
+        setCPFDocModificationInfo(docModificationInfo);
       }
 
-      const { height } = thePage.getSize();
       setHeight(height * pages.length);
       const pdfBytes = await pdfDoc.save();
       const file = new Blob([pdfBytes], { type: "application/pdf" });
@@ -206,5 +222,5 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
     getTermsandConditions();
   }, [wcmData, path]);
 
-  return { editedFile, height, pages };
+  return { editedFile, height, pages, cpfDocModificationInfo };
 }

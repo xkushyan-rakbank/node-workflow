@@ -16,12 +16,15 @@ import { getSignatories } from "../../../../store/selectors/appConfig";
 export const StakeholderKfs = ({ wcmData, setConsent }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages } = useGeneratePdf("kfsUrl", wcmData, true);
+  const { editedFile, height, pages, cpfDocModificationInfo } = useGeneratePdf(
+    "kfsUrl",
+    wcmData,
+    true
+  );
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
   const [isKfsProgress, setKfsProgress] = useState(termsAndConditions?.kfs)
-
   const openKFSModal = () => {
     setKfsDialog(true);
   };
@@ -33,8 +36,8 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
-    setKfsProgress(true)
-    dispatch(sendKfsMail());
+    setKfsProgress(true);
+    dispatch(sendKfsMail(cpfDocModificationInfo));
     dispatch(
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {

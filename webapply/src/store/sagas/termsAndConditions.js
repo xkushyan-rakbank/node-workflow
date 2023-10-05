@@ -5,7 +5,6 @@ import {
   getAccountType,
   getApplicantEmail,
   getAuthorizationHeader,
-  getCompanyName,
   getDatalist,
   getIsIslamicBanking,
   getRoEmail,
@@ -14,81 +13,13 @@ import {
 import { kfsAcknowledgement } from "../../api/apiClient";
 import { AccountDetails, CONVENTIONAL, ISLAMIC } from "../../constants";
 
-const accountTypeMap = {
-  "Current Account": "KFSDynamicDataForPrint_CurrentAccount",
-  RAKStarter: "KFSDynamicDataForPrint_RAKStarter",
-  RAKelite: "KFSDynamicDataForPrint_RAKElite"
-};
-
-const CONV = "CONV";
-const ISLA = "ISLA";
-const DATE = "KDAT";
-const COMPANY_NAME = "CNME";
-const SIGNATORY = "SIGN";
-const getCoordinates = obj => {
-  let parsedObj = JSON.parse(obj);
-  let coordinates = {
-    xCoordinate: parsedObj.x,
-    yCoordinate: parsedObj.y
-  };
-  return coordinates;
-};
-
-const getModInfo = (accountType, isIslamic, { customerName, companyName }) => {
-  if (!accountType) {
-    return null;
-  }
-  const selectedAccountTypeData = accountType.find(eachData => {
-    if (isIslamic) {
-      return eachData.code === ISLA;
-    } else {
-      return eachData.code === CONV;
-    }
-  });
-  const pageNumber = parseInt(JSON.parse(selectedAccountTypeData.displayText).pageNumber) + 1;
-  const corrdinateDetails = [];
-  const today = new Date().toLocaleDateString("en-GB");
-  selectedAccountTypeData.subGroup.forEach(element => {
-    const coordinates = getCoordinates(element.displayText);
-    switch (element.code) {
-      case DATE:
-        corrdinateDetails.push({
-          pageNumber,
-          text: today,
-          ...coordinates
-        });
-
-        break;
-      case COMPANY_NAME:
-        corrdinateDetails.push({
-          pageNumber,
-          text: companyName,
-          ...coordinates
-        });
-
-        break;
-      case SIGNATORY:
-        corrdinateDetails.push({
-          pageNumber,
-          text: customerName,
-          ...coordinates
-        });
-        break;
-      default:
-        break;
-    }
-  });
-
-  return corrdinateDetails;
-};
-
-export function* sendKfsMail() {
+export function* sendKfsMail({ payload: { docModificationInfo } }) {
   try {
     const headers = yield select(getAuthorizationHeader);
     headers.headers["client-id"] = "WBA";
     const signatories = yield select(getSignatories);
     const customerName = signatories[0].editedFullName;
-    const companyName = yield select(getCompanyName);
+
     const customerEmailAddress = yield select(getApplicantEmail);
     const accountType = yield select(getAccountType);
     const isIslamic = yield select(getIsIslamicBanking);
@@ -100,10 +31,6 @@ export function* sendKfsMail() {
     const bccIds = roEmail ? [dataListBccIds, roEmail] : [dataListBccIds];
     const accountCategory = isIslamic ? ISLAMIC : CONVENTIONAL;
     const subProductCode = AccountDetails[accountType].subProductCode[accountCategory];
-    const docModificationInfo = getModInfo(dataList[accountTypeMap[accountType]], isIslamic, {
-      customerName,
-      companyName
-    });
     const body = {
       customerName,
       customerEmailAddress,
