@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button } from "@material-ui/core";
+
 import { useStyles } from "../styled";
+import { ICONS, Icon } from "../../../components/Icons";
 
 export const TaxInfoSection = ({
   hideLabel,
@@ -10,7 +13,9 @@ export const TaxInfoSection = ({
   remarks,
   truncateString
 }) => {
-  const classes = useStyles();
+  const [showMoreBackgroundDetail, setShowMoreBackgroundDetail] = useState(false);
+  const classes = useStyles({ showMoreBackgroundDetail });
+
   return (
     <>
       {!hideLabel && <div className={classes.infoSubCatLabel}>Country {index + 1}</div>}
@@ -32,7 +37,25 @@ export const TaxInfoSection = ({
       </div>
       <div className={classes.infoLabelValue}>
         <label>Remarks:</label>
-        <p>{remarks ? truncateString(remarks, 100) : "-"}</p>
+        <p>
+          {remarks
+            ? showMoreBackgroundDetail || remarks.length < 120
+              ? remarks
+              : remarks.substring(0, 120)
+            : "-"}
+          {remarks && remarks.length > 120 ? (
+            <Button
+              disableRipple={true}
+              className={classes.showMoreBtn}
+              onClick={() => setShowMoreBackgroundDetail(!showMoreBackgroundDetail)}
+            >
+              {showMoreBackgroundDetail ? "Show less" : "Show more"}
+              <Icon name={ICONS.arrowDown} alt="arrow-down" className={classes.showMoreBtnIcon} />
+            </Button>
+          ) : (
+            ""
+          )}
+        </p>
       </div>
     </>
   );
