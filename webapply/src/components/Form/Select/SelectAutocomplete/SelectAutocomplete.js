@@ -10,7 +10,7 @@ import { useStyles, customStyles } from "./styled";
 import { InfoTitle } from "../../../InfoTitle";
 
 const SelectAutocompleteBase = ({
-  extractValue = option => option?.value || "",
+  extractValue = option => option?.value || (option?.value === false ? false : ""),
   extractLabel = option => option?.label || option?.displayText,
   theme,
   label,

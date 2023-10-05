@@ -53,9 +53,9 @@ const inviteSchema = Yup.object({
   FreeText1: Yup.string()
     .max(50, "Maximum 50 characters allowed")
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
-  isIslamic: Yup.boolean().required(),
-  persona: Yup.string().required("Please select your company category"),
-  accountType: Yup.string().required("Please select your account type")
+  isIslamic: Yup.boolean().required("Please select the product variant"),
+  persona: Yup.string().required("Please select the company category"),
+  accountType: Yup.string().required("Please select the account type")
 });
 
 export const InviteForm = ({ submitForm, isLoading }) => {
