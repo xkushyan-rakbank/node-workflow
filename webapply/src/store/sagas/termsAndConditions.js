@@ -23,6 +23,7 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
     headers.headers["client-id"] = "WBA";
     const signatories = yield select(getSignatories);
     const customerName = signatories[0].editedFullName;
+    const individualId = signatories[0].signatoryId;
 
     const customerEmailAddress = yield select(getApplicantEmail);
     const accountType = yield select(getAccountType);
@@ -45,7 +46,8 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
       productClassificationSubType: "ACT",
       toIds: [customerEmailAddress],
       bccIds,
-      docModificationInfo
+      docModificationInfo,
+      individualId
     };
     yield call(kfsAcknowledgement.sendMail, body, headers);
     yield put(
