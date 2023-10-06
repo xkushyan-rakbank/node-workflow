@@ -567,6 +567,15 @@ export const Personas = {
     companyCategoryCode: "SLLC",
     order: 2
   },
+  ONBEHALF: {
+    key: "ONBEHALF",
+    title: "I'm applying on behalf of someone else",
+    subTitle: "",
+    url: process.env.REACT_APP_BAU_URL || "/",
+    urlType: "bau",
+    companyCategoryCode: "ONBEHALF",
+    order: 3
+  },
   OTHER: {
     key: "OTHER",
     title: "None of the above",
@@ -579,7 +588,7 @@ export const Personas = {
     url: process.env.REACT_APP_BAU_URL || "/",
     urlType: "bau",
     companyCategoryCode: "OTHER",
-    order: 3
+    order: 4
   }
 };
 
