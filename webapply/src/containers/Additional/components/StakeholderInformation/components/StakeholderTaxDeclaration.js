@@ -226,7 +226,6 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                       return (
                         <>
                           {values.taxDetails.map((val, index) => {
-                            console.log(index, "index");
                             const hideRemarks =
                               hideAnotherCountryTaxField &&
                               values.taxDetails[index]?.reasonForTINNotAvailable ===

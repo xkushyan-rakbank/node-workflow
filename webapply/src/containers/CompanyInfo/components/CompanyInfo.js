@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import get from "lodash/get";
@@ -31,6 +31,7 @@ import useDynamicValidation from "../../../utils/useDynamicValidation";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { useFindDocument } from "../../../utils/useFindDocument";
 import { Footer } from "../../../components/Footer";
+import { scrollToDOMNode } from "../../../components/VerticalPagination";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
@@ -53,6 +54,7 @@ export const CompanyInfo = ({
 
   const orgDetails = useSelector(getOrganizationInfo) || {};
   const industries = orgDetails.industryMultiSelect || [];
+  const companyCategory = orgDetails.companyCategory || "";
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
@@ -62,8 +64,7 @@ export const CompanyInfo = ({
     CompanyDocumentKeys.TradeLicenseOrCOI
   );
   const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa);
-
-  console.log();
+  const refToTopOfCompanyInfo = useRef(null);
   useEffect(() => {
     dispatch(initDocumentUpload());
   }, []);
@@ -179,12 +180,16 @@ export const CompanyInfo = ({
       )
   };
 
-  function onUploadSuccess(props) {
-    handleClickNextStep();
-  }
+  const onUploadSuccess = props => {
+    if (props.values.companyCategory === "SLLC" && moa === "") {
+      scrollToDOMNode(refToTopOfCompanyInfo);
+    } else if (props.isValid) {
+      handleClickNextStep();
+    }
+  };
 
   return (
-    <div className={classes.companyInfoWrapper}>
+    <div className={classes.companyInfoWrapper} ref={refToTopOfCompanyInfo}>
       <SectionTitleWithInfo
         title={"Tell us about your company"}
         info="We just need a few details about your company to set up your account. Please complete all fields accurately so that we can process your application as smoothly as possible."
@@ -195,7 +200,7 @@ export const CompanyInfo = ({
         validationSchema={conditionalSchema(companyInfoSchema)}
         validateOnChange={true}
         validateOnMount={true}
-        onSubmit={onUploadSuccess}
+        onSubmit={handleClickNextStep}
       >
         {props => {
           return (
@@ -236,7 +241,7 @@ export const CompanyInfo = ({
                   display="block"
                   label="Next"
                   // disabled={!isCompanyInfoValid}
-                  // handleClick={() => handleClick(props)}
+                  onClick={() => onUploadSuccess(props)}
                 />
               </Footer>
             </Form>
