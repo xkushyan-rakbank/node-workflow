@@ -24,6 +24,7 @@ import AdditionalQuery from "./AdditionalQuery";
 import AdditionalDocument from "./AdditionalDocument";
 import { OverlayLoader } from "../../components/Loader";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
+import { checkLoginStatus } from "../../store/selectors/loginSelector";
 
 export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   useFormNavigation([false, false, additionInfoStepper, true, false]);
@@ -43,6 +44,8 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   // sending details back to bpm through update prospect
   const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
   const additionalDocumentDetailsForBPM = useSelector(getAdditionalDocumentDetailsForBPM);
+
+  const isAgent = useSelector(checkLoginStatus);
 
   useEffect(() => {
     dispatch(initDocumentUpload());
@@ -149,7 +152,13 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
       sendProspectToAPI(NEXT, null, SUBMIT).then(
         isScreeningError => {
           /* istanbul ignore else */
-          if (!isScreeningError) pushHistory(routes.MyApplications, true);
+          if (!isScreeningError) {
+            if (isAgent) {
+              pushHistory(routes.searchProspect, true);
+            } else {
+              pushHistory(routes.MyApplications, true);
+            }
+          }
         },
         () => setIsLoading(false)
       );
