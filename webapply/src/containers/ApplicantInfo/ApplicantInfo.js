@@ -75,7 +75,8 @@ export const ApplicantInfoContainer = ({
           "prospect.applicantInfo.persona": invitationPersona,
           "prospect.applicationInfo.accountType": invitationAccountType,
           "prospect.applicationInfo.islamicBanking": invitationIsIslamic === "true",
-          "prospect.applicantInfo.allianceCode": invitationAllianceCode
+          "prospect.applicantInfo.allianceCode": invitationAllianceCode,
+          "prospect.applicantInfo.isROInitited": true
         })
       );
     }
