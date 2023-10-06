@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import { Grid } from "@material-ui/core";
+import { format, isValid } from "date-fns";
 import cx from "classnames";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,11 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../components/CompanyStakeholders/styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { NextStepButton } from "../../../components/Buttons/NextStepButton";
-import {  NEXT, formStepper, operatorLoginScheme } from "../../../constants";
+import { DATE_FORMAT, NEXT, UAE, formStepper, operatorLoginScheme } from "../../../constants";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import {
+  Input,
   AutoSaveField as Field,
-  InlineRadioGroup
+  InlineRadioGroup,
+  DatePicker,
+  EmiratesID,
+  SelectAutocomplete
 } from "../../../components/Form";
 import routes from "../../../routes";
 import { OverlayLoader } from "../../../components/Loader";
@@ -21,11 +26,21 @@ import { useFormNavigation } from "../../../components/FormNavigation/FormNaviga
 import { useLayoutParams } from "../../FormLayout";
 import { useViewId } from "../../../utils/useViewId";
 import { BackLink } from "../../../components/Buttons/BackLink";
-import { getRequiredMessage } from "../../../utils/getValidationMessage";
+import {
+  MAX_FULL_NAME_LENGTH,
+  MAX_MOTHER_MAIDEN_NAME_LENGTH,
+  MIN_MOTHER_NAME_LENGTH
+} from "../../CompanyInfo/constants";
+import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
+import { NAME_REGEX, EMIRATES_ID_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
-import { getDatalist, getProspect } from "../../../store/selectors/appConfig";
+import { getDatalist, getProspect, getProspectId } from "../../../store/selectors/appConfig";
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
 import { updateProspect } from "../../../store/actions/appConfig";
+import { getSearchResults } from "../../../store/selectors/searchProspect";
+import { get } from "lodash";
+import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
+
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -35,8 +50,16 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   useViewId(true);
   const { scheme } = useSelector(getLoginResponse);
   const dispatch = useDispatch();
-
   const prospect = useSelector(getProspect);
+  const prospectId = useSelector(getProspectId);
+
+  const searchResults = useSelector(getSearchResults);
+  const currentProspect = searchResults.find(item => item.prospectId === prospectId);
+  
+  const isFrontCorrection = get(currentProspect, "status.statusType") === OPE_EDIT;
+  const isOperator = scheme === operatorLoginScheme; 
+  const isEditable = isOperator && isFrontCorrection;
+ 
   const [displayFields, setDisplayFields] = useState({});
 
   const { nationality: nationality } = useSelector(getDatalist);
@@ -46,11 +69,23 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     [displayFields, nationality]
   );
 
-  const isOperator = scheme === operatorLoginScheme;
+
 
   const [isLoading, setIsLoading] = useState(false);
-  const initialValues = {
+
+  const customerInitValues = {
     questionInput: ""
+  };
+
+  const operatorInitialValues = {
+    fullName: "",
+    mothersMaidenName: "",
+    nationality: "",
+    dateOfBirth: "",
+    eidNumber: "",
+    eidExpiryDt: "",
+    passportNumber: "",
+    passportExpiryDate: ""
   };
 
   const labelTextForNoEfrIncorrect = (
@@ -79,9 +114,46 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     }
   ];
 
-  const previewValidation = Yup.object({
+  const customerPreviewValidation = Yup.object({
     questionInput: Yup.string().required(getRequiredMessage("This field"))
   });
+
+  const operatorPreviewValidation = Yup.object({
+    fullName: Yup.string()
+      .required(getRequiredMessage("Fullname"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(NAME_REGEX, "Please remove any special character from your name"),
+    mothersMaidenName: Yup.string()
+      .required(getRequiredMessage("Mother's maiden name"))
+      .min(
+        MIN_MOTHER_NAME_LENGTH,
+        `Mother's maiden name is too short. Please enter at least ${MIN_MOTHER_NAME_LENGTH} characters`
+      )
+      .max(
+        MAX_MOTHER_MAIDEN_NAME_LENGTH,
+        `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
+      )
+      .matches(NAME_REGEX, "Please enter a valid mother's maiden name as per your passport"),
+    eidNumber: Yup.string().when("residenceCountry", {
+      is: value => value === UAE,
+      then: Yup.string()
+        .required(getRequiredMessage("Emirates ID"))
+        .transform(value => value.replace(/-/g, ""))
+        .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
+    }),
+    passportNumber: Yup.string()
+      .required(getRequiredMessage("Passport number"))
+      .max(12, "Maximum 12 characters allowed")
+      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Passport number")),
+    passportExpiryDate: Yup.string().required(getRequiredMessage("Passport expiry")),
+    eidExpiryDt: Yup.string().required(getRequiredMessage("Emirates ID expiry")),
+    dateOfBirth: Yup.string().required(getRequiredMessage("Date of birth")),
+    nationality: Yup.string().required(getRequiredMessage("Nationality"))
+  });
+
+  const changeDateProspectHandler = (_, value, path) =>
+    isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
   const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
@@ -122,16 +194,8 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     }
   }, [prospect]);
 
-  return (
-    <>
-      <div className={classes.completedScanInfoWrapper}>
-        <SuccessIcon />
-        <span>Scanning successfully completed</span>
-      </div>
-      <h3 className={classes.mainTitle}>Review the details we pulled from your documents</h3>
-      <p className={cx(classes.subTitle, classes["mb-40"])}>
-        These will be submitted with your application.
-      </p>
+  const customerReviewDetails = () => {
+    return (
       <div className={classes.reviewDetails}>
         <div>
           <h5 className={classes.reviewDetailsTitle}>Essential information</h5>
@@ -169,9 +233,189 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
           <p>{displayFields.passportExpiryDate}</p>
         </div>
       </div>
+    );
+  };
+
+  const operatorReviewDetails = () => {
+    return (
+      <>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="fullName"
+            path="prospect.signatoryInfo[0].editedFullName"
+            label="Name"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: 100 }
+            }}
+            disabled={!isEditable}
+            className="testingClass"
+            showEditIcon={!isEditable}
+            fieldDescription={"Please ensure the full name is per your passport"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="mothersMaidenName"
+            path="prospect.signatoryInfo[0].mothersMaidenName"
+            label="Mother's maiden name"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: 100 }
+            }}
+            disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
+            className="testingClass"
+            showEditIcon={!displayFields?.mothersMaidenName ? true : false}
+            fieldDescription={"Enter Mother's maiden name as per your passport"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="nationality"
+            path="prospect.signatoryInfo[0].kycDetails.nationality"
+            datalistId="nationality"
+            label="Nationality"
+            component={SelectAutocomplete}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+            disabled={!isEditable}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="dateOfBirth"
+            path="prospect.signatoryInfo[0].kycDetails.dateOfBirth"
+            label="Date of birth"
+            component={DatePicker}
+            inputAdornmentPosition="end"
+            changeProspect={changeDateProspectHandler}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+            disabled={!isEditable}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            name="eidNumber"
+            path="prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"
+            label="Emirates ID"
+            placeholder="784-1950-1234567-8"
+            disabled={!isEditable}
+            component={EmiratesID}
+            changeProspect={(prospect, value) => ({
+              ...prospect,
+              ["prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"]: value.replace(
+                /-/g,
+                ""
+              )
+            })}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="eidExpiryDt"
+            path="prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidExpiryDt"
+            label="Emirates ID expiry"
+            component={DatePicker}
+            changeProspect={changeDateProspectHandler}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+            inputAdornmentPosition="end"
+            disabled={!isEditable}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="passportNumber"
+            path="prospect.signatoryInfo[0].kycDetails.passportDetails[0].passportNumber"
+            label="Passport number"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+            disabled={!isEditable}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="passportExpiryDate"
+            path="prospect.signatoryInfo[0].kycDetails.passportDetails[0].passportExpiryDate"
+            label="Passport expiry"
+            component={DatePicker}
+            InputProps={{
+              inputProps: { tabIndex: 0 }
+            }}
+            changeProspect={changeDateProspectHandler}
+            disabled={!isEditable}
+            inputAdornmentPosition="end"
+          />
+        </Grid>
+      </>
+    );
+  };
+
+  const customerConfirmEFRDetails = radioChangeHandler => {
+    return (
+      <>
+        <div className={classes.informationQuestion}>Is all of your information correct?</div>
+        <Field
+          typeRadio
+          options={stakePreviewYesNoOptions}
+          name="questionInput"
+          path="prospect.signatoryInfo[0].isEFRDataCorrect"
+          component={InlineRadioGroup}
+          customIcon={false}
+          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+          radioColor="primary"
+          onChange={radioChangeHandler}
+        />
+        <div>
+          <p className={classes.reviewRemarks}>
+            If not, don't worry—you can continue with your application. We'll reach out to you
+            within 48 hours to help make any corrections.
+          </p>
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div className={classes.completedScanInfoWrapper}>
+        <SuccessIcon />
+        <span>Scanning successfully completed</span>
+      </div>
+      {isEditable ? (
+        <>
+          <h3 className={classes.mainTitle}>Did we get everything?</h3>
+          <p className={cx(classes.subTitle, classes["mb-40"])}>
+            Take a minute to review the details we pulled from your documents. You won't be able to
+            make any changes after this step.
+          </p>
+        </>
+      ) : (
+        <>
+          <h3 className={classes.mainTitle}>Review the details we pulled from your documents</h3>
+          <p className={cx(classes.subTitle, classes["mb-40"])}>
+            These will be submitted with your application.
+          </p>
+        </>
+      )}
+
+      {!isEditable && customerReviewDetails()}
       <Formik
-        initialValues={initialValues}
-        validationSchema={previewValidation}
+        initialValues={isEditable ? operatorInitialValues : customerInitValues}
+        validationSchema={isEditable ? operatorPreviewValidation : customerPreviewValidation}
         onSubmit={handleClickStakeholderPreviewNextStep}
       >
         {({ values, setFieldValue, ...props }) => {
@@ -180,32 +424,16 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
           return (
             <Form>
               <Grid container>
-                <Grid item xs={12}>
-                  <div className={classes.informationQuestion}>
-                    Is all of your information correct?
-                  </div>
-                  <Field
-                    typeRadio
-                    options={stakePreviewYesNoOptions}
-                    name="questionInput"
-                    path="prospect.signatoryInfo[0].isEFRDataCorrect"
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    radioColor="primary"
-                    onChange={radioChangeHandler}
-                  />
-                  <div>
-                    <p className={classes.reviewRemarks}>
-                      If not, don't worry—you can continue with your application. We'll reach out to
-                      you within 48 hours to help make any corrections.
-                    </p>
-                  </div>
-                </Grid>
+                {!isEditable && (
+                  <Grid item xs={12}>
+                    {customerConfirmEFRDetails(radioChangeHandler)}
+                  </Grid>
+                )}
+                {isEditable && operatorReviewDetails()}
               </Grid>
               <Footer>
                 <BackLink
-                  path={isOperator ? routes.companyInfo : routes.stakeholdersInfo}
+                  path={isEditable ? routes.companyInfo : routes.stakeholdersInfo}
                   isTypeButton={true}
                 />
                 <NextStepButton label="Next" type="submit" justify="flex-end" />
