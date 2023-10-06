@@ -11,7 +11,8 @@
       "roCode": "",
       "allianceCode": "",
       "validRoCode": "",
-      "persona": ""
+      "persona": "",
+      "isROInitited": ""
     },
     "generalInfo": {
       "prospectId": "",
