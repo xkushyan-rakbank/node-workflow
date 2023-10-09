@@ -39,11 +39,11 @@ export const StakeholderAdditionalReview = ({
 
   const stakeholderTaxDetails = useMemo(() => {
     if (fieldValues.stakeholderTaxDetails) {
-      if (fieldValues.stakeholderTaxDetails.length === 1) {
-        return [];
-      }
       const taxDetails = [...fieldValues.stakeholderTaxDetails];
       const found = taxDetails.find(details => details.country === "AE");
+      if (found && fieldValues.stakeholderTaxDetails.length === 1) {
+        return [];
+      }
       if (found) {
         taxDetails.unshift(taxDetails.pop());
       } else {
