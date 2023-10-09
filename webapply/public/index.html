@@ -50,7 +50,7 @@
       window["adrum-start-time"] = new Date().getTime();
       (function(config, hostname) {
         config.appKey = "%REACT_APP_AD_APPKEY%";
-        config.adrumExtUrlHttps = "https://" + hostname + "%PUBLIC_URL%/static/vendor";
+        config.adrumExtUrlHttps = "%PUBLIC_URL%/static/vendor";
         config.beaconUrlHttps = "%REACT_APP_AD_URL%";
         config.xd = { enable: true };
         config.spa = {
