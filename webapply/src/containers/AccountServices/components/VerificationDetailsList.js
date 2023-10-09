@@ -117,13 +117,16 @@ export const VerificationDetailsList = ({ values, setFieldValue, ...props }) => 
                       label="Verification remarks"
                       placeholder="Verification remarks"
                       multiline
-                      minRows="6"
+                      rows="6"
                       InputProps={{
                         inputProps: { tabIndex: 0, maxLength: 5000 }
                       }}
                       component={Input}
                       fieldDescription="Special characters - \ . % and spaces allowed."
-                      classes={{ formControlRoot: classes.rmVerificationRemarksTextarea }}
+                      classes={{
+                        formControlRoot: classes.rmVerificationRemarksTextarea,
+                        input: classes.textAreaStyle
+                      }}
                     />
                   </Grid>
                 </Grid>
