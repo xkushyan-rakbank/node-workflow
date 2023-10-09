@@ -751,7 +751,6 @@ export const applicationOverviewRoutes = [
   `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/application-overview`,
   `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/application-overview`,
   `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`,
-  `${smeBaseName}/VerifyMobileOTP`
 ];
 
 export const applicationPersona = [

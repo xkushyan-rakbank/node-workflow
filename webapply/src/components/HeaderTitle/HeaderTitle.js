@@ -65,8 +65,7 @@ const HeaderTitleComponent = ({
             </>
           )}
           {/* //ro-assist header missing issue fix */}
-          {![routes.searchProspect.split("/")[1]].includes(pathname.split("/")[1]) &&
-            !applicationOverviewRoutes.includes(pathname) && (
+          {![routes.searchProspect.split("/")[1]].includes(pathname.split("/")[1]) && (
               <>
                 {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
               </>
