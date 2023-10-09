@@ -112,7 +112,7 @@ export default function AdditionalInfoComponent() {
               onClick={() => navigateTo(routes.additionalCompanyInformation)}
               disabled={false}
               text="Company information"
-              helperText="Details about your buyers and suppliers, financial turnover, addresses and tax declarations help us better understand your company and business needs."
+              helperText="Tell us about your buyers, suppliers, financial turnover, addresses and tax declarations, so we can understand your company and business needs."
             />
           </div>
         </div>
@@ -127,7 +127,7 @@ export default function AdditionalInfoComponent() {
             onClick={() => navigateTo(routes.additionalStakeholderInformation)}
             disabled={!isStakeholderEnabled}
             text="Stakeholder information"
-            helperText="Stakeholders include proprietors, shareholders, partners, signatories and those who hold power of attorney. Information about your individual stakholders helps us better understand your company and business needs. Note that all sections are required."
+            helperText="So that we can understand you and your business needs, let us know about your industry experience, source of business funding, taxes and your address. Rest assured, all your details will be kept confidential and secure."
           />
         </div>
       </div>

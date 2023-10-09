@@ -138,7 +138,7 @@ export const StakeholderAdditionalReview = ({
               <p>{fieldValues.employmentType}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Source of income:</label>
+              <label>Source of funds:</label>
               <p>{fieldValues.sourceOfIncome}</p>
             </div>
             <div className={classes.infoLabelValue}>

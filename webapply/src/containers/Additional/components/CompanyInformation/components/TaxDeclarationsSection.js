@@ -104,50 +104,59 @@ export const TaxDeclarationsSection = forwardRef(
                 }}
                 accordionRef={taxDeclarationAccordionRef}
               >
-                <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
-                {dnfbpFieldVisible && (
+                <div>
+                  <div className={classes.descriptionSubField}>
+                    <p>
+                      Tax declarations are necessary for regulatory compliance. Please provide
+                      accurate information so that we can complete a quick and accurate assessment.
+                    </p>
+
+                  </div>
+                  <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
+                  {dnfbpFieldVisible && (
+                    <div className={classes.taxDeclarationQuestionare}>
+                      <label className={classes.sectionLabel}>
+                        Is your company dealing in Designated Business Categories?
+                      </label>
+                      <Field
+                        typeRadio
+                        options={YesNoList}
+                        name="dnfbpField"
+                        path={"prospect.companyAdditionalInfo.dnfbpField"}
+                        component={InlineRadioGroup}
+                        customIcon={false}
+                        classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+                        onChange={companyTaxRadioFieldHandler}
+                        radioColor="primary"
+                      />
+                    </div>
+                  )}
                   <div className={classes.taxDeclarationQuestionare}>
                     <label className={classes.sectionLabel}>
-                      Is your company dealing in Designated Business Categories?
+                      Is your company an active or passive non-financial entity (NFE)?
                     </label>
                     <Field
+                      name="isNonFinancialInstitution"
+                      path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
                       typeRadio
-                      options={YesNoList}
-                      name="dnfbpField"
-                      path={"prospect.companyAdditionalInfo.dnfbpField"}
+                      options={ActivePassiveOptions}
                       component={InlineRadioGroup}
                       customIcon={false}
                       classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
                       onChange={companyTaxRadioFieldHandler}
                       radioColor="primary"
                     />
+                    <p className={classes.activePassiveDesc}>
+                      Active Non-Financial Entity (Active NFE): This generally refers to entities
+                      with trading activities, including manufacturers, wholesalers, retailers,
+                      restaurants and bars, hotels, construction companies, health and social work.
+                    </p>
+                    <p className={classes.activePassiveDesc}>
+                      Passive Non-Financial Entity (Passive NFE): This generally refers to entities
+                      that do not actively engage in trade and instead receive income or dividend
+                      generated from assets, including properties and shares.
+                    </p>
                   </div>
-                )}
-                <div className={classes.taxDeclarationQuestionare}>
-                  <label className={classes.sectionLabel}>
-                    Is your company an active or passive non-financial entity (NFE)?
-                  </label>
-                  <Field
-                    name="isNonFinancialInstitution"
-                    path={"prospect.companyAdditionalInfo.isNonFinancialInstitution"}
-                    typeRadio
-                    options={ActivePassiveOptions}
-                    component={InlineRadioGroup}
-                    customIcon={false}
-                    classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                    onChange={companyTaxRadioFieldHandler}
-                    radioColor="primary"
-                  />
-                  <p className={classes.activePassiveDesc}>
-                    Active Non-Financial Entity (Active NFE): This generally refers to entities with
-                    trading activities, including manufacturers, wholesalers, retailers, restaurants
-                    and bars, hotels, construction companies, health and social work.
-                  </p>
-                  <p className={classes.activePassiveDesc}>
-                    Passive Non-Financial Entity (Passive NFE): This generally refers to entities
-                    that do not actively engage in trade and instead receive income or dividend
-                    generated from assets, including properties and shares.
-                  </p>
                 </div>
               </Accordion>
               <TermsAndConditionsDialog

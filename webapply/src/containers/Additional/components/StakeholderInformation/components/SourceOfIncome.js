@@ -302,7 +302,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
         const noIBAN = values.IBANType === "NOIB";
         return (
           <Accordion
-            title={"Source of income"}
+            title={"Source of funds"}
             id={id}
             setFormFieldValue={setFormFieldValue}
             isCompleted={IsValidForm}

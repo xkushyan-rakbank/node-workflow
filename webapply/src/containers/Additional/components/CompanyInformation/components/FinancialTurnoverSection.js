@@ -248,9 +248,11 @@ export const FinancialTurnoverSection = forwardRef(
                     }}
                   />
                   <p className={cx(classes.sectionLabel, classes.boldLabel)}>
-                    What is your estimated annual cash deposit?
+                    What are your estimated annual cash sales?
                   </p>
-                  <p className={classes.financialDescription}>Just drag the slider to adjust your estimated annual cash deposit amount.</p>
+                  <p className={classes.financialDescription}>
+                   Just drag the slider to adjust your estimated annual cash sales amount.
+                  </p>
                   <div className={classes.sliderContainer}>
                     <SliderThemeProvider theme={FinancialSlider}>
                       <Field
