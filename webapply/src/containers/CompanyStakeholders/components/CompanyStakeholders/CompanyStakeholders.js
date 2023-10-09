@@ -192,9 +192,10 @@ export const CompanyStakeholdersComponent = ({
 
   return (
     <>
-      <h3 className={classes.mainTitle}>Now let&apos;s talk about you</h3>
+      <h3 className={classes.mainTitle}>Let&apos;s verify you</h3>
       <p className={classes.subTitle}>
-        We just need to check your identity by verifying some documents.
+        We just need to check your identity by verifying some documents. You can temporarily switch
+        over to your mobile phone to complete this section.
       </p>
       {isDesktop && !isTablet && !isAgent && (
         <ScanViaMobile
@@ -273,7 +274,7 @@ export const CompanyStakeholdersComponent = ({
             helperText="Confirm that your face and photo match via your camera."
             isStepActive={!isEmpty(analysedEidData) && !isEmpty(analysedPassportData)}
             disabledReason={
-              "You'll be able to do this step after uploading your Emirates ID and passport."
+              "You'll be able to do this step after uploading your Emirates ID and passport. If you don't have a camera on your PC, you can scan your face quickly with your mobile phone's camera."
             }
             livenessData={faceLivelinessFeedback}
             transactionId={transactionId}

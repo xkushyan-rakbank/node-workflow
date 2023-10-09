@@ -94,7 +94,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
           "Your EFR face recognition process has been successfully completed, and you've accepted the KFS terms and conditions."
         }
       />
-      <h3 className={classes.mainTitle}>Time for the small print</h3>
+      <h3 className={classes.mainTitle}>Time for the fine print</h3>
       <p className={classes.kfsSubTitle}>Please review the terms and conditions to continue</p>
 
       <StakeholderKfs wcmData={wcmData} />

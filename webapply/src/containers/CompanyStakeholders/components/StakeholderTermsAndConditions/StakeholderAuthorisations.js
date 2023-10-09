@@ -59,7 +59,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           <h6 className={classes.kfsTitle}>Authorisations</h6>
           {!termsAndConditions.authorisation ? (
             <div className={classes.notAcceptWrapper}>
-              <span>Not accepted</span>
+              <span>To do</span>
             </div>
           ) : (
             <div className={classes.completedWrapper}>

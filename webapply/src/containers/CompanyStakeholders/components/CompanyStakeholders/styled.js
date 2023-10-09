@@ -69,18 +69,23 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     gap: "24px",
     "& div": {
-      display: "flex",
-      flexDirection: "row",
-      gap: "8px",
-      alignItems: "center",
-      justifyContent: "center",
       "& h6": {
         fontSize: "16px",
         fontWeight: 500,
         lineHeight: "24px",
         color: "#1F1F1F",
         margin: "0px",
-        marginBottom: "4px"
+        marginBottom: "4px",
+        marginRight: "auto"
+      },
+      "& p": {
+        fontSize: "14px",
+        fontWeight: 400,
+        lineHeight: "20px",
+        letterSpacing: "0em",
+        textAlign: "left",
+        margin: "0px",
+        color: "#757575"
       }
     }
   },
@@ -96,7 +101,7 @@ export const useStyles = makeStyles(theme => ({
     height: "40px",
     minWidth: "206px",
     borderRadius: "21px",
-    border: "2px solid #1F1F1F",
+    border: "1px solid #1F1F1F",
     background: "transparent",
     fontSize: "14px",
     fontWeight: 600,
@@ -104,7 +109,7 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: "0px",
     textAlign: "center",
     color: "#1F1F1F",
-    textTransform: "uppercase",
+    textTransform: "none",
     padding: "9px 24px",
     whiteSpace: "nowrap",
     "@media (max-width: 425px)": {
@@ -142,9 +147,8 @@ export const useStyles = makeStyles(theme => ({
     maxHeight: "calc(100% - 70px)",
     overflowY: "auto",
     [theme.breakpoints.down("sm")]: {
-      width: "85%",
-      padding: "32px",
-      overflowX: "hidden"
+      width: "80%",
+      padding: "32px"
     },
     [theme.breakpoints.only("md")]: {
       width: "70%"
@@ -504,7 +508,7 @@ export const useStyles = makeStyles(theme => ({
   },
   moveToMobile: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
     gap: "8px",
     alignItems: "center",
     justifyContent: "center"
@@ -526,7 +530,7 @@ export const useStyles = makeStyles(theme => ({
     fontStyle: "normal",
     fontWeight: 500,
     lineHeight: "1.5rem",
-    margin: 0,
+    margin: 0
   },
   infoLabelValue: {
     display: "flex",
@@ -597,5 +601,30 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "flex-start",
     gap: "1rem",
     alignSelf: "stretch"
+  },
+  actionButton: {
+    minWidth: "105px",
+    height: "40px",
+    borderRadius: "1.3125rem",
+    textTransform: "capitalize",
+    fontSize: "14px",
+    fontWeight: 500,
+    background: "#1F1F1F",
+    color: "#FFFFFF",
+    letterSpacing: "normal",
+    whiteSpace: "nowrap",
+    paddingLeft: "1.5rem",
+    paddingRight: "1.5rem",
+    paddingTop: "0.56rem",
+    paddingBottom: "0.69rem",
+    width: "200px",
+    "&:hover": {
+      background: "#1F1F1F",
+      color: "#FFFFFF"
+    },
+    "&:focus": {
+      background: "#1F1F1F",
+      color: "#FFFFFF"
+    }
   }
 }));

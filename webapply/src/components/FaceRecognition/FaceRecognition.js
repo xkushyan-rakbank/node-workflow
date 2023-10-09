@@ -302,9 +302,12 @@ export const FaceRecognition = ({
       </div>
       <div className={classes.disclaimerInfoWrapper}>
         <InformationIcon />
-        <p className={classes.disclaimerInfo}>{` ${
-          isMobile ? 'By tapping on the "Start" button' : 'By selecting "Start"'
-        }, you give us permission to retrieve your data for facial recognition, which ensures enhanced accuracy in the verification process of your ID documents. Rest assured, your privacy is our top priority and we strictly adhere to applicable regulations and security measures.`}</p>
+        <p className={classes.disclaimerInfo}>
+          During face verification, you give us permission to retrieve your data for facial
+          recognition, which ensures enhanced accuracy in the verification process of your ID
+          documents. Rest assured, your privacy is our top priority and we strictly adhere to
+          applicable regulations and security measures.
+        </p>
       </div>
       {identityValidation && (
         <div className={classes.uploadModalErrorWrapper}>

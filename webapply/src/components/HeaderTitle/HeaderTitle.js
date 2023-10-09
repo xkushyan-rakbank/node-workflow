@@ -65,11 +65,12 @@ const HeaderTitleComponent = ({
             </>
           )}
           {/* //ro-assist header missing issue fix */}
-          {![routes.searchProspect.split("/")[1]].includes(pathname.split("/")[1]) && (
-            <>
-              {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
-            </>
-          )}
+          {![routes.searchProspect.split("/")[1]].includes(pathname.split("/")[1]) &&
+            !applicationOverviewRoutes.includes(pathname) && (
+              <>
+                {selectedAccountTypeName} {islamicBanking && "RAKislamic"} Application{" "}
+              </>
+            )}
           {!applicationOverviewRoutes.includes(pathname) && companyName && (
             <>
               for <span>{companyName}</span>

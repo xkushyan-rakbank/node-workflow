@@ -24,7 +24,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const signatoryInfo = useSelector(getSignatories);
   const dispatch = useDispatch();
-  const [isKfsProgress, setKfsProgress] = useState(termsAndConditions?.kfs)
+  const [isKfsProgress, setKfsProgress] = useState(termsAndConditions?.kfs);
   const openKFSModal = () => {
     setKfsDialog(true);
   };
@@ -32,7 +32,6 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
   const handleClose = () => {
     setKfsDialog(false);
   };
-
 
   const handleAccept = () => {
     setKfsDialog(false);
@@ -44,7 +43,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
           ...signatoryInfo[0]?.consentInfo,
           kfsConsent: { accept: true }
         }
-      }),
+      })
     );
   };
 
@@ -55,7 +54,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
           <h6 className={classes.kfsTitle}>Key Fact Statement (KFS)</h6>
           {!termsAndConditions.kfs ? (
             <div className={classes.notAcceptWrapper}>
-              <span>Not accepted</span>
+              <span>To do</span>
             </div>
           ) : (
             <div className={classes.completedWrapper}>

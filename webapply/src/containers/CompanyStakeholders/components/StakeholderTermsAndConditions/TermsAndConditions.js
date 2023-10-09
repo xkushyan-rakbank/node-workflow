@@ -57,7 +57,7 @@ export const TermsAndConditions = ({ wcmData }) => {
           <h6 className={classes.kfsTitle}>General Terms and Conditions</h6>
           {!termsAndConditions.generalTCs ? (
             <div className={classes.notAcceptWrapper}>
-              <span>Not accepted</span>
+              <span>To do</span>
             </div>
           ) : (
             <div className={classes.completedWrapper}>
