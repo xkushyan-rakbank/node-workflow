@@ -47,8 +47,8 @@ export const CompanyInfo = ({
 }) => {
   const dispatch = useDispatch();
   const conditionalSchema = useDynamicValidation();
-  const { industry, subCategory } = useSelector(getOrganizationInfo);
   const classes = useStyles();
+  const companyInfoForm = useRef(null);
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
 
@@ -90,15 +90,7 @@ export const CompanyInfo = ({
         : industries.map(item => ({
             ...item,
             id: uniqueId()
-          })),
-    ...(industry &&
-      industry[0] && {
-        "prospect.organizationInfo.industryMultiSelect.industry": industry[0]
-      }),
-    ...(subCategory &&
-      subCategory[0] && {
-        "prospect.organizationInfo.industryMultiSelect.subCategory": subCategory[0]
-      })
+          }))
   };
 
   const companyInfoSchema = {
@@ -188,6 +180,22 @@ export const CompanyInfo = ({
     }
   };
 
+  useEffect(() => {
+    if (!companyInfoForm.current?.setFieldValue) {
+      return;
+    }
+    const industry = get(orgDetails, "industryMultiSelect[0].industry", null);
+    const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", null);
+    companyInfoForm.current.setFieldValue(
+      "prospect.organizationInfo.industryMultiSelect.industry",
+      industry[0]
+    );
+    companyInfoForm.current.setFieldValue(
+      "prospect.organizationInfo.industryMultiSelect.subCategory",
+      subCategory[0]
+    );
+  }, [companyInfoForm, orgDetails]);
+
   return (
     <div className={classes.companyInfoWrapper} ref={refToTopOfCompanyInfo}>
       <SectionTitleWithInfo
@@ -201,6 +209,7 @@ export const CompanyInfo = ({
         validateOnChange={true}
         validateOnMount={true}
         onSubmit={handleClickNextStep}
+        innerRef={companyInfoForm}
       >
         {props => {
           return (
