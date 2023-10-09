@@ -625,6 +625,11 @@ export const useStyles = makeStyles(theme => ({
     "&:focus": {
       background: "#1F1F1F",
       color: "#FFFFFF"
+    },
+    "&:disabled": {
+      background: "#CCCCCC",
+      color: "#666666",
+      cursor: "not-allowed"
     }
   }
 }));
