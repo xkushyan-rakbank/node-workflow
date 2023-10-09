@@ -155,6 +155,14 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
+  const formatEidNumber = number => {
+      const cleanNumber = String(number).replace(/\D/g, "");
+  
+      const formattedNumber = cleanNumber.replace(/(\d{3})(\d{4})(\d{7})(\d{1})/, "$1-$2-$3-$4");
+  
+      return formattedNumber;
+    };
+
   const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
@@ -181,14 +189,16 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         signatoryFullName: signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
           signatoryInfo && getNationalityLabel(signatoryInfo[0]?.kycDetails.nationality),
-        dateOfBirth: signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth,
+        dateOfBirth: signatoryInfo && signatoryInfo[0]?.kycDetails?.dateOfBirth,
         mothersMaidenName: (signatoryInfo && signatoryInfo[0]?.mothersMaidenName) || "-",
-        eidNumber: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidNumber,
-        eidExpiryDt: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidExpiryDt,
+        eidNumber:
+          signatoryInfo &&
+          formatEidNumber(signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidNumber),
+        eidExpiryDt: signatoryInfo && signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidExpiryDt,
         passportNumber:
-          signatoryInfo && signatoryInfo[0]?.kycDetails.passportDetails[0].passportNumber,
+          signatoryInfo && signatoryInfo[0]?.kycDetails?.passportDetails[0].passportNumber,
         passportExpiryDate:
-          signatoryInfo && signatoryInfo[0]?.kycDetails.passportDetails[0].passportExpiryDate
+          signatoryInfo && signatoryInfo[0]?.kycDetails?.passportDetails[0].passportExpiryDate
       };
       setDisplayFields(fields);
     }
