@@ -230,7 +230,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                       inputComponent: POBoxNumberInput,
                       inputProps: {
                         inputMode: "numeric",
-                        tabIndex: 0,
+                        tabIndex: 2,
                         maxLength: 6
                       }
                     }}
@@ -244,7 +244,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                     label="Street or location"
                     placeholder="Street or location"
                     InputProps={{
-                      inputProps: { tabIndex: 1, maxLength: 50 }
+                      inputProps: { tabIndex: 3, maxLength: 50 }
                     }}
                     component={Input}
                   />
@@ -257,6 +257,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                     placeholder="Emirate or city"
                     datalistId="emirateCity"
                     component={SelectAutocomplete}
+                    tabIndex={4}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12}>
@@ -268,6 +269,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                     datalistId="country"
                     component={SelectAutocomplete}
                     disabled={true}
+                    tabIndex={5}
                   />
                 </Grid>
                 <Grid item sm={12}>

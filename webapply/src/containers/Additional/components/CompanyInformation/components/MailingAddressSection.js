@@ -243,6 +243,7 @@ export const MailingAddressSection = forwardRef(
                             typeOfCheckbox="checkbox"
                             checked={typeOfAddress === "virtual"}
                             onChange={event => handleAddressTypeSelection(event, setFieldValue)}
+                            tabIndex={1}
                           />
                           <label className={classes.virtualOfficeLabel}>
                             I have a virtual office
@@ -260,7 +261,7 @@ export const MailingAddressSection = forwardRef(
                           }
                           placeholder="Office or shop number"
                           InputProps={{
-                            inputProps: { tabIndex: 1, maxLength: 50 }
+                            inputProps: { tabIndex: 2, maxLength: 50 }
                           }}
                           component={Input}
                         />
@@ -274,7 +275,7 @@ export const MailingAddressSection = forwardRef(
                           label="Flat, villa or building"
                           placeholder="Flat, villa or building"
                           InputProps={{
-                            inputProps: { tabIndex: 1, maxLength: 50 }
+                            inputProps: { tabIndex: 2, maxLength: 50 }
                           }}
                           component={Input}
                         />
@@ -292,7 +293,7 @@ export const MailingAddressSection = forwardRef(
                         InputProps={{
                           inputComponent: POBoxNumberInput,
                           inputProps: {
-                            tabIndex: 0,
+                            tabIndex: 3,
                             maxLength: 6
                           }
                         }}
@@ -307,7 +308,7 @@ export const MailingAddressSection = forwardRef(
                         }
                         placeholder="Street or location"
                         InputProps={{
-                          inputProps: { tabIndex: 1, maxLength: 50 }
+                          inputProps: { tabIndex: 4, maxLength: 50 }
                         }}
                         component={Input}
                       />
@@ -322,6 +323,10 @@ export const MailingAddressSection = forwardRef(
                         placeholder="Emirate or city"
                         datalistId="emirateCity"
                         component={SelectAutocomplete}
+                        InputProps={{
+                          inputProps: { tabIndex: 5 }
+                        }}
+                        tabIndex={5}
                       />
                     </Grid>
                     <Grid item sm={12} xs={12}>
@@ -335,6 +340,7 @@ export const MailingAddressSection = forwardRef(
                         datalistId="country"
                         component={SelectAutocomplete}
                         disabled={true}
+                        tabIndex={6}
                       />
                     </Grid>
                     <Grid item sm={12}>

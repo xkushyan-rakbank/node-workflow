@@ -30,7 +30,7 @@ export const ScanViaMobile = ({ disabled, getKycStatus }) => {
           disabled={disabled}
           onClick={() => setOpenMobileScanModal(true)}
         >
-          Move to Mobile
+          Move to mobile
         </Button>
       </div>
       <Modal open={openMobileScanModal}>
