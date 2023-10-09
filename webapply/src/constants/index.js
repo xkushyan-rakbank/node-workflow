@@ -582,7 +582,6 @@ export const Personas = {
     subTitle: [
       "I'm a partner in the business",
       "I have Power of Attorney",
-      "I'm applying on behalf of someone else.",
       "Company as a stakeholder"
     ],
     url: process.env.REACT_APP_BAU_URL || "/",

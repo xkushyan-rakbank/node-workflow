@@ -187,7 +187,7 @@ export const ApplicantInfoComponent = ({
       window.dataLayer.push({
         ApplicantInfofilled: (isIslamicBanking ? ISLAMIC : CONVENTIONAL) + " " + accountType
       });
-      window.pixel.parse(true);
+      window.pixel && window.pixel.parse(true);
     }
   };
 
