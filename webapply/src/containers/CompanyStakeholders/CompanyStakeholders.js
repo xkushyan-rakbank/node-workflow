@@ -16,6 +16,7 @@ import { useLayoutParams } from "../FormLayout";
 import { getTransactionId } from "../../store/selectors/kyc";
 import { startScheduler, stopScheduler } from "../../store/actions/webToMobile";
 import { getwtmSessionDetails } from "../../store/selectors/webToMobile";
+import { ConfirmDialog } from "../../components/Modals";
 
 export const CompanyStakeholdersContainer = ({
   fullName,
@@ -38,9 +39,11 @@ export const CompanyStakeholdersContainer = ({
   const pushHistory = useTrackingHistory();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
   const transactionId = useSelector(getTransactionId);
   const {
-    sessionData: { sessionType }
+    sessionData: { sessionType },
+    sessionError
   } = useSelector(getwtmSessionDetails);
   const [isLoading, setIsLoading] = useState(false);
   const [openInfo, setOpenInfo] = useState(false);
@@ -117,8 +120,29 @@ export const CompanyStakeholdersContainer = ({
     history.push(routes.quickapplyLanding);
   };
 
+  useEffect(() => {
+    if (sessionError) {
+      setOpenModal(true);
+    }
+  }, [sessionError]);
+
+  function handleModalClose() {
+    setOpenModal(false);
+    pushHistory(routes.quickapplyLanding);
+  }
+
   return (
     <StakeholdersNameProvider>
+      <ConfirmDialog
+        title={"Session closed"}
+        isOpen={openModal}
+        handleReject={() => {}}
+        cancelLabel={"close"}
+        handleClose={() => handleModalClose()}
+        message={
+          "The session has been abruptly ended, please scan the QR code to start a new session."
+        }
+      />
       <CompanyStakeholdersComponent
         fullName={fullName}
         companyCategory={companyCategory}

@@ -8,6 +8,8 @@ export const STOP_SCHEDULER = "SCHEDULER_STOP";
 
 export const SET_OVERALL_STATUS = "SET_OVERALL_STATUS";
 
+export const SESSION_ERR = "SESSION_ERR";
+
 export const createSyncSession = payload => {
   return { type: SYNC_SESSION, payload };
 };
@@ -22,4 +24,8 @@ export const clearSession = () => ({ type: CLEAR_SESSION });
 
 export const setOverallStatus = payload => {
   return { type: SET_OVERALL_STATUS, payload };
+};
+
+export const wtmSessionError = payload => {
+  return { type: SESSION_ERR, payload };
 };

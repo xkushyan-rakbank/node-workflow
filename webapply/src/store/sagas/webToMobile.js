@@ -1,4 +1,4 @@
-import { all, call, delay, put, select, take, takeLatest } from "redux-saga/effects";
+import { all, call, cancel, delay, fork, put, select, take, takeLatest } from "redux-saga/effects";
 import { webToMobile } from "../../api/apiClient";
 import { configureKYCTransactionAPIClient } from "../../api/axiosConfig";
 import { log } from "../../utils/loggger";
@@ -8,7 +8,8 @@ import {
   setSessionData,
   START_SCHEDULER,
   STOP_SCHEDULER,
-  SYNC_SESSION
+  SYNC_SESSION,
+  wtmSessionError
 } from "../actions/webToMobile";
 import { getAuthorizationHeader, getProspectId } from "../selectors/appConfig";
 import { getwtmSessionDetails } from "../selectors/webToMobile";
@@ -79,6 +80,10 @@ function* schedulerWorker({ payload, type }) {
   }
 }
 
+function* setWTMError(error) {
+  yield put(wtmSessionError(error));
+}
+
 function* updateStatus(payload) {
   try {
     const prospectId = yield select(getProspectId);
@@ -94,6 +99,13 @@ function* updateStatus(payload) {
       webMobileRefId
     );
   } catch (error) {
+    const { status } = error.response;
+    if (status === 400 || status === 412 || status === 401) {
+      yield call(setWTMError, error.message);
+      const bgSyncSession = yield fork(schedulerWorker);
+      yield cancel(bgSyncSession);
+    }
+
     log(error);
   }
 }

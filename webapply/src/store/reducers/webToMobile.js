@@ -1,4 +1,9 @@
-import { CLEAR_SESSION, SYNC_SESSION_DATA, SET_OVERALL_STATUS } from "../actions/webToMobile.js";
+import {
+  CLEAR_SESSION,
+  SYNC_SESSION_DATA,
+  SET_OVERALL_STATUS,
+  SESSION_ERR
+} from "../actions/webToMobile.js";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
@@ -9,7 +14,8 @@ export const initialState = {
     SID: "",
     prospectId: ""
   },
-  overallStatus: ""
+  overallStatus: "",
+  sessionError: false
 };
 
 export default handleActions(
@@ -24,6 +30,10 @@ export default handleActions(
     }),
     [CLEAR_SESSION]: () => ({
       ...initialState
+    }),
+    [SESSION_ERR]: (state, action) => ({
+      ...state,
+      sessionError: action.payload
     })
   },
   initialState
