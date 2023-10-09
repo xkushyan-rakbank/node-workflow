@@ -130,7 +130,7 @@ export const CompanyInfo = ({
         message: getInvalidMessage("Licence number")
       }),
     licenseOrCOIExpiryDate: Yup.date()
-      .required(getRequiredMessage("License or COI expiry date"))
+      .required(getRequiredMessage("License expiry date"))
       .test(
         "minDate",
         "This expiration date has already passed. Please select a valid date.",

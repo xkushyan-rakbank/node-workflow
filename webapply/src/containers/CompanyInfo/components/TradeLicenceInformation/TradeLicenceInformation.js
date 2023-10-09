@@ -103,9 +103,9 @@ export const TradeLicenceInformation = ({ values }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="licenseOrCOIExpiryDate"
-            label="Licence or certificate of incorporation expiry date"
+            label="Licence expiry date"
             path="prospect.organizationInfo.licenseOrCOIExpiryDate"
-            placeholder="Licence or certificate of incorporation expiry date"
+            placeholder="Licence expiry date"
             inputAdornmentPosition="end"
             component={DatePicker}
             InputProps={{
