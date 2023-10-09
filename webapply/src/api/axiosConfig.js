@@ -121,7 +121,7 @@ apiClient.interceptors.response.use(
     const {
       data,
       status,
-      config: { symKey, url }
+      config: { symKey, url, skipOops = false }
     } = error.response;
 
     let jsonData = data;
@@ -147,7 +147,9 @@ apiClient.interceptors.response.use(
     let notificationOptions = {};
     let serverError = null;
     const ignoreNotificationUrls = [endpoints.createInviteUri];
-
+    if (skipOops) {
+      return Promise.reject(error);
+    }
     if (jsonData) {
       const { errors, errorType } = jsonData;
       if (errorType === "InvalidCredentialsError") {

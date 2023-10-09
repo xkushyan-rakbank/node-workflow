@@ -363,17 +363,13 @@ export const webToMobile = {
       data
     }),
   wtmStatusUpdate: (data, headers, prospectId, webtobomrefId) => {
-    return httpClient
-      .request({
-        url: buildURI("wtmStatusUpdate", prospectId, "", webtobomrefId),
-        method: "PATCH",
-        ...headers,
-        data
-      })
-      .then(response => {
-        return response.data;
-      })
-      .catch(err => console.log("update status", err.message));
+    return httpClient.request({
+      url: buildURI("wtmStatusUpdate", prospectId, "", webtobomrefId),
+      method: "PATCH",
+      ...headers,
+      skipOops: true,
+      data
+    });
   },
   checkQRCodeStatus: (prospectId, webToMobileRefId, header) =>
     httpClient
