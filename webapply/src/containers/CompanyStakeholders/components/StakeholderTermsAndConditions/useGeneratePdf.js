@@ -163,7 +163,7 @@ export default function useGeneratePdf(path = "kfsUrl", wcmData = null, enableEd
           const lines = breakTextIntoLines(text, [" "], drawTxtMaxWidth, textWidth);
 
           const configuredY = y;
-          const lineOffset = 10;
+          const lineOffset = lines.length > 2 ? 8 : 10;
 
           lines.forEach((line, lineNumber) => {
             const lineY = configuredY + (lines.length - (lineNumber + 1)) * lineOffset;
