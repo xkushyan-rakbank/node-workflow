@@ -9,6 +9,10 @@ import { useLayoutParams } from "../FormLayout";
 import PersonaSelectionComponent from "./components/PersonaSelectionComponent";
 import { Personas } from "../../constants";
 import useRedirectionUrl from "../../utils/useRedirectionUrl";
+import { Footer } from "../../components/Footer";
+import { BackLink } from "../../components/Buttons/BackLink";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { smeBaseName } from "../../routes";
 
 export const PersonaSelection = ({ datalist }) => {
   const queryParams = useLocation().search;
@@ -21,6 +25,7 @@ export const PersonaSelection = ({ datalist }) => {
   const [filteredPersonas, setFilteredPersonas] = useState();
 
   const dispatch = useDispatch();
+  const { accountType } = useParams();
 
   useEffect(() => {
     const filteredData = datalist?.personas
@@ -59,6 +64,14 @@ export const PersonaSelection = ({ datalist }) => {
   };
 
   return (
-    <PersonaSelectionComponent handleNavigation={onSelectPersona} personas={filteredPersonas} />
+    <>
+      <PersonaSelectionComponent handleNavigation={onSelectPersona} personas={filteredPersonas} />
+      <Footer extraClasses={"oneElement"}>
+        <BackLink
+          path={`${smeBaseName}/accounts/${accountType}/application-overview`}
+          isTypeButton={true}
+        />
+      </Footer>
+    </>
   );
 };
