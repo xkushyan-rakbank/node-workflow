@@ -319,7 +319,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
                                 )
                               }
                               content={values?.addressProof[index]}
-                              isUploading={isUploading[index]}
+                              isUploading={isUploading[`${index}_stakeholder`]}
                               mobilecontentPlaceholder={"Upload your file"}
                             />
                             {index > 0 && (
