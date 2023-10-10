@@ -538,9 +538,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
               values,
               setFieldValue
             });
-            const isValidAccountInfoValidation = isAgent
-              ? kycAnnexureSchema.isValidSync(values)
-              : accountInfoValidation.isValidSync(values);
 
             return (
               <Form>
@@ -931,7 +928,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           name="allianceCode"
                           path={"prospect.applicantInfo.allianceCode"}
                           component={Input}
-                          disabled={isROInitited}
+                          disabled={values.allianceCode && isROInitited}
                           InputProps={{
                             inputProps: { tabIndex: 0, maxLength: 50 }
                           }}
