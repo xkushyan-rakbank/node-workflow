@@ -21,7 +21,7 @@ import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNot
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
 
 import { useStyles } from "../../styled";
-import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../../store/selectors/appConfig";
 
@@ -109,7 +109,9 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
             isTINAvailable: Yup.string().required(getRequiredMessage("Is TIN Available")),
             TIN: Yup.string().when("isTINAvailable", {
               is: "yes",
-              then: Yup.string().required("TIN is required"),
+              then: Yup.string()
+                .required(getRequiredMessage("TIN number"))
+                .matches(/^[a-zA-Z0-9]*$/, getInvalidMessage("TIN number")),
               otherwise: Yup.string().nullable()
             }),
             reasonForTINNotAvailable: Yup.string().when("isTINAvailable", {
@@ -292,7 +294,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
                                       label="Tax Identification Number (TIN)"
                                       placeholder="Tax Identification Number (TIN)"
                                       InputProps={{
-                                        inputProps: { tabIndex: 1 }
+                                        inputProps: { tabIndex: 1, maxLength: 40 }
                                       }}
                                       component={Input}
                                     />
