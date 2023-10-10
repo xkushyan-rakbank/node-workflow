@@ -56,6 +56,8 @@ export const AddCompanyInformation = ({
   const taxDeclarationFormRef = useRef(null);
   const taxDeclarationAccordionRef = useRef(null);
 
+  const additionalCompamnyForm = useRef(null);
+
   useEffect(() => {
     if (!companyAdditionalInfoStatus) {
       statuses["companyAdditionalInfoStatus"] = "In Progress";
@@ -146,9 +148,20 @@ export const AddCompanyInformation = ({
     }
   };
 
+  useEffect(() => {
+    if (additionalCompamnyForm.current) {
+      const isValidForm = formValidationSchema.isValidSync(additionalCompamnyForm.current.values);
+      if (!isValidForm) {
+        statuses["companyAdditionalInfoStatus"] = "In Progress";
+        dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+      }
+    }
+  }, [additionalCompamnyForm]);
+
   return (
     <>
       <Formik
+        innerRef={additionalCompamnyForm}
         initialValues={initialValues}
         validationSchema={formValidationSchema}
         onSubmit={handleClickNextStep}

@@ -55,6 +55,8 @@ export const AdditionalStakeholderInformation = ({
   const stakeHolderFormRef = useRef(null);
   const stakeHolderTaxAccordionRef = useRef(null);
 
+  const additionalStakeHolderForm = useRef(null);
+
   useEffect(() => {
     if (!addionalStakeholderInfoStatus) {
       statuses["addionalStakeholderInfoStatus"] = "In Progress";
@@ -153,9 +155,22 @@ export const AdditionalStakeholderInformation = ({
     }
   };
 
+  useEffect(() => {
+    if (additionalStakeHolderForm.current) {
+      const isValidForm = formValidationSchema.isValidSync(
+        additionalStakeHolderForm.current.values
+      );
+      if (!isValidForm) {
+        statuses["addionalStakeholderInfoStatus"] = "In Progress";
+        dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+      }
+    }
+  }, [additionalStakeHolderForm]);
+
   return (
     <>
       <Formik
+        innerRef={additionalStakeHolderForm}
         initialValues={initialValues}
         validationSchema={formValidationSchema}
         onSubmit={handleClickNextStep}

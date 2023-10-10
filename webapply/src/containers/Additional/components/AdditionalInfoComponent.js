@@ -61,7 +61,7 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
           <div
             className={cx(
               classes.completedWrapper,
-              status === "In progress" ? classes.incompleted : classes.success
+              status === "In Progress" ? classes.incompleted : classes.success
             )}
           >
             {status === "completed" ? <SuccessIcon /> : null}
