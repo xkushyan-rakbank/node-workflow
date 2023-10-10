@@ -32,6 +32,7 @@ import { rakValuePackages } from "../../constants";
 import { Footer } from "../../components/Footer";
 import { checkLoginStatus, getLoginResponse } from "../../store/selectors/loginSelector";
 import ApplicationChecks from "./components/ApplicationChecks";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 
 export const ReviewSubmit = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -41,6 +42,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const { scheme } = useSelector(getLoginResponse);
   const classes = useStyles();
   const isAgent = useSelector(checkLoginStatus);
+  const loading = useSelector(getIsSendingProspect);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -462,6 +464,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
           <NextStepButton
             label="Submit"
             justifycontent="flex-end"
+            type="button"
+            disabled={loading}
             onClick={() => handleReviewSubmit()}
           />
         </Footer>
