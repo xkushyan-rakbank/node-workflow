@@ -398,6 +398,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
             info="Please check through your application to ensure that the information you’ve provided is accurate. If you need to make any changes, just tap ‘Edit’. Once you’re ready, hit ‘Submit’!"
             smallInfo
           />
+          {loading && <OverlayLoader open={loading} text={"Loading"} />}
           <Formik initialValues={initialValues} onSubmit={() => {}} validateOnChange={true}>
             {({ values, setFieldValue, ...props }) => {
               return (
@@ -465,7 +466,6 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
             label="Submit"
             justifycontent="flex-end"
             type="button"
-            disabled={loading}
             onClick={() => handleReviewSubmit()}
           />
         </Footer>
