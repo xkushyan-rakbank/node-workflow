@@ -6,7 +6,14 @@ import { useFormNavigation } from "../../components/FormNavigation/FormNavigatio
 import { useLayoutParams } from "../FormLayout";
 import { ApplicantInfoComponent } from "./components/ApplicantInfo";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
-import { formStepper, CONVENTIONAL, ISLAMIC, CREAT_PROSPECT_KEYS, UAE_CODE, Personas } from "../../constants";
+import {
+  formStepper,
+  CONVENTIONAL,
+  ISLAMIC,
+  CREAT_PROSPECT_KEYS,
+  UAE_CODE,
+  Personas
+} from "../../constants";
 import routes from "../../routes";
 import { setAccessToken, updateProspect } from "../../store/actions/appConfig";
 import { setIsFromInvitationLink } from "../../store/actions/applicantInfoForm";
@@ -117,7 +124,11 @@ export const ApplicantInfoContainer = ({
     values => {
       dispatch(setAccessToken(""));
       setIsLoading(true);
-      submit(values)
+      const submittedValues = { ...values };
+      if (invitationParams) {
+        submittedValues.isROInitited = true;
+      }
+      submit(submittedValues)
         .then(() => {
           if (isLemniskEnable) {
             window.dataLayer = window.dataLayer || [];
@@ -128,7 +139,7 @@ export const ApplicantInfoContainer = ({
         })
         .then(
           () => {
-            const { companyFullName, persona } = values;
+            const { companyFullName, persona } = submittedValues;
             const selectedPersona = Personas[persona];
             dispatch(
               updateProspect({
@@ -144,7 +155,7 @@ export const ApplicantInfoContainer = ({
               /* istanbul ignore next */
               process.env.REACT_APP_OTP_ENABLE === "N"
                 ? routes.companyInfo
-                : values.countryCode === UAE_CODE
+                : submittedValues.countryCode === UAE_CODE
                 ? routes.verifyMobileOtp
                 : routes.verifyEmailOtp,
               true
