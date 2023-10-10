@@ -541,6 +541,13 @@ export const VIEW_IDS = {
   AccountServices: "/AccountServices"
 };
 
+export const VIEW_IDS_TILL_CONSENT = [
+  "/CompanyInfo",
+  "/StakeholdersInfo",
+  "/StakeholdersInfoPreview",
+  "/ConsentInfo"
+];
+
 export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo"];
 
 export const ACTION_TYPES = {
@@ -750,7 +757,7 @@ export const applicationOverviewRoutes = [
   `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ROUTE_PARAM}/application-overview`,
   `${smeBaseName}/accounts/${CURRENT_ACCOUNT_ISLAMIC_ROUTE_PARAM}/application-overview`,
   `${smeBaseName}/accounts/${ELITE_ISLAMIC_ROUTE_PARAM}/application-overview`,
-  `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`,
+  `${smeBaseName}/accounts/${ELITE_ROUTE_PARAM}/application-overview`
 ];
 
 export const applicationPersona = [

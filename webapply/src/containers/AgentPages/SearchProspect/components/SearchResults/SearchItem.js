@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { generatePath } from "react-router";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import cx from "classnames";
 import { get } from "lodash";
 
 import routes from "../../../../../routes";
-import { BAU_PROSPECT_VERSION, operatorLoginScheme } from "../../../../../constants";
+import { BAU_PROSPECT_VERSION, VIEW_IDS_TILL_CONSENT } from "../../../../../constants";
 import { useStyles } from "./styled";
 
 import { getLoginResponse } from "../../../../../store/selectors/loginSelector";
@@ -17,7 +17,6 @@ import {
   ctaStatusClass,
   ctaStatuses,
   custActions,
-  operatorActions,
   roActions
 } from "../../../../MyApplications/constants";
 import { STATUS_LOCKED } from "../../../SearchedAppInfo/constants";
@@ -34,10 +33,10 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { agentId, scheme } = useSelector(getLoginResponse);
-  const isOperator = scheme === operatorLoginScheme;
+  const { agentId } = useSelector(getLoginResponse);
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
+  const fullName = application.signatoryInfo && application.signatoryInfo[0].fullName;
 
   const handleNavigation = () => {
     if (application?.status?.statusType === "EFR_SUBMITTED") {
@@ -94,6 +93,14 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
       "notifyApplicationRequest.declineReasonDetailsFromBPM[0].declineRemarks"
     )?.replaceAll("<br/>", "\n") || "-";
 
+  const isConsentPending = useMemo(
+    () =>
+      application?.status?.statusType === "PEN_SUBMITTED" &&
+      fullName &&
+      VIEW_IDS_TILL_CONSENT.includes(application?.applicationInfo.viewId),
+    [application]
+  );
+
   return (
     <div key={prospectId} className={classes.searchItemCard}>
       <ConfirmDialog
@@ -122,7 +129,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
                 classes[ctaStatusClass[(application?.status?.statusType)]]
             )}
           >
-            {application?.status?.statusNotes}
+            {isConsentPending && agentId ? "Consents Pending" : application?.status?.statusNotes}
           </span>
         </div>
       </div>
@@ -161,7 +168,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
       </div>
       {prospectVersion === "v2" ? (
         <>
-          {agentId && (
+          {agentId && !isConsentPending && (
             <>
               <div className={classes.lineBreak}></div>
               <div className={classes.footer}>
