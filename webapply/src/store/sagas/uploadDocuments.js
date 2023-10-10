@@ -442,7 +442,7 @@ const checkTokenInvalid = token => {
     const payload = JSON.parse(atob(parts[1]));
     if (typeof payload.exp === "number") {
       const currentTime = Math.floor(Date.now() / 1000);
-      if (payload.exp < currentTime) {
+      if (payload.exp < currentTime + 10) {
         return true;
       } else {
         return false;
