@@ -178,7 +178,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
               />
 
               <Footer>
-                <BackLink path={routes.login} isTypeButton={true} />
+                <BackLink path={routes.searchProspect} isTypeButton={true} />
                 <SubmitButton justify="flex-end" label="Submit" disabled={!isValid || isLoading} />
               </Footer>
             </Form>
