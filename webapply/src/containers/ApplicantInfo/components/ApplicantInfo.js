@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
@@ -25,13 +25,12 @@ import {
   getRequiredMessage,
   getROInvalidMessage
 } from "../../../utils/getValidationMessage";
-import { NAME_REGEX, NUMBER_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ContexualHelp } from "../../../components/Notifications";
 import { Footer } from "../../../components/Footer";
-import { Button } from "@material-ui/core";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import routes from "../../../routes";
 
@@ -143,7 +142,7 @@ const aplicantInfoSchema = Yup.object({
     .matches(NUMBER_REGEX, getROInvalidMessage),
   allianceCode: Yup.string()
     .max(50, "Maximum 50 characters allowed")
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code"))
+    .matches(PARTNER_CODE_REGEX, getInvalidMessage("Partner Code"))
 });
 
 //ro-assist-brd3-16

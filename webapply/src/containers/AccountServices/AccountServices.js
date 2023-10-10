@@ -48,9 +48,9 @@ import {
 } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
 import {
-  ALPHANUMERIC_REGEX,
   NAME_REGEX,
   NUMBER_REGEX,
+  PARTNER_CODE_REGEX,
   TOTAL_EXPERIENCE_YRS_REGEX
 } from "../../utils/validation";
 import {
@@ -315,7 +315,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     allianceCode: Yup.string()
       .nullable()
       .max(50, "Maximum 50 characters allowed")
-      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
+      .matches(PARTNER_CODE_REGEX, getInvalidMessage("Partner Code")),
     roCode: Yup.string()
       .nullable()
       .max(6, "Maximum 6 characters allowed")

@@ -11,7 +11,7 @@ import {
   SelectAutocomplete
 } from "../../../../components/Form";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { ALPHANUMERIC_REGEX, NAME_REGEX, NUMBER_REGEX } from "../../../../utils/validation";
+import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage,
@@ -52,7 +52,7 @@ const inviteSchema = Yup.object({
     .matches(NUMBER_REGEX, getROInvalidMessage),
   FreeText1: Yup.string()
     .max(50, "Maximum 50 characters allowed")
-    .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Partner Code")),
+    .matches(PARTNER_CODE_REGEX, getInvalidMessage("Partner Code")),
   isIslamic: Yup.boolean().required("Please select the product variant"),
   persona: Yup.string().required("Please select the company category"),
   accountType: Yup.string().required("Please select the account type")

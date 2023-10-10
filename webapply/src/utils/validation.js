@@ -74,3 +74,4 @@ export const documentValidationSchema = Yup.object().shape({
 });
 
 export const ADDRESS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
+export const PARTNER_CODE_REGEX = /^([a-zA-Z0-9-/\s\\])*$/;
