@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 
 import { USER_IDLE_TIMEOUT, EXPIRY_INTERVAL } from "../../constants";
@@ -12,6 +12,14 @@ export const SessionExpiration = memo(props => {
   const [expiryTime, setExpiryTime] = useState(reminderTimer);
   const [extendExpiryTime, setExtendExpiryTime] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
+
+  const onConfirm = useCallback(() => {
+    if (isAgent) {
+      logout();
+    } else {
+      window.location.reload();
+    }
+  }, [isAgent, logout]);
 
   useEffect(() => {
     setExtendExpiryTime(true);
@@ -88,7 +96,7 @@ export const SessionExpiration = memo(props => {
     <Alert
       type="SUCCESS"
       isOpen={true}
-      handleConfirm={() => window.location.reload()}
+      handleConfirm={onConfirm}
       details="Sorry, your session has expired. But don't worry, you can retrieve your application from where you left."
       isAgent={isAgent}
     />
