@@ -505,7 +505,7 @@ export const screeningStatus = [
   }
 ];
 
-export const SCREENING_FAIL_REASONS = ["Decline", "Match"];
+export const SCREENING_FAIL_REASONS = ["Decline", "Match", "Match Found"];
 
 export const screeningStatusDefault = {
   icon: callbackRegular,
