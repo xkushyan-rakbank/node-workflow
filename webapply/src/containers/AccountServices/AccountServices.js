@@ -33,6 +33,7 @@ import {
 import { updateProspect } from "../../store/actions/appConfig";
 import { SelectServicePackage } from "./components/SelectServicePackage";
 import {
+  getAccordionStatuses,
   getAccountInfo,
   getApplicantInfo,
   getDocuments,
@@ -122,6 +123,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const accountEmirateCity = accountInfo.accountEmirateCity;
   const marketingChannelList = useSelector(getProspect).channelServicesInfo?.marketingChannel;
+
+  const accordionStatuses = useSelector(getAccordionStatuses);
+  const { allianceCode } = JSON.parse(accordionStatuses);
 
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
@@ -928,7 +932,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           name="allianceCode"
                           path={"prospect.applicantInfo.allianceCode"}
                           component={Input}
-                          disabled={values.allianceCode && isROInitited}
+                          disabled={isROInitited && allianceCode}
                           InputProps={{
                             inputProps: { tabIndex: 0, maxLength: 50 }
                           }}

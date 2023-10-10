@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cx from "classnames";
 import { Button } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 
 import routes from "../../../routes";
@@ -14,7 +14,8 @@ import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
 import { Footer } from "../../../components/Footer";
 import { ContexualHelp } from "../../../components/Notifications";
-import { getAccordionStatuses } from "../../../store/selectors/appConfig";
+import { getAccordionStatuses, getApplicantInfo } from "../../../store/selectors/appConfig";
+import { updateProspect } from "../../../store/actions/appConfig";
 
 const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, helperText }) => {
   const classes = useStyles();
@@ -78,11 +79,13 @@ const AdditionalInfoButton = ({ status, onClick, disabled, text, showHelper, hel
 export default function AdditionalInfoComponent() {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
+  const dispatch = useDispatch();
   const navigateTo = path => {
     pushHistory(path);
   };
   const accordionStatuses = useSelector(getAccordionStatuses);
   const statuses = JSON.parse(accordionStatuses);
+  const allianceCode = useSelector(getApplicantInfo).allianceCode;
   const { companyAdditionalInfoStatus, addionalStakeholderInfoStatus } = statuses;
 
   const isNextButtonEnabled =
@@ -93,6 +96,14 @@ export default function AdditionalInfoComponent() {
   const handleAdditionalInfoNextStep = () => {
     pushHistory(routes.accountServices);
   };
+
+  //To disable if ROinitaited and thier is a prefilled value
+  useEffect(() => {
+    if (!statuses["allianceCode"]) {
+      statuses["allianceCode"] = allianceCode;
+      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+    }
+  }, [allianceCode]);
 
   return (
     <div className={classes.container}>
