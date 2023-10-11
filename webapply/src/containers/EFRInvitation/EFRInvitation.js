@@ -20,10 +20,6 @@ export function EFRInvitation({ generateOtpCode }) {
   const { mobileNo } = useSelector(getApplicantInfo);
 
   useEffect(() => {
-    dispatch(logout());
-  }, []);
-
-  useEffect(() => {
     const prospectId = searchParams.get("prospectId");
     const mode = searchParams.get("mode");
     const mobileNumber = searchParams.get("mobileNo");

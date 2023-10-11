@@ -548,6 +548,8 @@ export const VIEW_IDS_TILL_CONSENT = [
   "/ConsentInfo"
 ];
 
+export const EFR_VIEW_IDS = ["/StakeholdersInfo", "/StakeholdersInfoPreview", "/ConsentInfo"];
+
 export const AUTO_SAVE_DISABLED_VIEW_IDS = ["/StakeholdersInfo"];
 
 export const ACTION_TYPES = {
