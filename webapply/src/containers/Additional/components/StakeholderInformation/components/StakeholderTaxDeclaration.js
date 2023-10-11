@@ -382,7 +382,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
               handleClose={() => setOpenDefinitionDialog(false)}
               editedFile={`${process.env.REACT_APP_PUBLIC_URL ||
                 ""}/TaxDeclarations_Definition.pdf`}
-              pages={[1, 2]}
+              pages={[1]}
               scrollToEnd={false}
             />
           </>
