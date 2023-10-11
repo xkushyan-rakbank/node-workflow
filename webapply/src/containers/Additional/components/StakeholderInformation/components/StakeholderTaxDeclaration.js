@@ -21,7 +21,7 @@ import { DisclaimerNote } from "../../../../../components/InfoNote/DisclaimerNot
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
 
 import { useStyles } from "../../styled";
-import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../../store/selectors/appConfig";
 import { ALPHANUMERIC_ONLY_REGEX } from "../../../../../utils/validation";
@@ -106,14 +106,19 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
       then: Yup.array()
         .of(
           Yup.object().shape({
-            country: Yup.string().required(getRequiredMessage("Country")),
+            country: Yup.string()
+              .required(getRequiredMessage("Country"))
+              .typeError(getRequiredMessage("Country")),
             isTINAvailable: Yup.string().required(getRequiredMessage("Is TIN Available")),
             TIN: Yup.string().when("isTINAvailable", {
               is: "yes",
               then: Yup.string()
                 .required(getRequiredMessage("TIN number"))
                 .max(40, "Maximum ${max} characters allowed")
-                .matches(ALPHANUMERIC_ONLY_REGEX, getInvalidMessage("TIN number")),
+                .matches(
+                  ALPHANUMERIC_ONLY_REGEX,
+                  "Please enter a valid TIN number without special characters"
+                ),
               otherwise: Yup.string().nullable()
             }),
             reasonForTINNotAvailable: Yup.string().when("isTINAvailable", {
