@@ -4,7 +4,8 @@ import {
   SEND_PROSPECT_TO_API_FAIL,
   SET_SCREENING_ERROR,
   RESET_SCREENING_ERROR,
-  RESET_FORM_STEP
+  RESET_FORM_STEP,
+  SEND_PROSPECT_TO_API_AUTO_SAVE_SUCCESS
 } from "../actions/sendProspectToAPI";
 import { handleActions } from "../../utils/redux-utils";
 
@@ -21,6 +22,10 @@ export default handleActions(
       loading: true
     }),
     [SEND_PROSPECT_TO_API_SUCCESS]: state => ({
+      ...state,
+      loading: false
+    }),
+    [SEND_PROSPECT_TO_API_AUTO_SAVE_SUCCESS]: state => ({
       ...state,
       loading: false
     }),
