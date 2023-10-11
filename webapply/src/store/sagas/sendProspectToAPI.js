@@ -9,7 +9,8 @@ import {
   cancel,
   fork,
   actionChannel,
-  flush
+  flush,
+  takeEvery
 } from "redux-saga/effects";
 
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
@@ -340,8 +341,9 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     } else if (preScreening) {
       yield put(updateProspect({ "prospect.organizationInfo.screeningInfo": preScreening }));
     }
-
-    yield put(sendProspectToAPISuccess(!!isScreeningError));
+    if (saveType !== "auto") {
+      yield put(sendProspectToAPISuccess(!!isScreeningError));
+    }
   } catch (error) {
     if (error instanceof ErrorOccurredWhilePerforming) {
       yield put(
@@ -370,7 +372,7 @@ export function* prospectAutoSaveFlowSaga() {
 
 export default function* sendProspectToAPISagas() {
   yield all([
-    takeLatest(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
+    takeEvery(SEND_PROSPECT_TO_API, sendProspectToAPISaga),
     takeLatest(PROSPECT_AUTO_SAVE, prospectAutoSaveFlowSaga),
     takeLatest(PROSPECT_SAVE_ONCLICK, prospectSaveOnClick),
     fork(watchRequest)
