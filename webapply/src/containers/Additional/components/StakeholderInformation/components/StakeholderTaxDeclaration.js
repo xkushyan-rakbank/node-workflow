@@ -24,6 +24,7 @@ import { useStyles } from "../../styled";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../../store/selectors/appConfig";
+import { ALPHANUMERIC_ONLY_REGEX } from "../../../../../utils/validation";
 
 const defaulatTaxDetails = {
   country: "",
@@ -111,7 +112,8 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
               is: "yes",
               then: Yup.string()
                 .required(getRequiredMessage("TIN number"))
-                .matches(/^[a-zA-Z0-9]*$/, getInvalidMessage("TIN number")),
+                .max(40, "Maximum ${max} characters allowed")
+                .matches(ALPHANUMERIC_ONLY_REGEX, getInvalidMessage("TIN number")),
               otherwise: Yup.string().nullable()
             }),
             reasonForTINNotAvailable: Yup.string().when("isTINAvailable", {
