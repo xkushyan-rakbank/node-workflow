@@ -19,7 +19,7 @@ import {
   getProspect,
   getProspectId
 } from "../selectors/appConfig";
-import { updateProspect } from "../actions/appConfig";
+import { updateProspectFromDecision } from "../actions/appConfig";
 import appConfig from "../../config/appConfig.json";
 
 function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBack) {
@@ -85,7 +85,7 @@ export function* setDecisions(response, onValuesChanged = null, isComeBack = fal
   }
   // if there are dependantFields to be changed then trigger callback
   if (Object.keys(changedFieldValues).length > 0) {
-    yield put(updateProspect(changedFieldValues));
+    yield put(updateProspectFromDecision(changedFieldValues));
     onValuesChanged && onValuesChanged(changedFieldValues);
   }
 }

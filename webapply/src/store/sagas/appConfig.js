@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest, select } from "redux-saga/effects";
+import { all, call, put, takeLatest, select, takeEvery } from "redux-saga/effects";
 import set from "lodash/set";
 
 import { cloneDeep } from "../../utils/cloneDeep";
@@ -14,7 +14,8 @@ import {
   saveSignatoryModel,
   saveOrganizationInfoModel,
   UPDATE_ADDITIONAL_INFO,
-  SET_ACCORDION_STATUS
+  SET_ACCORDION_STATUS,
+  UPDATE_PROSPECT_FROM_DECISION
 } from "../actions/appConfig";
 import { sendProspectToAPI, sendProspectToAPISuccess } from "../actions/sendProspectToAPI";
 import { config } from "../../api/apiClient";
@@ -145,6 +146,7 @@ export default function* appConfigSaga() {
     takeLatest(UPDATE_PROSPECT, updateProspectSaga),
     takeLatest(UPDATE_VIEW_ID, updateViewIdSaga),
     takeLatest(UPDATE_ADDITIONAL_INFO, updateAdditionInfo),
-    takeLatest(SET_ACCORDION_STATUS, setAccordionStatus)
+    takeLatest(SET_ACCORDION_STATUS, setAccordionStatus),
+    takeEvery(UPDATE_PROSPECT_FROM_DECISION, updateProspectSaga)
   ]);
 }

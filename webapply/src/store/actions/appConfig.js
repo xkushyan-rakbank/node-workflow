@@ -25,6 +25,7 @@ export const UPDATE_RO_EMAIL = "UPDATE_RO_EMAIL";
 export const UPDATE_ADDITIONAL_INFO = "UPDATE_ADDITIONAL_INFO";
 export const SET_ACCORDION_STATUS = "SET_ACCORDION_STATUS";
 export const SET_TAT = "SET_TAT";
+export const UPDATE_PROSPECT_FROM_DECISION = "UPDATE_PROSPECT_FROM_DECISION";
 
 export const loadMetaData = (meta = {}) => ({
   type: LOAD_META_DATA,
@@ -45,6 +46,12 @@ export const receiveAppConfigFail = payload => {
 
 export const updateProspect = (payload, gaEvent = null) => {
   const action = { type: UPDATE_PROSPECT, payload };
+
+  return appendGaEventToAction(action, gaEvent);
+};
+
+export const updateProspectFromDecision = (payload, gaEvent = null) => {
+  const action = { type: UPDATE_PROSPECT_FROM_DECISION, payload };
 
   return appendGaEventToAction(action, gaEvent);
 };

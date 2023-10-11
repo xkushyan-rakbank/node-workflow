@@ -23,7 +23,8 @@ import {
   sendProspectRequest,
   SEND_PROSPECT_REQUEST,
   setScreeningError,
-  PROSPECT_SAVE_ONCLICK
+  PROSPECT_SAVE_ONCLICK,
+  sendProspectToAPIAutoSaveSuccess
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
 import {
@@ -343,6 +344,8 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     }
     if (saveType !== "auto") {
       yield put(sendProspectToAPISuccess(!!isScreeningError));
+    } else {
+      yield put(sendProspectToAPIAutoSaveSuccess(!!isScreeningError));
     }
   } catch (error) {
     if (error instanceof ErrorOccurredWhilePerforming) {
