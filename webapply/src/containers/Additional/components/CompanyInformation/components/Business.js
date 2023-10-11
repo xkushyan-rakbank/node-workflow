@@ -4,8 +4,7 @@ import { Form, Formik } from "formik";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { TopCustomers } from "./TopCustomers";
-import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { SPECIAL_CHARACTERS_REGEX } from "../../../../../utils/validation";
+import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { TopSuppliers } from "./TopSuppliers";
 import { useStyles } from "../../styled";
 
@@ -15,8 +14,7 @@ const additionalCompanyInfoSchema = Yup.object().shape({
       name: Yup.string()
         // eslint-disable-next-line no-template-curly-in-string
         .max(255, "Maximum ${max} characters allowed")
-        .required(getRequiredMessage("Customer name"))
-        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Customer name")),
+        .required(getRequiredMessage("Customer name")),
       country: Yup.string().required(getRequiredMessage("Country"))
     })
   ),
@@ -25,8 +23,7 @@ const additionalCompanyInfoSchema = Yup.object().shape({
       name: Yup.string()
         .required(getRequiredMessage("Supplier name"))
         // eslint-disable-next-line no-template-curly-in-string
-        .max(255, "Maximum ${max} characters allowed")
-        .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Supplier name")),
+        .max(255, "Maximum ${max} characters allowed"),
       country: Yup.string().required(getRequiredMessage("Country"))
     })
   )
@@ -67,7 +64,11 @@ export const BusinessRelationship = forwardRef(
                 accordionRef={bussinesAccordionRef}
               >
                 <div className={classes.descriptionSubField}>
-                  <p>We need details about your customers and suppliers to gain a better understanding of your business model. If your business is less than 3 months old, please provide details about your potential customers and suppliers.</p>
+                  <p>
+                    We need details about your customers and suppliers to gain a better
+                    understanding of your business model. If your business is less than 3 months
+                    old, please provide details about your potential customers and suppliers.
+                  </p>
                 </div>
                 <TopCustomers topCustomers={topCustomers} {...props} />
                 <TopSuppliers topSuppliers={topSuppliers} {...props} />
