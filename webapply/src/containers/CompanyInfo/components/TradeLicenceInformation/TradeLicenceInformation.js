@@ -113,6 +113,7 @@ export const TradeLicenceInformation = ({ values }) => {
               inputProps: { tabIndex: 0 }
             }}
             minDate={addDays(new Date(), 10)}
+            initialFocusedDate={addDays(new Date(), 10)}
             changeProspect={changeDateProspectHandler}
           />
         </Grid>

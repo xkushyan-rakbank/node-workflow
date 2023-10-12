@@ -30,7 +30,8 @@ const DatePickerBase = ({
   onChange = value => setFieldValue(field.name, value),
   inputAdornmentPosition = "start",
   InputProps,
-  showIcon
+  showIcon,
+  initialFocusedDate
 }) => {
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && getIn(touched, field.name);
@@ -43,6 +44,7 @@ const DatePickerBase = ({
           <StyledKeyboardDatePicker
             autoOk
             autoComplete="off"
+            initialFocusedDate={initialFocusedDate}
             label={label}
             minDate={minDate}
             maxDate={maxDate}
