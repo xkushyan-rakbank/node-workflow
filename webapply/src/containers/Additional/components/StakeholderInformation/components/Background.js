@@ -64,7 +64,9 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   };
 
   const backgroundSchema = Yup.object().shape({
-    highestEducationAttained: Yup.string().required(getRequiredMessage("Highest education")),
+    highestEducationAttained: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Highest education")),
     employmentStatus: Yup.string().required(getRequiredMessage("Employment type")),
     linkedInURL: Yup.string()
       .nullable()
@@ -145,10 +147,12 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
           isNull(values?.backgroundInfo) &&
           values?.linkedInURL?.length === 0 &&
           isEmpty(values?.cv);
+        const isValidForm = backgroundSchema.isValidSync(values);
+
         return (
           <Accordion
             title={"Professional background"}
-            isCompleted={isValid}
+            isCompleted={isValidForm}
             id={id}
             setFormFieldValue={setFormFieldValue}
             classes={{

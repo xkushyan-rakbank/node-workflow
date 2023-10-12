@@ -64,20 +64,25 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
   const residentialAddressSchema = Yup.object().shape({
     country: Yup.string().required(),
     addressLine1: Yup.string()
+      .nullable()
       .required(getRequiredMessage("Flat, villa or building"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(ADDRESS_REGEX, getInvalidMessage("Flat, villa or building")),
     addressLine2: Yup.string()
+      .nullable()
       .required(getRequiredMessage("Street or location"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
       .matches(ADDRESS_REGEX, getInvalidMessage("Street or location")),
     poBox: Yup.string()
+      .nullable()
       .required(getRequiredMessage("P.O. Box number"))
       .max(6, "Maximum ${max} characters allowed")
       .matches(POBOX_REGEX, getInvalidMessage("P.O. Box number")),
-    emirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),
+    emirateCity: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Emirate or city")),
     addressProof: Yup.array()
       .of(
         Yup.mixed()
