@@ -115,7 +115,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0 }
                 }}
-                fieldDescription="This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
+                fieldDescription="This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
               />
               <InputGroup>
                 <LinkedField
