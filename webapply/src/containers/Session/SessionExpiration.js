@@ -12,6 +12,7 @@ export const SessionExpiration = memo(props => {
   const [expiryTime, setExpiryTime] = useState(reminderTimer);
   const [extendExpiryTime, setExtendExpiryTime] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
+  const [showExipryMesssagePopup, setShowExipryMesssagePopup] = useState(true);
 
   const onConfirm = useCallback(() => {
     if (isAgent) {
@@ -95,8 +96,11 @@ export const SessionExpiration = memo(props => {
   return (
     <Alert
       type="SUCCESS"
-      isOpen={true}
-      handleConfirm={onConfirm}
+      isOpen={showExipryMesssagePopup}
+      handleConfirm={() => {
+        setShowExipryMesssagePopup(false);
+        onConfirm();
+      }}
       details="Sorry, your session has expired. But don't worry, you can retrieve your application from where you left."
       isAgent={isAgent}
     />
