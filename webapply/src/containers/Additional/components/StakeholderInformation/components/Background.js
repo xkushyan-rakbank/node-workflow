@@ -67,6 +67,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
     highestEducationAttained: Yup.string().required(getRequiredMessage("Highest education")),
     employmentStatus: Yup.string().required(getRequiredMessage("Employment type")),
     linkedInURL: Yup.string()
+      .nullable()
       .min(27, "LinkedIn URL is too short. Please enter a valid LinkedIn profile URL.")
       .max(250, "LinkedIn URL is too long. Please enter upto 250 characters.")
       .matches(
@@ -74,6 +75,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
         "Invalid LinkedIn URL format. Please enter a valid LinkedIn profile URL."
       ),
     backgroundInfo: Yup.string()
+      .nullable()
       .min(100, "Background information is too short.")
       .max(2000, "Background information is too long. Please enter upto 2000 characters."),
     cv: Yup.string(),

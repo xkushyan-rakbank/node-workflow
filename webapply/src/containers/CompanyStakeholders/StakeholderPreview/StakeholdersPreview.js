@@ -41,7 +41,6 @@ import { getSearchResults } from "../../../store/selectors/searchProspect";
 import { get } from "lodash";
 import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
 
-
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
@@ -55,11 +54,11 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
 
   const searchResults = useSelector(getSearchResults);
   const currentProspect = searchResults.find(item => item.prospectId === prospectId);
-  
+
   const isFrontCorrection = get(currentProspect, "status.statusType") === OPE_EDIT;
-  const isOperator = scheme === operatorLoginScheme; 
+  const isOperator = scheme === operatorLoginScheme;
   const isEditable = isOperator && isFrontCorrection;
- 
+
   const [displayFields, setDisplayFields] = useState({});
 
   const { nationality: nationality } = useSelector(getDatalist);
@@ -68,8 +67,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     code => nationality?.find(nationality => nationality.code === code)?.displayText,
     [displayFields, nationality]
   );
-
-
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -156,12 +153,16 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
   const formatEidNumber = number => {
-      const cleanNumber = String(number).replace(/\D/g, "");
-  
-      const formattedNumber = cleanNumber.replace(/(\d{3})(\d{4})(\d{7})(\d{1})/, "$1-$2-$3-$4");
-  
-      return formattedNumber;
-    };
+    const cleanNumber = String(number).replace(/\D/g, "");
+
+    const formattedNumber = cleanNumber.replace(/(\d{3})(\d{4})(\d{7})(\d{1})/, "$1-$2-$3-$4");
+
+    return formattedNumber;
+  };
+
+  const formatDate = useCallback(date => (date ? format(new Date(date), "dd/MM/yyyy") : ""), [
+    displayFields
+  ]);
 
   const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
@@ -188,17 +189,19 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       const fields = {
         signatoryFullName: signatoryInfo && signatoryInfo[0]?.editedFullName,
         signatoryNationality:
-          signatoryInfo && getNationalityLabel(signatoryInfo[0]?.kycDetails.nationality),
-        dateOfBirth: signatoryInfo && signatoryInfo[0]?.kycDetails?.dateOfBirth,
+          signatoryInfo && getNationalityLabel(signatoryInfo[0]?.kycDetails?.nationality),
+        dateOfBirth: signatoryInfo && formatDate(signatoryInfo[0]?.kycDetails?.dateOfBirth),
         mothersMaidenName: (signatoryInfo && signatoryInfo[0]?.mothersMaidenName) || "-",
         eidNumber:
           signatoryInfo &&
           formatEidNumber(signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidNumber),
-        eidExpiryDt: signatoryInfo && signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidExpiryDt,
+        eidExpiryDt:
+          signatoryInfo && formatDate(signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidExpiryDt),
         passportNumber:
           signatoryInfo && signatoryInfo[0]?.kycDetails?.passportDetails[0].passportNumber,
         passportExpiryDate:
-          signatoryInfo && signatoryInfo[0]?.kycDetails?.passportDetails[0].passportExpiryDate
+          signatoryInfo &&
+          formatDate(signatoryInfo[0]?.kycDetails?.passportDetails[0].passportExpiryDate)
       };
       setDisplayFields(fields);
     }
