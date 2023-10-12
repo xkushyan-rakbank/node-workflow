@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
 import cx from "classnames";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import { isEmpty, isNull } from "lodash";
+import { isEmpty } from "lodash";
 
 import { AutoSaveField as Field, Input, SelectAutocomplete } from "../../../../../components/Form";
 import {
@@ -144,15 +144,14 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
     >
       {({ touched, setTouched, setFieldValue, values, isValid, errors }) => {
         const isBackgroundDetailsEmpty =
-          isNull(values?.backgroundInfo) &&
+          values?.backgroundInfo?.length === 0 &&
           values?.linkedInURL?.length === 0 &&
           isEmpty(values?.cv);
-        const isValidForm = backgroundSchema.isValidSync(values);
 
         return (
           <Accordion
             title={"Professional background"}
-            isCompleted={isValidForm}
+            isCompleted={isValid}
             id={id}
             setFormFieldValue={setFormFieldValue}
             classes={{

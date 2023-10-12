@@ -49,7 +49,9 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
     const details = [...signatories[0]?.stakeholderAdditionalInfo?.taxDetails];
     if (details[0] !== "") {
       const index = details.findIndex(element => element && element.country === "AE");
-      details.splice(index, 1);
+      if (index > 0) {
+        details.splice(index, 1);
+      }
     }
     return details.length === 0 ? null : details;
   }, [signatories]);
