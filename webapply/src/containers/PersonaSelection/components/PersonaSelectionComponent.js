@@ -1,8 +1,9 @@
 import React from "react";
+import { Button } from "@material-ui/core";
+
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ReactComponent as NavigationLeft } from "../../../assets/icons/blackNavigationLeftArrow.svg";
 import { useStyles } from "./styled";
-import { Button } from "@material-ui/core";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import routes from "../../../routes";
 
@@ -11,7 +12,8 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
   const pushHistory = useTrackingHistory();
 
   const handleRedirection = (path, replaceHistory = false) => {
-    pushHistory(path, replaceHistory);
+    const state = { notClearSession: true };
+    pushHistory(path, replaceHistory, state);
   };
 
   return (

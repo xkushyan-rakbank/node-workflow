@@ -86,7 +86,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "20px",
     [theme.breakpoints.up("sm")]: {
       marginTop: "40px",
-      marginBottom: "55px",
+      marginBottom: "55px"
     }
   },
   trackNSwitchAccountBtn: {
@@ -111,9 +111,9 @@ const useStyles = makeStyles(theme => ({
       fontWeight: 500,
       lineHeight: "22px",
       color: "#000",
-      border: "1px solid #000",
-    },
-  },
+      border: "1px solid #000"
+    }
+  }
 }));
 
 const aplicantInfoSchema = Yup.object({
@@ -191,7 +191,8 @@ export const ApplicantInfoComponent = ({
   };
 
   const handleRedirection = (path, replaceHistory = false) => {
-    pushHistory(path, replaceHistory);
+    const state = { notClearSession: true };
+    pushHistory(path, replaceHistory, state);
   };
 
   const {

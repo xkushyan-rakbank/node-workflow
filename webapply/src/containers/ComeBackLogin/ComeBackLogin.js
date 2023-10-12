@@ -1,4 +1,6 @@
 import React, { useEffect, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { ComeBackLoginComponent } from "./components/ComeBackLogin";
@@ -24,11 +26,14 @@ export const ComeBackLoginContainer = ({
   useFormNavigation([true, false]);
   useLayoutParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
-    logout();
-    resetProspect();
-  }, [resetProspect]);
+    if (!history.location.state?.notClearSession) {
+      logout();
+      resetProspect();
+    }
+  }, [resetProspect, history]);
 
   const submitForm = useCallback(
     values => {
