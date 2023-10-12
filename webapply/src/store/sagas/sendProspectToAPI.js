@@ -59,6 +59,7 @@ import { setTat, updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 import { pageProspectPaylodMap } from "../../constants/config";
+import { NOTIFY_HOST } from "../actions/kyc";
 
 function checkIsAutoSaveViewId(viewId) {
   return [
@@ -368,6 +369,7 @@ export function* prospectAutoSaveFlowSaga() {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
 
     yield take(SEND_PROSPECT_REQUEST);
+    yield take(NOTIFY_HOST);
 
     yield cancel(bgSyncAutoSave);
   }
