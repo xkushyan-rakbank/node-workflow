@@ -511,7 +511,8 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     gap: "8px",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    textTransform: "math-auto",
   },
   reviewDetails: {
     display: "flex",
@@ -606,7 +607,7 @@ export const useStyles = makeStyles(theme => ({
     minWidth: "105px",
     height: "40px",
     borderRadius: "1.3125rem",
-    textTransform: "capitalize",
+    textTransform: "math-auto",
     fontSize: "14px",
     fontWeight: 500,
     background: "#1F1F1F",

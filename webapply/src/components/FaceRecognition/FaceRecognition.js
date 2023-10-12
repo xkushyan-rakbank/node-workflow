@@ -296,7 +296,7 @@ export const FaceRecognition = ({
             disabled={!isAgent && !isStepActive}
             onClick={startFaceScan}
           >
-            Start
+            Scan
           </Button>
         )}
       </div>
