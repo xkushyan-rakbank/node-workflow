@@ -5,7 +5,7 @@ import { Form, Formik } from "formik";
 import { format } from "date-fns";
 
 import routes from "../../routes";
-import { NEXT, SUBMIT, formStepper } from "../../constants";
+import { CONVENTIONAL, ISLAMIC, NEXT, SUBMIT, formStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../FormLayout";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
@@ -261,6 +261,8 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         rakValuePackage: applicationInfo?.rakValuePackage
           ? rakValuePackages[(applicationInfo?.rakValuePackage)]
           : "N/A",
+        accountType: applicationInfo?.accountType,
+        productVariant: isIslamicBanking ? ISLAMIC : CONVENTIONAL,
         companyName: organizationInfo?.companyName,
         companyCategory: getCompanyCategoryDesc(organizationInfo?.companyCategory),
         lineOfBusiness:

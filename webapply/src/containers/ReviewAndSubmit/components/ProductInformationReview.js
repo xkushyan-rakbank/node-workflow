@@ -66,9 +66,15 @@ export const ProductInformationReview = ({ fieldValues }) => {
         >
           <div className={classes.infoListWrapper}>
             <div className={classes.infoLabelValue}>
+              <label>Product variant:</label>
+              <p style={{ textTransform: "capitalize" }}>{fieldValues.productVariant}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
+              <label>Account type:</label> <p>{fieldValues.accountType}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>Signing rights:</label> <p>{signingRightsText?.label}</p>
             </div>
-
             <div className={classes.infoLabelValue}>
               <label>Currency:</label> <p>{fieldValues.accountCurrency}</p>
             </div>
