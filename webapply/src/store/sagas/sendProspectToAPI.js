@@ -368,8 +368,7 @@ export function* prospectAutoSaveFlowSaga() {
   while (true) {
     const bgSyncAutoSave = yield fork(prospectAutoSave);
 
-    yield take(SEND_PROSPECT_REQUEST);
-    yield take(NOTIFY_HOST);
+    yield take([SEND_PROSPECT_REQUEST, NOTIFY_HOST]);
 
     yield cancel(bgSyncAutoSave);
   }
