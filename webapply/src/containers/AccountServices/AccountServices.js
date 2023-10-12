@@ -48,12 +48,7 @@ import {
   getROInvalidMessage
 } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
-import {
-  NAME_REGEX,
-  NUMBER_REGEX,
-  PARTNER_CODE_REGEX,
-  TOTAL_EXPERIENCE_YRS_REGEX
-} from "../../utils/validation";
+import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../utils/validation";
 import {
   getAccountType,
   getDatalist,
@@ -71,7 +66,7 @@ import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
-
+let inCompleteAccordionList = [];
 const marketingChannelSelectionHandlers = {
   "all the above": ({ isSelected }) =>
     isSelected ? [["Email", "SMS", "Call", "all the above"], ["Email", "SMS", "Call"]] : [[], []],
@@ -460,24 +455,27 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     if (isIncomplete && !isAccordionOpen) {
       accordionRef.current.click();
     }
+    inCompleteAccordionList.length > 0 &&
+      inCompleteAccordionList[0].parentNode.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const handleNextClickAction = validationResults => {
+  const handleNextClickAction = async () => {
+    const validatedFormFields = await formRef.current.validateForm();
     try {
       const servicePreferenceValidation =
-        validationResults.errors.hasOwnProperty("branchId") ||
-        validationResults.errors.hasOwnProperty("accountEmirateCity") ||
-        validationResults.errors.hasOwnProperty("receiveInterest");
+        validatedFormFields.hasOwnProperty("branchId") ||
+        validatedFormFields.hasOwnProperty("accountEmirateCity") ||
+        validatedFormFields.hasOwnProperty("receiveInterest");
 
       const authorizationValidation =
-        validationResults.errors.hasOwnProperty("chequeBookApplied") ||
-        validationResults.errors.hasOwnProperty("nameOnDebitCard");
+        validatedFormFields.hasOwnProperty("chequeBookApplied") ||
+        validatedFormFields.hasOwnProperty("nameOnDebitCard");
 
       const communicationValidation =
-        validationResults.errors.hasOwnProperty("marketing") ||
-        validationResults.errors.hasOwnProperty("mobileInstructions") ||
-        validationResults.errors.hasOwnProperty("preferredLanguage") ||
-        validationResults.errors.hasOwnProperty("surveys");
+        validatedFormFields.hasOwnProperty("marketing") ||
+        validatedFormFields.hasOwnProperty("mobileInstructions") ||
+        validatedFormFields.hasOwnProperty("preferredLanguage") ||
+        validatedFormFields.hasOwnProperty("surveys");
 
       let forms = {
         servicePrerences: {
@@ -493,10 +491,12 @@ export const AccountServices = ({ sendProspectToAPI }) => {
           isIncomplete: communicationValidation
         }
       };
-
       Object.keys(forms).forEach(formName => {
         const { accordionRef, isIncomplete } = forms[formName];
         handleFormAcordions(accordionRef, isIncomplete);
+        if (isIncomplete && inCompleteAccordionList.indexOf(accordionRef.current) === -1) {
+          inCompleteAccordionList.push(accordionRef.current);
+        }
       });
     } catch (validationError) {
       // console.error(validationError);

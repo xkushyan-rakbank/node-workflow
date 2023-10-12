@@ -31,7 +31,6 @@ import useDynamicValidation from "../../../utils/useDynamicValidation";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { useFindDocument } from "../../../utils/useFindDocument";
 import { Footer } from "../../../components/Footer";
-import { scrollToDOMNode } from "../../../components/VerticalPagination";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
@@ -54,7 +53,6 @@ export const CompanyInfo = ({
 
   const orgDetails = useSelector(getOrganizationInfo) || {};
   const industries = orgDetails.industryMultiSelect || [];
-  const companyCategory = orgDetails.companyCategory || "";
 
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
@@ -172,13 +170,6 @@ export const CompanyInfo = ({
       )
   };
 
-  const onUploadSuccess = props => {
-    if (props.values.companyCategory === "SLLC" && moa === "") {
-      scrollToDOMNode(refToTopOfCompanyInfo);
-    } else if (props.isValid) {
-      handleClickNextStep();
-    }
-  };
 
   useEffect(() => {
     if (!companyInfoForm.current?.setFieldValue) {
@@ -212,6 +203,11 @@ export const CompanyInfo = ({
         innerRef={companyInfoForm}
       >
         {props => {
+          if (props.isSubmitting) {
+            const el = document.querySelector(".Mui-error");
+            const element = el && el.parentElement ? el.parentElement : el;
+            element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
           return (
             <Form className={classes.companyInfoSectionForm}>
               <div className={classes.companyInfoSectionWrapper}>
@@ -250,7 +246,6 @@ export const CompanyInfo = ({
                   display="block"
                   label="Next"
                   // disabled={!isCompanyInfoValid}
-                  onClick={() => onUploadSuccess(props)}
                 />
               </Footer>
             </Form>

@@ -56,6 +56,7 @@ export const AdditionalStakeholderInformation = ({
   const stakeHolderTaxAccordionRef = useRef(null);
 
   const additionalStakeHolderForm = useRef(null);
+  let inCompleteAccordionList = [];
 
   useEffect(() => {
     if (!addionalStakeholderInfoStatus) {
@@ -119,6 +120,8 @@ export const AdditionalStakeholderInformation = ({
     if (!isCompleted && !isAccordionOpen && accordionRef?.current !== null) {
       accordionRef.current.click();
     }
+    inCompleteAccordionList.length > 0 &&
+      inCompleteAccordionList[0].parentNode.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
   const handleNextClickAction = validationResults => {
@@ -149,6 +152,9 @@ export const AdditionalStakeholderInformation = ({
       Object.keys(forms).forEach(formName => {
         const { formRef, accordionRef, isCompleted } = forms[formName];
         handleFormAcordions(formRef, accordionRef, isCompleted);
+        if (!isCompleted && inCompleteAccordionList.indexOf(accordionRef.current) === -1) {
+          inCompleteAccordionList.push(accordionRef.current);
+        }
       });
     } catch (validationError) {
       console.error(validationError);

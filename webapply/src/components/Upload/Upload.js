@@ -82,7 +82,7 @@ export const Upload = ({
         </ContexualHelp>
         {notedText}
 
-        <div className={classes.uplaodContainer}>
+        <div className={cx(classes.uplaodContainer, { "Mui-error": isError })}>
           <div className={classes.main} {...getRootProps()}>
             <div className={classes.row}>
               {hasFile && showUploadSuccessIcon ? (

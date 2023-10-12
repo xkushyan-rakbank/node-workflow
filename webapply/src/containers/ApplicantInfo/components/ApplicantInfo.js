@@ -242,207 +242,214 @@ export const ApplicantInfoComponent = ({
           onSubmit={values => onSubmit(removeUnWantedKeys(["allianceCodeFromDataList"], values))}
           className={classes.applicantInfoForm}
         >
-          {({ isValid }) => (
-            <Form>
-              {isConfigLoading ? (
-                <SkeletonLoader />
-              ) : (
-                <Field
-                  name="fullName"
-                  path="prospect.applicantInfo.fullName"
-                  label="Your name"
-                  placeholder="Your name"
-                  component={Input}
-                  InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 50 }
-                  }}
-                  isLemnisk={true}
-                  lemniskCall={value => lemniskCall(value)}
-                  fieldDescription="Enter your full name as shown on your passport."
-                  isLoadDefaultValueFromStore={false}
-                />
-              )}
-              {isConfigLoading ? (
-                <SkeletonLoader />
-              ) : (
-                <Field
-                  name="companyFullName"
-                  path="prospect.applicantInfo.companyFullName"
-                  label="Company’s full name"
-                  placeholder="Company’s full name"
-                  component={Input}
-                  InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 255 }
-                  }}
-                  isLemnisk={true}
-                  lemniskCall={value => lemniskCall(value)}
-                  fieldDescription="This should be the same as shown on your trade licence."
-                  isLoadDefaultValueFromStore={false}
-                  iconWidth={16}
-                  iconHeight={16}
-                  disabled={invitationParams?.company}
-                />
-              )}
-              {isConfigLoading ? (
-                <SkeletonLoader />
-              ) : (
-                <Field
-                  name="email"
-                  path="prospect.applicantInfo.email"
-                  label="Email"
-                  placeholder="Email"
-                  component={Input}
-                  InputProps={{
-                    inputProps: { tabIndex: 0, maxLength: 50 }
-                  }}
-                  isLemnisk={true}
-                  lemniskCall={value => lemniskCall(value)}
-                  fieldDescription={
-                    "This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
-                  }
-                  isLoadDefaultValueFromStore={false}
-                  disabled={invitationParams?.email}
-                  iconWidth={25}
-                  iconHeight={25}
-                  contextualHelpText="This email should be unique for a company"
-                />
-              )}
-              {isConfigLoading ? (
-                <SkeletonLoader />
-              ) : (
-                <InputGroup>
-                  <LinkedField
-                    name="countryCode"
-                    disabled
-                    linkedFieldName="mobileNo"
-                    path="prospect.applicantInfo.countryCode"
-                    linkedPath="prospect.applicantInfo.mobileNo"
-                    required
-                    datalistId="countryCode"
-                    component={CustomSelect}
-                    shrink={false}
-                    inputProps={{ tabIndex: 0 }}
-                  />
-                  <LinkedField
-                    name="mobileNo"
-                    linkedFieldName="countryCode"
-                    path="prospect.applicantInfo.mobileNo"
-                    linkedPath="prospect.applicantInfo.countryCode"
-                    label="Mobile number"
-                    placeholder="Mobile number"
-                    component={Input}
-                    contextualHelpText="This number should be unique for a company"
-                    InputProps={{
-                      inputProps: { tabIndex: 0 }
-                    }}
-                    isLemnisk={true}
-                    lemniskCall={value => lemniskCall(value)}
-                    fieldDescription={
-                      "This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
-                    }
-                    isLoadDefaultValueFromStore={false}
-                    iconWidth={25}
-                    iconHeight={25}
-                  />
-                </InputGroup>
-              )}
-
-              {isRecaptchaEnable && (
-                <Grid container>
-                  <Box mb="24px">
-                    <ErrorBoundaryForReCaptcha className="recaptchaPos">
-                      <ReCaptcha
-                        onVerify={handleReCaptchaVerify}
-                        onExpired={handleVerifiedFailed}
-                        onError={handleVerifiedFailed}
-                        reCaptchaSiteKey={reCaptchaSiteKey}
-                      />
-                    </ErrorBoundaryForReCaptcha>
-                  </Box>
-                </Grid>
-              )}
-
-              <Grid container spacing={3} className={classes.roCodeWrapper}>
-                <Grid item sm={6} xs={12}>
-                  <label className={classes.outsideLabel}>
-                    Agent code (optional)
-                    <ContexualHelp
-                      title={"Enter the Agent code of the Bank staff whom you are in touch with"}
-                      placement="right"
-                      isDisableHoverListener={false}
-                    >
-                      <HelpOutlineIcon className={classes.helperIcon} />
-                    </ContexualHelp>
-                  </label>
+          {({ isValid, isSubmitting }) => {
+            if (isSubmitting) {
+              const el = document.querySelector(".Mui-error");
+              const element = el && el.parentElement ? el.parentElement : el;
+              element && element.scrollIntoView({ behavior: "smooth", block: "end" });
+            }
+            return (
+              <Form>
+                {isConfigLoading ? (
+                  <SkeletonLoader />
+                ) : (
                   <Field
-                    name="roCode"
-                    path="prospect.applicantInfo.roCode"
-                    label=""
-                    component={Input}
-                    disabled={roCode !== "" || invitationParams?.rocode}
-                    InputProps={{
-                      inputProps: { tabIndex: 0, maxLength: 6 }
-                    }}
-                    classes={{
-                      formControlRoot: classes.roCodeFormControl,
-                      input: classes.inputWithoutLabel
-                    }}
-                  />
-                </Grid>
-                <Grid item sm={6} xs={12}>
-                  <label className={classes.outsideLabel}>
-                    Partner code (optional)
-                    <ContexualHelp
-                      title={
-                        "If you were referred by one of our Partners, enter the code shared by them"
-                      }
-                      placement="bottom"
-                      isDisableHoverListener={false}
-                    >
-                      <HelpOutlineIcon className={classes.helperIcon} />
-                    </ContexualHelp>
-                  </label>
-                  <Field
-                    name={
-                      allianceCodeFromQuery !== "" ? "allianceCode" : "allianceCodeFromDataList"
-                    }
-                    path="prospect.applicantInfo.allianceCode"
-                    disabled={allianceCodeFromQuery !== "" && allianceCodeFromQuery !== undefined}
+                    name="fullName"
+                    path="prospect.applicantInfo.fullName"
+                    label="Your name"
+                    placeholder="Your name"
                     component={Input}
                     InputProps={{
                       inputProps: { tabIndex: 0, maxLength: 50 }
                     }}
-                    classes={{
-                      formControlRoot: classes.roCodeFormControl,
-                      input: classes.inputWithoutLabel
+                    isLemnisk={true}
+                    lemniskCall={value => lemniskCall(value)}
+                    fieldDescription="Enter your full name as shown on your passport."
+                    isLoadDefaultValueFromStore={false}
+                  />
+                )}
+                {isConfigLoading ? (
+                  <SkeletonLoader />
+                ) : (
+                  <Field
+                    name="companyFullName"
+                    path="prospect.applicantInfo.companyFullName"
+                    label="Company’s full name"
+                    placeholder="Company’s full name"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0, maxLength: 255 }
                     }}
+                    isLemnisk={true}
+                    lemniskCall={value => lemniskCall(value)}
+                    fieldDescription="This should be the same as shown on your trade licence."
+                    isLoadDefaultValueFromStore={false}
+                    iconWidth={16}
+                    iconHeight={16}
+                    disabled={invitationParams?.company}
                   />
-                </Grid>
-              </Grid>
-
-              <Grid container direction="row" justify="flex-end" alignItems="center">
-                {/* message */}
-                <Footer>
-                  {!invitationParams?.isislamic && (
-                    <BackLink
-                      isTypeButton={true}
-                      path={
-                        personaSelectionRoutesMap[accountType][
-                          isIslamicBanking ? ISLAMIC : CONVENTIONAL
-                        ]
-                      }
+                )}
+                {isConfigLoading ? (
+                  <SkeletonLoader />
+                ) : (
+                  <Field
+                    name="email"
+                    path="prospect.applicantInfo.email"
+                    label="Email"
+                    placeholder="Email"
+                    component={Input}
+                    InputProps={{
+                      inputProps: { tabIndex: 0, maxLength: 50 }
+                    }}
+                    isLemnisk={true}
+                    lemniskCall={value => lemniskCall(value)}
+                    fieldDescription={
+                      "This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
+                    }
+                    isLoadDefaultValueFromStore={false}
+                    disabled={invitationParams?.email}
+                    iconWidth={25}
+                    iconHeight={25}
+                    contextualHelpText="This email should be unique for a company"
+                  />
+                )}
+                {isConfigLoading ? (
+                  <SkeletonLoader />
+                ) : (
+                  <InputGroup>
+                    <LinkedField
+                      name="countryCode"
+                      disabled
+                      linkedFieldName="mobileNo"
+                      path="prospect.applicantInfo.countryCode"
+                      linkedPath="prospect.applicantInfo.mobileNo"
+                      required
+                      datalistId="countryCode"
+                      component={CustomSelect}
+                      shrink={false}
+                      inputProps={{ tabIndex: 0 }}
                     />
-                  )}
-                  <SubmitButton
-                    disabled={(!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep}
-                    isDisplayLoader={isLoading}
-                    justify="flex-end"
-                    label="Next"
-                  />
-                </Footer>
-              </Grid>
-            </Form>
-          )}
+                    <LinkedField
+                      name="mobileNo"
+                      linkedFieldName="countryCode"
+                      path="prospect.applicantInfo.mobileNo"
+                      linkedPath="prospect.applicantInfo.countryCode"
+                      label="Mobile number"
+                      placeholder="Mobile number"
+                      component={Input}
+                      contextualHelpText="This number should be unique for a company"
+                      InputProps={{
+                        inputProps: { tabIndex: 0 }
+                      }}
+                      isLemnisk={true}
+                      lemniskCall={value => lemniskCall(value)}
+                      fieldDescription={
+                        "This number will be used to open the account. We'll send a one-time password (OTP) to it for verification."
+                      }
+                      isLoadDefaultValueFromStore={false}
+                      iconWidth={25}
+                      iconHeight={25}
+                    />
+                  </InputGroup>
+                )}
+
+                {isRecaptchaEnable && (
+                  <Grid container>
+                    <Box mb="24px">
+                      <ErrorBoundaryForReCaptcha className="recaptchaPos">
+                        <ReCaptcha
+                          onVerify={handleReCaptchaVerify}
+                          onExpired={handleVerifiedFailed}
+                          onError={handleVerifiedFailed}
+                          reCaptchaSiteKey={reCaptchaSiteKey}
+                        />
+                      </ErrorBoundaryForReCaptcha>
+                    </Box>
+                  </Grid>
+                )}
+
+                <Grid container spacing={3} className={classes.roCodeWrapper}>
+                  <Grid item sm={6} xs={12}>
+                    <label className={classes.outsideLabel}>
+                      Agent code (optional)
+                      <ContexualHelp
+                        title={"Enter the Agent code of the Bank staff whom you are in touch with"}
+                        placement="right"
+                        isDisableHoverListener={false}
+                      >
+                        <HelpOutlineIcon className={classes.helperIcon} />
+                      </ContexualHelp>
+                    </label>
+                    <Field
+                      name="roCode"
+                      path="prospect.applicantInfo.roCode"
+                      label=""
+                      component={Input}
+                      disabled={roCode !== "" || invitationParams?.rocode}
+                      InputProps={{
+                        inputProps: { tabIndex: 0, maxLength: 6 }
+                      }}
+                      classes={{
+                        formControlRoot: classes.roCodeFormControl,
+                        input: classes.inputWithoutLabel
+                      }}
+                    />
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <label className={classes.outsideLabel}>
+                      Partner code (optional)
+                      <ContexualHelp
+                        title={
+                          "If you were referred by one of our Partners, enter the code shared by them"
+                        }
+                        placement="bottom"
+                        isDisableHoverListener={false}
+                      >
+                        <HelpOutlineIcon className={classes.helperIcon} />
+                      </ContexualHelp>
+                    </label>
+                    <Field
+                      name={
+                        allianceCodeFromQuery !== "" ? "allianceCode" : "allianceCodeFromDataList"
+                      }
+                      path="prospect.applicantInfo.allianceCode"
+                      disabled={allianceCodeFromQuery !== "" && allianceCodeFromQuery !== undefined}
+                      component={Input}
+                      InputProps={{
+                        inputProps: { tabIndex: 0, maxLength: 50 }
+                      }}
+                      classes={{
+                        formControlRoot: classes.roCodeFormControl,
+                        input: classes.inputWithoutLabel
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+
+                <Grid container direction="row" justify="flex-end" alignItems="center">
+                  {/* message */}
+                  <Footer>
+                    {!invitationParams?.isislamic && (
+                      <BackLink
+                        isTypeButton={true}
+                        path={
+                          personaSelectionRoutesMap[accountType][
+                            isIslamicBanking ? ISLAMIC : CONVENTIONAL
+                          ]
+                        }
+                      />
+                    )}
+                    <SubmitButton
+                      disabled={(!reCaptchaToken && isRecaptchaEnable) || !isDisableNextstep}
+                      isDisplayLoader={isLoading}
+                      justify="flex-end"
+                      label="Next"
+                    />
+                  </Footer>
+                </Grid>
+              </Form>
+            );
+          }}
         </Formik>
       </div>
     </>
