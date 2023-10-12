@@ -38,19 +38,14 @@ export const TaxDeclarationsSection = forwardRef(
       setFieldValue(target, value);
     };
     const taxDeclarationSchema = Yup.object().shape({
-      isdnfbpFieldVisible: Yup.string(),
+      isdnfbpFieldVisible: Yup.boolean(),
       dnfbpField: Yup.string().when("isdnfbpFieldVisible", {
         is: true,
-        then: Yup.string()
-          .nullable()
-          .required("Designated Business Dealings is required"),
-        otherwise: Yup.string()
-          .nullable()
-          .notRequired()
+        then: Yup.string().required("Designated Business Dealings is required"),
+        otherwise: Yup.string().notRequired()
       }),
       isCompanyUSEntity: Yup.string().required(),
       isFinancialInstitution: Yup.string()
-        .nullable()
         .required()
         .oneOf(["yes", "no"], "Please confirm your entity type is required"),
       isNonFinancialInstitution: Yup.string().when("isFinancialInstitution", {

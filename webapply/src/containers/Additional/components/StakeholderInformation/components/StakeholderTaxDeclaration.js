@@ -109,15 +109,17 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
             country: Yup.string()
               .required(getRequiredMessage("Country"))
               .typeError(getRequiredMessage("Country")),
-            isTINAvailable: Yup.string().required(getRequiredMessage("Is TIN Available")),
+            isTINAvailable: Yup.string().required(
+              getRequiredMessage("Taxpayer Identification number")
+            ),
             TIN: Yup.string().when("isTINAvailable", {
               is: "yes",
               then: Yup.string()
-                .required(getRequiredMessage("TIN number"))
+                .required(getRequiredMessage("Taxpayer Identification number"))
                 .max(40, "Maximum ${max} characters allowed")
                 .matches(
                   ALPHANUMERIC_ONLY_REGEX,
-                  "Please enter a valid TIN number without special characters"
+                  "Please enter a valid Taxpayer Identification number without special characters"
                 ),
               otherwise: Yup.string().nullable()
             }),
