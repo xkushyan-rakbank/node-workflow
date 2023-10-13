@@ -35,7 +35,7 @@ jobs:
         inputs:
           versionSpec: 14.x
       - bash: |
-          echo "registry=https://pkgs.dev.azure.com/softwarelicense/505d78ca-5ab9-4415-bd14-9ad67f816ed9/_packaging/rakbank/npm/registry/" >> webapply/.npmrc
+          echo "@rakbank:registry=https://pkgs.dev.azure.com/softwarelicense/505d78ca-5ab9-4415-bd14-9ad67f816ed9/_packaging/rakbank/npm/registry/" >> webapply/.npmrc
           echo "always-auth=true" >> webapply/.npmrc
         displayName: 'Set Registry in .npmrc'
 

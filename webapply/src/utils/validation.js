@@ -66,7 +66,7 @@ export const documentValidationSchema = ({documentMinSize}) => Yup.object().shap
     .test("size", "File size exceeded (5Mb maximum)", value => value && value.size <= FILE_SIZE)
     .test(
       "minSize",
-      "Please upload correct document. The document size is too less.",
+      "Document size is insufficient. Please upload a document that is at least 50KB to continue.",
       value => value && value.size >= documentMinSize
     )
     .test(
