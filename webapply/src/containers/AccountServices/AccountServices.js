@@ -66,7 +66,6 @@ import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
-let inCompleteAccordionList = [];
 const marketingChannelSelectionHandlers = {
   "all the above": ({ isSelected }) =>
     isSelected ? [["Email", "SMS", "Call", "all the above"], ["Email", "SMS", "Call"]] : [[], []],
@@ -91,6 +90,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   useViewId(true);
+
+  let inCompleteAccordionList = [];
 
   const pushHistory = useTrackingHistory();
 
