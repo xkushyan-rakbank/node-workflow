@@ -92,4 +92,15 @@ export const useStyles = makeStyles({
       marginLeft: 0,
     },
   },
+  "@keyframes rotate": {
+    "100%": {
+      transform: "rotate(360deg)"
+    }
+  },
+  loader: {
+    width: "24px",
+    height: "24px",
+    margin: "0 auto",
+    animation: "$rotate 2s linear infinite"
+  }
 });

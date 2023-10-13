@@ -55,6 +55,7 @@ export const SearchedAppInfoContainer = ({
   const createSetStepHandler = nextStep => () => handleSetStep(nextStep);
 
   const [isDisplayConfirmDialog, setIsDisplayConfirmDialog] = useState(false);
+  const [isProspectLoading, setIsProspectLoading] = useState(false);
 
   useEffect(() => {
     resetProspect();
@@ -68,6 +69,7 @@ export const SearchedAppInfoContainer = ({
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
 
   const confirmHandler = useCallback(() => {
+    setIsProspectLoading(true);
     updateProspectId(match.params.id);
 
     return getProspectInfo(match.params.id).then(
@@ -75,7 +77,9 @@ export const SearchedAppInfoContainer = ({
         getDocumentsList();
         pushDisplayScreenToHistory(prospect);
       },
-      () => {}
+      () => {
+        setIsProspectLoading(false);
+      }
     );
   }, [
     pushDisplayScreenToHistory,
@@ -87,6 +91,7 @@ export const SearchedAppInfoContainer = ({
 
   const confirmDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);
+    setIsProspectLoading(false);
   }, [setIsDisplayConfirmDialog]);
 
   const searchResult = searchResults.find(item => item.prospectId === match.params.id);
@@ -116,6 +121,7 @@ export const SearchedAppInfoContainer = ({
         searchResult={searchResult}
         prospectOverview={prospectOverview}
         signatoryInfo={signatoryInfo}
+        isProspectLoading={isProspectLoading}
       />
     </>
   );

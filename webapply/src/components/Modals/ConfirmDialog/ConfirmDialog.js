@@ -6,6 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import cx from "classnames";
 
+import { ReactComponent as Loader } from "../../../assets/icons/loader.svg";
 import { useStyles } from "./styled";
 
 export const ConfirmDialog = ({
@@ -16,7 +17,8 @@ export const ConfirmDialog = ({
   handleConfirm,
   cancelLabel = "Cancel",
   confirmLabel = "Yes, I'm sure",
-  divider = true
+  divider = true,
+  isDisplayBtnLoader = false
 }) => {
   const classes = useStyles();
 
@@ -44,6 +46,7 @@ export const ConfirmDialog = ({
             color="primary"
             variant="outlined"
             className={classes.actionButton}
+            disabled={isDisplayBtnLoader}
           >
             {cancelLabel}
           </Button>
@@ -55,7 +58,11 @@ export const ConfirmDialog = ({
             variant="contained"
             className={cx(classes.actionButton, classes.marginTop12)}
           >
-            {confirmLabel}
+            {isDisplayBtnLoader ? (
+              <Loader className={classes.loader} alt="loading" />
+            ) : (
+              confirmLabel
+            )}
           </Button>
         )}
       </DialogActions>

@@ -22,7 +22,8 @@ export const SearchedAppInfoComponent = ({
   isDisabled,
   confirmHandler,
   confirmDialogHandler,
-  step
+  step,
+  isProspectLoading
 }) => {
   const [firstName, lastName] = fullName.split(/\s/);
   const classes = useStyles();
@@ -73,6 +74,7 @@ export const SearchedAppInfoComponent = ({
         handleReject={confirmDialogHandler}
         handleClose={confirmDialogHandler}
         message={CONFIRM_MESSAGE}
+        isDisplayBtnLoader={isProspectLoading}
       />
     </>
   );
