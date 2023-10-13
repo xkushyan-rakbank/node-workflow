@@ -385,6 +385,7 @@ export const ApplicantInfoComponent = ({
                       path="prospect.applicantInfo.roCode"
                       label=""
                       component={Input}
+                      isLoadDefaultValueFromStore={false}
                       disabled={roCode !== "" || invitationParams?.rocode}
                       InputProps={{
                         inputProps: { tabIndex: 0, maxLength: 6 }
@@ -415,6 +416,7 @@ export const ApplicantInfoComponent = ({
                       path="prospect.applicantInfo.allianceCode"
                       disabled={allianceCodeFromQuery !== "" && allianceCodeFromQuery !== undefined}
                       component={Input}
+                      isLoadDefaultValueFromStore={false}
                       InputProps={{
                         inputProps: { tabIndex: 0, maxLength: 50 }
                       }}
