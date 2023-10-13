@@ -112,7 +112,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   ];
 
   const customerPreviewValidation = Yup.object({
-    questionInput: Yup.string().required(getRequiredMessage("This field"))
+    questionInput: Yup.boolean()
+      .typeError(getRequiredMessage("This field"))
+      .required(getRequiredMessage("This field"))
   });
 
   const operatorPreviewValidation = Yup.object({
