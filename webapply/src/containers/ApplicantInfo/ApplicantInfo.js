@@ -17,11 +17,9 @@ import {
 import routes from "../../routes";
 import { setAccessToken, updateProspect } from "../../store/actions/appConfig";
 import { setIsFromInvitationLink } from "../../store/actions/applicantInfoForm";
+import { OverlayLoader } from "../../components/Loader";
 
 //ro-assist-brd3-16
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
 
 export const ApplicantInfoContainer = ({
   submit,
@@ -43,23 +41,18 @@ export const ApplicantInfoContainer = ({
   const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
   const location = useLocation();
-  const query = useQuery();
   useFormNavigation([false, false, formStepper]);
   useLayoutParams(false);
 
   const invitationParams = location.state?.invitationParams || null;
   const { applicantInfo: { persona } = {} } = prospect || {};
 
-  // useEffect(() => {
-  //   receiveAppConfig();
-  // }, [receiveAppConfig]);
-
   useEffect(() => {
     resetScreeningError();
   }, [resetScreeningError]);
 
   useEffect(() => {
-    const shouldRedirect = !invitationParams && !persona;
+    const shouldRedirect = !invitationParams && (!persona || !accountType);
     if (shouldRedirect) {
       pushHistory(routes.quickapplyLanding);
     }
