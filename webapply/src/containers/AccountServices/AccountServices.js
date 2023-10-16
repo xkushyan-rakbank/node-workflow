@@ -329,7 +329,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     businessModel: Yup.string()
       .nullable()
       .notRequired()
-      .matches(/^[a-zA-Z0-9.\-\\\s%]+$/, getInvalidMessage("Business model"))
       .max(5000, "Business model is too long. Please enter upto 5000 characters."),
     signatoryName: Yup.string()
       .nullable()
@@ -337,22 +336,18 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     ownerAdditionalInfo: Yup.string()
       .nullable()
       .notRequired()
-      .matches(/^[a-zA-Z0-9.\-\\\s%]+$/, getInvalidMessage("Additional Information of owner"))
       .max(5000, "Additional Information of owner is too long. Please enter upto 5000 characters."),
     generalRemarksRO: Yup.string()
       .nullable()
       .notRequired()
-      .matches(/^[a-zA-Z0-9.\-\\\s%]+$/, getInvalidMessage("General remarks (RO)"))
       .max(5000, "General remarks (RO) is too long. Please enter upto 5000 characters."),
     generalRemarksRM: Yup.string()
       .nullable()
       .notRequired()
-      .matches(/^[a-zA-Z0-9.\-\\\s%]+$/, getInvalidMessage("General remarks (RM)"))
       .max(5000, "General remarks (RM) is too long. Please enter upto 5000 characters."),
     verificationRemarksRM: Yup.string()
       .nullable()
       .notRequired()
-      .matches(/^[a-zA-Z0-9.\-\\\s%]+$/, getInvalidMessage("Remarks on verification (RM)"))
       .max(5000, "Remarks on verification (RM) is too long. Please enter upto 5000 characters."),
     isVisitConducted: Yup.string()
       .nullable()
@@ -365,7 +360,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
           .notRequired()
           // eslint-disable-next-line no-template-curly-in-string
           .max(5000, "Maximum ${max} characters allowed")
-          .matches(/^[a-zA-Z0-9.\-\\\s%]+$/, getInvalidMessage("Verification remarks"))
       })
     ),
     signatoryEIDinfo: Yup.string()

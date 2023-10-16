@@ -122,7 +122,6 @@ export const VerificationDetailsList = ({ values, setFieldValue, ...props }) => 
                         inputProps: { tabIndex: 0, maxLength: 5000 }
                       }}
                       component={Input}
-                      fieldDescription="Special characters - \ . % and spaces allowed."
                       classes={{
                         formControlRoot: classes.rmVerificationRemarksTextarea,
                         input: classes.textAreaStyle

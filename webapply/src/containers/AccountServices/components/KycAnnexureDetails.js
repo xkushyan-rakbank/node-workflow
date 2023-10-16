@@ -233,7 +233,6 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: EXPERIENCE_BUSINESS_MODAL_LENGTH }
             }}
             component={Input}
-            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
           />
         </Grid>
@@ -261,7 +260,6 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
             component={Input}
-            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
           />
         </Grid>
@@ -277,7 +275,6 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
             component={Input}
-            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ input: classes.textAreaStyle }}
           />
         </Grid>
@@ -293,7 +290,6 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
             component={Input}
-            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{ formControlRoot: classes.textAreaRoot, input: classes.textAreaStyle }}
           />
         </Grid>
@@ -326,7 +322,6 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
             component={Input}
-            fieldDescription="Special characters - \ . % and spaces allowed."
             classes={{
               formControlRoot: classes.rmVerificationRemarksTextarea,
               input: classes.textAreaStyle
