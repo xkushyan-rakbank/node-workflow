@@ -1,11 +1,12 @@
 /* eslint-disable max-len */
 import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
+import * as Yup from "yup";
+import { get } from "lodash";
 import { Grid } from "@material-ui/core";
 import { format, isValid } from "date-fns";
 import cx from "classnames";
-import * as Yup from "yup";
-import { useDispatch, useSelector } from "react-redux";
 
 import { useStyles } from "../components/CompanyStakeholders/styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
@@ -27,7 +28,9 @@ import { useLayoutParams } from "../../FormLayout";
 import { useViewId } from "../../../utils/useViewId";
 import { BackLink } from "../../../components/Buttons/BackLink";
 import {
-  MAX_FULL_NAME_LENGTH,
+  MAX_FIRST_NAME_LENGTH,
+  MAX_LAST_NAME_LENGTH,
+  MAX_MIDDLE_NAME_LENGTH,
   MAX_MOTHER_MAIDEN_NAME_LENGTH,
   MIN_MOTHER_NAME_LENGTH
 } from "../../CompanyInfo/constants";
@@ -38,7 +41,6 @@ import { getDatalist, getProspect, getProspectId } from "../../../store/selector
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getSearchResults } from "../../../store/selectors/searchProspect";
-import { get } from "lodash";
 import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
@@ -88,7 +90,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const labelTextForNoEfrIncorrect = (
     <span style={{ display: "flex", alignItems: "center" }}>
       <p style={{ margin: "0px" }}>
-        No{" "}
+        No
         <span style={{ fontSize: "14px", color: "#757575" }}>
           (We'll call you to fix any issues)
         </span>
@@ -119,9 +121,26 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
 
   const operatorPreviewValidation = Yup.object({
     fullName: Yup.string()
-      .required(getRequiredMessage("Fullname"))
+      .required(getRequiredMessage("Full name"))
       // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_FULL_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .max(
+        80,
+        "Full name length cannot be more than 80 characters, please reduce / adjust character length in either first, middle or last name field"
+      ),
+    firstName: Yup.string()
+      .required(getRequiredMessage("First name"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_FIRST_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(NAME_REGEX, "Please remove any special character from your name"),
+    middleName: Yup.string()
+      .notRequired()
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_MIDDLE_NAME_LENGTH, "Maximum ${max} characters allowed")
+      .matches(NAME_REGEX, "Please remove any special character from your name"),
+    lastName: Yup.string()
+      .required(getRequiredMessage("Last name"))
+      // eslint-disable-next-line no-template-curly-in-string
+      .max(MAX_LAST_NAME_LENGTH, "Maximum ${max} characters allowed")
       .matches(NAME_REGEX, "Please remove any special character from your name"),
     mothersMaidenName: Yup.string()
       .required(getRequiredMessage("Mother's maiden name"))
@@ -171,6 +190,18 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     const name = event.target.name;
     await setFieldValue(name, value);
     dispatch(updateProspect({ "prospect.signatoryInfo[0].isEFRDataCorrect": value }));
+  };
+
+  const handleFullNameChange = ({ values, setFieldValue }) => event => {
+    const value = event.target.value?.trim();
+    const name = event.target.name;
+    setFieldValue(name, value);
+    let fullNameValue = "";
+    fullNameValue += values.firstName ? values.firstName : "";
+    fullNameValue += values.middleName ? ` ${values.middleName}` : "";
+    fullNameValue += values.lastName ? ` ${values.lastName}` : "";
+    setFieldValue("fullName", fullNameValue);
+    dispatch(updateProspect({ "prospect.signatoryInfo[0].editedFullName": fullNameValue }));
   };
 
   const handleClickStakeholderPreviewNextStep = useCallback(() => {
@@ -251,7 +282,12 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     );
   };
 
-  const operatorReviewDetails = () => {
+  const operatorReviewDetails = (isSubmitting, nameChangeHandler) => {
+    if (isSubmitting) {
+      const el = document.querySelector(".Mui-error");
+      const element = el && el.parentElement ? el.parentElement : el;
+      element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     return (
       <>
         <Grid item xs={12}>
@@ -259,13 +295,56 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             isLoadDefaultValueFromStore={true}
             name="fullName"
             path="prospect.signatoryInfo[0].editedFullName"
-            label="Name"
+            label="Full name"
             component={Input}
             InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 100 }
+              inputProps: { tabIndex: 0, maxLength: 80 }
+            }}
+            disabled={isEditable}
+            showEditIcon={!isEditable}
+            fieldDescription={"Please ensure the full name is per your passport"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="firstName"
+            path="prospect.signatoryInfo[0].firstName"
+            label="First name"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: 30 },
+              onBlur: nameChangeHandler
+            }}
+            fieldDescription={"Please ensure the full name is per your passport"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="middleName"
+            path="prospect.signatoryInfo[0].middleName"
+            label="Middle name"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: 30 },
+              onBlur: nameChangeHandler
+            }}
+            fieldDescription={"Please ensure the full name is per your passport"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="lastName"
+            path="prospect.signatoryInfo[0].lastName"
+            label="Last name"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: 30 },
+              onBlur: nameChangeHandler
             }}
             disabled={!isEditable}
-            className="testingClass"
             showEditIcon={!isEditable}
             fieldDescription={"Please ensure the full name is per your passport"}
           />
@@ -281,7 +360,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
               inputProps: { tabIndex: 0, maxLength: 100 }
             }}
             disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
-            className="testingClass"
             showEditIcon={!displayFields?.mothersMaidenName ? true : false}
             fieldDescription={"Enter Mother's maiden name as per your passport"}
           />
@@ -433,8 +511,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         validationSchema={isEditable ? operatorPreviewValidation : customerPreviewValidation}
         onSubmit={handleClickStakeholderPreviewNextStep}
       >
-        {({ values, setFieldValue, ...props }) => {
+        {({ values, setFieldValue, isSubmitting, ...props }) => {
           const radioChangeHandler = selectRadioBoolean({ values, setFieldValue });
+          const nameChangeHandler = handleFullNameChange({ values, setFieldValue });
 
           return (
             <Form>
@@ -444,7 +523,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                     {customerConfirmEFRDetails(radioChangeHandler)}
                   </Grid>
                 )}
-                {isEditable && operatorReviewDetails()}
+                {isEditable && operatorReviewDetails(isSubmitting, nameChangeHandler)}
               </Grid>
               <Footer>
                 <BackLink

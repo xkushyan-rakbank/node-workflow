@@ -24,5 +24,8 @@ export const useStyles = makeStyles({
     fontWeight: 600,
     fontSize: "20px",
     marginBottom: "24px"
+  },
+  companyNameColumn: {
+    height: "auto"
   }
 });

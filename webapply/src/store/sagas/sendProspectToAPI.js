@@ -236,13 +236,25 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
       } else {
         const {
           editedFullName,
+          firstName,
+          middleName,
+          lastName,
           debitCardInfo,
           mothersMaidenName,
           kycDetails,
           isEFRDataCorrect
         } = prospect[key][0];
         nodePayload = [
-          { editedFullName, debitCardInfo, mothersMaidenName, kycDetails, isEFRDataCorrect }
+          {
+            editedFullName,
+            firstName,
+            middleName,
+            lastName,
+            debitCardInfo,
+            mothersMaidenName,
+            kycDetails,
+            isEFRDataCorrect
+          }
         ];
       }
 

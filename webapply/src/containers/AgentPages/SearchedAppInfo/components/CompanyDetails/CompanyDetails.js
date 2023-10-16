@@ -1,6 +1,7 @@
 import React from "react";
 import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
+import cx from "classnames";
 
 import { titles, errorMsgs } from "./constants";
 
@@ -15,7 +16,7 @@ export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
       {prospectOverview.applicantInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>{prospectOverview.applicantInfo.email}</div>
+            <div className={classes.companyDetails}>{prospectOverview.applicantInfo.email}--11</div>
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>
@@ -44,7 +45,7 @@ export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
       {get(prospectOverview, "organizationInfo.companyName") ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>
+            <div className={cx(classes.companyDetails, classes.companyNameColumn)}>
               {prospectOverview.organizationInfo.companyName}
             </div>
           </Grid>

@@ -24,6 +24,8 @@ export const ConfirmDialog = ({
 
   return (
     <Dialog
+      disableBackdropClick
+      disableEscapeKeyDown
       open={isOpen}
       onClose={handleClose}
       aria-labelledby="draggable-dialog-title"

@@ -24,3 +24,9 @@ export const blackListedAuthoritiesForUAE = {
   RAKE: { code: "RAKE", displayText: "RAKICC", key: "RAKE", subGroup: null, value: "RAKE" }
 };
 export const REGEX_LLC_PATTERN = /(?:Limited Liability Company)|((?:LLC)|(?:L.L.C)|(?:llc)|(?:L L C))$/i;
+
+export const MAX_FIRST_NAME_LENGTH = 30;
+
+export const MAX_LAST_NAME_LENGTH = 30;
+
+export const MAX_MIDDLE_NAME_LENGTH = 30;
