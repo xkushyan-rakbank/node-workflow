@@ -365,7 +365,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         eStatements: accountInfo?.eStatements ? "Physical" : "",
         signingRights: accountInfo?.signingPreferences,
         preferredLanguage: accountInfo?.preferredLanguage,
-        mobileInstructions: channelServicesInfo?.mobileInstructions,
+        mobileInstructions: channelServicesInfo?.mobileInstructions || "",
         marketing: findMarketingLabel(channelServicesInfo?.marketing),
         marketingChannel: channelServicesInfo?.marketingChannel,
         surveys: channelServicesInfo?.surveys ? "Yes" : "No",

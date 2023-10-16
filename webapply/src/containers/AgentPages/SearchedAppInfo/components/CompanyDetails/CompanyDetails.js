@@ -16,7 +16,7 @@ export const CompanyDetails = ({ prospectOverview = {}, searchResult }) => {
       {prospectOverview.applicantInfo ? (
         <Grid container spacing={3}>
           <Grid item md={6} sm={12}>
-            <div className={classes.companyDetails}>{prospectOverview.applicantInfo.email}--11</div>
+            <div className={classes.companyDetails}>{prospectOverview.applicantInfo.email}</div>
           </Grid>
           <Grid item md={6} sm={12}>
             <div className={classes.companyDetails}>

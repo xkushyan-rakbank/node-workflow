@@ -68,6 +68,8 @@ export const SearchedAppInfoComponent = ({
       </Footer>
 
       <ConfirmDialog
+        disableBackdropClick
+        disableEscapeKeyDown
         title={"Are you sure?"}
         isOpen={isDisplayConfirmDialog}
         handleConfirm={confirmHandler}

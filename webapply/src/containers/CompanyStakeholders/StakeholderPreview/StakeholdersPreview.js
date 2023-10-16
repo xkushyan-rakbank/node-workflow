@@ -78,6 +78,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
 
   const operatorInitialValues = {
     fullName: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
     mothersMaidenName: "",
     nationality: "",
     dateOfBirth: "",
@@ -192,18 +195,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     dispatch(updateProspect({ "prospect.signatoryInfo[0].isEFRDataCorrect": value }));
   };
 
-  const handleFullNameChange = ({ values, setFieldValue }) => event => {
-    const value = event.target.value?.trim();
-    const name = event.target.name;
-    setFieldValue(name, value);
-    let fullNameValue = "";
-    fullNameValue += values.firstName ? values.firstName : "";
-    fullNameValue += values.middleName ? ` ${values.middleName}` : "";
-    fullNameValue += values.lastName ? ` ${values.lastName}` : "";
-    setFieldValue("fullName", fullNameValue);
-    dispatch(updateProspect({ "prospect.signatoryInfo[0].editedFullName": fullNameValue }));
-  };
-
   const handleClickStakeholderPreviewNextStep = useCallback(() => {
     setIsLoading(true);
     return sendProspectToAPI(NEXT).then(
@@ -282,17 +273,32 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     );
   };
 
-  const operatorReviewDetails = (isSubmitting, nameChangeHandler) => {
+  const OperatorReviewDetails = (values, isSubmitting, setFieldValue) => {
     if (isSubmitting) {
       const el = document.querySelector(".Mui-error");
       const element = el && el.parentElement ? el.parentElement : el;
       element && element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    const {
+      firstName: signatoryFirstName,
+      middleName: signatoryMiddleName,
+      lastName: signatoryLastName
+    } = values;
+
+    useEffect(() => {
+      const concatNames = (...nameParts) => nameParts.join(" ").trim();
+      setFieldValue(
+        "fullName",
+        concatNames(signatoryFirstName, signatoryMiddleName, signatoryLastName)
+      );
+    }, [signatoryFirstName, signatoryMiddleName, signatoryLastName]);
+
     return (
       <>
         <Grid item xs={12}>
           <Field
-            isLoadDefaultValueFromStore={true}
+            isLoadDefaultValueFromStore={false}
             name="fullName"
             path="prospect.signatoryInfo[0].editedFullName"
             label="Full name"
@@ -313,10 +319,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             label="First name"
             component={Input}
             InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 30 },
-              onBlur: nameChangeHandler
+              inputProps: { tabIndex: 0, maxLength: 30 }
             }}
-            fieldDescription={"Please ensure the full name is per your passport"}
+            fieldDescription={"Please ensure the first name is as per your passport"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -327,10 +332,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             label="Middle name"
             component={Input}
             InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 30 },
-              onBlur: nameChangeHandler
+              inputProps: { tabIndex: 0, maxLength: 30 }
             }}
-            fieldDescription={"Please ensure the full name is per your passport"}
+            fieldDescription={"Please ensure the middle name is as per your passport"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -341,12 +345,11 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             label="Last name"
             component={Input}
             InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 30 },
-              onBlur: nameChangeHandler
+              inputProps: { tabIndex: 0, maxLength: 30 }
             }}
             disabled={!isEditable}
             showEditIcon={!isEditable}
-            fieldDescription={"Please ensure the full name is per your passport"}
+            fieldDescription={"Please ensure the last name is as per your passport"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -509,11 +512,12 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       <Formik
         initialValues={isEditable ? operatorInitialValues : customerInitValues}
         validationSchema={isEditable ? operatorPreviewValidation : customerPreviewValidation}
+        validateOnChange={true}
+        validateOnBlur={true}
         onSubmit={handleClickStakeholderPreviewNextStep}
       >
         {({ values, setFieldValue, isSubmitting, ...props }) => {
           const radioChangeHandler = selectRadioBoolean({ values, setFieldValue });
-          const nameChangeHandler = handleFullNameChange({ values, setFieldValue });
 
           return (
             <Form>
@@ -523,7 +527,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                     {customerConfirmEFRDetails(radioChangeHandler)}
                   </Grid>
                 )}
-                {isEditable && operatorReviewDetails(isSubmitting, nameChangeHandler)}
+                {isEditable && OperatorReviewDetails(values, isSubmitting, setFieldValue)}
               </Grid>
               <Footer>
                 <BackLink

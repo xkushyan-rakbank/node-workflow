@@ -18,16 +18,30 @@ export const ConfirmDialog = ({
   cancelLabel = "Cancel",
   confirmLabel = "Yes, I'm sure",
   divider = true,
-  isDisplayBtnLoader = false
+  isDisplayBtnLoader = false,
+  disableBackdropClick,
+  disableEscapeKeyDown
 }) => {
   const classes = useStyles();
 
+  const onClose = (event, reason) => {
+    if (disableBackdropClick && reason === "backdropClick") {
+      return false;
+    }
+
+    if (disableEscapeKeyDown && reason === "escapeKeyDown") {
+      return false;
+    }
+
+    if (typeof handleClose === "function") {
+      handleClose();
+    }
+  };
+
   return (
     <Dialog
-      disableBackdropClick
-      disableEscapeKeyDown
       open={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="draggable-dialog-title"
       classes={{
         container: classes.container,
