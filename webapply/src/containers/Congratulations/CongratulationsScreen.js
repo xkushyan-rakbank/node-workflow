@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { formStepper } from "../../constants";
-import { useIconsByAccount } from "../../utils/useIconsByAccount";
 import { useStyles } from "./styled";
 import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
@@ -17,6 +16,7 @@ import { useViewId } from "../../utils/useViewId";
 import { ReactComponent as CongratsIcon } from "../../assets/icons/congratsBallon.svg";
 import { ReactComponent as SubmittedForm } from "../../assets/icons/submittedForm.svg";
 import { ReactComponent as Phone } from "../../assets/icons/pinkPhone.svg";
+import { checkLoginStatus } from "../../store/selectors/loginSelector";
 
 export const CongratulationsScreen = ({ TAT }) => {
   useFormNavigation([true, true, formStepper]);
@@ -26,12 +26,16 @@ export const CongratulationsScreen = ({ TAT }) => {
   const pushHistory = useTrackingHistory();
 
   const classes = useStyles();
-  const { submitted } = useIconsByAccount();
   const prospectId = useSelector(getProspectId);
   const accountType = useSelector(getAccountType);
+  const isAgent = useSelector(checkLoginStatus);
 
   const navigateToDashboard = () => {
     pushHistory(routes.MyApplications, true);
+  };
+
+  const navigateToSearch = () => {
+    pushHistory(routes.searchProspect, true);
   };
 
   const accountTypeLabel = accountType === "Current Account" ? "Current" : accountType;
@@ -79,9 +83,9 @@ export const CongratulationsScreen = ({ TAT }) => {
         <ContainedButton
           withRightArrow
           justifyContent="flex-start"
-          label="Track my application"
+          label={isAgent ? "Back to search" : "Track my application"}
           className={classes.trackApplicationBtn}
-          handleClick={() => navigateToDashboard()}
+          handleClick={() => (isAgent ? navigateToSearch() : navigateToDashboard())}
         />
       </div>
     </>
