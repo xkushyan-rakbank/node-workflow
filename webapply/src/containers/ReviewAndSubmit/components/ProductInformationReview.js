@@ -46,6 +46,16 @@ export const ProductInformationReview = ({ fieldValues }) => {
   const getmarketingChannelOptions = options =>
     options.map(option => marketingChannelOptionsLabel[option]).join(", ");
 
+  const getAccountTitles = value => {
+    const labelMap = {
+      RAKelite: "Business Elite",
+      RAKStarter: "RAKstarter",
+      "Current Account": "Current Account"
+    };
+
+    return labelMap[value] || "";
+  };
+
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
@@ -70,7 +80,7 @@ export const ProductInformationReview = ({ fieldValues }) => {
               <p style={{ textTransform: "capitalize" }}>{fieldValues.productVariant}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Account type:</label> <p>{fieldValues.accountType}</p>
+              <label>Account type:</label> <p>{getAccountTitles(fieldValues.accountType)}</p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Signing rights:</label> <p>{signingRightsText?.label}</p>
