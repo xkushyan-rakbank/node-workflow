@@ -34,6 +34,7 @@ import {
 import { handleActions } from "../../utils/redux-utils";
 import { GET_KYC_STATUS_ERROR } from "../actions/kyc";
 import { GET_KYC_STATUS_SUCCESS } from "../actions/kyc";
+import { RESET_PROSPECT } from "../actions/appConfig";
 
 export const initialState = {
   loading: false,
@@ -295,7 +296,8 @@ export default handleActions(
     [SEND_EFR_INVITE_ERROR]: (state, { payload }) => ({
       ...state,
       efrSendInviteStatus: payload
-    })
+    }),
+    [RESET_PROSPECT]: () => initialState
   },
   initialState
 );

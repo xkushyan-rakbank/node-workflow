@@ -55,7 +55,7 @@ import {
   AUTO_SAVE_INTERVAL,
   applicationError
 } from "../../constants";
-import { setTat, updateProspect } from "../actions/appConfig";
+import { resetProspect, setTat, updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 import { pageProspectPaylodMap } from "../../constants/config";
@@ -170,6 +170,8 @@ export function* prospectSaveOnClick() {
     if (isSaveEnabled && newProspect) {
       yield put(sendProspectRequest(newProspect, AUTO));
     }
+
+    yield put(resetProspect);
 
     return { isSaveEnabled, newProspect };
   } catch (e) {
