@@ -86,10 +86,13 @@ import {
   PERSONAL_BACKGROUND_DOCTYPE,
   companyMultiDocs,
   stakeholderMultiDocs,
-  BBG_COMPANY_INFO_MODULEID
+  BBG_COMPANY_INFO_MODULEID,
+  invalidDocument,
+  tokenExpired
 } from "./../../constants";
 import { PROSPECT_STATUSES } from "../../constants/index";
 import { AUTO } from "../../constants";
+import { NotificationsManager } from "../../components/Notification";
 
 export function createUploader(prospectId, data, source, headers) {
   let emit;
@@ -575,7 +578,14 @@ export function* uploadDocuments({ payload }) {
       );
     }
   } catch (error) {
-    payload.onFailure();
+    if (error.response.status === 400) {
+      NotificationsManager.add(invalidDocument);
+    }
+    if (error.response.status === 502) {
+      NotificationsManager.add(tokenExpired);
+      yield call(initDocumentUpload);
+    }
+    payload.onFailure(error);
     log(error);
   }
 }
