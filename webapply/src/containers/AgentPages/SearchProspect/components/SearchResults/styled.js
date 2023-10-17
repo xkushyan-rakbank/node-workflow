@@ -173,8 +173,15 @@ export const useStyles = makeStyles({
     lineHeight: "1.25rem",
     whiteSpace: "pre-wrap"
   },
+  applicationDetails: {
+    flex: "1"
+  },
+  companyDetails: {
+    flex: "3"
+  },
   reason: {
-    maxWidth: "unset"
+    maxWidth: "unset",
+    flex: "4"
   },
   remarks: {
     gap: "0.5rem",

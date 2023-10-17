@@ -131,7 +131,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
         </div>
       </div>
       <div className={classes.searchItemDetails}>
-        <div className={classes.appDetails}>
+        <div className={cx(classes.appDetails, classes.applicationDetails)}>
           <span className={classes.appDetailsHeader}>Application details</span>
           <span className={classes.appDetailsinfo}>
             {application.applicantInfo?.email || ""}
@@ -140,7 +140,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
               ?.mobileNo || ""}`}
           </span>
         </div>
-        <div className={classes.appDetails}>
+        <div className={cx(classes.appDetails, classes.companyDetails)}>
           <span className={classes.appDetailsHeader}>Company details</span>
           {application?.organizationInfo ? (
             <span className={classes.appDetailsinfo}>
