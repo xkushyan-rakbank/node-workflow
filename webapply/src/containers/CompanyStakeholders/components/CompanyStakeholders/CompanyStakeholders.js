@@ -104,15 +104,6 @@ export const CompanyStakeholdersComponent = ({
     }
   }, [transactionId]);
 
-  useEffect(() => {
-    if (analysedEidData.age) {
-      const age = getOcrFieldValueBySource(analysedEidData?.age);
-      if (age && age < 18) {
-        dispatch(analyseOcrAgeRestriction(AGE_RESTRICTION));
-      }
-    }
-  }, [analysedEidData]);
-
   const onScanEid = () => {
     onRemoveOcrData(DOC_TYPE_EID);
     setOpenEidScanner(true);

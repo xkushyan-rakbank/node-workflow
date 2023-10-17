@@ -100,6 +100,46 @@ export function* createKycTransactionSaga() {
   }
 }
 
+function* validateOCR(response, documentType, analysedEidData) {
+  const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry);
+  const nationality = getOcrFieldValueBySource(response?.nationalityIso2);
+  const age = getOcrFieldValueBySource(response?.age);
+
+  if (documentType === DOC_TYPE_EID) {
+    if (!checkIsDocTypeEid(response)) {
+      yield put(analyseOcrFail(INVALID_DOCUMENT));
+      return false;
+    }
+    if (parseInt(daysToExpiry) <= 10) {
+      yield put(analyseOcrFail(EID_EXPIRY));
+    } else {
+      if (age < 18) {
+        yield put(analyseOcrAgeRestriction(AGE_RESTRICTION));
+      }
+      yield put(analyseOcrSuccessEid(response));
+      return true;
+    }
+
+    return false;
+  }
+  if (documentType === DOC_TYPE_PASSPORT) {
+    if (!checkIsDocTypePassport(response)) {
+      yield put(analyseOcrFail(INVALID_DOCUMENT));
+      return;
+    }
+    const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2);
+    if (nationalityAsInEid !== nationality) {
+      yield put(analyseOcrFail(DOC_MISMATCH));
+    } else if (daysToExpiry <= 10) {
+      yield put(analyseOcrFail(PASSPORT_EXPIRY));
+    } else {
+      yield put(analyseOcrSuccessPassport(response));
+      return true;
+    }
+    return false;
+  }
+}
+
 export function* analyseOcrDataSaga({ payload }) {
   const { ocrData, documentType } = payload;
   try {
@@ -120,36 +160,7 @@ export function* analyseOcrDataSaga({ payload }) {
       return;
     }
 
-    const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry);
-    const nationality = getOcrFieldValueBySource(response?.nationalityIso2);
-    const age = getOcrFieldValueBySource(response?.age);
-
-    if (documentType === DOC_TYPE_EID) {
-      if (!checkIsDocTypeEid(response)) {
-        yield put(analyseOcrFail(INVALID_DOCUMENT));
-        return;
-      }
-      parseInt(daysToExpiry) <= 10
-        ? yield put(analyseOcrFail(EID_EXPIRY))
-        : yield put(analyseOcrSuccessEid(response));
-      if (age < 18) {
-        yield put(analyseOcrAgeRestriction(AGE_RESTRICTION));
-      }
-    }
-    if (documentType === DOC_TYPE_PASSPORT) {
-      if (!checkIsDocTypePassport(response)) {
-        yield put(analyseOcrFail(INVALID_DOCUMENT));
-        return;
-      }
-      const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2);
-      if (nationalityAsInEid !== nationality) {
-        yield put(analyseOcrFail(DOC_MISMATCH));
-      } else if (daysToExpiry <= 10) {
-        yield put(analyseOcrFail(PASSPORT_EXPIRY));
-      } else {
-        yield put(analyseOcrSuccessPassport(response));
-      }
-    }
+    yield call(validateOCR, response, documentType, analysedEidData);
   } catch (error) {
     const notificationOptions = {};
 
@@ -427,7 +438,15 @@ function* putOcrData(transactionId) {
   const eidOcrDetails = extractOCRData(eidDocuments);
   const passportDetails = extractOCRData(passportDocuments);
   yield put(loadEidDocuments(eidOcrDetails));
-  yield put(loadPassportDocuments(passportDetails));
+  const isPassportValidated = yield call(
+    validateOCR,
+    passportDetails?.efrResponse,
+    DOC_TYPE_PASSPORT,
+    eidOcrDetails.efrResponse
+  );
+  if (isPassportValidated) {
+    yield put(loadPassportDocuments(passportDetails));
+  }
 }
 
 export function* getCurrentKYCStatus() {
@@ -514,6 +533,7 @@ export function* getCurrentKYCStatus() {
       const eidOcrDetails = extractOCRData(eidDocuments);
       const isDocValid = checkDocumentValid(eidOcrDetails?.efrResponse);
       if (isDocValid) {
+        yield call(validateOCR, eidOcrDetails?.efrResponse, DOC_TYPE_EID);
         yield put(loadEidDocuments(eidOcrDetails));
       }
     }
