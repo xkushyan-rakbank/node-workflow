@@ -89,15 +89,6 @@ export const AdditionalStakeholderInformation = ({
 
   const handleClickNextStep = () => {
     setIsLoading(true);
-    const fullName = `${signatoryInfo[0].editedFullName}`;
-    const editedName =
-      fullName.length > 19 ? signatoryInfo[0].editedFullName.split(" ")[0] : fullName;
-    const nameOnCard = editedName.length > 19 ? editedName.subString(0, 18) : editedName;
-    dispatch(
-      updateProspect({
-        "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard": nameOnCard
-      })
-    );
     return sendProspectToAPI(NEXT).then(
       isScreeningError => {
         if (!isScreeningError) {
