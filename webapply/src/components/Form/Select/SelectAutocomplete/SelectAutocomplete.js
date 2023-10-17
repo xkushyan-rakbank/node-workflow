@@ -1,4 +1,4 @@
-import React, { useState, memo, useEffect, useMemo } from "react";
+import React, { useState, memo, useEffect, useMemo, useRef } from "react";
 import Select from "react-select";
 import { getIn } from "formik";
 import { FormControl } from "@material-ui/core";
@@ -29,6 +29,7 @@ const SelectAutocompleteBase = ({
   isClearable = false,
   ...props
 }) => {
+  const selectRef = useRef();
   const classes = useStyles({
     ...props,
     disabled
@@ -43,6 +44,12 @@ const SelectAutocompleteBase = ({
 
   const handleChange = selected => {
     const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
+    const selectInnerRef = props.innerRef || selectRef;
+    if (!multiple && selectInnerRef && selectInnerRef.current) {
+      setTimeout(() => {
+        selectInnerRef.current.select.blur();
+      }, 0);
+    }
 
     return onChange(value, renderValue);
   };
@@ -71,7 +78,7 @@ const SelectAutocompleteBase = ({
         <Select
           {...field}
           {...props}
-          ref={props.innerRef}
+          ref={props.innerRef || selectRef}
           classes={classes}
           isOpen
           options={options}
