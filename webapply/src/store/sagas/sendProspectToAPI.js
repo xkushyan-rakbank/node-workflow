@@ -13,6 +13,7 @@ import {
   takeEvery
 } from "redux-saga/effects";
 
+import { get } from "lodash";
 import { getErrorScreensIcons } from "../../utils/getErrorScreenIcons/getErrorScreenIcons";
 import {
   SEND_PROSPECT_TO_API,
@@ -37,7 +38,7 @@ import {
   getApplicationInfo,
   getSignatories
 } from "../selectors/appConfig";
-import { checkLoginStatus } from "../selectors/loginSelector";
+import { checkLoginStatus, getLoginResponse } from "../selectors/loginSelector";
 import { getCompletedSteps } from "../selectors/completedSteps";
 import { getScreeningError } from "../selectors/sendProspectToAPI";
 import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
@@ -53,13 +54,16 @@ import {
   VIEW_IDS,
   STEP_STATUS,
   AUTO_SAVE_INTERVAL,
-  applicationError
+  applicationError,
+  operatorLoginScheme
 } from "../../constants";
 import { resetProspect, setTat, updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
 import { SCREENING_FAIL_REASONS } from "../../constants";
 import { pageProspectPaylodMap } from "../../constants/config";
 import { NOTIFY_HOST } from "../actions/kyc";
+import { OPE_EDIT } from "../../containers/AgentPages/SearchedAppInfo/constants";
+import { getSearchResults } from "../selectors/searchProspect";
 
 function checkIsAutoSaveViewId(viewId) {
   return [
@@ -196,7 +200,7 @@ export function* prospectAutoSave() {
   }
 }
 
-const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
+const getRequestPayloadForNode = (key, prospect, viewId, isAgent, isEditable) => {
   let nodePayload;
   switch (key) {
     case "organizationInfo": {
@@ -235,7 +239,7 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
             nodePayload = [{ isEFRCheckLimitExceeded, signatoryId }];
           }
         }
-      } else {
+      } else if (viewId === "/StakeholdersInfoPreview" && isEditable) {
         const {
           editedFullName,
           firstName,
@@ -252,6 +256,23 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
             firstName,
             middleName,
             lastName,
+            debitCardInfo,
+            mothersMaidenName,
+            kycDetails,
+            isEFRDataCorrect
+          }
+        ];
+      } else {
+        const {
+          editedFullName,
+          debitCardInfo,
+          mothersMaidenName,
+          kycDetails,
+          isEFRDataCorrect
+        } = prospect[key][0];
+        nodePayload = [
+          {
+            editedFullName,
             debitCardInfo,
             mothersMaidenName,
             kycDetails,
@@ -285,14 +306,20 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent) => {
 
 export function* sendProspectToAPI({ payload: { newProspect, saveType, actionType, step } }) {
   try {
+    const { scheme } = yield select(getLoginResponse);
     const prospectId = yield select(getProspectId);
     const headers = yield select(getAuthorizationHeader);
     const completedSteps = yield select(getCompletedSteps);
     const applicationInfo = yield select(getApplicationInfo);
     const signatoryInfo = yield select(getSignatories);
     const isAgent = yield select(checkLoginStatus);
+    const searchResults = yield select(getSearchResults);
+    const currentProspect = searchResults.find(item => item.prospectId === prospectId);
 
     const viewId = applicationInfo.viewId;
+    const isFrontCorrection = get(currentProspect, "status.statusType") === OPE_EDIT;
+    const isOperator = scheme === operatorLoginScheme;
+    const isEditable = isOperator && isFrontCorrection;
 
     const newCompletedSteps = step
       ? completedSteps.map(completedStep => {
@@ -315,7 +342,13 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     payloadKeys &&
       payloadKeys.forEach(key => {
         if (newProspect[key]) {
-          createProspectPayload[key] = getRequestPayloadForNode(key, newProspect, viewId, isAgent);
+          createProspectPayload[key] = getRequestPayloadForNode(
+            key,
+            newProspect,
+            viewId,
+            isAgent,
+            isEditable
+          );
         }
       });
 
