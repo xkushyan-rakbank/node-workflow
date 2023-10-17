@@ -82,8 +82,8 @@ export const Upload = ({
         </ContexualHelp>
         {notedText}
 
-        <div className={cx(classes.uplaodContainer, { "Mui-error": isError })}>
-          <div className={classes.main} {...getRootProps()}>
+        <div className={cx(classes.uplaodContainer, { "Mui-error": isError })} {...getRootProps()}>
+          <div className={classes.main}>
             <div className={classes.row}>
               {hasFile && showUploadSuccessIcon ? (
                 <Check size="14px" className={classes.success} />
@@ -139,7 +139,10 @@ export const Upload = ({
               color="primary"
               variant="outlined"
               className={classes.actionButton}
-              onClick={onDelete}
+              onClick={event => {
+                onDelete();
+                event.stopPropagation();
+              }}
             >
               Remove
             </Button>
@@ -149,6 +152,9 @@ export const Upload = ({
               variant="contained"
               component="label"
               className={classes.actionButton}
+              onClick={event => {
+                event.preventDefault();
+              }}
             >
               Upload
               <input type="file" hidden {...getInputProps()} />
