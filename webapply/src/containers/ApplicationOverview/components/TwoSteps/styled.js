@@ -55,7 +55,7 @@ export const useStyles = makeStyles((theme) => ({
       // marginBottom: "40px"
     },
     "& p": {
-      color: "#334E8D",
+      color: "#000000",
       fontSize: "0.75rem",
       fontWeight: 500,
       lineHeight: "16px",
@@ -169,7 +169,7 @@ export const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up("sm")]: {
       fontSize: "16px", 
-      fontWeight: 400,
+      fontWeight: 500,
       lineHeight: "22.4px",
     }
   },

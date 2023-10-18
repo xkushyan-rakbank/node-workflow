@@ -110,7 +110,7 @@ export default function AdditionalInfoComponent() {
       <div className={classes.section}>
         <SectionTitleWithInfo
           title={"Tell us about your business and stakeholders"}
-          info="We just need some details about your business and the people involved"
+          info="We need details about your business and the people involved."
           smallInfo
         />
         <div

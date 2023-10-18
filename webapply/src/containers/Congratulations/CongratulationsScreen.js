@@ -48,7 +48,7 @@ export const CongratulationsScreen = ({ TAT }) => {
       <CongratsIcon className={classes.congratulationIcon} />
       <div className={classes.congratulationsTextWrapper}>
         <SectionTitleWithInfo
-          title={"Congratulations!"}
+          title={"Thank you!"}
           info={`You've successfully submitted your ${accountTypeLabel} account application.`}
           smallInfo
           className={classes.customHeaderTitle}

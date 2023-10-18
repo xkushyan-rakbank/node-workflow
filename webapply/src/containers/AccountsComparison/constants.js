@@ -122,8 +122,8 @@ export const perksDataRows = [
   {
     info: "Free accounting packages and\nbusiness insurance**",
     starter: { ic: checkIcon },
-    currentAccount: { ic: crossIcon },
-    elite: { ic: crossIcon }
+    currentAccount: { ic: checkIcon },
+    elite: { ic: checkIcon }
   },
   {
     info: "Dedicated relationship manager",

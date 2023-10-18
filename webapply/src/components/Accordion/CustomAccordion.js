@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         alignItems: "center",
         gap: "8px",
-        fontWeight: 400,
+        fontWeight: 500,
         fontSize: "16px",
         lineHeight: "22px",
         color: "#8D0C10",

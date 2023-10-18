@@ -26,7 +26,7 @@ export const TwoSteps = () => {
           <div className={classes.cards}>
             <PassportIcon alt="passport" className={classes.passportIcon} height="24" />
             <p className={classes.cardDesc}>
-               Passports and Emirates ID of stakeholders
+               Passports and Emirates ID of Signatories
               <sup className={classes.asteriskText}>2</sup>
             </p>
           </div>

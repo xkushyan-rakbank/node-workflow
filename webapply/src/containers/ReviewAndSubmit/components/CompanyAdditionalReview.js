@@ -96,7 +96,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
             <div className={classes.infoLabelValue}>
               <label>Proof of address:</label> <p>{fieldValues.proofOfAddress}</p>
             </div>
-            <div className={classes.infoLabelValue}>
+            {/* <div className={classes.infoLabelValue}> //removed from figma :/
               <label>Registered email:</label>
               <p className={classes.noWrapText}>{fieldValues.email}</p>
             </div>
@@ -105,7 +105,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p className={classes.noWrapText}>
                 {fieldValues.mobileNo && `+${fieldValues.countryCode} ${fieldValues.mobileNo}`}
               </p>
-            </div>
+            </div> */}
           </div>
         </InformationSection>
         <InformationSection title={"Tax declarations"} showEditIcon={false}>
@@ -131,7 +131,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues.isNonFinancialInstitution}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Financial Institution:</label>
+              <label>Financial institution:</label>
               <p>{fieldValues.isFinancialInstitution}</p>
             </div>
 

@@ -560,7 +560,7 @@ export const ACTION_TYPES = {
 export const Personas = {
   SP: {
     key: "SP",
-    title: "I’m a sole proprietor (Individual)",
+    title: "I’m a sole proprietor",
     subTitle: ["I own this business"],
     url: routes.applicantInfo,
     urlType: "2.0",
@@ -591,7 +591,7 @@ export const Personas = {
     subTitle: [
       "I'm a partner in the business",
       "I have Power of Attorney",
-      "Company as a stakeholder"
+      "I'm applying as a stakeholding company"
     ],
     url: process.env.REACT_APP_BAU_URL || "/",
     urlType: "bau",

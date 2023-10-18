@@ -14,6 +14,7 @@ import { accountNames, applicationOverviewRoutes } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 import { accountTypes } from "../../containers/AccountsComparison/components/TableCompare/constants";
+import cx from "classnames";
 
 const HeaderTitleComponent = ({
   islamicBanking,
@@ -48,8 +49,10 @@ const HeaderTitleComponent = ({
     history.push(routes.login);
   }, [logout, history]);
 
+  const hideHeaderTile = pathname.endsWith(routes.verifyMobileOtp);
+
   return (
-    <div className={classes.headerTitle}>
+    <div className={cx(classes.headerTitle, { [classes.hideHeaderTile]: hideHeaderTile })}>
       <div className={classes.headerTitleIn}>
         <span>
           {/* //ro-assist header missing issue fix */}

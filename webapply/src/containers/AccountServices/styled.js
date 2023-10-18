@@ -47,7 +47,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   radioConatiner: {
     [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
+      flexDirection: "row",
     },
   },
   packageSelectionContainer: {

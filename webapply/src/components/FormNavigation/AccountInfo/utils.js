@@ -25,8 +25,8 @@ export const getTitleByPathname = (pathname, accountType) => {
     [`${BBG}${routes.comeBackLogin}`]: "Good to see you back!",
     [`${BBG}${routes.comeBackLoginVerification}`]: "Confirm that it's you",
     [`${BBG}${routes.verifyOtp}`]: "Confirm that it's you",
-    [`${BBG}${routes.ApplicationSubmitted}`]: "Check it out. Application submitted!",
-    [`${BBG}${routes.congratulations}`]: "Check it out. Application submitted!",
+    [`${BBG}${routes.ApplicationSubmitted}`]: "That's it. You're done!",
+    [`${BBG}${routes.congratulations}`]: "That's it. You're done!",
     [`${BBG}${routes.reUploadDocuments}`]: "Upload your documents",
     [`${BBG}${routes.quickapplyLanding}`]: "All businesses start with an account. Get yours now."
     //[routes.quickapplyLanding]: "Welcome to Quick Apply!"

@@ -775,7 +775,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                   >
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
-                        What language would you prefer for RAKBANK communications?
+                        Which language would you prefer for future correspondence from us?
                       </label>
                       <Field
                         typeRadio
@@ -871,7 +871,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                   <Accordion
                     title={accordionTitle("Code")}
                     id={"codesBankUse"}
-                    expandedDescription={"For bank use only"}
+                    expandedDescription={
+                      "Please use the agent or partner code that was provided if you were assisted by a sales agent or relationship manager."
+                    }
                     classes={{
                       accordionRoot: classes.accountServiceAccordionRoot,
                       accordionSummaryContent: classes.accountServiceAccordionSummaryContent,

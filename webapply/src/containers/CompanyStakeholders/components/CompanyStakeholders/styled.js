@@ -85,7 +85,7 @@ export const useStyles = makeStyles(theme => ({
         letterSpacing: "0em",
         textAlign: "left",
         margin: "0px",
-        color: "#757575"
+        color: "#1F1F1F"
       }
     }
   },
@@ -148,7 +148,8 @@ export const useStyles = makeStyles(theme => ({
     overflowY: "auto",
     [theme.breakpoints.down("sm")]: {
       width: "80%",
-      padding: "32px"
+      padding: "32px",
+      overflowX: "clip"
     },
     [theme.breakpoints.only("md")]: {
       width: "70%"

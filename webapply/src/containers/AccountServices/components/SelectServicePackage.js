@@ -81,7 +81,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           </Button>
         </Grid>
       </Grid>
-      <h3 className={classes.packagefeatureTitle}>Banking benefits</h3>
+      <h3 className={classes.packagefeatureTitle}>Banking</h3>
       {bankingBenefits.map(({ info, rakValue_plus, rakValue_max }, index) => {
         return (
           <Grid container key={index}>
@@ -109,7 +109,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           </Grid>
         );
       })}
-      <h3 className={classes.packagefeatureTitle}>Lifestyle Benefits</h3>
+      <h3 className={classes.packagefeatureTitle}>Lifestyle</h3>
       {lifestyleBenefits.map(({ info, rakValue_plus, rakValue_max }, index) => {
         return (
           <Grid container key={index}>
@@ -137,7 +137,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
           </Grid>
         );
       })}
-      <h3 className={classes.packagefeatureTitle}>Insurance Benefits</h3>
+      <h3 className={classes.packagefeatureTitle}>Insurance</h3>
       {insuranceBenefits.map(({ info, rakValue_plus, rakValue_max }, index) => {
         return (
           <Grid container key={index}>

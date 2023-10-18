@@ -233,14 +233,14 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <p>How can we help you?</p>
           <div className={classes.btnWrapper} id="businessAccountButton" ref={businessButton}>
             <div onClick={handleClick}>
-              <ExpandMoreButton label="Business Account" className={classes.accountBtn} />
+              <ExpandMoreButton label="Business account" className={classes.accountBtn} />
             </div>
             <div
               onClick={() =>
                 redirectInToFinance(process.env.REACT_APP_BAU_URL + smeBaseName + "/finances")
               }
             >
-              <ExpandMoreButton label="Business Finance" className={classes.accountBtn} />
+              <ExpandMoreButton label="Business finance" className={classes.accountBtn} />
             </div>
           </div>
         </div>
@@ -304,9 +304,8 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           </div>
         </div>
         <div className={classes.featureInfo}>
-          <p>Note: 5% VAT will be added to all applicable fees for business customers.</p>
           <p>
-            See our&nbsp;
+            Note: The above charges include 5% VAT. For additional details, please see our&nbsp;
             <a target="_blank" rel="noopener noreferrer" href={servicePricingGuideUrl}>
               Service & Price guide.
             </a>

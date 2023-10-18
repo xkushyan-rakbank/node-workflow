@@ -23,6 +23,9 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     width: "100%"
   },
+  hideHeaderTile: {
+    display: "none"
+  },
   logout: {
     float: "right",
     marginTop: "-20px",

@@ -51,7 +51,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
     <>
       <div className={classes.descriptionContent}>
         <div className={classes.kfsDescriptionContent}>
-          <h6 className={classes.kfsTitle}>Key Fact Statement (KFS)</h6>
+          <h6 className={classes.kfsTitle}>Key Facts Statement (KFS)</h6>
           {!termsAndConditions.kfs ? (
             <div className={classes.notAcceptWrapper}>
               <span>To do</span>
