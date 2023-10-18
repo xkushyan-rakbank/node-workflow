@@ -86,6 +86,8 @@ export const SaveAndClose = ({
           Save & close
         </Button>
         <ConfirmDialog
+          disableBackdropClick
+          disableEscapeKeyDown
           title={null}
           isOpen={isDisplayConfirmDialog}
           handleConfirm={handleConfirm}
@@ -95,6 +97,7 @@ export const SaveAndClose = ({
           cancelLabel="No"
           confirmLabel="Yes"
           divider={false}
+          isDisplayBtnLoader={circularProgress}
         />
       </div>
       {circularProgress && (
