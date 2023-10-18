@@ -578,10 +578,10 @@ export function* uploadDocuments({ payload }) {
       );
     }
   } catch (error) {
-    if (error.response.status === 400) {
+    if (error?.response && error.response.status === 400) {
       NotificationsManager.add(invalidDocument);
     }
-    if (error.response.status === 502) {
+    if (error?.response && error.response.status === 502) {
       NotificationsManager.add(tokenExpired);
       yield call(initDocumentUpload);
     }
