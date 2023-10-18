@@ -298,7 +298,11 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     } = values;
 
     useEffect(() => {
-      const concatNames = (...nameParts) => nameParts.join(" ").trim();
+      const concatNames = (...nameParts) =>
+        nameParts
+          .filter(Boolean)
+          .join(" ")
+          .trim();
       setFieldValue(
         "fullName",
         concatNames(signatoryFirstName, signatoryMiddleName, signatoryLastName)

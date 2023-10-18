@@ -113,7 +113,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 placeholder="Customer email address"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0 }
+                  inputProps: { tabIndex: 0, maxLength: 50 }
                 }}
                 fieldDescription="This email will be used to open the account. We'll send a one-time password (OTP) to it for verification."
               />
