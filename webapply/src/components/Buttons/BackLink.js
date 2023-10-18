@@ -1,11 +1,13 @@
 import React, { memo } from "react";
 import cx from "classnames";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { styled } from "@material-ui/styles";
 import { makeStyles } from "@material-ui/core";
 
 import { theme } from "../../theme";
 import { ICONS, Icon } from "../Icons";
+import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
 
 export const ArrowBack = styled(Icon)({
   width: "18px"
@@ -62,7 +64,7 @@ const useStyles = makeStyles(theme => ({
       color: "#3B3A3A",
       fontSize: "1rem",
       fontWeight: 500,
-      lineHeight: "28px",
+      lineHeight: "28px"
     },
 
     "& .arrowIcon": {
@@ -88,16 +90,25 @@ const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up("lg")]: {
       fontSize: "1.25rem",
-      padding: "12px 45px",
+      padding: "12px 45px"
     }
   }
 }));
 const BackLinkBase = ({ text = "Back", className = "", path, isTypeButton = false, ...props }) => {
+  const isProspectSaving = useSelector(getIsSendingProspect);
   const classes = useStyles();
+
+  const handleLinkClick = ev => {
+    if (ev && isProspectSaving) {
+      ev.preventDefault();
+    }
+  };
+
   return (
     <Link
       className={cx(classes.root, { [classes.linkContainerBtn]: isTypeButton })}
       to={path}
+      onClick={handleLinkClick}
       replace
       {...props}
     >
