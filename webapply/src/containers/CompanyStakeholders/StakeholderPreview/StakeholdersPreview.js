@@ -136,6 +136,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       .max(MAX_FIRST_NAME_LENGTH, "Maximum ${max} characters allowed")
       .matches(NAME_REGEX, "Please remove any special character from your name"),
     middleName: Yup.string()
+      .nullable()
       .notRequired()
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_MIDDLE_NAME_LENGTH, "Maximum ${max} characters allowed")
