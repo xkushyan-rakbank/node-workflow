@@ -64,7 +64,6 @@ export const AdditionalStakeholderInformation = ({
       statuses["addionalStakeholderInfoStatus"] = "In Progress";
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
-    dispatch(initDocumentUpload());
   }, []);
 
   const initialValues = {

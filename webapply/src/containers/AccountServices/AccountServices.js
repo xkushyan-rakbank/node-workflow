@@ -137,7 +137,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   }, [accountType]);
 
   useEffect(() => {
-    dispatch(initDocumentUpload());
     dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": true }));
     packageRef.current.click();
   }, []);

@@ -65,7 +65,6 @@ export const AddCompanyInformation = ({
       statuses["companyAdditionalInfoStatus"] = "In Progress";
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
-    dispatch(initDocumentUpload());
   }, []);
 
   const initialValues = {

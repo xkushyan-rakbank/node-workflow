@@ -460,15 +460,16 @@ const checkTokenInvalid = token => {
 
 export function* uploadDocuments({ payload }) {
   try {
+    yield call(initDocumentUpload);
     const prospectId = yield select(getProspectId);
     let headers = yield select(getDocuploaderHeader);
     let token = yield select(getDocumentUplaoderjwtToken);
-    const isInvalidToken = checkTokenInvalid(token);
-    if (isInvalidToken) {
-      yield call(initDocumentUpload);
-      headers = yield select(getDocuploaderHeader);
-      token = yield select(getDocumentUplaoderjwtToken);
-    }
+    // const isInvalidToken = checkTokenInvalid(token);
+    // if (isInvalidToken) {
+    //   yield call(initDocumentUpload);
+    //   headers = yield select(getDocuploaderHeader);
+    //   token = yield select(getDocumentUplaoderjwtToken);
+    // }
     const documentList = yield select(getDocumentsList);
     const prospect = yield select(getProspect);
     // find the respective document section from documentList

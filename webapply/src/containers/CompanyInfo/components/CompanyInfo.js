@@ -63,9 +63,6 @@ export const CompanyInfo = ({
   );
   const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa);
   const refToTopOfCompanyInfo = useRef(null);
-  useEffect(() => {
-    dispatch(initDocumentUpload());
-  }, []);
 
   const initialValues = {
     companyName: "",
