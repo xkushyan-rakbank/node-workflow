@@ -102,7 +102,8 @@ export function* createKycTransactionSaga() {
 
 function* validateOCR(response, documentType, analysedEidData) {
   const daysToExpiry = getOcrFieldValueBySource(response?.daysToExpiry);
-  const nationality = getOcrFieldValueBySource(response?.nationalityIso2);
+  const nationalityIso2 = getOcrFieldValueBySource(response?.nationalityIso2);
+  const nationalityIso3 = getOcrFieldValueBySource(response?.nationalityIso3);
   const age = getOcrFieldValueBySource(response?.age);
 
   if (documentType === DOC_TYPE_EID) {
@@ -127,8 +128,9 @@ function* validateOCR(response, documentType, analysedEidData) {
       yield put(analyseOcrFail(INVALID_DOCUMENT));
       return;
     }
-    const nationalityAsInEid = getOcrFieldValueBySource(analysedEidData?.nationalityIso2);
-    if (nationalityAsInEid !== nationality) {
+    const nationalityAsInEidIso2 = getOcrFieldValueBySource(analysedEidData?.nationalityIso2);
+    const nationalityAsInEidIso3 = getOcrFieldValueBySource(analysedEidData?.nationalityIso3);
+    if (nationalityAsInEidIso2 !== nationalityIso2 && nationalityIso3 !== nationalityAsInEidIso3) {
       yield put(analyseOcrFail(DOC_MISMATCH));
     } else if (daysToExpiry <= 10) {
       yield put(analyseOcrFail(PASSPORT_EXPIRY));
