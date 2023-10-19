@@ -4,7 +4,6 @@ import { Button } from "@material-ui/core";
 import cx from "classnames";
 import { useSelector } from "react-redux";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
-import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FaceScanIcon } from "../../assets/icons/face_scan.svg";
@@ -278,7 +277,20 @@ export const FaceRecognition = ({
             <CheckIcon />
             <span>Completed</span>
           </div>
-        ) : isAgent ? (
+        ) : (
+          !isAgent && (
+            <Button
+              color="primary"
+              variant="contained"
+              className={classes.actionButton}
+              disabled={!isAgent && !isStepActive}
+              onClick={startFaceScan}
+            >
+              Scan
+            </Button>
+          )
+        )}
+        {isAgent && (
           <Button
             color="primary"
             variant="contained"
@@ -287,16 +299,6 @@ export const FaceRecognition = ({
             isDisplayLoader={loading}
           >
             {loading ? <Loader className={classes.loader} alt="loading" /> : "Send link"}
-          </Button>
-        ) : (
-          <Button
-            color="primary"
-            variant="contained"
-            className={classes.actionButton}
-            disabled={!isAgent && !isStepActive}
-            onClick={startFaceScan}
-          >
-            Scan
           </Button>
         )}
       </div>
