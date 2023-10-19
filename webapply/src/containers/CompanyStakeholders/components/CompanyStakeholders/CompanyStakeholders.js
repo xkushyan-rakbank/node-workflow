@@ -11,7 +11,7 @@ import { UploadFileWrapper } from "../../../../components/UploadFileWrapper/Uplo
 import StakeholdersDetail from "./StakeholdersDetail";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";
-import { getOcrFieldValueBySource, removeEncodingPrefix } from "../../../../utils/ocr";
+import { removeEncodingPrefix } from "../../../../utils/ocr";
 
 import { getSdkConfig } from "../../../../store/selectors/sdkConfig";
 import { createSdkCofig } from "../../../../store/actions/sdkConfig";
@@ -24,15 +24,13 @@ import {
   setEidPreviewData,
   setPassportPreviewData,
   setEidActionType,
-  setPassportActionType,
-  analyseOcrAgeRestriction
+  setPassportActionType
 } from "../../../../store/actions/kyc";
 
 import { useStyles } from "./styled";
 import { OCRScanner } from "./OCRScanner";
 import { OverlayLoader } from "../../../../components/Loader";
 import {
-  AGE_RESTRICTION,
   DOC_TYPE_EID,
   DOC_TYPE_PASSPORT,
   SUPPORTED_FILE_FORMAT_TEXT,
@@ -288,7 +286,11 @@ export const CompanyStakeholdersComponent = ({
           handleClick={handleClickNextStep}
           isDisplayLoader={isLoading}
           disabled={
-            !(!isEmpty(analysedEidData) && !isEmpty(analysedPassportData) && confirmEntity?.success)
+            !(
+              !isEmpty(analysedEidData) &&
+              !isEmpty(analysedPassportData) &&
+              confirmEntity?.success
+            ) || isAgent
           }
           label={sessionType ? "Done" : "Next"}
           justify="flex-end"

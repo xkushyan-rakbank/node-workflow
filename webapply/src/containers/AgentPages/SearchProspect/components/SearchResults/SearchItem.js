@@ -35,6 +35,8 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
   const [loading, setLoading] = useState(false);
   const { agentId } = useSelector(getLoginResponse);
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
+  const fullName = application.signatoryInfo && application.signatoryInfo[0].fullName;
+
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
   const handleNavigation = () => {
     if (application?.status?.statusType === "EFR_SUBMITTED") {
@@ -94,6 +96,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
   const isConsentPending = useMemo(
     () =>
       application?.status?.statusType === "PEN_SUBMITTED" &&
+      fullName &&
       VIEW_IDS_TILL_CONSENT.includes(application?.applicationInfo.viewId),
     [application]
   );
