@@ -422,7 +422,10 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                     scheme={scheme}
                     getTINReasonLabel={getTINReasonLabel}
                   />
-                  <ProductInformationReview fieldValues={displayFields} />
+                  <ProductInformationReview
+                    fieldValues={displayFields}
+                    isIslamic={isIslamicBanking}
+                  />
 
                   <div className={classes.packageSelectionWrapper}>
                     <Accordion

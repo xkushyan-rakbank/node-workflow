@@ -6,7 +6,7 @@ import { ReactComponent as LetsGoGreen } from "../../../assets/icons/letsGoGreen
 import routes from "../../../routes";
 import { PreferredLanguageOptions, SinglyOptionList } from "../../../constants/options";
 
-export const ProductInformationReview = ({ fieldValues }) => {
+export const ProductInformationReview = ({ fieldValues, isIslamic }) => {
   const classes = useStyles();
   const bankStatementType = () => {
     return fieldValues.mailStatements ? (
@@ -93,7 +93,7 @@ export const ProductInformationReview = ({ fieldValues }) => {
               <p>{fieldValues.branch && `${fieldValues.branch}, ${fieldValues.branchEmirate}`}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Earn interest on account:</label>
+              <label>Earn {isIslamic ? "profit" : "interest"} on account:</label>
               <p>{fieldValues.receiveInterest}</p>
             </div>
             <div className={classes.infoLabelValue}>
