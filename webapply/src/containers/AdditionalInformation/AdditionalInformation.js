@@ -47,9 +47,6 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
 
   const isAgent = useSelector(checkLoginStatus);
 
-  useEffect(() => {
-    dispatch(initDocumentUpload());
-  }, []);
 
   //set intial values
   useEffect(() => {

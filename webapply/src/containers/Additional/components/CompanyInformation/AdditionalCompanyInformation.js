@@ -25,6 +25,7 @@ import { getAccordionStatuses, isFieldTouched } from "../../../../store/selector
 import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 import { Footer } from "../../../../components/Footer";
 import { updateProspect } from "../../../../store/actions/appConfig";
+import { initDocumentUpload } from "../../../../store/actions/uploadDocuments";
 
 export const AddCompanyInformation = ({
   companyName,
@@ -64,6 +65,7 @@ export const AddCompanyInformation = ({
       statuses["companyAdditionalInfoStatus"] = "In Progress";
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
+    dispatch(initDocumentUpload());
   }, []);
 
   const initialValues = {

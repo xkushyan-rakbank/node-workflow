@@ -40,9 +40,6 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
   const [isUploading, setIsUploading] = useState(false);
   const signatoryName = useSelector(getSignatories)[0]?.fullName;
 
-  useEffect(() => {
-    dispatch(initDocumentUpload());
-  }, []);
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
   const documents =

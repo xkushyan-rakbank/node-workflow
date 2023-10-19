@@ -204,10 +204,6 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
     []
   );
 
-  useEffect(() => {
-    dispatch(initDocumentUpload());
-  }, []);
-
   const initialIsValid = sourceOfIncomeValidationSchema.isValidSync(initialValues);
 
   const removeProofOfIncome = (indexToRemove, values, length, setFieldValue) => {

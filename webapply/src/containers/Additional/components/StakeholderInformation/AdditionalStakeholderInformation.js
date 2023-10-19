@@ -23,6 +23,7 @@ import { updateStakeholderInfoStatus } from "../../../../store/actions/additiona
 import { getAccordionStatuses, getSignatories } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { Footer } from "../../../../components/Footer";
+import { initDocumentUpload } from "../../../../store/actions/uploadDocuments";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -63,6 +64,7 @@ export const AdditionalStakeholderInformation = ({
       statuses["addionalStakeholderInfoStatus"] = "In Progress";
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
+    dispatch(initDocumentUpload());
   }, []);
 
   const initialValues = {

@@ -112,10 +112,6 @@ export const MailingAddressSection = forwardRef(
         .min(1, "At least one file is required")
     });
 
-    useEffect(() => {
-      dispatch(initDocumentUpload());
-    }, []);
-
     const handleDropFile = useCallback(
       (acceptedFiles, name, touched, setTouched, setFieldValue, index) => {
         const file = acceptedFiles[0];

@@ -50,10 +50,6 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
   const cv = useFindDocument(documents, documentKeyToCheck);
   const { backgroundFormRef, backgroundAccordionRef } = refs;
 
-  useEffect(() => {
-    dispatch(initDocumentUpload());
-  }, []);
-
   const initialValues = {
     highestEducationAttained: "",
     employmentStatus: employmentType?.filter(item => item.code === "Self-employed")[0]?.value,
