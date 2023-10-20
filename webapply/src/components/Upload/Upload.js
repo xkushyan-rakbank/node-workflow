@@ -45,20 +45,22 @@ export const Upload = ({
   const { minSize, maxSize } = fileSize;
   const classes = useStyles();
 
-  const { isDragActive, fileRejections, getRootProps, getInputProps } = useDropzone({
-    multiple: selectMultipleFiles,
-    accept,
-    maxSize,
-    minSize,
-    noDrag: isMobile ? true : false,
-    ...props
-  });
   const hasFile = !!file;
   const { visible } = useDecisions(path);
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && (getIn(touched, field.name) || touched[field.name]);
   const FileIconHeight = isMobile ? "35px" : "44px";
   const FileIconWidth = isMobile ? "32px" : "40px";
+
+  const { isDragActive, fileRejections, getRootProps, getInputProps } = useDropzone({
+    multiple: selectMultipleFiles,
+    accept,
+    maxSize,
+    minSize,
+    noDrag: isMobile ? true : false,
+    noClick: hasFile ? true : false,
+    ...props
+  });
 
   const handleErrorMessage = error => {
     const errorMessages = {
