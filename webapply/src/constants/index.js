@@ -127,6 +127,7 @@ const EXPIRED_PASSPORT = "004";
 const PASSPORT_NUMBER_UNAVAILABLE = "018";
 const PASSPORT_ISSUING_COUNTRY_UNAVAILABLE = "019";
 const PASSPORT_DOCTYPE_UNAVAILABLE = "020";
+const CHECKSUM_FAILED = "025";
 
 const RO_STOP =
   "We noticed that your application is incomplete. Not to worry, our team is already working on it.";
@@ -145,6 +146,8 @@ export const PASSPORT_EXPIRY =
 export const DOC_MISMATCH =
   "Your Emirates ID and Passport do not match. Please upload a valid Passport or Emirates ID.";
 export const IDENTITY_VERIFICATION_FAIL = "Verification failed";
+export const CHECKSUM_FAILED_MESSAGE =
+  "Sorry, we are unable to process the document. Please try again with a clearer copy or use the scan option";
 
 export const PROSPECT_STATUSES = {
   ASSESSING: "Assessing",
@@ -169,7 +172,8 @@ export const ERROR_MESSAGES = {
   [PASSPORT_ISSUING_COUNTRY_UNAVAILABLE]: INVALID_DOCUMENT,
   [PASSPORT_DOCTYPE_UNAVAILABLE]: INVALID_DOCUMENT,
   [EXPIRED_EID]: EID_EXPIRY,
-  [EXPIRED_PASSPORT]: PASSPORT_EXPIRY
+  [EXPIRED_PASSPORT]: PASSPORT_EXPIRY,
+  [CHECKSUM_FAILED]: CHECKSUM_FAILED_MESSAGE
 };
 
 export const APP_STOP_SCREEN_RESULT = "stop";
