@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import { FormControl } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { getIn } from "formik";
+import cx from "classnames";
 
 import { InfoTitle } from "../../InfoTitle";
 import { ErrorMessage, ContexualHelp } from "../../Notifications";
@@ -39,7 +40,7 @@ const DatePickerBase = ({
 
   return (
     <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
-      <FormControl className="formControl">
+      <FormControl className={cx("formControl", { "Mui-error": isError })}>
         <MuiPickersUtilsProvider utils={LocalizedUtils}>
           <StyledKeyboardDatePicker
             autoOk
