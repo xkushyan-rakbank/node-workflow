@@ -30,53 +30,50 @@ const additionalCompanyInfoSchema = Yup.object().shape({
 });
 
 // eslint-disable-next-line react/display-name
-export const BusinessRelationship = forwardRef(
-  ({ topCustomers, topSuppliers, setFieldValue: setFormFieldValue, id, refs }) => {
-    const classes = useStyles();
-    const initialValues = {
-      topCustomers,
-      topSuppliers
-    };
-    const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
-    const { businessFormRef, bussinesAccordionRef } = refs;
+export const BusinessRelationship = forwardRef(({ topCustomers, topSuppliers, id, refs }) => {
+  const classes = useStyles();
+  const initialValues = {
+    topCustomers,
+    topSuppliers
+  };
+  const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
+  const { businessFormRef, bussinesAccordionRef } = refs;
 
-    return (
-      <Formik
-        initialValues={initialValues}
-        validationSchema={additionalCompanyInfoSchema}
-        // onSubmit={handleFormSubmit}
-        validateOnChange={false}
-        innerRef={businessFormRef}
-      >
-        {props => {
-          return (
-            <Form>
-              <Accordion
-                title={"Business relationships"}
-                id={id}
-                setFormFieldValue={setFormFieldValue}
-                isCompleted={initialIsValid && props.isValid}
-                classes={{
-                  accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
-                  accordionSummaryContentExpanded:
-                    classes.additionalInfoAccordionSummaryContentExpanded
-                }}
-                accordionRef={bussinesAccordionRef}
-              >
-                <div className={classes.descriptionSubField}>
-                  <p>
-                    We need details about your customers and suppliers to gain a better
-                    understanding of your business model. If your business is less than 3 months
-                    old, please provide details about your potential customers and suppliers.
-                  </p>
-                </div>
-                <TopCustomers topCustomers={topCustomers} {...props} />
-                <TopSuppliers topSuppliers={topSuppliers} {...props} />
-              </Accordion>
-            </Form>
-          );
-        }}
-      </Formik>
-    );
-  }
-);
+  return (
+    <Formik
+      initialValues={initialValues}
+      validationSchema={additionalCompanyInfoSchema}
+      onSubmit={() => {}}
+      validateOnChange={false}
+      innerRef={businessFormRef}
+    >
+      {props => {
+        return (
+          <Form>
+            <Accordion
+              title={"Business relationships"}
+              id={id}
+              isCompleted={initialIsValid && props.isValid}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              accordionRef={bussinesAccordionRef}
+            >
+              <div className={classes.descriptionSubField}>
+                <p>
+                  We need details about your customers and suppliers to gain a better understanding
+                  of your business model. If your business is less than 3 months old, please provide
+                  details about your potential customers and suppliers.
+                </p>
+              </div>
+              <TopCustomers topCustomers={topCustomers} {...props} />
+              <TopSuppliers topSuppliers={topSuppliers} {...props} />
+            </Accordion>
+          </Form>
+        );
+      }}
+    </Formik>
+  );
+});

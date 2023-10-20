@@ -25,7 +25,6 @@ import { getAccordionStatuses, isFieldTouched } from "../../../../store/selector
 import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 import { Footer } from "../../../../components/Footer";
 import { updateProspect } from "../../../../store/actions/appConfig";
-import { initDocumentUpload } from "../../../../store/actions/uploadDocuments";
 
 export const AddCompanyInformation = ({
   companyName,
@@ -118,8 +117,9 @@ export const AddCompanyInformation = ({
       inCompleteAccordionList[0].parentNode.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const handleNextClickAction = validationResults => {
+  const handleNextClickAction = ({ values: validationResults, ...props }) => {
     try {
+      props.submitForm();
       let forms = {
         business: {
           formRef: businessFormRef.current,
@@ -145,7 +145,11 @@ export const AddCompanyInformation = ({
 
       Object.keys(forms).forEach(formName => {
         const { formRef, accordionRef, isCompleted } = forms[formName];
+        console.log(formRef);
+        // if (formName !== "taxDeclarations" && !formRef.isValid) {
         handleFormAcordions(formRef, accordionRef, isCompleted);
+        // }
+
         if (!isCompleted && inCompleteAccordionList.indexOf(accordionRef.current) === -1) {
           inCompleteAccordionList.push(accordionRef.current);
         }
@@ -164,6 +168,25 @@ export const AddCompanyInformation = ({
       }
     }
   }, [additionalCompamnyForm]);
+
+  useEffect(() => {
+    additionalCompamnyForm.current.setFieldValue(
+      "isBusinessRelationshipCompleted",
+      statuses["isBusinessRelationshipCompleted"]
+    );
+    additionalCompamnyForm.current.setFieldValue(
+      "isFinancialTurnoverCompleted",
+      statuses["isFinancialTurnoverCompleted"]
+    );
+    additionalCompamnyForm.current.setFieldValue(
+      "isMailingAddressCompleted",
+      statuses["isMailingAddressCompleted"]
+    );
+    additionalCompamnyForm.current.setFieldValue(
+      "isTaxDeclarationCompleted",
+      statuses["isTaxDeclarationCompleted"]
+    );
+  }, [statuses]);
 
   return (
     <>
@@ -215,8 +238,8 @@ export const AddCompanyInformation = ({
                     justify="flex-end"
                     label="Next"
                     isDisplayLoader={isLoading}
-                    type="submit"
-                    onClick={() => handleNextClickAction(props?.values)}
+                    type="button"
+                    onClick={() => handleNextClickAction(props)}
                   />
                 </Footer>
               </div>

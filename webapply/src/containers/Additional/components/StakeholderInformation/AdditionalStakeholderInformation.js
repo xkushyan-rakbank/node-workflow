@@ -20,10 +20,9 @@ import { SourceOfIncome } from "./components/SourceOfIncome";
 
 import { useStyles } from "../styled";
 import { updateStakeholderInfoStatus } from "../../../../store/actions/additionalInfo";
-import { getAccordionStatuses, getSignatories } from "../../../../store/selectors/appConfig";
+import { getAccordionStatuses } from "../../../../store/selectors/appConfig";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { Footer } from "../../../../components/Footer";
-import { initDocumentUpload } from "../../../../store/actions/uploadDocuments";
 
 export const AdditionalStakeholderInformation = ({
   stakeholderName,
@@ -42,7 +41,6 @@ export const AdditionalStakeholderInformation = ({
   const accordionStatuses = useSelector(getAccordionStatuses);
   const statuses = JSON.parse(accordionStatuses);
   const { addionalStakeholderInfoStatus } = useSelector(state => state.additionalInfo);
-  const signatoryInfo = useSelector(getSignatories);
 
   const backgroundFormRef = useRef(null);
   const backgroundAccordionRef = useRef(null);
@@ -116,8 +114,9 @@ export const AdditionalStakeholderInformation = ({
       inCompleteAccordionList[0].parentNode.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const handleNextClickAction = validationResults => {
+  const handleNextClickAction = ({ value: validationResults, ...props }) => {
     try {
+      props.submitForm();
       let forms = {
         background: {
           formRef: backgroundFormRef.current,
@@ -165,6 +164,25 @@ export const AdditionalStakeholderInformation = ({
     }
   }, [additionalStakeHolderForm]);
 
+  useEffect(() => {
+    additionalStakeHolderForm.current.setFieldValue(
+      "backgroundInfoSection",
+      statuses["backgroundInfoSection"]
+    );
+    additionalStakeHolderForm.current.setFieldValue(
+      "sourceOfIncomeSection",
+      statuses["sourceOfIncomeSection"]
+    );
+    additionalStakeHolderForm.current.setFieldValue(
+      "residentialAddressSection",
+      statuses["residentialAddressSection"]
+    );
+    additionalStakeHolderForm.current.setFieldValue(
+      "stakeholderTaxDeclarationSection",
+      statuses["stakeholderTaxDeclarationSection"]
+    );
+  }, [statuses]);
+
   return (
     <>
       <Formik
@@ -209,8 +227,9 @@ export const AdditionalStakeholderInformation = ({
                   <NextStepButton
                     justify="flex-end"
                     label="Next"
+                    type="button"
                     isDisplayLoader={isLoading}
-                    onClick={() => handleNextClickAction(props?.values)}
+                    onClick={() => handleNextClickAction(props)}
                   />
                 </Footer>
               </div>

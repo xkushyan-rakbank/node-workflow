@@ -23,12 +23,12 @@ import {
   getProspect,
   getSignatories
 } from "../../../../../store/selectors/appConfig";
-import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { NAME_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
-import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
+import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
+import { LINKEDIN_REGEX } from "../../../../../utils/validation";
+import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
 
-export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
+export const Background = ({ id, refs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { employmentType } = useSelector(getDatalist);
@@ -134,6 +134,7 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
     <Formik
       initialValues={initialValues}
       validateOnChange={false}
+      onSubmit={() => {}}
       validationSchema={backgroundSchema}
       isInitialValid={initialIsValid}
       innerRef={backgroundFormRef}
@@ -149,7 +150,6 @@ export const Background = ({ setFieldValue: setFormFieldValue, id, refs }) => {
             title={"Professional background"}
             isCompleted={isValid}
             id={id}
-            setFormFieldValue={setFormFieldValue}
             classes={{
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
               accordionSummaryContentExpanded: classes.additionalInfoAccordionSummaryContentExpanded

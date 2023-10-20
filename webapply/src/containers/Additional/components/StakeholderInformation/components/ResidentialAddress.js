@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldArray, Formik } from "formik";
 import * as Yup from "yup";
@@ -29,17 +29,16 @@ import {
   TL_ACCEPTED_FILE_TYPES,
   TL_COI_FILE_SIZE
 } from "../../../../../constants";
-import { uploadDocuments, initDocumentUpload } from "../../../../../store/actions/uploadDocuments";
+import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { Upload } from "../../../../../components/Upload";
 import { ContexualHelp } from "../../../../../components/Notifications";
 
-export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs }) => {
+export const ResidentialAddress = ({ id, refs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [isUploading, setIsUploading] = useState(false);
   const signatoryName = useSelector(getSignatories)[0]?.fullName;
-
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
   const documents =
@@ -174,6 +173,7 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
       initialValues={initialValues}
       validationSchema={residentialAddressSchema}
       validateOnChange={true}
+      onSubmit={() => {}}
       innerRef={residentialFormRef}
     >
       {({
@@ -191,7 +191,6 @@ export const ResidentialAddress = ({ setFieldValue: setFormFieldValue, id, refs 
           <Accordion
             title={"Residential address"}
             id={id}
-            setFormFieldValue={setFormFieldValue}
             isCompleted={isValidForm}
             classes={{
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,

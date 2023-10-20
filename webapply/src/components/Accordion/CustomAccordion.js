@@ -126,7 +126,6 @@ export const Accordion = ({
   subTitle,
   classes: extendedClasses,
   showHelperText,
-  setFormFieldValue = () => {},
   expandedByDefault = false,
   accordionRef,
   expandedDescription
@@ -156,7 +155,6 @@ export const Accordion = ({
   };
 
   useEffect(() => {
-    setFormFieldValue(id, isCompleted);
     if (!isCompleted || initialStatus || expanded) {
       const updatedStatuses = {};
       updatedStatuses[id] = isCompleted;

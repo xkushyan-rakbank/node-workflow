@@ -34,7 +34,7 @@ const defaulatTaxDetails = {
   isTINAvailable: ""
 };
 
-export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, id, refs }) => {
+export const StakeholderTaxDeclarations = ({ id, refs }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
@@ -176,6 +176,7 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
       initialValues={initialValues}
       validationSchema={stakeholderTaxInfoSchema}
       validateOnChange={false}
+      onSubmit={() => {}}
       innerRef={stakeHolderFormRef}
     >
       {({ values, setFieldValue, isValid, errors }) => {
@@ -187,7 +188,6 @@ export const StakeholderTaxDeclarations = ({ setFieldValue: setFormFieldValue, i
               title={"Tax declarations"}
               showDefinition={definitionContext}
               id={id}
-              setFormFieldValue={setFormFieldValue}
               isCompleted={IsValidForm}
               classes={{
                 accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,

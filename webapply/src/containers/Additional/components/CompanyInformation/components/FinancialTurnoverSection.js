@@ -45,256 +45,253 @@ const marks = (() => {
 
 const isNumeric = str => !isNaN(str) && !isNaN(parseFloat(str));
 
-export const FinancialTurnoverSection = forwardRef(
-  ({ setFieldValue: setFormFieldValue, id, refs }) => {
-    const classes = useStyles();
-    const { annualFinTurnoverAmtInAED, anualCashDepositAED } = useSelector(
-      getCompanyAdditionalInfo
-    );
-    const dispatch = useDispatch();
+export const FinancialTurnoverSection = forwardRef(({ id, refs }) => {
+  const classes = useStyles();
+  const { annualFinTurnoverAmtInAED, anualCashDepositAED } = useSelector(getCompanyAdditionalInfo);
+  const dispatch = useDispatch();
 
-    const isMobileDevice = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
+  const isMobileDevice = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
 
-    const { financialFormRef, financialAccordionRef } = refs;
+  const { financialFormRef, financialAccordionRef } = refs;
 
-    const sliderThumbIcon =
-      "url('data:image/svg+xml,<svg width=\"53\" height=\"62\" viewBox=\"0 0 53 62\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g filter=\"url(%23filter0_d_11717_129572)\"><rect opacity=\"0.8\" x=\"11.041\" y=\"19\" width=\"30.2695\" height=\"30\" rx=\"15\" fill=\"%23F7F7FC\" stroke=\"white\" stroke-width=\"8\"/><g filter=\"url(%23filter1_d_11717_129572)\"><rect x=\"15.041\" y=\"23\" width=\"22.2695\" height=\"22\" rx=\"11\" fill=\"white\"/><rect x=\"16.041\" y=\"24\" width=\"20.2695\" height=\"20\" rx=\"10\" stroke=\"%235E080B\" stroke-width=\"2\"/></g><path d=\"M22.4002 10.9895H29.6004C29.6733 10.9892 29.7448 10.9691 29.8071 10.9313C29.8694 10.8935 29.9203 10.8394 29.9541 10.7748C29.988 10.7103 30.0036 10.6377 29.9993 10.5649C29.995 10.4922 29.9709 10.422 29.9297 10.3619L26.3296 5.1617C26.1803 4.9461 25.8211 4.9461 25.6715 5.1617L22.0714 10.3619C22.0298 10.4218 22.0053 10.4921 22.0008 10.565C21.9962 10.6379 22.0117 10.7106 22.0456 10.7753C22.0795 10.84 22.1305 10.8942 22.193 10.9319C22.2555 10.9697 22.3272 10.9896 22.4002 10.9895Z\" fill=\"%23830000\"/></g><defs><filter id=\"filter0_d_11717_129572\" x=\"0.0410156\" y=\"0\" width=\"52.2695\" height=\"62\" filterUnits=\"userSpaceOnUse\" color-interpolation-filters=\"sRGB\"><feFlood flood-opacity=\"0\" result=\"BackgroundImageFix\"/><feColorMatrix in=\"SourceAlpha\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0\" result=\"hardAlpha\"/><feOffset dy=\"2\"/><feGaussianBlur stdDeviation=\"3.5\"/><feColorMatrix type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0\"/><feBlend mode=\"normal\" in2=\"BackgroundImageFix\" result=\"effect1_dropShadow_11717_129572\"/><feBlend mode=\"normal\" in=\"SourceGraphic\" in2=\"effect1_dropShadow_11717_129572\" result=\"shape\"/></filter><filter id=\"filter1_d_11717_129572\" x=\"8.04102\" y=\"18\" width=\"36.2695\" height=\"36\" filterUnits=\"userSpaceOnUse\" color-interpolation-filters=\"sRGB\"><feFlood flood-opacity=\"0\" result=\"BackgroundImageFix\"/><feColorMatrix in=\"SourceAlpha\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0\" result=\"hardAlpha\"/><feOffset dy=\"2\"/><feGaussianBlur stdDeviation=\"3.5\"/><feColorMatrix type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0\"/><feBlend mode=\"normal\" in2=\"BackgroundImageFix\" result=\"effect1_dropShadow_11717_129572\"/><feBlend mode=\"normal\" in=\"SourceGraphic\" in2=\"effect1_dropShadow_11717_129572\" result=\"shape\"/></filter></defs></svg>')";
-    const FinancialSlider = createMuiTheme({
-      overrides: {
-        MuiSlider: {
-          root: {
-            color: "#525252",
-            height: 12,
-            margin: "20px 0",
-            padding: "50px 0 20px !important",
-            backgroundColor: "transparent !important"
-          },
-          dragging: {
+  const sliderThumbIcon =
+    "url('data:image/svg+xml,<svg width=\"53\" height=\"62\" viewBox=\"0 0 53 62\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g filter=\"url(%23filter0_d_11717_129572)\"><rect opacity=\"0.8\" x=\"11.041\" y=\"19\" width=\"30.2695\" height=\"30\" rx=\"15\" fill=\"%23F7F7FC\" stroke=\"white\" stroke-width=\"8\"/><g filter=\"url(%23filter1_d_11717_129572)\"><rect x=\"15.041\" y=\"23\" width=\"22.2695\" height=\"22\" rx=\"11\" fill=\"white\"/><rect x=\"16.041\" y=\"24\" width=\"20.2695\" height=\"20\" rx=\"10\" stroke=\"%235E080B\" stroke-width=\"2\"/></g><path d=\"M22.4002 10.9895H29.6004C29.6733 10.9892 29.7448 10.9691 29.8071 10.9313C29.8694 10.8935 29.9203 10.8394 29.9541 10.7748C29.988 10.7103 30.0036 10.6377 29.9993 10.5649C29.995 10.4922 29.9709 10.422 29.9297 10.3619L26.3296 5.1617C26.1803 4.9461 25.8211 4.9461 25.6715 5.1617L22.0714 10.3619C22.0298 10.4218 22.0053 10.4921 22.0008 10.565C21.9962 10.6379 22.0117 10.7106 22.0456 10.7753C22.0795 10.84 22.1305 10.8942 22.193 10.9319C22.2555 10.9697 22.3272 10.9896 22.4002 10.9895Z\" fill=\"%23830000\"/></g><defs><filter id=\"filter0_d_11717_129572\" x=\"0.0410156\" y=\"0\" width=\"52.2695\" height=\"62\" filterUnits=\"userSpaceOnUse\" color-interpolation-filters=\"sRGB\"><feFlood flood-opacity=\"0\" result=\"BackgroundImageFix\"/><feColorMatrix in=\"SourceAlpha\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0\" result=\"hardAlpha\"/><feOffset dy=\"2\"/><feGaussianBlur stdDeviation=\"3.5\"/><feColorMatrix type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0\"/><feBlend mode=\"normal\" in2=\"BackgroundImageFix\" result=\"effect1_dropShadow_11717_129572\"/><feBlend mode=\"normal\" in=\"SourceGraphic\" in2=\"effect1_dropShadow_11717_129572\" result=\"shape\"/></filter><filter id=\"filter1_d_11717_129572\" x=\"8.04102\" y=\"18\" width=\"36.2695\" height=\"36\" filterUnits=\"userSpaceOnUse\" color-interpolation-filters=\"sRGB\"><feFlood flood-opacity=\"0\" result=\"BackgroundImageFix\"/><feColorMatrix in=\"SourceAlpha\" type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0\" result=\"hardAlpha\"/><feOffset dy=\"2\"/><feGaussianBlur stdDeviation=\"3.5\"/><feColorMatrix type=\"matrix\" values=\"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0\"/><feBlend mode=\"normal\" in2=\"BackgroundImageFix\" result=\"effect1_dropShadow_11717_129572\"/><feBlend mode=\"normal\" in=\"SourceGraphic\" in2=\"effect1_dropShadow_11717_129572\" result=\"shape\"/></filter></defs></svg>')";
+  const FinancialSlider = createMuiTheme({
+    overrides: {
+      MuiSlider: {
+        root: {
+          color: "#525252",
+          height: 12,
+          margin: "20px 0",
+          padding: "50px 0 20px !important",
+          backgroundColor: "transparent !important"
+        },
+        dragging: {
+          backgroundColor: "transparent"
+        },
+        thumb: {
+          backgroundColor: "transparent",
+          "& .thumbColorPrimary": {
             backgroundColor: "transparent"
           },
-          thumb: {
+          "&:focus, &:hover, &$active": {
             backgroundColor: "transparent",
-            "& .thumbColorPrimary": {
-              backgroundColor: "transparent"
-            },
-            "&:focus, &:hover, &$active": {
-              backgroundColor: "transparent",
-              backgroundRepeat: "no-repeat",
-              backgroundImage: `${sliderThumbIcon}`,
-              outline: "none",
-              boxShadow: "none"
-            },
-            "&::after": {
-              top: "-25px !important",
-              left: "-25px !important",
-              right: "-25px !important",
-              bottom: "-25px !important",
-              marginBottom: 0,
-              marginLeft: 0,
-              boxShadow: "none",
-              backgroundColor: "transparent",
-              backgroundRepeat: "no-repeat",
-              backgroundImage: `${sliderThumbIcon}`
-            }
+            backgroundRepeat: "no-repeat",
+            backgroundImage: `${sliderThumbIcon}`,
+            outline: "none",
+            boxShadow: "none"
           },
-          active: {
-            height: 12,
-            width: 12,
+          "&::after": {
+            top: "-25px !important",
+            left: "-25px !important",
+            right: "-25px !important",
+            bottom: "-25px !important",
+            marginBottom: 0,
+            marginLeft: 0,
             boxShadow: "none",
             backgroundColor: "transparent",
             backgroundRepeat: "no-repeat",
             backgroundImage: `${sliderThumbIcon}`
-          },
-          valueLabel: {
-            top: "55px !important",
-            left: "calc(-50% + 4px)"
-          },
-          track: {
-            height: 12,
-            borderRadius: 10
-          },
-          rail: {
-            height: 12,
-            borderRadius: 10
-          },
-          markLabel: {
-            top: "2px !important",
-            paddingBottom: "5px"
-          },
-          markActive: {
-            opacity: 0
-          },
-          mark: {
-            display: "none"
           }
+        },
+        active: {
+          height: 12,
+          width: 12,
+          boxShadow: "none",
+          backgroundColor: "transparent",
+          backgroundRepeat: "no-repeat",
+          backgroundImage: `${sliderThumbIcon}`
+        },
+        valueLabel: {
+          top: "55px !important",
+          left: "calc(-50% + 4px)"
+        },
+        track: {
+          height: 12,
+          borderRadius: 10
+        },
+        rail: {
+          height: 12,
+          borderRadius: 10
+        },
+        markLabel: {
+          top: "2px !important",
+          paddingBottom: "5px"
+        },
+        markActive: {
+          opacity: 0
+        },
+        mark: {
+          display: "none"
         }
       }
-    });
+    }
+  });
 
-    const initialValues = {
-      annualFinTurnoverAmtInAED,
-      anualCashDepositAED
-    };
+  const initialValues = {
+    annualFinTurnoverAmtInAED,
+    anualCashDepositAED
+  };
 
-    const [sliderValue, setSliderValue] = useState(
-      isNumeric(anualCashDepositAED)
-        ? (anualCashDepositAED / annualFinTurnoverAmtInAED).toFixed(2) * 100
-        : null
-    );
+  const [sliderValue, setSliderValue] = useState(
+    isNumeric(anualCashDepositAED)
+      ? (anualCashDepositAED / annualFinTurnoverAmtInAED).toFixed(2) * 100
+      : null
+  );
 
-    const additionalCompanyInfoSchema = Yup.object({
-      annualFinTurnoverAmtInAED: Yup.number()
-        .typeError("The amount should be greater than 1000.00 AED")
-        .required(getRequiredMessage("Annual financial turnover (AED)"))
-        .min(1000.01, "The amount should be greater than 1000.00 AED"),
-      anualCashDepositAED: Yup.number().required(getRequiredMessage("Annual cash deposit"))
-    });
+  const additionalCompanyInfoSchema = Yup.object({
+    annualFinTurnoverAmtInAED: Yup.number()
+      .typeError("The amount should be greater than 1000.00 AED")
+      .required(getRequiredMessage("Annual financial turnover (AED)"))
+      .min(1000.01, "The amount should be greater than 1000.00 AED"),
+    anualCashDepositAED: Yup.number().required(getRequiredMessage("Annual cash deposit"))
+  });
 
-    const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
+  const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
 
-    return (
-      <>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={additionalCompanyInfoSchema}
-          validateOnChange={true}
-          validateOnBlur={true}
-          isInitialValid={initialIsValid}
-          innerRef={financialFormRef}
-        >
-          {({ setFieldValue, values, isValid, handleBlur, setFieldTouched , errors, touched}) => {
-            const [sliderMarks, setSliderMarks] = useState(marks);
+  return (
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={additionalCompanyInfoSchema}
+        validateOnChange={true}
+        validateOnBlur={true}
+        isInitialValid={initialIsValid}
+        onSubmit={() => {}}
+        innerRef={financialFormRef}
+      >
+        {({ setFieldValue, values, isValid, handleBlur, setFieldTouched, errors, touched }) => {
+          const [sliderMarks, setSliderMarks] = useState(marks);
 
-            function handleChange(ev, blur) {
-              const { value } = ev.target;
-              const annualTurnover = value ? parseFloat(value.replaceAll(",", "")).toFixed(2) : "";
-              setFieldValue("annualFinTurnoverAmtInAED", annualTurnover?.toString());
-              blur(ev);
-            }
+          function handleChange(ev, blur) {
+            const { value } = ev.target;
+            const annualTurnover = value ? parseFloat(value.replaceAll(",", "")).toFixed(2) : "";
+            setFieldValue("annualFinTurnoverAmtInAED", annualTurnover?.toString());
+            blur(ev);
+          }
 
-            function handleSliderChange(ev, newValue) {
-              setSliderValue(newValue);
-              setFieldTouched("anualCashDepositAED");
-            }
+          function handleSliderChange(ev, newValue) {
+            setSliderValue(newValue);
+            setFieldTouched("anualCashDepositAED");
+          }
 
-            const numberWithCommas = x => parseFloat(x).toLocaleString();
-            const [annualCashDeposit, setAnnualCashDeposit] = useState(0);
+          const numberWithCommas = x => parseFloat(x).toLocaleString();
+          const [annualCashDeposit, setAnnualCashDeposit] = useState(0);
 
-            function updateAnnualCashDeposit(annualCashDepositAmount) {
-              setAnnualCashDeposit(annualCashDepositAmount);
-              setFieldValue("anualCashDepositAED", annualCashDepositAmount.toString());
-              dispatch(
-                updateProspect({
-                  "prospect.companyAdditionalInfo.anualCashDepositAED": annualCashDepositAmount.toString()
-                })
-              );
-            }
-
-            useEffect(() => {
-              if (isNumeric(values.annualFinTurnoverAmtInAED) && sliderValue !== null) {
-                const annualFinTurnoverAmtInAED = parseFloat(values.annualFinTurnoverAmtInAED);
-                const annualCashDepositAmount = calculateAmountFromPercentage(
-                  sliderValue,
-                  annualFinTurnoverAmtInAED
-                );
-                updateAnnualCashDeposit(annualCashDepositAmount);
-              } else {
-                updateAnnualCashDeposit("");
-              }
-            }, [values.annualFinTurnoverAmtInAED, sliderValue]);
-
-            const sliderDisplayValue = sliderValue !== null ? sliderValue : 50;
-
-            useEffect(() => {
-              if (isMobileDevice) {
-                let newMarks = [];
-                if (sliderDisplayValue > 10) newMarks.push({ value: 0, label: "0%" });
-
-                newMarks.push({ value: sliderDisplayValue, label: `${sliderDisplayValue}%` });
-
-                if (sliderDisplayValue < 85) newMarks.push({ value: 100, label: "100%" });
-                setSliderMarks(newMarks);
-              }
-            }, [sliderDisplayValue]);
-            return (
-              <Accordion
-                title={"Financial turnover"}
-                id={id}
-                setFormFieldValue={setFormFieldValue}
-                isCompleted={isValid}
-                classes={{
-                  accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
-                  accordionSummaryContentExpanded:
-                    classes.additionalInfoAccordionSummaryContentExpanded
-                }}
-                accordionRef={financialAccordionRef}
-              >
-                <>
-                  <div className={classes.descriptionSubField}>
-                    <p>Sharing your yearly business revenue and cash sales percentage helps us tailor our services to fit your business needs.</p>
-                  </div>
-                  <Field
-                    name="annualFinTurnoverAmtInAED"
-                    label="Annual financial turnover (AED)"
-                    placeholder="Annual financial turnover (AED)"
-                    path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
-                    component={Input}
-                    showCounter={false}
-                    InputProps={{
-                      inputComponent: FormatDecimalNumberInput,
-                      // 9 digits + 2 ','(commas)
-                      inputProps: { tabIndex: 0 },
-                      onChange: e => handleChange(e, handleBlur)
-                    }}
-                  />
-                  <p className={cx(classes.sectionLabel, classes.boldLabel)}>
-                    What are your estimated annual cash sales?
-                  </p>
-                  <p className={classes.financialDescription}>
-                   Just drag the slider to adjust your estimated annual cash sales amount.
-                  </p>
-                  <div className={classes.sliderContainer}>
-                    <SliderThemeProvider theme={FinancialSlider}>
-                      <Field
-                        name="anualCashDepositSlider"
-                        // path="prospect.companyAdditionalInfo.anualCashDepositAED"
-                        value={sliderDisplayValue}
-                        component={Slider}
-                        step={1}
-                        min={0}
-                        max={100}
-                        onChange={handleSliderChange}
-                        disabled={
-                          !values?.annualFinTurnoverAmtInAED ||
-                          values.annualFinTurnoverAmtInAED < 1001
-                        }
-                        marks={sliderMarks}
-                      />
-                    </SliderThemeProvider>
-                  </div>
-                  <div className={classes.slideValuePrice}>
-                    {sliderValue != null &&
-                      isNumeric(annualFinTurnoverAmtInAED) &&
-                      isNumeric(anualCashDepositAED) && (
-                        <>
-                          <span className={classes.percentageText}>
-                            Cash sales ({sliderValue}%)
-                          </span>
-                          <span className={classes.amountText}>
-                            {numberWithCommas(annualCashDeposit)} AED
-                          </span>
-                        </>
-                      )}
-                    {errors.anualCashDepositAED && touched.anualCashDepositAED && (
-                      <ErrorMessage error={getRequiredMessage("Annual cash deposit")} />
-                    )}
-                  </div>
-                </>
-              </Accordion>
+          function updateAnnualCashDeposit(annualCashDepositAmount) {
+            setAnnualCashDeposit(annualCashDepositAmount);
+            setFieldValue("anualCashDepositAED", annualCashDepositAmount.toString());
+            dispatch(
+              updateProspect({
+                "prospect.companyAdditionalInfo.anualCashDepositAED": annualCashDepositAmount.toString()
+              })
             );
-          }}
-        </Formik>
-      </>
-    );
-  }
-);
+          }
+
+          useEffect(() => {
+            if (isNumeric(values.annualFinTurnoverAmtInAED) && sliderValue !== null) {
+              const annualFinTurnoverAmtInAED = parseFloat(values.annualFinTurnoverAmtInAED);
+              const annualCashDepositAmount = calculateAmountFromPercentage(
+                sliderValue,
+                annualFinTurnoverAmtInAED
+              );
+              updateAnnualCashDeposit(annualCashDepositAmount);
+            } else {
+              updateAnnualCashDeposit("");
+            }
+          }, [values.annualFinTurnoverAmtInAED, sliderValue]);
+
+          const sliderDisplayValue = sliderValue !== null ? sliderValue : 50;
+
+          useEffect(() => {
+            if (isMobileDevice) {
+              let newMarks = [];
+              if (sliderDisplayValue > 10) newMarks.push({ value: 0, label: "0%" });
+
+              newMarks.push({ value: sliderDisplayValue, label: `${sliderDisplayValue}%` });
+
+              if (sliderDisplayValue < 85) newMarks.push({ value: 100, label: "100%" });
+              setSliderMarks(newMarks);
+            }
+          }, [sliderDisplayValue]);
+          return (
+            <Accordion
+              title={"Financial turnover"}
+              id={id}
+              isCompleted={isValid}
+              classes={{
+                accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
+                accordionSummaryContentExpanded:
+                  classes.additionalInfoAccordionSummaryContentExpanded
+              }}
+              accordionRef={financialAccordionRef}
+            >
+              <>
+                <div className={classes.descriptionSubField}>
+                  <p>
+                    Sharing your yearly business revenue and cash sales percentage helps us tailor
+                    our services to fit your business needs.
+                  </p>
+                </div>
+                <Field
+                  name="annualFinTurnoverAmtInAED"
+                  label="Annual financial turnover (AED)"
+                  placeholder="Annual financial turnover (AED)"
+                  path="prospect.companyAdditionalInfo.annualFinTurnoverAmtInAED"
+                  component={Input}
+                  showCounter={false}
+                  InputProps={{
+                    inputComponent: FormatDecimalNumberInput,
+                    // 9 digits + 2 ','(commas)
+                    inputProps: { tabIndex: 0 },
+                    onChange: e => handleChange(e, handleBlur)
+                  }}
+                />
+                <p className={cx(classes.sectionLabel, classes.boldLabel)}>
+                  What are your estimated annual cash sales?
+                </p>
+                <p className={classes.financialDescription}>
+                  Just drag the slider to adjust your estimated annual cash sales amount.
+                </p>
+                <div className={classes.sliderContainer}>
+                  <SliderThemeProvider theme={FinancialSlider}>
+                    <Field
+                      name="anualCashDepositSlider"
+                      // path="prospect.companyAdditionalInfo.anualCashDepositAED"
+                      value={sliderDisplayValue}
+                      component={Slider}
+                      step={1}
+                      min={0}
+                      max={100}
+                      onChange={handleSliderChange}
+                      disabled={
+                        !values?.annualFinTurnoverAmtInAED ||
+                        values.annualFinTurnoverAmtInAED < 1001
+                      }
+                      marks={sliderMarks}
+                    />
+                  </SliderThemeProvider>
+                </div>
+                <div className={classes.slideValuePrice}>
+                  {sliderValue != null &&
+                    isNumeric(annualFinTurnoverAmtInAED) &&
+                    isNumeric(anualCashDepositAED) && (
+                      <>
+                        <span className={classes.percentageText}>Cash sales ({sliderValue}%)</span>
+                        <span className={classes.amountText}>
+                          {numberWithCommas(annualCashDeposit)} AED
+                        </span>
+                      </>
+                    )}
+                  {errors.anualCashDepositAED && touched.anualCashDepositAED && (
+                    <ErrorMessage error={getRequiredMessage("Annual cash deposit")} />
+                  )}
+                </div>
+              </>
+            </Accordion>
+          );
+        }}
+      </Formik>
+    </>
+  );
+});

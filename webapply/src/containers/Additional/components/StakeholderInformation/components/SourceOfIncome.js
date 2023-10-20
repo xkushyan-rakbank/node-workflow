@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FieldArray, Formik } from "formik";
 import { Button, Grid, IconButton } from "@material-ui/core";
 import * as Yup from "yup";
@@ -18,7 +18,7 @@ import {
 
 import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { initDocumentUpload, uploadDocuments } from "../../../../../store/actions/uploadDocuments";
+import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants";
 import { getDocuments, getSignatories } from "../../../../../store/selectors/appConfig";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
@@ -47,7 +47,7 @@ export const IBANField = props => (
   />
 );
 
-export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) => {
+export const SourceOfIncome = ({ id, refs }) => {
   const classes = useStyles();
   const [isUploading, setIsUploading] = useState(false);
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo.sourceOfIncomeDetails";
@@ -288,6 +288,7 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
   return (
     <Formik
       initialValues={initialValues}
+      onSubmit={() => {}}
       validationSchema={sourceOfIncomeValidationSchema}
       isInitialValid={initialIsValid}
       innerRef={sourceOfIncomeFormRef}
@@ -300,7 +301,6 @@ export const SourceOfIncome = ({ setFieldValue: setFormFieldValue, id, refs }) =
           <Accordion
             title={"Source of funds"}
             id={id}
-            setFormFieldValue={setFormFieldValue}
             isCompleted={IsValidForm}
             classes={{
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
