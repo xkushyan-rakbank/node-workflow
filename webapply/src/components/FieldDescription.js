@@ -6,13 +6,11 @@ import { useMediaQuery } from "@material-ui/core";
 const useStyles = makeStyles({
   wrapper: {
     display: "flex",
-    position: "absolute",
     justifyContent: "space-between",
     fontSize: "12px",
     fontWeight: "400",
     color: "#757575",
     marginTop: "10px",
-    flexWrap: "nowrap",
     "& div": {
       display: "flex",
       alignItems: "center",
@@ -25,10 +23,6 @@ const useStyles = makeStyles({
     whiteSpace: "pre-line",
     marginRight: "auto",
     gap: "8px"
-  },
-  main: {
-    display: "flex",
-    flexDirection: "row-reverse",
   }
 });
 
@@ -38,7 +32,7 @@ export const FieldDescription = ({
   fieldMaxLength,
   showTitleIcon,
   iconWidth = 14,
-  iconHeight = 14
+  iconHeight = 14,
 }) => {
   const classes = useStyles();
   const isMobile = useMediaQuery("(max-width: 767px") || window.innerWidth <= 768;
@@ -46,22 +40,20 @@ export const FieldDescription = ({
     ? { width: iconWidth, height: iconHeight }
     : { width: "14px", height: "14px" };
   return (
-    <div className={classes.main}>
-      <div className={classes.wrapper}>
-        <div className={classes.informationDisclaimer}>
-          {title && (
-            <>
-              <InformationIcon {...iconSize} />
-              {title}
-            </>
-          )}
-        </div>
-        {fieldMaxLength && (
-          <div>
-            {fieldValueLength}&nbsp;/&nbsp;{fieldMaxLength}
-          </div>
+    <div className={classes.wrapper}>
+      <div className={classes.informationDisclaimer}>
+        {title && (
+          <>
+            <InformationIcon {...iconSize} />
+            {title}
+          </>
         )}
       </div>
+      {fieldMaxLength && (
+        <div>
+          {fieldValueLength}&nbsp;/&nbsp;{fieldMaxLength}
+        </div>
+      )}
     </div>
   );
 };
