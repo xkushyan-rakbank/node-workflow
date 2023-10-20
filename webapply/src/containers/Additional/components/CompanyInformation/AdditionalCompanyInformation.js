@@ -145,7 +145,6 @@ export const AddCompanyInformation = ({
 
       Object.keys(forms).forEach(formName => {
         const { formRef, accordionRef, isCompleted } = forms[formName];
-        console.log(formRef);
         // if (formName !== "taxDeclarations" && !formRef.isValid) {
         handleFormAcordions(formRef, accordionRef, isCompleted);
         // }

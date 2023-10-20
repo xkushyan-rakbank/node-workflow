@@ -122,6 +122,7 @@ const InputBase = ({
           showTitleIcon={infoIcon}
           iconHeight={props?.iconHeight}
           iconWidth={props?.iconWidth}
+          showInLineError={InputProps.inputProps && InputProps.inputProps.showInLineError}
         />
       )}
 

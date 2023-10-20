@@ -100,7 +100,7 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
                       path={`prospect.companyAdditionalInfo.topCustomers[${index}].name`}
                       placeholder={"Customer name"}
                       InputProps={{
-                        inputProps: { maxLength: 255, tabIndex: 1 }
+                        inputProps: { maxLength: 255, tabIndex: 1, showInLineError: true }
                       }}
                       component={Input}
                       classes={{ formControlRoot: classes.customLabel }}
