@@ -1,10 +1,10 @@
 import React, { useCallback, useState, useEffect } from "react";
+import { isEmpty } from "lodash";
 
 import { SearchProspect } from "./components/SearchProspect/SearchProspect";
 import { useLayoutParams } from "../../FormLayout";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
-import { agentFormStepper } from "../../../constants";
-import { isEmpty } from "lodash";
+import { agentFormStepper, searchProspectStepper } from "../../../constants";
 
 export const SearchProspectPage = ({
   searchApplications,
@@ -13,9 +13,10 @@ export const SearchProspectPage = ({
   resetProspect,
   searchError,
   searchErrorDesc,
-  dataList
+  dataList,
+  roCode
 }) => {
-  useFormNavigation([false, false, agentFormStepper, true, true]);
+  useFormNavigation([false, false, roCode ? agentFormStepper : searchProspectStepper, true, true]);
   useLayoutParams(true);
 
   const [isSearchLaunched, setSearchStatus] = useState(false);
