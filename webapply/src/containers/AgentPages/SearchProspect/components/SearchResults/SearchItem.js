@@ -35,7 +35,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
   const [loading, setLoading] = useState(false);
   const { agentId } = useSelector(getLoginResponse);
   const prospectVersion = application.prospectVersion ? application.prospectVersion : "";
-  const fullName = application.signatoryInfo && application.signatoryInfo[0].fullName;
+  const fullName = application.signatoryInfo?.[0]?.fullName;
 
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
   const handleNavigation = () => {
