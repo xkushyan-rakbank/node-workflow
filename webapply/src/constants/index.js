@@ -807,13 +807,13 @@ export const UPLOAD = "Upload ";
 export const MOA_ACCEPTED_FILE_TYPES = {
   "image/png": [".png"],
   "image/jpeg": [".jpeg"],
-  "application/pdf": ["application/pdf"]
+  "application/pdf": [".pdf"]
 };
 
 export const TL_ACCEPTED_FILE_TYPES = {
   "image/png": [".png"],
   "image/jpeg": [".jpeg"],
-  "application/pdf": ["application/pdf"]
+  "application/pdf": [".pdf"]
 };
 
 export const DOC_TYPE_EID = "id";
