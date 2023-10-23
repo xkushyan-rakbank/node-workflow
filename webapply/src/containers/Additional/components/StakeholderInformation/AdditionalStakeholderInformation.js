@@ -153,18 +153,6 @@ export const AdditionalStakeholderInformation = ({
   };
 
   useEffect(() => {
-    if (additionalStakeHolderForm.current) {
-      const isValidForm = formValidationSchema.isValidSync(
-        additionalStakeHolderForm.current.values
-      );
-      if (!isValidForm) {
-        statuses["addionalStakeholderInfoStatus"] = "In Progress";
-        dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
-      }
-    }
-  }, [additionalStakeHolderForm]);
-
-  useEffect(() => {
     additionalStakeHolderForm.current.setFieldValue(
       "backgroundInfoSection",
       statuses["backgroundInfoSection"]
@@ -182,6 +170,18 @@ export const AdditionalStakeholderInformation = ({
       statuses["stakeholderTaxDeclarationSection"]
     );
   }, [statuses]);
+
+  const redirectBack = () => {
+    if (additionalStakeHolderForm.current) {
+      const isValidForm = formValidationSchema.isValidSync(
+        additionalStakeHolderForm.current.values
+      );
+      if (!isValidForm) {
+        statuses["addionalStakeholderInfoStatus"] = "In Progress";
+        dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+      }
+    }
+  };
 
   return (
     <>
@@ -223,7 +223,11 @@ export const AdditionalStakeholderInformation = ({
                   />
                 </div>
                 <Footer>
-                  <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
+                  <BackLink
+                    onClick={redirectBack}
+                    path={routes.additionalInfoComponent}
+                    isTypeButton={true}
+                  />
                   <NextStepButton
                     justify="flex-end"
                     label="Next"

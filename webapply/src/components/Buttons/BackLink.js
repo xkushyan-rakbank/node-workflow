@@ -102,6 +102,7 @@ const BackLinkBase = ({ text = "Back", className = "", path, isTypeButton = fals
     if (ev && isProspectSaving) {
       ev.preventDefault();
     }
+    props.onClick && props.onClick();
   };
 
   return (

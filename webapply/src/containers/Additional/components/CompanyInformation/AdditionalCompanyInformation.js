@@ -159,16 +159,6 @@ export const AddCompanyInformation = ({
   };
 
   useEffect(() => {
-    if (additionalCompamnyForm.current) {
-      const isValidForm = formValidationSchema.isValidSync(additionalCompamnyForm.current.values);
-      if (!isValidForm) {
-        statuses["companyAdditionalInfoStatus"] = "In Progress";
-        dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
-      }
-    }
-  }, [additionalCompamnyForm]);
-
-  useEffect(() => {
     additionalCompamnyForm.current.setFieldValue(
       "isBusinessRelationshipCompleted",
       statuses["isBusinessRelationshipCompleted"]
@@ -186,6 +176,16 @@ export const AddCompanyInformation = ({
       statuses["isTaxDeclarationCompleted"]
     );
   }, [statuses]);
+
+  const redirectBack = () => {
+    if (additionalCompamnyForm.current) {
+      const isValidForm = formValidationSchema.isValidSync(additionalCompamnyForm.current.values);
+      if (!isValidForm) {
+        statuses["companyAdditionalInfoStatus"] = "In Progress";
+        dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+      }
+    }
+  };
 
   return (
     <>
@@ -232,7 +232,11 @@ export const AddCompanyInformation = ({
                   />
                 </div>
                 <Footer>
-                  <BackLink path={routes.additionalInfoComponent} isTypeButton={true} />
+                  <BackLink
+                    onClick={redirectBack}
+                    path={routes.additionalInfoComponent}
+                    isTypeButton={true}
+                  />
                   <NextStepButton
                     justify="flex-end"
                     label="Next"
