@@ -116,11 +116,6 @@ export const useStyles = makeStyles(theme => ({
       marginTop: "24px"
     }
   },
-  horizontalLine: {
-    height: "1px",
-    background: "#E6E6E6",
-    margin: "24px 0"
-  },
   ocrScannerMainContainer: {
     backgroundColor: "#282c34",
     minHeight: "100vh",
@@ -633,5 +628,10 @@ export const useStyles = makeStyles(theme => ({
       color: "#666666",
       cursor: "not-allowed"
     }
-  }
+  },
+  horizontalLine: {
+    backgroundColor: "#E6E6E6",
+    height: "1px",
+    width: "100%"
+  },
 }));

@@ -93,7 +93,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const labelTextForNoEfrIncorrect = (
     <span style={{ display: "flex", alignItems: "center" }}>
       <p style={{ margin: "0px" }}>
-        No
+        No&nbsp;
         <span style={{ fontSize: "14px", color: "#757575" }}>
           (We'll call you to fix any issues)
         </span>
@@ -248,6 +248,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         <div>
           <h5 className={classes.reviewDetailsTitle}>Essential information</h5>
         </div>
+        <div className={classes.horizontalLine}></div>
         <div className={classes.infoLabelValue}>
           <label>Full name:</label>
           <p>{displayFields.signatoryFullName}</p>
