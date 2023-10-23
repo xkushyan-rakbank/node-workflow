@@ -211,7 +211,7 @@ export const ResidentialAddress = ({ id, refs }) => {
                     label="Flat, villa or building"
                     placeholder="Flat, villa or building"
                     InputProps={{
-                      inputProps: { tabIndex: 1, maxLength: 50 }
+                      inputProps: { tabIndex: 1, maxLength: 50, showInLineError: true }
                     }}
                     component={Input}
                   />
@@ -227,7 +227,8 @@ export const ResidentialAddress = ({ id, refs }) => {
                       inputProps: {
                         inputMode: "numeric",
                         tabIndex: 2,
-                        maxLength: 6
+                        maxLength: 6,
+                        showInLineError: true
                       }
                     }}
                     component={Input}
@@ -240,7 +241,7 @@ export const ResidentialAddress = ({ id, refs }) => {
                     label="Street or location"
                     placeholder="Street or location"
                     InputProps={{
-                      inputProps: { tabIndex: 3, maxLength: 50 }
+                      inputProps: { tabIndex: 3, maxLength: 50, showInLineError: true }
                     }}
                     component={Input}
                   />
