@@ -8,7 +8,8 @@ import {
   getSearchError,
   getSearchErrorDesc
 } from "../../../store/selectors/searchProspect";
-import { getDatalist, getRoCode } from "../../../store/selectors/appConfig";
+import { getDatalist } from "../../../store/selectors/appConfig";
+import { getRoCode } from "../../../store/selectors/loginSelector";
 
 const mapStateToProps = state => ({
   searchResults: getSearchResults(state),
