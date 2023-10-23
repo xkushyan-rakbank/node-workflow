@@ -24,13 +24,13 @@ import {
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../constants";
-import { initDocumentUpload } from "../../../store/actions/uploadDocuments";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
 import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { useFindDocument } from "../../../utils/useFindDocument";
 import { Footer } from "../../../components/Footer";
+import { scrollToDOMNode } from "../../../components/VerticalPagination";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
@@ -48,6 +48,7 @@ export const CompanyInfo = ({
   const conditionalSchema = useDynamicValidation();
   const classes = useStyles();
   const companyInfoForm = useRef(null);
+  const documentUploadSectionRef = useRef(null);
 
   const isIslamicBanking = useSelector(getIsIslamicBanking);
 
@@ -89,6 +90,35 @@ export const CompanyInfo = ({
   };
 
   const companyInfoSchema = {
+    tradeLicenseOrCOI: Yup.mixed()
+      .test("required", getRequiredMessage("This field"), file => {
+        if (file) return true;
+        return false;
+      })
+      .test(
+        "fileSize",
+        "The file size is too big. Please upload a file less than or equal to 10MB.",
+        file => {
+          return (
+            file &&
+            (file === true ||
+              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+          );
+        }
+      ),
+    moa: Yup.mixed()
+      .test("required", getRequiredMessage("This field"), file => {
+        if (file) return true;
+        return false;
+      })
+      .test("fileSize", "The file is too large", file => {
+        return (
+          file &&
+          (file === true ||
+            (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
+        );
+      }),
     companyName: Yup.string()
       .required(getRequiredMessage("Company name"))
       // eslint-disable-next-line no-template-curly-in-string
@@ -103,18 +133,6 @@ export const CompanyInfo = ({
         })
       })
     ),
-    moa: Yup.mixed()
-      .test("required", getRequiredMessage("This field"), file => {
-        if (file) return true;
-        return false;
-      })
-      .test("fileSize", "The file is too large", file => {
-        return (
-          file &&
-          (file === true ||
-            (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
-        );
-      }),
     licenseIssuingAuthority: Yup.string().required(
       getRequiredMessage("License Issuance Authority")
     ),
@@ -147,24 +165,7 @@ export const CompanyInfo = ({
           return inputDate.getTime() < addDays(new Date(), 0);
         }
       )
-      .typeError(getInvalidMessage("Date of incorporation")),
-    tradeLicenseOrCOI: Yup.mixed()
-      .test("required", getRequiredMessage("This field"), file => {
-        if (file) return true;
-        return false;
-      })
-      .test(
-        "fileSize",
-        "The file size is too big. Please upload a file less than or equal to 10MB.",
-        file => {
-          return (
-            file &&
-            (file === true ||
-              (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-                file.fileSize <= TL_COI_FILE_SIZE.maxSize))
-          );
-        }
-      )
+      .typeError(getInvalidMessage("Date of incorporation"))
   };
 
 
@@ -201,13 +202,22 @@ export const CompanyInfo = ({
       >
         {props => {
           if (props.isSubmitting) {
-            const el = document.querySelector(".Mui-error");
-            const element = el && el.parentElement ? el.parentElement : el;
-            element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+            const fieldErrorNames = Object.keys(props.errors);
+            if (fieldErrorNames.length > 0) {
+              if (fieldErrorNames[0] === "tradeLicenseOrCOI" || fieldErrorNames[0] === "moa") {
+                scrollToDOMNode(documentUploadSectionRef);
+              } else {
+                const el =
+                  document.querySelector(`input[name='${fieldErrorNames[0]}']`) ||
+                  document.querySelector(".Mui-error");
+                const element = el && el.parentElement ? el.parentElement : el;
+                element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }
           }
           return (
             <Form className={classes.companyInfoSectionForm}>
-              <div className={classes.companyInfoSectionWrapper}>
+              <div className={classes.companyInfoSectionWrapper} ref={documentUploadSectionRef}>
                 <SectionTitle
                   title={"Upload company documents"}
                   classes={{ wrapper: classes.title }}
