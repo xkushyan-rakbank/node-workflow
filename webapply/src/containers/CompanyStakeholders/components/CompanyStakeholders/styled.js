@@ -630,6 +630,11 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   horizontalLine: {
+    height: "1px",
+    background: "#E6E6E6",
+    margin: "24px 0"
+  },
+  stakeHolderPreviewHorizontal: {
     backgroundColor: "#E6E6E6",
     height: "1px",
     width: "100%"

@@ -248,7 +248,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         <div>
           <h5 className={classes.reviewDetailsTitle}>Essential information</h5>
         </div>
-        <div className={classes.horizontalLine}></div>
+        <div className={classes.stakeHolderPreviewHorizontal}></div>
         <div className={classes.infoLabelValue}>
           <label>Full name:</label>
           <p>{displayFields.signatoryFullName}</p>
