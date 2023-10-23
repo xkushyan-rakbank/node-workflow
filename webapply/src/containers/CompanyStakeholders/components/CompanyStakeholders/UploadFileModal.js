@@ -232,11 +232,11 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                     onDrop={acceptedFile => handleDropFile(acceptedFile, "passport")}
                     isInsideForm={false}
                     file={values && values.passport}
-                    content={uploadedFileName.passport &&{fileName: uploadedFileName.passport}}
+                    content={uploadedFileName.passport && { fileName: uploadedFileName.passport }}
                     showUploadSuccessIcon={true}
                     onDelete={() => removeValue("passport", "")}
                     component={Upload}
-                    mobilecontentPlaceholder="Upload your Passport"
+                    mobilecontentPlaceholder="Upload your passport"
                   />
                 )}
                 <div className={classes.btnWrapper}>

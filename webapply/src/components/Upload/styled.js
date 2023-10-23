@@ -12,8 +12,6 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     cursor: "pointer",
     gap: "24px",
-    minWidth: "210px",
-    maxWidth: "270px",
     [theme.breakpoints.up("sm")]: {
       padding: "24px",
       flexDirection: "row",
