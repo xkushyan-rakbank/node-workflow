@@ -61,10 +61,6 @@ export const TradeLicenceInformation = ({ values }) => {
             // Return a single "Loading..." option when waiting for a decision
             return [{ label: "Loading...", value: null }];
           }
-          const checkLicenceIssuing = blackListedAuthoritiesForUAE[values.licenseIssuingAuthority];
-          if (checkLicenceIssuing) {
-            return options.filter(item => item.code !== COUNTRY_CODE_UAE);
-          }
           return options;
         }}
       />
