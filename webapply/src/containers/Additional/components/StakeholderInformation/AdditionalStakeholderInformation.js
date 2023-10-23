@@ -114,7 +114,7 @@ export const AdditionalStakeholderInformation = ({
       inCompleteAccordionList[0].parentNode.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const handleNextClickAction = ({ value: validationResults, ...props }) => {
+  const handleNextClickAction = ({ values: validationResults, ...props }) => {
     try {
       props.submitForm();
       let forms = {
