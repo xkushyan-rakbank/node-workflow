@@ -38,12 +38,7 @@ function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBa
       return yield put(setLabel(decision.output_key, decision.output_value[0]));
     case "SET_FIELD_VALUE":
     case "RESET_FIELD_VALUE": {
-      const { scheme } = yield select(getLoginResponse);
-      const isOperator = scheme === operatorLoginScheme;
       const storeAppConfig = yield select(getAppConfig);
-      if (isOperator) {
-        return;
-      }
       const prospectValue = get(storeAppConfig, decision.output_key);
       const defaultValue = get(appConfig, decision.output_key);
       let decisionValue = decision.output_value[0];
