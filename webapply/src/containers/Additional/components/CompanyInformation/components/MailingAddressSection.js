@@ -256,7 +256,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                         }
                         placeholder="Office or shop number"
                         InputProps={{
-                          inputProps: { tabIndex: 2, maxLength: 50 }
+                          inputProps: { tabIndex: 2, maxLength: 50, showInLineError: true }
                         }}
                         component={Input}
                       />
@@ -270,7 +270,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                         label="Flat, villa or building"
                         placeholder="Flat, villa or building"
                         InputProps={{
-                          inputProps: { tabIndex: 2, maxLength: 50 }
+                          inputProps: { tabIndex: 2, maxLength: 50, showInLineError: true }
                         }}
                         component={Input}
                       />
@@ -287,7 +287,8 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                         inputComponent: POBoxNumberInput,
                         inputProps: {
                           tabIndex: 3,
-                          maxLength: 6
+                          maxLength: 6,
+                          showInLineError: true
                         }
                       }}
                     />
@@ -301,7 +302,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                       }
                       placeholder="Street or location"
                       InputProps={{
-                        inputProps: { tabIndex: 4, maxLength: 50 }
+                        inputProps: { tabIndex: 4, maxLength: 50, showInLineError: true }
                       }}
                       component={Input}
                     />
