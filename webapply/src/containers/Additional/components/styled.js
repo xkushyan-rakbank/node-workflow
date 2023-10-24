@@ -410,6 +410,9 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     lineHeight: "20px",
     color: "#757575",
+    position: "relative",
+    textAlign: "left",
+    bottom: "15px",
     [theme.breakpoints.up("sm")]: {
       fontSize: "14px"
     }
