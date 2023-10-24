@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Form, Formik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import * as Yup from "yup";
 
 import { NEXT, SUBMIT, TL_COI_FILE_SIZE, additionInfoStepper } from "../../constants";
@@ -12,14 +12,12 @@ import StakeholdersDetail from "../CompanyStakeholders/components/CompanyStakeho
 import {
   getAdditionalDocumentDetailsForBPM,
   getAdditionalDocumentDetailsFromBPM,
-  getAdditionalInfoDetailsForBPM,
   getAdditionalInfoDetailsFromBPM
 } from "../../store/selectors/appConfig";
 import { Footer } from "../../components/Footer";
 import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import routes from "../../routes";
-import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import AdditionalQuery from "./AdditionalQuery";
 import AdditionalDocument from "./AdditionalDocument";
 import { OverlayLoader } from "../../components/Loader";
@@ -30,7 +28,6 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   useFormNavigation([false, false, additionInfoStepper, true, false]);
   useLayoutParams(false);
   useViewId(true);
-  const dispatch = useDispatch();
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
   const [loading, setIsLoading] = useState(false);
@@ -42,11 +39,10 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   const additionalDocumentDetailsFromBPM = useSelector(getAdditionalDocumentDetailsFromBPM);
 
   // sending details back to bpm through update prospect
-  const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
+  // const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
   const additionalDocumentDetailsForBPM = useSelector(getAdditionalDocumentDetailsForBPM);
 
   const isAgent = useSelector(checkLoginStatus);
-
 
   //set intial values
   useEffect(() => {
@@ -200,7 +196,10 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
                 setTouched={setTouched}
               />
               <Footer>
-                <BackLink path={routes.comeBackLogin} isTypeButton={true} />
+                <BackLink
+                  path={isAgent ? routes.searchProspect : routes.comeBackLogin}
+                  isTypeButton={true}
+                />
                 <NextStepButton
                   justify="flex-end"
                   display="block"
