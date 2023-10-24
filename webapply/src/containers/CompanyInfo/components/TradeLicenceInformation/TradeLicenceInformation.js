@@ -35,7 +35,7 @@ export const TradeLicenceInformation = ({ values }) => {
     <>
       <Field
         name="licenseIssuingAuthority"
-        label="Licence issuing authority"
+        label="License issuing authority"
         path="prospect.organizationInfo.licenseIssuingAuthority"
         datalistId="licenseIssuingAuthority"
         isSearchable
@@ -43,8 +43,8 @@ export const TradeLicenceInformation = ({ values }) => {
         isClearable={true}
         tabIndex="0"
         infoIcon={true}
-        infoTitle={`This should be the same as shown on your trade licence.
-        If your company does not have a UAE trade licence,
+        infoTitle={`This should be the same as shown on your trade license.
+        If your company does not have a UAE trade license,
          enter the company registration details as shown on other company documents.`}
       />
       <Field
@@ -66,7 +66,7 @@ export const TradeLicenceInformation = ({ values }) => {
       />
       <Field
         name="licenseOrCOINumber"
-        label="Licence number"
+        label="License number"
         path="prospect.organizationInfo.licenseOrCOINumber"
         fieldDescription="Special characters allowed (- / . Space)"
         component={Input}
@@ -99,9 +99,9 @@ export const TradeLicenceInformation = ({ values }) => {
         <Grid item sm={6} xs={12}>
           <Field
             name="licenseOrCOIExpiryDate"
-            label="Licence expiry date"
+            label="License expiry date"
             path="prospect.organizationInfo.licenseOrCOIExpiryDate"
-            placeholder="Licence expiry date"
+            placeholder="License expiry date"
             inputAdornmentPosition="end"
             component={DatePicker}
             InputProps={{

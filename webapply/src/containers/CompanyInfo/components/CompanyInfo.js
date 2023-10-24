@@ -238,7 +238,7 @@ export const CompanyInfo = ({
               </div>
               <div className={classes.companyInfoSectionWrapper}>
                 <SectionTitle
-                  title={"Trade licence information"}
+                  title={"Trade license information"}
                   classes={{ wrapper: classes.title }}
                 />
                 <Divider className={classes.divider} />
