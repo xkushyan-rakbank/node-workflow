@@ -126,15 +126,15 @@ export const AddCompanyInformation = ({
           accordionRef: bussinesAccordionRef,
           isCompleted: validationResults?.isBusinessRelationshipCompleted
         },
-        mailAddress: {
-          formRef: mailAddressFormRef.current,
-          accordionRef: mailAddressAccordionRef,
-          isCompleted: validationResults?.isMailingAddressCompleted
-        },
         financial: {
           formRef: financialFormRef.current,
           accordionRef: financialAccordionRef,
           isCompleted: validationResults?.isFinancialTurnoverCompleted
+        },
+        mailAddress: {
+          formRef: mailAddressFormRef.current,
+          accordionRef: mailAddressAccordionRef,
+          isCompleted: validationResults?.isMailingAddressCompleted
         },
         taxDeclarations: {
           formRef: taxDeclarationFormRef.current,

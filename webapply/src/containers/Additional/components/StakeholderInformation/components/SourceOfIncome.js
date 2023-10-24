@@ -169,7 +169,7 @@ export const SourceOfIncome = ({ id, refs }) => {
           saveProspectPath = `stakeholdersDocuments.0_${[signatoryName]}.additionalDocuments`;
         }
         let proofDoc = { ...isUploading };
-        proofDoc[index || name] = true;
+        proofDoc[name || `proofOfIncome[${index}]`] = true;
         setIsUploading(proofDoc);
         dispatch(
           uploadDocuments({
@@ -187,12 +187,12 @@ export const SourceOfIncome = ({ id, refs }) => {
 
               setFieldValue(name, fileStore);
               setTouched({ ...touched, ...{ [name]: true } });
-              proofDoc[index || name] = false;
+              proofDoc[name || `proofOfIncome[${index}]`] = false;
               setIsUploading(proofDoc);
             },
             onFailure: () => {
               setFieldValue(name, "");
-              proofDoc[index || name] = false;
+              proofDoc[name || `proofOfIncome[${index}]`] = false;
               setIsUploading(proofDoc);
             },
             index,
@@ -455,7 +455,7 @@ export const SourceOfIncome = ({ id, refs }) => {
                                   )
                                 }
                                 content={values?.proofOfIncome[index]}
-                                isUploading={isUploading[index]}
+                                isUploading={isUploading[`proofOfIncome[${index}]`]}
                                 mobilecontentPlaceholder={"Upload your file"}
                                 notedText={index === 0 ? sourceOfIncomeInformation : null}
                               />

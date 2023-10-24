@@ -63,7 +63,6 @@ import { Footer } from "../../components/Footer";
 import { KycAnnexureDetails } from "./components/KycAnnexureDetails";
 import { checkLoginStatus, getLoginResponse } from "../../store/selectors/loginSelector";
 import { scrollToDOMNode } from "../../components/VerticalPagination";
-import { initDocumentUpload } from "../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 const marketingChannelSelectionHandlers = {
@@ -90,8 +89,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   useViewId(true);
-
-  let inCompleteAccordionList = [];
 
   const pushHistory = useTrackingHistory();
 
@@ -240,13 +237,13 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     signingPreferences: "singly",
     chequeBookApplied: "",
     debitCardApplied: true,
+    nameOnDebitCard: "",
     statementsVia,
     preferredLanguage: "",
     mobileInstructions: "",
     marketing: "",
     marketingChannel: [],
     marketingChannelOptions: getInitialSelectedMarketingChannelOptions || [],
-    nameOnDebitCard: "",
     surveys: "",
     companyCifId: "",
     retailCifId: "",
@@ -449,16 +446,24 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     if (isIncomplete && !isAccordionOpen) {
       accordionRef.current.click();
     }
-    inCompleteAccordionList.length > 0 &&
-      inCompleteAccordionList[0].parentNode.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const scrollToFirstInvalidField = invalidField => {
+    setTimeout(() => {
+      const el = document.querySelector(`input[name='${invalidField}']`);
+      const element = el && el.parentElement ? el.parentElement : el;
+      element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 500);
   };
 
   const handleNextClickAction = async () => {
     const validatedFormFields = await formRef.current.validateForm();
+    const firstInvalidField = Object.keys(validatedFormFields)[0];
+
     try {
       const servicePreferenceValidation =
-        validatedFormFields.hasOwnProperty("branchId") ||
         validatedFormFields.hasOwnProperty("accountEmirateCity") ||
+        validatedFormFields.hasOwnProperty("branchId") ||
         validatedFormFields.hasOwnProperty("receiveInterest");
 
       const authorizationValidation =
@@ -466,9 +471,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         validatedFormFields.hasOwnProperty("nameOnDebitCard");
 
       const communicationValidation =
+        validatedFormFields.hasOwnProperty("preferredLanguage") ||
         validatedFormFields.hasOwnProperty("marketing") ||
         validatedFormFields.hasOwnProperty("mobileInstructions") ||
-        validatedFormFields.hasOwnProperty("preferredLanguage") ||
         validatedFormFields.hasOwnProperty("surveys");
 
       let forms = {
@@ -487,11 +492,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       };
       Object.keys(forms).forEach(formName => {
         const { accordionRef, isIncomplete } = forms[formName];
-        handleFormAcordions(accordionRef, isIncomplete);
-        if (isIncomplete && inCompleteAccordionList.indexOf(accordionRef.current) === -1) {
-          inCompleteAccordionList.push(accordionRef.current);
-        }
+        handleFormAcordions(accordionRef, isIncomplete, firstInvalidField);
       });
+      firstInvalidField && scrollToFirstInvalidField(firstInvalidField);
     } catch (validationError) {
       // console.error(validationError);
     }
