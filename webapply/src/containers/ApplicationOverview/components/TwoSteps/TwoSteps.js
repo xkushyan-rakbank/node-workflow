@@ -19,7 +19,7 @@ export const TwoSteps = () => {
           <div className={classes.cards}>
             <TradeLicenseDocIcon alt="trade-license" width="21" height="24" />
             <p className={classes.cardDesc}>
-              Valid trade licence and constitutional documents
+              Valid trade license and constitutional documents
               <sup className={classes.asteriskText}>1</sup>
             </p>
           </div>

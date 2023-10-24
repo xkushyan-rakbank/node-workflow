@@ -50,11 +50,11 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues.lineOfBusiness}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Licence number:</label>
+              <label>License number:</label>
               <p>{fieldValues.licenseOrCOINumber}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Licence issuing authority:</label>
+              <label>License issuing authority:</label>
               <p>{fieldValues.licenseIssuingAuthority}</p>
             </div>
             <div className={classes.infoLabelValue}>
@@ -66,7 +66,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{formatDate(fieldValues.dateOfIncorporation)}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Licence expiry date:</label>
+              <label>License expiry date:</label>
               <p>{formatDate(fieldValues.licenseOrCOIExpiryDate)}</p>
             </div>
           </div>

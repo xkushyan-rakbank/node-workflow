@@ -391,7 +391,7 @@ export const SourceOfIncome = ({ id, refs }) => {
                           name="tradeLicense"
                           path="prospect.prospectDocuments.additionalStakeholderDocument.tradeLicense"
                           type="file"
-                          fieldDescription="Upload Trade licence"
+                          fieldDescription="Upload Trade license"
                           helperText={SUPPORTED_FILE_FORMAT_TEXT}
                           accept={TL_ACCEPTED_FILE_TYPES}
                           fileSize={TL_COI_FILE_SIZE}

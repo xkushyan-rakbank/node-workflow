@@ -105,7 +105,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 InputProps={{
                   inputProps: { tabIndex: 0, maxLength: 255 }
                 }}
-                fieldDescription="This should be the same as shown on customers trade licence."
+                fieldDescription="This should be the same as shown on customers trade license."
               />
               <Field
                 name="custEmail"

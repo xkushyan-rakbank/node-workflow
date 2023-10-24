@@ -52,7 +52,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
 
   const uploadDescription = (
     <div style={{fontWeight: 400, fontSize: "14px", lineHeight: "20px", color: "#757575"}}>
-      <p>Make sure your trade licence or certificate is clear and legible.</p>
+      <p>Make sure your trade license or certificate is clear and legible.</p>
     </div>
   );
 
@@ -62,7 +62,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
         name="tradeLicenseOrCOI"
         path="prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI"
         type="file"
-        fieldDescription="Trade licence/Certificate of incorporation"
+        fieldDescription="Trade license/Certificate of incorporation"
         helperText={SUPPORTED_FILE_FORMAT_TEXT}
         accept={TL_ACCEPTED_FILE_TYPES}
         fileSize={TL_COI_FILE_SIZE}

@@ -140,7 +140,7 @@ export const CompanyInfo = ({
     licenseOrCOINumber: Yup.string()
       .required(getRequiredMessage("License number"))
       .matches(/^[a-zA-Z0-9./\- ]+$/, {
-        message: getInvalidMessage("Licence number")
+        message: getInvalidMessage("License number")
       }),
     licenseOrCOIExpiryDate: Yup.date()
       .required(getRequiredMessage("License expiry date"))
