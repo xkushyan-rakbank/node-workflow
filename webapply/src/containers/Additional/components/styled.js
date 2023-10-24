@@ -456,5 +456,14 @@ export const useStyles = makeStyles(theme => ({
     color: "#000",
     fontWeight: 500,
     lineHeight: "20px"
+  },
+  noteWrapper: {
+    alignItems: "start !important",
+    "& svg": {
+      marginTop: "5px",
+      fill: "#757575",
+      width: "14px",
+      height: "14px"
+    },
   }
 }));

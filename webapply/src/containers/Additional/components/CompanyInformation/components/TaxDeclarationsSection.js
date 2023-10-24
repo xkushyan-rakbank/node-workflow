@@ -103,7 +103,10 @@ export const TaxDeclarationsSection = forwardRef(({ id, refs }) => {
                     accurate information so that we can complete a quick and accurate assessment.
                   </p>
                 </div>
-                <DisclaimerNote text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support" />
+                <DisclaimerNote
+                  className={classes.noteWrapper}
+                  text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support"
+                />
                 {dnfbpFieldVisible && (
                   <div className={classes.taxDeclarationQuestionare}>
                     <label className={classes.sectionLabel}>
