@@ -728,7 +728,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           }
                           placeholder={"Name on card"}
                           InputProps={{
-                            inputProps: { tabIndex: 1, maxLength: 19 }
+                            inputProps: { tabIndex: 1, maxLength: 19, showInLineError: true }
                           }}
                           component={Input}
                           classes={{ formControlRoot: classes.customLabel }}
