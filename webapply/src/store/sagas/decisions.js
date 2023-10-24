@@ -23,6 +23,17 @@ import { updateProspectFromDecision } from "../actions/appConfig";
 import appConfig from "../../config/appConfig.json";
 import { getLoginResponse } from "../selectors/loginSelector";
 import { operatorLoginScheme } from "../../constants";
+import { getSearchResultsStatuses } from "../selectors/searchProspect";
+import { OPE_EDIT } from "../../containers/AgentPages/SearchedAppInfo/constants";
+
+const ignoreOutpuKeys = [
+  "prospect.companyAdditionalInfo.topCustomers[0].name",
+  "prospect.companyAdditionalInfo.topCustomers[0].country",
+  "prospect.companyAdditionalInfo.topSuppliers[0].name",
+  "prospect.companyAdditionalInfo.topSuppliers[0].country",
+  "prospect.companyAdditionalInfo.isNonFinancialInstitution",
+  "prospect.companyAdditionalInfo.dnfbpField"
+];
 
 function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBack) {
   switch (decision.action_type) {
@@ -38,6 +49,19 @@ function* processDecisionOutput(decision, changedFieldValues, prospect, isComeBa
       return yield put(setLabel(decision.output_key, decision.output_value[0]));
     case "SET_FIELD_VALUE":
     case "RESET_FIELD_VALUE": {
+      if (ignoreOutpuKeys.includes(decision.output_key)) {
+        const { scheme } = yield select(getLoginResponse);
+        const isOperator = scheme === operatorLoginScheme;
+        const statuses = yield select(getSearchResultsStatuses);
+        const prospectId = yield select(getProspectId);
+        const prospectStatus = (statuses.find(status => status.prospectId === prospectId) || {})
+          .statusType;
+
+        const isFrontendCorrection = prospectStatus === OPE_EDIT;
+        if (isOperator && isFrontendCorrection) {
+          return;
+        }
+      }
       const storeAppConfig = yield select(getAppConfig);
       const prospectValue = get(storeAppConfig, decision.output_key);
       const defaultValue = get(appConfig, decision.output_key);
