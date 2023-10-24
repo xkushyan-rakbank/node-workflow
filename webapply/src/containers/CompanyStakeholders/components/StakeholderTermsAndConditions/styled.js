@@ -243,5 +243,15 @@ export const useStyles = makeStyles(theme => ({
       marginTop: "12px",
       marginLeft: 0
     }
+  },
+  mainTitle: {
+    color: "#1F1F1F",
+    fontFamily: "DM Sans",
+    fontSize: "22px",
+    fontStyle: "normal",
+    fontWeight: 600,
+    letterSpacing: "normal",
+    fontStretch: "normal",
+    lineHeight: "0.25rem"
   }
 }));
