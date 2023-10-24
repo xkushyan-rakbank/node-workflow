@@ -131,6 +131,10 @@ export const useStyles = makeStyles((theme) => ({
     },
     "&:first-child": {
       background: "rgba(245, 245, 245, 0.50)",
+      textAlign: "left",
+      [theme.breakpoints.up("sm")]: {
+        alignItems: "left"
+      }
     },
     "&:nth-child(2)": {
       background: "rgba(253, 231, 232, 0.60)",
@@ -150,7 +154,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   packageListTitle: {
     "& h2": {
-      color: "#1F1F1F",
+      color: "#830000",
       fontSize: "0.875rem",
       fontWeight: 500,
       lineHeight: "20px",
@@ -167,17 +171,19 @@ export const useStyles = makeStyles((theme) => ({
     },
     "& p": {
       color: "#1F1F1F",
-      fontSize: "16px",
+      fontSize: "14px",
+      textAlign: "left",
       fontWeight: 500,
-      lineHeight: "24px",
+      lineHeight: "1.5rem",
       margin: 0,
       [theme.breakpoints.up("sm")]: {
         fontSize: "18px",
+        textAlign: "unset",
         fontWeight: 400,
         lineHeight: "28px",
-        margin: 0,
-      },
-    },
+        margin: 0
+      }
+    }
   },
   serviceList: {
     margin: 0,
@@ -247,10 +253,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   selectedPackageListBtn: {
     color: "#ffffff",
-    backgroundColor: "#1F1F1F",
+    backgroundColor: "#1F1F1F"
   },
   accountServiceAccordionRoot: {
-    borderTop: "none",
+    borderTop: "none"
   },
   accountServiceAccordionSummaryContent: {
     "& .accordionTitle": {
@@ -313,13 +319,14 @@ export const useStyles = makeStyles((theme) => ({
     display: "inline",
     [theme.breakpoints.up("sm")]: {
       color: "#1F1F1F",
+      whiteSpace: "unset",
       textAlign: "left",
       fontSize: "1rem",
       fontWeight: 500,
       lineHeight: "24px",
       margin: 0,
-      width: "unset",
-    },
+      width: "unset"
+    }
   },
   featureValues: {
     color: "#1F1F1F",
@@ -469,6 +476,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#3B3A3A",
     [theme.breakpoints.up("sm")]: {
       fontSize: "1rem",
+      lineHeight: "0.5rem",
     }
   }
 }));
