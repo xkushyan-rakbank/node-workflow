@@ -94,6 +94,12 @@ export const Documents = ({ signatoryInfo, downloadDocument, docs }) => {
                 downloadDocument,
                 `stakeholdersDocuments['${index}_${user.fullName}'].personalBackground.documents`
               )}
+              {listDocuments(
+                docs,
+                classes,
+                downloadDocument,
+                `stakeholdersDocuments['${index}_${user.fullName}'].additionalDocuments`
+              )}
             </div>
           </div>
         ))
