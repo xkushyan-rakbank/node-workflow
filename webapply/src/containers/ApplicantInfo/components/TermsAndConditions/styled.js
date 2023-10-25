@@ -6,18 +6,28 @@ export const useStyles = makeStyles(theme => ({
   },
   paper: {
     width: "500px",
-    borderRadius: "20px",
-    boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
-    backgroundColor: "#ffffff"
-  },
-  noTitlePaper: {
-    width: "1239px",
-    height: "min(845px, 90vh)",
-    borderRadius: "20px",
+    height: "281px",
+    borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
-    [theme.breakpoints.down("sm")]: {
-      minHeight: "0px"
+    "@media (max-width: 420px)": {
+      height: "320px",
+      overflow: "hidden"
+    },
+    "@media (max-width: 372px)": {
+      height: "370px"
+    }
+  },
+  noTitlePaper: {
+    width: "max-content",
+    minHeight: "650px",
+    minWidth: "auto",
+    borderRadius: "8px",
+    boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
+    backgroundColor: "#ffffff",
+    maxWidth: "unset",
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "780px"
     }
   },
   actionContainer: {
@@ -48,18 +58,25 @@ export const useStyles = makeStyles(theme => ({
     height: "100%"
   },
   content: {
+    padding: "unset",
     height: "400px",
-    padding: "0px 60px",
-    marginTop: "40px",
-    "& .react-pdf__Page__canvas": {
-      width: "100% !important",
-      height: "100% !important",
-      overflow: "hidden"
+    "overflow-x": "hidden !important", 
+    [theme.breakpoints.up("sm")]: {
+      padding: "8px 17px",
     },
-    [theme.breakpoints.down("sm")]: {
-      padding: "5px",
-      overflowX: "hidden",
-      marginTop: "10px"
+    [theme.breakpoints.between("sm", "md")]: {
+      "overflow-x": "hidden !important",
+    },
+    [theme.breakpoints.up("md")]: {
+      padding: "8px 17px", 
+    },
+    "& .react-pdf__Page__canvas": {
+      height: "100% !important",
+      width: "100% !important",
+      overflow: "hidden",
+      [theme.breakpoints.between("sm", "md")]: {
+        width: "100% !important",
+      }
     }
   },
   dialogActions: {
