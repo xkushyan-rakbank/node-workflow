@@ -8,7 +8,6 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "25px"
   },
   section: {
-    border: "1px solid #CCCCCC",
     padding: "20px 10px",
     borderRadius: "10px",
     [theme.breakpoints.up("sm")]: {
@@ -28,16 +27,17 @@ export const useStyles = makeStyles(theme => ({
   additionalSelectionButton: {
     boxSizing: "border-box",
     padding: "16px",
+    flexDirection: "column",
     [theme.breakpoints.up("sm")]: {
       width: contentWidth,
-      padding: "24px"
+      padding: "24px",
+      flexDirection: "row",
     },
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
     borderRadius: "10px",
     marginTop: "24px",
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     [theme.breakpoints.between("sm", "md")]: {
@@ -61,7 +61,7 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     fontSize: 20,
-    fontWeight: 600,
+    fontWeight: 500,
     [theme.breakpoints.only("xs")]: {
       fontSize: 14,
       width: "50%"
@@ -77,19 +77,22 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   btnContainer: {
-    marginTop: "60px"
+    // marginTop: "60px"
   },
   actionButton: {
     width: "auto",
     minWidth: "69px",
-    height: "45px",
     borderRadius: "10px",
     textTransform: "none",
     fontSize: "14px",
     fontWeight: 500,
-    padding: 20,
     letterSpacing: "normal",
-    padding: "8px"
+    padding: "8px",
+    lineHeight: "1rem",
+    [theme.breakpoints.up("sm")]: {
+      lineHeight: "unset",
+      height: "45px",
+    }
   },
   btnAdd: {
     background: "#E6E6E6",
@@ -98,7 +101,13 @@ export const useStyles = makeStyles(theme => ({
   },
   buttonWrap: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    alignSelf: "flex-end",
+    position: "absolute",
+    [theme.breakpoints.up("sm")]: {
+      alignSelf: "unset",
+      position: "unset",
+    }
   },
   completedWrapper: {
     display: "flex",
@@ -114,13 +123,14 @@ export const useStyles = makeStyles(theme => ({
     background: "#ECF9F2",
     color: "#157947",
     minWidth: "50px",
-    padding: "8px",
+    padding: "2px 5px",
     borderRadius: "10px",
     alignItems: "center",
     gap: "4px",
     fontWeight: 500,
     [theme.breakpoints.up("sm")]: {
-      minWidth: "98px"
+      minWidth: "98px",
+      padding: "8px"
     }
   },
   incompleted: {
@@ -129,11 +139,14 @@ export const useStyles = makeStyles(theme => ({
     color: "#332600",
     width: "auto",
     minWidth: "69px",
-    padding: "8px",
+    padding: "2px 5px", 
     borderRadius: "10px",
     alignItems: "center",
     gap: "4px",
-    fontWeight: 500
+    fontWeight: 500,
+    [theme.breakpoints.up("sm")]:{
+      padding: "8px",
+    }
   },
   additionalCompanyInfoContainer: {
     marginTop: "25px",
