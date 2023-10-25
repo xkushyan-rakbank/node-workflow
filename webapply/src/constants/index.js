@@ -246,6 +246,8 @@ export const SIGNING_TRANSACTIONS_TYPE = {
 };
 //ro-assist-brd1-3
 const blank = "_blank";
+
+export const EFR_CHECK = "EFR Check";
 export const smeSouqLink = "https://rakbank.ae/wps/portal/business-banking/smesouk";
 export const EFR_CHECK_ERROR = `Dear Customer, we were unable to complete your facial recognition process successfully. Not to worry! You may still proceed with our alternative application platform by clicking this secure link.<a href="${process.env.REACT_APP_BAU_URL}" target="${blank}"> https://quickapplyuat.rakbank.ae....</a>`;
 export const applicationError = [
@@ -487,7 +489,7 @@ export const screeningStatus = [
   },
   {
     error: "EFR check",
-    screeningType: "EFR Limit Check",
+    screeningType: EFR_CHECK,
     link: true,
     buttons: [
       {

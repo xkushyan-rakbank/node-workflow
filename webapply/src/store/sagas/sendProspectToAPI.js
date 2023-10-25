@@ -55,7 +55,9 @@ import {
   STEP_STATUS,
   AUTO_SAVE_INTERVAL,
   applicationError,
-  operatorLoginScheme
+  operatorLoginScheme,
+  EFR_CHECK_ERROR,
+  EFR_CHECK
 } from "../../constants";
 import { resetProspect, setTat, updateProspect } from "../actions/appConfig";
 import { FieldsValidationError, ErrorOccurredWhilePerforming } from "../../api/serverErrors";
@@ -128,14 +130,24 @@ export function* setScreeningResults({ preScreening }) {
     const accountType = yield select(getAccountType);
     const isIslamicBanking = yield select(getIsIslamicBanking);
     const { screeningType, screeningNotes } = screenError;
-
-    yield put(
-      setScreeningError({
-        ...screenError,
-        text: currScreeningType.reasonNotes,
-        icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType, screeningNotes)
-      })
-    );
+    if (screenError.screeningType?.toLowerCase() === EFR_CHECK.toLowerCase()) {
+      yield put(
+        setScreeningError({
+          ...screenError,
+          text: EFR_CHECK_ERROR,
+          icon: "",
+          screeningType: 403
+        })
+      );
+    } else {
+      yield put(
+        setScreeningError({
+          ...screenError,
+          text: currScreeningType.reasonNotes,
+          icon: getErrorScreensIcons(accountType, isIslamicBanking, screeningType, screeningNotes)
+        })
+      );
+    }
   } else {
     yield put(setScreeningError(screeningStatusDefault));
   }
