@@ -28,8 +28,8 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "8px"
   },
   readBtn: {
-    height: "60px",
-    width: "100%",
+    height: "3.2rem",
+    width: "16rem",
     borderRadius: "100px",
     border: "1px solid #1F1F1F",
     background: "transparent",
@@ -41,12 +41,13 @@ export const useStyles = makeStyles(theme => ({
     textTransform: "none",
     padding: "19px 24px",
     marginTop: "20px",
+    alignSelf: "center",
     [theme.breakpoints.up("sm")]: {
-      minWidth: "124px",
-      height: "40px",
       borderRadius: "21px",
       padding: "9px 24px",
-      width: "fit-content"
+      width: "206px",
+      height: "40px",
+      alignSelf: "unset"
     }
   },
   readAcceptBtn: {

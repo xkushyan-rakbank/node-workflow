@@ -272,7 +272,10 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "16px"
   },
   customLabel: {
-    margin: "12px 0 10px"
+    margin: "18px 0 10px",
+    [theme.breakpoints.up("sm")]: {
+      margin: "12px 0 10px"
+    }
   },
   customUrlLabel: {
     margin: "0px"
