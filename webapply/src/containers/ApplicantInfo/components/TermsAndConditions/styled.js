@@ -20,14 +20,14 @@ export const useStyles = makeStyles(theme => ({
   },
   noTitlePaper: {
     width: "max-content",
-    minHeight: "650px",
     minWidth: "auto",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
     maxWidth: "unset",
     [theme.breakpoints.up("sm")]: {
-      minWidth: "780px"
+      minWidth: "780px",
+      minHeight: "650px"
     }
   },
   actionContainer: {
@@ -58,24 +58,24 @@ export const useStyles = makeStyles(theme => ({
     height: "100%"
   },
   content: {
-    padding: "unset",
+    padding: "5px",
     height: "400px",
-    "overflow-x": "hidden !important", 
+    "overflow-x": "hidden !important",
     [theme.breakpoints.up("sm")]: {
-      padding: "8px 17px",
+      padding: "8px 17px"
     },
     [theme.breakpoints.between("sm", "md")]: {
-      "overflow-x": "hidden !important",
+      "overflow-x": "hidden !important"
     },
     [theme.breakpoints.up("md")]: {
-      padding: "8px 17px", 
+      padding: "8px 17px"
     },
     "& .react-pdf__Page__canvas": {
       height: "100% !important",
       width: "100% !important",
       overflow: "hidden",
       [theme.breakpoints.between("sm", "md")]: {
-        width: "100% !important",
+        width: "100% !important"
       }
     }
   },
