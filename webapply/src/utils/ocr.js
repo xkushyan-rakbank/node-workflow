@@ -1,6 +1,22 @@
 export const getOcrFieldValueBySource = node => {
-  const nodeValue = node?.find(x => x?.source === "mrz" || x?.source === "visual");
-  return nodeValue?.value || "";
+  let valueToFind = null;
+
+  for (const item of node) {
+    if (item.source === "mrz") {
+      valueToFind = item.value;
+      break;
+    }
+  }
+
+  if (valueToFind === null) {
+    for (const item of node) {
+      if (item.source === "visual") {
+        valueToFind = item.value;
+        break;
+      }
+    }
+  }
+  return valueToFind || "";
 };
 
 export const removeEncodingPrefix = imgStr => imgStr.replace(/data:.*;base64,/, "");
