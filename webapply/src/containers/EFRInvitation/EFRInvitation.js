@@ -9,7 +9,7 @@ import { setOtpMode } from "../../store/actions/otp";
 import routes from "../../routes";
 import { updateProspect } from "../../store/actions/appConfig";
 import { getApplicantInfo } from "../../store/selectors/appConfig";
-import { logout } from "../../store/actions/loginForm";
+import { resetLogin } from "../../store/actions/loginForm";
 
 export function EFRInvitation({ generateOtpCode }) {
   const location = useLocation();
@@ -18,6 +18,10 @@ export function EFRInvitation({ generateOtpCode }) {
 
   const searchParams = new URLSearchParams(location.search);
   const { mobileNo } = useSelector(getApplicantInfo);
+
+  useEffect(() => {
+    dispatch(resetLogin());
+  }, []);
 
   useEffect(() => {
     const prospectId = searchParams.get("prospectId");
