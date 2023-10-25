@@ -312,7 +312,11 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
                                       label="Tax Identification Number (TIN)"
                                       placeholder="Tax Identification Number (TIN)"
                                       InputProps={{
-                                        inputProps: { tabIndex: 1, maxLength: 40 }
+                                        inputProps: {
+                                          tabIndex: 1,
+                                          maxLength: 40,
+                                          showInLineError: true
+                                        }
                                       }}
                                       component={Input}
                                     />
