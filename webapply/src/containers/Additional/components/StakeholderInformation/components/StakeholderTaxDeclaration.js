@@ -265,7 +265,11 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
                                     datalistId="country"
                                     component={SelectAutocomplete}
                                     filterOptions={options => {
-                                      return options.filter(item => item.code !== "AE");
+                                      return options.filter(
+                                        item =>
+                                          item.code !== "AE" &&
+                                          values.taxDetails?.[index - 1]?.country !== item.code
+                                      );
                                     }}
                                   />
                                 </Grid>
