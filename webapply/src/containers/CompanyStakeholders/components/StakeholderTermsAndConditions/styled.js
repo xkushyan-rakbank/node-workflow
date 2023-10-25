@@ -15,7 +15,10 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     padding: "24px",
     marginBottom: "20px",
-    border: "1px solid #E6E6E6"
+    border: "1px solid #E6E6E6",
+    [theme.breakpoints.up("sm")]: {
+      padding: "18px", 
+    }
   },
   kfsDescriptionContent: {
     display: "flex",
@@ -47,18 +50,19 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   readAcceptBtn: {
-    height: "60px",
-    width: "100%",
+    height: "3.2rem",
+    width: "16rem",
     borderRadius: "100px",
     background: "#1F1F1F",
     fontSize: "14px",
     fontWeight: 600,
-    lineHeight: "22px",
+    lineHeight: "1.375rem",
     letterSpacing: "0px",
     color: "#FFFFFF",
     textTransform: "none",
     padding: "19px 24px",
     marginTop: "20px",
+    alignSelf: "center",
     "&:hover": {
       background: "rgba(0, 0, 0, 0.7)"
     },
@@ -68,6 +72,8 @@ export const useStyles = makeStyles(theme => ({
       height: "40px",
       borderRadius: "21px",
       padding: "9px 24px",
+      lineHeight: "22px",
+      alignSelf: "unset"
     }
   },
   completedWrapper: {
@@ -75,22 +81,27 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: "space-evenly",
     alignItems: "center",
     height: "32px",
-    minWidth: "98px",
+    minWidth: "90px",
     background: "#ECF9F2",
     borderRadius: "10px",
     fontSize: "12px",
-    color: "#157947"
+    color: "#157947",
+    fontWeight: 500,
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "98px",
+    }
   },
   notAcceptWrapper: {
     display: "flex",
     justifyContent: "space-evenly",
     alignItems: "center",
     height: "32px",
-    minWidth: "98px",
+    width: "20%",
     background: "#FDE7E8",
     borderRadius: "10px",
     fontSize: "12px",
-    color: "#8D0C10"
+    color: "#8D0C10",
+    fontWeight: "500"
   },
   kfsTitle: {
     margin: "0px",
