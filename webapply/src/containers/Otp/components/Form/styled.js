@@ -58,6 +58,16 @@ export const useStyles = makeStyles(theme => ({
   },
   title: {
     marginTop: "40px",
+    "& div:nth-of-type(2) span": {
+      fontSize: "0.75rem",
+      lineHeight: "1rem",
+      fontWeight: 500,
+      [theme.breakpoints.up("sm")]: {
+        fontSize: "1.25rem",
+        lineHeight: "1.75rem",
+        fontWeight: "unset"
+      }
+    },
     [theme.breakpoints.only("xs")]: {
       marginTop: 0
     }
