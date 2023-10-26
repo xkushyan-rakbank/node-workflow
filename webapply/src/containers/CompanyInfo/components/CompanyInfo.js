@@ -199,7 +199,6 @@ export const CompanyInfo = ({
       return;
     }
     const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", null);
-    console.log(subCategory, statuses, "test");
     if (statuses["subCategory"] !== subCategory) {
       const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
         .statusType;
