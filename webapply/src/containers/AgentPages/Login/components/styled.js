@@ -1,8 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { theme } from "../../../../theme";
 
 export const useStyles = makeStyles({
   baseForm: {
-    marginTop: "135px",
-    maxWidth: "612px"
+    maxWidth: "612px",
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "135px",
+    }
   }
 });

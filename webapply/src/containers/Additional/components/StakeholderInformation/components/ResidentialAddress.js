@@ -269,7 +269,7 @@ export const ResidentialAddress = ({ id, refs }) => {
                     tabIndex={5}
                   />
                 </Grid>
-                <Grid item sm={12}>
+                <Grid item sm={12} xs={12}>
                   <FieldArray name="addressProof">
                     {({ push, remove, arrayHelpers }) => (
                       <Grid item sm={12} xs={12}>

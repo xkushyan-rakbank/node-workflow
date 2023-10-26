@@ -229,4 +229,9 @@ export const useStyles = makeStyles(theme => ({
       display: "none",
     },
   },
+  formTwoStepNav: {
+    [theme.breakpoints.down("sm")]: {
+      height: "160px !important"
+    }
+  }
 }));

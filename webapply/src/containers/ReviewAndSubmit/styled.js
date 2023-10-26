@@ -12,7 +12,12 @@ export const useStyles = makeStyles(theme => ({
     margin: "20px 0",
     [theme.breakpoints.up("lg")]: {
       padding: "30px",
-      margin: "40px 0",
+      margin: "40px 0"
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: "0px",
+      borderRadius: "0px",
+      border: "none"
     }
   },
   accountServiceAccordionRoot: {
@@ -129,7 +134,7 @@ export const useStyles = makeStyles(theme => ({
       fontStyle: "normal",
       fontWeight: 400,
       lineHeight: "20px",
-      width: "190px",
+      width: "11.75rem",
       minWidth: "188px"
     },
     "& p": {

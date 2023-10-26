@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import cx from "classnames";
 
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { getAgentName } from "../../store/selectors/appConfig";
@@ -14,7 +15,6 @@ import { accountNames, applicationOverviewRoutes } from "../../constants";
 import routes from "../../routes";
 import { useStyles } from "./styled";
 import { accountTypes } from "../../containers/AccountsComparison/components/TableCompare/constants";
-import cx from "classnames";
 
 const HeaderTitleComponent = ({
   islamicBanking,

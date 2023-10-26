@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles(theme => ({
   headerTitle: {
-    marginTop: 35,
     backgroundColor: "#fff",
     marginBottom: ({ withoutMarginBottom }) => (withoutMarginBottom ? 0 : 115),
     "& span": {
@@ -12,10 +11,10 @@ export const useStyles = makeStyles(theme => ({
       "& span": {
         fontWeight: "600"
       }
+    },
+    [theme.breakpoints.up("sm")]: {
+      marginTop: 35
     }
-    // [theme.breakpoints.only("xs")]: {
-    //   display: "none"
-    // }
   },
   headerTitleIn: {
     display: "flex",

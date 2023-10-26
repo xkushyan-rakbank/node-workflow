@@ -243,7 +243,7 @@ export const Background = ({ id, refs }) => {
                 label="LinkedIn URL"
                 placeholder="LinkedIn URL"
                 InputProps={{
-                  inputProps: { tabIndex: 1 }
+                  inputProps: { tabIndex: 1, maxLength: 250, showInLineError: true }
                 }}
                 component={Input}
                 classes={{ formControlRoot: classes.customUrlLabel }}

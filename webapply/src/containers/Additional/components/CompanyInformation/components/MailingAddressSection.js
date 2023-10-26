@@ -337,7 +337,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                       tabIndex={6}
                     />
                   </Grid>
-                  <Grid item sm={12}>
+                  <Grid item sm={12} xs={12}>
                     <FieldArray
                       name="addressProof"
                       render={arrayHelpers => (
@@ -346,6 +346,8 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                             return (
                               <Grid
                                 item
+                                sm={12}
+                                xs={12}
                                 style={{
                                   textAlign: "right",
                                   marginBottom: index === 0 ? "25px" : ""

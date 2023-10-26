@@ -242,11 +242,14 @@ export const ApplicantInfoComponent = ({
           onSubmit={values => onSubmit(removeUnWantedKeys(["allianceCodeFromDataList"], values))}
           className={classes.applicantInfoForm}
         >
-          {({ isValid, isSubmitting }) => {
+          {({ isValid, isSubmitting, ...props }) => {
             if (isSubmitting) {
-              const el = document.querySelector(".Mui-error");
+              const fieldErrorNames = Object.keys(props.errors);
+              const el =
+                document.querySelector(`input[name='${fieldErrorNames[0]}']`) ||
+                document.querySelector(".Mui-error");
               const element = el && el.parentElement ? el.parentElement : el;
-              element && element.scrollIntoView({ behavior: "smooth", block: "end" });
+              element && element.scrollIntoView({ behavior: "smooth", block: "start" });
             }
             return (
               <Form>
