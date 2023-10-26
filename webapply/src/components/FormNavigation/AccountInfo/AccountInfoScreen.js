@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import { ContainedButton } from "../../Buttons/ContainedButton";
 import { useStyles } from "./styled";
 import { accountsInfo } from "./constants";
+import { BackLink } from "../../Buttons/BackLink";
 
 export const AccountInfoScreen = ({
   isShowApply,
@@ -78,23 +79,14 @@ export const AccountInfoScreen = ({
       )}
       {isShowStart && (
         <div className={classes.sectionButton}>
-          <div className="hide-on-mobile">
-            <ContainedButton
-              withRightArrow
-              justify="flex-start"
-              label="Let's start"
-              handleClick={handleStart}
-            />
-          </div>
-          <div className="show-on-mobile">
-            {/* <MobileNotification /> */}
-            <ContainedButton
-              withRightArrow
-              justify="flex-start"
-              label="Let's start"
-              handleClick={handleStart}
-            />
-          </div>
+          <BackLink path={"/"} isTypeButton={true} className={classes.accountCompBackBtn} />
+          <ContainedButton
+            withRightArrow
+            justify="flex-start"
+            label="Let's start"
+            handleClick={handleStart}
+            className={classes.letsStartBtn}
+          />
         </div>
       )}
     </div>

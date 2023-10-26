@@ -98,7 +98,45 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   sectionButton: {
+    display: "flex",
+    gap: "0.94rem",
     marginTop: 60,
-    [theme.breakpoints.only("xs")]: buttonMobile
+    [theme.breakpoints.only("xs")]: buttonMobile,
+    [theme.breakpoints.only("sm")]: {
+      flexDirection: "column-reverse"
+    }
+  },
+  letsStartBtn: {
+    padding: "12px 30px"
+  },
+  accountCompBackBtn: {
+    padding: "10px 30px !important",
+    borderRadius: "100px",
+    border: "1px solid #fff !important",
+    background: "transparent !important",
+    color: "#fff !important",
+    [theme.breakpoints.only("sm")]: {
+      justifyContent: "space-evenly !important"
+    },
+    [theme.breakpoints.up("sm")]: {
+      padding: "10px 30px !important",
+      lineHeight: "28px"
+    },
+    "& .arrowIcon": {
+      fill: "#fff !important",
+      "& path": {
+        fill: "#fff !important"
+      }
+    },
+    "&:hover": {
+      color: "#ffffff !important",
+      backgroundColor: "#1F1F1F",
+      "& svg": {
+        fill: "#ffffff !important",
+        "& path": {
+          fill: "#ffffff !important"
+        }
+      }
+    }
   }
 }));

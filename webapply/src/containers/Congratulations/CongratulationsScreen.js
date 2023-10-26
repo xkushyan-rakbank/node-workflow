@@ -13,7 +13,6 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
 import { useLayoutParams } from "../FormLayout";
 import { useViewId } from "../../utils/useViewId";
-import { ReactComponent as CongratsIcon } from "../../assets/icons/congratsBallon.svg";
 import { ReactComponent as SubmittedForm } from "../../assets/icons/submittedForm.svg";
 import { ReactComponent as Phone } from "../../assets/icons/pinkPhone.svg";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
@@ -45,7 +44,7 @@ export const CongratulationsScreen = ({ TAT }) => {
 
   return (
     <>
-      <CongratsIcon className={classes.congratulationIcon} />
+      {/* <CongratsIcon className={classes.congratulationIcon} /> */}
       <div className={classes.congratulationsTextWrapper}>
         <SectionTitleWithInfo
           title={"Thank you!"}

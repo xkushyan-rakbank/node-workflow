@@ -107,7 +107,7 @@ const BackLinkBase = ({ text = "Back", className = "", path, isTypeButton = fals
 
   return (
     <Link
-      className={cx(classes.root, { [classes.linkContainerBtn]: isTypeButton })}
+      className={cx(className, classes.root, { [classes.linkContainerBtn]: isTypeButton })}
       to={path}
       onClick={handleLinkClick}
       replace
