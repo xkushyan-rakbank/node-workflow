@@ -1,5 +1,5 @@
 /* eslint-disable no-extra-boolean-cast */
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import { format } from "date-fns";
@@ -33,6 +33,7 @@ import { Footer } from "../../components/Footer";
 import { checkLoginStatus, getLoginResponse } from "../../store/selectors/loginSelector";
 import ApplicationChecks from "./components/ApplicationChecks";
 import { getIsSendingProspect } from "../../store/selectors/sendProspectToAPI";
+import { scrollToDOMNode } from "../../components/VerticalPagination";
 
 export const ReviewSubmit = ({ sendProspectToAPI }) => {
   useFormNavigation([false, true, formStepper]);
@@ -45,6 +46,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const loading = useSelector(getIsSendingProspect);
 
   const [isLoading, setIsLoading] = useState(false);
+  const reviewSubmitRef = useRef(null);
 
   const {
     country: countryList,
@@ -241,6 +243,12 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   };
 
   useEffect(() => {
+    setTimeout(() => {
+      scrollToDOMNode(reviewSubmitRef);
+    }, 0);
+  }, []);
+
+  useEffect(() => {
     if (prospect) {
       const {
         applicantInfo,
@@ -393,7 +401,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
   return (
     <>
-      <div className={classes.container}>
+      <div className={classes.container} ref={reviewSubmitRef}>
         <div className={classes.section}>
           <SectionTitleWithInfo
             title={"Have one last look over your info"}
