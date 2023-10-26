@@ -214,7 +214,7 @@ export const configureKYCTransactionAPIClient = (transactionId, kycAccessToken) 
     headers: {
       Authorization: `Bearer ${kycAccessToken}`
     },
-    timeout: 30000 // 30 seconds
+    timeout: 60000 // 60 seconds
   });
   return kycTransactionAPIClient[transactionId];
 };
