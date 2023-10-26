@@ -76,7 +76,9 @@ export const FormNavigationComponent = () => {
 
   const showTwoStepsNavForMobile =
     Object.values(VIEW_IDS).some(path => pathname.includes(path)) ||
-    ["/ApplicantInfo", "/VerifyMobileOTP", "/agent/Login"].some(path => pathname.includes(path));
+    ["/ApplicantInfo", "/VerifyMobileOTP", "/agent/Login", "/VerifyEmailOTP"].some(path =>
+      pathname.includes(path)
+    );
 
   return (
     <div
