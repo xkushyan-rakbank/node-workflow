@@ -37,7 +37,7 @@ export const WEBSITE_REGEX = /^(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-
 export const FILE_SIZE = 5 * 1048576;
 export const SUPPORTED_FORMATS = ["image/png", "image/jpeg", "application/pdf", "application/txt"];
 
-export const LINKEDIN_REGEX = /^https?:\/\/(www\.)?linkedin\.com\/.*$/i;
+export const LINKEDIN_REGEX = /^https:\/\/[A-Za-z0-9.-]+[.][A-Za-z]{2,4}/;
 
 export const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
 export const checkIsTrimmed = (value = "") => value.length === value.trim().length;
