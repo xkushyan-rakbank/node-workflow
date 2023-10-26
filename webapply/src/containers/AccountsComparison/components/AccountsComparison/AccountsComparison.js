@@ -233,14 +233,14 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <p>How can we help you?</p>
           <div className={classes.btnWrapper} id="businessAccountButton" ref={businessButton}>
             <div onClick={handleClick}>
-              <ExpandMoreButton label="Business account" className={classes.accountBtn} />
+              <ExpandMoreButton label="Business Account" className={classes.accountBtn} />
             </div>
             <div
               onClick={() =>
                 redirectInToFinance(process.env.REACT_APP_BAU_URL + smeBaseName + "/finances")
               }
             >
-              <ExpandMoreButton label="Business finance" className={classes.accountBtn} />
+              <ExpandMoreButton label="Business Finance" className={classes.accountBtn} />
             </div>
           </div>
         </div>

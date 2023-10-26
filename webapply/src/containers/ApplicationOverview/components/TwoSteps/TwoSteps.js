@@ -13,20 +13,21 @@ export const TwoSteps = () => {
     <>
       <div className={classes.firstGroup}>
         <p className={classes.infoDesc}>
-          For a successful application, please ensure that the information you provide is as accurate as possible.
+          For a successful application, please ensure that the information you provide is as
+          accurate as possible.
         </p>
         <div className={classes.cardsWrapper}>
           <div className={classes.cards}>
             <TradeLicenseDocIcon alt="trade-license" width="21" height="24" />
             <p className={classes.cardDesc}>
-              Valid trade license and constitutional documents
+              Valid Trade License and Constitutional Documents
               <sup className={classes.asteriskText}>1</sup>
             </p>
           </div>
           <div className={classes.cards}>
             <PassportIcon alt="passport" className={classes.passportIcon} height="24" />
             <p className={classes.cardDesc}>
-               Passports and Emirates ID of Signatories
+              Passports and Emirates ID of Signatories
               <sup className={classes.asteriskText}>2</sup>
             </p>
           </div>
@@ -36,7 +37,7 @@ export const TwoSteps = () => {
           </div>
           <div className={classes.cards}>
             <ProofOfIncomeIcon alt="Proof of income" width="18" height="24" />
-            <p className={classes.cardDesc}>Proof of income for stakeholders</p>
+            <p className={classes.cardDesc}>Proof of income for Stakeholders</p>
           </div>
         </div>
       </div>
@@ -52,6 +53,12 @@ export const TwoSteps = () => {
           <p>
             <sup className={classes.asteriskText}>2</sup>Emirates ID not required for non-resident
             stakeholders
+          </p>
+        </div>
+        <div>
+          <p className={classes.disclaimer}>
+           **Following the review of the submitted documents, the Bank may seek additional documents
+            / information
           </p>
         </div>
       </div>

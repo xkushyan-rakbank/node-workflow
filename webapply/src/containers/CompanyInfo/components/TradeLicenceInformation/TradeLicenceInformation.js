@@ -43,8 +43,8 @@ export const TradeLicenceInformation = ({ values }) => {
         isClearable={true}
         tabIndex="0"
         infoIcon={true}
-        infoTitle={`This should be the same as shown on your trade license.
-        If your company does not have a UAE trade license,
+        infoTitle={`This should be the same as shown on your Trade License.
+        If your company does not have a UAE Trade License,
          enter the company registration details as shown on other company documents.`}
       />
       <Field

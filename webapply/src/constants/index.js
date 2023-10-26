@@ -566,7 +566,7 @@ export const ACTION_TYPES = {
 export const Personas = {
   SP: {
     key: "SP",
-    title: "I’m a sole proprietor",
+    title: "I’m a Sole Proprietor",
     subTitle: ["I own this business"],
     url: routes.applicantInfo,
     urlType: "2.0",
@@ -575,7 +575,7 @@ export const Personas = {
   },
   SPLL: {
     key: "SPLL",
-    title: "I'm a sole proprietor with an LLC",
+    title: "I'm a Sole Proprietor with an LLC",
     subTitle: ["I do business as a limited liability company (LLC)"],
     url: routes.applicantInfo,
     urlType: "2.0",

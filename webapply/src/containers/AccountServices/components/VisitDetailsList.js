@@ -169,7 +169,7 @@ export const VisitDetailsList = ({
                       <Field
                         name={`visitDetails[${index}].sisterCompanyTradeLicense`}
                         type="file"
-                        fieldDescription="Upload sister company trade license"
+                        fieldDescription="Upload sister company Trade License"
                         helperText={SUPPORTED_FILE_FORMAT_TEXT}
                         accept={TL_ACCEPTED_FILE_TYPES}
                         fileSize={TL_COI_FILE_SIZE}

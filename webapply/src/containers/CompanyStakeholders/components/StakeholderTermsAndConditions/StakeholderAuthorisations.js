@@ -69,7 +69,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           )}
         </div>
         <ul className={classes.authorisationsList}>
-          <li>Al Etihad credit bureau checks</li>
+          <li>Al Etihad Credit Bureau checks</li>
           <li>Account statements check with Central Bank of the UAE (CBUAE)</li>
           <li>Other regulatory authorisations</li>
         </ul>

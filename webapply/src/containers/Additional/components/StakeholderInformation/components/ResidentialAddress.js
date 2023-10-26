@@ -78,7 +78,7 @@ export const ResidentialAddress = ({ id, refs }) => {
       .matches(POBOX_REGEX, getInvalidMessage("P.O. Box number")),
     emirateCity: Yup.string()
       .nullable()
-      .required(getRequiredMessage("Emirate or city")),
+      .required(getRequiredMessage("Emirate or City")),
     addressProof: Yup.array()
       .of(
         Yup.mixed()
@@ -250,8 +250,8 @@ export const ResidentialAddress = ({ id, refs }) => {
                   <Field
                     name="emirateCity"
                     path={`${basePath}.emirateCity`}
-                    label="Emirate or city"
-                    placeholder="Emirate or city"
+                    label="Emirate or City"
+                    placeholder="Emirate or City"
                     datalistId="emirateCity"
                     component={SelectAutocomplete}
                     tabIndex={4}

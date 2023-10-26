@@ -138,7 +138,7 @@ export const CompanyPreferredMailingAddressComponent = ({
                       path={`${BASE_PATH_1}.addressLine1`}
                       label="Office / Shop Number"
                       placeholder="Office / Shop Number"
-                      contextualHelpText="Give the Registered Address of the company as given in Trade license or the operating or head office address of the company."
+                      contextualHelpText="Give the Registered Address of the company as given in Trade License or the operating or head office address of the company."
                       InputProps={{
                         inputProps: { maxLength: MAX_OFFICE_NUMBER_LENGTH, tabIndex: 1 }
                       }}

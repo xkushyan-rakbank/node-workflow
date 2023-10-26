@@ -285,7 +285,7 @@ export const ApplicantInfoComponent = ({
                     }}
                     isLemnisk={true}
                     lemniskCall={value => lemniskCall(value)}
-                    fieldDescription="This should be the same as shown on your trade license."
+                    fieldDescription="This should be the same as shown on your Trade License."
                     isLoadDefaultValueFromStore={false}
                     iconWidth={16}
                     iconHeight={16}

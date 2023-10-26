@@ -43,9 +43,9 @@ const companyBranchesAndSubsidiariesSchema = () =>
             .test("space validation", getInvalidMessage("Company name"), checkIsTrimmed),
           emirate: Yup.string().required(getRequiredMessage("Emirate/ City")),
           tradeLicenseNo: Yup.string()
-            .required(getRequiredMessage("Trade license number"))
+            .required(getRequiredMessage("Trade License number"))
             .max(20, "Maximum 20 characters allowed")
-            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Trade license number"))
+            .matches(SPECIAL_CHARACTERS_REGEX, getInvalidMessage("Trade License number"))
         })
       )
     }),
@@ -141,7 +141,7 @@ export const CompanyBranchesAndSubsidiariesComponent = ({
                                 contextualHelpText={
                                   <>
                                     The name of the other company, branch or subsidiary should be as
-                                    per their respective Trade license.
+                                    per their respective Trade License.
                                     <br /> Example <br /> Airlift Global Automation and Heavy
                                     Equipment Rental LLC
                                   </>

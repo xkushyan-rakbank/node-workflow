@@ -38,7 +38,7 @@ export const Industry = ({ datalistId, values }) => {
                   shrink={true}
                   tabIndex="0"
                   infoIcon={true}
-                  infoTitle="This should be the same as shown on your trade license."
+                  infoTitle="This should be the same as shown on your Trade License."
                 />
                 <Field
                   name={`industries[${industryIndex}].subCategory`}

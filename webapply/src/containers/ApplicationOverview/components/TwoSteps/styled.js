@@ -186,4 +186,11 @@ export const useStyles = makeStyles((theme) => ({
     "-webkit-text-fill-color": "transparent",
     "-moz-text-fill-color": "transparent",
   },
+  disclaimer: {
+    paddingTop: "5px",
+    color: "#3B3A3A !important",
+    fontWeight: "500 !important",
+    lineHeight: "24px !important",
+    margin: 0,
+  }
 }));

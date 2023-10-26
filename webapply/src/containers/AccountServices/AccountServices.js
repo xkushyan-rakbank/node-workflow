@@ -589,8 +589,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     <Field
                       name="accountEmirateCity"
                       path={"prospect.accountInfo.accountEmirateCity"}
-                      label="Emirate or city"
-                      placeholder="Emirate or city"
+                      label="Emirate or City"
+                      placeholder="Emirate or City"
                       datalistId="branchCity"
                       component={SelectAutocomplete}
                       isLoadDefaultValueFromStore={false}
@@ -864,6 +864,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       />
                     </div>
                     <DisclaimerNote
+                      className={classes.noteWrapper}
                       text={
                         "Any service updates you make, including your signed documents and attachments, will be sent to your registered email."
                       }

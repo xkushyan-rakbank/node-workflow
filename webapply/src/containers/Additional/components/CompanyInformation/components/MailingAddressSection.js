@@ -313,8 +313,8 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                       path={
                         "prospect.companyAdditionalInfo.addressInfo[0].addressDetails[0].emirateCity"
                       }
-                      label="Emirate or city"
-                      placeholder="Emirate or city"
+                      label="Emirate or City"
+                      placeholder="Emirate or City"
                       datalistId="emirateCity"
                       component={SelectAutocomplete}
                       InputProps={{

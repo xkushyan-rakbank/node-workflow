@@ -134,8 +134,12 @@ export const useStyles = makeStyles(theme => ({
       fontStyle: "normal",
       fontWeight: 400,
       lineHeight: "20px",
-      width: "11.75rem",
-      minWidth: "188px"
+      width: "120px",
+      minWidth: "auto",
+      [theme.breakpoints.up("sm")]: {
+        minWidth: "188px",
+        width: "190px",
+      }
     },
     "& p": {
       color: "#525252",
@@ -146,8 +150,15 @@ export const useStyles = makeStyles(theme => ({
       margin: 0,
       wordBreak: "break-word",
       whiteSpace: "pre-line",
+      flex: 1,
+      width: "120px",
+      // flexBasis: "fit-content",
+      minWidth: "auto",
       [theme.breakpoints.up("sm")]: {
-        whiteSpace: "unset"
+        whiteSpace: "unset",
+        flex: "unset",
+        flexBasis: "unset",
+        width: "unset"
       }
     }
   },

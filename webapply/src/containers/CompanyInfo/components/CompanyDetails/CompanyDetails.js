@@ -104,7 +104,7 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
         name="companyName"
         label="Company’s full name"
         path="prospect.organizationInfo.companyName"
-        fieldDescription="This should be the same as shown on your trade license."
+        fieldDescription="This should be the same as shown on your Trade License."
         component={Input}
         // onBlur={handleBlur}
         InputProps={{

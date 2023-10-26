@@ -86,7 +86,7 @@ const useStyles = makeStyles({
   },
   formActionButtons: {
     display: "flex",
-    gap: "24px",
+    gap: "17px",
     alignItems: "baseline",
     width: "100%",
     justifyContent: "space-between",
@@ -94,7 +94,9 @@ const useStyles = makeStyles({
       width: "auto",
       margin: 0
     },
-
+    [theme.breakpoints.up("sm")]: {
+      gap: "24px", 
+    },
     "& > :nth-child(1)": {
       order: 3,
       marginLeft: "-40px",

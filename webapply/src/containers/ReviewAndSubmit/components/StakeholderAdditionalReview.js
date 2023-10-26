@@ -190,7 +190,7 @@ export const StakeholderAdditionalReview = ({
                   <p>{fieldValues.companyNameforSOF}</p>
                 </div>
                 <div className={classes.infoLabelValue}>
-                  <label>Trade license: </label>
+                  <label>Trade License: </label>
                   <p>{fieldValues.sourceOfIncomeTradeLicense}</p>
                 </div>
               </>
