@@ -38,5 +38,8 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       marginLeft: "auto"
     }
+  },
+  formGap: {
+    paddingTop: "5px"
   }
 }));

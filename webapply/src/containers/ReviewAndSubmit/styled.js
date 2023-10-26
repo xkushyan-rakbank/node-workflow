@@ -124,7 +124,7 @@ export const useStyles = makeStyles(theme => ({
   infoLabelValue: {
     display: "flex",
     alignItems: "start",
-    gap: "10px",
+    gap: "0px",
     [theme.breakpoints.up("sm")]:{
       gap: "24px", 
     },

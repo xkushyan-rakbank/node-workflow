@@ -78,7 +78,7 @@ export const ComeBackLoginComponent = ({
                   component={Input}
                   isLoadDefaultValueFromStore={false}
                   InputProps={{
-                    inputProps: { maxLength: MAX_LENGTH_EMAIL, tabIndex: 0 }
+                    inputProps: { maxLength: MAX_LENGTH_EMAIL, tabIndex: 0, showInLineError: true }
                   }}
                 />
               )}
@@ -86,7 +86,7 @@ export const ComeBackLoginComponent = ({
               {isConfigLoading ? (
                 <SkeletonLoader />
               ) : (
-                <InputGroup>
+                <InputGroup extraClasses={classes.formGap}>
                   <LinkedField
                     name="countryCode"
                     linkedFieldName="mobileNo"

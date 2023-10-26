@@ -2,12 +2,13 @@ import React, { memo } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import { useStyles } from "./styled";
 import { ErrorMessage } from "../../Notifications";
+import cx from "classnames";
 
-const InputGroupBase = ({ error, children }) => {
+const InputGroupBase = ({ error, children, extraClasses }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.inputGroupWrapper}>
+    <div className={cx(classes.inputGroupWrapper, extraClasses)}>
       <FormGroup row className={classes.selectCombined}>
         {children}
       </FormGroup>
