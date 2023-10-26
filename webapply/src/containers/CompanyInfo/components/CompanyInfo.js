@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -17,20 +18,26 @@ import { CompanyDetails } from "./CompanyDetails";
 import { Industry } from "./Industry";
 
 import {
+  getAccordionStatuses,
   getCompanyDocuments,
   getIsIslamicBanking,
-  getOrganizationInfo
+  getOrganizationInfo,
+  getProspectId
 } from "../../../store/selectors/appConfig";
 
 import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../constants";
 import { TradeLicenceInformation } from "./TradeLicenceInformation";
-import { MOA_FILE_SIZE, TL_COI_FILE_SIZE } from "../../../constants";
+import { MOA_FILE_SIZE, TL_COI_FILE_SIZE, operatorLoginScheme } from "../../../constants";
 import useDynamicValidation from "../../../utils/useDynamicValidation";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { useFindDocument } from "../../../utils/useFindDocument";
 import { Footer } from "../../../components/Footer";
 import { scrollToDOMNode } from "../../../components/VerticalPagination";
+import { updateProspect } from "../../../store/actions/appConfig";
+import { getLoginResponse } from "../../../store/selectors/loginSelector";
+import { getSearchResultsStatuses } from "../../../store/selectors/searchProspect";
+import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
 
 const CompanyDocumentKeys = {
   Moa: "prospect.prospectDocuments.companyDocument.moa",
@@ -49,12 +56,14 @@ export const CompanyInfo = ({
   const classes = useStyles();
   const companyInfoForm = useRef(null);
   const documentUploadSectionRef = useRef(null);
-
+  const accordionStatuses = useSelector(getAccordionStatuses);
+  const statuses = JSON.parse(accordionStatuses);
+  const { scheme } = useSelector(getLoginResponse);
+  const prospectLists = useSelector(getSearchResultsStatuses);
+  const prospectId = useSelector(getProspectId);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
-
   const orgDetails = useSelector(getOrganizationInfo) || {};
   const industries = orgDetails.industryMultiSelect || [];
-
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   const companyDocuments = useSelector(getCompanyDocuments) || [];
@@ -184,6 +193,26 @@ export const CompanyInfo = ({
       subCategory[0]
     );
   }, [companyInfoForm, orgDetails]);
+
+  useEffect(() => {
+    if (!companyInfoForm.current?.setFieldValue) {
+      return;
+    }
+    const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", null);
+    console.log(subCategory, statuses, "test");
+    if (statuses["subCategory"] !== subCategory) {
+      const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
+        .statusType;
+      const isFrontendCorrection = prospectStatus === OPE_EDIT;
+      const isOperator = scheme === operatorLoginScheme;
+      statuses["subCategory"] = subCategory;
+      if (isFrontendCorrection && isOperator) {
+        statuses["addionalStakeholderInfoStatus"] = "In Progress";
+        statuses["companyAdditionalInfoStatus"] = "In Progress";
+      }
+      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+    }
+  }, [companyInfoForm.current?.values]);
 
   return (
     <div className={classes.companyInfoWrapper} ref={refToTopOfCompanyInfo}>
