@@ -26,7 +26,7 @@ import {
   PreferredLanguageOptions,
   PreferredNotificationOptions,
   SinglyOptionList,
-  yesNoAskMeLaterOptions,
+  YesNoList,
   yesNoMobileInstructionsOptions,
   yesNoOptions
 } from "../../constants/options";
@@ -837,7 +837,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       </label>
                       <Field
                         typeRadio
-                        options={yesNoAskMeLaterOptions}
+                        options={YesNoList}
                         name="marketing"
                         path={"prospect.channelServicesInfo.marketing"}
                         component={InlineRadioGroup}

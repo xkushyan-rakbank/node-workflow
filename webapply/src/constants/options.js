@@ -210,27 +210,6 @@ export const PreferredNotificationOptions = [
   }
 ];
 
-export const yesNoAskMeLaterOptions = [
-  {
-    code: "Yes",
-    key: "Yes",
-    value: "yes",
-    label: "Yes"
-  },
-  {
-    code: "No",
-    key: "No",
-    value: "no",
-    label: "No"
-  },
-  {
-    code: "ask_me_later",
-    key: "ask_me_later",
-    value: "other",
-    label: "Ask me later"
-  }
-];
-
 export const accountTypeOptions = [
   {
     code: "RAKStarter",
