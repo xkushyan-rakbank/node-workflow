@@ -144,7 +144,7 @@ export const FinancialTurnoverSection = forwardRef(({ id, refs }) => {
       .typeError("The amount should be greater than 1000.00 AED")
       .required(getRequiredMessage("Annual financial turnover (AED)"))
       .min(1000.01, "The amount should be greater than 1000.00 AED"),
-    anualCashDepositAED: Yup.number().required(getRequiredMessage("Annual cash deposit"))
+    anualCashDepositAED: Yup.number().required(getRequiredMessage("Annual cash sales"))
   });
 
   const initialIsValid = additionalCompanyInfoSchema.isValidSync(initialValues);
@@ -284,7 +284,7 @@ export const FinancialTurnoverSection = forwardRef(({ id, refs }) => {
                       </>
                     )}
                   {errors.anualCashDepositAED && touched.anualCashDepositAED && (
-                    <ErrorMessage error={getRequiredMessage("Annual cash deposit")} />
+                    <ErrorMessage error={getRequiredMessage("Annual cash sales")} />
                   )}
                 </div>
               </>
