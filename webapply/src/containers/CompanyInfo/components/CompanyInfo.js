@@ -155,6 +155,7 @@ export const CompanyInfo = ({
       )
       .typeError(getInvalidMessage("License expiry date")),
     dateOfIncorporation: Yup.date()
+      .nullable()
       .required(getRequiredMessage("Date Of incorporation"))
       .test(
         "maxDate",
@@ -167,7 +168,6 @@ export const CompanyInfo = ({
       )
       .typeError(getInvalidMessage("Date of incorporation"))
   };
-
 
   useEffect(() => {
     if (!companyInfoForm.current?.setFieldValue) {
