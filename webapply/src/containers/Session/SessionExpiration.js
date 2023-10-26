@@ -1,8 +1,10 @@
 import React, { useEffect, useState, memo, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { USER_IDLE_TIMEOUT, EXPIRY_INTERVAL } from "../../constants";
 import Alert from "./components/Alert";
+import { getProspect } from "../../store/selectors/appConfig";
 let reminderTimer = EXPIRY_INTERVAL;
 export const SessionExpiration = memo(props => {
   const location = useLocation();
@@ -13,6 +15,7 @@ export const SessionExpiration = memo(props => {
   const [extendExpiryTime, setExtendExpiryTime] = useState(false);
   const [isAgent, setIsAgent] = useState(false);
   const [showExipryMesssagePopup, setShowExipryMesssagePopup] = useState(true);
+  const prospect = useSelector(getProspect);
 
   const onConfirm = useCallback(() => {
     if (isAgent) {
@@ -61,7 +64,7 @@ export const SessionExpiration = memo(props => {
       clearTimeout(timer);
       clearInterval(intervalRef);
     };
-  }, [location.pathname, extendExpiryTime]);
+  }, [location.pathname, extendExpiryTime, prospect]);
 
   const logout = () => {
     setExpiredStatus(true);
