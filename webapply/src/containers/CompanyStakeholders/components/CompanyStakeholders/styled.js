@@ -518,7 +518,11 @@ export const useStyles = makeStyles(theme => ({
     gap: "1rem",
     borderRadius: "0.5rem",
     background: "#FAFAFA",
-    marginBottom: "2.5rem"
+    marginBottom: "2.5rem",
+    flexWrap: "wrap",
+    [theme.breakpoints.up("sm")]:{
+      flexWrap: "unset",
+    }
   },
   reviewDetailsTitle: {
     color: "#1F1F1F",
@@ -532,9 +536,11 @@ export const useStyles = makeStyles(theme => ({
   infoLabelValue: {
     display: "flex",
     alignItems: "start",
-    gap: "10px",
+    gap: "0px",
+    justifyContent: "space-between",
     [theme.breakpoints.up("sm")]: {
-      gap: "24px"
+      gap: "24px",
+      justifyContent: "unset"
     },
     "& label": {
       color: "#757575",
@@ -542,8 +548,12 @@ export const useStyles = makeStyles(theme => ({
       fontStyle: "normal",
       fontWeight: 400,
       lineHeight: "20px",
-      width: "190px",
-      minWidth: "188px"
+      width: "120px",
+      minWidth: "auto",
+      [theme.breakpoints.up("sm")]: {
+        minWidth: "188px",
+        width: "190px",
+      }
     },
     "& p": {
       color: "#525252",
@@ -554,8 +564,13 @@ export const useStyles = makeStyles(theme => ({
       margin: 0,
       wordBreak: "break-word",
       whiteSpace: "pre-line",
+      flex: 1,
+      flexBasis: "fit-content",
+      minWidth: "auto",
       [theme.breakpoints.up("sm")]: {
-        whiteSpace: "unset"
+        whiteSpace: "unset",
+        flex: "unset",
+        flexBasis: "unset",
       }
     }
   },
