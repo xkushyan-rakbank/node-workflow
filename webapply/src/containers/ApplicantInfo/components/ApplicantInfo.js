@@ -37,13 +37,14 @@ import routes from "../../../routes";
 const useStyles = makeStyles(theme => ({
   applicantInfoComponentWrapper: {
     display: "flex",
-    padding: "20px",
+    padding: "0px",
     flexDirection: "column",
     gap: "30px",
     borderRadius: "10px",
-    border: "1px solid #CCC",
+    border: "unset",
     [theme.breakpoints.up("sm")]: {
-      padding: "30px"
+      padding: "30px",
+      border: "1px solid #CCC",
     }
   },
   header: {

@@ -486,12 +486,16 @@ export const useStyles = makeStyles(theme => ({
   },
   companyStakeholdersWrapper: {
     display: "flex",
-    padding: "30px",
+    padding: "0px",
     flexDirection: "column",
     gap: "32px",
     borderRadius: "10px",
-    border: "1px solid #CCC",
-    marginTop: "40px"
+    border: "unset",
+    marginTop: "40px",
+    [theme.breakpoints.up("sm")]: {
+      padding: "30px",
+      border: "1px solid #CCC",
+    }
   },
   stakeholderContainer: {
     paddingTop: "0!important"

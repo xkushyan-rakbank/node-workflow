@@ -1,15 +1,15 @@
 import { makeStyles } from "@material-ui/core/styles";
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    marginTop: "25px",
+    marginTop: "25px"
   },
   questionareWrapper: {
     marginBottom: "10px",
     "&:last-child": {
-      marginBottom: "0px",
-    },
+      marginBottom: "0px"
+    }
   },
   sectionLabel: {
     display: "flex",
@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "16px",
     lineHeight: "22px",
     color: "#1F1F1F",
-    margin: 0,
+    margin: 0
   },
   sectionLabelWithInfo: {
     display: "flex",
@@ -30,36 +30,37 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: "12px",
       lineHeight: "16px",
       marginTop: "4px",
-      color: "#757575",
-    },
+      color: "#757575"
+    }
   },
   radioButtonRoot: {
     border: "1px solid #cccccc",
     borderRadius: "50px",
     marginTop: "10px",
-    marginLeft: 0,
+    marginLeft: 0
   },
   radioLabelRoot: {
     fontSize: "16px",
     fontWeight: 500,
     lineHeight: "24px",
-    paddingRight: "15px",
+    paddingRight: "15px"
   },
   radioConatiner: {
     [theme.breakpoints.down("sm")]: {
-      flexDirection: "row",
-    },
+      flexDirection: "row"
+    }
   },
   packageSelectionContainer: {
-    marginTop: "40px",
+    marginTop: "40px"
   },
   packageSelectionWrapper: {
-    padding: "30px 20px",
+    padding: "0px",
     borderRadius: "10px",
-    border: "1px solid #cccccc",
+    border: "unset",
     margin: "40px 0",
     [theme.breakpoints.up("sm")]: {
-      padding: "30px", 
+      padding: "30px",
+      border: "1px solid #cccccc"
     }
   },
   packageSelectionTitle: {
@@ -69,15 +70,15 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: "20px",
       fontWeight: 500,
       lineHeight: "32px",
-      margin: 0,
+      margin: 0
     },
     "& p": {
       color: "#757575",
       fontSize: "16px",
       fontWeight: 400,
       lineHeight: "28px",
-      margin: 0,
-    },
+      margin: 0
+    }
   },
   packageList: {
     display: "flex",
@@ -92,42 +93,46 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       padding: "40px 18px",
       paddingTop: "40px!important",
-      paddingBottom: "40px!important",
+      paddingBottom: "40px!important"
     },
     "&:nth-child(1)": {
       display: "none",
       [theme.breakpoints.up("sm")]: {
-        display: "block",
-      },
+        display: "block"
+      }
     },
     "&:nth-child(2)": {
       background: "rgba(252, 232, 233, 0.20)",
       [theme.breakpoints.up("sm")]: {
-        background: "rgba(253, 231, 232, 0.60)",
-      },
+        background: "rgba(253, 231, 232, 0.60)"
+      }
     },
     "&:nth-child(3)": {
       background: "rgba(253, 231, 232, 0.60)",
       width: "50%",
       [theme.breakpoints.up("sm")]: {
         background: "#FDE7E8",
-        width: "unset",
-      },
-    },
+        width: "unset"
+      }
+    }
   },
   packageFeatureWrapper: {
     display: "table",
     textAlign: "center",
     padding: "18px 11px",
-    paddingTop: "22px!important",
-    paddingBottom: "22px!important",
+    paddingTop: "22px !important",
+    paddingBottom: "20px !important",
     width: "33.33%",
     tableLayout: "fixed",
-    [theme.breakpoints.between("sm","md")]: {
+    [theme.breakpoints.between("sm", "md")]: {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       padding: "18px 17px"
+    },
+    [theme.breakpoints.down("md")]: {
+      paddingTop: "0px !important",
+      paddingBottom: "20px !important",
     },
     "&:first-child": {
       background: "rgba(245, 245, 245, 0.50)",
@@ -137,20 +142,19 @@ export const useStyles = makeStyles((theme) => ({
       }
     },
     "&:nth-child(2)": {
-      background: "rgba(253, 231, 232, 0.60)",
+      background: "rgba(253, 231, 232, 0.60)"
     },
     "&:nth-child(3)": {
-      background: "#FDE7E8",
+      background: "#FDE7E8"
     },
-    [theme.breakpoints.up("sm")]:{
+    [theme.breakpoints.up("sm")]: {
       width: "unset",
-      padding: "22px 20px",
-    },
-    
+      padding: "22px 20px"
+    }
   },
   selectedPackageList: {
     border: "2px solid #157947",
-    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
+    boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
   },
   packageListTitle: {
     "& h2": {
@@ -166,8 +170,8 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 500,
         lineHeight: "36px",
         margin: 0,
-        marginBottom: 8,
-      },
+        marginBottom: 8
+      }
     },
     "& p": {
       color: "#1F1F1F",
@@ -195,12 +199,12 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "28px",
     "& > li": {
       display: "flex",
-      alignItems: "baseline",
-    },
+      alignItems: "baseline"
+    }
   },
   serviceListIcon: {
     marginRight: "16px",
-    width: 16,
+    width: 16
   },
   serviceSubList: {
     paddingLeft: "16px",
@@ -209,7 +213,7 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
     fontWeight: 600,
     lineHeight: "24px",
-    color: "#757575",
+    color: "#757575"
   },
   selectBtn: {
     borderRadius: "100px",
@@ -235,21 +239,21 @@ export const useStyles = makeStyles((theme) => ({
       padding: "10px 40px",
       textAlign: "center",
       color: "#3B3A3A",
-      width: "80%",
+      width: "80%"
     },
     "&:hover": {
       color: "#ffffff",
       backgroundColor: "#1F1F1F",
       width: "75%",
       [theme.breakpoints.up("sm")]: {
-        width: "80%",
-      },
-    },
+        width: "80%"
+      }
+    }
   },
   selectBtnArrow: {
     width: "16px",
     height: "16px",
-    marginLeft: "8px",
+    marginLeft: "8px"
   },
   selectedPackageListBtn: {
     color: "#ffffff",
@@ -264,34 +268,39 @@ export const useStyles = makeStyles((theme) => ({
         fontWeight: 500,
         fontSize: "20px",
         lineHeight: "28px",
-        color: "#000",
-      },
-    },
+        color: "#000"
+      }
+    }
   },
   accordionSummaryContentExpanded: {
     "& .activePanel": {
-      display: "none",
+      display: "none"
     },
     "& .accordionTitle": {
-      paddingLeft: 0,
-    },
+      paddingLeft: 0
+    }
   },
   accordionDetails: {
     borderTop: "1px solid #E6E6E6",
-    paddingTop: "30px",
     marginTop: "24px",
+    paddingTop: "1.5rem",
+    paddingBottom: "1.5rem",
     marginBottom: "0px",
+    [theme.breakpoints.up("sm")]: {
+      paddingTop: "30px",
+      paddingBottom: "unset"
+    }
   },
   infoIcon: {
     width: "20px",
     height: "20px",
     color: "#757575",
-    fontSize: "1.25rem",
+    fontSize: "1.25rem"
   },
   headerWithHelperIcon: {
     display: "flex",
     alignItems: "center",
-    gap: "8px",
+    gap: "8px"
   },
   packagefeatureTitle: {
     color: "#8D0C10",
@@ -336,10 +345,10 @@ export const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     lineHeight: "20px",
     margin: 0,
-    [theme.breakpoints.up("sm")]:{
+    [theme.breakpoints.up("sm")]: {
       fontSize: "1rem",
       fontWeight: 400,
-      lineHeight: "24px",
+      lineHeight: "24px"
     }
   },
   featureValueIcon: {
@@ -348,22 +357,28 @@ export const useStyles = makeStyles((theme) => ({
     "& img": {
       width: "24px",
       height: "24px",
-    },
+      paddingTop: "10px",
+      paddingBottom: "10px",
+      [theme.breakpoints.up("sm")]: {
+        paddingTop: "unset",
+        paddingBottom: "unset"
+      }
+    }
   },
   generalDetailsGrid: {
     marginTop: 0,
-    marginBottom: 0,
+    marginBottom: 0
   },
   verificationDetailsWrapper: {
     padding: "20px 10px",
     borderRadius: "10px",
     border: "1px solid #CCC",
     marginBottom: "8px",
-    marginTop: "18px",
+    marginTop: "18px"
   },
   verificationDetailsGrid: {
     width: "100%",
-    margin: "0 auto",
+    margin: "0 auto"
   },
   verificationDetailsInfoWrapper: {
     display: "flex",
@@ -372,12 +387,12 @@ export const useStyles = makeStyles((theme) => ({
     fontSize: "0.75rem",
     fontWeight: 400,
     lineHeight: "16px",
-    color: "#757575",
+    color: "#757575"
   },
   verifyDetailInfoIcon: {
     width: "16px",
     height: "16px",
-    fill: "#757575",
+    fill: "#757575"
   },
   addMoreButton: {
     border: "1px solid #1F1F1F",
@@ -389,10 +404,10 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "22px",
     textTransform: "none",
     width: "max-content",
-    margin: "24px 0",
+    margin: "24px 0"
   },
   textAreaRoot: {
-    marginBottom: 0,
+    marginBottom: 0
   },
   textAreaStyle: {
     height: "100px",
@@ -406,17 +421,17 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "28px",
     color: "#000",
     margin: 0,
-    marginBottom: "30px",
+    marginBottom: "30px"
   },
   kycSection: {
-    marginTop: "32px",
+    marginTop: "32px"
   },
   rmVerificationRemarksTextarea: {
-    margin: "24px 0",
+    margin: "24px 0"
   },
   addMoreKycButtonWrapper: {
     textAlign: "right",
-    margin: "5px 0",
+    margin: "5px 0"
   },
   outsideLabel: {
     display: "flex",
@@ -426,25 +441,25 @@ export const useStyles = makeStyles((theme) => ({
     fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "24px",
-    color: "#1F1F1F",
+    color: "#1F1F1F"
   },
   inputWithoutLabel: {
-    padding: "20px 12px",
+    padding: "20px 12px"
   },
   helperIcon: {
     color: "#525252",
     width: "20px",
-    height: "20px",
+    height: "20px"
   },
   roCodeWrapper: {
     marginTop: "0px",
     "& > div": {
-      marginBottom: "15px",
-    },
+      marginBottom: "15px"
+    }
   },
   roCodeFormControl: {
     margin: 0,
-    marginTop: "8px",
+    marginTop: "8px"
   },
 
   packageListWrapper: {
@@ -452,31 +467,31 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
 
     "& > div:first-child": {
-      display: "none",
+      display: "none"
     },
     [theme.breakpoints.up("sm")]: {
       "& > div:first-child": {
-        display: "block",
-      },
-    },
+        display: "block"
+      }
+    }
   },
   accordionTitle: {
     color: "#8D0C10",
     fontSize: "16px",
     fontWeight: 500,
     lineHeight: "28px",
-    [theme.breakpoints.up("sm")]:{
-      fontSize: "20px",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "20px"
     }
   },
   disclaimer: {
     fontSize: "0.75rem",
     fontWeight: 500,
-    lineHeight: "1.5rem",
+    lineHeight: "0.95rem",
     color: "#3B3A3A",
     [theme.breakpoints.up("sm")]: {
       fontSize: "1rem",
-      lineHeight: "0.5rem",
+      lineHeight: "0.85rem"
     }
   },
   noteWrapper: {
@@ -486,6 +501,6 @@ export const useStyles = makeStyles((theme) => ({
       fill: "#757575",
       width: "14px",
       height: "14px"
-    },
+    }
   }
 }));

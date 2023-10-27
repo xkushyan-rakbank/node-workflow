@@ -7,9 +7,13 @@ export const useStyles = makeStyles(theme => ({
     gap: "40px"
   },
   companyInfoSectionWrapper: {
-    padding: "30px",
+    padding: "0px",
     borderRadius: "10px",
-    border: "1px solid #CCC"
+    border: "unset",
+    [theme.breakpoints.up("sm")]: {
+      border: "1px solid #CCC",
+      padding: "30px",
+    },
   },
   companyInfoSectionForm: {
     display: "flex",

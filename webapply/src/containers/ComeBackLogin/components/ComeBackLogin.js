@@ -27,11 +27,11 @@ export const MAX_LENGTH_EMAIL = 50;
 const getComebackSchema = () =>
   Yup.object({
     email: Yup.string()
-      .required(getRequiredMessage("email address"))
-      .email(getInvalidMessage("email address")),
+      .required(getRequiredMessage("Email address"))
+      .email(getInvalidMessage("Email address")),
     countryCode: Yup.string().required(getRequiredMessage("Country code")),
     mobileNo: Yup.string()
-      .required(getRequiredMessage("mobile number"))
+      .required(getRequiredMessage("Mobile number"))
       .phoneNo({ codeFieldName: "countryCode", fieldName: "mobile number" })
   });
 

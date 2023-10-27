@@ -7,16 +7,19 @@ export const useStyles = makeStyles({
   },
   paper: {
     width: "650px",
-    height: "281px",
+    height: "auto",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
     "@media (max-width: 420px)": {
-      height: "320px",
+      height: "auto",
       overflow: "hidden"
     },
     "@media (max-width: 372px)": {
-      height: "370px"
+      height: "auto"
+    },
+    [theme.breakpoints.up("md")]: {
+      height: "281px",
     }
   },
   noTitlePaper: {
@@ -70,11 +73,16 @@ export const useStyles = makeStyles({
   dialogActions: {
     padding: "20px 20px 30px 40px",
     justifyContent: "flex-start",
-    "@media (max-width: 372px)": {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center"
-    }
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "10px",
+    [theme.breakpoints.up("sm")]: {
+      display: "unset",
+      flexDirection: "unset",
+      alignItems: "unset",
+      gap: "unset" 
+    },
   },
   buttonSpacing: {
     "& > * + *": {
@@ -84,7 +92,7 @@ export const useStyles = makeStyles({
   actionButton: {
     borderRadius: "28px",
     outline: "none ",
-    fontSize: "18px",
+    fontSize: "15px",
     textTransform: "none",
     padding: "10px 32px",
     backgroundColor: "#1F1F1F",
@@ -93,15 +101,26 @@ export const useStyles = makeStyles({
     "&:hover": {
       backgroundColor: "#1F1F1F",
       color: "white",
+    },
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "18px", 
     }
   },
 
   notActiveButton: {
     borderRadius: "28px",
     outline: "none ",
-    fontSize: "18px",
+    fontSize: "15px",
     textTransform: "none",
-    padding: "10px 32px",
-    marginRight: "15px", 
+    padding: "0px 32px",
+    marginRight: "15px",
+    height: "50px",
+    width: "90%",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "18px", 
+      padding: "10px 32px",
+      height: "unset",
+      width: "unset"
+    }
   }
 });

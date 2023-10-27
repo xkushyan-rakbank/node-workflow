@@ -55,8 +55,10 @@ export const useStyles = makeStyles(theme => ({
   buttonText: {
     display: "flex",
     flexDirection: "column",
+    alignItems: "baseline",
     [theme.breakpoints.up("sm")]: {
-      width: 450
+      width: 450,
+      alignItems: "unset"
     }
   },
   title: {
@@ -189,8 +191,12 @@ export const useStyles = makeStyles(theme => ({
   },
   companyInfoDetailWrapper: {
     borderRadius: "10px",
-    padding: "24px",
-    border: "1px solid #E6E6E6"
+    padding: "0px",
+    border: "unset",
+    [theme.breakpoints.up("sm")]:{
+      padding: "24px",
+      border: "1px solid #E6E6E6", 
+    }
   },
   sectionLabel: {
     fontWeight: 400,
