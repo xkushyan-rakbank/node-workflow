@@ -5,14 +5,16 @@ import {
   SET_SCREENING_ERROR,
   RESET_SCREENING_ERROR,
   RESET_FORM_STEP,
-  SEND_PROSPECT_TO_API_AUTO_SAVE_SUCCESS
+  SEND_PROSPECT_TO_API_AUTO_SAVE_SUCCESS,
+  UPDATE_AUTO_SAVE_PROSPECT_HASH
 } from "../actions/sendProspectToAPI";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
   loading: false,
   resetStep: false,
-  screeningError: {}
+  screeningError: {},
+  prospectAutoSaveHash: ""
 };
 
 export default handleActions(
@@ -44,6 +46,10 @@ export default handleActions(
     [RESET_SCREENING_ERROR]: state => ({
       ...state,
       screeningError: initialState.screeningError
+    }),
+    [UPDATE_AUTO_SAVE_PROSPECT_HASH]: (state, action) => ({
+      ...state,
+      prospectAutoSaveHash: action.payload
     })
   },
   initialState

@@ -25,7 +25,8 @@ import {
   SEND_PROSPECT_REQUEST,
   setScreeningError,
   PROSPECT_SAVE_ONCLICK,
-  sendProspectToAPIAutoSaveSuccess
+  sendProspectToAPIAutoSaveSuccess,
+  updateAutoSaveProspectHash
 } from "../actions/sendProspectToAPI";
 import { log } from "../../utils/loggger";
 import {
@@ -40,7 +41,7 @@ import {
 } from "../selectors/appConfig";
 import { checkLoginStatus, getLoginResponse } from "../selectors/loginSelector";
 import { getCompletedSteps } from "../selectors/completedSteps";
-import { getScreeningError } from "../selectors/sendProspectToAPI";
+import { getProspectAutoSaveHash, getScreeningError } from "../selectors/sendProspectToAPI";
 import { setErrorOccurredWhilePerforming } from "../actions/searchProspect";
 import { resetInputsErrors, setInputsErrors } from "../actions/serverValidation";
 import { updateAccountNumbers } from "../actions/accountNumbers";
@@ -195,6 +196,19 @@ export function* prospectSaveOnClick() {
   }
 }
 
+export async function generateHash(value) {
+  // Convert the JSON string to a Uint8Array
+  const encoder = new TextEncoder();
+  const data = encoder.encode(JSON.stringify(value));
+
+  // Use the SubtleCrypto API to create a hash (SHA-256 in this example)
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  // Convert the hash to a hexadecimal string
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
 export function* prospectAutoSave() {
   try {
     while (true) {
@@ -204,7 +218,12 @@ export function* prospectAutoSave() {
       const isAutoSaveEnabled = isSaveEnabled;
 
       if (isAutoSaveEnabled) {
-        yield put(sendProspectRequest(newProspect, AUTO));
+        const currentProspectHash = yield call(generateHash, newProspect);
+        const lastSavedProspectHash = yield select(getProspectAutoSaveHash);
+        yield put(updateAutoSaveProspectHash(currentProspectHash));
+        if (lastSavedProspectHash !== currentProspectHash) {
+          yield put(sendProspectRequest(newProspect, AUTO));
+        }
       }
     }
   } catch (e) {

@@ -13,6 +13,7 @@ export const RESET_SCREENING_ERROR = "RESET_SCREENING_ERROR";
 export const SEND_PROSPECT_REQUEST = "SEND_PROSPECT_REQUEST";
 export const PROSPECT_SAVE_ONCLICK = "PROSPECT_SAVE_ONCLICK";
 export const SEND_PROSPECT_TO_API_AUTO_SAVE_SUCCESS = "SEND_PROSPECT_TO_API_AUTO_SAVE_SUCCESS";
+export const UPDATE_AUTO_SAVE_PROSPECT_HASH = "UPDATE_AUTO_SAVE_PROSPECT_HASH";
 
 export const sendProspectToAPI = (saveType = NEXT, actionType = SAVE) => {
   return { type: SEND_PROSPECT_TO_API, payload: { saveType, actionType } };
@@ -85,4 +86,8 @@ export const sendProspectRequest = (
   step = null
 ) => {
   return { type: SEND_PROSPECT_REQUEST, payload: { saveType, actionType, newProspect, step } };
+};
+
+export const updateAutoSaveProspectHash = hash => {
+  return { type: UPDATE_AUTO_SAVE_PROSPECT_HASH, payload: hash };
 };
