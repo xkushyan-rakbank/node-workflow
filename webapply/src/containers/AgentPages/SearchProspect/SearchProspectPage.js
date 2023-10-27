@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { isEmpty } from "lodash";
 
 import { SearchProspect } from "./components/SearchProspect/SearchProspect";
@@ -33,12 +33,17 @@ export const SearchProspectPage = ({
     [searchApplications]
   );
 
+  const v2SearchResults = useMemo(
+    () => searchResults.filter(prospect => prospect.prospectVersion === "v2"),
+    [searchResults]
+  );
+
   return (
     <SearchProspect
       onSearch={handleSearch}
       isLoading={isLoading || isEmpty(dataList)}
       isSearchLaunched={isSearchLaunched}
-      searchResults={searchResults}
+      searchResults={v2SearchResults}
       searchError={searchError}
       searchErrorDesc={searchErrorDesc}
     />
