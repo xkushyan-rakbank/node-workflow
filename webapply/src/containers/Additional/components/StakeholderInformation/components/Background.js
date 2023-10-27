@@ -67,7 +67,7 @@ export const Background = ({ id, refs }) => {
     linkedInURL: Yup.string()
       .nullable()
       .min(27, "LinkedIn URL is too short. Please enter a valid LinkedIn profile URL.")
-      .max(250, "LinkedIn URL is too long. Please enter upto 250 characters.")
+      .max(200, "LinkedIn URL is too long. Please enter upto 200 characters.")
       .matches(
         LINKEDIN_REGEX,
         "Invalid LinkedIn URL format. Please enter a valid LinkedIn profile URL."
@@ -243,7 +243,7 @@ export const Background = ({ id, refs }) => {
                 label="LinkedIn URL"
                 placeholder="LinkedIn URL"
                 InputProps={{
-                  inputProps: { tabIndex: 1, maxLength: 250, showInLineError: true }
+                  inputProps: { tabIndex: 1, maxLength: 200, showInLineError: true }
                 }}
                 component={Input}
                 classes={{ formControlRoot: classes.customUrlLabel }}
