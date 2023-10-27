@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo, useCallback } from "react";
+import React, { useEffect, useState, memo, useCallback, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -16,6 +16,7 @@ export const SessionExpiration = memo(props => {
   const [isAgent, setIsAgent] = useState(false);
   const [showExipryMesssagePopup, setShowExipryMesssagePopup] = useState(true);
   const prospect = useSelector(getProspect);
+  const prospectString = useMemo(() => JSON.stringify(prospect), [prospect]);
 
   const onConfirm = useCallback(() => {
     if (isAgent) {
@@ -64,7 +65,7 @@ export const SessionExpiration = memo(props => {
       clearTimeout(timer);
       clearInterval(intervalRef);
     };
-  }, [location.pathname, extendExpiryTime, prospect]);
+  }, [location.pathname, extendExpiryTime, prospectString]);
 
   const logout = () => {
     setExpiredStatus(true);
