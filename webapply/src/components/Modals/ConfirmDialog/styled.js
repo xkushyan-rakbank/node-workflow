@@ -74,13 +74,14 @@ export const useStyles = makeStyles({
     },
   },
   actionButton: {
-    width: "150px",
+    minWidth: "150px",
     height: "40px",
     borderRadius: "21px",
-    textTransform: "capitalize",
+    textTransform: "none",
     fontSize: "16px",
     fontWeight: 500,
     letterSpacing: "normal",
+    whiteSpace: "nowrap",
     "@media (max-width: 372px)": {
       width: "100%",
       marginLeft: 0,

@@ -107,7 +107,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
         title={"Email sent to the customer"}
         isOpen={openModal}
         handleReject={() => {}}
-        cancelLabel={"close"}
+        cancelLabel={"Close"}
         handleClose={() => setOpenModal(false)}
         message={
           "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknowledge and accept the associated Terms & Conditions."

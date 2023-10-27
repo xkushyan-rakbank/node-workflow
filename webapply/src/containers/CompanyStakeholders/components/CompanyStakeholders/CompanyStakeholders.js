@@ -323,7 +323,7 @@ export const CompanyStakeholdersComponent = ({
         title={"Your progress has been saved"}
         isOpen={openInfo}
         handleReject={() => {}}
-        cancelLabel={"close"}
+        cancelLabel={"Close"}
         handleClose={() => {
           dispatch(stopScheduler(WTM_STATUS.FINISHED));
           handleInfoModalClose();

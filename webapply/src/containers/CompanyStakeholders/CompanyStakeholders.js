@@ -137,7 +137,7 @@ export const CompanyStakeholdersContainer = ({
         title={"Session closed"}
         isOpen={openModal}
         handleReject={() => {}}
-        cancelLabel={"close"}
+        cancelLabel={"Close"}
         handleClose={() => handleModalClose()}
         message={
           "The session has been abruptly ended, please scan the QR code to start a new session."

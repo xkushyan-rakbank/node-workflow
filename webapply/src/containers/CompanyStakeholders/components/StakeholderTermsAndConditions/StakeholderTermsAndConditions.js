@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
@@ -20,14 +21,16 @@ import { getIsRoInviteEfr } from "../../../../store/selectors/otp";
 import { Footer } from "../../../../components/Footer";
 import { ConfirmDialog } from "../../../../components/Modals";
 import { BackLink } from "../../../../components/Buttons/BackLink";
-import { getLoginResponse } from "../../../../store/selectors/loginSelector";
+import { checkLoginStatus, getLoginResponse } from "../../../../store/selectors/loginSelector";
 
 export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isBrowserBackClickConfirmed, setIsBrowserBackClickConfirmed] = useState(false);
   const [wcmData, setWcmData] = useState(null);
   const classes = useStyles();
   const pushHistory = useTrackingHistory();
+  const history = useHistory();
   useFormNavigation([false, true, formStepper]);
   useLayoutParams(false, true);
   useViewId(true);
@@ -36,7 +39,23 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const isRoInviteEFR = useSelector(getIsRoInviteEfr);
   const { scheme } = useSelector(getLoginResponse);
+  const isAgent = useSelector(checkLoginStatus);
   const isOperator = scheme === operatorLoginScheme;
+  useEffect(() => {
+    const handleBrowserBackBtn = (location, action) => {
+      if (action === "POP") {
+        setIsBrowserBackClickConfirmed(true);
+        return false; // Block the user from going back
+      }
+      return true; // Allow user navigation for other actions
+    };
+
+    const unblock = history.block(handleBrowserBackBtn);
+
+    return () => {
+      unblock();
+    };
+  }, [history]);
 
   const goToAdditional = useCallback(() => {
     setIsLoading(true);
@@ -82,17 +101,30 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
     pushHistory(routes.comeBackLogin);
   };
 
+  const handleBackBtnConfirmModal = () => {
+    setIsBrowserBackClickConfirmed(false);
+    isAgent ? pushHistory(routes.login) : pushHistory(routes.comeBackLogin);
+  };
+
   return (
     <>
       <ConfirmDialog
         title={"Thank you"}
         isOpen={openModal}
         handleReject={() => {}}
-        cancelLabel={"close"}
+        cancelLabel={"Close"}
         handleClose={() => handleModalClose()}
         message={
           "Your EFR face recognition process has been successfully completed, and you've accepted the KFS terms and conditions."
         }
+      />
+      <ConfirmDialog
+        isOpen={isBrowserBackClickConfirmed}
+        handleReject={() => {}}
+        cancelLabel={"Stay on this page"}
+        handleClose={() => setIsBrowserBackClickConfirmed(false)}
+        message={"You will be logged out of the application!"}
+        handleConfirm={() => handleBackBtnConfirmModal()}
       />
       <h3 className={classes.mainTitle}>Time for the fine print</h3>
       <p className={classes.kfsSubTitle}>Please review the terms and conditions to continue</p>

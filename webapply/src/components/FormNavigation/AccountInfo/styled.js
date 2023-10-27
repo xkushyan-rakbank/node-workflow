@@ -107,7 +107,10 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   letsStartBtn: {
-    padding: "12px 30px"
+    padding: "12px 30px",
+    [theme.breakpoints.only("sm")]: {
+      padding: "12px 25px",
+    }
   },
   accountCompBackBtn: {
     padding: "10px 30px !important",
@@ -116,11 +119,13 @@ export const useStyles = makeStyles(theme => ({
     background: "transparent !important",
     color: "#fff !important",
     [theme.breakpoints.only("sm")]: {
+      fontSize: "1rem",
       justifyContent: "space-evenly !important"
     },
     [theme.breakpoints.up("sm")]: {
       padding: "10px 30px !important",
-      lineHeight: "28px"
+      lineHeight: "28px",
+      fontSize: "1rem !important"
     },
     "& .arrowIcon": {
       fill: "#fff !important",

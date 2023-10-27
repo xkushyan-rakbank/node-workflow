@@ -235,7 +235,7 @@ export const FaceRecognition = ({
         title={"Email sent to the customer"}
         isOpen={openModal}
         handleReject={() => {}}
-        cancelLabel={"close"}
+        cancelLabel={"Close"}
         handleClose={() => handleModalClose()}
         message={
           "The email has been successfully sent to the customer's registered email address to complete the EFR face scan, as well as to acknowledge and accept the associated Terms & Conditions."
@@ -245,7 +245,7 @@ export const FaceRecognition = ({
         title={"Unable to detect the face"}
         isOpen={openWarning}
         handleReject={() => {}}
-        cancelLabel={"close"}
+        cancelLabel={"Close"}
         confirmLabel="Try Again"
         handleConfirm={startFaceScan}
         handleClose={handleCloseWarning}
