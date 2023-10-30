@@ -14,7 +14,8 @@ import {
 import {
   NAME_REGEX,
   ALPHANUMERIC_REGEX,
-  LICENSE_NUMBER_REGEX
+  LICENSE_NUMBER_REGEX,
+  PROSPECT_ID_REGEX
 } from "../../../../../utils/validation";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../../constants";
@@ -32,7 +33,8 @@ const searchProspectSchema = Yup.object({
     .matches(ALPHANUMERIC_REGEX, getInvalidMessage("RAKtrack Lead Reference Number")),
   tradeLicenseNo: Yup.string()
     .max(20, "Maximum 20 characters allowed")
-    .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("Trade License Number"))
+    .matches(LICENSE_NUMBER_REGEX, getInvalidMessage("Trade License Number")),
+  prospectId: Yup.string().matches(PROSPECT_ID_REGEX, getInvalidMessage("Prospect Id"))
 });
 
 const initialValues = {
@@ -41,7 +43,8 @@ const initialValues = {
   mobileNo: "",
   email: "",
   leadNumber: "",
-  tradeLicenseNo: ""
+  tradeLicenseNo: "",
+  prospectId: ""
 };
 
 export const SearchProspectForm = ({ onSearch, isLoading }) => (
@@ -127,6 +130,20 @@ export const SearchProspectForm = ({ onSearch, isLoading }) => (
               path="searchInfo.tradeLicenseNo"
               label="Trade License Number"
               placeholder="Trade License Number"
+              component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0 }
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={3}>
+          <Grid item sm={6} xs={12}>
+            <Field
+              name="prospectId"
+              path="searchInfo.prospectId"
+              label="Prospect number"
+              placeholder="Prospect Number"
               component={Input}
               InputProps={{
                 inputProps: { tabIndex: 0 }

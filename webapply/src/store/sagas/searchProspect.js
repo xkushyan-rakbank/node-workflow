@@ -24,6 +24,7 @@ export function* searchProspectFormSaga({ payload }) {
       leadNumber: payload.leadNumber || "",
       tradeLicenseNo: payload.tradeLicenseNo || "",
       email: payload.email || "",
+      prospectId: payload.prospectId || "",
       eidNumber: ""
     };
 

@@ -18,6 +18,7 @@ export const NUMBER_REGEX = /^[0-9]*$/;
 export const ALPHANUMERIC_REGEX = /^([a-zA-Z0-9-])*$/;
 export const PLACE_BIRTH_ALPHANUMERIC_REGEX = /^([a-zA-Z0-9-\s])*$/;
 export const ALPHANUMERIC_ONLY_REGEX = /^([a-zA-Z0-9])*$/;
+export const PROSPECT_ID_REGEX = /^\d{1,10}$/;
 
 export const UAE_MOBILE_PHONE_REGEX = /^[0-9]{9}$/;
 export const UAE_LANDLINE_PHONE_REGEX = /^[0-9]{8}$/;
