@@ -142,9 +142,7 @@ export const CompanyInfo = ({
         })
       })
     ),
-    licenseIssuingAuthority: Yup.string().required(
-      getRequiredMessage("License Issuance Authority")
-    ),
+    licenseIssuingAuthority: Yup.string().required(getRequiredMessage("License issuing authority")),
     countryOfIncorporation: Yup.string().required(getRequiredMessage("Country of incorporation")),
     licenseOrCOINumber: Yup.string()
       .required(getRequiredMessage("License number"))
