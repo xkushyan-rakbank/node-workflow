@@ -8,3 +8,5 @@ export const getMinDateMessage = fieldName => `${fieldName} should not be less t
 
 export const getROInvalidMessage = "Only numbers without spaces are allowed";
 export const getNotTrimmedMessage = fieldName => `${fieldName} should not have trailing spaces`;
+
+export const nameInvalidMessage = "Please enter alphabets only";

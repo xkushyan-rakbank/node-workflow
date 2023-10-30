@@ -45,7 +45,8 @@ import {
 import {
   getInvalidMessage,
   getRequiredMessage,
-  getROInvalidMessage
+  getROInvalidMessage,
+  nameInvalidMessage
 } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
 import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../utils/validation";
@@ -296,7 +297,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         .required(getRequiredMessage("Name"))
         .max(MAX_DEBIT_CARD_NAME_LENGTH, "Maximum ${max} characters allowed")
         .min(MIN_DEBIT_CARD_NAME_LENGTH, "Minimum ${max} characters required")
-        .matches(NAME_REGEX, getInvalidMessage("name"))
+        .matches(NAME_REGEX, nameInvalidMessage)
     }),
     branchId: Yup.string().required(getRequiredMessage("Branch")),
     accountEmirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),

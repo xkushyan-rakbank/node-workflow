@@ -34,7 +34,11 @@ import {
   MAX_MOTHER_MAIDEN_NAME_LENGTH,
   MIN_MOTHER_NAME_LENGTH
 } from "../../CompanyInfo/constants";
-import { getInvalidMessage, getRequiredMessage } from "../../../utils/getValidationMessage";
+import {
+  getInvalidMessage,
+  getRequiredMessage,
+  nameInvalidMessage
+} from "../../../utils/getValidationMessage";
 import { NAME_REGEX, EMIRATES_ID_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
 import { getDatalist, getProspect, getProspectId } from "../../../store/selectors/appConfig";
@@ -134,18 +138,18 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       .required(getRequiredMessage("First name"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_FIRST_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, "Please remove any special character from your name"),
+      .matches(NAME_REGEX, nameInvalidMessage),
     middleName: Yup.string()
       .nullable()
       .notRequired()
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_MIDDLE_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, "Please remove any special character from your name"),
+      .matches(NAME_REGEX, nameInvalidMessage),
     lastName: Yup.string()
       .required(getRequiredMessage("Last name"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_LAST_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, "Please remove any special character from your name"),
+      .matches(NAME_REGEX, nameInvalidMessage),
     mothersMaidenName: Yup.string()
       .required(getRequiredMessage("Mother's maiden name"))
       .min(
@@ -156,7 +160,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         MAX_MOTHER_MAIDEN_NAME_LENGTH,
         `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
       )
-      .matches(NAME_REGEX, "Please enter a valid mother's maiden name as per your passport"),
+      .matches(NAME_REGEX, nameInvalidMessage),
     eidNumber: Yup.string().when("residenceCountry", {
       is: value => value === UAE,
       then: Yup.string()

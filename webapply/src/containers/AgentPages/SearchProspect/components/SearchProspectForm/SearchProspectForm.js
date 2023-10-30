@@ -18,13 +18,13 @@ import {
 } from "../../../../../utils/validation";
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../../constants";
-import { getInvalidMessage } from "../../../../../utils/getValidationMessage";
+import { getInvalidMessage, nameInvalidMessage } from "../../../../../utils/getValidationMessage";
 import { Footer } from "../../../../../components/Footer";
 
 const searchProspectSchema = Yup.object({
   fullName: Yup.string()
     .max(30, "Maximum 30 characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("Applicant Name")),
+    .matches(NAME_REGEX, nameInvalidMessage),
   mobileNo: Yup.string().phoneNo({ codeFieldName: "countryCode", fieldName: "Mobile Number" }),
   email: Yup.string().email(getInvalidMessage("Email")),
   leadNumber: Yup.string()

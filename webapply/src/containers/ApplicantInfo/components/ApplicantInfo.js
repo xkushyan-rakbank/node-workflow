@@ -23,7 +23,8 @@ import { CONVENTIONAL, ISLAMIC, personaSelectionRoutesMap, UAE_CODE } from "../.
 import {
   getInvalidMessage,
   getRequiredMessage,
-  getROInvalidMessage
+  getROInvalidMessage,
+  nameInvalidMessage
 } from "../../../utils/getValidationMessage";
 import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
@@ -121,7 +122,7 @@ const aplicantInfoSchema = Yup.object({
   fullName: Yup.string()
     .required("Please enter your name")
     .max(50, "Maximum 50 characters allowed")
-    .matches(NAME_REGEX, getInvalidMessage("name")),
+    .matches(NAME_REGEX, nameInvalidMessage),
   companyFullName: Yup.string()
     .required(getRequiredMessage("Company’s full name"))
     // eslint-disable-next-line no-template-curly-in-string

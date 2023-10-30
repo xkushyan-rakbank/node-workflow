@@ -15,7 +15,8 @@ import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../../utils/
 import {
   getInvalidMessage,
   getRequiredMessage,
-  getROInvalidMessage
+  getROInvalidMessage,
+  nameInvalidMessage
 } from "../../../../utils/getValidationMessage";
 
 import { useStyles } from "./styled";
@@ -30,7 +31,7 @@ const inviteSchema = Yup.object({
   custName: Yup.string()
     .required("Please enter your name")
     .max(50, "Maximum 50 characters allowed")
-    .matches(NAME_REGEX, "Please remove any special character from your name"),
+    .matches(NAME_REGEX, nameInvalidMessage),
   custEmail: Yup.string()
     .required(getRequiredMessage("Email"))
     .max(50, "Maximum 50 characters allowed")
