@@ -28,7 +28,7 @@ const getComebackSchema = () =>
   Yup.object({
     email: Yup.string()
       .required(getRequiredMessage("Email address"))
-      .email(getInvalidMessage("Email address")),
+      .email(getInvalidMessage("email address")),
     countryCode: Yup.string().required(getRequiredMessage("Country code")),
     mobileNo: Yup.string()
       .required(getRequiredMessage("Mobile number"))
