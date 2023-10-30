@@ -74,7 +74,7 @@ export const Background = ({ id, refs }) => {
       ),
     backgroundInfo: Yup.string()
       .nullable()
-      .min(100, "Background information is too short.")
+      .min(100, "Background information is too short. Please enter at least 100 characters.")
       .max(2000, "Background information is too long. Please enter upto 2000 characters."),
     cv: Yup.string(),
     common: Yup.string().when(["linkedInURL", "backgroundInfo", "cv"], {
