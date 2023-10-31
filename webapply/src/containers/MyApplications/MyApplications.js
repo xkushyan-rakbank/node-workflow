@@ -21,7 +21,7 @@ export const MyApplications = () => {
   const isLoading = useSelector(getIsLoadingSearchProspects);
   const searchResults = useSelector(getSearchResults);
   const loadingProspectId = useSelector(getLoadingProspectId);
-  const { authorizationToken } = useSelector(getAppConfig);
+  const { authorizationToken, loading: loadingConfig } = useSelector(getAppConfig);
   const dispatch = useDispatch();
   const { pushDisplayScreenToHistory } = useDisplayScreenBasedOnViewId();
   useFormNavigation([true, false, searchProspectStepper]);
@@ -74,7 +74,7 @@ export const MyApplications = () => {
   return (
     <BaseComponent
       getProspectInfo={onGetProspectInfo}
-      isLoading={isLoading}
+      isLoading={isLoading || loadingConfig}
       searchResults={searchResults}
       loadingProspectId={loadingProspectId}
     />
