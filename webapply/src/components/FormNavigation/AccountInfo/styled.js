@@ -108,6 +108,7 @@ export const useStyles = makeStyles(theme => ({
   },
   letsStartBtn: {
     padding: "12px 30px",
+    minWidth: "fit-content",
     [theme.breakpoints.only("sm")]: {
       padding: "12px 25px",
     }
@@ -125,7 +126,8 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       padding: "10px 30px !important",
       lineHeight: "28px",
-      fontSize: "1rem !important"
+      fontSize: "1rem !important",
+      justifyContent: "space-between !important"
     },
     "& .arrowIcon": {
       fill: "#fff !important",
