@@ -214,7 +214,7 @@ export function* prospectAutoSave() {
   try {
     const autoSave = yield select(getIsAutoSaveEnabled);
     const isAutoSaveEnabled = autoSave?.[0]?.displayText === "true";
-    while (true && isAutoSaveEnabled) {
+    while (isAutoSaveEnabled) {
       yield delay(AUTO_SAVE_INTERVAL);
 
       const { isSaveEnabled, newProspect } = yield call(saveProspectData);
