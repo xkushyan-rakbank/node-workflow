@@ -65,13 +65,13 @@ export const ISLAMIC = "islamic";
 
 export const accountNames = {
   starter: "RAKStarter",
-  currentAccount: "Business Current Account",
-  elite: "Business Elite"
+  currentAccount: "Current Account",
+  elite: "RAKelite"
 };
 
 export const accountTitles = {
   starter: "RAKstarter",
-  currentAccount: "Business Current Account",
+  currentAccount: "Current Account",
   elite: "Business Elite"
 };
 

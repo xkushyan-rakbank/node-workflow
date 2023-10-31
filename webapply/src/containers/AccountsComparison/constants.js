@@ -57,7 +57,7 @@ export const featuresDataList = [
   {
     info: "Lifestyle benefits",
     starter: { ic: checkIcon },
-    currentAccount: { ic: checkIcon },
+    currentAccount: { ic: crossIcon },
     elite: { ic: checkIcon }
   },
   {
