@@ -32,13 +32,23 @@ export const useStyles = makeStyles(theme => ({
         background: "rgba(245, 245, 245, 0.50)"
       },
       "&:nth-child(2)": {
-        background: "rgba(253, 231, 232, 0.20)"
+        background: "rgba(253, 231, 232, 0.20)",
+        [theme.breakpoints.up("lg")]: {
+          "& div > p": {
+            paddingTop: "37px"
+          }
+        }
       },
       "&:nth-child(3)": {
         background: "rgba(253, 231, 232, 0.60)"
       },
       "&:last-child": {
-        background: "#FDE7E8"
+        background: "#FDE7E8",
+        [theme.breakpoints.up("lg")]: {
+          "& div > p": {
+            paddingTop: "37px"
+          }
+        }
       }
     }
   },
@@ -54,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
       padding: "35px 24px"
     },
     [theme.breakpoints.up("md")]: {
-      height: "216px",
+      height: "233px",
       padding: "35px 24px"
     }
   },
