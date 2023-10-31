@@ -37,7 +37,8 @@ import {
   getIsIslamicBanking,
   getAuthToken,
   getApplicationInfo,
-  getSignatories
+  getSignatories,
+  getIsAutoSaveEnabled
 } from "../selectors/appConfig";
 import { checkLoginStatus, getLoginResponse } from "../selectors/loginSelector";
 import { getCompletedSteps } from "../selectors/completedSteps";
@@ -211,7 +212,9 @@ export async function generateHash(value) {
 
 export function* prospectAutoSave() {
   try {
-    while (true) {
+    const autoSave = yield select(getIsAutoSaveEnabled);
+    const isAutoSaveEnabled = autoSave?.[0]?.displayText === "true";
+    while (true && isAutoSaveEnabled) {
       yield delay(AUTO_SAVE_INTERVAL);
 
       const { isSaveEnabled, newProspect } = yield call(saveProspectData);

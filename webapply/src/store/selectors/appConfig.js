@@ -6,6 +6,8 @@ export const getAgentName = state => state.appConfig.login.userName;
 
 export const getAppConfig = state => state.appConfig || {};
 
+export const getAppConfigLoading = state => getAppConfig(state).loading;
+
 export const getUploadDocuments = state => state.uploadDocuments || {};
 
 export const getDatalist = state => getAppConfig(state).datalist || {};
@@ -216,3 +218,5 @@ export const getAccordionStatuses = state => getProspect(state).accordionsStatus
 export const getTat = state => {
   return typeof state.appConfig.tat !== "undefined" ? state.appConfig.tat : "";
 };
+
+export const getIsAutoSaveEnabled = state => getDatalist(state)?.AutoSave;
