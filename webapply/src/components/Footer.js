@@ -95,7 +95,7 @@ const useStyles = makeStyles({
       margin: 0
     },
     [theme.breakpoints.up("sm")]: {
-      gap: "24px", 
+      gap: "24px"
     },
     "& > :nth-child(1)": {
       order: 3,
@@ -215,24 +215,12 @@ const useStyles = makeStyles({
   }
 });
 
-const saveCloseViewIds = {
-  CompanyInfo: "/CompanyInfo",
-  StakeholdersInfo: "/StakeholdersInfo",
-  StakeholdersInfoPreview: "/StakeholdersInfoPreview",
-  ConsentInfo: "/ConsentInfo",
-  AdditionalInfo: "/AdditionalInfo",
-  CompanyAdditionalInfo: "/CompanyAdditionalInfo",
-  StakeholdersAdditionalInfo: "/StakeholdersAdditionalInfo",
-  AccountInfo: "/AccountInfo",
-  SubmitApplication: "/SubmitApplication"
-};
-
 export const Footer = ({ children, extraClasses, hideSaveClose = false }) => {
   const classes = useStyles({
     smallMenu: checkIsShowSmallMenu(pathname)
   });
   const { pathname } = useLocation();
-  const showSaveClose = Object.values(saveCloseViewIds).some(screen => pathname.includes(screen));
+  const showSaveClose = Object.values(VIEW_IDS).some(screen => pathname.includes(screen));
   const isOnlyNextButton = React.Children.toArray(children).length === 1;
 
   return (

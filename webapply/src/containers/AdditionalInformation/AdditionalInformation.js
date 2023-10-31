@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Form, Formik } from "formik";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
+import { isEmpty } from "lodash";
 
 import { NEXT, SUBMIT, TL_COI_FILE_SIZE, additionInfoStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
@@ -12,6 +13,7 @@ import StakeholdersDetail from "../CompanyStakeholders/components/CompanyStakeho
 import {
   getAdditionalDocumentDetailsForBPM,
   getAdditionalDocumentDetailsFromBPM,
+  getAdditionalInfoDetailsForBPM,
   getAdditionalInfoDetailsFromBPM
 } from "../../store/selectors/appConfig";
 import { Footer } from "../../components/Footer";
@@ -39,7 +41,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   const additionalDocumentDetailsFromBPM = useSelector(getAdditionalDocumentDetailsFromBPM);
 
   // sending details back to bpm through update prospect
-  // const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
+  const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
   const additionalDocumentDetailsForBPM = useSelector(getAdditionalDocumentDetailsForBPM);
 
   const isAgent = useSelector(checkLoginStatus);
@@ -62,40 +64,45 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
 
   //useEffect to load on comeback
   // TODO: rework when autosave has to be implemented
-  //   useEffect(() => {
-  //     const docFiles = {};
-  //     if (additionalDocumentDetailsForBPM.length) {
-  //       additionalDocumentDetailsForBPM.forEach(eachDoc => {
-  //         const { DocUniqueID, DocResponse } = eachDoc;
-  //         if (!docFiles[`doc_${DocUniqueID}`]) {
-  //           docFiles[`doc_${DocUniqueID}`] = [];
-  //         }
+  useEffect(() => {
+    const docFiles = {};
+    if (additionalDocumentDetailsForBPM.length) {
+      additionalDocumentDetailsForBPM.forEach(eachDoc => {
+        const { DocUniqueID, DocResponse } = eachDoc;
+        const isFound = additionalDocumentDetailsFromBPM.find(
+          eachFile => eachFile.documentUniqueId === DocUniqueID
+        );
+        if (isFound) {
+          if (!docFiles[`doc_${DocUniqueID}`]) {
+            docFiles[`doc_${DocUniqueID}`] = [];
+          }
 
-  //         // Push the current item to the corresponding array
-  //         docFiles[`doc_${DocUniqueID}`].push({
-  //           file: DocResponse,
-  //           fileName: DocResponse,
-  //           fieldDescription: DocResponse,
-  //           documentUniqueId: DocUniqueID
-  //         });
-  //       });
-  //       setAdditionalDoc(docFiles);
-  //     }
-  //     const infoList = {};
+          // Push the current item to the corresponding array
+          docFiles[`doc_${DocUniqueID}`].push({
+            file: DocResponse,
+            fileName: DocResponse,
+            fieldDescription: DocResponse,
+            documentUniqueId: DocUniqueID
+          });
+        }
+      });
+      !isEmpty(docFiles) && setAdditionalDoc(docFiles);
+    }
+    const infoList = {};
 
-  //     if (additionalInfoDetailsForBPM.length) {
-  //       additionalInfoDetailsForBPM.forEach(eachDoc => {
-  //         const { QueryUniqueID, QueryResponse } = eachDoc;
-  //         if (!infoList[`info_${QueryUniqueID}`]) {
-  //           infoList[`info_${QueryUniqueID}`] = [];
-  //         }
+    if (additionalInfoDetailsForBPM.length) {
+      additionalInfoDetailsForBPM.forEach(eachDoc => {
+        const { QueryUniqueID, QueryResponse } = eachDoc;
+        if (!infoList[`info_${QueryUniqueID}`]) {
+          infoList[`info_${QueryUniqueID}`] = [];
+        }
 
-  //         // Push the current item to the corresponding array
-  //         infoList[`info_${QueryUniqueID}`].push(QueryResponse);
-  //       });
-  //       setAdditionalInfo(infoList);
-  //     }
-  //   }, []);
+        // Push the current item to the corresponding array
+        infoList[`info_${QueryUniqueID}`].push(QueryResponse);
+      });
+      setAdditionalInfo(infoList);
+    }
+  }, []);
 
   const initialValues = {
     ...(additionInfo && additionInfo),
@@ -167,7 +174,6 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
       validationSchema={additionalInfoSchema}
     >
       {({ touched, setTouched, setFieldValue, values, isValid, errors, ...props }) => {
-        // console.log(errors);
         return (
           <Form>
             <OverlayLoader open={loading} text={"Please Wait"} />
