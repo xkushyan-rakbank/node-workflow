@@ -44,6 +44,34 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
   const additionalDocumentDetailsForBPM = useSelector(getAdditionalDocumentDetailsForBPM);
 
+  const additionalDocumentDetailsForBPMSetCurrentReq = useMemo(() => {
+    const arr = [];
+    additionalDocumentDetailsForBPM.forEach(eachDoc => {
+      const { DocUniqueID } = eachDoc;
+      const isFound = additionalDocumentDetailsFromBPM.find(
+        eachFile => eachFile.documentUniqueId === DocUniqueID
+      );
+      if (isFound) {
+        arr.push(eachDoc);
+      }
+    });
+    return arr;
+  }, [additionalDocumentDetailsForBPM]);
+
+  const additionalInfoDetailsForBPMSetCurrentReq = useMemo(() => {
+    const arr = [];
+    additionalInfoDetailsForBPM.forEach(eachDoc => {
+      const { QueryUniqueID } = eachDoc;
+      const isFound = additionalInfoDetailsFromBPM.find(
+        eachFile => eachFile.queryUniqueID === QueryUniqueID
+      );
+      if (isFound) {
+        arr.push(eachDoc);
+      }
+    });
+    return arr;
+  }, [additionalInfoDetailsForBPM]);
+
   const isAgent = useSelector(checkLoginStatus);
 
   //set intial values
@@ -63,35 +91,38 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   }, []);
 
   //useEffect to load on comeback
-  // TODO: rework when autosave has to be implemented
   useEffect(() => {
+    if (!additionalDocumentDetailsForBPMSetCurrentReq.length) {
+      return;
+    }
     const docFiles = {};
-    if (additionalDocumentDetailsForBPM.length) {
-      additionalDocumentDetailsForBPM.forEach(eachDoc => {
+    if (additionalDocumentDetailsForBPMSetCurrentReq.length) {
+      additionalDocumentDetailsForBPMSetCurrentReq.forEach(eachDoc => {
         const { DocUniqueID, DocResponse } = eachDoc;
-        const isFound = additionalDocumentDetailsFromBPM.find(
-          eachFile => eachFile.documentUniqueId === DocUniqueID
-        );
-        if (isFound) {
-          if (!docFiles[`doc_${DocUniqueID}`]) {
-            docFiles[`doc_${DocUniqueID}`] = [];
-          }
 
-          // Push the current item to the corresponding array
-          docFiles[`doc_${DocUniqueID}`].push({
-            file: DocResponse,
-            fileName: DocResponse,
-            fieldDescription: DocResponse,
-            documentUniqueId: DocUniqueID
-          });
+        if (!docFiles[`doc_${DocUniqueID}`]) {
+          docFiles[`doc_${DocUniqueID}`] = [];
         }
+
+        // Push the current item to the corresponding array
+        docFiles[`doc_${DocUniqueID}`].push({
+          file: DocResponse,
+          fileName: DocResponse,
+          fieldDescription: DocResponse,
+          documentUniqueId: DocUniqueID
+        });
       });
       !isEmpty(docFiles) && setAdditionalDoc(docFiles);
     }
-    const infoList = {};
+  }, [additionalDocumentDetailsForBPMSetCurrentReq]);
 
-    if (additionalInfoDetailsForBPM.length) {
-      additionalInfoDetailsForBPM.forEach(eachDoc => {
+  useEffect(() => {
+    const infoList = {};
+    if (!additionalInfoDetailsForBPMSetCurrentReq.length) {
+      return;
+    }
+    if (additionalInfoDetailsForBPMSetCurrentReq.length) {
+      additionalInfoDetailsForBPMSetCurrentReq.forEach(eachDoc => {
         const { QueryUniqueID, QueryResponse } = eachDoc;
         if (!infoList[`info_${QueryUniqueID}`]) {
           infoList[`info_${QueryUniqueID}`] = [];
@@ -102,7 +133,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
       });
       setAdditionalInfo(infoList);
     }
-  }, []);
+  }, [additionalInfoDetailsForBPMSetCurrentReq]);
 
   const initialValues = {
     ...(additionInfo && additionInfo),
@@ -124,9 +155,10 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
             .test("fileSize", "The file is too large", file => {
               return (
                 file &&
-                (file === true ||
-                  (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
-                    file.fileSize <= TL_COI_FILE_SIZE.maxSize))
+                ((!file.fileSize && file.fieldDescription) ||
+                  (file.fileSize &&
+                    (file.fileSize >= TL_COI_FILE_SIZE.minSize &&
+                      file.fileSize <= TL_COI_FILE_SIZE.maxSize)))
               );
             })
         );
@@ -187,6 +219,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
               )}
               <AdditionalQuery
                 additionalInfoDetailsFromBPM={additionalInfoDetailsFromBPM}
+                additionalInfoDetailsForBPMSetCurrentReq={additionalInfoDetailsForBPMSetCurrentReq}
                 setFieldValue={setFieldValue}
                 errors={errors}
               />
@@ -195,7 +228,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
               )}
               <AdditionalDocument
                 additionalDocumentDetailsFromBPM={additionalDocumentDetailsFromBPM}
-                additionalDocumentDetailsForBPM={additionalDocumentDetailsForBPM}
+                additionalDocumentDetailsForBPM={additionalDocumentDetailsForBPMSetCurrentReq}
                 setFieldValue={setFieldValue}
                 values={values}
                 touched={touched}

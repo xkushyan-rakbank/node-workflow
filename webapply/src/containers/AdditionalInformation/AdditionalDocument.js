@@ -64,7 +64,7 @@ export default function AdditionalDocument({
             onSuccess: responseName => {
               let fileStore = new File([file], responseName, { type: file.type });
               fileStore.preview = URL.createObjectURL(fileStore);
-              fileStore.DocUniqueID = additionalFile.documentUniqueId;
+              fileStore.documentUniqueId = additionalFile.documentUniqueId;
               fileStore = {
                 ...fileStore,
                 ...{ fileName: fileStore.name, fileSize: fileStore.size }

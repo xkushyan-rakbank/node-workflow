@@ -99,26 +99,24 @@ export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   }
 }
 
-function* updateAdditionInfo({ payload }) {
+function* updateAdditionInfo({ payload: { newInfo, additionalInfoDetailsForBPMSetCurrentReq } }) {
   try {
-    const additionalInfoDetailsForBPM = yield select(getAdditionalInfoDetailsForBPM);
-    console.log(additionalInfoDetailsForBPM, "additionalInfoDetailsForBPM");
     // Create a copy of the original array
-    const updatedInfoBPM = [...additionalInfoDetailsForBPM];
+    const updatedInfoBPM = [...additionalInfoDetailsForBPMSetCurrentReq];
 
     // Check if a matching QueryUniqueID exists in updatedInfoBPM
     const existingIndex = updatedInfoBPM.findIndex(
-      info => info.QueryUniqueID === payload.QueryUniqueID
+      info => info.QueryUniqueID === newInfo.QueryUniqueID
     );
 
     if (existingIndex !== -1) {
       // If it exists, update the QueryResponse in the copy
-      updatedInfoBPM[existingIndex].QueryResponse = payload.QueryResponse;
+      updatedInfoBPM[existingIndex].QueryResponse = newInfo.QueryResponse;
     } else {
       // If it doesn't exist, add a new object to the copy
       updatedInfoBPM.push({
-        QueryUniqueID: payload.QueryUniqueID,
-        QueryResponse: payload.QueryResponse
+        QueryUniqueID: newInfo.QueryUniqueID,
+        QueryResponse: newInfo.QueryResponse
       });
     }
     yield put(

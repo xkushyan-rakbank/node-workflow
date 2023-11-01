@@ -5,7 +5,12 @@ import { useStyles } from "./styled";
 import { AutoSaveField as Field, Input } from "../../components/Form";
 import { updateAdditionalInfo } from "../../store/actions/appConfig";
 
-export default function AdditionalQuery({ additionalInfoDetailsFromBPM, setFieldValue, errors }) {
+export default function AdditionalQuery({
+  additionalInfoDetailsFromBPM,
+  additionalInfoDetailsForBPMSetCurrentReq,
+  setFieldValue,
+  errors
+}) {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -17,7 +22,7 @@ export default function AdditionalQuery({ additionalInfoDetailsFromBPM, setField
       QueryResponse: value
     };
     if (!errors[name]) {
-      dispatch(updateAdditionalInfo(newInfo));
+      dispatch(updateAdditionalInfo({ newInfo, additionalInfoDetailsForBPMSetCurrentReq }));
     }
   }, []);
 
