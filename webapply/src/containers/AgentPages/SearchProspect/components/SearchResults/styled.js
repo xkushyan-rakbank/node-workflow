@@ -108,9 +108,16 @@ export const useStyles = makeStyles({
   },
   searchItemStatus: {
     display: "flex",
-    alignItems: "center",
+    alignItems: "unset",
     justifyContent: "space-between",
-    width: "100%"
+    flexFlow: "column",
+    width: "100%",
+    gap: "20px",
+    [theme.breakpoints.up("sm")]: {
+      gap: "unset",
+      alignItems: "center",
+      flexFlow: "unset",
+    }
   },
   preview: {
     paddingTop: "0 !important"
