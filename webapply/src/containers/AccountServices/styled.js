@@ -502,5 +502,8 @@ export const useStyles = makeStyles(theme => ({
       width: "14px",
       height: "14px"
     }
-  }
+  },
+  debitCardWrapper: {
+    padding: "10px 0px",
+  } 
 }));

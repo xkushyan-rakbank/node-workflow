@@ -702,16 +702,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
                         Would you like to apply for a business debit card?
-                        <ContexualHelp
-                          title={
-                            "You can get a card for yourself and/or\n other people in your company. Business\n debit cards can only be issued for\n eligible AED accounts and will be sent\n by courier to your designated mailing\n address."
-                          }
-                          placement="right"
-                          isDisableHoverListener={false}
-                          classes={classes.infoIcon}
-                        >
-                          <HelpOutlineIcon className={classes.infoIcon} />
-                        </ContexualHelp>
                       </label>
                       <Field
                         typeRadio
@@ -739,6 +729,14 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           classes={{ formControlRoot: classes.customLabel }}
                         />
                       )}
+                      <div className={classes.debitCardWrapper}>
+                        <DisclaimerNote
+                          className={classes.noteWrapper}
+                          text={
+                            "Note: In order to access our digital banking services, you are required to have a debit card associated with your account."
+                          }
+                        />
+                      </div>
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
