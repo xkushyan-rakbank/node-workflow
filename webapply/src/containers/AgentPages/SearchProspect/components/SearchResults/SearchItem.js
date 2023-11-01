@@ -118,7 +118,9 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
           name={application.applicantInfo?.fullName}
           className={classes.preview}
           isStakeholder={false}
-          referenceNumber={`Reference No. ${application.prospectId}`}
+          referenceNumber={`Reference No. ${application.prospectId}${
+            agentId ? ` (${prospectVersion})` : ""
+          }`}
         />
         <div className={classes.statusCont}>
           <span className={classes.label}>Status</span>
