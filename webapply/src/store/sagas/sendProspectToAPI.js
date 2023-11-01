@@ -268,9 +268,11 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent, isEditable) =>
         nodePayload = [{ debitCardInfo }];
       } else if (viewId === "/StakeholdersInfo") {
         if (prospect[key][0]) {
-          const { isEFRCheckLimitExceeded, signatoryId } = prospect[key][0];
+          const { isEFRCheckLimitExceeded, signatoryId, eFRCompletedTimestamp } = prospect[key][0];
           if (isEFRCheckLimitExceeded) {
             nodePayload = [{ isEFRCheckLimitExceeded, signatoryId }];
+          } else if (eFRCompletedTimestamp) {
+            nodePayload = [{ eFRCompletedTimestamp }];
           }
         }
       } else if (viewId === "/StakeholdersInfoPreview" && isEditable) {

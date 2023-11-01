@@ -17,7 +17,7 @@ import {
   setLivelinessData
 } from "../../store/actions/kyc";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
-import { getOrganizationInfo } from "../../store/selectors/appConfig";
+import { getOrganizationInfo, getSignatories } from "../../store/selectors/appConfig";
 import { OverlayLoader } from "../Loader";
 import { checkLoginStatus } from "../../store/selectors/loginSelector";
 import { ReactComponent as CheckIcon } from "../../assets/icons/credit_score.svg";
@@ -25,6 +25,7 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { ConfirmDialog } from "../Modals";
 import { ReactComponent as Loader } from "./../../assets/icons/loader.svg";
+import { updateProspect } from "../../store/actions/appConfig";
 
 const localizedMessagesLiveness = {
   record_button: "Record",
@@ -132,7 +133,7 @@ export const FaceRecognition = ({
   const [openWarning, setOpenWarning] = useState(false);
   const [loading, setLoading] = useState(false);
   const pushHistory = useTrackingHistory();
-
+  const isEFRCompletedTimestampAvailable = useSelector(getSignatories)?.[0]?.eFRCompletedTimestamp;
   const {
     isLoading,
     isLivenessCheckReady,
@@ -201,6 +202,13 @@ export const FaceRecognition = ({
     }
     if (!isLivenessCheckReady) {
       return;
+    }
+    if (!isEFRCompletedTimestampAvailable) {
+      dispatch(
+        updateProspect({
+          "prospect.signatoryInfo[0].eFRCompletedTimestamp": new Date().toISOString()
+        })
+      );
     }
     startLivenessCheck({ onResult });
   };
