@@ -55,9 +55,9 @@ export const accountsDataRows = [
 
 export const featuresDataList = [
   {
-    info: "Lifestyle benefits",
+    info: "Lifestyle benefits**",
     starter: { ic: checkIcon },
-    currentAccount: { ic: crossIcon },
+    currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }
   },
   {
@@ -110,13 +110,13 @@ export const perksDataRows = [
   {
     info: "Free remittances*",
     starter: { ic: checkIcon },
-    currentAccount: { ic: crossIcon },
+    currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }
   },
   {
     info: "Preferential FX rates**",
     starter: { ic: checkIcon },
-    currentAccount: { ic: crossIcon },
+    currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }
   },
   {
@@ -126,7 +126,7 @@ export const perksDataRows = [
     elite: { ic: checkIcon }
   },
   {
-    info: "Dedicated relationship manager",
+    info: "Dedicated Relationship Manager",
     starter: { ic: checkIcon },
     currentAccount: { ic: checkIcon },
     elite: { ic: checkIcon }
