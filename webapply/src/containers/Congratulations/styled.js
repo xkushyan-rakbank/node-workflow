@@ -78,13 +78,13 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "16px"
   },
   infoWrapper: {
-    color: "#757575",
-    fosectionComponettSize: "0.75rem",
-    fontWeight: 400,
-    lineHeight: "16px",
-    "& span": {
-      fontWeight: "400!important",
-    }
+    alignItems: "start !important",
+    "& svg": {
+      marginTop: "5px",
+      fill: "#757575",
+      width: "14px",
+      height: "14px"
+    },
   },
   infoIcon: {
     width: "32px !important",

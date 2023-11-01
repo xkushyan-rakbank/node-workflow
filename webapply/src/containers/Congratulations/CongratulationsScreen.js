@@ -8,7 +8,6 @@ import { SectionTitleWithInfo } from "../../components/SectionTitleWithInfo";
 import { ContainedButton } from "../../components/Buttons/ContainedButton";
 import routes from "../../routes";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
-import { ICONS, Icon } from "../../components/Icons";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { getAccountType, getProspectId } from "../../store/selectors/appConfig";
 import { useLayoutParams } from "../FormLayout";
@@ -66,7 +65,6 @@ export const CongratulationsScreen = ({ TAT }) => {
             text={
               "You'll need this reference number if you contact Customer Care about your application."
             }
-            customIcon={<Icon name={ICONS.info} className={classes.infoIcon} alt="infoIcon" />}
           />
           <div className={classes.horizontalLine}></div>
 
