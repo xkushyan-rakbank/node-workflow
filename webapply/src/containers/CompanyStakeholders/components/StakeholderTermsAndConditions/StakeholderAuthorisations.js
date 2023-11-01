@@ -32,6 +32,8 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     setKfsDialog(false);
   };
 
+  const acceptedTimeStamp = new Date().toISOString();
+
   const handleAccept = () => {
     setKfsDialog(false);
     dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "AUTH_CONSENT"));
@@ -39,10 +41,10 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {
           ...signatoryInfo[0]?.consentInfo,
-          efrConsent: { accept: true },
-          aecbConsent: { accept: true },
-          ftsConsent: { accept: true },
-          norblocConsent: { accept: true }
+          efrConsent: { accept: true, timestamp: acceptedTimeStamp },
+          aecbConsent: { accept: true, timestamp: acceptedTimeStamp },
+          ftsConsent: { accept: true, timestamp: acceptedTimeStamp },
+          norblocConsent: { accept: true, timestamp: acceptedTimeStamp }
         }
       })
     );

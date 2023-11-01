@@ -41,7 +41,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {
           ...signatoryInfo[0]?.consentInfo,
-          kfsConsent: { accept: true }
+          kfsConsent: { accept: true, timestamp: new Date().toISOString() }
         }
       })
     );

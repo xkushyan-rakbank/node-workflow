@@ -39,7 +39,7 @@ export const TermsAndConditions = ({ wcmData }) => {
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {
           ...signatoryInfo[0].consentInfo,
-          otherTncConsent: { accept: true }
+          otherTncConsent: { accept: true, timestamp: new Date().toISOString() }
         }
       })
     );
