@@ -9,11 +9,13 @@ export const useStyles = makeStyles({
       lineHeight: "1.1",
       margin: "0",
       color: "#ea2b1e",
-      maxWidth: "280px",
+      maxWidth: "fit-content",
+      paddingRight: "50px",
       [theme.breakpoints.up("sm")]: {
         lineHeight: "1",
         width: "auto",
-        maxWidth: "300px",
+        maxWidth: "fit-content",
+        paddingRight: "30px",
       },
     },
     "& svg": {
