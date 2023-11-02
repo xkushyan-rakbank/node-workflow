@@ -26,7 +26,7 @@ import {
   MAX_FLAT_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
 } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
-import { ADDRESS_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
+import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, POBOX_REGEX } from "../../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { getDocuments } from "../../../../../store/selectors/appConfig";
@@ -73,19 +73,19 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
       .required(getRequiredMessage("Street / location"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(ADDRESS_REGEX, getInvalidMessage("Street / Location")),
+      .matches(ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE),
     addressLine1: Yup.string().when("typeOfAddress", {
       is: typeOfAddress => typeOfAddress === "physical",
       then: Yup.string()
         .required(getRequiredMessage("Office or shop number"))
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-        .matches(ADDRESS_REGEX, getInvalidMessage("Office or shop number")),
+        .matches(ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE),
       otherwise: Yup.string()
         .required(getRequiredMessage("Flat, villa or building"))
         // eslint-disable-next-line no-template-curly-in-string
         .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-        .matches(ADDRESS_REGEX, getInvalidMessage("Flat, villa or building"))
+        .matches(ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE)
     }),
     poBox: Yup.string()
       .nullable()

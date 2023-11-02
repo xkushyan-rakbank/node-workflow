@@ -54,7 +54,7 @@ export const addPhoneNoValidationToYup = () => {
       is: countryCode => countryCode === UAE_CODE,
       then: Yup.string().matches(
         isLandline ? UAE_LANDLINE_PHONE_REGEX : UAE_MOBILE_PHONE_REGEX,
-        message || getInvalidMessage(fieldName),
+        message || getInvalidMessage(fieldName)
       ),
       otherwise: Yup.string()
         .matches(NUMBER_REGEX, message || getInvalidMessage(fieldName))
@@ -76,3 +76,5 @@ export const documentValidationSchema = Yup.object().shape({
 
 export const ADDRESS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
 export const PARTNER_CODE_REGEX = /^([a-zA-Z0-9-/\s\\])*$/;
+export const ADDRESS_VALIDATION_MESSAGE =
+  "You can only use letters (A-Z, a-z),\nnumbers (0-9),\nspecial characters (., @ # % () /-)\nand spaces in this field.";

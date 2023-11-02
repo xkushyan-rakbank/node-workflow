@@ -15,7 +15,7 @@ import {
   POBoxNumberInput
 } from "../../../../../components/Form";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { ADDRESS_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
+import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, POBOX_REGEX } from "../../../../../utils/validation";
 import {
   MAX_FLAT_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
@@ -64,13 +64,13 @@ export const ResidentialAddress = ({ id, refs }) => {
       .required(getRequiredMessage("Flat, villa or building"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_FLAT_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(ADDRESS_REGEX, getInvalidMessage("Flat, villa or building")),
+      .matches(ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE),
     addressLine2: Yup.string()
       .nullable()
       .required(getRequiredMessage("Street or location"))
       // eslint-disable-next-line no-template-curly-in-string
       .max(MAX_STREET_NUMBER_LENGTH, "Maximum ${max} characters allowed")
-      .matches(ADDRESS_REGEX, getInvalidMessage("Street or location")),
+      .matches(ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE),
     poBox: Yup.string()
       .nullable()
       .required(getRequiredMessage("P.O. Box number"))
