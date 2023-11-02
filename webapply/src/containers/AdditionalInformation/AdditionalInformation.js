@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Form, Formik } from "formik";
 import { useSelector } from "react-redux";
 import * as Yup from "yup";
-import { isEmpty } from "lodash";
 
 import { NEXT, SUBMIT, TL_COI_FILE_SIZE, additionInfoStepper } from "../../constants";
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
@@ -31,6 +30,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   useLayoutParams(false);
   useViewId(true);
   const classes = useStyles();
+  const additionDataref = useRef(null);
   const pushHistory = useTrackingHistory();
   const [loading, setIsLoading] = useState(false);
   const [additionInfo, setAdditionalInfo] = useState([{}]);
@@ -92,14 +92,13 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
 
   //useEffect to load on comeback
   useEffect(() => {
-    if (!additionalDocumentDetailsForBPMSetCurrentReq.length) {
+    if (!additionalDocumentDetailsForBPMSetCurrentReq.length || !additionDataref.current) {
       return;
     }
     const docFiles = {};
     if (additionalDocumentDetailsForBPMSetCurrentReq.length) {
       additionalDocumentDetailsForBPMSetCurrentReq.forEach(eachDoc => {
         const { DocUniqueID, DocResponse } = eachDoc;
-
         if (!docFiles[`doc_${DocUniqueID}`]) {
           docFiles[`doc_${DocUniqueID}`] = [];
         }
@@ -112,13 +111,15 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
           documentUniqueId: DocUniqueID
         });
       });
-      !isEmpty(docFiles) && setAdditionalDoc(docFiles);
     }
+    Object.keys(docFiles).forEach(eachDoc => {
+      additionDataref.current.setFieldValue(eachDoc, docFiles[eachDoc]);
+    });
   }, [additionalDocumentDetailsForBPMSetCurrentReq]);
 
   useEffect(() => {
     const infoList = {};
-    if (!additionalInfoDetailsForBPMSetCurrentReq.length) {
+    if (!additionalInfoDetailsForBPMSetCurrentReq.length || !additionDataref.current) {
       return;
     }
     if (additionalInfoDetailsForBPMSetCurrentReq.length) {
@@ -130,8 +131,8 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
 
         // Push the current item to the corresponding array
         infoList[`info_${QueryUniqueID}`].push(QueryResponse);
+        additionDataref.current.setFieldValue(`info_${QueryUniqueID}`, QueryResponse);
       });
-      setAdditionalInfo(infoList);
     }
   }, [additionalInfoDetailsForBPMSetCurrentReq]);
 
@@ -141,10 +142,8 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
   };
 
   const SchemaObject = useMemo(() => {
-    // console.log(initialValues);
     const schema = {};
     Object.keys(initialValues).map(field => {
-      //   console.log(field);
       if (field.includes("doc")) {
         schema[field] = Yup.array().of(
           Yup.mixed()
@@ -171,7 +170,6 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
           .max(1000, "Maximum ${max} characters allowed");
       }
     });
-    // console.log(schema);
     return schema;
   }, [initialValues]);
 
@@ -204,8 +202,23 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
       validateOnBlur={true}
       validateOnMount={true}
       validationSchema={additionalInfoSchema}
+      innerRef={additionDataref}
     >
-      {({ touched, setTouched, setFieldValue, values, isValid, errors, ...props }) => {
+      {({
+        touched,
+        setTouched,
+        setFieldValue,
+        isSubmitting,
+        values,
+        isValid,
+        errors,
+        ...props
+      }) => {
+        if (isSubmitting) {
+          const el = document.querySelector(".Mui-error");
+          const element = el && el.parentElement ? el.parentElement : el;
+          element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
         return (
           <Form>
             <OverlayLoader open={loading} text={"Please Wait"} />

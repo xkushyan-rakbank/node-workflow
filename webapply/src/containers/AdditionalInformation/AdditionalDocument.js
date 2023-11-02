@@ -135,6 +135,8 @@ export default function AdditionalDocument({
   return additionalDocumentDetailsFromBPM ? (
     additionalDocumentDetailsFromBPM.map((additionalFile, index) => {
       const documentUniqueId = `doc_${additionalFile.documentUniqueId}`;
+      const documentRemarks = additionalFile.documentRemarks.split("\n");
+
       return (
         <div key={index} className={classes.innerCards}>
           <div className={classes.infoCont}>
@@ -143,7 +145,14 @@ export default function AdditionalDocument({
           </div>
           <div className={classes.infoCont}>
             <span className={classes.infoLabel}>Query:</span>
-            <span className={classes.infoValue}>{additionalFile.documentRemarks}</span>
+            <span className={classes.infoValue}>
+              {documentRemarks.map((line, index) => (
+                <span key={index}>
+                  {line}
+                  {index !== documentRemarks.length - 1 && <br />}
+                </span>
+              ))}
+            </span>
           </div>
           <FieldArray name={documentUniqueId}>
             {({ push, remove, arrayHelpers }) => (

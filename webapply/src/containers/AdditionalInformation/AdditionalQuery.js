@@ -29,6 +29,7 @@ export default function AdditionalQuery({
   return additionalInfoDetailsFromBPM ? (
     additionalInfoDetailsFromBPM.map((info, index) => {
       const queryType = `info_${info.queryUniqueID}`;
+      const queryRemarksLines = info.queryRemarks.split("\n");
       return (
         <div key={index} className={classes.innerCards}>
           <div className={classes.infoType}>
@@ -44,7 +45,14 @@ export default function AdditionalQuery({
           <div className={classes.infoType}>
             <div className={classes.infoCont}>
               <span className={classes.infoLabel}>Query:</span>
-              <span className={classes.infoValue}>{info.queryRemarks}</span>
+              <span className={classes.infoValue}>
+                {queryRemarksLines.map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index !== queryRemarksLines.length - 1 && <br />}
+                  </span>
+                ))}
+              </span>
             </div>
           </div>
           <div className={classes.textArea}>
@@ -54,7 +62,7 @@ export default function AdditionalQuery({
               multiline
               minRows="3"
               InputProps={{
-                inputProps: { tabIndex: 0, maxLength: 1000, minLength: 100 }
+                inputProps: { tabIndex: 0, maxLength: 1000, minLength: 25 }
               }}
               onChange={ev => onChange(ev, info, setFieldValue)}
               component={Input}
