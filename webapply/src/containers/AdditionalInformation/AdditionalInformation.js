@@ -48,9 +48,11 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
     const arr = [];
     additionalDocumentDetailsForBPM.forEach(eachDoc => {
       const { DocUniqueID } = eachDoc;
-      const isFound = additionalDocumentDetailsFromBPM.find(
-        eachFile => eachFile.documentUniqueId === DocUniqueID
-      );
+      const isFound =
+        additionalDocumentDetailsFromBPM &&
+        additionalDocumentDetailsFromBPM.find(
+          eachFile => eachFile.documentUniqueId === DocUniqueID
+        );
       if (isFound) {
         arr.push(eachDoc);
       }
@@ -62,9 +64,9 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
     const arr = [];
     additionalInfoDetailsForBPM.forEach(eachDoc => {
       const { QueryUniqueID } = eachDoc;
-      const isFound = additionalInfoDetailsFromBPM.find(
-        eachFile => eachFile.queryUniqueID === QueryUniqueID
-      );
+      const isFound =
+        additionalInfoDetailsFromBPM &&
+        additionalInfoDetailsFromBPM.find(eachFile => eachFile.queryUniqueID === QueryUniqueID);
       if (isFound) {
         arr.push(eachDoc);
       }
