@@ -21,7 +21,12 @@ import { useViewId } from "../../../../utils/useViewId";
 
 import { useStyles } from "../styled";
 import { updateCompanyAdditionalInfoStatus } from "../../../../store/actions/additionalInfo";
-import { getAccordionStatuses, isFieldTouched } from "../../../../store/selectors/appConfig";
+import {
+  getAccordionStatuses,
+  getCompanyAdditionalInfo,
+  getSignatories,
+  isFieldTouched
+} from "../../../../store/selectors/appConfig";
 import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 import { Footer } from "../../../../components/Footer";
 import { updateProspect } from "../../../../store/actions/appConfig";
@@ -40,6 +45,11 @@ export const AddCompanyInformation = ({
   const dispatch = useDispatch();
   const accordionStatuses = useSelector(getAccordionStatuses);
   const statuses = JSON.parse(accordionStatuses);
+  const companyAdditionalInfoAddress = useSelector(getCompanyAdditionalInfo)?.addressInfo?.[0];
+  const stakeholderAdditionalInfoAddress = useSelector(getSignatories)?.[0]
+    ?.stakeholderAdditionalInfo?.residentialAddress;
+
+  const typeOfAddress = companyAdditionalInfoAddress?.typeOfAddress;
 
   const { companyAdditionalInfoStatus } = statuses;
 
@@ -97,6 +107,32 @@ export const AddCompanyInformation = ({
           // dispatch(updateCompanyAdditionalInfoStatus("completed"));
           statuses["companyAdditionalInfoStatus"] = "completed";
           dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+          if (typeOfAddress === "virtual") {
+            const {
+              addressLine1,
+              addressLine2,
+              poBox,
+              emirateCity
+            } = stakeholderAdditionalInfoAddress;
+            if (!addressLine1 && !addressLine2 && !poBox && !emirateCity) {
+              const {
+                addressLine1: compAddrss1,
+                addressLine2: compAddrss2,
+                poBox: compPobox,
+                emirateCity: compEmirateCity
+              } = companyAdditionalInfoAddress?.addressDetails[0];
+              const basePath =
+                "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
+              dispatch(
+                updateProspect({
+                  [`${basePath}.addressLine1`]: compAddrss1,
+                  [`${basePath}.addressLine2`]: compAddrss2,
+                  [`${basePath}.poBox`]: compPobox,
+                  [`${basePath}.emirateCity`]: compEmirateCity
+                })
+              );
+            }
+          }
           pushHistory(routes.additionalInfoComponent, true);
         }
       },
