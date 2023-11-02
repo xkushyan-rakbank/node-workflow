@@ -59,7 +59,7 @@
       "accountPurpose": "",
       "signingPreferences": "singly",
       "preferredLanguage": "",
-      "debitCardApplied": true,
+      "debitCardApplied": "",
       "chequeBookApplied": "",
       "accountwithoutChequebook": "",
       "eStatements": true,

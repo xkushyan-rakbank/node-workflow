@@ -238,7 +238,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     receiveInterest: "",
     signingPreferences: "singly",
     chequeBookApplied: "",
-    debitCardApplied: true,
+    debitCardApplied: "",
     nameOnDebitCard: "",
     statementsVia,
     preferredLanguage: "",
@@ -729,14 +729,16 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           classes={{ formControlRoot: classes.customLabel }}
                         />
                       )}
-                      <div className={classes.debitCardWrapper}>
-                        <DisclaimerNote
-                          className={classes.noteWrapper}
-                          text={
-                            "Note: In order to access our digital banking services, you are required to have a debit card associated with your account."
-                          }
-                        />
-                      </div>
+                      {!values.debitCardApplied && (
+                        <div className={classes.debitCardWrapper}>
+                          <DisclaimerNote
+                            className={classes.noteWrapper}
+                            text={
+                              "Note: In order to access our digital banking services, you are required to have a debit card associated with your account."
+                            }
+                          />
+                        </div>
+                      )}
                     </div>
                     <div className={classes.questionareWrapper}>
                       <label className={classes.sectionLabel}>
