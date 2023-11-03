@@ -380,7 +380,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             label="Mother's maiden name"
             component={Input}
             InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 100 }
+              inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
             }}
             disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
             showEditIcon={!displayFields?.mothersMaidenName ? true : false}
