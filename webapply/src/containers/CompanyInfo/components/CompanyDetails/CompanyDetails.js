@@ -9,6 +9,7 @@ import { getApplicantInfo, getCompanyDocuments } from "../../../../store/selecto
 import { ConfirmDialog } from "../../../../components/Modals";
 import useRedirectionUrl from "../../../../utils/useRedirectionUrl";
 import useDecisions from "../../../../utils/useDecisions";
+import { ALLOWED_CHAR_REGEX } from "../../../../utils/validation";
 
 export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,6 +112,7 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
           inputProps: { maxLength: MAX_COMPANY_FULL_NAME_LENGTH, tabIndex: 0 },
           onBlur: handleBlur
         }}
+        allowedCharRegex={ALLOWED_CHAR_REGEX}
       />
       <Field
         name="companyCategory"

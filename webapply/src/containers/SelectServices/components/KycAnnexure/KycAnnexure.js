@@ -35,7 +35,8 @@ import {
   REGISTRATION_NUMBER_REGEX,
   MAX_EXPERIENCE_YEARS_LENGTH,
   ALPHANUMERIC_ONLY_REGEX,
-  REMARK_RESON_REGEX
+  REMARK_RESON_REGEX,
+  ALLOWED_CHAR_REGEX
 } from "../../../../utils/validation";
 import { Subtitle } from "../../../../components/Subtitle";
 import { Divider } from "../Divider";
@@ -324,6 +325,7 @@ export const KycAnnexureComponent = ({
               InputProps={{
                 inputProps: { maxLength: EXPERIENCE_BUSINESS_MODAL_LENGTH, tabIndex: 0 }
               }}
+              allowedCharRegex={ALLOWED_CHAR_REGEX}
             />
           </Grid>
           <Divider />

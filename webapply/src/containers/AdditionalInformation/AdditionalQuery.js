@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useStyles } from "./styled";
 import { AutoSaveField as Field, Input } from "../../components/Form";
 import { updateAdditionalInfo } from "../../store/actions/appConfig";
+import { ALLOWED_CHAR_REGEX } from "../../utils/validation";
 
 export default function AdditionalQuery({
   additionalInfoDetailsFromBPM,
@@ -66,6 +67,7 @@ export default function AdditionalQuery({
               }}
               onChange={ev => onChange(ev, info, setFieldValue)}
               component={Input}
+              allowedCharRegex={ALLOWED_CHAR_REGEX}
               classes={{
                 formControlRoot: classes.customUrlLabel,
                 input: classes.textAreaStyle

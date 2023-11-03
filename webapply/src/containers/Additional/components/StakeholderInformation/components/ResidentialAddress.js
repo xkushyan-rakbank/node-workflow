@@ -15,7 +15,7 @@ import {
   POBoxNumberInput
 } from "../../../../../components/Form";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, POBOX_REGEX } from "../../../../../utils/validation";
+import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, ALLOWED_CHAR_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
 import {
   MAX_FLAT_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
@@ -214,6 +214,7 @@ export const ResidentialAddress = ({ id, refs }) => {
                       inputProps: { tabIndex: 1, maxLength: 50, showInLineError: true }
                     }}
                     component={Input}
+                    allowedCharRegex={ALLOWED_CHAR_REGEX}
                   />
                 </Grid>
                 <Grid item sm={6} xs={12}>
@@ -244,6 +245,7 @@ export const ResidentialAddress = ({ id, refs }) => {
                       inputProps: { tabIndex: 3, maxLength: 50, showInLineError: true }
                     }}
                     component={Input}
+                    allowedCharRegex={ALLOWED_CHAR_REGEX}
                   />
                 </Grid>
                 <Grid item sm={12} xs={12}>

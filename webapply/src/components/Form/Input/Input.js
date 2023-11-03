@@ -37,6 +37,7 @@ const InputBase = ({
   showEditIcon = false,
   iconColor = "grey",
   infoIcon,
+  allowedCharRegex,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -52,6 +53,23 @@ const InputBase = ({
     ? field.value.length
     : 0;
 
+  const handleSpecialCharacterKeyPress = (event, allowedCharRegex) => {
+    const hasDisAllowedCharacters = allowedCharRegex.test(event.key);
+
+    if (hasDisAllowedCharacters) {
+      event.preventDefault();
+    }
+  };
+
+  const handleSpecialCharacterPaste = (event, allowedCharRegex) => {
+    let paste = (event.clipboardData || window.clipboardData).getData("text");
+    const regex = new RegExp(allowedCharRegex, "g");
+    paste = paste.replace(regex, " ");
+
+    event.preventDefault();
+    document.execCommand("insertText", false, paste);
+  };
+
   return (
     <FormControl classes={{ root: classes.formControlRoot }}>
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps} placement={placement}>
@@ -64,6 +82,12 @@ const InputBase = ({
           placeholder={placeholder}
           disabled={isFieldEditable}
           error={!!isError}
+          onKeyPress={event =>
+            allowedCharRegex ? handleSpecialCharacterKeyPress(event, allowedCharRegex) : null
+          }
+          onPaste={event =>
+            allowedCharRegex ? handleSpecialCharacterPaste(event, allowedCharRegex) : null
+          }
           autoComplete={"off"}
           InputProps={{
             endAdornment: showEditIcon ? (

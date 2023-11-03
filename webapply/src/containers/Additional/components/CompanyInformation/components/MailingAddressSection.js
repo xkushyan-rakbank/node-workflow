@@ -26,7 +26,7 @@ import {
   MAX_FLAT_NUMBER_LENGTH,
   MAX_STREET_NUMBER_LENGTH
 } from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
-import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, POBOX_REGEX } from "../../../../../utils/validation";
+import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, ALLOWED_CHAR_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { getDocuments } from "../../../../../store/selectors/appConfig";
@@ -259,6 +259,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                           inputProps: { tabIndex: 2, maxLength: 50, showInLineError: true }
                         }}
                         component={Input}
+                        allowedCharRegex={ALLOWED_CHAR_REGEX}
                       />
                     )}
                     {typeOfAddress === "virtual" && (
@@ -273,6 +274,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                           inputProps: { tabIndex: 2, maxLength: 50, showInLineError: true }
                         }}
                         component={Input}
+                        allowedCharRegex={ALLOWED_CHAR_REGEX}
                       />
                     )}
                   </Grid>
@@ -305,6 +307,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                         inputProps: { tabIndex: 4, maxLength: 50, showInLineError: true }
                       }}
                       component={Input}
+                      allowedCharRegex={ALLOWED_CHAR_REGEX}
                     />
                   </Grid>
                   <Grid item sm={12} xs={12}>

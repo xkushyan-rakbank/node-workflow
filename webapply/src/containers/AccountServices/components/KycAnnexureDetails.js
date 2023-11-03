@@ -23,6 +23,7 @@ import { getDocuments, getSignatories } from "../../../store/selectors/appConfig
 import { VerificationDetailsList } from "./VerificationDetailsList";
 import { VisitDetailsList } from "./VisitDetailsList";
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
+import { ALLOWED_CHAR_REGEX } from "../../../utils/validation";
 
 export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
   const classes = useStyles();
@@ -251,6 +252,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             }}
             component={Input}
             classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
           />
         </Grid>
         <Grid item sm={12} xs={12}>
@@ -277,6 +279,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
             component={Input}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
             classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
           />
         </Grid>
@@ -292,6 +295,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
             component={Input}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
             classes={{ input: classes.textAreaStyle }}
           />
         </Grid>
@@ -306,6 +310,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: 5000 }
             }}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
             component={Input}
             classes={{ formControlRoot: classes.textAreaRoot, input: classes.textAreaStyle }}
           />
@@ -343,6 +348,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
               formControlRoot: classes.rmVerificationRemarksTextarea,
               input: classes.textAreaStyle
             }}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
           />
         </div>
         <VerificationDetailsList values={values} setFieldValue={setFieldValue} {...props} />

@@ -16,6 +16,7 @@ import { useStyles } from "../styled";
 import { ICONS, Icon } from "../../../components/Icons";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { DATE_FORMAT, DATE_TIME_FORMAT } from "../../../constants";
+import { ALLOWED_CHAR_REGEX } from "../../../utils/validation";
 
 export const VerificationDetailsList = ({ values, setFieldValue, ...props }) => {
   const classes = useStyles();
@@ -126,6 +127,7 @@ export const VerificationDetailsList = ({ values, setFieldValue, ...props }) => 
                         formControlRoot: classes.rmVerificationRemarksTextarea,
                         input: classes.textAreaStyle
                       }}
+                      allowedCharRegex={ALLOWED_CHAR_REGEX}
                     />
                   </Grid>
                 </Grid>

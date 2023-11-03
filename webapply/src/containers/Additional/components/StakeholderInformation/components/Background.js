@@ -24,7 +24,7 @@ import {
   getSignatories
 } from "../../../../../store/selectors/appConfig";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
-import { LINKEDIN_REGEX } from "../../../../../utils/validation";
+import { ALLOWED_CHAR_REGEX, LINKEDIN_REGEX } from "../../../../../utils/validation";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
 
@@ -263,6 +263,7 @@ export const Background = ({ id, refs }) => {
                 fieldDescription={
                   "Provide a summary of your employment and qualifications as relevant to your current position."
                 }
+                allowedCharRegex={ALLOWED_CHAR_REGEX}
                 classes={{ formControlRoot: classes.customUrlLabel, input: classes.textAreaStyle }}
               />
             </>

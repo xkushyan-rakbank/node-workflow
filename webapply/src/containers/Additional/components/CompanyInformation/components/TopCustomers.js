@@ -12,6 +12,7 @@ import { ErrorInfo } from "../../../../../components/InfoNote/ErrorInfo";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { BUSINESS_RELATIONSHIPS } from "../../../../../constants";
 import useDecisions from "../../../../../utils/useDecisions";
+import { ALLOWED_CHAR_REGEX } from "../../../../../utils/validation";
 
 export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...props }) => {
   const classes = useStyles();
@@ -104,6 +105,7 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
                       }}
                       component={Input}
                       classes={{ formControlRoot: classes.customLabel }}
+                      allowedCharRegex={ALLOWED_CHAR_REGEX}
                     />
                   </Grid>
                   <Grid item sm={6} xs={12} style={{ textAlign: "right" }}>

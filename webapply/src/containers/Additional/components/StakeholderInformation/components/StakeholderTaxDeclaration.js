@@ -24,7 +24,7 @@ import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../../store/selectors/appConfig";
-import { ALPHANUMERIC_ONLY_REGEX } from "../../../../../utils/validation";
+import { ALLOWED_CHAR_REGEX, ALPHANUMERIC_ONLY_REGEX } from "../../../../../utils/validation";
 
 const defaulatTaxDetails = {
   country: "",
@@ -319,6 +319,7 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
                                         }
                                       }}
                                       component={Input}
+                                      allowedCharRegex={ALLOWED_CHAR_REGEX}
                                     />
                                   </Grid>
                                 )}

@@ -10,6 +10,7 @@ import { useStyles } from "../../styled";
 import { BUSINESS_RELATIONSHIPS } from "../../../../../constants";
 import { updateProspect } from "../../../../../store/actions/appConfig";
 import useDecisions from "../../../../../utils/useDecisions";
+import { ALLOWED_CHAR_REGEX } from "../../../../../utils/validation";
 
 export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...props }) => {
   const classes = useStyles();
@@ -68,6 +69,7 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
                       inputProps: { maxLength: 255, tabIndex: 1, showInLineError: true }
                     }}
                     component={Input}
+                    allowedCharRegex={ALLOWED_CHAR_REGEX}
                     classes={{ formControlRoot: classes.customLabel }}
                   />
                 </Grid>

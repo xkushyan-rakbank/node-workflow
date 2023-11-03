@@ -39,7 +39,12 @@ import {
   getRequiredMessage,
   nameInvalidMessage
 } from "../../../utils/getValidationMessage";
-import { NAME_REGEX, EMIRATES_ID_REGEX, ALPHANUMERIC_REGEX } from "../../../utils/validation";
+import {
+  NAME_REGEX,
+  EMIRATES_ID_REGEX,
+  ALPHANUMERIC_REGEX,
+  ALLOWED_CHAR_REGEX
+} from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
 import { getDatalist, getProspect, getProspectId } from "../../../store/selectors/appConfig";
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
@@ -382,6 +387,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             InputProps={{
               inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
             }}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
             disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
             showEditIcon={!displayFields?.mothersMaidenName ? true : false}
             fieldDescription={"Enter Mother's maiden name as per your passport"}

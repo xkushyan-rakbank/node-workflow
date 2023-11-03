@@ -76,5 +76,6 @@ export const documentValidationSchema = Yup.object().shape({
 
 export const ADDRESS_REGEX = /^([a-zA-Z0-9.,@#%*()/ -])*$/;
 export const PARTNER_CODE_REGEX = /^([a-zA-Z0-9-/\s\\])*$/;
+export const ALLOWED_CHAR_REGEX = /[^A-Za-z0-9@#%*(),-._\/&?\s]+/;
 export const ADDRESS_VALIDATION_MESSAGE =
   "You can only use letters (A-Z, a-z),\nnumbers (0-9),\nspecial characters (., @ # % () /-)\nand spaces in this field.";

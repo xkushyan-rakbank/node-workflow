@@ -26,7 +26,7 @@ import {
   getROInvalidMessage,
   nameInvalidMessage
 } from "../../../utils/getValidationMessage";
-import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../utils/validation";
+import { ALLOWED_CHAR_REGEX, NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
@@ -292,6 +292,7 @@ export const ApplicantInfoComponent = ({
                     iconWidth={16}
                     iconHeight={16}
                     disabled={invitationParams?.company}
+                    allowedCharRegex={ALLOWED_CHAR_REGEX}
                   />
                 )}
                 {isConfigLoading ? (
