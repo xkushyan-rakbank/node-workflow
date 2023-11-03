@@ -122,6 +122,23 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
     []
   );
 
+  useEffect(() => {
+    if (values["isVisitConducted"] !== "yes") {
+      dispatch(updateProspect({ "prospect.kycAnnexure.visitDetails": null }));
+      setFieldValue("visitDetails", [
+        {
+          kycVisitDate: "",
+          kycVisitTime: "",
+          visitConductedBy: "",
+          visitConductedAt: "",
+          noticeToCounterfeit: "",
+          sisterCompanyTradeLicense: ""
+        }
+      ]);
+    }
+  }, [values["isVisitConducted"]]);
+
+  console.log(values["isVisitConducted"], values);
   return (
     <>
       <h4 className={classes.title}>General details</h4>
@@ -395,15 +412,17 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           />
         </div>
         {isError() && <ErrorInfo text={"You should add atleast one visit detail"} />}
-        <VisitDetailsList
-          values={values}
-          setFieldValue={setFieldValue}
-          kycAnnexureRadioHandler={kycAnnexureRadioHandler}
-          removeDoc={removeDoc}
-          handleDropFile={handleDropFile}
-          isUploading={isUploading}
-          {...props}
-        />
+        {values["isVisitConducted"] === "yes" && (
+          <VisitDetailsList
+            values={values}
+            setFieldValue={setFieldValue}
+            kycAnnexureRadioHandler={kycAnnexureRadioHandler}
+            removeDoc={removeDoc}
+            handleDropFile={handleDropFile}
+            isUploading={isUploading}
+            {...props}
+          />
+        )}
       </div>
     </>
   );

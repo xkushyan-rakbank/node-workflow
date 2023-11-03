@@ -275,7 +275,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     ],
     signatoryEIDinfo: "NA",
     signatoryEIDinfoReport: signatoryEIDinfoReportDocs[0] || "",
-    isVisitConducted: "NA",
+    isVisitConducted: kycAnnexureDetails?.isVisitConducted || "NA",
     visitDetails: (kycAnnexureDetails?.visitDetails?.length > 0 &&
       kycAnnexureDetails?.visitDetails) || [
       {
@@ -306,10 +306,14 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     chequeBookApplied: Yup.string().required("This field is required"),
     statementsVia: Yup.string().required("This field is required"),
     preferredLanguage: Yup.string().required("This field is required"),
-    mobileInstructions: Yup.string().required("This field is required"),
+    mobileInstructions: Yup.string()
+      .nullable()
+      .required("This field is required"),
     marketing: Yup.string().required("This field is required"),
     marketingChannelOptions: Yup.array().required(getRequiredMessage("Marketing Channel")),
-    surveys: Yup.string().required("This field is required"),
+    surveys: Yup.string()
+      .nullable()
+      .required("This field is required"),
     allianceCode: Yup.string()
       .nullable()
       .max(50, "Maximum 50 characters allowed")
