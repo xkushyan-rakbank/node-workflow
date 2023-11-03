@@ -21,6 +21,7 @@ import webToMobile from "./webToMobile";
 import termsAndConditions from "./termsAndConditions";
 import additionalInfo from "./additionalInfo";
 import applicantInfo from "./applicantInfo";
+import decisions from "./decisions";
 
 const reducers = history =>
   combineReducers({
@@ -45,7 +46,8 @@ const reducers = history =>
     webToMobile,
     termsAndConditions,
     additionalInfo,
-    applicantInfo
+    applicantInfo,
+    decisions
   });
 
 export default reducers;

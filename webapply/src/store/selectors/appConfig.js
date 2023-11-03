@@ -197,8 +197,6 @@ export const getCompanyAdditionalInfo = state => getProspect(state).companyAddit
 
 export const isFieldTouched = id => state => getProspect(state).fields?.[id]?.touched;
 
-export const isDecisionLoading = state => getAppConfig(state).decisionLoading;
-
 export const getAdditionalInfoDetailsFromBPM = state =>
   getProspect(state).notifyApplicationRequest?.additionalInfoDetailsFromBPM;
 

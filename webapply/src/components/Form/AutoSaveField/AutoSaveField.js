@@ -6,10 +6,11 @@ import isEqual from "lodash/isEqual";
 
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
-import { getDatalist, isDecisionLoading } from "../../../store/selectors/appConfig";
+import { getDatalist } from "../../../store/selectors/appConfig";
 import { OthersOption } from "../../../constants/options";
 import useDecisions from "../../../utils/useDecisions";
 import { OverlayLoader } from "../../Loader";
+import { isDecisionLoading } from "../../../store/selectors/decisions";
 
 export const AutoSaveField = ({
   isVisible = true,
