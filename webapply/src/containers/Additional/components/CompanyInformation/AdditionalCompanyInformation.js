@@ -109,31 +109,23 @@ export const AddCompanyInformation = ({
           // dispatch(updateCompanyAdditionalInfoStatus("completed"));
           statuses["companyAdditionalInfoStatus"] = "completed";
           dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
-          if (typeOfAddress === "virtual" && !isEmpty(stakeholderAdditionalInfoAddress)) {
+          if (typeOfAddress === "virtual" && !stakeholderAdditionalInfoAddress) {
             const {
-              addressLine1,
-              addressLine2,
-              poBox,
-              emirateCity
-            } = stakeholderAdditionalInfoAddress;
-            if (!addressLine1 && !addressLine2 && !poBox && !emirateCity) {
-              const {
-                addressLine1: compAddrss1,
-                addressLine2: compAddrss2,
-                poBox: compPobox,
-                emirateCity: compEmirateCity
-              } = companyAdditionalInfoAddress?.addressDetails[0];
-              const basePath =
-                "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
-              dispatch(
-                updateProspect({
-                  [`${basePath}.addressLine1`]: compAddrss1,
-                  [`${basePath}.addressLine2`]: compAddrss2,
-                  [`${basePath}.poBox`]: compPobox,
-                  [`${basePath}.emirateCity`]: compEmirateCity
-                })
-              );
-            }
+              addressLine1: compAddrss1,
+              addressLine2: compAddrss2,
+              poBox: compPobox,
+              emirateCity: compEmirateCity
+            } = companyAdditionalInfoAddress?.addressDetails[0];
+            const basePath =
+              "prospect.signatoryInfo[0].stakeholderAdditionalInfo.residentialAddress";
+            dispatch(
+              updateProspect({
+                [`${basePath}.addressLine1`]: compAddrss1,
+                [`${basePath}.addressLine2`]: compAddrss2,
+                [`${basePath}.poBox`]: compPobox,
+                [`${basePath}.emirateCity`]: compEmirateCity
+              })
+            );
           }
           pushHistory(routes.additionalInfoComponent, true);
         }

@@ -139,7 +139,6 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
     }
   }, [values["isVisitConducted"]]);
 
-  console.log(values["isVisitConducted"], values);
   return (
     <>
       <h4 className={classes.title}>General details</h4>
