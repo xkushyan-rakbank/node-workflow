@@ -390,7 +390,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       })
     )
   });
-  const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
+  const selectRadioBoolean = ({ values, setFieldValue, setFieldTouched }) => async event => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
     await setFieldValue(name, value);
@@ -733,7 +733,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                           classes={{ formControlRoot: classes.customLabel }}
                         />
                       )}
-                      {!values.debitCardApplied && (
+                      {values.debitCardApplied === false && (
                         <div className={classes.debitCardWrapper}>
                           <DisclaimerNote
                             className={classes.noteWrapper}
