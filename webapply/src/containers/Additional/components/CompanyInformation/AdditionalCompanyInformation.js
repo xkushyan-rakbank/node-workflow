@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
+
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
 
 import { useFormNavigation } from "../../../../components/FormNavigation/FormNavigationProvider";
@@ -107,7 +109,7 @@ export const AddCompanyInformation = ({
           // dispatch(updateCompanyAdditionalInfoStatus("completed"));
           statuses["companyAdditionalInfoStatus"] = "completed";
           dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
-          if (typeOfAddress === "virtual") {
+          if (typeOfAddress === "virtual" && !isEmpty(stakeholderAdditionalInfoAddress)) {
             const {
               addressLine1,
               addressLine2,
