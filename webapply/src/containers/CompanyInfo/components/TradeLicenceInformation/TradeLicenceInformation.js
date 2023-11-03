@@ -9,13 +9,9 @@ import {
   Input,
   DatePicker
 } from "../../../../components/Form";
-import {
-  blackListedAuthoritiesForUAE,
-  COUNTRY_CODE_UAE,
-  MAX_LICENSE_NUMBER_LENGTH
-} from "../../constants";
+import { MAX_LICENSE_NUMBER_LENGTH } from "../../constants";
 import { DATE_FORMAT } from "../../../../constants";
-import { isDecisionLoading } from "../../../../store/selectors/appConfig";
+import { isDecisionLoading } from "../../../../store/selectors/decisions";
 import { enableInputField } from "../../../../store/actions/decisions";
 
 export const TradeLicenceInformation = ({ values }) => {
