@@ -62,7 +62,8 @@ import {
   SCREENING_FAIL_REASONS,
   applicationError,
   AGE_RESTRICTION,
-  NEXT
+  NEXT,
+  AUTO
 } from "../../constants";
 import { setScreeningError } from "../actions/sendProspectToAPI";
 import routes from "../../routes";
@@ -362,8 +363,16 @@ export function* setLivelinessData({ payload }) {
       livelinessData.data,
       livelinessData.datahash
     );
+    const acceptedTimeStamp = new Date().toISOString();
     // adding this to clear already saved (if any) editedfullname
-    yield put(updateProspect({ "prospect.signatoryInfo[0].editedFullName": "" }));
+    yield put(
+      updateProspect({
+        "prospect.signatoryInfo[0].editedFullName": "",
+        "prospect.signatoryInfo[0].eFRCompletedTimestamp": acceptedTimeStamp
+      })
+    );
+
+    yield put(sendProspectToAPI(AUTO));
 
     yield put(validateIdentitySuccess());
     if (filteredlicenseIssuingAuthority?.length) {

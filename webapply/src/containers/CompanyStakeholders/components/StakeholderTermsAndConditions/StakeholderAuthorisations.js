@@ -41,7 +41,6 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {
           ...signatoryInfo[0]?.consentInfo,
-          efrConsent: { accept: true, timestamp: acceptedTimeStamp },
           aecbConsent: { accept: true, timestamp: acceptedTimeStamp },
           ftsConsent: { accept: true, timestamp: acceptedTimeStamp },
           norblocConsent: { accept: true, timestamp: acceptedTimeStamp }

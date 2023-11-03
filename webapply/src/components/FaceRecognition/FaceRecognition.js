@@ -133,7 +133,8 @@ export const FaceRecognition = ({
   const [openWarning, setOpenWarning] = useState(false);
   const [loading, setLoading] = useState(false);
   const pushHistory = useTrackingHistory();
-  const isEFRCompletedTimestampAvailable = useSelector(getSignatories)?.[0]?.eFRCompletedTimestamp;
+  const signatoryInfo = useSelector(getSignatories);
+  const isEFRConsentDone = signatoryInfo?.[0]?.consentInfo?.efrConsent?.accept;
   const {
     isLoading,
     isLivenessCheckReady,
@@ -203,10 +204,14 @@ export const FaceRecognition = ({
     if (!isLivenessCheckReady) {
       return;
     }
-    if (!isEFRCompletedTimestampAvailable) {
+    if (!isEFRConsentDone) {
+      const acceptedTimeStamp = new Date().toISOString();
       dispatch(
         updateProspect({
-          "prospect.signatoryInfo[0].eFRCompletedTimestamp": new Date().toISOString()
+          "prospect.signatoryInfo[0].consentInfo.efrConsent": {
+            accept: true,
+            timestamp: acceptedTimeStamp
+          }
         })
       );
     }
