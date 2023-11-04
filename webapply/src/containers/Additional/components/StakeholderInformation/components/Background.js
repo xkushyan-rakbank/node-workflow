@@ -140,6 +140,8 @@ export const Background = ({ id, refs }) => {
       innerRef={backgroundFormRef}
     >
       {({ touched, setTouched, setFieldValue, values, isValid, errors }) => {
+        const IsValidForm = backgroundSchema.isValidSync(values);
+
         const isBackgroundDetailsEmpty =
           values?.backgroundInfo?.length === 0 &&
           values?.linkedInURL?.length === 0 &&
@@ -148,7 +150,7 @@ export const Background = ({ id, refs }) => {
         return (
           <Accordion
             title={"Professional background"}
-            isCompleted={isValid}
+            isCompleted={IsValidForm}
             id={id}
             classes={{
               accordionSummaryContent: classes.additionalInfoAccordionSummaryContent,
