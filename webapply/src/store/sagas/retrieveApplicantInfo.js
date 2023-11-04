@@ -128,7 +128,7 @@ export function* getProspectIdInfo({ payload }) {
           yield put(
             termsAndConditionsAccepted({
               kfs: signatoryDetails.consentInfo?.kfsConsent?.accept,
-              authorisation: signatoryDetails.consentInfo?.efrConsent?.accept,
+              authorisation: signatoryDetails.consentInfo?.aecbConsent?.accept,
               generalTCs: signatoryDetails.consentInfo?.otherTncConsent?.accept
             })
           );
