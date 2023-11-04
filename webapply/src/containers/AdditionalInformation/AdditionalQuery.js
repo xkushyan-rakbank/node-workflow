@@ -23,8 +23,8 @@ export default function AdditionalQuery({
   const requestedFromBPM = useSelector(getAdditionalInfoDetailsFromBPM);
 
   const filterRequestedAdditionalInfoDetailsForBPM = useMemo(() => {
-    const arr = requestedFromBPM.map(info => info.queryUniqueID);
-    return additionalInfoDetailsForBPM.filter(info => arr.includes(info.QueryUniqueID));
+    const arr = requestedFromBPM && requestedFromBPM.map(info => info.queryUniqueID) || [];
+    return additionalInfoDetailsForBPM && additionalInfoDetailsForBPM.filter(info => arr.includes(info.QueryUniqueID));
   }, [requestedFromBPM, additionalInfoDetailsForBPM]);
 
   const onChange = useCallback((ev, info, setFieldValue) => {
