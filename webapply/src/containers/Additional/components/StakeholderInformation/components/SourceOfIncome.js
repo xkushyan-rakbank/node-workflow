@@ -23,6 +23,7 @@ import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../../../CompanyInfo/constants"
 import { getDocuments, getSignatories } from "../../../../../store/selectors/appConfig";
 import { useFindDocument } from "../../../../../utils/useFindDocument";
 import { updateProspect } from "../../../../../store/actions/appConfig";
+import { ALLOWED_CHAR_REGEX } from "../../../../../utils/validation";
 
 const TextMask = ({ inputRef, ...rest }) => (
   <PatternFormat
@@ -383,6 +384,7 @@ export const SourceOfIncome = ({ id, refs }) => {
                           inputProps: { tabIndex: 1 }
                         }}
                         component={Input}
+                        allowedCharRegex={ALLOWED_CHAR_REGEX}
                       />
                     </Grid>
                     <Grid item sm={12} xs={12}>
