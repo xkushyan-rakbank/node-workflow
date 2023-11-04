@@ -269,7 +269,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         kycVerificationDate: "",
         kycVerificationTime: "",
         verificationConductedBy: "",
-        verificationStatus: "SATF",
+        verificationStatus: "",
         verificationRemarks: ""
       }
     ],
