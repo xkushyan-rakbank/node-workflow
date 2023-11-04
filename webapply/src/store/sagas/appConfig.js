@@ -26,7 +26,6 @@ import {
   getProspect,
   getLeadSource,
   getRoCode,
-  getAdditionalInfoDetailsForBPM,
   getAccordionStatuses
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
@@ -99,10 +98,10 @@ export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   }
 }
 
-function* updateAdditionInfo({ payload: { newInfo, additionalInfoDetailsForBPMSetCurrentReq } }) {
+function* updateAdditionInfo({ payload: { newInfo, filterRequestedAdditionalInfoDetailsForBPM } }) {
   try {
     // Create a copy of the original array
-    const updatedInfoBPM = [...additionalInfoDetailsForBPMSetCurrentReq];
+    const updatedInfoBPM = [...filterRequestedAdditionalInfoDetailsForBPM];
 
     // Check if a matching QueryUniqueID exists in updatedInfoBPM
     const existingIndex = updatedInfoBPM.findIndex(

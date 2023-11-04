@@ -1,10 +1,14 @@
-import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useCallback, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useStyles } from "./styled";
 import { AutoSaveField as Field, Input } from "../../components/Form";
 import { updateAdditionalInfo } from "../../store/actions/appConfig";
 import { ALLOWED_CHAR_REGEX } from "../../utils/validation";
+import {
+  getAdditionalInfoDetailsForBPM,
+  getAdditionalInfoDetailsFromBPM
+} from "../../store/selectors/appConfig";
 
 export default function AdditionalQuery({
   additionalInfoDetailsFromBPM,
@@ -15,6 +19,14 @@ export default function AdditionalQuery({
   const classes = useStyles();
   const dispatch = useDispatch();
 
+  const additionalInfoDetailsForBPM = useSelector(getAdditionalInfoDetailsForBPM);
+  const requestedFromBPM = useSelector(getAdditionalInfoDetailsFromBPM);
+
+  const filterRequestedAdditionalInfoDetailsForBPM = useMemo(() => {
+    const arr = requestedFromBPM.map(info => info.queryUniqueID);
+    return additionalInfoDetailsForBPM.filter(info => arr.includes(info.QueryUniqueID));
+  }, [requestedFromBPM, additionalInfoDetailsForBPM]);
+
   const onChange = useCallback((ev, info, setFieldValue) => {
     const { name, value } = ev.target;
     setFieldValue(name, value);
@@ -23,7 +35,7 @@ export default function AdditionalQuery({
       QueryResponse: value
     };
     if (!errors[name]) {
-      dispatch(updateAdditionalInfo({ newInfo, additionalInfoDetailsForBPMSetCurrentReq }));
+      dispatch(updateAdditionalInfo({ newInfo, filterRequestedAdditionalInfoDetailsForBPM }));
     }
   }, []);
 
