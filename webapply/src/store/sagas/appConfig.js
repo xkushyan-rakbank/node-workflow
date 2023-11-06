@@ -26,7 +26,9 @@ import {
   getProspect,
   getLeadSource,
   getRoCode,
-  getAccordionStatuses
+  getAdditionalInfoDetailsForBPM,
+  getAccordionStatuses,
+  getAdditionalInfoDetailsFromBPM
 } from "../selectors/appConfig";
 import { log } from "../../utils/loggger";
 
@@ -98,24 +100,31 @@ export function* updateViewIdSaga({ payload: { viewId, isSendToApi } }) {
   }
 }
 
-function* updateAdditionInfo({ payload: { newInfo, filterRequestedAdditionalInfoDetailsForBPM } }) {
+function* updateAdditionInfo({ payload }) {
   try {
+    const additionalInfoDetailsForBPM = yield select(getAdditionalInfoDetailsForBPM);
+
+    const requestedFromBPM = yield select(getAdditionalInfoDetailsFromBPM);
+    const arr = requestedFromBPM.map(info => info.queryUniqueID);
+    const filterRequestedAdditionalInfoDetailsForBPM = additionalInfoDetailsForBPM.filter(info =>
+      arr.includes(info.QueryUniqueID)
+    );
     // Create a copy of the original array
     const updatedInfoBPM = [...filterRequestedAdditionalInfoDetailsForBPM];
 
     // Check if a matching QueryUniqueID exists in updatedInfoBPM
     const existingIndex = updatedInfoBPM.findIndex(
-      info => info.QueryUniqueID === newInfo.QueryUniqueID
+      info => info.QueryUniqueID === payload.QueryUniqueID
     );
 
     if (existingIndex !== -1) {
       // If it exists, update the QueryResponse in the copy
-      updatedInfoBPM[existingIndex].QueryResponse = newInfo.QueryResponse;
+      updatedInfoBPM[existingIndex].QueryResponse = payload.QueryResponse;
     } else {
       // If it doesn't exist, add a new object to the copy
       updatedInfoBPM.push({
-        QueryUniqueID: newInfo.QueryUniqueID,
-        QueryResponse: newInfo.QueryResponse
+        QueryUniqueID: payload.QueryUniqueID,
+        QueryResponse: payload.QueryResponse
       });
     }
     yield put(
