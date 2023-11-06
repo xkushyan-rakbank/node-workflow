@@ -22,6 +22,8 @@ export const getIsRecaptchaEnable = state =>
   process.env.REACT_APP_RECAPTCHA_ENABLE?.toLowerCase() === "y" ||
   getAppConfig(state).recaptchaEnable;
 
+export const getFreeFieldsInfo = state => getProspect(state).freeFieldsInfo || {};
+
 export const getServicePricingGuideUrl = state => getAppConfig(state).servicePricingGuideUrl;
 
 export const getAuthToken = state => getAppConfig(state).authorizationToken;

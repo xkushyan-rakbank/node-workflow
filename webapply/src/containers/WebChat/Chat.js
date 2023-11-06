@@ -5,15 +5,22 @@ import get from "lodash/get";
 import { Chat as WebChatComponent } from "@rakbank/web-chat";
 
 import { useWebChatState } from "./hooks/useWebChatState";
-import { getApplicantInfo } from "../../store/selectors/appConfig";
+import { getApplicantInfo, getFreeFieldsInfo } from "../../store/selectors/appConfig";
 import { getSearchResults } from "../../store/selectors/searchProspect";
-
 import { ClosedChat } from "./components/ClosedChat";
 import { Portal } from "./components/Portal";
 import { useStyles } from "./styled";
 import { Header } from "./components/Header";
 
-const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, email }) => {
+const ChatComponent = ({
+  className,
+  searchResults,
+  freeField,
+  name,
+  mobileNo,
+  countryCode,
+  email
+}) => {
   const classes = useStyles();
   const closedChatRef = useRef(null);
   const [{ isOpened, isClosed, isMinimized }, dispatch] = useWebChatState();
@@ -61,6 +68,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
                   apiPath: process.env.REACT_APP_CHAT_API_PATH
                 }}
                 Header={Header}
+                //language={freeField === "" || freeField === "true" ? "en" : "ar"}
               />
             </Suspense>
           </div>
@@ -72,6 +80,7 @@ const ChatComponent = ({ className, searchResults, name, mobileNo, countryCode, 
 
 const mapStateToProps = state => ({
   searchResults: getSearchResults(state),
+  freeField: getFreeFieldsInfo(state).freeField3,
   name: getApplicantInfo(state).fullName,
   mobileNo: getApplicantInfo(state).mobileNo,
   countryCode: getApplicantInfo(state).countryCode,
