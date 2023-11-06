@@ -546,9 +546,13 @@ export function* uploadDocuments({ payload }) {
       let valueToUpdate;
       if (pathToUpdate === "companyDocuments") {
         pathToUpdate = "prospect.documents";
+        const currentDocList = get(prospect, "documents") || {};
         valueToUpdate = {
-          isCompanyDocUpdate: true,
-          companyDocuments: uploadedDocuments
+          ...currentDocList,
+          ...{
+            isCompanyDocUpdate: true,
+            companyDocuments: uploadedDocuments
+          }
         };
       } else if (pathToUpdate === "otherDocuments") {
         pathToUpdate = "prospect.documents";
