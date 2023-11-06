@@ -184,11 +184,11 @@ export const CompanyInfo = ({
     const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", null);
     companyInfoForm.current.setFieldValue(
       "prospect.organizationInfo.industryMultiSelect.industry",
-      industry[0]
+      industry && industry[0]
     );
     companyInfoForm.current.setFieldValue(
       "prospect.organizationInfo.industryMultiSelect.subCategory",
-      subCategory[0]
+      subCategory && subCategory[0]
     );
   }, [companyInfoForm, orgDetails]);
 
