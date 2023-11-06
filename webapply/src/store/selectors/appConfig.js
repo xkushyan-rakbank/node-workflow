@@ -18,7 +18,9 @@ export const getOrganizationInfoModel = state => getAppConfig(state).organizatio
 
 export const getReCaptchaSiteKey = state => getAppConfig(state).reCaptchaSiteKey;
 
-export const getIsRecaptchaEnable = state => getAppConfig(state).recaptchaEnable;
+export const getIsRecaptchaEnable = state =>
+  process.env.REACT_APP_RECAPTCHA_ENABLE?.toLowerCase() === "y" ||
+  getAppConfig(state).recaptchaEnable;
 
 export const getServicePricingGuideUrl = state => getAppConfig(state).servicePricingGuideUrl;
 

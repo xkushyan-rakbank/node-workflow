@@ -14,7 +14,7 @@ export const ReCaptchaNotRobot = ({
 
   useEffect(() => {
     reCaptchaId.current = grecaptcha.render(rootRef.current, {
-      sitekey: reCaptchaSiteKey || PUB_KEY,
+      sitekey: PUB_KEY || reCaptchaSiteKey,
       size: "normal",
       callback: onVerify,
       "expired-callback": onExpired,
