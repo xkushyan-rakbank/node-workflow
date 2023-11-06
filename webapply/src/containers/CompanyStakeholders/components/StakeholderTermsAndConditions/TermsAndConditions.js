@@ -12,6 +12,7 @@ import {
 } from "../../../../store/actions/termsAndConditions";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { formattedAccTimeStamp } from "../../../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
@@ -39,7 +40,7 @@ export const TermsAndConditions = ({ wcmData }) => {
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {
           ...signatoryInfo[0].consentInfo,
-          otherTncConsent: { accept: true, timestamp: new Date().toISOString() }
+          otherTncConsent: { accept: true, timestamp: formattedAccTimeStamp(new Date()) }
         }
       })
     );

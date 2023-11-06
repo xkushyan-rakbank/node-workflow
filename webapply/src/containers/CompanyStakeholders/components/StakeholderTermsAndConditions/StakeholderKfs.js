@@ -12,6 +12,7 @@ import {
 } from "../../../../store/actions/termsAndConditions";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { formattedAccTimeStamp } from "../../../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 export const StakeholderKfs = ({ wcmData, setConsent }) => {
   const classes = useStyles();
@@ -41,7 +42,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
       updateProspect({
         "prospect.signatoryInfo[0].consentInfo": {
           ...signatoryInfo[0]?.consentInfo,
-          kfsConsent: { accept: true, timestamp: new Date().toISOString() }
+          kfsConsent: { accept: true, timestamp: formattedAccTimeStamp(new Date()) }
         }
       })
     );

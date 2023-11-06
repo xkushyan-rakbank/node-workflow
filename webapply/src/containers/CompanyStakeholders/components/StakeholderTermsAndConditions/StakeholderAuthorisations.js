@@ -12,6 +12,7 @@ import {
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
 import { updateProspect } from "../../../../store/actions/appConfig";
 import { getSignatories } from "../../../../store/selectors/appConfig";
+import { formattedAccTimeStamp } from "../../../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
@@ -32,8 +33,8 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     setKfsDialog(false);
   };
 
-  const acceptedTimeStamp = new Date().toISOString();
-
+  const acceptedTimeStamp = formattedAccTimeStamp(new Date());
+  
   const handleAccept = () => {
     setKfsDialog(false);
     dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "AUTH_CONSENT"));
