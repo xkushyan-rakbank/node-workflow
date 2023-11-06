@@ -49,6 +49,8 @@ export const VisitDetailsList = ({
     return counterfeit === "COMP" || counterfeit === "SHOP" || counterfeit === "SISC";
   };
 
+  const isSisterCompany = visitConductedAt => visitConductedAt === "SISC";
+
   const addVisitDetails = (arrayHelpers, arrayLength) => {
     arrayHelpers.insert(arrayLength, {
       kycVisitDate: "",
@@ -139,7 +141,6 @@ export const VisitDetailsList = ({
                         component={SelectAutocomplete}
                       />
                     </Grid>
-
                     {isCounterfeitProductQuestionVisible(
                       values.visitDetails[index].visitConductedAt
                     ) && (
@@ -165,43 +166,45 @@ export const VisitDetailsList = ({
                         </div>
                       </Grid>
                     )}
-                    <Grid item sm={12} xs={12} style={{ marginBottom: "10px" }}>
-                      <Field
-                        name={`visitDetails[${index}].sisterCompanyTradeLicense`}
-                        type="file"
-                        fieldDescription="Upload sister company Trade License"
-                        helperText={SUPPORTED_FILE_FORMAT_TEXT}
-                        accept={TL_ACCEPTED_FILE_TYPES}
-                        fileSize={TL_COI_FILE_SIZE}
-                        component={Upload}
-                        mobilecontentPlaceholder={"Upload your file"}
-                        file={values.visitDetails[index]?.sisterCompanyTradeLicense}
-                        onDrop={acceptedFile =>
-                          handleDropFile(
-                            acceptedFile,
-                            `visitDetails[${index}].sisterCompanyTradeLicense`,
-                            props.touched,
-                            props.setTouched,
-                            setFieldValue,
-                            index
-                          )
-                        }
-                        isUploading={
-                          isUploading[`visitDetails[${index}].sisterCompanyTradeLicense`]
-                        }
-                        content={values.visitDetails[index]?.sisterCompanyTradeLicense}
-                        onDelete={() => {
-                          removeDoc(
-                            index,
-                            values,
-                            `visitDetails[${index}].sisterCompanyTradeLicense`,
-                            values.visitDetails[index].sisterCompanyTradeLicense,
-                            values.visitDetails.length,
-                            setFieldValue
-                          );
-                        }}
-                      />
-                    </Grid>
+                    {isSisterCompany(values.visitDetails[index].visitConductedAt) && (
+                      <Grid item sm={12} xs={12} style={{ marginBottom: "10px" }}>
+                        <Field
+                          name={`visitDetails[${index}].sisterCompanyTradeLicense`}
+                          type="file"
+                          fieldDescription="Upload sister company Trade License"
+                          helperText={SUPPORTED_FILE_FORMAT_TEXT}
+                          accept={TL_ACCEPTED_FILE_TYPES}
+                          fileSize={TL_COI_FILE_SIZE}
+                          component={Upload}
+                          mobilecontentPlaceholder={"Upload your file"}
+                          file={values.visitDetails[index]?.sisterCompanyTradeLicense}
+                          onDrop={acceptedFile =>
+                            handleDropFile(
+                              acceptedFile,
+                              `visitDetails[${index}].sisterCompanyTradeLicense`,
+                              props.touched,
+                              props.setTouched,
+                              setFieldValue,
+                              index
+                            )
+                          }
+                          isUploading={
+                            isUploading[`visitDetails[${index}].sisterCompanyTradeLicense`]
+                          }
+                          content={values.visitDetails[index]?.sisterCompanyTradeLicense}
+                          onDelete={() => {
+                            removeDoc(
+                              index,
+                              values,
+                              `visitDetails[${index}].sisterCompanyTradeLicense`,
+                              values.visitDetails[index].sisterCompanyTradeLicense,
+                              values.visitDetails.length,
+                              setFieldValue
+                            );
+                          }}
+                        />
+                      </Grid>
+                    )}
                   </Grid>
                 </div>
                 {values.visitDetails.length > 1 && index > 0 && (
