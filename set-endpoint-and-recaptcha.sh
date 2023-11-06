@@ -58,7 +58,7 @@ then
         echo 'REACT_APP_CHAT_API_PATH=https://quickapplyuat.rakbank.ae:8888/genesys/cometd' >> webapply/.env.production
         echo 'REACT_APP_AD_APPKEY=EUM-AAD-RVT' >>webapply/.env.production
         echo 'REACT_APP_AD_URL=https://conv.rakbankonline.ae/uatappd/cowebapply' >>webapply/.env.production
-        echo 'REACT_APP_RECAPTCHA_ENABLE=Y' >> webapply/.env.production
+        echo 'REACT_APP_RECAPTCHA_ENABLE=N' >> webapply/.env.production
         echo 'REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY=6LdCogkdAAAAAKzmT7nPJhw8CuWVtjishbrKBcfy' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=N' >> webapply/.env.production
         echo 'REACT_APP_RAKBANK_KYC_API_PATH=https://quickapplyuat.rakbank.ae:8888/digitalbank/rakbank-kyc' >> webapply/.env.production
