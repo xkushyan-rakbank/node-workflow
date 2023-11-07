@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from "react";
 
-const PUB_KEY = process.env.REACT_APP_RECAPTCHA_NOT_ROBOT_PUBLIC_KEY || " ";
-
 export const ReCaptchaNotRobot = ({
   grecaptcha,
   reCaptchaSiteKey,
@@ -14,7 +12,7 @@ export const ReCaptchaNotRobot = ({
 
   useEffect(() => {
     reCaptchaId.current = grecaptcha.render(rootRef.current, {
-      sitekey: reCaptchaSiteKey || PUB_KEY,
+      sitekey: process.env.REACT_APP_RECAPTCHA_SITE_KEY || reCaptchaSiteKey,
       size: "normal",
       callback: onVerify,
       "expired-callback": onExpired,
