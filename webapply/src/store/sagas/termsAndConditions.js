@@ -1,5 +1,8 @@
 import { all, call, put, select, takeLatest } from "redux-saga/effects";
+import { startCase } from "lodash";
+
 import { log } from "../../utils/loggger";
+
 import {
   SEND_CUSTOMER_CONSENT_TO_CPF,
   SEND_KFS_MAIL,
@@ -22,7 +25,7 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
     const headers = yield select(getAuthorizationHeader);
     headers.headers["client-id"] = "WBA";
     const signatories = yield select(getSignatories);
-    const customerName = signatories[0].editedFullName;
+    const customerName = startCase(signatories[0].editedFullName.toLowerCase());
     const individualId = signatories[0].signatoryId;
 
     const customerEmailAddress = yield select(getApplicantEmail);
