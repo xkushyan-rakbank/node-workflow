@@ -351,6 +351,7 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
                                           }}
                                           component={Input}
                                           classes={{ input: classes.textAreaStyle }}
+                                          allowedCharRegex={ALLOWED_CHAR_REGEX}
                                         />
                                       </Grid>
                                     )}
