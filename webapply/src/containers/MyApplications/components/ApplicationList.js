@@ -46,35 +46,41 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
               </div>,
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 {ctaStatuses[app.status.statusNotes] ? (
-                  <>
-                    <WhiteContainedButton
-                      disabled={app.status.reasonCode === STATUS_LOCKED}
-                      label={ctaStatuses[app.status.statusNotes].buttonText}
-                      handleClick={() => getProspectInfo(app.prospectId)}
-                      isDisplayLoader={loadingProspectId === app.prospectId}
-                    />
-                    {/* <div className={classes.hint}>
-                      {ctaStatuses[app.status.statusNotes].mobileStatus}
-                    </div> */}
-                  </>
+                   <>
+                   {app.status.statusType == "WI_NOT_SUBMITTED" ? (
+                     <span>{notCtaStatuses[app.status.statusType]}</span>
+                   ) : (
+                     <WhiteContainedButton
+                       disabled={app.status.reasonCode === STATUS_LOCKED}
+                       label={ctaStatuses[app.status.statusNotes].buttonText}
+                       handleClick={() => getProspectInfo(app.prospectId)}
+                       isDisplayLoader={loadingProspectId === app.prospectId}
+                     />
+                   )}
+
+                   {/* <div className={classes.hint}>
+                     {ctaStatuses[app.status.statusNotes].mobileStatus}
+                   </div> */}
+                 </>
                 ) : (
                   <span>{notCtaStatuses[app.status.statusNotes]}</span>
                 )}
               </div>
             ]
           : [
-              <div key="status" className={classes.oneThirdWidth}>
-                <span className={classes.listStatus}>Incomplete</span>
-              </div>,
+            <div key="status" className={classes.oneThirdWidth}>
+              <span className={classes.listStatus}>Incomplete</span>
+            </div>
+            ,
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 <WhiteContainedButton
                   label="Finish Application"
                   handleClick={() => getProspectInfo(app.prospectId)}
                 />
                 {/* <div className={classes.hint}>
-                  {ctaStatuses[app.status.statusNotes].mobileStatus}
-                </div> */}
-              </div>
+              {ctaStatuses[app.status.statusNotes].mobileStatus}
+            </div> */}
+              </div>       
             ]}
       </div>
     </div>
