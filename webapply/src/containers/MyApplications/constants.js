@@ -8,7 +8,8 @@ export const notCtaStatuses = {
   "Account activated": "Ready for transaction",
   Declined: "Criteria not met",
   Ineligible: "We will call you soon",
-  NoStatusYet: "We will call you soon"
+  NoStatusYet: "We will call you soon",
+  WI_NOT_SUBMITTED: "We will call you soon",
 };
 
 export const ctaStatuses = {

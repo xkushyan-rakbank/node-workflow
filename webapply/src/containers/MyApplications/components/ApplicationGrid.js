@@ -45,12 +45,17 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
         </Typography>
         {app.status
           ? [
+            <>
               <div key="status" className={classes.status}>
                 {app.status.statusNotes}
               </div>,
               <div key="action" className={classes.blockAction}>
                 {ctaStatuses[app.status.statusNotes] ? (
                   <>
+                   {app.status.statusType == "WI_NOT_SUBMITTED" ? (
+                     <span>{notCtaStatuses[app.status.statusType]}</span>
+                   ) : (
+                    <>
                     <WhiteContainedButton
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
@@ -60,6 +65,8 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
                     <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}
                     </div>
+                    </>
+                   )}
                   </>
                 ) : (
                   notCtaStatuses[app.status.statusNotes] && (
@@ -69,8 +76,9 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
                   )
                 )}
               </div>
+              </>
             ]
-          : [
+          : [ 
               <div key="status" className={classes.status}>
                 Incomplete
               </div>,
@@ -83,6 +91,7 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
                   {ctaStatuses[app.status.statusNotes].mobileStatus}
                 </div>
               </div>
+
             ]}
       </div>
     </div>
