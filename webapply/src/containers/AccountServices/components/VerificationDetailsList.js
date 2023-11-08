@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Fragment } from "react";
 import { useDispatch } from "react-redux";
 import { FieldArray } from "formik";
@@ -96,7 +97,7 @@ export const VerificationDetailsList = ({ values, setFieldValue, ...props }) => 
                       placeholder="Verification conducted by"
                       component={Input}
                       InputProps={{
-                        inputProps: { tabIndex: 0 }
+                        inputProps: { tabIndex: 0, maxLength: 80 }
                       }}
                     />
                   </Grid>

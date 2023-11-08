@@ -127,7 +127,7 @@ export const VisitDetailsList = ({
                         placeholder="Visit conducted by"
                         component={Input}
                         InputProps={{
-                          inputProps: { tabIndex: 0 }
+                          inputProps: { tabIndex: 0, maxLength: 80 }
                         }}
                       />
                     </Grid>
