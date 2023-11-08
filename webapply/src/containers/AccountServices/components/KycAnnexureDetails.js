@@ -83,6 +83,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
 
   const handleDropFile = useCallback(
     (acceptedFiles, name, touched, setTouched, setFieldValue, index) => {
+      let documentName = name.indexOf(".") > 0 ? name.split(".")[1] : name;
       const file = acceptedFiles[0];
       setIsUploading(false);
       if (file) {
@@ -93,7 +94,7 @@ export const KycAnnexureDetails = ({ values, setFieldValue, ...props }) => {
           uploadDocuments({
             docs: [file],
             otherDocuments: {
-              documentType: file.type,
+              documentType: `KYC Annexure ${documentName}`,
               documentTitle: name
             },
             documentSection: "kycAnnexureDocuments",
