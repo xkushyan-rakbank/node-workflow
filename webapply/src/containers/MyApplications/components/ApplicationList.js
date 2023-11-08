@@ -47,16 +47,12 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 {ctaStatuses[app.status.statusNotes] ? (
                    <>
-                   {app.status.statusType == "WI_NOT_SUBMITTED" ? (
-                     <span>{notCtaStatuses[app.status.statusType]}</span>
-                   ) : (
                      <WhiteContainedButton
                        disabled={app.status.reasonCode === STATUS_LOCKED}
                        label={ctaStatuses[app.status.statusNotes].buttonText}
                        handleClick={() => getProspectInfo(app.prospectId)}
                        isDisplayLoader={loadingProspectId === app.prospectId}
                      />
-                   )}
 
                    {/* <div className={classes.hint}>
                      {ctaStatuses[app.status.statusNotes].mobileStatus}
