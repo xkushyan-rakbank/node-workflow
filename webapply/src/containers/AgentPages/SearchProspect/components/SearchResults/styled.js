@@ -116,7 +116,7 @@ export const useStyles = makeStyles({
     [theme.breakpoints.up("sm")]: {
       gap: "unset",
       alignItems: "center",
-      flexFlow: "unset",
+      flexFlow: "unset"
     }
   },
   preview: {
@@ -163,7 +163,10 @@ export const useStyles = makeStyles({
     flexDirection: "column",
     gap: "1rem",
     flexWrap: "wrap",
-    maxWidth: "8.9375rem"
+    maxWidth: "100%",
+    [theme.breakpoints.up("sm")]: {
+      maxWidth: "8.9375rem"
+    }
   },
   appDetailsHeader: {
     color: "#000",
@@ -178,7 +181,8 @@ export const useStyles = makeStyles({
     fontStyle: "normal",
     fontWeight: "400",
     lineHeight: "1.25rem",
-    whiteSpace: "pre-wrap"
+    width: "100%",
+    wordWrap: "break-word"
   },
   applicationDetails: {
     flex: "1"
