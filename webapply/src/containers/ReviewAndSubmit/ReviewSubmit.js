@@ -133,7 +133,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
     value => {
       if (value) {
         const fixedValue = parseFloat(value).toFixed(2);
-        let numberX = fixedValue.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        let numberX = parseFloat(fixedValue).toLocaleString();
         return numberX;
       }
     },
