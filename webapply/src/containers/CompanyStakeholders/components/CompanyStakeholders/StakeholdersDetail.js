@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import cx from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   stakeholderWrapper: {
     display: "flex",
     alignItems: "center",
     [theme.breakpoints.down("sm")]: {
-      paddingTop: "30px",
-    },
+      paddingTop: "30px"
+    }
   },
   nameInitialWrapper: {
     display: "flex",
@@ -29,14 +29,15 @@ const useStyles = makeStyles((theme) => ({
       height: "32px",
       width: "32px",
       minWidth: "32px",
-      lineHeight: "unset",
-    },
+      lineHeight: "unset"
+    }
   },
   detailWrapper: {
     display: "flex",
     textAlign: "left",
     flexDirection: "column",
     marginLeft: "16px",
+    wordBreak: "break-word",
     "& h5": {
       fontSize: "16px",
       fontWeight: 500,
@@ -46,8 +47,8 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
       [theme.breakpoints.up("sm")]: {
         fontSize: "20px",
-        lineHeight: "28px",
-      },
+        lineHeight: "28px"
+      }
     },
     "& p": {
       fontSize: "14px",
@@ -55,9 +56,9 @@ const useStyles = makeStyles((theme) => ({
       color: "#757575",
       lineHeight: "20px",
       margin: 0,
-      marginTop: "4px",
-    },
-  },
+      marginTop: "4px"
+    }
+  }
 }));
 const StakeholdersDetail = ({
   className,
