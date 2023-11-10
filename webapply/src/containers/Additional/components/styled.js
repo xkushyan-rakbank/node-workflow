@@ -31,7 +31,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: contentWidth,
       padding: "24px",
-      flexDirection: "row",
+      flexDirection: "row"
     },
     border: "1px solid #CCCCCC",
     background: "#FFFFFF",
@@ -93,7 +93,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "1rem",
     [theme.breakpoints.up("sm")]: {
       lineHeight: "unset",
-      height: "45px",
+      height: "45px"
     }
   },
   btnAdd: {
@@ -108,7 +108,7 @@ export const useStyles = makeStyles(theme => ({
     position: "absolute",
     [theme.breakpoints.up("sm")]: {
       alignSelf: "unset",
-      position: "unset",
+      position: "unset"
     }
   },
   completedWrapper: {
@@ -141,13 +141,13 @@ export const useStyles = makeStyles(theme => ({
     color: "#332600",
     width: "auto",
     minWidth: "69px",
-    padding: "2px 5px", 
+    padding: "2px 5px",
     borderRadius: "10px",
     alignItems: "center",
     gap: "4px",
     fontWeight: 500,
-    [theme.breakpoints.up("sm")]:{
-      padding: "8px",
+    [theme.breakpoints.up("sm")]: {
+      padding: "8px"
     }
   },
   additionalCompanyInfoContainer: {
@@ -184,6 +184,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "28px",
     textAlign: "left",
     marginBottom: "24px",
+    wordBreak: "break-word",
     [theme.breakpoints.up("sm")]: {
       fontSize: "20px",
       lineHeight: "24px"
@@ -193,9 +194,9 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "10px",
     padding: "0px",
     border: "unset",
-    [theme.breakpoints.up("sm")]:{
+    [theme.breakpoints.up("sm")]: {
       padding: "24px",
-      border: "1px solid #E6E6E6", 
+      border: "1px solid #E6E6E6"
     }
   },
   sectionLabel: {
@@ -489,6 +490,6 @@ export const useStyles = makeStyles(theme => ({
       fill: "#757575",
       width: "14px",
       height: "14px"
-    },
+    }
   }
 }));
