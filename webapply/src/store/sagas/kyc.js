@@ -78,6 +78,7 @@ import { resetFormStep } from "../actions/sendProspectToAPI";
 import { updateProspect } from "../actions/appConfig";
 import { getAgentId, getRoCode } from "../selectors/loginSelector";
 import { sendProspectToAPI } from "../actions/sendProspectToAPI";
+import { formattedAccTimeStamp } from "../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 const individualId = "SID1";
 
@@ -363,7 +364,7 @@ export function* setLivelinessData({ payload }) {
       livelinessData.data,
       livelinessData.datahash
     );
-    const acceptedTimeStamp = new Date().toISOString();
+    const acceptedTimeStamp = formattedAccTimeStamp(new Date());
     // adding this to clear already saved (if any) editedfullname
     yield put(
       updateProspect({
