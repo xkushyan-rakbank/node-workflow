@@ -2,7 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 
 import { WhiteContainedButton } from "./WhiteContainedButton";
-import { ctaStatuses, notCtaStatuses, RO_LABEL } from "../constants";
+import { ctaStatuses, notCtaStatuses, RO_LABEL, BPM_TIMEOUT } from "../constants";
 import { INCOMPLETE, STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
 
 import { useStyles } from "./styled";
@@ -51,7 +51,11 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
               </div>,
               <div key="action" className={classes.blockAction}>
                 {ctaStatuses[app.status.statusNotes] ? (
-                  <>   
+                  <>
+                   {app.status.statusType == BPM_TIMEOUT ? (
+                     <span>{notCtaStatuses[app.status.statusType]}</span>
+                   ) : (
+                    <>
                     <WhiteContainedButton
                       disabled={app.status.reasonCode === STATUS_LOCKED}
                       label={ctaStatuses[app.status.statusNotes].buttonText}
@@ -61,6 +65,8 @@ export const ApplicationGrid = ({ getProspectInfo, applicantInfo = [], loadingPr
                     <div className={classes.hint}>
                       {ctaStatuses[app.status.statusNotes].mobileStatus}
                     </div>
+                    </>
+                   )}
                   </>
                 ) : (
                   notCtaStatuses[app.status.statusNotes] && (
