@@ -2,14 +2,14 @@ export const LIST_VIEW = "list";
 
 export const GRID_VIEW = "grid";
 export const RO_LABEL = "The contact details of your sales officer";
-
+export const BPM_TIMEOUT = "BPM_TIMEOUT"
 export const notCtaStatuses = {
   Assessing: "We will call you soon",
   "Account activated": "Ready for transaction",
   Declined: "Criteria not met",
   Ineligible: "We will call you soon",
   NoStatusYet: "We will call you soon",
-  WI_NOT_SUBMITTED: "We will call you soon",
+  BPM_TIMEOUT: "We will call you soon"
 };
 
 export const ctaStatuses = {

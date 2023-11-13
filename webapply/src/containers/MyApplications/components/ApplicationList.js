@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 
-import { ctaStatuses, notCtaStatuses, RO_LABEL } from "../constants";
+import { ctaStatuses, notCtaStatuses, RO_LABEL, BPM_TIMEOUT } from "../constants";
 import { getTitleForAccountType } from "../utils";
 import { WhiteContainedButton } from "./WhiteContainedButton";
 import { INCOMPLETE, STATUS_LOCKED } from "../../AgentPages/SearchedAppInfo/constants";
@@ -47,7 +47,7 @@ export const ApplicationList = ({ getProspectInfo, applicantInfo = [], loadingPr
               <div className={cx(classes.action, classes.oneThirdWidth)} key="action">
                 {ctaStatuses[app.status.statusNotes] ? (
                    <>
-                   {app.status.statusType == "WI_NOT_SUBMITTED" ? (
+                   {app.status.statusType == BPM_TIMEOUT ? (
                      <span>{notCtaStatuses[app.status.statusType]}</span>
                    ) : (
                      <WhiteContainedButton
