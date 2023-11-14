@@ -97,7 +97,9 @@ export const SourceOfIncome = ({ id, refs }) => {
       }
     ),
     IBANType: Yup.string().when("showSOF", (showSOF, schema) => {
-      return showSOF ? schema.required(getRequiredMessage("IBAN type")) : schema.nullable();
+      return showSOF
+        ? schema.nullable().required(getRequiredMessage("IBAN type"))
+        : schema.nullable();
     }),
     IBAN: Yup.string().when(["IBANType", "showSOF"], (IBANType, showSOF, schema) => {
       return IBANType !== "NOIB" && showSOF

@@ -58,7 +58,7 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
 
   const initialValues = {
     taxDetails: taxDetails || [defaulatTaxDetails],
-    taxesInAnotherCountry: "no"
+    taxesInAnotherCountry: ""
   };
 
   const createStakeholderTaxRadioHandler = ({ values, setFieldValue, index }, event) => {
@@ -101,7 +101,8 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
 
   const stakeholderTaxInfoSchema = Yup.object().shape({
     taxesInAnotherCountry: Yup.string()
-      .required()
+      .nullable()
+      .required("Do you pay taxes in another country is required")
       .oneOf(["yes", "no"], "Do you pay taxes in another country is required"),
     taxDetails: Yup.array().when("taxesInAnotherCountry", {
       is: "yes",
