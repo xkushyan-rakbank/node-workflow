@@ -13,19 +13,20 @@ import { MAX_LICENSE_NUMBER_LENGTH } from "../../constants";
 import { DATE_FORMAT } from "../../../../constants";
 import { isDecisionLoading } from "../../../../store/selectors/decisions";
 import { enableInputField } from "../../../../store/actions/decisions";
+import { getOrganizationInfo } from "../../../../store/selectors/appConfig";
 
 export const TradeLicenceInformation = ({ values }) => {
   const countryOfIncorporationRef = useRef();
   const waitingForDecision = useSelector(isDecisionLoading);
+  const orgDetails = useSelector(getOrganizationInfo) || {};
   const dispatch = useDispatch();
   const changeDateProspectHandler = (_, value, path) =>
     isValid(value) && { [path]: format(value, DATE_FORMAT) };
-
   useEffect(() => {
-    if (values.licenseIssuingAuthority === "") {
+    if (values.licenseIssuingAuthority === "" && !orgDetails.licenseIssuingAuthority) {
       dispatch(enableInputField("prospect.organizationInfo.countryOfIncorporation"));
     }
-  }, [values.licenseIssuingAuthority]);
+  }, [values.licenseIssuingAuthority, orgDetails.licenseIssuingAuthority]);
 
   return (
     <>
