@@ -23,7 +23,7 @@ import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components
 import { useStyles } from "../../styled";
 import { getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { updateProspect } from "../../../../../store/actions/appConfig";
-import { getSignatories } from "../../../../../store/selectors/appConfig";
+import { getIsIslamicBanking, getSignatories } from "../../../../../store/selectors/appConfig";
 import { ALLOWED_CHAR_REGEX, ALPHANUMERIC_ONLY_REGEX } from "../../../../../utils/validation";
 
 const defaulatTaxDetails = {
@@ -41,7 +41,7 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
 
   const basePath = "prospect.signatoryInfo[0].stakeholderAdditionalInfo";
   const signatories = useSelector(getSignatories);
-
+  const isIslamic = useSelector(getIsIslamicBanking);
   const taxDetails = useMemo(() => {
     if (!signatories[0]?.stakeholderAdditionalInfo?.taxDetails) {
       return null;
@@ -207,7 +207,11 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
                 </div>
                 <DisclaimerNote
                   className={classes.noteWrapper}
-                  text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support"
+                  text={`${
+                    !isIslamic ? "RAKBANK" : "RAKislamic"
+                  } cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform ${
+                    !isIslamic ? "RAKBANK" : "RAKislamic"
+                  } within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support`}
                 />
                 <div className={classes.taxDeclarationQuestionare}>
                   <label className={classes.sectionLabel}>

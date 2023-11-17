@@ -776,9 +776,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       accordionSummaryContentExpanded: classes.accordionSummaryContentExpanded,
                       accordionDetails: classes.accordionDetails
                     }}
-                    expandedDescription={
-                      "Stay connected with RAKBANK and get access to personalised updates and offers."
-                    }
+                    expandedDescription={`Stay connected with ${
+                      !isIslamic ? "RAKBANK" : "RAKislamic"
+                    } and get access to personalised updates and offers.`}
                     accordionRef={communicationRef}
                   >
                     <div className={classes.questionareWrapper}>

@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useSelector } from "react-redux";
 
 import { Accordion } from "../../../../../components/Accordion/CustomAccordion";
 import { useStyles } from "../../styled";
@@ -9,6 +10,7 @@ import { ActivePassiveOptions, YesNoList } from "../../../../../constants/option
 import { AutoSaveField as Field, InlineRadioGroup } from "../../../../../components/Form";
 import TermsAndConditionsDialog from "../../../../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
 import useDecisions from "../../../../../utils/useDecisions";
+import { getIsIslamicBanking } from "../../../../../store/selectors/appConfig";
 
 // eslint-disable-next-line react/display-name
 export const TaxDeclarationsSection = forwardRef(({ id, refs }) => {
@@ -16,6 +18,7 @@ export const TaxDeclarationsSection = forwardRef(({ id, refs }) => {
   const [openDefinitionDialog, setOpenDefinitionDialog] = useState(false);
   const { visible: dnfbpFieldVisible } = useDecisions("prospect.companyAdditionalInfo.dnfbpField");
   const { taxDeclarationFormRef, taxDeclarationAccordionRef } = refs;
+  const isIslamic = useSelector(getIsIslamicBanking);
 
   const definitionContext = (
     <a
@@ -105,7 +108,11 @@ export const TaxDeclarationsSection = forwardRef(({ id, refs }) => {
                 </div>
                 <DisclaimerNote
                   className={classes.noteWrapper}
-                  text="RAKBANK cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform RAKBANK within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support"
+                  text={`${
+                    !isIslamic ? "RAKBANK" : "RAKislamic"
+                  } cannot offer advice on your tax status or classification. False/incorrect information submitted may lead to enforcement/penal action by the relevant authorities. If any information/tax status provided on this form changes, you must inform ${
+                    !isIslamic ? "RAKBANK" : "RAKislamic"
+                  } within 30 days of such a change and provide a suitably updated Self-Certification Form within 90 days of such change in circumstances. You may contact a professional tax advisor for further support`}
                 />
                 {dnfbpFieldVisible && (
                   <div className={classes.taxDeclarationQuestionare}>
