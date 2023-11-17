@@ -78,22 +78,22 @@ export const accountTitles = {
 export const AccountDetails = {
   [accountNames.starter]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACNS3",
-      [ISLAMIC]: "GCNS4"
+      [CONVENTIONAL]: "ACFP3",
+      [ISLAMIC]: "GCFP4"
     },
     isElite: false
   },
   [accountNames.currentAccount]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACNS6",
-      [ISLAMIC]: "GCNS2"
+      [CONVENTIONAL]: "ACFP6",
+      [ISLAMIC]: "GCFP1"
     },
     isElite: false
   },
   [accountNames.elite]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACNS6",
-      [ISLAMIC]: "GCAP1"
+      [CONVENTIONAL]: "ACFP6",
+      [ISLAMIC]: "GCFP1"
     },
     isElite: true
   }
@@ -890,4 +890,3 @@ export const CHAT_INFO = {
   PLEASE_CALL_AR: "يرجى الاتصال على",
   PHONE_NUM: "04 213 0000"
 };
-
