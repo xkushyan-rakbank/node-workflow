@@ -78,22 +78,22 @@ export const accountTitles = {
 export const AccountDetails = {
   [accountNames.starter]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACFP3",
-      [ISLAMIC]: "GCFP4"
+      [CONVENTIONAL]: "ACNS3",
+      [ISLAMIC]: "GCNS4"
     },
     isElite: false
   },
   [accountNames.currentAccount]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACFP6",
-      [ISLAMIC]: "GCFP1"
+      [CONVENTIONAL]: "ACNS6",
+      [ISLAMIC]: "GCNS2"
     },
     isElite: false
   },
   [accountNames.elite]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACFP6",
-      [ISLAMIC]: "GCFP1"
+      [CONVENTIONAL]: "ACNS6",
+      [ISLAMIC]: "GCAP1"
     },
     isElite: true
   }
