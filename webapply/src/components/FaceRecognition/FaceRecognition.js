@@ -26,6 +26,7 @@ import routes from "../../routes";
 import { ConfirmDialog } from "../Modals";
 import { ReactComponent as Loader } from "./../../assets/icons/loader.svg";
 import { updateProspect } from "../../store/actions/appConfig";
+import { formattedAccTimeStamp } from "../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 const localizedMessagesLiveness = {
   record_button: "Record",
@@ -205,7 +206,7 @@ export const FaceRecognition = ({
       return;
     }
     if (!isEFRConsentDone) {
-      const acceptedTimeStamp = new Date().toISOString();
+      const acceptedTimeStamp = formattedAccTimeStamp(new Date());
       dispatch(
         updateProspect({
           "prospect.signatoryInfo[0].consentInfo.efrConsent": {
