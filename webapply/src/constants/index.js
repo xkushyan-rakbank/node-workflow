@@ -92,7 +92,7 @@ export const AccountDetails = {
   },
   [accountNames.elite]: {
     subProductCode: {
-      [CONVENTIONAL]: "ACNS6",
+      [CONVENTIONAL]: "ACNS6-DBO",
       [ISLAMIC]: "GCAP1"
     },
     isElite: true
