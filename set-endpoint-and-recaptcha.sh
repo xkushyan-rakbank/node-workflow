@@ -135,11 +135,12 @@ then
         echo 'REACT_APP_RECAPTCHA_SITE_KEY=6Lfmr78UAAAAAInMv7VFRHt3Ppe52o6AYbKVsY8o' >> webapply/.env.production
         echo 'REACT_APP_ENCRYPTION_ENABLE=Y' >> webapply/.env.production
         echo 'REACT_APP_RAKBANK_KYC_API_PATH=https://quickapply.rakbank.ae/digitalbank/rakbank-kyc' >> webapply/.env.production
-        echo 'REACT_APP_WCM_PATH=https://revamp.rakbank.ae' >> webapply/.env.production
-        echo 'REACT_APP_WCM_API_PATH=https://revamp.rakbank.ae' >> webapply/.env.production
+        echo 'REACT_APP_WCM_PATH=https://rakbank.ae' >> webapply/.env.production
+        echo 'REACT_APP_WCM_API_PATH=https://rakbank.ae' >> webapply/.env.production
         echo 'REACT_APP_WTM_SCHEDULER_INTERVAL=5000' >> webapply/.env.production
         echo 'REACT_APP_DISABLE_GTM=false' >> webapply/.env.production
         echo 'REACT_APP_BAU_URL=quickapply.rakbank.ae' >> webapply/.env.production
+        echo 'GENERATE_SOURCEMAP=false' >> webapply/.env.production
 else
     exit 1
 fi
