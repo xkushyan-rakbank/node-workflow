@@ -8,8 +8,6 @@ import {
   personaSelectionRoutes
 } from "../../../constants";
 
-export const BBG = process.env.REACT_APP_SERVER_ENV === "production" ? "/digitalbank" : "";
-
 export const getTitleByPathname = (pathname, accountType) => {
   if (detailedAccountRoutes.includes(pathname))
     return get(accountsInfo, [accountType, "title"], "");
@@ -21,14 +19,14 @@ export const getTitleByPathname = (pathname, accountType) => {
     return "Open your account in a few simple steps.";
 
   return {
-    [`${BBG}${routes.MyApplications}`]: "Your  applications, at a glance",
-    [`${BBG}${routes.comeBackLogin}`]: "Good to see you back!",
-    [`${BBG}${routes.comeBackLoginVerification}`]: "Confirm that it's you",
-    [`${BBG}${routes.verifyOtp}`]: "Confirm that it's you",
-    [`${BBG}${routes.ApplicationSubmitted}`]: "That's it. You're done!",
-    [`${BBG}${routes.congratulations}`]: "That's it. You're done!",
-    [`${BBG}${routes.reUploadDocuments}`]: "Upload your documents",
-    [`${BBG}${routes.quickapplyLanding}`]: "All businesses start with an account. Get yours now."
+    [`${routes.MyApplications}`]: "Your  applications, at a glance",
+    [`${routes.comeBackLogin}`]: "Good to see you back!",
+    [`${routes.comeBackLoginVerification}`]: "Confirm that it's you",
+    [`${routes.verifyOtp}`]: "Confirm that it's you",
+    [`${routes.ApplicationSubmitted}`]: "That's it. You're done!",
+    [`${routes.congratulations}`]: "That's it. You're done!",
+    [`${routes.reUploadDocuments}`]: "Upload your documents",
+    [`${routes.quickapplyLanding}`]: "All businesses start with an account. Get yours now."
     //[routes.quickapplyLanding]: "Welcome to Quick Apply!"
   }[pathname];
 };
