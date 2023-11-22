@@ -104,15 +104,7 @@ const localizedMessagesLiveness = {
   error_upload_unknown: "Error: Unable to process the file."
 };
 
-const livenessChecklist = [
-  //"SMILE",
-  "CLOSE_EYES_AND_OPEN"
-  // "TURN_HEAD_TO_LEFT",
-  //"TURN_HEAD_TO_RIGHT",
-  // "ZOOM_OUT",
-  // "ZOOM_IN",
-  //"RAISE_HEAD_UP",
-];
+const livenessChecklist = ["CLOSE_EYES_AND_OPEN", "TURN_HEAD_TO_LEFT", "TURN_HEAD_TO_RIGHT"];
 
 export const FaceRecognition = ({
   fieldDescription,
