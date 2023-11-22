@@ -59,7 +59,7 @@ export const TopSuppliers = ({ topSuppliers, values, errors, setFieldValue, ...p
           <>
             {values?.topSuppliers?.map((item, index) => (
               <Grid container spacing={3} key={index} style={{ marginBottom: "20px" }}>
-                <Grid item sm={6} xs={12}>
+                <Grid item sm={6} xs={12} style={{ marginBottom: "10px" }}>
                   <Field
                     name={`topSuppliers[${index}].name`}
                     label={"Supplier name"}

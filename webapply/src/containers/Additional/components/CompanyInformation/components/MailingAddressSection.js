@@ -304,7 +304,11 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
                       }
                       placeholder="Street or location"
                       InputProps={{
-                        inputProps: { tabIndex: 4, maxLength: 50, showInLineError: true }
+                        inputProps: {
+                          tabIndex: 4,
+                          maxLength: MAX_STREET_NUMBER_LENGTH,
+                          showInLineError: true
+                        }
                       }}
                       component={Input}
                       allowedCharRegex={ALLOWED_CHAR_REGEX}

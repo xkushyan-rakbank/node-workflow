@@ -242,7 +242,11 @@ export const ResidentialAddress = ({ id, refs }) => {
                     label="Street or location"
                     placeholder="Street or location"
                     InputProps={{
-                      inputProps: { tabIndex: 3, maxLength: 50, showInLineError: true }
+                      inputProps: {
+                        tabIndex: 3,
+                        maxLength: MAX_STREET_NUMBER_LENGTH,
+                        showInLineError: true
+                      }
                     }}
                     component={Input}
                     allowedCharRegex={ALLOWED_CHAR_REGEX}

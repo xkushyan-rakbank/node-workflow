@@ -94,7 +94,7 @@ export const TopCustomers = ({ topCustomers, values, errors, setFieldValue, ...p
             <Grid container spacing={3} style={{ marginBottom: "20px" }}>
               {values.topCustomers.map((item, index) => (
                 <Fragment key={index}>
-                  <Grid item sm={6} xs={12}>
+                  <Grid item sm={6} xs={12} style={{ marginBottom: "10px" }}>
                     <Field
                       name={`topCustomers[${index}].name`}
                       label={"Customer name"}
