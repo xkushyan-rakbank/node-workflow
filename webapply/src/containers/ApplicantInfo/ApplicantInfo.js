@@ -51,8 +51,9 @@ export const ApplicantInfoContainer = ({
     resetScreeningError();
   }, [resetScreeningError]);
 
+  const shouldRedirect = !invitationParams && (!persona || !accountType);
+
   useEffect(() => {
-    const shouldRedirect = !invitationParams && (!persona || !accountType);
     if (shouldRedirect) {
       pushHistory(routes.quickapplyLanding);
     }
@@ -170,24 +171,26 @@ export const ApplicantInfoContainer = ({
   }, [setToken]);
 
   return (
-    <ApplicantInfoComponent
-      onSubmit={onSubmit}
-      //ro-assist-brd3-16
-      partnerInfo={findInDataList()}
-      isConfigLoading={isConfigLoading}
-      isRecaptchaEnable={isRecaptchaEnable}
-      reCaptchaSiteKey={reCaptchaSiteKey}
-      reCaptchaToken={reCaptchaToken}
-      isDisableNextstep={dataListCheck()}
-      handleReCaptchaVerify={handleReCaptchaVerify}
-      handleVerifiedFailed={handleVerifiedFailed}
-      isIslamicBanking={isIslamicBanking}
-      isLoading={isLoading}
-      accountType={accountType}
-      roCode={roCode}
-      isLemniskEnable={isLemniskEnable}
-      persona={prospect.applicantInfo?.persona}
-      invitationParams={invitationParams}
-    />
+    !shouldRedirect && (
+      <ApplicantInfoComponent
+        onSubmit={onSubmit}
+        //ro-assist-brd3-16
+        partnerInfo={findInDataList()}
+        isConfigLoading={isConfigLoading}
+        isRecaptchaEnable={isRecaptchaEnable}
+        reCaptchaSiteKey={reCaptchaSiteKey}
+        reCaptchaToken={reCaptchaToken}
+        isDisableNextstep={dataListCheck()}
+        handleReCaptchaVerify={handleReCaptchaVerify}
+        handleVerifiedFailed={handleVerifiedFailed}
+        isIslamicBanking={isIslamicBanking}
+        isLoading={isLoading}
+        accountType={accountType}
+        roCode={roCode}
+        isLemniskEnable={isLemniskEnable}
+        persona={prospect.applicantInfo?.persona}
+        invitationParams={invitationParams}
+      />
+    )
   );
 };
