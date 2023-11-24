@@ -8,13 +8,14 @@ import { OtpChannel, UAE_CODE } from "../../constants";
 import { setOtpMode } from "../../store/actions/otp";
 import routes from "../../routes";
 import { updateProspect } from "../../store/actions/appConfig";
-import { getApplicantInfo } from "../../store/selectors/appConfig";
+import { getAppConfigLoading, getApplicantInfo } from "../../store/selectors/appConfig";
 import { resetLogin } from "../../store/actions/loginForm";
 
 export function EFRInvitation({ generateOtpCode }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
+  const isAppConfigLoading = useSelector(getAppConfigLoading);
 
   const searchParams = new URLSearchParams(location.search);
   const { mobileNo } = useSelector(getApplicantInfo);
@@ -24,6 +25,9 @@ export function EFRInvitation({ generateOtpCode }) {
   }, []);
 
   useEffect(() => {
+    if (isAppConfigLoading) {
+      return;
+    }
     const prospectId = searchParams.get("prospectId");
     const mode = searchParams.get("mode");
     const mobileNumber = searchParams.get("mobileNo");
@@ -51,7 +55,7 @@ export function EFRInvitation({ generateOtpCode }) {
         () => {}
       );
     }
-  }, [searchParams, mobileNo]);
+  }, [searchParams, mobileNo, isAppConfigLoading]);
 
   return <Loader loading={true} />;
 }
