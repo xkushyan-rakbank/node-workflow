@@ -56,7 +56,13 @@ apiClient.interceptors.request.use(config => {
 });
 
 apiClient.interceptors.request.use(config => {
-  if (encryptionEnabled && rsaPublicKey && ENCRYPT_METHODS.includes(config.method.toLowerCase())) {
+  let isWTMUrl = config?.url?.includes("webToMobile");
+  if (
+    encryptionEnabled &&
+    rsaPublicKey &&
+    ENCRYPT_METHODS.includes(config.method.toLowerCase()) &&
+    !isWTMUrl
+  ) {
     const [encryptedPayload, encryptedSymKey, symKey] = encrypt(
       rsaPublicKey,
       JSON.stringify(config.data)
