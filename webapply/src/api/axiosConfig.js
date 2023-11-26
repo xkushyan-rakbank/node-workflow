@@ -57,11 +57,13 @@ apiClient.interceptors.request.use(config => {
 
 apiClient.interceptors.request.use(config => {
   let isWTMUrl = config?.url?.includes("webToMobile");
+  let isCPFurl = config?.url?.includes("cpf");
   if (
     encryptionEnabled &&
     rsaPublicKey &&
     ENCRYPT_METHODS.includes(config.method.toLowerCase()) &&
-    !isWTMUrl
+    !isWTMUrl &&
+    !isCPFurl
   ) {
     const [encryptedPayload, encryptedSymKey, symKey] = encrypt(
       rsaPublicKey,
