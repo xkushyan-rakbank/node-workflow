@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Button, CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import useGeneratePdf from "./useGeneratePdf";
-import {
-  sendCustomerConsentToCPF,
-  termsAndConditionsAccepted
-} from "../../../../store/actions/termsAndConditions";
+import { sendCustomerConsentToCPF } from "../../../../store/actions/termsAndConditions";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
-import { updateProspect } from "../../../../store/actions/appConfig";
-import { getSignatories } from "../../../../store/selectors/appConfig";
-import { formattedAccTimeStamp } from "../../../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
@@ -23,8 +17,15 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     true
   );
   const { termsAndConditions } = useSelector(getTermsAndConditions);
-  const signatoryInfo = useSelector(getSignatories);
+  const [isAuthorizationProgress, setAuthorizationProgress] = useState(
+    termsAndConditions?.authorisation
+  );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setAuthorizationProgress(termsAndConditions?.authorisation);
+  }, [termsAndConditions?.authorisation]);
+
   const openKFSModal = () => {
     setKfsDialog(true);
   };
@@ -33,26 +34,10 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     setKfsDialog(false);
   };
 
-  const acceptedTimeStamp = formattedAccTimeStamp(new Date());
-  
   const handleAccept = () => {
     setKfsDialog(false);
+    setAuthorizationProgress(true);
     dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "AUTH_CONSENT"));
-    dispatch(
-      updateProspect({
-        "prospect.signatoryInfo[0].consentInfo": {
-          ...signatoryInfo[0]?.consentInfo,
-          aecbConsent: { accept: true, timestamp: acceptedTimeStamp },
-          ftsConsent: { accept: true, timestamp: acceptedTimeStamp },
-          norblocConsent: { accept: true, timestamp: acceptedTimeStamp }
-        }
-      })
-    );
-    dispatch(
-      termsAndConditionsAccepted({
-        authorisation: true
-      })
-    );
   };
   return (
     <>
@@ -80,7 +65,15 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           className={!termsAndConditions.authorisation ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
         >
-          {!termsAndConditions.authorisation ? "Read and accept" : "Accepted"}
+          {!termsAndConditions.authorisation ? (
+            !isAuthorizationProgress ? (
+              "Read and accept"
+            ) : (
+              <CircularProgress size={14} value={null} color="#fff" />
+            )
+          ) : (
+            "Accepted"
+          )}
         </Button>
       </div>
       <TermsAndConditionsDialog

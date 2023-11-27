@@ -19,6 +19,8 @@ import {
 } from "../selectors/appConfig";
 import { cpfCustomerConsent, kfsAcknowledgement } from "../../api/apiClient";
 import { AccountDetails, CONVENTIONAL, ISLAMIC } from "../../constants";
+import { updateProspect } from "../actions/appConfig";
+import { formattedAccTimeStamp } from "../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
 
 export function* sendKfsMail({ payload: { docModificationInfo } }) {
   try {
@@ -58,8 +60,21 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
         kfs: true
       })
     );
+    yield put(
+      updateProspect({
+        "prospect.signatoryInfo[0].consentInfo": {
+          ...signatories[0]?.consentInfo,
+          kfsConsent: { accept: true, timestamp: formattedAccTimeStamp(new Date()) }
+        }
+      })
+    );
   } catch (error) {
     log(error);
+    yield put(
+      termsAndConditionsAccepted({
+        kfs: false
+      })
+    );
   }
 }
 
@@ -84,8 +99,53 @@ export function* sendCustomerConsentToCPF({ payload: { docModificationInfo, cons
       docModificationInfo
     };
     yield call(cpfCustomerConsent.send, body, headers);
+    const acceptedTimeStamp = formattedAccTimeStamp(new Date());
+    if (consentType === "TNC_CONSENT") {
+      yield put(
+        updateProspect({
+          "prospect.signatoryInfo[0].consentInfo": {
+            ...signatories[0].consentInfo,
+            otherTncConsent: { accept: true, timestamp: acceptedTimeStamp }
+          }
+        })
+      );
+      yield put(
+        termsAndConditionsAccepted({
+          generalTCs: true
+        })
+      );
+    } else {
+      yield put(
+        updateProspect({
+          "prospect.signatoryInfo[0].consentInfo": {
+            ...signatories[0]?.consentInfo,
+            aecbConsent: { accept: true, timestamp: acceptedTimeStamp },
+            ftsConsent: { accept: true, timestamp: acceptedTimeStamp },
+            norblocConsent: { accept: true, timestamp: acceptedTimeStamp }
+          }
+        })
+      );
+      yield put(
+        termsAndConditionsAccepted({
+          authorisation: true
+        })
+      );
+    }
   } catch (error) {
     log(error);
+    if (consentType === "TNC_CONSENT") {
+      yield put(
+        termsAndConditionsAccepted({
+          generalTCs: false
+        })
+      );
+    } else {
+      yield put(
+        termsAndConditionsAccepted({
+          authorisation: false
+        })
+      );
+    }
   }
 }
 

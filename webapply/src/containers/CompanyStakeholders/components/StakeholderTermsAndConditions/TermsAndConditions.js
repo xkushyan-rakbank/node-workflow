@@ -1,18 +1,12 @@
-import React, { useState } from "react";
-import { Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Button, CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
 import useGeneratePdf from "./useGeneratePdf";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
-import {
-  sendCustomerConsentToCPF,
-  termsAndConditionsAccepted
-} from "../../../../store/actions/termsAndConditions";
-import { updateProspect } from "../../../../store/actions/appConfig";
-import { getSignatories } from "../../../../store/selectors/appConfig";
-import { formattedAccTimeStamp } from "../../../../utils/getAcceptedTimeStamp/getAcceptedTimeStamp";
+import { sendCustomerConsentToCPF } from "../../../../store/actions/termsAndConditions";
 
 export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
@@ -22,8 +16,12 @@ export const TermsAndConditions = ({ wcmData }) => {
     wcmData
   );
   const { termsAndConditions } = useSelector(getTermsAndConditions);
-  const signatoryInfo = useSelector(getSignatories);
+  const [isTNCProgress, setTNCProgress] = useState(termsAndConditions?.generalTCs);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTNCProgress(termsAndConditions.generalTCs);
+  }, [termsAndConditions.generalTCs]);
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -35,20 +33,8 @@ export const TermsAndConditions = ({ wcmData }) => {
 
   const handleAccept = () => {
     setKfsDialog(false);
+    setTNCProgress(true);
     dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "TNC_CONSENT"));
-    dispatch(
-      updateProspect({
-        "prospect.signatoryInfo[0].consentInfo": {
-          ...signatoryInfo[0].consentInfo,
-          otherTncConsent: { accept: true, timestamp: formattedAccTimeStamp(new Date()) }
-        }
-      })
-    );
-    dispatch(
-      termsAndConditionsAccepted({
-        generalTCs: true
-      })
-    );
   };
 
   return (
@@ -72,7 +58,15 @@ export const TermsAndConditions = ({ wcmData }) => {
           className={!termsAndConditions.generalTCs ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
         >
-          {!termsAndConditions.generalTCs ? "Read and accept" : "Accepted"}
+          {!termsAndConditions.generalTCs ? (
+            !isTNCProgress ? (
+              "Read and accept"
+            ) : (
+              <CircularProgress size={14} value={null} color="#fff" />
+            )
+          ) : (
+            "Accepted"
+          )}
         </Button>
       </div>
       <TermsAndConditionsDialog
