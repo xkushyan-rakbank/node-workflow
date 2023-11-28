@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { MyApplications as BaseComponent } from "./components/MyApplications";
@@ -71,11 +71,16 @@ export const MyApplications = () => {
     [pushDisplayScreenToHistory, dispatch]
   );
 
+  const v2SearchResults = useMemo(
+    () => searchResults.filter(prospect => prospect.prospectVersion === "v2"),
+    [searchResults]
+  );
+
   return (
     <BaseComponent
       getProspectInfo={onGetProspectInfo}
       isLoading={isLoading || loadingConfig}
-      searchResults={searchResults}
+      searchResults={v2SearchResults}
       loadingProspectId={loadingProspectId}
     />
   );
