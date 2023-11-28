@@ -45,7 +45,12 @@ export const useStyles = makeStyles(theme => ({
   infoType: {
     display: "flex",
     alignItems: "flex-start",
-    gap: "5.625rem"
+    gap: "1rem",
+    flexDirection: "column",
+    [theme.breakpoints.up("sm")]: {
+      gap: "5.625rem",
+      flexDirection: "row"
+    }
   },
   infoLabel: {
     color: "#000",
