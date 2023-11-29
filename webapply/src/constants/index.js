@@ -567,7 +567,7 @@ export const Personas = {
   SP: {
     key: "SP",
     title: "I’m a Sole Proprietor",
-    subTitle: ["I own this business"],
+    subTitle: ["I own the business as Sole Proprietorship/ Free Zone Establishment"],
     url: routes.applicantInfo,
     urlType: "2.0",
     companyCategoryCode: "SOLE",
@@ -576,7 +576,7 @@ export const Personas = {
   SPLL: {
     key: "SPLL",
     title: "I'm a Sole Proprietor with an LLC",
-    subTitle: ["I do business as a limited liability company (LLC)"],
+    subTitle: ["I do business as a limited liability company (LLC)/ Free Zone Establishment"],
     url: routes.applicantInfo,
     urlType: "2.0",
     companyCategoryCode: "SLLC",

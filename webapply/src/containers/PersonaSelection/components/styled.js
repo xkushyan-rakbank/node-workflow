@@ -46,9 +46,7 @@ export const useStyles = makeStyles(theme => ({
   buttonText: {
     display: "flex",
     flexDirection: "column",
-    [theme.breakpoints.up("sm")]: {
-      width: 450
-    }
+    marginRight: "20px"
   },
   title: {
     fontSize: "0.875rem",
