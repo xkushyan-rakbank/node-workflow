@@ -356,7 +356,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       .notRequired(),
     verificationDetails: Yup.array().of(
       Yup.object().shape({
-        verificationStatus: Yup.string(),
+        verificationStatus: Yup.string()
+          .nullable()
+          .notRequired(),
         verificationRemarks: Yup.string()
           .nullable()
           .notRequired()
