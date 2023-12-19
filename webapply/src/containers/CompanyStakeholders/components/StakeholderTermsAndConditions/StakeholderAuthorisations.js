@@ -11,6 +11,7 @@ import { getTermsAndConditions } from "../../../../store/selectors/termsAndCondi
 export const StakeholderAuthorisations = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
+  const [isAcceptBtnDisabled, setIsAcceptBtnDisabled] = useState(true);
   const { editedFile, height, pages, cpfDocModificationInfo } = useGeneratePdf(
     "authorizationsConsent",
     wcmData,
@@ -39,6 +40,17 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     setAuthorizationProgress(true);
     dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "AUTH_CONSENT"));
   };
+
+  useEffect(() => {
+    const isConsentAccepted = !!termsAndConditions.authorisation;
+    const isPdfLoaded = editedFile && editedFile.length > 0;
+    if (isConsentAccepted) {
+      setIsAcceptBtnDisabled(isConsentAccepted);
+    } else {
+      setIsAcceptBtnDisabled(!isPdfLoaded);
+    }
+  }, [editedFile]);
+
   return (
     <>
       <div className={classes.descriptionContent}>
@@ -84,7 +96,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
         height={height}
         pages={pages}
         scrollToEnd={false}
-        isAccepted={termsAndConditions.authorisation}
+        isAccepted={isAcceptBtnDisabled}
         showInstructionText={
           termsAndConditions.authorisation
             ? "Your accepted authorizations will be sent to your registered email."
