@@ -19,7 +19,7 @@ export const getOcrFieldValueBySource = node => {
     }
     return valueToFind || "";
   }
-  return false;
+  return "";
 };
 
 export const removeEncodingPrefix = imgStr => imgStr.replace(/data:.*;base64,/, "");

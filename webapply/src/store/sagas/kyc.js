@@ -113,11 +113,12 @@ function* validateOCR(response, documentType, analysedEidData) {
       yield put(analyseOcrFail(INVALID_DOCUMENT));
       return false;
     }
-    if (parseInt(daysToExpiry) <= 10) {
+    if (daysToExpiry <= 10) {
       yield put(analyseOcrFail(EID_EXPIRY));
     } else {
       if (age < 18) {
         yield put(analyseOcrAgeRestriction(AGE_RESTRICTION));
+        return false;
       }
       yield put(analyseOcrSuccessEid(response));
       return true;
@@ -545,8 +546,10 @@ export function* getCurrentKYCStatus() {
       const eidOcrDetails = extractOCRData(eidDocuments);
       const isDocValid = checkDocumentValid(eidOcrDetails?.efrResponse);
       if (isDocValid) {
-        yield call(validateOCR, eidOcrDetails?.efrResponse, DOC_TYPE_EID);
-        yield put(loadEidDocuments(eidOcrDetails));
+        const isEidValidated = yield call(validateOCR, eidOcrDetails?.efrResponse, DOC_TYPE_EID);
+        if (isEidValidated) {
+          yield put(loadEidDocuments(eidOcrDetails));
+        }
       }
     }
     yield put(getKycSuccess(true));

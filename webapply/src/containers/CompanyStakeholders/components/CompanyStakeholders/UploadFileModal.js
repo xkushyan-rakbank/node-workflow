@@ -41,7 +41,13 @@ function getModalStyle() {
 export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { loading, error, analysedEidDataStatus, analysedPassportDataStatus } = useSelector(getKyc);
+  const {
+    loading,
+    error,
+    analysedEidDataStatus,
+    analysedPassportDataStatus,
+    ageRestrictionError
+  } = useSelector(getKyc);
 
   const [modalStyle] = useState(getModalStyle);
   const [values, setFieldValue] = useState({
@@ -177,10 +183,10 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
               <div style={modalStyle} className={classes.paper}>
                 <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
                 <h2 className={classes.uploadModalTitle}>{title}</h2>
-                {error && (
+                {(error || ageRestrictionError) && (
                   <div className={classes.uploadModalErrorWrapper}>
                     <ErrorOutlineIcon className={classes.errorIcon} />
-                    {error}
+                    {error || ageRestrictionError}
                   </div>
                 )}
                 {typeOfUpload === DOC_TYPE_EID && (

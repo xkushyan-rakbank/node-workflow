@@ -240,7 +240,7 @@ export const CompanyStakeholdersComponent = ({
             }
             isSuccess={isEmpty(analysedPassportData) ? false : true}
             successText={`Succcesfully ${actionType?.passport}`}
-            isStepActive={!isEmpty(analysedEidData)}
+            isStepActive={!isEmpty(analysedEidData) && ageRestrictionError?.length === 0}
             disabledReason={"You'll be able to do this step after uploading your Emirates ID."}
             showPreview={!isEmpty(analysedPassportData)}
             handleScan={onScanPassport}
