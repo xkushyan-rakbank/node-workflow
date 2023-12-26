@@ -82,7 +82,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const customerInitValues = {
-    questionInput: ""
+    questionInput: "",
+    mothersMaidenName: "",
+    countryofBirth: ""
   };
 
   const operatorInitialValues = {
@@ -128,7 +130,21 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const customerPreviewValidation = Yup.object({
     questionInput: Yup.boolean()
       .typeError(getRequiredMessage("This field"))
-      .required(getRequiredMessage("This field"))
+      .required(getRequiredMessage("This field")),
+    countryofBirth: Yup.string()
+      .nullable()
+      .required(getRequiredMessage("Country of birth")),
+    mothersMaidenName: Yup.string()
+      .required(getRequiredMessage("Mother's maiden name"))
+      .min(
+        MIN_MOTHER_NAME_LENGTH,
+        `Mother's maiden name is too short. Please enter at least ${MIN_MOTHER_NAME_LENGTH} characters`
+      )
+      .max(
+        MAX_MOTHER_MAIDEN_NAME_LENGTH,
+        `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
+      )
+      .matches(NAME_REGEX, nameInvalidMessage)
   });
 
   const operatorPreviewValidation = Yup.object({
@@ -235,7 +251,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         signatoryNationality:
           signatoryInfo && getNationalityLabel(signatoryInfo[0]?.kycDetails?.nationality),
         dateOfBirth: signatoryInfo && formatDate(signatoryInfo[0]?.kycDetails?.dateOfBirth),
-        mothersMaidenName: (signatoryInfo && signatoryInfo[0]?.mothersMaidenName) || "-",
         eidNumber:
           signatoryInfo &&
           formatEidNumber(signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidNumber),
@@ -269,10 +284,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         <div className={classes.infoLabelValue}>
           <label>Date of birth:</label>
           <p>{displayFields.dateOfBirth}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Mother's maiden name:</label>
-          <p>{displayFields.mothersMaidenName}</p>
         </div>
         <div className={classes.infoLabelValue}>
           <label>Emirates ID number:</label>
@@ -396,6 +407,22 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         <Grid item xs={12}>
           <Field
             isLoadDefaultValueFromStore={true}
+            name="countryofBirth"
+            path="prospect.signatoryInfo[0].countryofBirth"
+            label="Country of birth"
+            datalistId="country"
+            component={SelectAutocomplete}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
+            }}
+            disabled={!isEditable}
+            showEditIcon={!isEditable}
+            fieldDescription={"Enter Country of birth"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
             name="nationality"
             path="prospect.signatoryInfo[0].kycDetails.nationality"
             datalistId="nationality"
@@ -489,23 +516,64 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const customerConfirmEFRDetails = radioChangeHandler => {
     return (
       <>
-        <div className={classes.informationQuestion}>Is all of your information correct?</div>
-        <Field
-          typeRadio
-          options={stakePreviewYesNoOptions}
-          name="questionInput"
-          path="prospect.signatoryInfo[0].isEFRDataCorrect"
-          component={InlineRadioGroup}
-          customIcon={false}
-          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-          radioColor="primary"
-          onChange={radioChangeHandler}
-        />
+        <div className={classes.reviewDetails}>
+          <div>
+            <h5 className={classes.reviewDetailsTitle}>Other information</h5>
+          </div>
+          <div className={classes.stakeHolderPreviewHorizontal}></div>
+          <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
+            <label>Mother's maiden name:</label>
+            <Field
+              name="mothersMaidenName"
+              path="prospect.signatoryInfo[0].mothersMaidenName"
+              label=""
+              component={Input}
+              InputProps={{
+                inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
+              }}
+              allowedCharRegex={ALLOWED_CHAR_REGEX}
+              classes={{
+                formControlRoot: classes.previewFormControl,
+                input: classes.inputWithoutLabel
+              }}
+              fieldDescription={"Enter Mother's maiden name as per your passport"}
+            />
+          </div>
+          <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
+            <label>Country of birth:</label>
+            <Field
+              name="countryofBirth"
+              path="prospect.signatoryInfo[0].countryofBirth"
+              placeholder="Select"
+              label=""
+              datalistId="country"
+              component={SelectAutocomplete}
+              tabIndex="0"
+              classes={{
+                formControlRoot: classes.previewFormControl
+              }}
+            />
+          </div>
+        </div>
         <div>
-          <p className={classes.reviewRemarks}>
-            If not, don't worry—you can continue with your application. We'll reach out to you
-            within 48 hours to help make any corrections.
-          </p>
+          <div className={classes.informationQuestion}>Is all of your information correct?</div>
+          <Field
+            typeRadio
+            options={stakePreviewYesNoOptions}
+            name="questionInput"
+            path="prospect.signatoryInfo[0].isEFRDataCorrect"
+            component={InlineRadioGroup}
+            customIcon={false}
+            classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+            radioColor="primary"
+            onChange={radioChangeHandler}
+          />
+          <div>
+            <p className={classes.reviewRemarks}>
+              If not, don't worry—you can continue with your application. We'll reach out to you
+              within 48 hours to help make any corrections.
+            </p>
+          </div>
         </div>
       </>
     );

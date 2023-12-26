@@ -310,6 +310,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         signatoryNationality:
           signatoryInfo && getCountryLabel(signatoryInfo[0]?.kycDetails.nationality),
         dateOfBirth: signatoryInfo && signatoryInfo[0]?.kycDetails.dateOfBirth,
+        countryofBirth: signatoryInfo && signatoryInfo[0]?.countryofBirth,
         mothersMaidenName: (signatoryInfo && signatoryInfo[0]?.mothersMaidenName) || "N/A",
         eidNumber: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidNumber,
         eidExpiryDt: signatoryInfo && signatoryInfo[0]?.kycDetails.emirateIdDetails.eidExpiryDt,

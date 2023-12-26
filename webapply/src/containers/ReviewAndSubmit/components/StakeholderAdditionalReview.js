@@ -93,6 +93,10 @@ export const StakeholderAdditionalReview = ({
               <p>{formatDate(fieldValues.dateOfBirth)}</p>
             </div>
             <div className={classes.infoLabelValue}>
+              <label>Country of birth:</label>
+              <p>{fieldValues.countryofBirth ? countryLabel(fieldValues.countryofBirth) : ""}</p>
+            </div>
+            <div className={classes.infoLabelValue}>
               <label>Mother’s maiden name:</label>
               <p>{fieldValues.mothersMaidenName}</p>
             </div>

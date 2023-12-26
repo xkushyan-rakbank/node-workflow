@@ -537,6 +537,9 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "1.5rem",
     margin: 0
   },
+  editCustomerDetails: {
+    width: "100%"
+  },
   infoLabelValue: {
     display: "flex",
     alignItems: "start",
@@ -657,5 +660,13 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "#E6E6E6",
     height: "1px",
     width: "100%"
+  },
+  inputWithoutLabel: {
+    padding: "17px 12px"
+  },
+  previewFormControl: {
+    margin: 0,
+    marginBottom: "8px",
+    width: "60%"
   },
 }));

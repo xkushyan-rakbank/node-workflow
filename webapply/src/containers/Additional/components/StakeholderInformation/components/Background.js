@@ -51,7 +51,6 @@ export const Background = ({ id, refs }) => {
   const { backgroundFormRef, backgroundAccordionRef } = refs;
 
   const initialValues = {
-    countryofBirth: "",
     highestEducationAttained: "",
     employmentStatus: employmentType?.filter(item => item.code === "Self-employed")[0]?.value,
     linkedInURL: "",
@@ -61,9 +60,6 @@ export const Background = ({ id, refs }) => {
   };
 
   const backgroundSchema = Yup.object().shape({
-    countryofBirth: Yup.string()
-      .nullable()
-      .required(getRequiredMessage("Country of birth")),
     highestEducationAttained: Yup.string()
       .nullable()
       .required(getRequiredMessage("Highest education")),
@@ -170,16 +166,6 @@ export const Background = ({ id, refs }) => {
 
               <p className={classes.sectionLabel}>Education and employment</p>
               <Grid container spacing={3}>
-                <Grid item sm={12} xs={12}>
-                  <Field
-                    name="countryofBirth"
-                    path="prospect.signatoryInfo[0].countryofBirth"
-                    label="Country of birth"
-                    datalistId="country"
-                    component={SelectAutocomplete}
-                    tabIndex="0"
-                  />
-                </Grid>
                 <Grid item sm={12} xs={12}>
                   <Field
                     name="highestEducationAttained"
