@@ -239,14 +239,14 @@ export const useStyles = makeStyles(theme => ({
       padding: "10px 40px",
       textAlign: "center",
       color: "#3B3A3A",
-      width: "80%"
-    },
-    "&:hover": {
-      color: "#ffffff",
-      backgroundColor: "#1F1F1F",
-      width: "75%",
-      [theme.breakpoints.up("sm")]: {
-        width: "80%"
+      width: "80%",
+      "&:hover": {
+        color: "#ffffff",
+        backgroundColor: "#1F1F1F",
+        width: "75%",
+        [theme.breakpoints.up("sm")]: {
+          width: "80%"
+        }
       }
     }
   },
@@ -257,7 +257,11 @@ export const useStyles = makeStyles(theme => ({
   },
   selectedPackageListBtn: {
     color: "#ffffff",
-    backgroundColor: "#1F1F1F"
+    backgroundColor: "#1F1F1F",
+    "&:hover": {
+      color: "#ffffff",
+      backgroundColor: "#1F1F1F"
+    }
   },
   accountServiceAccordionRoot: {
     borderTop: "none"
@@ -504,6 +508,22 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   debitCardWrapper: {
-    padding: "10px 0px",
-  } 
+    padding: "10px 0px"
+  },
+  priceGuideInfo: {
+    color: "#847F7F",
+    fontSize: "0.875rem",
+    fontWeight: 400,
+    lineHeight: "1rem"
+  },
+  priceGuideLink: {
+    fontWeight: 400,
+    fontSize: "0.875rem",
+    lineHeight: "22px",
+    textDecoration: "underline",
+    color: "#8D0C10",
+    "&:hover": {
+      textDecoration: "underline"
+    }
+  }
 }));
