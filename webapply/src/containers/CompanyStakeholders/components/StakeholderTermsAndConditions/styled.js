@@ -153,14 +153,15 @@ export const useStyles = makeStyles(theme => ({
   },
   noTitlePaper: {
     width: "max-content",
-    minHeight: "650px",
     minWidth: "auto",
+    minHeight: "450px",
     borderRadius: "8px",
     boxShadow: "10px 10px 18px 0 rgba(0, 0, 0, 0.2)",
     backgroundColor: "#ffffff",
     maxWidth: "unset",
     [theme.breakpoints.up("sm")]: {
       minWidth: "780px", 
+      minHeight: "650px"
     }
   },
   actionContainer: {
@@ -184,6 +185,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "#D9D9D9",
     width: "100%",
     height: "100%",
+    overflowX: "hidden",
+    overflowY: "auto",
     textAlign: "center"
   },
   title: {

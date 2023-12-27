@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "./styled";
-import useGeneratePdf from "./useGeneratePdf";
 import { ReactComponent as SuccessIcon } from "../../../../assets/icons/credit_score.svg";
 import TermsAndConditionsDialog from "./TermsAndConditionsDialog";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
@@ -11,10 +10,7 @@ import { sendCustomerConsentToCPF } from "../../../../store/actions/termsAndCond
 export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
-  const { editedFile, height, pages, cpfDocModificationInfo } = useGeneratePdf(
-    "generalTermsAndConditions",
-    wcmData
-  );
+  const [pdfLink, setPdfLink] = useState(null);
   const { termsAndConditions } = useSelector(getTermsAndConditions);
   const [isTNCProgress, setTNCProgress] = useState(termsAndConditions?.generalTCs);
   const dispatch = useDispatch();
@@ -22,6 +18,12 @@ export const TermsAndConditions = ({ wcmData }) => {
   useEffect(() => {
     setTNCProgress(termsAndConditions.generalTCs);
   }, [termsAndConditions.generalTCs]);
+
+  useEffect(() => {
+    if (wcmData) {
+      setPdfLink(wcmData.productVariantContent[0]["generalTermsAndConditions"]);
+    }
+  }, [wcmData]);
 
   const openKFSModal = () => {
     setKfsDialog(true);
@@ -34,7 +36,7 @@ export const TermsAndConditions = ({ wcmData }) => {
   const handleAccept = () => {
     setKfsDialog(false);
     setTNCProgress(true);
-    dispatch(sendCustomerConsentToCPF(cpfDocModificationInfo, "TNC_CONSENT"));
+    dispatch(sendCustomerConsentToCPF([], "TNC_CONSENT"));
   };
 
   return (
@@ -73,9 +75,7 @@ export const TermsAndConditions = ({ wcmData }) => {
         open={openKfsDialog}
         handleClose={handleClose}
         handleAccept={!termsAndConditions.generalTCs ? handleAccept : ""}
-        editedFile={editedFile}
-        height={height}
-        pages={pages}
+        editedFile={pdfLink}
         scrollToEnd={false}
         isAccepted={termsAndConditions.generalTCs}
         showInstructionText={

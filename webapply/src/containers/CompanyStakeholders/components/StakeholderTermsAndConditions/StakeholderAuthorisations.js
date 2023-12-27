@@ -43,13 +43,13 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
 
   useEffect(() => {
     const isConsentAccepted = !!termsAndConditions.authorisation;
-    const isPdfLoaded = editedFile && editedFile.length > 0;
+    const isPdfLoaded = editedFile && pages.length > 0;
     if (isConsentAccepted) {
       setIsAcceptBtnDisabled(isConsentAccepted);
     } else {
       setIsAcceptBtnDisabled(!isPdfLoaded);
     }
-  }, [editedFile]);
+  }, [editedFile, pages]);
 
   return (
     <>
