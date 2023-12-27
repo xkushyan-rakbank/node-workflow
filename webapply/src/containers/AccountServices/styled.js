@@ -522,6 +522,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "22px",
     textDecoration: "underline",
     color: "#8D0C10",
+    cursor: "pointer",
     "&:hover": {
       textDecoration: "underline"
     }
