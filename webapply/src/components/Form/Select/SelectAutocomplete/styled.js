@@ -10,6 +10,11 @@ export const useStyles = makeStyles(theme => ({
     position: "relative",
     "& > div": {
       margin: 0
+    },
+    "& .Mui-error": {
+      "& .MuiFilledInput-input": {
+        borderColor: "#ea2b1e"
+      }
     }
   },
   input: {
@@ -119,7 +124,10 @@ export const useStyles = makeStyles(theme => ({
   filledLabelShrink: {
     fontWeight: 500,
     fontSize: "0.875rem"
-  }
+  },
+  filledInputError: {
+    borderColor: "#ea2b1e"
+  },
 }));
 
 export const customStyles = {

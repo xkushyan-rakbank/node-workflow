@@ -391,22 +391,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         <Grid item xs={12}>
           <Field
             isLoadDefaultValueFromStore={true}
-            name="mothersMaidenName"
-            path="prospect.signatoryInfo[0].mothersMaidenName"
-            label="Mother's maiden name"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
-            }}
-            allowedCharRegex={ALLOWED_CHAR_REGEX}
-            disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
-            showEditIcon={!displayFields?.mothersMaidenName ? true : false}
-            fieldDescription={"Enter Mother's maiden name as per your passport"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
             name="countryofBirth"
             path="prospect.signatoryInfo[0].countryofBirth"
             label="Country of birth"
@@ -418,6 +402,22 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             disabled={!isEditable}
             showEditIcon={!isEditable}
             fieldDescription={"Enter Country of birth"}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Field
+            isLoadDefaultValueFromStore={true}
+            name="mothersMaidenName"
+            path="prospect.signatoryInfo[0].mothersMaidenName"
+            label="Mother's maiden name"
+            component={Input}
+            InputProps={{
+              inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
+            }}
+            allowedCharRegex={ALLOWED_CHAR_REGEX}
+            disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
+            showEditIcon={!displayFields?.mothersMaidenName ? true : false}
+            fieldDescription={"Enter Mother's maiden name as per your passport"}
           />
         </Grid>
         <Grid item xs={12}>
@@ -522,6 +522,21 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
           </div>
           <div className={classes.stakeHolderPreviewHorizontal}></div>
           <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
+            <label>Country of birth:</label>
+            <Field
+              name="countryofBirth"
+              path="prospect.signatoryInfo[0].countryofBirth"
+              placeholder="Select"
+              label=""
+              datalistId="country"
+              component={SelectAutocomplete}
+              tabIndex="0"
+              classes={{
+                formControlRoot: classes.previewFormControl
+              }}
+            />
+          </div>
+          <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
             <label>Mother's maiden name:</label>
             <Field
               name="mothersMaidenName"
@@ -537,21 +552,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
                 input: classes.inputWithoutLabel
               }}
               fieldDescription={"Enter Mother's maiden name as per your passport"}
-            />
-          </div>
-          <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
-            <label>Country of birth:</label>
-            <Field
-              name="countryofBirth"
-              path="prospect.signatoryInfo[0].countryofBirth"
-              placeholder="Select"
-              label=""
-              datalistId="country"
-              component={SelectAutocomplete}
-              tabIndex="0"
-              classes={{
-                formControlRoot: classes.previewFormControl
-              }}
             />
           </div>
         </div>
