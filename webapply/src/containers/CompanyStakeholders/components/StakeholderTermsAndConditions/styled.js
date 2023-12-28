@@ -187,7 +187,14 @@ export const useStyles = makeStyles(theme => ({
     height: "100%",
     overflowX: "hidden",
     overflowY: "auto",
-    textAlign: "center"
+    textAlign: "center",
+    "& > div": {
+      overflowX: "hidden !important",
+      scrollbarWidth: "none", //Hide scrollbar in chrome/Edge/Firefox
+      "&::-webkit-scrollbar": {
+        display: "none"
+      }
+    }
   },
   title: {
     padding: "40px 40px 20px 40px",
