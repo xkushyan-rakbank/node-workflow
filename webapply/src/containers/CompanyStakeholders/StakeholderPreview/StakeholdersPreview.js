@@ -534,6 +534,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
               classes={{
                 formControlRoot: classes.previewFormControl
               }}
+              addSelectLabelOption={true}
             />
           </div>
           <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>

@@ -137,10 +137,10 @@ export const customStyles = {
     marginTop: "6px",
     width: "100%"
   }),
-  singleValue: provided => ({
+  singleValue: (provided, state) => ({
     ...provided,
     whiteSpace: "nowrap",
     padding: "2px",
-    marginTop: "6px"
+    marginTop: state.selectProps.label ? "6px" : "0px"
   })
 };

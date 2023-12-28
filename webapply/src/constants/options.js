@@ -105,6 +105,13 @@ export const OthersOption = {
   value: "Others"
 };
 
+export const SelectOption = {
+  code: null,
+  displayText: "Select",
+  key: null,
+  value: null
+};
+
 export const virtualOrPhysicalAddressOptions = [
   {
     code: "Virtual",

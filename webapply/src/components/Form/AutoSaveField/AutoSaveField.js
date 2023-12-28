@@ -7,7 +7,7 @@ import isEqual from "lodash/isEqual";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getInputServerValidityByPath } from "../../../store/selectors/serverValidation";
 import { getDatalist } from "../../../store/selectors/appConfig";
-import { OthersOption } from "../../../constants/options";
+import { OthersOption, SelectOption } from "../../../constants/options";
 import useDecisions from "../../../utils/useDecisions";
 import { OverlayLoader } from "../../Loader";
 import { isDecisionLoading } from "../../../store/selectors/decisions";
@@ -24,6 +24,7 @@ export const AutoSaveField = ({
   changeProspect = prospect => prospect,
   initialValue = "",
   addOthers = false,
+  addSelectLabelOption = false,
   label,
   ...rest
 }) => {
@@ -63,6 +64,9 @@ export const AutoSaveField = ({
       datalist[datalistId][datalist[datalistId].length - 1].code !== "Others"
     ) {
       datalist[datalistId].push(OthersOption);
+    }
+    if (addSelectLabelOption === true) {
+      datalist[datalistId].push(SelectOption);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
