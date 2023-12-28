@@ -141,6 +141,6 @@ export const customStyles = {
     ...provided,
     whiteSpace: "nowrap",
     padding: "2px",
-    marginTop: state.selectProps.label ? "6px" : "0px"
+    marginTop: state.selectProps.labelText ? "6px" : "0px"
   })
 };

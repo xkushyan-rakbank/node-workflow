@@ -97,6 +97,7 @@ const SelectAutocompleteBase = ({
           placeholder=""
           menuPlacement="auto"
           minMenuHeight={300}
+          labelText={label}
           textFieldProps={{
             onFocus: () => setFocus(true),
             onBlur: () => {
