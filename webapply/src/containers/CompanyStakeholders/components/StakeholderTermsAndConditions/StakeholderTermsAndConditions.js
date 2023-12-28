@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { get } from "lodash";
 
 import { useStyles } from "./styled";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
@@ -13,7 +14,11 @@ import { useFormNavigation } from "../../../../components/FormNavigation/FormNav
 import { useLayoutParams } from "../../../FormLayout";
 import { useViewId } from "../../../../utils/useViewId";
 import { formStepper, operatorLoginScheme, NEXT } from "../../../../constants";
-import { getAccountType, getIsIslamicBanking } from "../../../../store/selectors/appConfig";
+import {
+  getAccountType,
+  getIsIslamicBanking,
+  getProspectId
+} from "../../../../store/selectors/appConfig";
 import { wcmClient } from "../../../../api/axiosConfig";
 import { log } from "../../../../utils/loggger";
 import { getTermsAndConditions } from "../../../../store/selectors/termsAndConditions";
@@ -22,6 +27,8 @@ import { Footer } from "../../../../components/Footer";
 import { ConfirmDialog } from "../../../../components/Modals";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import { checkLoginStatus, getLoginResponse } from "../../../../store/selectors/loginSelector";
+import { OPE_EDIT } from "../../../AgentPages/SearchedAppInfo/constants";
+import { getSearchResults } from "../../../../store/selectors/searchProspect";
 
 export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +47,14 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
   const isRoInviteEFR = useSelector(getIsRoInviteEfr);
   const { scheme } = useSelector(getLoginResponse);
   const isAgent = useSelector(checkLoginStatus);
+  const searchResults = useSelector(getSearchResults);
+  const prospectId = useSelector(getProspectId);
+  const currentProspect = searchResults.find(item => item.prospectId === prospectId);
+
+  const isFrontCorrection = get(currentProspect, "status.statusType") === OPE_EDIT;
   const isOperator = scheme === operatorLoginScheme;
+  const isEditable = isOperator && isFrontCorrection;
+
   useEffect(() => {
     const handleBrowserBackBtn = (location, action) => {
       if (action === "POP") {
@@ -134,7 +148,7 @@ export const StakeholdersTermsAndConditions = ({ sendProspectToAPI }) => {
       <TermsAndConditions wcmData={wcmData} />
 
       <Footer extraClasses={"oneElement"}>
-        {isOperator ? <BackLink path={routes.stakeholdersPreview} isTypeButton={true} /> : null}
+        {isEditable ? <BackLink path={routes.stakeholdersPreview} isTypeButton={true} /> : null}
         <NextStepButton
           isDisplayLoader={isLoading}
           type="button"
