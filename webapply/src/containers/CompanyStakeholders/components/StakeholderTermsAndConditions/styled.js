@@ -130,12 +130,16 @@ export const useStyles = makeStyles(theme => ({
   },
   uploadModalCloseIcon: {
     position: "absolute",
-    right: "18px",
-    top: "20px",
+    right: "16px",
+    top: "16px",
     width: "16px",
     height: "16px",
     fill: "#525252",
-    PointerEvent: "cursor"
+    PointerEvent: "cursor",
+    [theme.breakpoints.up("sm")]: {
+      top: "20px",
+      right: "18px"
+    }
   },
   paper: {
     width: "500px",
@@ -182,7 +186,6 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "12px"
   },
   previewPDF: {
-    backgroundColor: "#D9D9D9",
     width: "100%",
     height: "100%",
     overflowX: "hidden",
@@ -225,6 +228,9 @@ export const useStyles = makeStyles(theme => ({
       [theme.breakpoints.between("sm", "md")]: {
         width: "100% !important",
       }
+    },
+    "&::-webkit-scrollbar": {
+      display: "none"
     }
   },
   divider: {

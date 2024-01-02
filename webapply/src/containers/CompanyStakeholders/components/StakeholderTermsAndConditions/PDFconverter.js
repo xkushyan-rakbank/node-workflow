@@ -10,12 +10,7 @@ function areEqualFileProp(prefFile, nextFile) {
 
 const PageView = ({ index, style }) => (
   <div style={{ ...style, width: "auto" }}>
-    <Page
-      key={`page_${index + 1}`}
-      pageNumber={index + 1}
-      devicePixelRatio={1}
-      scale={isMobile ? undefined : 1.75}
-    />
+    <Page key={`page_${index + 1}`} pageNumber={index + 1} devicePixelRatio={1} scale={1.75} />
   </div>
 );
 
