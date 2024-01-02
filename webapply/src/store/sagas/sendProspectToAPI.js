@@ -336,8 +336,8 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent, isEditable) =>
     }
     case "applicantInfo": {
       if (viewId === "/AccountInfo") {
-        const { roCode, allianceCode } = prospect[key];
-        nodePayload = { roCode, allianceCode };
+        const { roCode, allianceCode, sourcingId } = prospect[key];
+        nodePayload = { roCode, allianceCode, sourcingId };
       } else {
         nodePayload = prospect[key];
       }

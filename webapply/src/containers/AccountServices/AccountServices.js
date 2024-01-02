@@ -49,7 +49,12 @@ import {
   nameInvalidMessage
 } from "../../utils/getValidationMessage";
 import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
-import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../utils/validation";
+import {
+  NAME_REGEX,
+  NUMBER_REGEX,
+  PARTNER_CODE_REGEX,
+  SOURCING_ID_REGEX
+} from "../../utils/validation";
 import {
   getAccountType,
   getDatalist,
@@ -111,6 +116,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const signatoryNameData = useSelector(getSignatories)[0]?.editedFullName;
   const allianceCodeData = useSelector(getApplicantInfo).allianceCode;
+  const sourcingIdData = useSelector(getApplicantInfo).sourcingId;
   const roCodeData = useSelector(getLoginResponse).roCode;
   const isROInitited = useSelector(getApplicantInfo).isROInitited;
 
@@ -255,6 +261,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     leadNumber: "",
     sourcingCode: "",
     allianceCode: allianceCodeData || "",
+    sourcingId: sourcingIdData || "",
     roCode: roCodeData || "",
     skillBasedCategory: "",
     roName: "",
@@ -323,7 +330,10 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     roCode: Yup.string()
       .nullable()
       .max(6, "Maximum 6 characters allowed")
-      .matches(NUMBER_REGEX, getROInvalidMessage)
+      .matches(NUMBER_REGEX, getROInvalidMessage),
+    sourcingId: Yup.string()
+      .max(12, "Maximum 12 characters allowed")
+      .matches(SOURCING_ID_REGEX, getInvalidMessage("Sourcing ID"))
   });
 
   const kycAnnexureSchema = accountInfoValidation.shape({
@@ -963,6 +973,22 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                             disabled={isROInitited && allianceCode}
                             InputProps={{
                               inputProps: { tabIndex: 0, maxLength: 50 }
+                            }}
+                            classes={{
+                              formControlRoot: classes.roCodeFormControl,
+                              input: classes.inputWithoutLabel
+                            }}
+                          />
+                        </Grid>
+                        <Grid item sm={6} xs={12}>
+                          <label className={classes.outsideLabel}>Sourcing ID (optional)</label>
+                          <Field
+                            name="sourcingId"
+                            path="prospect.applicantInfo.sourcingId"
+                            component={Input}
+                            isLoadDefaultValueFromStore={false}
+                            InputProps={{
+                              inputProps: { tabIndex: 0, maxLength: 12 }
                             }}
                             classes={{
                               formControlRoot: classes.roCodeFormControl,

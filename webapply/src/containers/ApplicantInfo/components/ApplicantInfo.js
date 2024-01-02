@@ -26,7 +26,13 @@ import {
   getROInvalidMessage,
   nameInvalidMessage
 } from "../../../utils/getValidationMessage";
-import { ALLOWED_CHAR_REGEX, NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../utils/validation";
+import {
+  ALLOWED_CHAR_REGEX,
+  NAME_REGEX,
+  NUMBER_REGEX,
+  PARTNER_CODE_REGEX,
+  SOURCING_ID_REGEX
+} from "../../../utils/validation";
 import { InfoCard } from "./InfoCard";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
@@ -45,7 +51,7 @@ const useStyles = makeStyles(theme => ({
     border: "unset",
     [theme.breakpoints.up("sm")]: {
       padding: "30px",
-      border: "1px solid #CCC",
+      border: "1px solid #CCC"
     }
   },
   header: {
@@ -144,7 +150,10 @@ const aplicantInfoSchema = Yup.object({
     .matches(NUMBER_REGEX, getROInvalidMessage),
   allianceCode: Yup.string()
     .max(50, "Maximum 50 characters allowed")
-    .matches(PARTNER_CODE_REGEX, getInvalidMessage("Partner Code"))
+    .matches(PARTNER_CODE_REGEX, getInvalidMessage("Partner Code")),
+  sourcingId: Yup.string()
+    .max(12, "Maximum 12 characters allowed")
+    .matches(SOURCING_ID_REGEX, getInvalidMessage("Sourcing ID"))
 });
 
 //ro-assist-brd3-16
@@ -205,7 +214,8 @@ export const ApplicantInfoComponent = ({
     rocode = "",
     // roAgentId = allianceCodeFromQuery,
     alliancecodeFromDataList: allianceCodeDisplayText,
-    persona = personaFromStore
+    persona = personaFromStore,
+    sourcingId = ""
   } = invitationParams || {};
 
   return (
@@ -236,7 +246,8 @@ export const ApplicantInfoComponent = ({
             roCode: rocode || roCode,
             allianceCode: allianceCodeFromQuery,
             allianceCodeFromDataList: allianceCodeDisplayText,
-            persona
+            persona,
+            sourcingId
           }}
           validationSchema={aplicantInfoSchema}
           validateOnChange={false}
@@ -425,6 +436,22 @@ export const ApplicantInfoComponent = ({
                       isLoadDefaultValueFromStore={false}
                       InputProps={{
                         inputProps: { tabIndex: 0, maxLength: 50 }
+                      }}
+                      classes={{
+                        formControlRoot: classes.roCodeFormControl,
+                        input: classes.inputWithoutLabel
+                      }}
+                    />
+                  </Grid>
+                  <Grid item sm={6} xs={12}>
+                    <label className={classes.outsideLabel}>Sourcing ID (optional)</label>
+                    <Field
+                      name="sourcingId"
+                      path="prospect.applicantInfo.sourcingId"
+                      component={Input}
+                      isLoadDefaultValueFromStore={false}
+                      InputProps={{
+                        inputProps: { tabIndex: 0, maxLength: 12 }
                       }}
                       classes={{
                         formControlRoot: classes.roCodeFormControl,

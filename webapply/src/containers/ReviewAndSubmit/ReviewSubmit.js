@@ -266,6 +266,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         countryCode: applicantInfo?.countryCode,
         agentCode: applicantInfo?.roCode || "N/A",
         partnerCode: applicantInfo?.allianceCode || "N/A",
+        sourcingID: applicantInfo?.sourcingId || "N/A",
         rakValuePackage: applicationInfo?.rakValuePackage
           ? rakValuePackages[(applicationInfo?.rakValuePackage)]
           : "N/A",
@@ -456,6 +457,10 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
                         <div className={classes.infoListWrapper}>
                           <div className={classes.infoLabelValue}>
                             <label>Agent code:</label> <p>{displayFields.agentCode}</p>
+                          </div>
+                          <div className={classes.infoLabelValue}>
+                            <label>Sourcing ID:</label>
+                            <p>{displayFields.sourcingID}</p>
                           </div>
                         </div>
                         <div className={classes.infoListWrapper}>
