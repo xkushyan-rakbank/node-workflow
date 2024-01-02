@@ -11,7 +11,12 @@ import {
   SelectAutocomplete
 } from "../../../../components/Form";
 import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
-import { NAME_REGEX, NUMBER_REGEX, PARTNER_CODE_REGEX } from "../../../../utils/validation";
+import {
+  NAME_REGEX,
+  NUMBER_REGEX,
+  PARTNER_CODE_REGEX,
+  SOURCING_ID_REGEX
+} from "../../../../utils/validation";
 import {
   getInvalidMessage,
   getRequiredMessage,
@@ -56,7 +61,10 @@ const inviteSchema = Yup.object({
     .matches(PARTNER_CODE_REGEX, getInvalidMessage("Partner Code")),
   isIslamic: Yup.boolean().required("Please select the product variant"),
   persona: Yup.string().required("Please select the company category"),
-  accountType: Yup.string().required("Please select the account type")
+  accountType: Yup.string().required("Please select the account type"),
+  sourcingId: Yup.string()
+    .max(12, "Maximum 12 characters allowed")
+    .matches(SOURCING_ID_REGEX, getInvalidMessage("Sourcing ID"))
 });
 
 export const InviteForm = ({ submitForm, isLoading }) => {
@@ -79,7 +87,8 @@ export const InviteForm = ({ submitForm, isLoading }) => {
           persona: "",
           accountType: "",
           isIslamic: "",
-          FreeText1: ""
+          FreeText1: "",
+          sourcingId: ""
         }}
         validationSchema={inviteSchema}
         validateOnChange={true}
@@ -177,7 +186,14 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                   inputProps: { tabIndex: 0, maxLength: 50 }
                 }}
               />
-
+              <Field
+                name="sourcingId"
+                label="Sourcing ID"
+                component={Input}
+                InputProps={{
+                  inputProps: { tabIndex: 0, maxLength: 12 }
+                }}
+              />
               <Footer>
                 <BackLink path={routes.searchProspect} isTypeButton={true} />
                 <SubmitButton justify="flex-end" label="Submit" disabled={!isValid || isLoading} />
