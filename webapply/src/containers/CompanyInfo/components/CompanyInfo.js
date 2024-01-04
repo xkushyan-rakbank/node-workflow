@@ -1,13 +1,12 @@
 import React from "react";
 import cx from "classnames";
 
-import { BackLink } from "../../../components/Buttons/BackLink";
+import { BackLinkButton } from "../../../components/Buttons/BackLink";
 import { FormCard } from "../../../components/FormCard/FormCard";
 import { StepComponent } from "../../../components/StepComponent/StepComponent";
 import StatusLoader from "../../../components/StatusLoader";
 import { NextStepButton } from "../../../components/Buttons/NextStepButton";
 import { STEP_STATUS } from "../../../constants";
-import routes from "../../../routes";
 
 import { companyInfoSteps, STEP_1 } from "../constants";
 import { useStyles } from "./styled";
@@ -70,7 +69,13 @@ export const CompanyInfo = ({
       </FormCard>
 
       <div className="linkContainer">
-        {isComeFromROScreens && <BackLink path={routes.searchProspect} />}
+        {isComeFromROScreens && (
+          <BackLinkButton
+            onClick={() => {
+              window.history.go(-2);
+            }}
+          />
+        )}
         <NextStepButton
           justify="flex-end"
           label="Next Step"
