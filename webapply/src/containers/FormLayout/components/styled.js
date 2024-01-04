@@ -17,9 +17,6 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       flexWrap: "wrap"
     },
-    [theme.breakpoints.up("sm")]: {
-      height: "100vh"
-    },
     [theme.breakpoints.up("xl")]: {
       marginLeft: "auto",
       marginRight: "auto",

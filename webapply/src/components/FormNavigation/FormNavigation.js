@@ -2,12 +2,10 @@ import React, { useState, lazy, Suspense, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import cx from "classnames";
 import { useMediaQuery } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 
 import { FormNavigationStep } from "../FormNavigationStep";
 import { FormNavigationAgentStep } from "../FormNavigationAgentStep";
 import { FormNavigationContext } from "./FormNavigationProvider";
-import { IslamicSwitcher } from "../IslamicSwitcher";
 import { AccountInfo } from "./AccountInfo";
 import { Header } from "../Header";
 import routes from "../../routes";
@@ -97,16 +95,6 @@ export const FormNavigationComponent = () => {
       <BgBlob className={classes.blob} />
       <div className={classes.formNavContent}>
         <Header />
-        <IslamicSwitcher
-          className={classes.formNavBg}
-          isSwitcherShow={isSwitcherShow}
-          toggleSwitcherShow={() => setIsSwitcherShow(!isSwitcherShow)}
-        >
-          <Typography variant="h2" component="h2" classes={{ root: classes.sectionTitle }}>
-            What banking option do you prefer?
-          </Typography>
-        </IslamicSwitcher>
-
         {isShowAccountInfo ? (
           <AccountInfo />
         ) : (

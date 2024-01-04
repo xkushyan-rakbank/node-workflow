@@ -45,10 +45,6 @@ export const IslamicSwitcher = ({ children, className, isSwitcherShow, toggleSwi
       </button>
       <div className={cx(className, classes.switcherWrapper)}>
         <div className={classes.children}>{children}</div>
-        <IslamicSwitcherButtons
-          isIslamicBanking={isIslamicBanking}
-          setIsIslamicBanking={setIsIslamicBanking}
-        />
       </div>
     </>
   );

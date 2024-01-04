@@ -479,6 +479,16 @@ h3 {
   width: 25px;
 }
 
+@media (max-width: #{$tabletResolution}px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .show-on-mobile {
+    display: block;
+  }
+}
+
 @media (max-width: #{$tabletResolution}px) and (max-device-width: #{$tabletResolution}px) {
   .hide-on-mobile {
     display: none !important;

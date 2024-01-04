@@ -8,6 +8,7 @@ import { getVideoByAccountType } from "../../../../utils/getVideoByAccountType";
 import { BackgroundVideoPlayer } from "../../../../components/BackgroundVideoPlayer";
 import { useStyles } from "./styled";
 import { detailedAccountRoutesMap } from "../../../../constants";
+import { HeaderButtonGroup } from "../../../../components/HeaderButtonGroup";
 
 export const DetailedAccountComponent = ({
   accountType,
@@ -33,6 +34,9 @@ export const DetailedAccountComponent = ({
       <Helmet>
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
+      <div className={classes.headerButton}>
+        <HeaderButtonGroup />
+      </div>
       <VerticalPagination scrollToSection={scrollToSection}>
         <div ref={firstSection} className="hide-on-mobile">
           <BackgroundVideoPlayer
