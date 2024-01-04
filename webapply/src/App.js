@@ -1,5 +1,6 @@
-import React, { useEffect, Suspense, lazy } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+/* eslint-disable max-len */
+import React, { useEffect, Suspense, lazy, useState } from "react";
+import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -55,6 +56,7 @@ const ApplicantInfoRedirect = lazy(() =>
 );
 
 const App = ({ receiveAppConfig, prospectAutoSave }) => {
+  const [isRouteSet, setIsRoute] = useState(true);
   useEffect(() => {
     receiveAppConfig();
     prospectAutoSave();
@@ -66,87 +68,144 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     }
   }, []);
 
+  const generateRedirectUrl = newPath => {
+    const basePath = process.env.REACT_APP_DIGITALBANK_URL;
+    if (newPath) {
+      window.location.replace(`${basePath}${newPath}`);
+    } else {
+      window.location.replace(basePath + window.location.pathname + window.location.search);
+    }
+  };
+
+  const redirectFunction = location => {
+    const homepageUrlPattern = [
+      "/",
+      `${smeBaseName}/`,
+      routes.quickapplyLanding,
+      routes.comeBackLogin.toLowerCase(),
+      routes.accountsComparison
+    ];
+    const accountUrlPattern = /^\/business\/accounts\/(.+)$/;
+    const accountUrl = /^\/business\/accounts\/?$/;
+    const agentUrlPattern = /^\/agent\/[^/]+(?:\/[^/\d]+)*$/;
+
+    if (accountUrl.test(location.pathname)) {
+      generateRedirectUrl("#products");
+    } else if (agentUrlPattern.test(location.pathname)) {
+      generateRedirectUrl();
+    } else if (accountUrlPattern.test(location.pathname)) {
+      generateRedirectUrl(`${location.pathname}/application-overview${window.location.search}`);
+    } else if (homepageUrlPattern.includes(location.pathname.toLowerCase())) {
+      generateRedirectUrl();
+    }
+  };
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      redirectFunction(location);
+    });
+    return () => unlisten();
+  }, [history]);
+
+  useEffect(() => {
+    redirectFunction(history.location);
+    setIsRoute(true);
+  }, []);
+
   return (
     <MuiThemeProvider theme={theme}>
       <ConnectedRouter history={history}>
         <FormLayout>
           <Suspense fallback={ServerRequestLoadingScreen()}>
-            <Switch>
-              <ProspectProtectedRoute
-                exact
-                path={routes.ApplicationSubmitted}
-                component={ApplicationSubmitted}
-              />
-              <ProtectedRoute
-                exact
-                path={routes.accountsComparison}
-                component={AccountsComparison}
-              />
-              <ProtectedRoute exact path={routes.applicantInfo} component={ApplicantInfo} />
-              <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
-              <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
-              <ProspectProtectedRoute
-                exact
-                path={routes.stakeholdersInfo}
-                component={CompanyStakeholders}
-              />
-              <ProspectProtectedRoute
-                exact
-                path={routes.finalQuestions}
-                component={FinalQuestions}
-              />
-              <ProspectProtectedRoute
-                exact
-                path={routes.uploadDocuments}
-                component={UploadDocuments}
-              />
-              <ProspectProtectedRoute
-                exact
-                path={routes.reUploadDocuments}
-                component={ReUploadDocuments}
-              />
-              <ProspectProtectedRoute
-                exact
-                path={routes.selectServices}
-                component={SelectServices}
-              />
-              <AccountTypeProtectedRoute
-                exact
-                path={routes.applicationOverview}
-                component={ApplicationOverview}
-              />
-              <AccountTypeProtectedRoute
-                exact
-                path={routes.detailedAccount}
-                component={DetailedAccount}
-              />
-              <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
-              <OTPGeneratedProtectedRoute
-                exact
-                path={routes.comeBackLoginVerification}
-                component={ComeBackVerification}
-              />
-              <OTPProtectedRoute exact path={routes.MyApplications} component={MyApplications} />
-              <ProspectProtectedRoute
-                exact
-                path={routes.SubmitApplication}
-                component={SubmitApplication}
-              />
-              <ProtectedRoute path={agentBaseName} component={Agents} />
-              <ProtectedRoute exact path={routes.quickapplyLanding} component={QuickapplyLanding} />
-              <ProtectedRoute exact path={smeBaseName} component={QuickapplyLanding} />
-              <ProtectedRoute exact path="/" component={QuickapplyLanding} />
-              {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
-              <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
-              <Route path={routes.applicationRedirect} component={ApplicationRedirect} />
-              <Route
-                path={routes.applicationComeBackRedirect}
-                component={ApplicationComeBackRedirect}
-              />
-              <Route path={routes.applicantInfoRedirect} component={ApplicantInfoRedirect} />
-              <Route path="*" component={NotFoundPage} />
-            </Switch>
-            <SessionExpiration />
+            {isRouteSet ? (
+              <>
+                <Switch>
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.ApplicationSubmitted}
+                    component={ApplicationSubmitted}
+                  />
+                  <ProtectedRoute
+                    exact
+                    path={routes.accountsComparison}
+                    component={AccountsComparison}
+                  />
+                  <ProtectedRoute exact path={routes.applicantInfo} component={ApplicantInfo} />
+                  <ProspectProtectedRoute exact path={routes.verifyOtp} component={FormConfirm} />
+                  <ProspectProtectedRoute exact path={routes.companyInfo} component={CompanyInfo} />
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.stakeholdersInfo}
+                    component={CompanyStakeholders}
+                  />
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.finalQuestions}
+                    component={FinalQuestions}
+                  />
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.uploadDocuments}
+                    component={UploadDocuments}
+                  />
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.reUploadDocuments}
+                    component={ReUploadDocuments}
+                  />
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.selectServices}
+                    component={SelectServices}
+                  />
+                  <AccountTypeProtectedRoute
+                    exact
+                    path={routes.applicationOverview}
+                    component={ApplicationOverview}
+                  />
+                  <AccountTypeProtectedRoute
+                    exact
+                    path={routes.detailedAccount}
+                    component={DetailedAccount}
+                  />
+                  <ProtectedRoute exact path={routes.comeBackLogin} component={ComeBackLogin} />
+                  <OTPGeneratedProtectedRoute
+                    exact
+                    path={routes.comeBackLoginVerification}
+                    component={ComeBackVerification}
+                  />
+                  <OTPProtectedRoute
+                    exact
+                    path={routes.MyApplications}
+                    component={MyApplications}
+                  />
+                  <ProspectProtectedRoute
+                    exact
+                    path={routes.SubmitApplication}
+                    component={SubmitApplication}
+                  />
+                  <ProtectedRoute path={agentBaseName} component={Agents} />
+                  <ProtectedRoute
+                    exact
+                    path={routes.quickapplyLanding}
+                    component={QuickapplyLanding}
+                  />
+                  <ProtectedRoute exact path={smeBaseName} component={QuickapplyLanding} />
+                  <ProtectedRoute exact path="/" component={QuickapplyLanding} />
+                  {/* <Redirect exact path={smeBaseName} to={routes.quickapplyLanding} />
+                <Redirect exact path="/" to={routes.quickapplyLanding} /> */}
+                  <Route path={routes.applicationRedirect} component={ApplicationRedirect} />
+                  <Route
+                    path={routes.applicationComeBackRedirect}
+                    component={ApplicationComeBackRedirect}
+                  />
+                  <Route path={routes.applicantInfoRedirect} component={ApplicantInfoRedirect} />
+                  <Route path="*" component={NotFoundPage} />
+                </Switch>
+                <SessionExpiration />
+              </>
+            ) : (
+              <></>
+            )}
           </Suspense>
         </FormLayout>
       </ConnectedRouter>
