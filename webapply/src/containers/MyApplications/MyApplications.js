@@ -71,16 +71,11 @@ export const MyApplications = () => {
     [pushDisplayScreenToHistory, dispatch]
   );
 
-  const v2SearchResults = useMemo(
-    () => searchResults.filter(prospect => prospect.prospectVersion === "v2"),
-    [searchResults]
-  );
-
   return (
     <BaseComponent
       getProspectInfo={onGetProspectInfo}
       isLoading={isLoading || loadingConfig}
-      searchResults={v2SearchResults}
+      searchResults={searchResults}
       loadingProspectId={loadingProspectId}
     />
   );

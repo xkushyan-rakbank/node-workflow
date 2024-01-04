@@ -33,17 +33,12 @@ export const SearchProspectPage = ({
     [searchApplications]
   );
 
-  const v2SearchResults = useMemo(
-    () => searchResults.filter(prospect => prospect.prospectVersion === "v2"),
-    [searchResults]
-  );
-
   return (
     <SearchProspect
       onSearch={handleSearch}
       isLoading={isLoading || isEmpty(dataList)}
       isSearchLaunched={isSearchLaunched}
-      searchResults={v2SearchResults}
+      searchResults={searchResults}
       searchError={searchError}
       searchErrorDesc={searchErrorDesc}
     />
