@@ -62,9 +62,11 @@ const InputBase = ({
   };
 
   const handleSpecialCharacterPaste = (event, allowedCharRegex) => {
-    let paste = (event.clipboardData || window.clipboardData).getData("text");
+    let paste = (event.clipboardData || window.clipboardData).getData("text/plain");
+    // Replace non-breaking spaces with regular spaces
+    const textWithSpaces = paste.replace(/\xA0/g, " ");
     const regex = new RegExp(allowedCharRegex, "g");
-    paste = paste.replace(regex, " ");
+    paste = textWithSpaces.replace(regex, " ");
 
     event.preventDefault();
     document.execCommand("insertText", false, paste);
