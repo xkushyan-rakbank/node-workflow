@@ -40,9 +40,6 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
 
   const accountTypeRef = useRef(null);
   const businessButton = useRef(null);
-  const [accountNavTop, setAccountNavTop] = useState(0);
-  const [accountNavLeft, setAccountNavLeft] = useState(0);
-  const [accountNavHeight, setAccountNavHeight] = useState(0);
 
   useEffect(() => {
     if ("scrollRestoration" in history) {
@@ -139,6 +136,16 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
       window.location.href = url;
     }
   };
+
+  useEffect(() => {
+    if (window.location.hash) {
+      const targetElementId = window.location.hash.substring(1);
+      const targetElement = document.getElementById(targetElementId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "auto" });
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -245,7 +252,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           </div>
         </div>
       </div>
-      <Container maxWidth="md" className={classes.mainWrapper}>
+      <Container maxWidth="md" className={classes.mainWrapper} id="products">
         <div
           ref={accountTypeRef}
           className={cx(classes.landingPageHeader, !isAccountTypeSticky ? classes.withPadding : "")}
