@@ -32,7 +32,7 @@ export const rakValuesList = [
       { text: "Host of other banking and lifestyle benefits" }
     ],
     isIncluded: false,
-    cost: 156.56,
+    cost: 156.45,
     value: "RAKvalue SME MAX",
     buttonLabel: "Keep MAX",
     notSelectedLabel: "Upgrade to MAX",
