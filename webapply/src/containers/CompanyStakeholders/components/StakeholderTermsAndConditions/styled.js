@@ -156,7 +156,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   noTitlePaper: {
-    width: "max-content",
+    width: "100%",
     minWidth: "auto",
     minHeight: "450px",
     borderRadius: "8px",
@@ -164,7 +164,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "#ffffff",
     maxWidth: "unset",
     [theme.breakpoints.up("sm")]: {
-      minWidth: "780px", 
+      width: "max-content",
+      minWidth: "780px",
       minHeight: "650px"
     }
   },
