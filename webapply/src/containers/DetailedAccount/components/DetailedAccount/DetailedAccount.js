@@ -35,7 +35,7 @@ export const DetailedAccountComponent = ({
         <link rel="canonical" href={canonicalUrl} />
       </Helmet>
       <div className={classes.headerButton}>
-        <HeaderButtonGroup />
+        <HeaderButtonGroup detailedAccountRoutesMap={detailedAccountRoutesMap} />
       </div>
       <VerticalPagination scrollToSection={scrollToSection}>
         <div ref={firstSection} className="hide-on-mobile">

@@ -8,7 +8,7 @@ import { applicationOverviewRoutesMap, CONVENTIONAL, ISLAMIC } from "../../const
 import { getAccountType, getIsIslamicBanking } from "../../store/selectors/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 
-export const HeaderButtonGroup = () => {
+export const HeaderButtonGroup = ({ detailedAccountRoutesMap }) => {
   const classes = useStyles();
   const accountType = useSelector(getAccountType);
   const pushHistory = useTrackingHistory();
@@ -18,6 +18,7 @@ export const HeaderButtonGroup = () => {
   const handleRedirection = (path, replaceHistory = false) => {
     pushHistory(path, replaceHistory);
   };
+  const route = detailedAccountRoutesMap || applicationOverviewRoutesMap;
 
   return (
     <div className={classes.trackNSwitchAccountBtnWrapper}>
@@ -35,8 +36,8 @@ export const HeaderButtonGroup = () => {
         onClick={() =>
           handleRedirection(
             isIslamic
-              ? applicationOverviewRoutesMap[accountType][CONVENTIONAL] + queryParams
-              : applicationOverviewRoutesMap[accountType][ISLAMIC] + queryParams,
+              ? route[accountType][CONVENTIONAL] + queryParams
+              : route[accountType][ISLAMIC] + queryParams,
             true
           )
         }
