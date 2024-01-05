@@ -93,6 +93,8 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       generateRedirectUrl("#products");
     } else if (agentUrlPattern.test(location.pathname)) {
       generateRedirectUrl();
+    } else if (location.pathname.indexOf("/application-overview") > 0) {
+      generateRedirectUrl();
     } else if (accountUrlPattern.test(location.pathname)) {
       generateRedirectUrl(`${location.pathname}/application-overview${window.location.search}`);
     } else if (homepageUrlPattern.includes(location.pathname.toLowerCase())) {
