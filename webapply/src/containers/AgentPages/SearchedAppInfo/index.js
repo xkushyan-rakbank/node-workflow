@@ -5,7 +5,7 @@ import { getProspectInfoPromisify } from "../../../store/actions/retrieveApplica
 import {
   getSearchResults,
   getProspectOverview,
-  getFilledOverviewSignatories
+  getOverviewSignatories
 } from "../../../store/selectors/searchProspect";
 import { getProspectOverviewPromisify } from "../../../store/actions/searchProspect";
 import { SearchedAppInfoContainer } from "./SearchedAppInfo";
@@ -14,7 +14,7 @@ import { getDocumentsList } from "../../../store/actions/uploadDocuments";
 const mapStateToProps = state => ({
   searchResults: getSearchResults(state),
   prospectOverview: getProspectOverview(state),
-  signatoryInfo: getFilledOverviewSignatories(state)
+  signatoryInfo: getOverviewSignatories(state)
 });
 
 const mapDispatchToProps = {

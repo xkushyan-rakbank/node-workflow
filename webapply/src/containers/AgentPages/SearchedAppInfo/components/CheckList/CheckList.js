@@ -54,7 +54,7 @@ export const CheckList = ({
       {signatoryInfo.length ? (
         signatoryInfo.map((signatory, index) => (
           <div key={signatory.signatoryId}>
-            {!props.isReviewSubmit ? (
+            {!props.isReviewSubmit && signatory.firstName ? (
               <div className={classes.contentWrapper}>
                 <Avatar fullName={signatory.fullName} index={index} />
                 <div className={classes.userInfo}>
