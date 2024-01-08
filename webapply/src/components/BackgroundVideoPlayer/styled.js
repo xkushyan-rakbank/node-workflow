@@ -9,6 +9,7 @@ export const useStyles = makeStyles(theme => ({
     left: 0,
     right: 0,
     transition: "transform 400ms",
+    overflow: "hidden",
     maxHeight: "100vh",
     zIndex: 10,
     [theme.breakpoints.only("xs")]: {
