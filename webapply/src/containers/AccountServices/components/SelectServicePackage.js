@@ -67,7 +67,7 @@ export const SelectServicePackage = ({ setFormFieldValue }) => {
         <Grid item sm={4} className={classes.packageList}>
           <div className={classes.packageListTitle}>
             <h2>RAKvalue SME Max</h2>
-            <p>156.56 AED/month</p>
+            <p>156.45 AED/month</p>
           </div>
           <Button
             variant="outlined"
