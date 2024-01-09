@@ -88,7 +88,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     const accountUrlPattern = /^\/business\/accounts\/(.+)$/;
     const accountUrl = /^\/business\/accounts\/?$/;
     const agentUrlPattern = /^\/agent\/[^/]+(?:\/[^/\d]+)*$/;
-
     if (accountUrl.test(location.pathname)) {
       generateRedirectUrl("#products");
     } else if (agentUrlPattern.test(location.pathname)) {
@@ -100,6 +99,7 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     } else if (homepageUrlPattern.includes(location.pathname.toLowerCase())) {
       generateRedirectUrl();
     }
+    setIsRoute(true);
   };
   useEffect(() => {
     const unlisten = history.listen((location, action) => {
@@ -110,7 +110,6 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
 
   useEffect(() => {
     redirectFunction(history.location);
-    setIsRoute(true);
   }, []);
 
   return (
