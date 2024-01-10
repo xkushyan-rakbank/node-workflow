@@ -10,10 +10,11 @@ export const useBlobColor = (isHideSideBar = false) => {
   const accountType = useSelector(getAccountType);
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const isAccountsComparison = routes.quickapplyLanding === pathname;
-  const isComeback = routes.comeBackLogin === pathname;
+  const isComeback = pathname.indexOf(routes.comeBackLogin) >= 0;
 
   if (isHideSideBar) return NONE;
-  if (!isAccountsComparison && accountType === accountNames.elite && !isComeback) return ELITE;
+  if (isComeback) return STANDART;
+  if (!isAccountsComparison && accountType === accountNames.elite) return ELITE;
   if (!isAccountsComparison && isIslamicBanking) return ISLAMIC;
   return STANDART;
 };
