@@ -345,7 +345,9 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
                   target="_blank"
                   rel="noopener noreferrer"
                   href={
-                    isIslamicLanding ? "/islamicServicePriceGuidePDF.pdf" : servicePricingGuideUrl
+                    isIslamicLanding
+                      ? `${process.env.REACT_APP_PUBLIC_URL || ""}/islamicServicePriceGuidePDF.pdf`
+                      : servicePricingGuideUrl
                   }
                 >
                   Service & Price guide.
@@ -376,7 +378,9 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
                 target="_blank"
                 rel="noopener noreferrer"
                 href={
-                  isIslamicLanding ? "/islamicServicePriceGuidePDF.pdf" : servicePricingGuideUrl
+                  isIslamicLanding
+                    ? `${process.env.REACT_APP_PUBLIC_URL || ""}/islamicServicePriceGuidePDF.pdf`
+                    : servicePricingGuideUrl
                 }
               >
                 Service & Price guide.
