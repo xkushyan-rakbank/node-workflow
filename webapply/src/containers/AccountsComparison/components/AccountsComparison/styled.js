@@ -122,10 +122,11 @@ export const useStyles = makeStyles(theme => ({
     display: "block",
     zIndex: 2,
     height: "260px",
-    backgroundImage: ({ color }) => `url(${blobImages[`${color}S`]})`,
+    backgroundImage: `url(${blobImages["STANDARTS"]})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center bottom",
+    transition: "all 0.2s linear",
     "@media (max-width: 375px) and (height: 548px)": {
       height: "260px!important"
     },
@@ -204,13 +205,18 @@ export const useStyles = makeStyles(theme => ({
       lineHeight: "32px",
       color: "#8D0C10",
       padding: "18px 0px 18px 24px",
-      margin: 0,
-    },
+      margin: 0
+    }
   },
   featureListWrapper: {
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       justifyContent: "space-between",
+      "&.islamicAccountType": {
+        "& div:nth-child(3)": {
+          background: "#E6F2EC"
+        }
+      },
       "& div:first-child": {
         textAlign: "left !important",
         paddingLeft: "20px",
@@ -228,7 +234,7 @@ export const useStyles = makeStyles(theme => ({
         padding: "17px 20px",
       },
       "& div:nth-child(3)": {
-        background: "#FCE8E9", 
+        background: "#FCE8E9",
         padding: "17px 20px",
       },
       "& div": {
@@ -263,6 +269,17 @@ export const useStyles = makeStyles(theme => ({
     background: "rgba(245, 245, 245, 0.50)",
     textAlign: "center",
     whiteSpace: "pre-wrap",
+    "&.islamicAccountType": {
+      "&:nth-child(2)": {
+        background: "rgba(230, 242, 236, 0.20)"
+      },
+      "&:nth-child(3)": {
+        background: "rgba(230, 242, 236, 0.60)"
+      },
+      "&:last-child": {
+        background: "#E6F2EC"
+      }
+    },
     "&:first-child": {
       textAlign: "left",
       whiteSpace: "break-spaces"
@@ -301,6 +318,11 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "16px",
     margin: 0,
     marginTop: "40px",
+    "&.islamicFeatureInfo": {
+      "& a": {
+        color: "#0B5D34"
+      }
+    },
     "& p": {
       margin: 0
     },
@@ -394,6 +416,7 @@ export const useStyles = makeStyles(theme => ({
     top: 16,
     width: "100%",
     zIndex: 137,
+    transition: "all 0.2s linear",
     [theme.breakpoints.up("sm")]: {
       top: 40
     }
@@ -429,9 +452,13 @@ export const useStyles = makeStyles(theme => ({
     color: "#1F1F1F",
     border: "1px solid #1F1F1F",
   },
-  white: {
-    color: "#FFFFFF",
+  whiteTrackNSwitchAccountBtn: {
+    color: "#000 !important",
+    background: "#FFF",
     border: "1px solid #FFF",
+    "&:hover": {
+      background: "rgba(255, 255, 255, 0.5)"
+    }
   },
   accountInfoMain: {
     position: "absolute",
@@ -447,13 +474,11 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center",
 
-  
-
     [theme.breakpoints.between("sm", "md")]: {
       top: "20%",
       left: "65%!important",
       transform: "translateX(-50%)",
-      width: "80%", 
+      width: "80%",
 
       "@media (orientation: portrait)": {
         top: "50%",
@@ -496,7 +521,6 @@ export const useStyles = makeStyles(theme => ({
           fontSize: "3.75rem",
           left: "35%",
         }
-      
       },
       [theme.breakpoints.up("lg")]: {
         left: "65%",
@@ -563,7 +587,7 @@ export const useStyles = makeStyles(theme => ({
       color: "#fff"
     },
     [theme.breakpoints.between("sm", "md")]: {
-      padding: "20px 10px !important", 
+      padding: "20px 10px !important",
       width: "100%"
     },
     [theme.breakpoints.only("xs")]: {
@@ -646,6 +670,73 @@ export const useStyles = makeStyles(theme => ({
       fontSize: "0.875rem",
       fontWeight: 400,
       lineHeight: "20px"
+    }
+  },
+  hideLandingPageHeader: {
+    opacity: 0
+    // transition: "all 0.2s ease-in-out",
+  },
+  navInMiddleOfScroll: {
+    top: "0px",
+    background: "linear-gradient(268deg, #EB151D -4.66%, #CD000E 82.62%)",
+
+    padding: "20px 0px 30px"
+    // transition: "all 0.2s linear",
+  },
+  showNavBarDescription: {
+    display: "block !important"
+  },
+  navBarDescription: {
+    textAlign: "center",
+    display: "none",
+    // transition: "all 0.2s ease-in-out",
+    "& h3": {
+      fontSize: "1.25rem",
+      fontWeight: 500,
+      color: "#FFF"
+    },
+
+    [theme.breakpoints.up("sm")]: {
+      "& h3": {
+        fontSize: "1.75rem",
+        fontWeight: 500,
+        margin: 0,
+        color: "#FFF"
+      }
+    }
+  },
+  startStickyPos: {
+    marginTop: "50px"
+  },
+  redBannerStyle: {
+    backgroundImage: ({ color }) =>
+      color === STANDART
+        ? "linear-gradient(268deg, #EB151D -4.66%, #CD000E 82.62%)"
+        : "linear-gradient(270deg, #118D4B 2.05%, #05631A 100%)",
+    paddingBottom: "30px",
+    transition: "all 0.2s linear",
+    "& h3": {
+      paddingTop: "100px",
+      color: "#FFF",
+      textAlign: "center"
+    }
+  },
+  descForAccounts: {
+    "& p": {
+      fontSize: "1rem",
+      fontWeight: 500,
+      color: "#757575",
+      lineHeight: "24px"
+    },
+
+    [theme.breakpoints.up("sm")]: {
+      "& p": {
+        fontSize: "1.25rem",
+        fontWeight: 400,
+        margin: 0,
+        color: "#757575",
+        lineHeight: "28px"
+      }
     }
   }
 }));

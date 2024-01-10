@@ -16,8 +16,12 @@ export const useStyles = makeStyles(theme => ({
     },
     "& button": {
       zIndex: "11",
-      color: "#fff",
-      borderColor: "#fff"
+      color: "#000",
+      background: "#FFF",
+      border: "1px solid #FFF",
+      "&:hover": {
+        background: "rgba(255, 255, 255, 0.5)"
+      }
     },
     "@media (max-width: 1023px)": {
       "& button": {

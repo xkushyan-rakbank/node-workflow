@@ -2,8 +2,6 @@
 import React from "react";
 import { Button } from "@material-ui/core";
 import cx from "classnames";
-import { ReactComponent as NavigationLeft } from "../../../../assets/icons/whiteArrow.svg";
-import { SubmitButton } from "../../../../components/Buttons/SubmitButton";
 import { ContainedButton } from "../../../../components/Buttons/ContainedButton";
 import { useStyles } from "./styled";
 //import { ReactComponent as CheckIcon } from "../../../../assets/images/icons/circle_checked_o.svg";
@@ -15,7 +13,8 @@ export const AccountTypeCardComponent = ({
   handleSetAccountType,
   accountType,
   accountTypeName,
-  isSticky
+  isSticky,
+  isIslamic
 }) => {
   const classes = useStyles();
   return (
@@ -34,7 +33,7 @@ export const AccountTypeCardComponent = ({
           }}
           withRightArrow
           label={applyNowButton}
-          handleClick={() => handleSetAccountType(accountTypeName)}
+          handleClick={() => handleSetAccountType(accountTypeName, isIslamic)}
         />
       )}
     </>

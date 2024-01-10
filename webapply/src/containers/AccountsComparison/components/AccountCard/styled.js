@@ -10,6 +10,17 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     textAlign: "center",
     gap: "16px",
+    "&.islamicAccountType": {
+      border: 0,
+      "&:nth-child(3)": {
+        border: 0,
+        background: "rgba(230, 242, 236, 0.20)"
+      },
+      "&:nth-child(4)": {
+        border: 0,
+        background: "#E6F2EC"
+      }
+    },
     "&:nth-child(3)": {
       background: "rgba(253, 231, 232, 0.20)",
       border: "0.5px solid #E6E6E6"
@@ -28,6 +39,17 @@ export const useStyles = makeStyles(theme => ({
       justifyContent: "space-between",
       alignItems: "center",
       textAlign: "center",
+      "&.islamicAccountType": {
+        "&:nth-child(2)": {
+          background: "rgba(230, 242, 236, 0.20)"
+        },
+        "&:nth-child(3)": {
+          background: "rgba(230, 242, 236, 0.60)"
+        },
+        "&:last-child": {
+          background: "#E6F2EC"
+        }
+      },
       "&:first-child": {
         background: "rgba(245, 245, 245, 0.50)"
       },
@@ -62,6 +84,7 @@ export const useStyles = makeStyles(theme => ({
     height: "165px",
     padding: "16px 10px",
     gap: "16px",
+    transition: "all 0.2s linear",
 
     [theme.breakpoints.up("sm")]: {
       height: "auto",

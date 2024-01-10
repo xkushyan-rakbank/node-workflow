@@ -7,6 +7,7 @@ import cx from "classnames";
 import { Button, Container } from "@material-ui/core";
 import { AccountCard } from "../AccountCard";
 import { useTrackingHistory } from "../../../../utils/useTrackingHistory";
+import { updateProspect } from "../../../../store/actions/appConfig";
 import { accountsInfo } from "../../../../components/FormNavigation/AccountInfo/constants";
 import { ReactComponent as BgBlob } from "../../../../assets/images/bg-blobs/bg-blob.svg";
 import { landingVideo } from "../../../../constants/videos";
@@ -24,6 +25,7 @@ import { COMPARED_ACCOUNTS_TYPES } from "../TableCompare/components/StyledTableB
 import { useStyles } from "./styled";
 
 export const AccountsComparisonComponent = ({ handleSetAccountType, servicePricingGuideUrl }) => {
+  const queryParams = useLocation().search;
   const blobColor = useBlobColor();
   const classes = useStyles({
     color: blobColor
@@ -32,20 +34,24 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [mobileAccounts, setMobileAccounts] = useState(COMPARED_ACCOUNTS_TYPES.starter);
-
-  const [isAccountTypeSticky, setIsAccountTypeSticky] = useState(false);
-
-  const [isFullyScrolled, setIsFullyScrolled] = useState(false);
-
   const accountTypeRef = useRef(null);
   const businessButton = useRef(null);
+  const [mobileAccounts, setMobileAccounts] = useState(COMPARED_ACCOUNTS_TYPES.starter);
+  const [isAccountTypeSticky, setIsAccountTypeSticky] = useState(false);
+  const [isFullyScrolled, setIsFullyScrolled] = useState(false);
+  const [showRedBanner, setShowRedBanner] = useState(false);
+  const [isIslamicLanding, setIsIslamicLanding] = useState(false);
+  const handleRedirection = path => {
+    pushHistory(path);
+  };
 
-  useEffect(() => {
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
+  const checkIfScrolled = () => {
+    if (window.scrollY >= window.innerHeight - 40) {
+      setIsFullyScrolled(true);
+    } else {
+      setIsFullyScrolled(false);
     }
-  }, []);
+  };
 
   useLayoutEffect(() => {
     if (window.scrollY === 0) {
@@ -57,13 +63,6 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     };
   }, []);
 
-  const checkIfScrolled = () => {
-    if (window.scrollY >= window.innerHeight - 40) {
-      setIsFullyScrolled(true);
-    } else {
-      setIsFullyScrolled(false);
-    }
-  };
   useLayoutEffect(() => {
     const accountTypeDiv = accountTypeRef?.current;
     const observer = new IntersectionObserver(
@@ -97,6 +96,20 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
   }, [businessButton]);
 
   useEffect(() => {
+    if (isFullyScrolled) {
+      if (isAccountTypeSticky) {
+        setShowRedBanner(false);
+      }
+    }
+  }, [isFullyScrolled, isAccountTypeSticky]);
+
+  useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
     checkIfScrolled();
     window.addEventListener("scroll", checkIfScrolled);
 
@@ -105,11 +118,21 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     };
   });
 
-  const handleRedirection = path => {
-    pushHistory(path);
-  };
-
-  const queryParams = useLocation().search;
+  useEffect(() => {
+    if (window.location.hash) {
+      const targetElementId = window.location.hash.substring(1);
+      const targetElement = document.getElementById(targetElementId);
+      if (targetElement) {
+        setShowRedBanner(true);
+        const offsetTop = targetElement.offsetTop - 1;
+        document.body.classList.remove("no-scroll");
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "auto"
+        });
+      }
+    }
+  }, []);
 
   const handleClick = () => {
     /**
@@ -125,6 +148,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
 
     document.body.classList.remove("no-scroll");
     accountTypeRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    setShowRedBanner(true);
     dispatch(sendGoogleAnalyticsMetrics(GA_EVENTS.LANDING_PAGE_ACCOUNT_CHOSEN));
   };
 
@@ -137,15 +161,14 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
     }
   };
 
-  useEffect(() => {
-    if (window.location.hash) {
-      const targetElementId = window.location.hash.substring(1);
-      const targetElement = document.getElementById(targetElementId);
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: "auto" });
-      }
-    }
-  }, []);
+  const handleLandingIslamicSwitch = () => {
+    setIsIslamicLanding(!isIslamicLanding);
+    dispatch(
+      updateProspect({
+        "prospect.applicationInfo.islamicBanking": !isIslamicLanding
+      })
+    );
+  };
 
   return (
     <>
@@ -182,7 +205,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <div className={classes.accountInfoNavLinks}>
             <Link to={routes.quickapplyLanding + queryParams}>
               <img
-                src={isFullyScrolled ? StandardRedLogo : StandardLogo}
+                src={!isFullyScrolled || showRedBanner ? StandardLogo : StandardRedLogo}
                 alt="logo"
                 className={classes.logo}
               />
@@ -192,24 +215,28 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
                 variant="outlined"
                 className={cx(
                   classes.trackNSwitchAccountBtn,
-                  isFullyScrolled ? classes.black : classes.white
+                  isFullyScrolled && !showRedBanner
+                    ? classes.black
+                    : classes.whiteTrackNSwitchAccountBtn
                 )}
                 onClick={() => handleRedirection(routes.comeBackLogin)}
               >
                 Track my application
               </Button>
-              {/* <Button
-                variant="outlined"
-                className={cx(
-                  classes.trackNSwitchAccountBtn,
-                  isScrollPast800 ? classes.black : classes.white
-                )}
-                onClick={() =>
-                  handleRedirection(detailedAccountRoutesMap[accountType][ISLAMIC] + queryParams)
-                }
-              >
-                Switch to RAKislamic
-              </Button> */}
+              {isFullyScrolled && (
+                <Button
+                  variant="outlined"
+                  className={cx(
+                    classes.trackNSwitchAccountBtn,
+                    isFullyScrolled && !showRedBanner
+                      ? classes.black
+                      : classes.whiteTrackNSwitchAccountBtn
+                  )}
+                  onClick={() => handleLandingIslamicSwitch()}
+                >
+                  {isIslamicLanding ? "Switch to Conventional" : "Switch to RAKislamic"}
+                </Button>
+              )}
             </div>
           </div>
         </nav>
@@ -229,12 +256,8 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             >
               Track my Application
             </Button>
-            {/* <Button variant="outlined" className={classes.navButton}>
-              Switch to RAKIslamic
-            </Button> */}
           </div>
         </div>
-
         <div className={classes.accountInfoMain}>
           <h2>Let’s get down to business</h2>
           <p>How can we help you?</p>
@@ -252,73 +275,116 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           </div>
         </div>
       </div>
-      <Container maxWidth="md" className={classes.mainWrapper} id="products">
+      <div id="products">
         <div
           ref={accountTypeRef}
-          className={cx(classes.landingPageHeader, !isAccountTypeSticky ? classes.withPadding : "")}
+          className={cx(
+            classes.landingPageHeader,
+            !isAccountTypeSticky ? classes.withPadding : "",
+            isFullyScrolled && showRedBanner ? classes.redBannerStyle : ""
+          )}
         >
-          <h3>Whatever the size of your business, we’ve got the account for you</h3>
-          <p>Available for conventional or Islamic banking.</p>
+          <Container maxWidth="md">
+            <h3>Whatever the size of your business, we’ve got the account for you</h3>
+            {!showRedBanner && <p>Available for conventional or Islamic banking.</p>}
+            <div className={classes.navOutline}>
+              <Button
+                variant="outlined"
+                className={cx(classes.navButton, classes.whiteTrackNSwitchAccountBtn)}
+                onClick={() => handleRedirection(routes.comeBackLogin)}
+              >
+                Track my Application
+              </Button>
+              {isFullyScrolled && (
+                <Button
+                  variant="outlined"
+                  className={cx(classes.navButton, classes.whiteTrackNSwitchAccountBtn)}
+                  onClick={() => handleLandingIslamicSwitch()}
+                >
+                  {isIslamicLanding ? "Switch to Conventional" : "Switch to RAKislamic"}
+                </Button>
+              )}
+            </div>
+          </Container>
         </div>
-        <div className={classes.stickyDiv}>
-          <AccountCard
-            handleSetAccountType={handleSetAccountType}
-            accountSticky={isAccountTypeSticky}
-            mobileAccounts={mobileAccounts}
-            onChangeMobileAccounts={newComparisonData => setMobileAccounts(newComparisonData)}
+        <Container className={classes.mainWrapper} maxWidth="md">
+          {showRedBanner && (
+            <p className={classes.descForAccounts}>
+              Available for conventional or Islamic banking.
+            </p>
+          )}
+          <div className={classes.stickyDiv} id="stickyDiv">
+            <AccountCard
+              handleSetAccountType={handleSetAccountType}
+              accountSticky={isAccountTypeSticky}
+              mobileAccounts={mobileAccounts}
+              onChangeMobileAccounts={newComparisonData => setMobileAccounts(newComparisonData)}
+            />
+          </div>
+          <AccountFeatureListing
+            title={"Features"}
+            featureData={featuresDataList}
+            mobileAccountsData={mobileAccounts}
           />
-        </div>
-        <AccountFeatureListing
-          title={"Features"}
-          featureData={featuresDataList}
-          mobileAccountsData={mobileAccounts}
-        />
-        <AccountFeatureListing
-          title={"Perks"}
-          featureData={perksDataRows}
-          mobileAccountsData={mobileAccounts}
-        />
-        <AccountFeatureListing
-          title={"Fees & charges"}
-          featureData={feesChargesDataRows}
-          mobileAccountsData={mobileAccounts}
-        />
-        <div className={classes.featureDataInfo}>
-          <div className={classes.featureInfo}>
-            <p>*Waiver only applies to RAKBANK charges.</p>
+          <AccountFeatureListing
+            title={"Perks"}
+            featureData={perksDataRows}
+            mobileAccountsData={mobileAccounts}
+          />
+          <AccountFeatureListing
+            title={"Fees & charges"}
+            featureData={feesChargesDataRows}
+            mobileAccountsData={mobileAccounts}
+          />
+          <div className={classes.featureDataInfo}>
+            <div className={cx(classes.featureInfo, { islamicFeatureInfo: isIslamicLanding })}>
+              <p>*Waiver only applies to RAKBANK charges.</p>
+              <p>
+                **Services are part of RAKValue SME PLUS and MAX Packages. Please refer to the{" "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={
+                    isIslamicLanding ? "/islamicServicePriceGuidePDF.pdf" : servicePricingGuideUrl
+                  }
+                >
+                  Service & Price guide.
+                </a>
+              </p>
+            </div>
+            <br />
+            <div>
+              <p>For RAKstarter and Business Current Account customers:</p>
+              <ul>
+                <li>
+                  {
+                    "If the monthly average credit balance is greater than or equal to AED 250,000.00 the monthly maintenance fee will be waived, but the Digital Banking fee will apply."
+                  }
+                </li>
+                <li>
+                  {
+                    "If the monthly average credit balance is less than AED 250,000.00 the monthly maintenance fee will apply, but the Digital Banking fee will be waived."
+                  }
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className={cx(classes.featureInfo, { islamicFeatureInfo: isIslamicLanding })}>
             <p>
-              **Services are part of RAKValue SME PLUS and MAX Packages. Please refer to the{" "}
-              <a target="_blank" rel="noopener noreferrer" href={servicePricingGuideUrl}>
+              Note: The above charges include 5% VAT. For additional details, please see our&nbsp;
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={
+                  isIslamicLanding ? "/islamicServicePriceGuidePDF.pdf" : servicePricingGuideUrl
+                }
+              >
                 Service & Price guide.
               </a>
             </p>
           </div>
-          <br />
-          <div>
-            <p>For RAKstarter and Business Current Account customers:</p>
-            <ul>
-              <li>
-                {
-                  "If the monthly average credit balance is greater than or equal to AED 250,000.00 the monthly maintenance fee will be waived, but the Digital Banking fee will apply."
-                }
-              </li>
-              <li>
-                {
-                  "If the monthly average credit balance is less than AED 250,000.00 the monthly maintenance fee will apply, but the Digital Banking fee will be waived."
-                }
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className={classes.featureInfo}>
-          <p>
-            Note: The above charges include 5% VAT. For additional details, please see our&nbsp;
-            <a target="_blank" rel="noopener noreferrer" href={servicePricingGuideUrl}>
-              Service & Price guide.
-            </a>
-          </p>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </>
   );
 };

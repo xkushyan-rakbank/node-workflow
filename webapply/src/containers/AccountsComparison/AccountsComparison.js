@@ -4,7 +4,12 @@ import { useLocation } from "react-router-dom";
 
 import { accountTypes } from "./components/TableCompare/constants";
 import { AccountsComparisonComponent } from "./components/AccountsComparison/AccountsComparison";
-import { applicationOverviewRoutesMap, CONVENTIONAL, DEFAULT_REFERRAL_NAME } from "../../constants";
+import {
+  applicationOverviewRoutesMap,
+  CONVENTIONAL,
+  DEFAULT_REFERRAL_NAME,
+  ISLAMIC
+} from "../../constants";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { resetProspect } from "../../store/actions/appConfig";
 
@@ -39,19 +44,23 @@ export const AccountsComparisonContainer = ({
   const [selectedAccount, setSelectedAccount] = useState(accountTypes.starter.name);
 
   const goto = useCallback(
-    (accountType) => {
+    (accountType, isIslamicVal) => {
       if (queryParams) {
-        pushHistory(applicationOverviewRoutesMap[accountType][CONVENTIONAL] + queryParams);
+        isIslamicVal
+          ? pushHistory(applicationOverviewRoutesMap[accountType][ISLAMIC] + queryParams)
+          : pushHistory(applicationOverviewRoutesMap[accountType][CONVENTIONAL] + queryParams);
       } else {
-        pushHistory(applicationOverviewRoutesMap[accountType][CONVENTIONAL]);
+        isIslamicVal
+          ? pushHistory(applicationOverviewRoutesMap[accountType][ISLAMIC])
+          : pushHistory(applicationOverviewRoutesMap[accountType][CONVENTIONAL]);
       }
     },
     [pushHistory]
   );
 
   const handleSetAccountType = useCallback(
-    (accountType) => {
-      goto(accountType);
+    (accountType, isIslamicVal) => {
+      goto(accountType, isIslamicVal);
       setSelectedAccount(accountType);
     },
     [setSelectedAccount]
