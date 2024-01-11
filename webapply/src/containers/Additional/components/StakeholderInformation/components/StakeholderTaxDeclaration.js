@@ -134,7 +134,7 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
               otherwise: Yup.string().nullable()
             }),
             remarks: Yup.string().when("reasonForTINNotAvailable", {
-              is: reasonForTINNotAvailable => reasonForTINNotAvailable === "C-NO TIN REQD",
+              is: reasonForTINNotAvailable => reasonForTINNotAvailable === "B-UNABLE GET TIN",
               then: Yup.string()
                 .required(getRequiredMessage("Remarks"))
                 .max(500, "Maximum ${max} characters allowed"),
@@ -250,7 +250,7 @@ export const StakeholderTaxDeclarations = ({ id, refs }) => {
                             const showRemarks =
                               hideAnotherCountryTaxField &&
                               values.taxDetails[index]?.reasonForTINNotAvailable ===
-                                "C-NO TIN REQD";
+                                "B-UNABLE GET TIN";
                             return (
                               <Grid key={index} container spacing={3}>
                                 {index > 0 && (
