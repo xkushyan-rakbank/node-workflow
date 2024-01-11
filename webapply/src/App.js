@@ -88,8 +88,13 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
     const accountUrlPattern = /^\/business\/accounts\/(.+)$/;
     const accountUrl = /^\/business\/accounts\/?$/;
     const agentUrlPattern = /^\/agent\/[^/]+(?:\/[^/\d]+)*$/;
+    const checkIfRoInitiated = window.location.search.indexOf("rocode") > 0;
+    if (checkIfRoInitiated) {
+      setIsRoute(true);
+      return;
+    }
     if (accountUrl.test(location.pathname)) {
-      generateRedirectUrl("#products");
+      generateRedirectUrl(`#products${window.location.search}`);
     } else if (agentUrlPattern.test(location.pathname)) {
       generateRedirectUrl();
     } else if (location.pathname.indexOf("/application-overview") > 0) {
