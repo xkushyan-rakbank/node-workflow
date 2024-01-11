@@ -439,7 +439,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
             }}
             allowedCharRegex={ALLOWED_CHAR_REGEX}
             disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
-            showEditIcon={!displayFields?.mothersMaidenName ? true : false}
             fieldDescription={"Enter Mother's maiden name as per your passport"}
           />
         </Grid>
