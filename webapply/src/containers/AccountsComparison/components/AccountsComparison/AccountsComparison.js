@@ -11,8 +11,10 @@ import { updateProspect } from "../../../../store/actions/appConfig";
 import { accountsInfo } from "../../../../components/FormNavigation/AccountInfo/constants";
 import { ReactComponent as BgBlob } from "../../../../assets/images/bg-blobs/bg-blob.svg";
 import { landingVideo } from "../../../../constants/videos";
-import StandardLogo from "../../../../assets/images/logo-standart.svg";
-import StandardRedLogo from "../../../../assets/images/logo-red.svg";
+import { ReactComponent as StandardLogo } from "../../../../assets/images/logo-standart.svg";
+import { ReactComponent as StandardRedLogo } from "../../../../assets/images/logo-red.svg";
+import { ReactComponent as IslamicLogo } from "../../../../assets/images/logo-islamic.svg";
+import { ReactComponent as IslamicGreenLogo } from "../../../../assets/images/islamic_logo_colored.svg";
 import { featuresDataList, feesChargesDataRows, perksDataRows } from "../../constants";
 import { AccountFeatureListing } from "./AccountFeatureListing";
 import routes, { smeBaseName } from "../../../../routes";
@@ -204,11 +206,23 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
         >
           <div className={classes.accountInfoNavLinks}>
             <Link to={routes.quickapplyLanding + queryParams}>
-              <img
-                src={!isFullyScrolled || showRedBanner ? StandardLogo : StandardRedLogo}
-                alt="logo"
-                className={classes.logo}
-              />
+              {(() => {
+                if (isIslamicLanding) {
+                  return showRedBanner ? (
+                    <IslamicLogo className={classes.islamicLogo} alt="logo" />
+                  ) : !isFullyScrolled ? (
+                    <StandardLogo className={classes.logo} alt="logo" />
+                  ) : (
+                    <IslamicGreenLogo className={classes.islamicLogo} alt="logo" />
+                  );
+                } else {
+                  return !isFullyScrolled || showRedBanner ? (
+                    <StandardLogo className={classes.logo} alt="logo" />
+                  ) : (
+                    <StandardRedLogo className={classes.logo} alt="logo" />
+                  );
+                }
+              })()}
             </Link>
             <div className={classes.trackNSwitchAccountBtnWrapper}>
               <Button
@@ -287,24 +301,26 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
           <Container maxWidth="md">
             <h3>Whatever the size of your business, we’ve got the account for you</h3>
             {!showRedBanner && <p>Available for conventional or Islamic banking.</p>}
-            <div className={classes.navOutline}>
-              <Button
-                variant="outlined"
-                className={cx(classes.navButton, classes.whiteTrackNSwitchAccountBtn)}
-                onClick={() => handleRedirection(routes.comeBackLogin)}
-              >
-                Track my Application
-              </Button>
-              {isFullyScrolled && (
+            {isFullyScrolled && showRedBanner && (
+              <div className={classes.navOutline}>
                 <Button
                   variant="outlined"
                   className={cx(classes.navButton, classes.whiteTrackNSwitchAccountBtn)}
-                  onClick={() => handleLandingIslamicSwitch()}
+                  onClick={() => handleRedirection(routes.comeBackLogin)}
                 >
-                  {isIslamicLanding ? "Switch to Conventional" : "Switch to RAKislamic"}
+                  Track my Application
                 </Button>
-              )}
-            </div>
+                {isFullyScrolled && (
+                  <Button
+                    variant="outlined"
+                    className={cx(classes.navButton, classes.whiteTrackNSwitchAccountBtn)}
+                    onClick={() => handleLandingIslamicSwitch()}
+                  >
+                    {isIslamicLanding ? "Switch to Conventional" : "Switch to RAKislamic"}
+                  </Button>
+                )}
+              </div>
+            )}
           </Container>
         </div>
         <Container className={classes.mainWrapper} maxWidth="md">
@@ -314,6 +330,27 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             </p>
           )}
           <div className={classes.stickyDiv} id="stickyDiv">
+            <div
+              className={cx(
+                classes.stickyTrackNSwitchBtnMobile,
+                isFullyScrolled && showRedBanner ? classes.hideStickySwitchBtn : ""
+              )}
+            >
+              <Button
+                variant="outlined"
+                className={cx(classes.trackNSwitchAccountBtn, classes.black)}
+                onClick={() => handleRedirection(routes.comeBackLogin)}
+              >
+                Track my Application
+              </Button>
+              <Button
+                variant="outlined"
+                className={cx(classes.trackNSwitchAccountBtn, classes.black)}
+                onClick={() => handleLandingIslamicSwitch()}
+              >
+                {isIslamicLanding ? "Switch to Conventional" : "Switch to RAKislamic"}
+              </Button>
+            </div>
             <AccountCard
               handleSetAccountType={handleSetAccountType}
               accountSticky={isAccountTypeSticky}

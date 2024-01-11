@@ -15,6 +15,6 @@ export const useBlobColor = (isHideSideBar = false) => {
   if (isHideSideBar) return NONE;
   if (isComeback) return STANDART;
   if (!isAccountsComparison && accountType === accountNames.elite) return ELITE;
-  if (!isAccountsComparison && isIslamicBanking) return ISLAMIC;
+  if (isIslamicBanking) return ISLAMIC;
   return STANDART;
 };

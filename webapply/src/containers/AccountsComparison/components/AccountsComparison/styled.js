@@ -29,12 +29,12 @@ export const useStyles = makeStyles(theme => ({
     textDecoration: "underline"
   },
   landingPageHeader: {
-    marginBottom: "40px",
+    marginBottom: "20px",
     "& h3": {
       fontSize: "1.25rem",
       fontWeight: 500,
       marginBottom: "8px",
-      paddingTop: "150px",
+      paddingTop: "100px",
       color: "#1F1F1F"
     },
     "& p": {
@@ -45,6 +45,7 @@ export const useStyles = makeStyles(theme => ({
     },
 
     [theme.breakpoints.up("sm")]: {
+      marginBottom: "40px",
       "& h3": {
         fontSize: "1.75rem",
         fontWeight: 500,
@@ -223,7 +224,7 @@ export const useStyles = makeStyles(theme => ({
         color: "#1F1F1F",
         fontSize: "12px",
         fontWeight: 500,
-        lineHeight: "16px",
+        lineHeight: "16px"
       },
       "& div:nth-child(1)": {
         background: "#F7F8F9",
@@ -231,11 +232,11 @@ export const useStyles = makeStyles(theme => ({
       },
       "& div:nth-child(2)": {
         background: "rgba(252, 232, 233, 0.20)",
-        padding: "17px 20px",
+        padding: "17px 20px"
       },
       "& div:nth-child(3)": {
         background: "#FCE8E9",
-        padding: "17px 20px",
+        padding: "17px 20px"
       },
       "& div": {
         flexGrow: 1,
@@ -256,8 +257,8 @@ export const useStyles = makeStyles(theme => ({
               height: "24px"
             }
           }
-        },
-      },
+        }
+      }
     }
   },
   featureList: {
@@ -298,7 +299,7 @@ export const useStyles = makeStyles(theme => ({
       height: "20px"
     },
     [theme.breakpoints.only("md")]: {
-      padding: "20px 15px",
+      padding: "20px 15px"
     },
     [theme.breakpoints.up("md")]: {
       "& img": {
@@ -309,7 +310,7 @@ export const useStyles = makeStyles(theme => ({
   },
   infoText: {
     marginTop: "24px",
-    whiteSpace: "pre-wrap",
+    whiteSpace: "pre-wrap"
   },
   featureInfo: {
     color: "#847F7F",
@@ -388,7 +389,7 @@ export const useStyles = makeStyles(theme => ({
         paddingLeft: "40px",
         whiteSpace: "pre-line",
         "@media (orientation: landscape)": {
-          fontSize: "1.75rem",
+          fontSize: "1.75rem"
         }
       }
     },
@@ -428,29 +429,29 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       paddingLeft: "31px",
       "& div:nth-child(2)": {
-        display: "none",
-      },
+        display: "none"
+      }
     },
     [theme.breakpoints.up("sm")]: {
       paddingLeft: "60px",
-      paddingRight: "80px",
-    },
+      paddingRight: "80px"
+    }
   },
   trackNSwitchAccountBtnWrapper: {
     display: "inline-flex",
     alignItems: "baseline",
-    gap: "12px",
+    gap: "12px"
   },
   trackNSwitchAccountBtn: {
     fontSize: "1rem",
     fontWeight: 500,
     lineHeight: "22px",
     borderRadius: "21px",
-    textTransform: "none",
+    textTransform: "none"
   },
   black: {
     color: "#1F1F1F",
-    border: "1px solid #1F1F1F",
+    border: "1px solid #1F1F1F"
   },
   whiteTrackNSwitchAccountBtn: {
     color: "#000 !important",
@@ -514,12 +515,12 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "80px",
         "@media (orientation: landscape)": {
           fontSize: "6rem",
-          left: "65%",
+          left: "65%"
         },
 
         "@media (orientation: portrait)": {
           fontSize: "3.75rem",
-          left: "35%",
+          left: "35%"
         }
       },
       [theme.breakpoints.up("lg")]: {
@@ -527,8 +528,8 @@ export const useStyles = makeStyles(theme => ({
         // width: "708px",
         letterSpacing: " -5.5px",
         fontSize: "6rem",
-        lineHeight: "100px",
-      },
+        lineHeight: "100px"
+      }
     },
 
     "& p": {
@@ -545,8 +546,8 @@ export const useStyles = makeStyles(theme => ({
         fontSize: "2rem",
         fontWeight: 500,
         lineHeight: "40px",
-        color: "#FFFFFF",
-      },
+        color: "#FFFFFF"
+      }
     },
 
     [theme.breakpoints.up("md")]: {
@@ -554,8 +555,8 @@ export const useStyles = makeStyles(theme => ({
       top: "55% !important",
       left: "65% !important",
       transform: "translate(-55%,-65%)",
-      width: "50%",
-    },
+      width: "50%"
+    }
   },
   btnWrapper: {
     display: "flex",
@@ -593,8 +594,8 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.only("xs")]: {
       padding: "20px 40px",
       borderRadius: "100px",
-      background: "#fff",
-    },
+      background: "#fff"
+    }
   },
   accountInfoNavScrolled: {
     backgroundColor: "#FFFFFF",
@@ -609,14 +610,25 @@ export const useStyles = makeStyles(theme => ({
       position: "fixed",
       top: 0,
       paddingTop: "24px",
-      boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
-    },
+      boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)"
+    }
   },
   logo: {
+    transition: "all 0.2s linear",
     [theme.breakpoints.only("xs")]: {
       width: "110px",
-      height: "50px",
+      height: "50px"
+    }
+  },
+  islamicLogo: {
+    transition: "all 0.2s linear",
+    [theme.breakpoints.only("xs")]: {
+      width: "110px",
+      height: "50px"
     },
+    "@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)": {
+      width: "200px"
+    }
   },
   navOutline: {
     display: "flex",
@@ -625,13 +637,13 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: "26px",
     marginTop: "40px",
     "@media (max-width: 375px) and (height: 548px)": {
-      marginTop: "16px!important",
+      marginTop: "16px!important"
     },
     [theme.breakpoints.only("xs")]: {
-      paddingTop: "0px",
+      paddingTop: "0px"
     },
     [theme.breakpoints.up("sm")]: {
-      display: "none",
+      display: "none"
     }
   },
   navButton: {
@@ -738,5 +750,18 @@ export const useStyles = makeStyles(theme => ({
         lineHeight: "28px"
       }
     }
+  },
+  stickyTrackNSwitchBtnMobile: {
+    display: "flex",
+    gap: "10px",
+    margin: "20px 0",
+    alignItems: "center",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
+  },
+  hideStickySwitchBtn: {
+    display: "none!important"
   }
 }));
