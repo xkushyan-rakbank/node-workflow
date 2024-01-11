@@ -447,6 +447,7 @@ export const ApplicantInfoComponent = ({
                     <label className={classes.outsideLabel}>Sourcing ID (optional)</label>
                     <Field
                       name="sourcingId"
+                      disabled={invitationParams?.sourcingId}
                       path="prospect.applicantInfo.sourcingId"
                       component={Input}
                       isLoadDefaultValueFromStore={false}

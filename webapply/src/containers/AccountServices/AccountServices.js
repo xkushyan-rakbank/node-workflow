@@ -126,7 +126,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const marketingChannelList = useSelector(getProspect).channelServicesInfo?.marketingChannel;
 
   const accordionStatuses = useSelector(getAccordionStatuses);
-  const { allianceCode } = JSON.parse(accordionStatuses);
+  const { allianceCode, sourcingId } = JSON.parse(accordionStatuses);
 
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
@@ -986,6 +986,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                             name="sourcingId"
                             path="prospect.applicantInfo.sourcingId"
                             component={Input}
+                            disabled={isROInitited && sourcingId}
                             isLoadDefaultValueFromStore={false}
                             InputProps={{
                               inputProps: { tabIndex: 0, maxLength: 12 }

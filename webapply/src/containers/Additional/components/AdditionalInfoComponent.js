@@ -86,6 +86,7 @@ export default function AdditionalInfoComponent() {
   const accordionStatuses = useSelector(getAccordionStatuses);
   const statuses = JSON.parse(accordionStatuses);
   const allianceCode = useSelector(getApplicantInfo).allianceCode;
+  const sourcingId = useSelector(getApplicantInfo).sourcingId;
   const { companyAdditionalInfoStatus, addionalStakeholderInfoStatus } = statuses;
 
   const isNextButtonEnabled =
@@ -104,6 +105,13 @@ export default function AdditionalInfoComponent() {
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
   }, [allianceCode]);
+
+  useEffect(() => {
+    if (!statuses["sourcingId"]) {
+      statuses["sourcingID"] = sourcingId;
+      dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+    }
+  }, [sourcingId]);
 
   return (
     <div className={classes.container}>
