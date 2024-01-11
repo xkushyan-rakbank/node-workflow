@@ -46,10 +46,18 @@ import {
   ALLOWED_CHAR_REGEX
 } from "../../../utils/validation";
 import { Footer } from "../../../components/Footer";
-import { getDatalist, getProspect, getProspectId } from "../../../store/selectors/appConfig";
+import {
+  getAccordionStatuses,
+  getDatalist,
+  getProspect,
+  getProspectId
+} from "../../../store/selectors/appConfig";
 import { getLoginResponse } from "../../../store/selectors/loginSelector";
 import { updateProspect } from "../../../store/actions/appConfig";
-import { getSearchResults } from "../../../store/selectors/searchProspect";
+import {
+  getSearchResults,
+  getSearchResultsStatuses
+} from "../../../store/selectors/searchProspect";
 import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
@@ -62,7 +70,10 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const dispatch = useDispatch();
   const prospect = useSelector(getProspect);
   const prospectId = useSelector(getProspectId);
+  const prospectLists = useSelector(getSearchResultsStatuses);
+  const accordionStatuses = useSelector(getAccordionStatuses);
 
+  const statuses = JSON.parse(accordionStatuses);
   const searchResults = useSelector(getSearchResults);
   const currentProspect = searchResults.find(item => item.prospectId === prospectId);
 
@@ -265,6 +276,18 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
       setDisplayFields(fields);
     }
   }, [prospect]);
+
+  useEffect(() => {
+    const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
+      .statusType;
+    const isFrontendCorrection = prospectStatus === OPE_EDIT;
+    const isOperator = scheme === operatorLoginScheme;
+    if (isFrontendCorrection && isOperator) {
+      statuses["addionalStakeholderInfoStatus"] = "In Progress";
+      statuses["companyAdditionalInfoStatus"] = "In Progress";
+    }
+    dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
+  }, []);
 
   const customerReviewDetails = () => {
     return (
