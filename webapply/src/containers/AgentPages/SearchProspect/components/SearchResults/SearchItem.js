@@ -151,7 +151,7 @@ export const SearchItem = ({ application, prospectId, getProspectInfo, loadingPr
             <span className={classes.appDetailsinfo}>
               {application?.organizationInfo?.companyName}
               <br />
-              {"TL NO." + application?.organizationInfo?.licenseNumber}
+              {"TL NO. " + application?.organizationInfo?.licenseNumber}
             </span>
           ) : (
             <></>

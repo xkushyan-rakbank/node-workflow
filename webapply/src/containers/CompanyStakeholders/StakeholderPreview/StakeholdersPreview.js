@@ -139,9 +139,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   ];
 
   const customerPreviewValidation = Yup.object({
-    questionInput: Yup.boolean()
-      .typeError(getRequiredMessage("This field"))
-      .required(getRequiredMessage("This field")),
     countryofBirth: Yup.string()
       .nullable()
       .required(getRequiredMessage("Country of birth")),
@@ -155,7 +152,10 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         MAX_MOTHER_MAIDEN_NAME_LENGTH,
         `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
       )
-      .matches(NAME_REGEX, nameInvalidMessage)
+      .matches(NAME_REGEX, nameInvalidMessage),
+    questionInput: Yup.boolean()
+      .typeError(getRequiredMessage("This field"))
+      .required(getRequiredMessage("This field"))
   });
 
   const operatorPreviewValidation = Yup.object({
@@ -535,7 +535,15 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     );
   };
 
-  const customerConfirmEFRDetails = radioChangeHandler => {
+  const customerConfirmEFRDetails = (isSubmitting, errors, radioChangeHandler) => {
+    if (isSubmitting) {
+      const fieldErrorNames = Object.keys(errors);
+      const el =
+        document.querySelector(`input[name='${fieldErrorNames[0]}']`) ||
+        document.querySelector(".Mui-error");
+      const element = el && el.parentElement ? el.parentElement : el;
+      element && element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
     return (
       <>
         <div className={classes.reviewDetails}>
@@ -633,7 +641,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         validateOnBlur={true}
         onSubmit={handleClickStakeholderPreviewNextStep}
       >
-        {({ values, setFieldValue, isSubmitting, ...props }) => {
+        {({ values, setFieldValue, isSubmitting, errors, ...props }) => {
           const radioChangeHandler = selectRadioBoolean({ values, setFieldValue });
 
           return (
@@ -641,7 +649,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
               <Grid container>
                 {!isEditable && (
                   <Grid item xs={12}>
-                    {customerConfirmEFRDetails(radioChangeHandler)}
+                    {customerConfirmEFRDetails(isSubmitting, errors, radioChangeHandler)}
                   </Grid>
                 )}
                 {isEditable && OperatorReviewDetails(values, isSubmitting, setFieldValue)}
