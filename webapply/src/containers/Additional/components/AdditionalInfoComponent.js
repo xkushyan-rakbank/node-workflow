@@ -108,7 +108,7 @@ export default function AdditionalInfoComponent() {
 
   useEffect(() => {
     if (!statuses["sourcingId"]) {
-      statuses["sourcingID"] = sourcingId;
+      statuses["sourcingId"] = sourcingId;
       dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
     }
   }, [sourcingId]);
