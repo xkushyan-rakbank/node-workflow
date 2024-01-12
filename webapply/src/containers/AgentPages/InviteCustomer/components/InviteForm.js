@@ -70,6 +70,12 @@ const inviteSchema = Yup.object({
 export const InviteForm = ({ submitForm, isLoading }) => {
   const classes = useStyles();
 
+  const handleBlur = (target, setFieldValue) => {
+    const { name, value } = target;
+    const capitalizedSourcingId = value.toUpperCase();
+    setFieldValue(name, capitalizedSourcingId);
+  };
+
   return (
     <div className={classes.baseForm}>
       <h2>Send Invite</h2>
@@ -94,7 +100,7 @@ export const InviteForm = ({ submitForm, isLoading }) => {
         validateOnChange={true}
         onSubmit={submitForm}
       >
-        {({ isValid }) => {
+        {({ isValid, setFieldValue }) => {
           return (
             <Form>
               <Field
@@ -191,7 +197,8 @@ export const InviteForm = ({ submitForm, isLoading }) => {
                 label="Sourcing ID"
                 component={Input}
                 InputProps={{
-                  inputProps: { tabIndex: 0, maxLength: 12 }
+                  inputProps: { tabIndex: 0, maxLength: 12 },
+                  onBlur: e => handleBlur(e.target, setFieldValue)
                 }}
               />
               <Footer>

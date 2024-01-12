@@ -520,6 +520,13 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }
   };
 
+  const handleBlur = (target, setFieldValue) => {
+    const { name, value } = target;
+    const capitalizedSourcingId = value.toUpperCase();
+    setFieldValue(name, capitalizedSourcingId);
+    dispatch(updateProspect({ "prospect.applicantInfo.sourcingId": capitalizedSourcingId }));
+  };
+
   return (
     <>
       <div className={classes.container} ref={refToTopOfAccountService}>
@@ -989,7 +996,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                             disabled={isROInitited && sourcingId}
                             isLoadDefaultValueFromStore={false}
                             InputProps={{
-                              inputProps: { tabIndex: 0, maxLength: 12 }
+                              inputProps: { tabIndex: 0, maxLength: 12 },
+                              onBlur: e => handleBlur(e.target, setFieldValue)
                             }}
                             classes={{
                               formControlRoot: classes.roCodeFormControl,

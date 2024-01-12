@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import { useDispatch } from "react-redux";
 
 import {
   AutoSaveField as Field,
@@ -40,6 +41,7 @@ import { ContexualHelp } from "../../../components/Notifications";
 import { Footer } from "../../../components/Footer";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import routes from "../../../routes";
+import { updateProspect } from "../../../store/actions/appConfig";
 
 const useStyles = makeStyles(theme => ({
   applicantInfoComponentWrapper: {
@@ -189,6 +191,7 @@ export const ApplicantInfoComponent = ({
   const allianceCodeDisplyText = partnerInfo !== undefined ? partnerInfo.displayText : "";
   const [lemniskValue, setLemniskValue] = useState(false);
   const pushHistory = useTrackingHistory();
+  const dispatch = useDispatch();
 
   const lemniskCall = value => {
     if (isLemniskEnable && !lemniskValue && value) {
@@ -217,6 +220,13 @@ export const ApplicantInfoComponent = ({
     persona = personaFromStore,
     sourcingId = ""
   } = invitationParams || {};
+
+  const handleBlur = (target, setFieldValue) => {
+    const { name, value } = target;
+    const capitalizedSourcingId = value.toUpperCase();
+    setFieldValue(name, capitalizedSourcingId);
+    dispatch(updateProspect({ "prospect.applicantInfo.sourcingId": capitalizedSourcingId }));
+  };
 
   return (
     <>
@@ -255,7 +265,7 @@ export const ApplicantInfoComponent = ({
           onSubmit={values => onSubmit(removeUnWantedKeys(["allianceCodeFromDataList"], values))}
           className={classes.applicantInfoForm}
         >
-          {({ isValid, isSubmitting, ...props }) => {
+          {({ isValid, isSubmitting, setFieldValue, ...props }) => {
             if (isSubmitting) {
               const fieldErrorNames = Object.keys(props.errors);
               const el =
@@ -452,7 +462,8 @@ export const ApplicantInfoComponent = ({
                       component={Input}
                       isLoadDefaultValueFromStore={false}
                       InputProps={{
-                        inputProps: { tabIndex: 0, maxLength: 12 }
+                        inputProps: { tabIndex: 0, maxLength: 12 },
+                        onBlur: e => handleBlur(e.target, setFieldValue)
                       }}
                       classes={{
                         formControlRoot: classes.roCodeFormControl,
