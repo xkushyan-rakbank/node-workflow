@@ -52,7 +52,6 @@ export const useStyles = makeStyles(theme => ({
         margin: 0,
         marginBottom: "8px",
         color: "#1F1F1F",
-        paddingTop: "80px"
       },
       "& p": {
         fontSize: "1.25rem",
@@ -622,6 +621,8 @@ export const useStyles = makeStyles(theme => ({
   },
   islamicLogo: {
     transition: "all 0.2s linear",
+    height: "45px",
+    width: "auto",
     [theme.breakpoints.only("xs")]: {
       width: "110px",
       height: "50px"
