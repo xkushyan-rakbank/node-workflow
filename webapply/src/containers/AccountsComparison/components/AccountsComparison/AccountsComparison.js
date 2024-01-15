@@ -302,7 +302,7 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
             <h3>Whatever the size of your business, we’ve got the account for you</h3>
             {!showRedBanner && <p>Available for conventional or Islamic banking.</p>}
             {isFullyScrolled && showRedBanner && (
-              <div className={classes.navOutline}>
+              <div className={cx(classes.navOutline, classes.btnNavOutline)}>
                 <Button
                   variant="outlined"
                   className={cx(classes.navButton, classes.whiteTrackNSwitchAccountBtn)}

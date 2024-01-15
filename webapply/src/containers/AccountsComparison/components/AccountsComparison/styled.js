@@ -442,11 +442,15 @@ export const useStyles = makeStyles(theme => ({
     gap: "12px"
   },
   trackNSwitchAccountBtn: {
-    fontSize: "1rem",
+    fontSize: "0.75rem",
     fontWeight: 500,
-    lineHeight: "22px",
+    lineHeight: "1rem",
     borderRadius: "21px",
-    textTransform: "none"
+    textTransform: "none",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "1rem",
+      lineHeight: "22px"
+    }
   },
   black: {
     color: "#1F1F1F",
@@ -646,6 +650,12 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "none"
     }
+  },
+  btnNavOutline: {
+    [theme.breakpoints.only("xs")]: {
+      justifyContent: "center",
+      paddingLeft: "0px",
+    },
   },
   navButton: {
     // width: "144px",
