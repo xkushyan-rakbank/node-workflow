@@ -103,8 +103,9 @@ const App = ({ receiveAppConfig, prospectAutoSave }) => {
       generateRedirectUrl(`${location.pathname}/application-overview${window.location.search}`);
     } else if (homepageUrlPattern.includes(location.pathname.toLowerCase())) {
       generateRedirectUrl();
+    } else {
+      setIsRoute(true);
     }
-    setIsRoute(true);
   };
   useEffect(() => {
     const unlisten = history.listen((location, action) => {
