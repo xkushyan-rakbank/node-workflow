@@ -60,6 +60,7 @@ export const AccountInfo = props => {
   const handleGoToAccountOptions = useCallback(() => {
     pushHistory({
       pathname: routes.accountsComparison,
+      search: queryParams,
       state: {
         applicationOverviewFlow: true
       }
