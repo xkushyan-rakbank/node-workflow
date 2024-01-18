@@ -1048,7 +1048,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
         open={openDebitCardPriceGuideDialog}
         handleClose={() => setOpenDebitCardPriceGuide(false)}
         editedFile={`${process.env.REACT_APP_PUBLIC_URL || ""}${
-          isIslamic ? "/S&P-VAT-DebitCard-guide.pdf" : "/sp-vat-debitcard-islamic.pdf"
+          !isIslamic ? "/S&P-VAT-DebitCard-guide.pdf" : "/sp-vat-debitcard-islamic.pdf"
         }`}
         pages={[1]}
         scrollToEnd={false}
