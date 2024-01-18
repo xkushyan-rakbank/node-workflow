@@ -72,6 +72,7 @@ import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 import TermsAndConditionsDialog from "../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
+
 const marketingChannelSelectionHandlers = {
   "all the above": ({ isSelected }) =>
     isSelected ? [["Email", "SMS", "Call", "all the above"], ["Email", "SMS", "Call"]] : [[], []],
@@ -1046,7 +1047,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       <TermsAndConditionsDialog
         open={openDebitCardPriceGuideDialog}
         handleClose={() => setOpenDebitCardPriceGuide(false)}
-        editedFile={`${process.env.REACT_APP_PUBLIC_URL || ""}/S&P-VAT-DebitCard-guide.pdf`}
+        editedFile={`${process.env.REACT_APP_PUBLIC_URL || ""}${
+          isIslamic ? "/S&P-VAT-DebitCard-guide.pdf" : "/sp-vat-debitcard-islamic.pdf"
+        }`}
         pages={[1]}
         scrollToEnd={false}
       />
