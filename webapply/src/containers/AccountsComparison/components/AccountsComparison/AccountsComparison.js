@@ -122,8 +122,8 @@ export const AccountsComparisonComponent = ({ handleSetAccountType, servicePrici
 
   useEffect(() => {
     if (window.location.hash) {
-      const targetElementId = window.location.hash.substring(1);
-      const targetElement = document.getElementById(targetElementId);
+      const targetElementId = window.location.hash.substring(1).split("?");
+      const targetElement = document.getElementById(targetElementId[0]);
       if (targetElement) {
         setShowRedBanner(true);
         const offsetTop = targetElement.offsetTop - 1;
