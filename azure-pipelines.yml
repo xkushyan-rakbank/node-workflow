@@ -142,26 +142,26 @@ jobs:
       - bash : |
           cd webapply
           #npm install redux-mock-store --save-dev
-          npm test
+          npm run test -- --coverage
         displayName: 'Unit Test cases'
-        enabled: false
+        enabled: true
 
       - task: PublishTestResults@2
-        displayName: 'Publish Test Results'
         inputs:
-          testResultsFiles: coverage/index.html
-          failTaskOnFailedTests: true
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '**/reports/junit/*.xml'
         condition: succeededOrFailed()
-        enabled: false
+        enabled: true
 
       - task: PublishCodeCoverageResults@1
         displayName: Publish Code Coverage Results
         inputs:
-          codeCoverageTool: cobertura
-          summaryFileLocation: $(Build.SourcesDirectory)/CoverageReports/Cobertura.xml
-          reportDirectory: $(Build.SourcesDirectory)/CoverageReports
+          codeCoverageTool: Cobertura
+          summaryFileLocation: $(Build.SourcesDirectory)/webapply/coverage/cobertura-coverage.xml
+          reportDirectory: $(Build.SourcesDirectory)/webapply/coverage
         condition: succeededOrFailed()
-        enabled: false
+        enabled: true
+
       - task: CopyFiles@2
         displayName: 'Stage Artifacts'
         inputs:

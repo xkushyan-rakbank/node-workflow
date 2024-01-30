@@ -9,16 +9,17 @@ module.exports = {
   collectCoverage: true,
 
   collectCoverageFrom: [
-    "src/**/*.js",
     "!src/*.js",
     "!src/**/index.js",
     "!src/**/styled.js",
     "!src/**/constants.js",
     "!**/constants/**",
-    "!**/components/**",
     "!src/stories/**",
-    "!src/containers/WebChat/**"
+    "!src/containers/WebChat/**",
+    "src/**/*New.{js,jsx}"
   ],
+
+  reporters: ["default", ["jest-junit", { outputDirectory: "reports/junit" }]],
 
   coverageDirectory: "coverage",
 
@@ -33,6 +34,7 @@ module.exports = {
   testEnvironment: "jsdom",
 
   testPathIgnorePatterns: [
+    "<rootDir>/__tests__/",
     "/node_modules/",
     "./src/setupTests.js",
     "./src/constants",
@@ -53,5 +55,5 @@ module.exports = {
 };
 
 function getCoverageReporters() {
-  return process.env.TF_BUILD ? ["cobertura"] : ["json", "text", "cobertura", "html"];
+  return process.env.TF_BUILD ? ["cobertura", "html"] : ["json", "text", "cobertura", "html"];
 }
