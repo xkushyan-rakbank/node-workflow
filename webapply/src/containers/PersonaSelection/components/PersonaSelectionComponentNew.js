@@ -24,6 +24,7 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
             variant="outlined"
             className={classes.trackNSwitchAccountBtn}
             onClick={() => handleRedirection(routes.comeBackLogin)}
+            data-testid="trackNSwitchAccountBtn"
           >
             Track my application
           </Button>
@@ -38,18 +39,28 @@ export default function RoleSelectionComponent({ handleNavigation, personas }) {
             return (
               <div
                 key={persona.key}
+                data-testid="persona-item"
                 className={classes.roleSelectionButton}
                 onClick={() => handleNavigation(persona, persona.urlType)}
               >
                 <div className={classes.buttonText}>
-                  <div className={classes.title}>{persona.title}</div>
+                  <div className={classes.title} data-testid="persona-title">
+                    {persona.title}
+                  </div>
                   {persona.subTitle.length === 1 && (
-                    <span className={classes.subTitle}> {persona.subTitle[0]}</span>
+                    <span data-testid="persona-subtitle" className={classes.subTitle}>
+                      {" "}
+                      {persona.subTitle[0]}
+                    </span>
                   )}
                   {persona.subTitle.length > 1 && (
                     <ul className={classes.subTitleList}>
                       {persona.subTitle.map((persona, index) => (
-                        <li className={classes.subTitle} key={index}>
+                        <li
+                          data-testid="persona-subtitle-list"
+                          className={classes.subTitle}
+                          key={index}
+                        >
                           {persona}
                         </li>
                       ))}

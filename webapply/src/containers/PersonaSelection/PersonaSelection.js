@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 
 import { useFormNavigation } from "../../components/FormNavigation/FormNavigationProvider";
 import { updateProspect } from "../../store/actions/appConfig";
 import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import { useLayoutParams } from "../FormLayout";
-import PersonaSelectionComponent from "./components/PersonaSelectionComponent";
+import PersonaSelectionComponent from "./components/PersonaSelectionComponentNew";
 import { Personas } from "../../constants";
 import useRedirectionUrl from "../../utils/useRedirectionUrl";
 import { Footer } from "../../components/Footer";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
 import { smeBaseName } from "../../routes";
 
 export const PersonaSelection = ({ datalist }) => {
