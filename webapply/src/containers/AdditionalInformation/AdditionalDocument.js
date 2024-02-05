@@ -136,6 +136,8 @@ export default function AdditionalDocument({
     additionalDocumentDetailsFromBPM.map((additionalFile, index) => {
       const documentUniqueId = `doc_${additionalFile.documentUniqueId}`;
       const documentRemarks = additionalFile.documentRemarks.split("\n");
+      const additionalDocCount =
+        additionalFile.documentType === "Memorandum and Other Legal Mandate" ? 5 : 3;
 
       return (
         <div key={index} className={classes.innerCards}>
@@ -198,31 +200,37 @@ export default function AdditionalDocument({
                         mobilecontentPlaceholder={"Upload your file"}
                       />
                       {key > 0 && (
-                        <IconButton
-                          aria-label="delete"
+                        <div
                           style={{
-                            padding: 0,
+                            display: "flex",
                             marginTop: "5px",
                             width: "100%",
                             justifyContent: "end"
                           }}
-                          onClick={() =>
-                            removeDoc(
-                              key,
-                              values,
-                              `doc_${additionalFile.documentUniqueId}`,
-                              item,
-                              values[documentUniqueId].length,
-                              setFieldValue
-                            )
-                          }
                         >
-                          <HighlightOffIcon />
-                        </IconButton>
+                          <IconButton
+                            aria-label="delete"
+                            style={{
+                              padding: 0
+                            }}
+                            onClick={() =>
+                              removeDoc(
+                                key,
+                                values,
+                                `doc_${additionalFile.documentUniqueId}`,
+                                item,
+                                values[documentUniqueId].length,
+                                setFieldValue
+                              )
+                            }
+                          >
+                            <HighlightOffIcon />
+                          </IconButton>
+                        </div>
                       )}
                     </div>
                   ))}
-                {values[documentUniqueId] && values[documentUniqueId].length < 3 && (
+                {values[documentUniqueId] && values[documentUniqueId].length < additionalDocCount && (
                   <Button
                     color="primary"
                     variant="outlined"

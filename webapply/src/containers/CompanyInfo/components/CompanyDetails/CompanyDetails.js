@@ -67,7 +67,9 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
 
   const removeMoaDoc = async () => {
     const path = "prospect.prospectDocuments.companyDocument.moa";
-    const updatedCompanyDocs = companyDocuments.filter(eachDoc => eachDoc.documentKey !== path);
+    const updatedCompanyDocs = companyDocuments.filter(
+      eachDoc => !eachDoc.documentKey.includes(path)
+    );
     dispatch(
       updateProspect({
         "prospect.documents.companyDocuments": updatedCompanyDocs
@@ -79,10 +81,14 @@ export const CompanyDetails = ({ setFieldValue, setTouched, touched, values }) =
   };
 
   useEffect(() => {
-    if (!moaVisible) {
+    if (moaVisible && values.companyCategory === "SOLE") {
       removeMoaDoc();
+    } else {
+      if (!values?.moa?.length) {
+        setFieldValue("moa", [""]);
+      }
     }
-  }, [moaVisible, dispatch]);
+  }, [values.companyCategory]);
 
   const onChange = (value, renderValue) => {
     if (value === "OTHER") {
