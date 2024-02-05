@@ -214,13 +214,15 @@ export function* prospectAutoSave() {
   try {
     const autoSave = yield select(getIsAutoSaveEnabled);
     const isAutoSaveEnabled = autoSave?.[0]?.displayText === "true";
+    const newProspect = yield select(getProspect);
+    const viewId = newProspect.applicationInfo.viewId;
     while (isAutoSaveEnabled) {
       yield delay(AUTO_SAVE_INTERVAL);
 
       const { isSaveEnabled, newProspect } = yield call(saveProspectData);
       const isAutoSaveEnabled = isSaveEnabled;
 
-      if (isAutoSaveEnabled) {
+      if (isAutoSaveEnabled && viewId !== "/SubmitApplication") {
         const currentProspectHash = yield call(generateHash, newProspect);
         const lastSavedProspectHash = yield select(getProspectAutoSaveHash);
         yield put(updateAutoSaveProspectHash(currentProspectHash));
