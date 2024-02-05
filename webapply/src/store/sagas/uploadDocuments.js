@@ -486,7 +486,8 @@ export function* uploadDocuments({ payload }) {
       !savePath.includes("companyAddressProof") &&
       !savePath.includes("otherDocuments") &&
       !savePath.includes("kycAnnexureDocuments") &&
-      !savePath.includes("additionalDocuments")
+      !savePath.includes("additionalDocuments") &&
+      !savePath.includes("companyDocuments")
     ) {
       uploadedList = [];
     } else {
@@ -506,11 +507,6 @@ export function* uploadDocuments({ payload }) {
         payload.otherDocuments || documentSectionArray.find(doc => doc.documentTitle === docPath);
 
       // const docItem = documentSectionArray.find(doc => doc.documentTitle === docPath);
-      if (savePath === "companyDocuments") {
-        uploadedDocuments = uploadedProspectList
-          ? uploadedProspectList.filter(eachItem => eachItem.documentKey !== docPath)
-          : [];
-      }
       const fieldData = payload.docs[docPath];
       if (fieldData.name) {
         const documentUniq =

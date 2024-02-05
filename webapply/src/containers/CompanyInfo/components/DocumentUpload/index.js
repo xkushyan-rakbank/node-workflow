@@ -1,1 +1,1 @@
-export { DocumentUpload } from "./DocumentUpload";
+export { DocumentUpload } from "./DocumentUploadNew";

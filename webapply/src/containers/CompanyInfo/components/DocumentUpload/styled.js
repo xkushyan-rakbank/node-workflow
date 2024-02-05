@@ -39,5 +39,24 @@ export const useStyles = makeStyles(theme => ({
   subcontent: {
     fontSize: "12px",
     color: "#757575"
+  },
+  addMoreButton: {
+    border: "1px solid #1F1F1F",
+    borderRadius: "21px",
+    padding: "9px 24px",
+    color: "#1F1F1F",
+    fontWeight: 500,
+    fontSize: "16px",
+    lineHeight: "22px",
+    textTransform: "none",
+    width: "max-content",
+    marginTop: "10px"
+  },
+  removeButton: {
+    // position: "absolute",
+    right: "5px",
+    bottom: "5px",
+    marginTop: "5px",
+    padding: 0
   }
 }));

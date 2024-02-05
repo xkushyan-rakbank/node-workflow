@@ -64,6 +64,8 @@ export const CompanyInfo = ({
   const isIslamicBanking = useSelector(getIsIslamicBanking);
   const orgDetails = useSelector(getOrganizationInfo) || {};
   const industries = orgDetails.industryMultiSelect || [];
+  const industry = get(orgDetails, "industryMultiSelect[0].industry", "");
+  const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", "");
   const datalistId = isIslamicBanking ? "islamicIndustry" : "industry";
 
   const companyDocuments = useSelector(getCompanyDocuments) || [];
@@ -71,7 +73,7 @@ export const CompanyInfo = ({
     companyDocuments,
     CompanyDocumentKeys.TradeLicenseOrCOI
   );
-  const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa);
+  const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa) || [""];
   const refToTopOfCompanyInfo = useRef(null);
 
   const initialValues = {
@@ -79,7 +81,7 @@ export const CompanyInfo = ({
     shortName: "",
     companyCategory: "",
     tradeLicenseOrCOI: tradeLicenseOrCOI && tradeLicenseOrCOI[0],
-    moa: moa && moa[0],
+    moa,
     licenseIssuingAuthority: "",
     countryOfIncorporation: "",
     licenseOrCOINumber: "",
@@ -116,18 +118,22 @@ export const CompanyInfo = ({
           );
         }
       ),
-    moa: Yup.mixed()
-      .test("required", getRequiredMessage("This field"), file => {
-        if (file) return true;
-        return false;
-      })
-      .test("fileSize", "The file is too large", file => {
-        return (
-          file &&
-          (file === true ||
-            (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
-        );
-      }),
+    moa: Yup.array()
+      .of(
+        Yup.mixed()
+          .test("required", getRequiredMessage("This field"), file => {
+            if (file) return true;
+            return false;
+          })
+          .test("fileSize", "The file is too large", file => {
+            return (
+              file &&
+              (file === true ||
+                (file.fileSize >= MOA_FILE_SIZE.minSize && file.fileSize <= MOA_FILE_SIZE.maxSize))
+            );
+          })
+      )
+      .min(1, "At least one file is required"),
     companyName: Yup.string()
       .required(getRequiredMessage("Company name"))
       // eslint-disable-next-line no-template-curly-in-string
@@ -180,8 +186,6 @@ export const CompanyInfo = ({
     if (!companyInfoForm.current?.setFieldValue) {
       return;
     }
-    const industry = get(orgDetails, "industryMultiSelect[0].industry", null);
-    const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", null);
     companyInfoForm.current.setFieldValue(
       "prospect.organizationInfo.industryMultiSelect.industry",
       industry && industry[0]
@@ -196,7 +200,6 @@ export const CompanyInfo = ({
     if (!companyInfoForm.current?.setFieldValue) {
       return;
     }
-    const subCategory = get(orgDetails, "industryMultiSelect[0].subCategory", null);
     if (statuses["subCategory"] !== subCategory) {
       const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
         .statusType;

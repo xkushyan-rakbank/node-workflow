@@ -46,7 +46,10 @@ export const Upload = ({
   const classes = useStyles();
 
   const hasFile = !!file;
-  const { visible } = useDecisions(path);
+  const isMOAField = path.includes("moa");
+  const { visible } = useDecisions(
+    isMOAField ? "prospect.prospectDocuments.companyDocument.moa" : path
+  );
   const errorMessage = getIn(errors, field.name);
   const isError = errorMessage && (getIn(touched, field.name) || touched[field.name]);
   const FileIconHeight = isMobile ? "35px" : "44px";
