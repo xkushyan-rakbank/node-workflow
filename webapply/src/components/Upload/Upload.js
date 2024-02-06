@@ -46,7 +46,7 @@ export const Upload = ({
   const classes = useStyles();
 
   const hasFile = !!file;
-  const isMOAField = path.includes("moa");
+  const isMOAField = path?.includes("moa");
   const { visible } = useDecisions(
     isMOAField ? "prospect.prospectDocuments.companyDocument.moa" : path
   );
