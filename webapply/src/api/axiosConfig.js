@@ -90,10 +90,24 @@ apiClient.interceptors.request.use(config => {
   });
 });
 
+//check if the response.data string is html for network blociking cases
+const handleNetworkError = response => {
+  if (
+    response.data &&
+    typeof response.data === "string" &&
+    response.data.includes("The requested URL was rejected")
+  ) {
+    const notificationOptions = { title: "Oops", message: "Something went wrong" };
+    NotificationsManager.add(notificationOptions);
+    throw new Error("Network Error");
+  }
+};
+
 apiClient.interceptors.response.use(
   response => {
     const { symKey } = response.config;
 
+    handleNetworkError(response);
     if (symKey && response.data && typeof response.data === "string") {
       let payload;
 
@@ -114,7 +128,6 @@ apiClient.interceptors.response.use(
         log({ e, payload });
       }
     }
-
     return response;
   },
   error => {
@@ -201,7 +214,6 @@ apiClient.interceptors.response.use(
     if (notificationOptions && NotificationsManager.add) {
       NotificationsManager.add(notificationOptions);
     }
-
     return Promise.reject(serverError || error);
   }
 );
