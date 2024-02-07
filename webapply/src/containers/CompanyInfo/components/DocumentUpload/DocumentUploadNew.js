@@ -221,7 +221,7 @@ export const DocumentUpload = ({ values, setFieldValue, touched, setTouched }) =
                     </div>
                   );
                 })}
-                {values?.moa?.length < 5 && (
+                {values?.moa?.length && values?.moa?.length < 5 && (
                   <Button
                     disabled={values.moa.length === 1 && !values.moa[0].fileName}
                     color="primary"
