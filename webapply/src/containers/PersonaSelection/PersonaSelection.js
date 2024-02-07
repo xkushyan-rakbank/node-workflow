@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom";
 
@@ -12,12 +12,14 @@ import { Personas } from "../../constants";
 import useRedirectionUrl from "../../utils/useRedirectionUrl";
 import { Footer } from "../../components/Footer";
 import { BackLink } from "../../components/Buttons/BackLink";
-import { smeBaseName } from "../../routes";
+import routes, { smeBaseName } from "../../routes";
+import { getIsIslamicBanking } from "../../store/selectors/appConfig";
 
 export const PersonaSelection = ({ datalist }) => {
   const queryParams = useLocation().search;
   const pushHistory = useTrackingHistory();
   const { redirectToExternalURL } = useRedirectionUrl();
+  const islamicBanking = useSelector(getIsIslamicBanking);
 
   useFormNavigation([true, false]);
   useLayoutParams(false, false, true);
@@ -51,6 +53,12 @@ export const PersonaSelection = ({ datalist }) => {
   }
 
   const onSelectPersona = ({ url, key }, type) => {
+    const shouldRedirect = islamicBanking === null || islamicBanking === undefined;
+    if (shouldRedirect) {
+      pushHistory(routes.quickapplyLanding);
+      return;
+    }
+
     dispatch(
       updateProspect({
         "prospect.applicantInfo.persona": key
