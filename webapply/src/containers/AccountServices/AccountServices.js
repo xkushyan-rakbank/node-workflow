@@ -39,6 +39,7 @@ import {
   getDocuments,
   getKycAnnexureDetails,
   getProspect,
+  getProspectId,
   getRakValuePackage,
   getSignatories
 } from "../../store/selectors/appConfig";
@@ -72,6 +73,8 @@ import { scrollToDOMNode } from "../../components/VerticalPagination";
 import { useFindDocument } from "../../utils/useFindDocument";
 import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 import TermsAndConditionsDialog from "../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
+import { getSearchResultsStatuses } from "../../store/selectors/searchProspect";
+import { OPE_EDIT } from "../AgentPages/SearchedAppInfo/constants";
 
 const marketingChannelSelectionHandlers = {
   "all the above": ({ isSelected }) =>
@@ -120,6 +123,13 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const sourcingIdData = useSelector(getApplicantInfo).sourcingId;
   const roCodeData = useSelector(getLoginResponse).roCode;
   const isROInitited = useSelector(getApplicantInfo).isROInitited;
+  const prospectLists = useSelector(getSearchResultsStatuses);
+  const prospectId = useSelector(getProspectId);
+
+  const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
+    .statusType;
+  const isFrontendCorrection = prospectStatus === OPE_EDIT;
+  const isSourceIdAgentROFieldEnabled = isFrontendCorrection || isAgent;
 
   const statementsVia = accountInfo.eStatements ? true : false;
 
@@ -951,7 +961,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                             path="prospect.applicantInfo.roCode"
                             label=""
                             component={Input}
-                            disabled={isROInitited}
+                            disabled={isSourceIdAgentROFieldEnabled ? false : isROInitited}
                             InputProps={{
                               inputProps: { tabIndex: 0, maxLength: 6 }
                             }}
@@ -978,7 +988,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                             name="allianceCode"
                             path={"prospect.applicantInfo.allianceCode"}
                             component={Input}
-                            disabled={isROInitited && allianceCode}
+                            disabled={
+                              isSourceIdAgentROFieldEnabled ? false : isROInitited && allianceCode
+                            }
                             InputProps={{
                               inputProps: { tabIndex: 0, maxLength: 50 }
                             }}
@@ -994,7 +1006,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                             name="sourcingId"
                             path="prospect.applicantInfo.sourcingId"
                             component={Input}
-                            disabled={isROInitited && sourcingId}
+                            disabled={
+                              isSourceIdAgentROFieldEnabled ? false : isROInitited && sourcingId
+                            }
                             isLoadDefaultValueFromStore={false}
                             InputProps={{
                               inputProps: { tabIndex: 0, maxLength: 12 },

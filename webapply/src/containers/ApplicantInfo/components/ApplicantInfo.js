@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
-import { useDispatch } from "react-redux";
 
 import {
   AutoSaveField as Field,
@@ -34,7 +34,6 @@ import {
   PARTNER_CODE_REGEX,
   SOURCING_ID_REGEX
 } from "../../../utils/validation";
-import { InfoCard } from "./InfoCard";
 import { MAX_COMPANY_FULL_NAME_LENGTH } from "../../CompanyInfo/constants";
 import { SectionTitleWithInfo } from "../../../components/SectionTitleWithInfo";
 import { ContexualHelp } from "../../../components/Notifications";
@@ -42,6 +41,10 @@ import { Footer } from "../../../components/Footer";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
 import routes from "../../../routes";
 import { updateProspect } from "../../../store/actions/appConfig";
+import { checkLoginStatus } from "../../../store/selectors/loginSelector";
+import { getSearchResultsStatuses } from "../../../store/selectors/searchProspect";
+import { getProspectId } from "../../../store/selectors/appConfig";
+import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
 
 const useStyles = makeStyles(theme => ({
   applicantInfoComponentWrapper: {
@@ -192,6 +195,14 @@ export const ApplicantInfoComponent = ({
   const [lemniskValue, setLemniskValue] = useState(false);
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();
+
+  const isAgent = useSelector(checkLoginStatus);
+  const prospectId = useSelector(getProspectId);
+  const prospectLists = useSelector(getSearchResultsStatuses);
+  const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
+    .statusType;
+  const isFrontendCorrection = prospectStatus === OPE_EDIT;
+  const isSourceIdAgentROFieldEnabled = isFrontendCorrection || isAgent;
 
   const lemniskCall = value => {
     if (isLemniskEnable && !lemniskValue && value) {
@@ -413,7 +424,7 @@ export const ApplicantInfoComponent = ({
                       label=""
                       component={Input}
                       isLoadDefaultValueFromStore={false}
-                      disabled={roCode !== "" || invitationParams?.rocode}
+                      disabled={isSourceIdAgentROFieldEnabled ? false : invitationParams?.rocode}
                       InputProps={{
                         inputProps: { tabIndex: 0, maxLength: 6 }
                       }}
@@ -441,7 +452,11 @@ export const ApplicantInfoComponent = ({
                         allianceCodeFromQuery !== "" ? "allianceCode" : "allianceCodeFromDataList"
                       }
                       path="prospect.applicantInfo.allianceCode"
-                      disabled={allianceCodeFromQuery !== "" && allianceCodeFromQuery !== undefined}
+                      disabled={
+                        isSourceIdAgentROFieldEnabled
+                          ? false
+                          : allianceCodeFromQuery !== "" && allianceCodeFromQuery !== undefined
+                      }
                       component={Input}
                       isLoadDefaultValueFromStore={false}
                       InputProps={{
@@ -457,7 +472,9 @@ export const ApplicantInfoComponent = ({
                     <label className={classes.outsideLabel}>Sourcing ID (optional)</label>
                     <Field
                       name="sourcingId"
-                      disabled={invitationParams?.sourcingId}
+                      disabled={
+                        isSourceIdAgentROFieldEnabled ? false : invitationParams?.sourcingId
+                      }
                       path="prospect.applicantInfo.sourcingId"
                       component={Input}
                       isLoadDefaultValueFromStore={false}

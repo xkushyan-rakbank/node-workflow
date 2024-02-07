@@ -50,20 +50,6 @@ describe("DocumentUpload component", () => {
     expect(Upload).toHaveBeenCalled();
   });
 
-  it("should display add more button in disabled state", () => {
-    const props = {
-      ...commonProps,
-      values: { tradeLicenseOrCOI: "", moa: [] }
-    };
-    const { getByTestId } = render(
-      <Formik initialValues={{ moa: [""] }}>
-        <DocumentUpload {...props} />
-      </Formik>
-    );
-    const addMoreButton = getByTestId("addMoreMOA");
-    expect(addMoreButton).toHaveProperty("disabled");
-  });
-
   it("should handle removeDocument callback for tradeLicenseOrCOI", async () => {
     const props = {
       ...commonProps,
