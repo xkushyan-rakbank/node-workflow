@@ -73,7 +73,7 @@ export const CompanyInfo = ({
     companyDocuments,
     CompanyDocumentKeys.TradeLicenseOrCOI
   );
-  const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa) || [""];
+  const moa = useFindDocument(companyDocuments, CompanyDocumentKeys.Moa) || [];
   const refToTopOfCompanyInfo = useRef(null);
 
   const initialValues = {
