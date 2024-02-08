@@ -14,7 +14,7 @@ const PageView = ({ index, style }) => (
   </div>
 );
 
-const PdfToPngConverter = ({ file, pages = [] }) => {
+const PdfToPngConverter = ({ file, pages = [], onPDFloadSuccess }) => {
   const PREVIEW_HEIGHT = window.innerHeight * 0.8;
 
   const classes = useStyles();
@@ -27,6 +27,7 @@ const PdfToPngConverter = ({ file, pages = [] }) => {
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+    onPDFloadSuccess();
   };
 
   return (
