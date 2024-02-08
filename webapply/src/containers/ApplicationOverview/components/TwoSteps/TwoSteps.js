@@ -57,8 +57,8 @@ export const TwoSteps = () => {
         </div>
         <div>
           <p className={classes.disclaimer}>
-           **Following the review of the submitted documents, the Bank may seek additional documents
-            / information
+            **Following the review of the submitted documents, the Bank may seek additional
+            documents / information
           </p>
         </div>
       </div>

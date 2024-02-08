@@ -89,7 +89,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       height: "auto",
       padding: "24px 24px",
-      width: "unset",
+      width: "unset"
     }
   },
 
@@ -101,7 +101,7 @@ export const useStyles = makeStyles(theme => ({
   desktopAccountCard: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
-      display: "flex",
+      display: "flex"
     }
   }
 }));

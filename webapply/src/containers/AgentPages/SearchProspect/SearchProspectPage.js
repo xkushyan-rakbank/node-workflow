@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useMemo } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { isEmpty } from "lodash";
 
 import { SearchProspect } from "./components/SearchProspect/SearchProspect";

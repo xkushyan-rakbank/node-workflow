@@ -12,7 +12,6 @@ import { useLayoutParams } from "../../../FormLayout";
 import { formStepper, NEXT } from "../../../../constants";
 import { BackLink } from "../../../../components/Buttons/BackLink";
 import routes from "../../../../routes";
-import { ICONS, Icon } from "../../../../components/Icons";
 import { ColoredAvatar } from "../../../../components/Avatar/ColoredAvatar";
 import { BusinessRelationship } from "./components/Business";
 import { FinancialTurnoverSection } from "./components/FinancialTurnoverSection";
@@ -22,14 +21,11 @@ import { NextStepButton } from "../../../../components/Buttons/NextStepButton";
 import { useViewId } from "../../../../utils/useViewId";
 
 import { useStyles } from "../styled";
-import { updateCompanyAdditionalInfoStatus } from "../../../../store/actions/additionalInfo";
 import {
   getAccordionStatuses,
   getCompanyAdditionalInfo,
-  getSignatories,
-  isFieldTouched
+  getSignatories
 } from "../../../../store/selectors/appConfig";
-import { getIsComeback } from "../../../../store/selectors/retrieveApplicantInfo";
 import { Footer } from "../../../../components/Footer";
 import { updateProspect } from "../../../../store/actions/appConfig";
 

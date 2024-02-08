@@ -213,7 +213,7 @@ export const useStyles = makeStyles(theme => ({
       right: "5px"
     },
     "@media (max-width: 800px)": {
-      top: "50%",
+      top: "50%"
     }
   },
   sectionTitle: {
@@ -222,12 +222,12 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "36px",
     fontWeight: 500,
     fontFamily: "Open Sans",
-    whiteSpace: "pre-line",
+    whiteSpace: "pre-line"
   },
   saveAndCloseMobile: {
     [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
+      display: "none"
+    }
   },
   formTwoStepNav: {
     [theme.breakpoints.down("sm")]: {

@@ -1,8 +1,9 @@
 import React, { memo } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
+import cx from "classnames";
+
 import { useStyles } from "./styled";
 import { ErrorMessage } from "../../Notifications";
-import cx from "classnames";
 
 const InputGroupBase = ({ error, children, extraClasses }) => {
   const classes = useStyles();

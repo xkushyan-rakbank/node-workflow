@@ -110,7 +110,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "12px 30px",
     minWidth: "fit-content",
     [theme.breakpoints.only("sm")]: {
-      padding: "12px 25px",
+      padding: "12px 25px"
     }
   },
   accountCompBackBtn: {

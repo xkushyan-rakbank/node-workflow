@@ -1,1 +1,1 @@
-export {UploadFileWrapper} from "./UploadFileWrapper"
+export { UploadFileWrapper } from "./UploadFileWrapper";

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { useSelector } from "react-redux";
 
@@ -14,7 +15,7 @@ export default function FormEmailConfirmPage() {
   const applicantInfo = useSelector(getApplicantInfo);
   const emailStyle = {
     color: "#5E080B",
-    fontWeight: 500,
+    fontWeight: 500
   };
 
   return (

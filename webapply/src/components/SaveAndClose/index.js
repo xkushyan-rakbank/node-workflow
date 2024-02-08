@@ -5,4 +5,7 @@ import { prospectSaveOnClickPromisfy } from "../../store/actions/sendProspectToA
 
 const mapDispatchToProps = { prospectSaveOnClick: prospectSaveOnClickPromisfy };
 
-export default connect(null, mapDispatchToProps)(SaveAndClose);
+export default connect(
+  null,
+  mapDispatchToProps
+)(SaveAndClose);

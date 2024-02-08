@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React from "react";
-import { Button } from "@material-ui/core";
 import cx from "classnames";
 import { ContainedButton } from "../../../../components/Buttons/ContainedButton";
 import { useStyles } from "./styled";

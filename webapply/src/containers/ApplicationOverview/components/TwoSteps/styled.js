@@ -1,47 +1,46 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { theme } from "../../../../theme";
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   icon: {
     fontSize: "55px",
-    color: "green",
+    color: "green"
   },
   firstGroup: {
     width: "100%",
-    marginTop: 15,
+    marginTop: 15
   },
   indent: {
     margin: "0 -10px 30px",
-    paddingTop: 20,
+    paddingTop: 20
   },
   secondGroup: {
     height: "300px",
     width: "100%",
     display: "flex",
     "& span": {
-      maxWidth: "380px",
+      maxWidth: "380px"
     },
     "& img": {
       maxWidth: "100%",
       objectFit: "contain",
       [theme.breakpoints.only("sm")]: {
-        width: 440,
-      },
+        width: 440
+      }
     },
     [theme.breakpoints.only("xs")]: {
       height: "auto",
       flexDirection: "column-reverse",
       "& img": {
-        margin: "20px auto 0",
-      },
-    },
+        margin: "20px auto 0"
+      }
+    }
   },
   secondGroupText: {
     marginRight: -110,
     zIndex: 1,
     [theme.breakpoints.only("xs")]: {
-      marginRight: 0,
-    },
+      marginRight: 0
+    }
   },
   note: {
     // marginBottom: "15px",
@@ -60,10 +59,10 @@ export const useStyles = makeStyles((theme) => ({
       fontWeight: 500,
       lineHeight: "16px",
       margin: 0,
-      [theme.breakpoints.up("sm")]:{
+      [theme.breakpoints.up("sm")]: {
         fontSize: "0.875rem",
         fontWeight: 400,
-        lineHeight: "20px", 
+        lineHeight: "20px"
       },
       "& sup": {
         marginRight: "6px"
@@ -77,20 +76,20 @@ export const useStyles = makeStyles((theme) => ({
     margin: "22px 0 0 0",
     fontWeight: "600",
     [theme.breakpoints.between("sm", "lg")]: {
-      fontSize: "1.125rem",
+      fontSize: "1.125rem"
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "1.25rem",
-    },
+      fontSize: "1.25rem"
+    }
   },
   info: {
     color: "#373737",
     fontSize: 20,
-    lineHeight: "26px",
+    lineHeight: "26px"
   },
   divider: {
     height: "1px",
-    background: "#E6E6E6",
+    background: "#E6E6E6"
   },
   infoDesc: {
     color: "#757575",
@@ -102,14 +101,14 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: "16px",
     [theme.breakpoints.up("sm")]: {
       fontWeight: 400,
-      lineHeight: "28px",
+      lineHeight: "28px"
     },
     [theme.breakpoints.between("sm", "lg")]: {
-      fontSize: "1.125rem",
+      fontSize: "1.125rem"
     },
     [theme.breakpoints.up("lg")]: {
-      fontSize: "1.25rem",
-    },
+      fontSize: "1.25rem"
+    }
   },
   cardsWrapper: {
     display: "flex",
@@ -120,16 +119,16 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.only("sm")]: {
       flexDirection: "row",
       margin: "24px 0",
-      flexWrap: "wrap",
+      flexWrap: "wrap"
     },
     [theme.breakpoints.between("sm", "md")]: {
-      flexDirection: "row",
+      flexDirection: "row"
     },
     [theme.breakpoints.up("md")]: {
       gap: "24px",
       flexDirection: "row",
-      margin: "24px 0",
-    },
+      margin: "24px 0"
+    }
   },
   cards: {
     display: "flex",
@@ -144,18 +143,18 @@ export const useStyles = makeStyles((theme) => ({
       gap: "24px",
       width: "240px",
       padding: "24px 30px",
-      borderRadius: "20px",
+      borderRadius: "20px"
     },
     [theme.breakpoints.between("sm", "md")]: {
-      width: "35%", 
+      width: "35%",
       gap: "15px",
-      padding: "20px 30px",
+      padding: "20px 30px"
     },
     [theme.breakpoints.up("md")]: {
       minWidth: "0px",
       flex: "1 1 0",
-      padding: "24px 18px",
-    },
+      padding: "24px 18px"
+    }
   },
   cardDesc: {
     color: "#000",
@@ -165,12 +164,12 @@ export const useStyles = makeStyles((theme) => ({
     lineHeight: "16px",
     margin: 0,
     "& sup": {
-      marginLeft: "6px",
+      marginLeft: "6px"
     },
     [theme.breakpoints.up("sm")]: {
-      fontSize: "16px", 
+      fontSize: "16px",
       fontWeight: 500,
-      lineHeight: "22.4px",
+      lineHeight: "22.4px"
     }
   },
   asteriskText: {
@@ -184,13 +183,13 @@ export const useStyles = makeStyles((theme) => ({
     "-webkit-background-clip": "text",
     "-moz-background-clip": "text",
     "-webkit-text-fill-color": "transparent",
-    "-moz-text-fill-color": "transparent",
+    "-moz-text-fill-color": "transparent"
   },
   disclaimer: {
     paddingTop: "5px",
     color: "#3B3A3A !important",
     fontWeight: "500 !important",
     lineHeight: "24px !important",
-    margin: 0,
+    margin: 0
   }
 }));

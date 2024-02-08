@@ -50,7 +50,6 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
 
   const {
     country: countryList,
-    emirate: emirateList,
     companyCategory: companyCategoryList,
     licenseIssuingAuthority: licenseIssuingAuthorityList,
     industry: industryList,
@@ -107,11 +106,6 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
   const getCountryLabel = useCallback(
     code => countryList?.find(country => country.code === code)?.displayText,
     [displayFields, countryList]
-  );
-
-  const getEmirateLabel = useCallback(
-    code => emirateList?.find(emirate => emirate.code === code)?.displayText,
-    [displayFields, emirateList]
   );
 
   const getEmirateCityLabel = useCallback(

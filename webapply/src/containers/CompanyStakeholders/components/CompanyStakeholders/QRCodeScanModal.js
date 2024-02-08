@@ -1,15 +1,11 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
 import { CircularProgress } from "@material-ui/core";
 import cx from "classnames";
 
-import {
-  QR_CODE_SIZE,
-  QR_CODE_REFRESH_BEFORE_SECONDS,
-  SESSION_TYPE,
-  WTM_STATUS
-} from "../../../../constants";
+import { QR_CODE_SIZE, SESSION_TYPE, WTM_STATUS } from "../../../../constants";
 import { webToMobile } from "../../../../api/apiClient";
 import {
   getAccountType,

@@ -127,7 +127,7 @@ export const useStyles = makeStyles(theme => ({
   },
   filledInputError: {
     borderColor: "#ea2b1e"
-  },
+  }
 }));
 
 export const customStyles = {

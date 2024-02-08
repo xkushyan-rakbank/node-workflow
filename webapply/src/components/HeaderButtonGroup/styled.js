@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles/index";
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   trackNSwitchAccountBtnWrapper: {
     display: "flex",
     left: 0,
@@ -8,8 +8,8 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "21px",
     justifyContent: "center",
     [theme.breakpoints.up("sm")]: {
-      justifyContent: "flex-end",
-    },
+      justifyContent: "flex-end"
+    }
   },
   trackNSwitchAccountBtn: {
     minWidth: "144px",
@@ -33,7 +33,7 @@ export const useStyles = makeStyles((theme) => ({
       fontWeight: 500,
       lineHeight: "22px",
       color: "#000",
-      border: "1px solid #000",
-    },
-  },
+      border: "1px solid #000"
+    }
+  }
 }));

@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "center",
     [theme.breakpoints.up("sm")]: {
-      gap: "10px", 
+      gap: "10px"
     },
 
     "& .MuiStepper-root": {

@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense, useContext } from "react";
+import React, { lazy, Suspense, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import cx from "classnames";
 import { useMediaQuery } from "@material-ui/core";
@@ -25,12 +25,11 @@ export const FormNavigationComponent = () => {
     location: { pathname }
   } = useHistory();
   const navContext = useContext(FormNavigationContext);
-  const [isSwitcherShow, setIsSwitcherShow] = useState(false);
   const blobColor = useBlobColor(!navContext);
   const classes = useStyles({
     color: blobColor,
     isSmallBg: checkIsShowSmallBg(pathname),
-    isOpen: isSwitcherShow,
+    isOpen: false,
     accountsComparisonPage: routes.quickapplyLanding === pathname,
     smallMenu: checkIsShowSmallMenu(pathname)
   });

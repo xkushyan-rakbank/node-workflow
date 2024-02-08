@@ -17,7 +17,6 @@ import {
 import routes from "../../routes";
 import { setAccessToken, updateProspect } from "../../store/actions/appConfig";
 import { setIsFromInvitationLink } from "../../store/actions/applicantInfoForm";
-import { OverlayLoader } from "../../components/Loader";
 
 //ro-assist-brd3-16
 

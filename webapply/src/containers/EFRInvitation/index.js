@@ -6,8 +6,7 @@ import { generateOtpCodePromisify } from "../../store/actions/otp";
 
 const mapDispatchToProps = {
   getKycStatus: getKycStatusPromisify,
-  generateOtpCode: generateOtpCodePromisify,
-
+  generateOtpCode: generateOtpCodePromisify
 };
 
 export default connect(

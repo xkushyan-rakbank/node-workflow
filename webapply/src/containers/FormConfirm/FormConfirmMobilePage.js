@@ -27,7 +27,8 @@ export default function FormConfirmMobilePage() {
         <span>
           We sent a 6-digit OTP to the number{" "}
           <span style={suffixNumberStyle}>
-            +{countryCode}{mobileNo}
+            +{countryCode}
+            {mobileNo}
           </span>
           . Please enter it below.
         </span>

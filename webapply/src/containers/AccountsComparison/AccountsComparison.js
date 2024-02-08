@@ -20,7 +20,7 @@ const useQuery = () => {
 export const AccountsComparisonContainer = ({
   servicePricingGuideUrl,
   setProspectLead,
-  setRoCode,
+  setRoCode
 }) => {
   let query = useQuery();
 

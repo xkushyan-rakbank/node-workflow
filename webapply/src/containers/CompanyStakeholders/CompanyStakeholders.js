@@ -13,7 +13,6 @@ import { useTrackingHistory } from "../../utils/useTrackingHistory";
 import routes from "../../routes";
 import { formStepper, WTM_STATUS } from "../../constants";
 import { useLayoutParams } from "../FormLayout";
-import { getTransactionId } from "../../store/selectors/kyc";
 import { startScheduler, stopScheduler } from "../../store/actions/webToMobile";
 import { getwtmSessionDetails } from "../../store/selectors/webToMobile";
 import { ConfirmDialog } from "../../components/Modals";
@@ -40,7 +39,6 @@ export const CompanyStakeholdersContainer = ({
   const history = useHistory();
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
-  const transactionId = useSelector(getTransactionId);
   const {
     sessionData: { sessionType },
     sessionError
