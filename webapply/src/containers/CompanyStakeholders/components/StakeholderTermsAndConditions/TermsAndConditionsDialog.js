@@ -1,5 +1,5 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import CloseIcon from "@material-ui/icons/Close";
 
 import { useStyles } from "./styled";
@@ -19,6 +19,7 @@ export default function TermsAndConditionsDialog({
 }) {
   const classes = useStyles();
   const [disabled, setDisabled] = useState(scrollToEnd);
+  const [isPDFLoaded, setIsPDFLoaded] = useState(false);
 
   const handleScroll = event => {
     if (!scrollToEnd) {
@@ -29,6 +30,10 @@ export default function TermsAndConditionsDialog({
       setDisabled(false);
     }
   };
+
+  const onPDFloadSuccess = useCallback(() => {
+    setIsPDFLoaded(true);
+  }, []);
 
   return (
     <Dialog
@@ -43,7 +48,7 @@ export default function TermsAndConditionsDialog({
         <CloseIcon onClick={handleClose} className={classes.uploadModalCloseIcon} />
       </DialogTitle>
       <DialogContent classes={{ root: classes.content }} onScroll={handleScroll}>
-        <PdfPreview file={editedFile} pages={pages} />
+        <PdfPreview file={editedFile} pages={pages} onPDFloadSuccess={onPDFloadSuccess} />
       </DialogContent>
       <DialogActions classes={{ root: classes.dialogActions, spacing: classes.buttonSpacing }}>
         <div className={classes.actionContainer}>
@@ -52,7 +57,7 @@ export default function TermsAndConditionsDialog({
               <Button
                 withRightArrow
                 className={classes.agreeButton}
-                disabled={disabled || isAccepted}
+                disabled={!isPDFLoaded || disabled || isAccepted}
                 label="Accept and continue"
                 onClick={handleAccept}
               />

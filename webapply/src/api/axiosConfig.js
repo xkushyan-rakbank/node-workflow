@@ -29,6 +29,8 @@ const rsaPublicKey = process.env.REACT_APP_RSA_PUBLIC_KEY;
 
 const encryptionEnabled = ENCRYPTION_ENABLE === "Y";
 
+const ERROR_CONTENT_TYPE = "text/html";
+
 export const uploadClient = axios.create({
   baseURL: process.env.REACT_APP_UPLOAD_PATH || "https://uatrmtc.rakbankonline.ae/documentUploader"
 });
@@ -93,9 +95,8 @@ apiClient.interceptors.request.use(config => {
 //check if the response.data string is html for network blociking cases
 const handleNetworkError = response => {
   if (
-    response.data &&
-    typeof response.data === "string" &&
-    response.data.includes("The requested URL was rejected")
+    response?.headers?.["content-type"] &&
+    response.headers["content-type"].includes(ERROR_CONTENT_TYPE)
   ) {
     const notificationOptions = { title: "Oops", message: "Something went wrong" };
     NotificationsManager.add(notificationOptions);
