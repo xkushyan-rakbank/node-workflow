@@ -3,7 +3,7 @@ import { theme } from "../../../theme";
 
 export const useStyles = makeStyles({
   container: {
-    backgroundColor: "rgba(0,0,0,.3)",
+    backgroundColor: "rgba(0,0,0,.3)"
   },
   paper: {
     width: "500px",
@@ -49,15 +49,15 @@ export const useStyles = makeStyles({
       fontSize: "24px",
       fontWeight: 600,
       lineHeight: 1.33,
-      letterSpacing: "normal",
-    },
+      letterSpacing: "normal"
+    }
   },
   content: {
-    padding: "8px 40px",
+    padding: "8px 40px"
   },
   divider: {
     height: "1px",
-    backgroundColor: "#dcdcdc",
+    backgroundColor: "#dcdcdc"
   },
   dialogActions: {
     padding: "20px",
@@ -65,13 +65,13 @@ export const useStyles = makeStyles({
     "@media (max-width: 372px)": {
       display: "flex",
       flexDirection: "column",
-      alignItems: "center",
-    },
+      alignItems: "center"
+    }
   },
   buttonSpacing: {
     "& > * + *": {
-      marginLeft: "20px",
-    },
+      marginLeft: "20px"
+    }
   },
   actionButton: {
     minWidth: "150px",
@@ -84,14 +84,14 @@ export const useStyles = makeStyles({
     whiteSpace: "nowrap",
     "@media (max-width: 372px)": {
       width: "100%",
-      marginLeft: 0,
-    },
+      marginLeft: 0
+    }
   },
   marginTop12: {
     "@media (max-width: 372px)": {
       marginTop: "12px",
-      marginLeft: 0,
-    },
+      marginLeft: 0
+    }
   },
   "@keyframes rotate": {
     "100%": {

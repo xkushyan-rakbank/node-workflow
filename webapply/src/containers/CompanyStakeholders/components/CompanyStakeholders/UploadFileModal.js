@@ -202,7 +202,11 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                       isInsideForm={false}
                       file={values.emiratesIDFront}
                       onDelete={() => removeValue("emiratesIDFront", "")}
-                      content={uploadedFileName?.emiratesIDFront && {fileName: uploadedFileName.emiratesIDFront}}
+                      content={
+                        uploadedFileName?.emiratesIDFront && {
+                          fileName: uploadedFileName.emiratesIDFront
+                        }
+                      }
                       showUploadSuccessIcon={true}
                       component={Upload}
                       mobilecontentPlaceholder="Upload your Emirates ID"
@@ -218,7 +222,11 @@ export const UploadFileModal = ({ isOpen, typeOfUpload, title, handleClose }) =>
                         onDrop={acceptedFile => handleDropFile(acceptedFile, "emiratesIDBack")}
                         isInsideForm={false}
                         file={values.emiratesIDBack}
-                        content={uploadedFileName.emiratesIDBack && {fileName: uploadedFileName.emiratesIDBack}}
+                        content={
+                          uploadedFileName.emiratesIDBack && {
+                            fileName: uploadedFileName.emiratesIDBack
+                          }
+                        }
                         showUploadSuccessIcon={true}
                         onDelete={() => removeValue("emiratesIDBack", "")}
                         component={Upload}

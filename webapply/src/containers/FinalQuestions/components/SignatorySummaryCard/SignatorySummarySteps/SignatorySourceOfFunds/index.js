@@ -1,1 +1,0 @@
-export { SignatorySourceOfFunds } from "./SignatorySourceOfFunds";

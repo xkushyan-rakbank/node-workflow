@@ -7,7 +7,7 @@ import { HeaderTitle } from "../../../components/HeaderTitle";
 import { Notifications } from "../../../components/Notification";
 import { ApplicationStatus } from "../../../components/ApplicationStatus/ApplicationStatus";
 
-import { ERROR_MESSAGES, VIEW_IDS } from "../../../constants";
+import { ERROR_MESSAGES } from "../../../constants";
 import { useBlobColor } from "../../../utils/useBlobColor/useBlobColor";
 import { LayoutContext } from "../LayoutProvider";
 
@@ -34,7 +34,6 @@ export const FormLayoutComponent = ({
     hasVerticalPagination,
     isSmallContentWidth: !checkIsShowSmallMenu(pathname)
   });
-
 
   return pathname === routes.quickapplyLanding ||
     pathname === "/" ||

@@ -14,13 +14,13 @@ export const useStyles = makeStyles(theme => ({
       textAlign: "center",
       color: "#1F1F1F",
       fontSize: "1.25rem",
-      lineHeight: "22px",
+      lineHeight: "22px"
     },
 
     [theme.breakpoints.up("md")]: {
       textAlign: "center",
       fontSize: "1.75rem",
-      lineHeight: "36px",
+      lineHeight: "36px"
     }
   },
   accountTypeTitleSticky: {
@@ -30,7 +30,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       fontSize: "1.75rem",
       lineHeight: "36px"
-    },
+    }
   },
   accountTypeDesc: {
     color: "#757575",
@@ -46,8 +46,8 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 500,
       lineHeight: "28px",
       margin: 0,
-      textAlign: "inherit",
-    },
+      textAlign: "inherit"
+    }
   },
   applyBtn: {
     display: "inline-flex",
@@ -63,11 +63,11 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "32px",
     textTransform: "none",
     "&:hover": {
-      backgroundColor: "#1F1F1F",
-    },
+      backgroundColor: "#1F1F1F"
+    }
   },
   btnWrapper: {
-    justifyContent: "center",
+    justifyContent: "center"
   },
   accountTypeCardBtn: {
     minHeight: "auto",
@@ -75,7 +75,7 @@ export const useStyles = makeStyles(theme => ({
     padding: "10px  20px",
     borderRadius: "50px",
     [theme.breakpoints.only("sm")]: {
-      padding: "12px 20px",
+      padding: "12px 20px"
     },
     [theme.breakpoints.up("md")]: {
       fontSize: "1.25rem",
@@ -86,7 +86,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "0.875rem",
     [theme.breakpoints.only("sm")]: {
       whiteSpace: "nowrap",
-      fontSize: "1rem",
+      fontSize: "1rem"
     },
     [theme.breakpoints.up("md")]: {
       fontSize: "1.25rem"

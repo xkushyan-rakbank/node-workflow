@@ -12,7 +12,7 @@ export const useStyles = makeStyles({
       position: "static",
       padding: 0,
       textAlign: "center"
-    },
+    }
   },
 
   saveButtonContainer: {
@@ -44,8 +44,8 @@ export const useStyles = makeStyles({
         fontSize: "1.25rem",
         fontWeight: 500,
         lineHeight: "28px"
-      },
-    },
+      }
+    }
   },
 
   saveCloseLabel: {
@@ -56,8 +56,8 @@ export const useStyles = makeStyles({
     color: "#757575",
     [theme.breakpoints.up("sm")]: {
       fontSize: "0.875rem",
-      lineHeight: "18px",
-    },
+      lineHeight: "18px"
+    }
   },
 
   saveCloseProgressContainer: {
@@ -65,8 +65,8 @@ export const useStyles = makeStyles({
     marginTop: "0px",
     [theme.breakpoints.up("sm")]: {
       marginLeft: "0px",
-      marginTop: "0px",
-    },
+      marginTop: "0px"
+    }
   },
 
   progressLayout: {
@@ -87,7 +87,7 @@ export const useStyles = makeStyles({
       display: "block",
       color: "black",
       marginRight: "8px",
-      marginTop: "2px",
-    },
-  },
+      marginTop: "2px"
+    }
+  }
 });

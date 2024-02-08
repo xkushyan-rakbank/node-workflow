@@ -15,9 +15,9 @@ const useStyles = makeStyles(() => ({
       paddingTop: "unset",
       alignItems: "unset",
       gap: "unset",
-      flexDirection: "row",
-    },
-  },
+      flexDirection: "row"
+    }
+  }
 }));
 
 export const IconCardsContainer = ({ children }) => {

@@ -132,7 +132,7 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.down("md")]: {
       paddingTop: "0px !important",
-      paddingBottom: "20px !important",
+      paddingBottom: "20px !important"
     },
     "&:first-child": {
       background: "rgba(245, 245, 245, 0.50)",

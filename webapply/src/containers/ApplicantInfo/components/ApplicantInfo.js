@@ -191,7 +191,6 @@ export const ApplicantInfoComponent = ({
   //ro-assist-brd3-16
   const allianceCodeFromQuery =
     partnerInfo !== undefined ? partnerInfo.code : invitationParams?.alliancecode;
-  const allianceCodeDisplyText = partnerInfo !== undefined ? partnerInfo.displayText : "";
   const [lemniskValue, setLemniskValue] = useState(false);
   const pushHistory = useTrackingHistory();
   const dispatch = useDispatch();

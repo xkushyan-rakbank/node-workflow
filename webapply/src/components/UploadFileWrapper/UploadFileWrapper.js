@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from "react";
 import cx from "classnames";
-import { Button, useMediaQuery } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import { isMobile } from "react-device-detect";
 
 import { useStyles } from "./styled";
 import { ReactComponent as FileIcon } from "../../assets/icons/fileUpload.svg";
 import { ReactComponent as SuccessIcon } from "../../assets/icons/loadingGreen.svg";
 import { ReactComponent as PreviewEye } from "../../assets/icons/previewEye.svg";
 import { PreviewDataModal } from "../../containers/CompanyStakeholders/components/CompanyStakeholders/PreviewDataModal";
-import { isMobile, isTablet } from "react-device-detect";
 
 export const UploadFileWrapper = ({
   fieldDescription,

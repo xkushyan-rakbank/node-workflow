@@ -22,11 +22,13 @@ import {
 } from "../../../../../constants";
 import { TL_COI_FILE_SIZE } from "../../../../../constants";
 import { useStyles } from "../../styled";
+import { MAX_FLAT_NUMBER_LENGTH, MAX_STREET_NUMBER_LENGTH } from "../../../constants";
 import {
-  MAX_FLAT_NUMBER_LENGTH,
-  MAX_STREET_NUMBER_LENGTH
-} from "../../../../FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
-import { ADDRESS_REGEX, ADDRESS_VALIDATION_MESSAGE, ALLOWED_CHAR_REGEX, POBOX_REGEX } from "../../../../../utils/validation";
+  ADDRESS_REGEX,
+  ADDRESS_VALIDATION_MESSAGE,
+  ALLOWED_CHAR_REGEX,
+  POBOX_REGEX
+} from "../../../../../utils/validation";
 import { getInvalidMessage, getRequiredMessage } from "../../../../../utils/getValidationMessage";
 import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
 import { getDocuments } from "../../../../../store/selectors/appConfig";

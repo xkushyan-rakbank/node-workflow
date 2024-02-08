@@ -494,7 +494,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: "40px",
     [theme.breakpoints.up("sm")]: {
       padding: "30px",
-      border: "1px solid #CCC",
+      border: "1px solid #CCC"
     }
   },
   stakeholderContainer: {
@@ -512,7 +512,7 @@ export const useStyles = makeStyles(theme => ({
     gap: "8px",
     alignItems: "center",
     justifyContent: "center",
-    textTransform: "math-auto",
+    textTransform: "math-auto"
   },
   reviewDetails: {
     display: "flex",
@@ -524,8 +524,8 @@ export const useStyles = makeStyles(theme => ({
     background: "#FAFAFA",
     marginBottom: "2.5rem",
     flexWrap: "wrap",
-    [theme.breakpoints.up("sm")]:{
-      flexWrap: "unset",
+    [theme.breakpoints.up("sm")]: {
+      flexWrap: "unset"
     }
   },
   reviewDetailsTitle: {
@@ -559,7 +559,7 @@ export const useStyles = makeStyles(theme => ({
       minWidth: "auto",
       [theme.breakpoints.up("sm")]: {
         minWidth: "188px",
-        width: "190px",
+        width: "190px"
       }
     },
     "& p": {
@@ -577,7 +577,7 @@ export const useStyles = makeStyles(theme => ({
       [theme.breakpoints.up("sm")]: {
         whiteSpace: "unset",
         flex: "unset",
-        flexBasis: "unset",
+        flexBasis: "unset"
       }
     }
   },
@@ -668,5 +668,5 @@ export const useStyles = makeStyles(theme => ({
     margin: 0,
     marginBottom: "8px",
     width: "60%"
-  },
+  }
 }));

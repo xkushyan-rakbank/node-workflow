@@ -1,1 +1,0 @@
-export { SignatoryPersonalInformation } from "./SignatoryPersonalInformation";

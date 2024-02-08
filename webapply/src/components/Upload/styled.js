@@ -31,11 +31,11 @@ export const useStyles = makeStyles(theme => ({
     letterSpacing: "normal",
     "@media (max-width: 372px)": {
       width: "100%",
-      marginLeft: 0,
+      marginLeft: 0
     },
     [theme.breakpoints.down("xs")]: {
-      fontSize: "0.875rem",
-    },
+      fontSize: "0.875rem"
+    }
   },
   main: {
     display: "flex",
@@ -47,11 +47,11 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.between("sm", "md")]: {
       width: "calc(100% - 105px)",
       flexDirection: "row",
-      gap: "20px",
+      gap: "20px"
     },
     [theme.breakpoints.up("md")]: {
       flexDirection: "row",
-      gap: "20px",
+      gap: "20px"
     }
   },
   contentContainer: {
@@ -61,7 +61,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.between("sm", "md")]: {
       width: "calc(100% - 54px)",
       textAlign: "left",
-      marginTop: "0px",
+      marginTop: "0px"
     },
     [theme.breakpoints.up("md")]: {
       width: "calc(100% - 54px)",
@@ -100,11 +100,11 @@ export const useStyles = makeStyles(theme => ({
   },
   success: {
     color: "#157947",
-    fontWeight: 500,
+    fontWeight: 500
   },
   error: {
     color: "#8D0C10",
-    wordBreak: "break-word",
+    wordBreak: "break-word"
   },
   fieldDescription: {
     display: "flex",
@@ -112,7 +112,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: "500",
     color: "#1F1F1F",
     marginBottom: "8px",
-    width: "fit-content",
+    width: "fit-content"
   },
   contentWrapper: {
     width: "100%",
@@ -124,13 +124,13 @@ export const useStyles = makeStyles(theme => ({
     fill: "#909093",
     width: "16px",
     height: "16px",
-    marginLeft: "8px",
+    marginLeft: "8px"
   },
   isUploadingStatus: {
     marginRight: "unset",
     marginLeft: "8px",
     [theme.breakpoints.up("sm")]: {
-      marginRight: "8px",
-    },
-  },
+      marginRight: "8px"
+    }
+  }
 }));

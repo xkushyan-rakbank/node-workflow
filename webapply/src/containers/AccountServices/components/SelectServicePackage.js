@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid } from "@material-ui/core";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import cx from "classnames";
 import { useStyles } from "../styled";
 import { updateProspect } from "../../../store/actions/appConfig";
 import { getRakValuePackage } from "../../../store/selectors/appConfig";
-import { ContexualHelp } from "../../../components/Notifications";
 import { bankingBenefits, insuranceBenefits, lifestyleBenefits, otherBenefits } from "../constants";
 
 export const SelectServicePackage = ({ setFormFieldValue }) => {

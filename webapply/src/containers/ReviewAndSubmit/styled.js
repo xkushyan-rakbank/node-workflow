@@ -38,7 +38,7 @@ export const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up("sm")]: {
           fontWeight: 500,
           fontSize: "20px",
-          lineHeight: "28px",
+          lineHeight: "28px"
         }
       }
     }
@@ -125,8 +125,8 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "start",
     gap: "0px",
-    [theme.breakpoints.up("sm")]:{
-      gap: "24px", 
+    [theme.breakpoints.up("sm")]: {
+      gap: "24px"
     },
     "& label": {
       color: "#757575",
@@ -138,7 +138,7 @@ export const useStyles = makeStyles(theme => ({
       minWidth: "auto",
       [theme.breakpoints.up("sm")]: {
         minWidth: "188px",
-        width: "190px",
+        width: "190px"
       }
     },
     "& p": {
@@ -180,7 +180,7 @@ export const useStyles = makeStyles(theme => ({
     gap: "8px",
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-     width: "unset"
+      width: "unset"
     }
   },
   iconWrapper: {

@@ -23,7 +23,7 @@ import { COMPANY_STAKEHOLDER_ID } from "../../containers/CompanyStakeholders/con
 import { VIEW_IDS, COMPANY_SIGNATORY_ID, FINAL_QUESTIONS_COMPANY_ID } from "../../constants";
 import { COMPANY_INFO_PAGE_ID } from "../../containers/CompanyInfo/constants";
 import { SELECT_SERVICES_PAGE_ID } from "../../containers/SelectServices/constants";
-import { OUTSIDE_BASE_PATH } from "../../containers/FinalQuestions/components/CompanySummaryCard/CompanySummarySteps/CompanyPreferredMailingAddress/constants";
+import { OUTSIDE_BASE_PATH } from "../../containers/Additional/constants";
 import { signatoryCompanyInfo, kycAnnexure } from "../../constants/prospectPatches";
 import { termsAndConditionsAccepted } from "../actions/termsAndConditions";
 import { getAppConfig } from "../selectors/appConfig";
