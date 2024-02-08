@@ -36,7 +36,7 @@ export default function ApplicationChecks() {
       >
         <InformationSection title={""}>
           {application ? (
-            <div style={{ flexDirection: "column", width: "100%"}}>
+            <div style={{ flexDirection: "column", width: "100%" }}>
               {" "}
               <CheckList signatoryInfo={signatoryInfo} isReviewSubmit={true} />
             </div>

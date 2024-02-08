@@ -12,8 +12,8 @@ export const useStyles = makeStyles(theme => ({
     border: "unset",
     [theme.breakpoints.up("sm")]: {
       border: "1px solid #CCC",
-      padding: "30px",
-    },
+      padding: "30px"
+    }
   },
   companyInfoSectionForm: {
     display: "flex",

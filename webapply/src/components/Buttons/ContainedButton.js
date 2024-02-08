@@ -3,7 +3,6 @@ import cx from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button/Button";
 
-import { ReactComponent as Arrow } from "./../../assets/icons/whiteArrow.svg";
 import { ReactComponent as Loader } from "./../../assets/icons/loader.svg";
 import { theme } from "../../theme";
 import { ICONS, Icon } from "../Icons";

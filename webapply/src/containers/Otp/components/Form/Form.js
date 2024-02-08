@@ -29,7 +29,7 @@ export const Form = ({
   info,
   title,
   otpType,
-  classes: extendedClasses,
+  classes: extendedClasses
 }) => {
   const classes = useStyles({ classes: extendedClasses });
 
@@ -75,7 +75,7 @@ export const Form = ({
                 <span
                   onClick={handleSendNewCodeLinkClick}
                   className={cx(classes.link, {
-                    [classes.linkDisabled]: hasMaxAttemptsError,
+                    [classes.linkDisabled]: hasMaxAttemptsError
                   })}
                 >
                   Resend OTP

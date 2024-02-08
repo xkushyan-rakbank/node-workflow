@@ -9,7 +9,6 @@ import {
 } from "../store/selectors/searchProspect";
 import routes, { smeBaseName } from "../routes";
 import { ACTION_TYPES, VIEW_IDS } from "../constants";
-import { PROSPECT_STATUSES } from "../constants/index";
 
 export const useDisplayScreenBasedOnViewId = () => {
   const history = useHistory();

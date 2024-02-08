@@ -1,7 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { ReactComponent as InformationIcon } from "../assets/icons/information.svg";
 import { useMediaQuery } from "@material-ui/core";
+
+import { ReactComponent as InformationIcon } from "../assets/icons/information.svg";
 
 const useStyles = makeStyles({
   wrapper: ({ showInLineError }) => ({

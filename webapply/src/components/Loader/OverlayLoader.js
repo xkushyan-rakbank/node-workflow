@@ -15,8 +15,8 @@ const useStyle = makeStyles({
     padding: 40,
     borderRadius: "20px",
     "&:focus-visible": {
-      outline: 'none !important',
-    }, 
+      outline: "none !important"
+    }
   },
 
   bottom: {

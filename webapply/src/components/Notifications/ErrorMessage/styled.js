@@ -15,8 +15,8 @@ export const useStyles = makeStyles({
         lineHeight: "1",
         width: "auto",
         maxWidth: "fit-content",
-        paddingRight: "30px",
-      },
+        paddingRight: "30px"
+      }
     },
     "& svg": {
       marginRight: "5px"

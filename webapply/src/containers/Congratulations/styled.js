@@ -23,14 +23,14 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "40px",
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "unset",
+      width: "unset"
     },
     alignItems: "center",
     "& >span:nth-child(1)": {
       width: "100%",
       alignItems: "center",
-      justifyContent: "center",
-    },
+      justifyContent: "center"
+    }
   },
   congratulationsTextWrapper: {
     display: "flex",
@@ -52,7 +52,7 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: "#fff",
     boxShadow: "0px 4px 20px 0px rgba(0, 0, 0, 0.10)",
     [theme.breakpoints.up("lg")]: {
-      padding: "24px",
+      padding: "24px"
     }
   },
   applicationNumber: {
@@ -62,7 +62,7 @@ export const useStyles = makeStyles(theme => ({
     lineHeight: "28px",
     margin: 0,
     [theme.breakpoints.up("lg")]: {
-      fontSize: "1.25rem",
+      fontSize: "1.25rem"
     }
   },
   applicationDesc: {
@@ -84,7 +84,7 @@ export const useStyles = makeStyles(theme => ({
       fill: "#757575",
       width: "14px",
       height: "14px"
-    },
+    }
   },
   infoIcon: {
     width: "32px !important",
@@ -98,7 +98,7 @@ export const useStyles = makeStyles(theme => ({
   successTextWrapper: {
     display: "flex",
     flexDirection: "column",
-    gap: "4px",
+    gap: "4px"
   },
 
   customHeaderTitle: {
@@ -112,8 +112,8 @@ export const useStyles = makeStyles(theme => ({
       [theme.breakpoints.up("sm")]: {
         fontSize: "1.75rem",
         margin: 0,
-        marginBottom: "8px",
-      },
+        marginBottom: "8px"
+      }
     },
     "& > span:nth-child(2)": {
       fontSize: "1rem",
@@ -125,14 +125,14 @@ export const useStyles = makeStyles(theme => ({
       [theme.breakpoints.only("xs")]: {
         fontSize: "1rem",
         marginTop: 5,
-        fontWeight: 400,
+        fontWeight: 400
       },
       [theme.breakpoints.up("sm")]: {
         fontSize: "1.25rem",
         margin: 0,
-        fontWeight: 400, 
-      },
-    },
+        fontWeight: 400
+      }
+    }
   },
   sectionComponet: {
     display: "flex",
@@ -149,7 +149,7 @@ export const useStyles = makeStyles(theme => ({
     minHeight: "32px",
     [theme.breakpoints.up("sm")]: {
       width: "38px",
-      height: "38px",
+      height: "38px"
     }
   }
 }));

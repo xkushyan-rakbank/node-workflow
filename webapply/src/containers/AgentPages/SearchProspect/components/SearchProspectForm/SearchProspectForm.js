@@ -20,7 +20,6 @@ import {
 import { SubmitButton } from "../../../../../components/Buttons/SubmitButton";
 import { UAE_CODE, MAX_EMAIL_LENGTH } from "../../../../../constants";
 import { getInvalidMessage, nameInvalidMessage } from "../../../../../utils/getValidationMessage";
-import { Footer } from "../../../../../components/Footer";
 
 const searchProspectSchema = Yup.object({
   fullName: Yup.string()

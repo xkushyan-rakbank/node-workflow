@@ -10,7 +10,6 @@ import searchProspectSaga from "./searchProspect";
 import retrieveApplicantInfo from "./retrieveApplicantInfo";
 import stakeholders from "./stakeholders";
 import screenProspect from "./screenProspect";
-import completedSteps from "./completedSteps";
 import agentFeatures from "./agentFeatures";
 import decisionsSaga from "./decisions";
 import kycSaga from "./kyc";
@@ -30,7 +29,6 @@ export default function*() {
     fork(searchProspectSaga),
     fork(retrieveApplicantInfo),
     fork(stakeholders),
-    fork(completedSteps),
     fork(screenProspect),
     fork(agentFeatures),
     fork(decisionsSaga),

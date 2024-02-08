@@ -51,14 +51,14 @@ export const SaveAndClose = ({
           }
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log("Error while saving:", error);
-        if (isMounted) { 
+        if (isMounted) {
           setIsDisplayConfirmDialog(false);
           setCircularProgess(false);
         }
-      })
-  }, [isMounted,setIsDisplayConfirmDialog, prospectSaveOnClick, pushHistory]);
+      });
+  }, [isMounted, setIsDisplayConfirmDialog, prospectSaveOnClick, pushHistory]);
 
   const closeDialogHandler = useCallback(() => {
     setIsDisplayConfirmDialog(false);

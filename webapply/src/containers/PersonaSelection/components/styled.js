@@ -16,7 +16,7 @@ export const useStyles = makeStyles(theme => ({
   roleSelectionButton: {
     boxSizing: "border-box",
     [theme.breakpoints.up("md")]: {
-      padding: "24px",
+      padding: "24px"
     },
     maxWidth: "708px",
     border: "1px solid #CCCCCC",
@@ -33,7 +33,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.between("sm", "md")]: {
       "@media (orientation: portrait)": {
         maxWidth: "560px"
-      },
+      }
     },
     "&:hover": {
       border: "1px solid transparent",
@@ -98,15 +98,15 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 500,
       lineHeight: "22px",
       color: "#000",
-      border: "1px solid #000",
-    },
+      border: "1px solid #000"
+    }
   },
   trackButtonContainer: {
     marginTop: "16px",
     marginBottom: "20px",
     [theme.breakpoints.up("sm")]: {
       marginTop: "40px",
-      marginBottom: "55px",
+      marginBottom: "55px"
     }
-  },
+  }
 }));

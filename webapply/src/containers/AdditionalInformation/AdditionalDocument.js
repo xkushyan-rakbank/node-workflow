@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FieldArray } from "formik";

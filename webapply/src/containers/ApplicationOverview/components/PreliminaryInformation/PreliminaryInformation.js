@@ -1,7 +1,6 @@
 import React from "react";
 import { Youtube } from "../../../../components/Youtube/Youtube";
 
-
 import { useStyles } from "./styled";
 
 export const PreliminaryInformation = () => {

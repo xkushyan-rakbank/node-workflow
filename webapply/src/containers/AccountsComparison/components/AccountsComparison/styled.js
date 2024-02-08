@@ -1,10 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles/index";
-import {
-  contentWidth,
-  sideNavWidthLG,
-  sideNavWidthMD,
-  sideNavWidthXL
-} from "../../../../constants/styles";
+import { contentWidth, sideNavWidthLG, sideNavWidthXL } from "../../../../constants/styles";
 import { STANDART } from "../../../../utils/useBlobColor/constants";
 
 const blobImages = {
@@ -51,7 +46,7 @@ export const useStyles = makeStyles(theme => ({
         fontWeight: 500,
         margin: 0,
         marginBottom: "8px",
-        color: "#1F1F1F",
+        color: "#1F1F1F"
       },
       "& p": {
         fontSize: "1.25rem",
@@ -654,8 +649,8 @@ export const useStyles = makeStyles(theme => ({
   btnNavOutline: {
     [theme.breakpoints.only("xs")]: {
       justifyContent: "center",
-      paddingLeft: "0px",
-    },
+      paddingLeft: "0px"
+    }
   },
   navButton: {
     // width: "144px",

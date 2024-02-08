@@ -105,7 +105,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       display: "unset",
       flexDirection: "unset",
-      gap: "unset",
+      gap: "unset"
     },
     [theme.breakpoints.up("xl")]: {
       minWidth: "auto"

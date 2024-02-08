@@ -60,12 +60,12 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       width: "auto",
       marginRight: "16px",
-      padding: "20px 40px",
+      padding: "20px 40px"
     },
     "&:hover": {
       backgroundColor: "#373737",
-      color: "#fff",
-    },
+      color: "#fff"
+    }
   },
   appErrorMultipleLink: {
     background: "#1F1F1F",
@@ -82,19 +82,19 @@ export const useStyles = makeStyles(theme => ({
       marginRight: "16px",
       padding: "20px 40px",
       fontSize: "24px",
-      borderRadius: "100px",
+      borderRadius: "100px"
     },
     "&:hover": {
       backgroundColor: "#373737",
-      color: "#fff",
-    },
+      color: "#fff"
+    }
   },
   appErrorStatusMain: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
-    minHeight: "100vh",
+    minHeight: "100vh"
   },
   appErrorStatus: {
     display: "flex",
@@ -109,18 +109,18 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("sm")]: {
       padding: "40px",
       height: "auto",
-      width: "788px",
-    },
+      width: "788px"
+    }
   },
   errorMessage: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "flex-start"
   },
   linkErrorWrapper: {
     display: "flex",
     alignItems: "flex-start",
-    marginTop: "40px",
+    marginTop: "40px"
   },
   title: {
     fontWeight: "500",
@@ -132,8 +132,8 @@ export const useStyles = makeStyles(theme => ({
     color: "#1F1F1F",
     [theme.breakpoints.up("sm")]: {
       fontSize: "28px",
-      lineHeight: "36px",
-    },
+      lineHeight: "36px"
+    }
   },
   subTitle: {
     fontWeight: "400",
@@ -142,15 +142,15 @@ export const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     marginRight: "8px",
-    color: "#757575",
+    color: "#757575"
   },
   divider: {
     border: "1px solid #E6E6E6",
     width: "100%",
     marginTop: "40px",
     [theme.breakpoints.up("sm")]: {
-      width: "708px",
-    },
+      width: "708px"
+    }
   },
   info: {
     fontWeight: "400",
@@ -160,32 +160,32 @@ export const useStyles = makeStyles(theme => ({
     color: "#757575",
     [theme.breakpoints.up("sm")]: {
       fontSize: "20px",
-      lineHeight: "28px",
+      lineHeight: "28px"
     },
     "& a": {
       color: "#0000FF",
       textDecoration: "underline",
       "&:hover": {
-        textDecoration: "none",
-      },
-    },
+        textDecoration: "none"
+      }
+    }
   },
   header: {
     position: "absolute",
     top: 30,
     zIndex: 12,
     "& a": {
-      display: "flex",
+      display: "flex"
     },
     [theme.breakpoints.down("sm")]: {
-      maxWidth: "270px",
+      maxWidth: "270px"
     },
     [theme.breakpoints.up("sm")]: {
-      left: 40,
+      left: 40
     },
     [theme.breakpoints.only("xs")]: {
       top: "20px",
-      left: "16px",
-    },
-  },
+      left: "16px"
+    }
+  }
 }));

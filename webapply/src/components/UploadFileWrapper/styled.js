@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: "10px",
     marginTop: "8px",
     [theme.breakpoints.up("sm")]: {
-      padding: "24px",
+      padding: "24px"
     }
   },
   uploadContainer: {
@@ -38,7 +38,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     justifyContent: "center",
     [theme.breakpoints.up("sm")]: {
-      justifyContent: "start",
+      justifyContent: "start"
     },
     "& svg": {
       marginRight: "2px"
@@ -51,13 +51,12 @@ export const useStyles = makeStyles(theme => ({
     gap: "16px",
     [theme.breakpoints.up("sm")]: {
       flexDirection: "row",
-      gap: "8px",
+      gap: "8px"
     }
   },
   scanUploadbtnWrapper: {
     display: "flex",
-    gap: "8px",
-
+    gap: "8px"
   },
   actionButton: {
     minWidth: "105px",
@@ -117,7 +116,7 @@ export const useStyles = makeStyles(theme => ({
   fieldDescription: {
     fontSize: "0.875rem",
     fontWeight: "500",
-    color: "#1F1F1F",
+    color: "#1F1F1F"
   },
   disableUpload: {
     pointerEvents: "none",
@@ -129,11 +128,11 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 400,
     fontSize: "0.75rem",
     lineHeight: "16px",
-    borderRadius: "10px",
+    borderRadius: "10px"
   },
   fileUploadIcon: {
     width: "32px",
-    height: "35px",
+    height: "35px"
   },
   successText: {
     fontWeight: 500,
@@ -145,7 +144,7 @@ export const useStyles = makeStyles(theme => ({
   contentWrapper: {
     [theme.breakpoints.down("xs")]: {
       marginLeft: "unset",
-      textAlign: "center",
+      textAlign: "center"
     }
   },
   previewMobile: {
@@ -153,13 +152,13 @@ export const useStyles = makeStyles(theme => ({
     fontSize: "14px",
     lineHeight: "20px",
     color: "#8D0C10",
-    cursor: "pointer",
+    cursor: "pointer"
   },
   success: {
     marginLeft: "5px",
     [theme.breakpoints.down("xs")]: {
-      marginRight: "16px",
-    },
+      marginRight: "16px"
+    }
   },
   emriatesIDTile: {
     display: "flex",
@@ -182,8 +181,7 @@ export const useStyles = makeStyles(theme => ({
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
-      width: "550px",
+      width: "550px"
     }
-  },
-
+  }
 }));

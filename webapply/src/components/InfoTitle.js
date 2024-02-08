@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { makeStyles, styled } from "@material-ui/core/styles";
-import {ReactComponent as InformationIcon} from "../assets/icons/information.svg"
+import { ReactComponent as InformationIcon } from "../assets/icons/information.svg";
 
-import { Icon, ICONS } from "./Icons";
+import { ICONS } from "./Icons";
 
 const useStyles = makeStyles({
   wrapper: {

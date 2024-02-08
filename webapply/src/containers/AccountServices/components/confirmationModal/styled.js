@@ -19,7 +19,7 @@ export const useStyles = makeStyles({
       height: "auto"
     },
     [theme.breakpoints.up("md")]: {
-      height: "281px",
+      height: "281px"
     }
   },
   noTitlePaper: {
@@ -81,8 +81,8 @@ export const useStyles = makeStyles({
       display: "unset",
       flexDirection: "unset",
       alignItems: "unset",
-      gap: "unset" 
-    },
+      gap: "unset"
+    }
   },
   buttonSpacing: {
     "& > * + *": {
@@ -100,10 +100,10 @@ export const useStyles = makeStyles({
     marginRight: "15px",
     "&:hover": {
       backgroundColor: "#1F1F1F",
-      color: "white",
+      color: "white"
     },
     [theme.breakpoints.up("sm")]: {
-      fontSize: "18px", 
+      fontSize: "18px"
     }
   },
 
@@ -117,7 +117,7 @@ export const useStyles = makeStyles({
     height: "50px",
     width: "90%",
     [theme.breakpoints.up("sm")]: {
-      fontSize: "18px", 
+      fontSize: "18px",
       padding: "10px 32px",
       height: "unset",
       width: "unset"
