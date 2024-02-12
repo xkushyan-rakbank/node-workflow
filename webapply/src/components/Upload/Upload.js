@@ -40,6 +40,7 @@ export const Upload = ({
   infoIcon = false,
   isUploading = false,
   notedText,
+  dataTestId,
   ...props
 }) => {
   const { minSize, maxSize } = fileSize;
@@ -76,7 +77,7 @@ export const Upload = ({
 
   return (
     visible && (
-      <Fragment>
+      <div data-testid={dataTestId}>
         <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
           <div className={classes.fieldDescription}>
             {fieldDescription}
@@ -104,7 +105,9 @@ export const Upload = ({
                     {/* Drag and drop file here or upload from your computer */}
                     {showUploadSuccessIcon}
                     {props?.content && props?.content?.fileName ? (
-                      <p>{props?.content?.fileDescription || props?.content?.fileName}</p>
+                      <p data-test-id="uploadedFileName">
+                        {props?.content?.fileDescription || props?.content?.fileName}
+                      </p>
                     ) : (
                       `${
                         isMobile && mobilecontentPlaceholder
@@ -148,6 +151,7 @@ export const Upload = ({
                 onDelete();
                 event.stopPropagation();
               }}
+              data-testid="removeButton"
             >
               Remove
             </Button>
@@ -160,15 +164,16 @@ export const Upload = ({
               onClick={event => {
                 event.preventDefault();
               }}
+              data-testid="uploadFileButton"
             >
               Upload
-              <input type="file" hidden {...getInputProps()} />
+              <input type="file" hidden {...getInputProps()} data-testid="uploadFileInput" />
             </Button>
           )}
         </div>
         {infoTitle && <InfoTitle title={infoTitle} showIcon={infoIcon} />}
         {isError && <ErrorMessageComponent error={errorMessage} />}
-      </Fragment>
+      </div>
     )
   );
 };

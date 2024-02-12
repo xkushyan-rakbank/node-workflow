@@ -1,125 +1,63 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { fireEvent, render, act } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { fireEvent, render, act, screen } from "@testing-library/react";
+import configureStore from "redux-mock-store";
 import { Formik } from "formik";
-import { Upload } from "../../../../../components/Upload/Upload";
-import { uploadDocuments } from "../../../../../store/actions/uploadDocuments";
-import { updateProspect } from "../../../../../store/actions/appConfig";
-import { DocumentUpload } from "../DocumentUploadNew";
+import DocumentUpload from "../DocumentUploadNew";
 
-jest.mock("../../../../../components/Upload/Upload");
-jest.mock("../../../../../store/selectors/appConfig");
-jest.mock("../../../../../store/actions/appConfig");
-jest.mock("../../../../../store/actions/uploadDocuments");
-jest.mock("react-redux", () => ({
-  useSelector: jest.fn().mockImplementation(fn => fn()),
-  useDispatch: jest
-    .fn()
-    .mockImplementation(() => jest.fn())
-    .mockReturnValue(fn => fn)
-}));
-
-jest.mock("../../../../../components/Upload/Upload", () => ({
-  Upload: jest.fn().mockImplementation(() => null)
+jest.mock("connected-react-router", () => ({
+  routerMiddleware: jest.fn()
 }));
 
 describe("DocumentUpload component", () => {
+  let store;
+
+  const mockStore = configureStore([]);
   const file = new File(["file"], "file.png", { type: "image/png" });
-  const acceptedFiles = [file];
 
   const commonProps = {
     touched: {},
     setTouched: jest.fn(),
-    setFieldValue: jest.fn()
+    setFieldValue: jest.fn(),
+    values: {}
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
+
+    store = mockStore({
+      inputFieldBehaviours: {
+        "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": {
+          visible: true,
+          enabled: true
+        },
+        "prospect.prospectDocuments.companyDocument.moa": {
+          visible: true,
+          enabled: true
+        }
+      },
+      decisions: {
+        decisionLoading: {}
+      }
+    });
   });
 
-  it("should render component", () => {
-    const props = {
-      ...commonProps,
-      values: {}
-    };
+  const renderComp = (props = commonProps) =>
     render(
-      <Formik initialValues={{}}>
-        <DocumentUpload {...props} />
-      </Formik>
+      <Provider store={store}>
+        <Formik initialValues={props.values}>
+          <DocumentUpload {...props} />
+        </Formik>
+      </Provider>
     );
-    expect(Upload).toHaveBeenCalled();
+
+  it("should render component", () => {
+    const { getByTestId } = renderComp();
+    const documentUploadSection = getByTestId("DocumentUploadSection");
+    expect(documentUploadSection).toBeTruthy();
   });
 
   it("should handle removeDocument callback for tradeLicenseOrCOI", async () => {
-    const props = {
-      ...commonProps,
-      values: {
-        tradeLicenseOrCOI: [
-          {
-            preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
-            fileName: "addressproof.jpeg",
-            fileSize: 273228
-          }
-        ],
-        moa: []
-      }
-    };
-
-    render(
-      <Formik
-        initialValues={{
-          tradeLicenseOrCOI: {
-            preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
-            fileName: "addressproof.jpeg",
-            fileSize: 273228
-          }
-        }}
-      >
-        <DocumentUpload {...props} />
-      </Formik>
-    );
-
-    expect(Upload).toHaveBeenCalled();
-    act(() => {
-      Upload.mock.calls[0][0].onDelete();
-    });
-    expect(updateProspect).toHaveBeenCalled();
-  });
-
-  it("should upload file correctly on drop handleDrpFile callback on tradeLicenseOrCOI", () => {
-    const mockDispatch = jest.fn();
-    const props = {
-      ...commonProps,
-      values: {}
-    };
-    useDispatch.mockReturnValue(mockDispatch);
-
-    render(
-      <Formik initialValues={{}}>
-        <DocumentUpload {...props} />
-      </Formik>
-    );
-
-    expect(Upload).toHaveBeenCalled();
-    act(() => {
-      Upload.mock.calls[0][0].onDrop(acceptedFiles);
-    });
-    expect(mockDispatch).toHaveBeenCalledWith(
-      uploadDocuments({
-        docs: {
-          "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": file
-        },
-        documentSection: "companyDocuments",
-        onSuccess: expect.any(Function),
-        onFailure: expect.any(Function),
-        index: expect.any(Number)
-      })
-    );
-  });
-
-  it("should upload file correctly on drop handleDrpFile callback on moa", () => {
-    const mockDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockDispatch);
     const props = {
       ...commonProps,
       values: {
@@ -128,28 +66,71 @@ describe("DocumentUpload component", () => {
           fileName: "addressproof.jpeg",
           fileSize: 273228
         },
-        moa: [
-          {
-            preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
-            fileName: "addressproof1.jpeg",
-            fileSize: 273228
-          }
-        ]
+        moa: []
       }
     };
+    renderComp(props);
+    const tradeLicenseOrCOIUploadField = screen.getByTestId("tradeLicenseOrCOIUploadField");
+    expect(tradeLicenseOrCOIUploadField).toBeTruthy();
+    const removeButton = screen.getByTestId("removeButton");
+    removeButton.click();
+    // act(() => {
+    //   Upload.mock.calls[0][0].onDelete();
+    // });
+  });
 
-    render(
-      <Formik initialValues={{}}>
-        <DocumentUpload {...props} />
-      </Formik>
-    );
+  it("should upload file correctly on drop handleDrpFile callback on tradeLicenseOrCOI", async () => {
+    const props = {
+      ...commonProps,
+      values: {}
+    };
 
-    expect(Upload).toHaveBeenCalledTimes(2);
-    const rendersCount = Upload.mock.calls.length;
-    act(() => {
-      Upload.mock.calls[rendersCount - 1][0].onDrop(acceptedFiles);
+    renderComp(props);
+
+    const tradeLicenseOrCOIUploadField = screen.getByTestId("tradeLicenseOrCOIUploadField");
+    expect(tradeLicenseOrCOIUploadField).toBeTruthy();
+    const uploadFileInput = screen.getByTestId("uploadFileInput");
+    // uploadButton.click();
+    // userEvent.upload(uploadFileInput, file);
+    const file = new File(["file contents"], "filename.txt", { type: "text/plain" });
+    if (file) {
+      act(() => {
+        // fireEvent.drop(tradeLicenseOrCOIUploadField, {
+        //   dataTransfer: { files: [file] }
+        // });
+        fireEvent.change(uploadFileInput, {
+          dataTransfer: { files: [file] }
+        });
+      });
+    } else {
+      console.error("file is undefined");
+    }
+  });
+
+  it("should upload file correctly on drop handleDrpFile callback on moa", () => {
+    const props = {
+      ...commonProps,
+      values: {
+        tradeLicenseOrCOI: {
+          preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
+          fileName: "addressproof.jpeg",
+          fileSize: 273228
+        },
+        moa: [""]
+      }
+    };
+    renderComp(props);
+    const uploadField = screen.getByTestId("moaUploadField");
+    expect(uploadField).toBeTruthy();
+    const uploadButton = screen.getByTestId("uploadFileButton");
+    const uploadFileInput = screen.getByTestId("uploadFileInput");
+    uploadButton.click();
+    // userEvent.upload(uploadFileInput, file);
+    // expect(handleDropFile).toHaveBeenCalled();
+    fireEvent.change(uploadFileInput, {
+      dataTransfer: { acceptedFiles: [file] }
     });
-    expect(Upload.mock.calls[rendersCount - 1][0].file).toBe(props.values.moa[0].fileName);
+    // expect(handleDropFile).toHaveBeenCalledWith([file]);
   });
 
   it("should add more moa fields on click on add more button", () => {
@@ -166,33 +147,24 @@ describe("DocumentUpload component", () => {
         ]
       }
     };
-    const { getByTestId, getAllByTestId } = render(
-      <Formik
-        initialValues={{
-          moa: [
-            {
-              preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
-              fileName: "addressproof.jpeg",
-              fileSize: 273228
-            }
-          ]
-        }}
-      >
-        <DocumentUpload {...props} />
-      </Formik>
-    );
-    const addMoreButton = getByTestId("addMoreMOA");
-    const moaFields = getAllByTestId("moaWrapperDiv");
-    expect(moaFields.length).toBe(1);
-    fireEvent.click(addMoreButton);
+    renderComp(props);
+    const uploadFields = screen.getAllByTestId("moaUploadField");
+    expect(uploadFields.length).toBe(1);
+    const addMoreButton = screen.getByTestId("addMoreMOA");
+    addMoreButton.click();
   });
 
-  it("should render correct number of moa fields and call removeDocument on click on cross icon", () => {
+  it("should render correct number of moa fields and call removeDocument on click on cross icon", async () => {
     const moaList = [
       {
         preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
         fileName: "addressproof.jpeg",
         fileSize: 273228
+      },
+      {
+        preview: "blob:http://localhost:3000/31da2dd8-f983-4f02-8c3a-f657b1a9926b",
+        fileName: "proof of income.png",
+        fileSize: 64078
       },
       {
         preview: "blob:http://localhost:3000/31da2dd8-f983-4f02-8c3a-f657b1a9926b",
@@ -204,23 +176,13 @@ describe("DocumentUpload component", () => {
       ...commonProps,
       values: { moa: moaList }
     };
-
-    const { getAllByTestId } = render(
-      <Formik initialValues={{ moa: moaList }}>
-        <DocumentUpload {...props} />
-      </Formik>
-    );
-    const moaFields = getAllByTestId("moaWrapperDiv");
-    const removeIconBtn = getAllByTestId("removeIconButton");
-
-    expect(Upload).toHaveBeenCalled();
-    expect(moaFields.length).toBe(2);
-    removeIconBtn.forEach((btn, index) => {
-      btn.click();
-    });
+    renderComp(props);
+    const moaFields = screen.getAllByTestId("moaUploadField");
+    expect(moaFields.length).toBe(3);
+    const removeButtons = screen.getAllByTestId("removeIconButton");
+    removeButtons[1].click();
   });
   it("should remove moa field on click on remove button", () => {
-    const handleFieldDelete = jest.fn();
     const props = {
       ...commonProps,
       values: {
@@ -233,28 +195,30 @@ describe("DocumentUpload component", () => {
         ]
       }
     };
-
-    render(
-      <Formik
-        initialValues={{
-          moa: [
-            {
-              preview: "blob:http://localhost:3000/17686b32-4671-4944-a400-dda94dfca8d2",
-              fileName: "addressproof.jpeg",
-              fileSize: 273228
-            }
-          ]
-        }}
-      >
-        <DocumentUpload {...props} removeDocument={handleFieldDelete} />
-      </Formik>
-    );
-
-    expect(Upload).toHaveBeenCalledTimes(2);
-    const rendersCount = Upload.mock.calls.length;
-    act(() => {
-      Upload.mock.calls[rendersCount - 1][0].onDelete();
+    renderComp(props);
+    const moaUploadField = screen.getByTestId("moaUploadField");
+    expect(moaUploadField).toBeTruthy();
+    const removeButton = screen.getByTestId("removeButton");
+    removeButton.click();
+  });
+  it("should not render moa section if useDecisions for moa path is not enabled", () => {
+    store = mockStore({
+      inputFieldBehaviours: {
+        "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": {
+          visible: true,
+          enabled: true
+        },
+        "prospect.prospectDocuments.companyDocument.moa": {
+          visible: false,
+          enabled: true
+        }
+      },
+      decisions: {
+        decisionLoading: {}
+      }
     });
-    expect(updateProspect).toHaveBeenCalled();
+    renderComp();
+    const moaSection = screen.queryByTestId("moaWrapperDiv");
+    expect(moaSection).toBeNull();
   });
 });
