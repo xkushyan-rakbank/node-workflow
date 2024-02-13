@@ -62,6 +62,7 @@
       "preferredLanguage": "",
       "debitCardApplied": "",
       "chequeBookApplied": "",
+      "nameOnChequeBook": "",
       "accountwithoutChequebook": "",
       "eStatements": true,
       "mailStatements": false,

@@ -26,6 +26,7 @@ export const AutoSaveField = ({
   addOthers = false,
   addSelectLabelOption = false,
   label,
+  dataTestId,
   ...rest
 }) => {
   const dispatch = useDispatch();
@@ -132,6 +133,7 @@ export const AutoSaveField = ({
           disabled={!enabled}
           name={name}
           options={options}
+          data-testid={dataTestId}
           {...rest}
           label={decisionLabel || label}
         />

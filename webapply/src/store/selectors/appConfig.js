@@ -222,3 +222,6 @@ export const getTat = state => {
 };
 
 export const getIsAutoSaveEnabled = state => getDatalist(state)?.AutoSave;
+
+export const getIsChequeBookNameFieldEnabled = state =>
+  getDatalist(state)?.isChqbookNameEditable?.[0]?.displayText === "true";
