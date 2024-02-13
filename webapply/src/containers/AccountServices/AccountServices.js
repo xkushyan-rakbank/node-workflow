@@ -13,7 +13,7 @@ import { NextStepButton } from "../../components/Buttons/NextStepButton";
 import { BackLink } from "../../components/Buttons/BackLink";
 import routes from "../../routes";
 import { Accordion } from "../../components/Accordion/CustomAccordion";
-import { ReactComponent as LetsGoGreen } from "../../assets/icons/letsGoGreenIcon.svg";
+import { AuthorisationPreferences } from "./components/AuthorisationPreferencesNew";
 import {
   CheckboxGroup,
   AutoSaveField as Field,
@@ -25,7 +25,6 @@ import { useStyles } from "./styled";
 import {
   PreferredLanguageOptions,
   PreferredNotificationOptions,
-  SinglyOptionList,
   YesNoList,
   yesNoMobileInstructionsOptions,
   yesNoOptions
@@ -36,7 +35,9 @@ import {
   getAccordionStatuses,
   getAccountInfo,
   getApplicantInfo,
+  getCompanyName,
   getDocuments,
+  getIsChequeBookNameFieldEnabled,
   getKycAnnexureDetails,
   getProspect,
   getProspectId,
@@ -49,7 +50,12 @@ import {
   getROInvalidMessage,
   nameInvalidMessage
 } from "../../utils/getValidationMessage";
-import { MAX_DEBIT_CARD_NAME_LENGTH, MIN_DEBIT_CARD_NAME_LENGTH } from "../CompanyInfo/constants";
+import {
+  MAX_CHEQUE_BOOK_NAME_LENGTH,
+  MAX_COMPANY_NAME_LENGTH,
+  MAX_DEBIT_CARD_NAME_LENGTH,
+  MIN_DEBIT_CARD_NAME_LENGTH
+} from "../CompanyInfo/constants";
 import {
   NAME_REGEX,
   NUMBER_REGEX,
@@ -75,6 +81,7 @@ import { DisclaimerNote } from "../../components/InfoNote/DisclaimerNote";
 import TermsAndConditionsDialog from "../CompanyStakeholders/components/StakeholderTermsAndConditions/TermsAndConditionsDialog";
 import { getSearchResultsStatuses } from "../../store/selectors/searchProspect";
 import { OPE_EDIT } from "../AgentPages/SearchedAppInfo/constants";
+import { useShortenName } from "../../utils/useShortenNameNew";
 
 const marketingChannelSelectionHandlers = {
   "all the above": ({ isSelected }) =>
@@ -125,6 +132,8 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const isROInitited = useSelector(getApplicantInfo).isROInitited;
   const prospectLists = useSelector(getSearchResultsStatuses);
   const prospectId = useSelector(getProspectId);
+  const isChqbookNameEditable = useSelector(getIsChequeBookNameFieldEnabled);
+  const isChequeBookApplied = useSelector(getAccountInfo).chequeBookApplied;
 
   const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
     .statusType;
@@ -139,51 +148,37 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const accordionStatuses = useSelector(getAccordionStatuses);
   const { allianceCode, sourcingId } = JSON.parse(accordionStatuses);
 
+  const companyName = useSelector(getCompanyName);
+
   const [isLoading, setIsLoading] = useState(false);
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
   const [openDebitCardPriceGuideDialog, setOpenDebitCardPriceGuide] = useState(false);
+  const [chequeBookName, setChequeBookName] = useState("");
   const formRef = useRef(null);
   const packageRef = useRef(null);
   const servicePreferenceRef = useRef(null);
   const authorizationRef = useRef(null);
   const communicationRef = useRef(null);
   const codeRef = useRef(null);
+  const shortenedCompanyName = useShortenName(
+    companyName.length > MAX_COMPANY_NAME_LENGTH ? companyName : null
+  );
 
   useEffect(() => {
     dispatch(updateProspect({ "prospect.accountInfo.accountType": accountType }));
   }, [accountType]);
 
   useEffect(() => {
+    const chequeBookName =
+      companyName.length > MAX_COMPANY_NAME_LENGTH ? shortenedCompanyName : companyName;
+    setChequeBookName(chequeBookName);
     dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": true }));
+    if (isChequeBookApplied) {
+      dispatch(updateProspect({ "prospect.accountInfo.nameOnChequeBook": chequeBookName }));
+    }
     setTimeout(() => scrollToDOMNode(refToTopOfAccountService), 0);
     packageRef.current.click();
   }, []);
-
-  const labelTextForGoGreenOption = (
-    <span style={{ display: "flex", alignItems: "center" }}>
-      <p style={{ margin: "0px" }}>
-        Yes, let’s go green <span style={{ fontSize: "12px" }}>(free)</span>
-      </p>
-      <LetsGoGreen style={{ marginLeft: 4 }} />
-    </span>
-  );
-
-  const labelTextForPreferPaper = <p style={{ margin: "0px" }}>No, I prefer paper</p>;
-
-  const YesNoListForRecieveStatementMode = [
-    {
-      code: "Yes",
-      key: "Yes",
-      value: true,
-      label: labelTextForGoGreenOption
-    },
-    {
-      code: "No",
-      key: "No",
-      value: false,
-      label: labelTextForPreferPaper
-    }
-  ];
 
   const createAccountServiceRadioHandler = ({ values, setFieldValue }) => async event => {
     const value = JSON.parse(event.target.value);
@@ -249,6 +244,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   }, []);
 
   const initialValues = {
+    isChqbookNameEditable,
     rakValuePackage: "",
     accountCurrency: "AED",
     accountEmirateCity:
@@ -257,6 +253,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     receiveInterest: "",
     signingPreferences: "singly",
     chequeBookApplied: "",
+    nameOnChequeBook: "",
     debitCardApplied: "",
     nameOnDebitCard: "",
     statementsVia,
@@ -310,6 +307,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   };
 
   const accountInfoValidation = Yup.object().shape({
+    isChqbookNameEditable: Yup.boolean(),
     debitCardApplied: Yup.boolean().required("This field is required"),
     nameOnDebitCard: Yup.string().when("debitCardApplied", {
       is: debitCardApplied => debitCardApplied,
@@ -324,6 +322,13 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     receiveInterest: Yup.string().required("This field is required"),
     signingPreferences: Yup.string().required("This field is required"),
     chequeBookApplied: Yup.string().required("This field is required"),
+    nameOnChequeBook: Yup.string().when("isChqbookNameEditable", {
+      is: isChqbookNameEditable => isChqbookNameEditable,
+      then: Yup.string()
+        .required(getRequiredMessage("Name on cheque book"))
+        .max(MAX_CHEQUE_BOOK_NAME_LENGTH, "Maximum ${max} characters allowed")
+        .matches(NAME_REGEX, nameInvalidMessage)
+    }),
     statementsVia: Yup.string().required("This field is required"),
     preferredLanguage: Yup.string().required("This field is required"),
     mobileInstructions: Yup.string()
@@ -415,12 +420,22 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       })
     )
   });
+
   const selectRadioBoolean = ({ values, setFieldValue, setFieldTouched }) => async event => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
     await setFieldValue(name, value);
     if (name === "debitCardApplied") {
       dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": value }));
+    }
+    if (name === "chequeBookApplied") {
+      if (value) {
+        setFieldValue("nameOnChequeBook", chequeBookName);
+        dispatch(updateProspect({ "prospect.accountInfo.nameOnChequeBook": chequeBookName }));
+      } else {
+        setFieldValue("nameOnChequeBook", "");
+        dispatch(updateProspect({ "prospect.accountInfo.nameOnChequeBook": "" }));
+      }
     }
   };
 
@@ -493,19 +508,19 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
     try {
       const servicePreferenceValidation =
-        validatedFormFields.hasOwnProperty("accountEmirateCity") ||
-        validatedFormFields.hasOwnProperty("branchId") ||
-        validatedFormFields.hasOwnProperty("receiveInterest");
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "accountEmirateCity") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "branchId") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "receiveInterest");
 
       const authorizationValidation =
-        validatedFormFields.hasOwnProperty("chequeBookApplied") ||
-        validatedFormFields.hasOwnProperty("nameOnDebitCard");
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "chequeBookApplied") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "nameOnDebitCard");
 
       const communicationValidation =
-        validatedFormFields.hasOwnProperty("preferredLanguage") ||
-        validatedFormFields.hasOwnProperty("marketing") ||
-        validatedFormFields.hasOwnProperty("mobileInstructions") ||
-        validatedFormFields.hasOwnProperty("surveys");
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "preferredLanguage") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "marketing") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "mobileInstructions") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "surveys");
 
       let forms = {
         servicePrerences: {
@@ -694,126 +709,18 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       }
                       accordionRef={authorizationRef}
                     >
-                      <div className={classes.questionareWrapper}>
-                        <label className={classes.sectionLabel}>
-                          Who has signing rights for this account?
-                        </label>
-                        <Field
-                          typeRadio
-                          options={SinglyOptionList}
-                          name="signingPreferences"
-                          path={"prospect.accountInfo.signingPreferences"}
-                          component={InlineRadioGroup}
-                          customIcon={false}
-                          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                          radioColor="primary"
-                          onChange={radioChangeHandler}
-                        />
-                      </div>
-                      <div className={classes.questionareWrapper}>
-                        <label className={classes.sectionLabel}>
-                          Would you like a company chequebook?
-                          <ContexualHelp
-                            title={
-                              "Chequebook availability is subject to\n successful credit checks."
-                            }
-                            placement="right"
-                            isDisableHoverListener={false}
-                            classes={classes.infoIcon}
-                          >
-                            <HelpOutlineIcon className={classes.infoIcon} />
-                          </ContexualHelp>
-                        </label>
-                        <Field
-                          typeRadio
-                          options={yesNoOptions}
-                          name="chequeBookApplied"
-                          path={"prospect.accountInfo.chequeBookApplied"}
-                          component={InlineRadioGroup}
-                          onChange={radioChangeHandler}
-                          customIcon={false}
-                          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                          radioColor="primary"
-                        />
-                      </div>
-                      <div className={classes.questionareWrapper}>
-                        <label className={classes.sectionLabel}>
-                          Would you like to apply for a business debit card?
-                        </label>
-                        <Field
-                          typeRadio
-                          options={yesNoOptions}
-                          name="debitCardApplied"
-                          path={"prospect.accountInfo.debitCardApplied"}
-                          component={InlineRadioGroup}
-                          onChange={radioChangeHandler}
-                          customIcon={false}
-                          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                          radioColor="primary"
-                        />
-                        {values.debitCardApplied && (
-                          <>
-                            <Field
-                              name="nameOnDebitCard"
-                              label={"Name on card"}
-                              path={
-                                "prospect.signatoryInfo[0].debitCardInfo.authSignatoryDetails.nameOnDebitCard"
-                              }
-                              placeholder={"Name on card"}
-                              InputProps={{
-                                inputProps: { tabIndex: 1, maxLength: 19, showInLineError: true }
-                              }}
-                              component={Input}
-                              classes={{ formControlRoot: classes.customLabel }}
-                            />
-                            <div className={classes.priceGuideInfo}>
-                              <p>
-                                Note: For details, please refer to the&nbsp;
-                                <a
-                                  className={classes.priceGuideLink}
-                                  onClick={e => {
-                                    e.stopPropagation();
-                                    setOpenDebitCardPriceGuide(true);
-                                  }}
-                                >
-                                  Debit Card Service & Price guide
-                                </a>
-                                .
-                              </p>
-                            </div>
-                          </>
-                        )}
-                        {values.debitCardApplied === false && (
-                          <div className={classes.debitCardWrapper}>
-                            <DisclaimerNote
-                              className={classes.noteWrapper}
-                              text={
-                                "Note: In order to access our digital banking services, you are required to have a debit card associated with your account."
-                              }
-                            />
-                          </div>
-                        )}
-                      </div>
-                      <div className={classes.questionareWrapper}>
-                        <label className={classes.sectionLabel}>
-                          Would you like to receive your account statements online? It’s a small
-                          step towards a greener planet.
-                        </label>
-                        <Field
-                          typeRadio
-                          options={YesNoListForRecieveStatementMode}
-                          name="statementsVia"
-                          component={InlineRadioGroup}
-                          customIcon={false}
-                          classes={{
-                            root: classes.radioButtonRoot,
-                            label: classes.radioLabelRoot,
-                            parent: classes.radioConatiner
-                          }}
-                          radioColor={!values.statementsVia ? "primary" : "#00CA2C"}
-                          onChange={accountServiceChangeHandler}
-                        />
-                      </div>
+                      <AuthorisationPreferences
+                        values={values}
+                        radioChangeHandler={radioChangeHandler}
+                        accountServiceChangeHandler={accountServiceChangeHandler}
+                        openDebitCardPriceGuideDialogOnClick={() =>
+                          setOpenDebitCardPriceGuide(true)
+                        }
+                        setFieldValue={setFieldValue}
+                        isChqbookNameFieldEditable={!isChqbookNameEditable}
+                        statementsViaRadioColor={!values.statementsVia ? "primary" : "#00CA2C"}
+                        {...props}
+                      />
                     </Accordion>
                   </div>
                   <div className={classes.packageSelectionWrapper}>

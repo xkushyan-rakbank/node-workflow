@@ -120,8 +120,10 @@ export function* getProspectIdInfo({ payload }) {
       if (config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0]) {
         const signatoryDetails =
           config.prospect?.signatoryInfo && config.prospect?.signatoryInfo[0];
-        signatoryDetails["editedFullName"] = signatoryDetails.editedFullName || signatoryDetails.fullName;
-        prospect["signatoryInfo[0].editedFullName"] = signatoryDetails.editedFullName || signatoryDetails.fullName;
+        signatoryDetails["editedFullName"] =
+          signatoryDetails.editedFullName || signatoryDetails.fullName;
+        prospect["signatoryInfo[0].editedFullName"] =
+          signatoryDetails.editedFullName || signatoryDetails.fullName;
 
         //consent screen
         if (signatoryDetails.consentInfo) {
@@ -159,13 +161,11 @@ export function* getProspectIdInfo({ payload }) {
     try {
       prospect[`${OUTSIDE_BASE_PATH}.isSameAsRegisteredAddress`] =
         config.prospect.organizationInfo?.addressInfo[0]?.officeAddressDifferent === "No";
-      // eslint-disable-next-line prettier/prettier
       if (
         config.prospect.organizationInfo?.addressInfo[0]?.addressDetails[0].preferredAddress ===
         "Yes"
       ) {
         prospect[`${OUTSIDE_BASE_PATH}.preferredMailingAddrs`] = true;
-        // eslint-disable-next-line prettier/prettier
       } else if (
         config.prospect.organizationInfo?.addressInfo[1].addressDetails[0]?.preferredAddress ===
         "Yes"

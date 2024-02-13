@@ -22,7 +22,8 @@ const InlineRadioGroupBase = ({
   disabled: isDisabled,
   customIcon = false,
   classes: extendedClasses,
-  radioColor = "secondary"
+  radioColor = "secondary",
+  dataTestId
 }) => {
   const classes = useStyles();
   const errorMessage = getIn(errors, field.name);
@@ -37,6 +38,7 @@ const InlineRadioGroupBase = ({
       required={required}
       error={isError}
       className={classes.wrapper}
+      data-testid={dataTestId}
     >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <RadioGroup
@@ -49,6 +51,7 @@ const InlineRadioGroupBase = ({
             "smallText",
             isDisabled && classes.disabledLabel
           )}
+          data-testid={dataTestId}
         >
           {label && <span className={classes.label}>{label}</span>}
           <div className={cx(classes.inlineFormRadioWrapper, extendedClasses.parent)}>
@@ -62,6 +65,7 @@ const InlineRadioGroupBase = ({
                 onSelect={onSelect}
                 customIcon={customIcon}
                 classes={extendedClasses}
+                data-testid={item.key}
               />
             ))}
           </div>

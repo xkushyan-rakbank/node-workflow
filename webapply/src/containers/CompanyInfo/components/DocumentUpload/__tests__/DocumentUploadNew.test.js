@@ -74,12 +74,10 @@ describe("DocumentUpload component", () => {
     expect(tradeLicenseOrCOIUploadField).toBeTruthy();
     const removeButton = screen.getByTestId("removeButton");
     removeButton.click();
-    // act(() => {
-    //   Upload.mock.calls[0][0].onDelete();
-    // });
   });
 
   it("should upload file correctly on drop handleDrpFile callback on tradeLicenseOrCOI", async () => {
+    const file = new File(["file contents"], "filename.txt", { type: "text/plain" });
     const props = {
       ...commonProps,
       values: {}
@@ -90,9 +88,6 @@ describe("DocumentUpload component", () => {
     const tradeLicenseOrCOIUploadField = screen.getByTestId("tradeLicenseOrCOIUploadField");
     expect(tradeLicenseOrCOIUploadField).toBeTruthy();
     const uploadFileInput = screen.getByTestId("uploadFileInput");
-    // uploadButton.click();
-    // userEvent.upload(uploadFileInput, file);
-    const file = new File(["file contents"], "filename.txt", { type: "text/plain" });
     if (file) {
       act(() => {
         // fireEvent.drop(tradeLicenseOrCOIUploadField, {
@@ -122,15 +117,10 @@ describe("DocumentUpload component", () => {
     renderComp(props);
     const uploadField = screen.getByTestId("moaUploadField");
     expect(uploadField).toBeTruthy();
-    const uploadButton = screen.getByTestId("uploadFileButton");
     const uploadFileInput = screen.getByTestId("uploadFileInput");
-    uploadButton.click();
-    // userEvent.upload(uploadFileInput, file);
-    // expect(handleDropFile).toHaveBeenCalled();
     fireEvent.change(uploadFileInput, {
       dataTransfer: { acceptedFiles: [file] }
     });
-    // expect(handleDropFile).toHaveBeenCalledWith([file]);
   });
 
   it("should add more moa fields on click on add more button", () => {

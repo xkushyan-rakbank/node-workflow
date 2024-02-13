@@ -23,6 +23,8 @@ export const blackListedAuthoritiesForUAE = {
   OS: { code: "OS", displayText: "Overseas", key: "OS", subGroup: null, value: "OS" },
   RAKE: { code: "RAKE", displayText: "RAKICC", key: "RAKE", subGroup: null, value: "RAKE" }
 };
+
+// eslint-disable-next-line max-len
 export const REGEX_LLC_PATTERN = /(?:Limited Liability Company)|((?:LLC)|(?:L.L.C)|(?:llc)|(?:L L C))$/i;
 
 export const MAX_FIRST_NAME_LENGTH = 30;
@@ -30,3 +32,5 @@ export const MAX_FIRST_NAME_LENGTH = 30;
 export const MAX_LAST_NAME_LENGTH = 30;
 
 export const MAX_MIDDLE_NAME_LENGTH = 30;
+
+export const MAX_CHEQUE_BOOK_NAME_LENGTH = 50;
