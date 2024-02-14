@@ -1,1 +1,1 @@
-export { CommonQuestions } from "./CommonQuestions";
+export { CommonQuestions } from "./CommonQuestionsNew";

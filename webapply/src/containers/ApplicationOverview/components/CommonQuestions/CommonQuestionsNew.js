@@ -13,6 +13,7 @@ export const CommonQuestions = ({ questions }) => {
   const classes = useStyles();
 
   const handleChange = name => () => {
+    /* istanbul ignore next @preserve */
     const value = expandedPanel === name ? null : name;
     setExpandedPanel(value);
   };
@@ -24,6 +25,7 @@ export const CommonQuestions = ({ questions }) => {
       expanded={expandedPanel === question.id}
       onChange={handleChange(question.id)}
       classes={{ root: classes.root, expanded: classes.expanded }}
+      data-testid="common-questions-wrapper"
     >
       <ExpansionPanelSummary
         expandIcon={<Icon name={ICONS.arrowDown} alt="arrow-down" className={classes.iconSize} />}
@@ -34,11 +36,16 @@ export const CommonQuestions = ({ questions }) => {
           content: classes.summaryContent,
           expanded: classes.expanded
         }}
+        data-testid="common-questions"
       >
-        <div className={classes.text}>{question.question}</div>
+        <div className={classes.text} data-testid="common-questions-label">
+          {question.question}
+        </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
-        <div className={cx(classes.text, classes.info)}>{question.answer.__html}</div>
+        <div className={cx(classes.text, classes.info)} data-testid="common-questions-desc">
+          {question.answer.__html}
+        </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   ));

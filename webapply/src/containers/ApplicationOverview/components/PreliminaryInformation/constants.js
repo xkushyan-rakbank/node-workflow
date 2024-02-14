@@ -58,9 +58,9 @@ export const questions = [
     answer: {
       __html: (
         <>
-          Yes. You can save and close your application at any stage and later continue from where
-          you left using a link that will be provided in the email sent to you once you save and
-          close the application.
+          You can revisit the Bank website, click on Quick Apply under Business. On this webpage you
+          will see the option stating &apos;Track My Application&apos;. Please click and resume the
+          journey.
         </>
       )
     },
