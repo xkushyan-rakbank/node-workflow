@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { Formik } from "formik";
 import { act } from "react-dom/test-utils";
-import MutationObserver from "mutation-observer";
 import { render, screen, fireEvent, within, waitFor } from "@testing-library/react";
 import { AuthorisationPreferences } from "../AuthorisationPreferencesNew";
 
@@ -12,7 +11,6 @@ jest.mock("../../../../components/Accordion/CustomAccordion", () => ({
 }));
 
 describe("AuthorisationPreferences", () => {
-  global.MutationObserver = MutationObserver;
   const mockStore = configureStore([]);
   const store = mockStore({
     appConfig: {

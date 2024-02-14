@@ -1,7 +1,6 @@
 import React from "react";
 import cx from "classnames";
 import { TwoSteps } from "./TwoSteps";
-import { PreliminaryInformation } from "./PreliminaryInformation";
 import { SectionSteps } from "../../../components/SectionSteps";
 import { CommonQuestions } from "./CommonQuestions";
 import { questions } from "./PreliminaryInformation/constants";
