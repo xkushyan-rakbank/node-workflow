@@ -371,6 +371,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         receiveInterest: accountInfo?.receiveInterest ? "Yes" : "No",
         debitCardApplied: accountInfo?.debitCardApplied ? "Yes" : "No",
         chequeBookApplied: accountInfo?.chequeBookApplied ? "Yes" : "No",
+        nameOnChequeBook: accountInfo?.nameOnChequeBook,
         mailStatements: accountInfo?.mailStatements,
         eStatements: accountInfo?.eStatements ? "Physical" : "",
         signingRights: accountInfo?.signingPreferences,

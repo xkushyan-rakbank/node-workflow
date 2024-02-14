@@ -110,6 +110,12 @@ export const ProductInformationReview = ({ fieldValues, isIslamic }) => {
               <label>Company cheque book:</label>
               <p>{fieldValues.chequeBookApplied}</p>
             </div>
+            {fieldValues.chequeBookApplied === "Yes" && (
+              <div className={classes.infoLabelValue}>
+                <label>Name on cheque book:</label>
+                <p>{fieldValues.nameOnChequeBook}</p>
+              </div>
+            )}
             <div className={classes.infoLabelValue}>
               <label>Bank statement delivery:</label>
               <p style={{ display: "flex", alignItems: "center" }}>{bankStatementType()} </p>
