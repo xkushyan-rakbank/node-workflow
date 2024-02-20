@@ -1,51 +1,20 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable max-len */
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
 import { get } from "lodash";
-import { Grid } from "@material-ui/core";
-import { format, isValid } from "date-fns";
+import { format } from "date-fns";
 import cx from "classnames";
 
 import { useStyles } from "../components/CompanyStakeholders/styled";
 import { useTrackingHistory } from "../../../utils/useTrackingHistory";
-import { NextStepButton } from "../../../components/Buttons/NextStepButton";
-import { DATE_FORMAT, NEXT, UAE, formStepper, operatorLoginScheme } from "../../../constants";
+import { NEXT, formStepper, operatorLoginScheme } from "../../../constants";
 import { ReactComponent as SuccessIcon } from "../../../assets/icons/credit_score.svg";
-import {
-  Input,
-  AutoSaveField as Field,
-  InlineRadioGroup,
-  DatePicker,
-  EmiratesID,
-  SelectAutocomplete
-} from "../../../components/Form";
 import routes from "../../../routes";
 import { OverlayLoader } from "../../../components/Loader";
 import { useFormNavigation } from "../../../components/FormNavigation/FormNavigationProvider";
 import { useLayoutParams } from "../../FormLayout";
 import { useViewId } from "../../../utils/useViewId";
-import { BackLink } from "../../../components/Buttons/BackLink";
-import {
-  MAX_FIRST_NAME_LENGTH,
-  MAX_LAST_NAME_LENGTH,
-  MAX_MIDDLE_NAME_LENGTH,
-  MAX_MOTHER_MAIDEN_NAME_LENGTH,
-  MIN_MOTHER_NAME_LENGTH
-} from "../../CompanyInfo/constants";
-import {
-  getInvalidMessage,
-  getRequiredMessage,
-  nameInvalidMessage
-} from "../../../utils/getValidationMessage";
-import {
-  NAME_REGEX,
-  EMIRATES_ID_REGEX,
-  ALPHANUMERIC_REGEX,
-  ALLOWED_CHAR_REGEX
-} from "../../../utils/validation";
-import { Footer } from "../../../components/Footer";
 import {
   getAccordionStatuses,
   getDatalist,
@@ -59,6 +28,8 @@ import {
   getSearchResultsStatuses
 } from "../../../store/selectors/searchProspect";
 import { OPE_EDIT } from "../../AgentPages/SearchedAppInfo/constants";
+import { CustomerReviewDetails } from "./components/CustomerReviewDetailsNew";
+import { OperatorReviewDetails } from "./components/OperatorReviewDetailsNew";
 
 export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const classes = useStyles();
@@ -79,11 +50,12 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
 
   const isFrontCorrection = get(currentProspect, "status.statusType") === OPE_EDIT;
   const isOperator = scheme === operatorLoginScheme;
-  const isEditable = isOperator && isFrontCorrection;
+  const isEditable = isOperator && isFrontCorrection || true;
+  const { signatoryInfo } = prospect;
 
   const [displayFields, setDisplayFields] = useState({});
 
-  const { nationality: nationality } = useSelector(getDatalist);
+  const { nationality } = useSelector(getDatalist);
 
   const getNationalityLabel = useCallback(
     code => nationality?.find(nationality => nationality.code === code)?.displayText,
@@ -91,127 +63,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   );
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const customerInitValues = {
-    questionInput: "",
-    mothersMaidenName: "",
-    countryofBirth: ""
-  };
-
-  const operatorInitialValues = {
-    fullName: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    mothersMaidenName: "",
-    nationality: "",
-    dateOfBirth: "",
-    eidNumber: "",
-    eidExpiryDt: "",
-    passportNumber: "",
-    passportExpiryDate: ""
-  };
-
-  const labelTextForNoEfrIncorrect = (
-    <span style={{ display: "flex", alignItems: "center" }}>
-      <p style={{ margin: "0px" }}>
-        No&nbsp;
-        <span style={{ fontSize: "14px", color: "#757575" }}>
-          (We'll call you to fix any issues)
-        </span>
-      </p>
-    </span>
-  );
-
-  const stakePreviewYesNoOptions = [
-    {
-      code: "Yes",
-      key: "Yes",
-      value: true,
-      label: "Yes"
-    },
-    {
-      code: "No",
-      key: "No",
-      value: false,
-      label: labelTextForNoEfrIncorrect
-    }
-  ];
-
-  const customerPreviewValidation = Yup.object({
-    countryofBirth: Yup.string()
-      .nullable()
-      .required(getRequiredMessage("Country of birth")),
-    mothersMaidenName: Yup.string()
-      .required(getRequiredMessage("Mother's maiden name"))
-      .min(
-        MIN_MOTHER_NAME_LENGTH,
-        `Mother's maiden name is too short. Please enter at least ${MIN_MOTHER_NAME_LENGTH} characters`
-      )
-      .max(
-        MAX_MOTHER_MAIDEN_NAME_LENGTH,
-        `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
-      )
-      .matches(NAME_REGEX, nameInvalidMessage),
-    questionInput: Yup.boolean()
-      .typeError(getRequiredMessage("This field"))
-      .required(getRequiredMessage("This field"))
-  });
-
-  const operatorPreviewValidation = Yup.object({
-    fullName: Yup.string()
-      .required(getRequiredMessage("Full name"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(
-        80,
-        "Full name length cannot be more than 80 characters, please reduce / adjust character length in either first, middle or last name field"
-      ),
-    firstName: Yup.string()
-      .required(getRequiredMessage("First name"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_FIRST_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, nameInvalidMessage),
-    middleName: Yup.string()
-      .nullable()
-      .notRequired()
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_MIDDLE_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, nameInvalidMessage),
-    lastName: Yup.string()
-      .required(getRequiredMessage("Last name"))
-      // eslint-disable-next-line no-template-curly-in-string
-      .max(MAX_LAST_NAME_LENGTH, "Maximum ${max} characters allowed")
-      .matches(NAME_REGEX, nameInvalidMessage),
-    mothersMaidenName: Yup.string()
-      .required(getRequiredMessage("Mother's maiden name"))
-      .min(
-        MIN_MOTHER_NAME_LENGTH,
-        `Mother's maiden name is too short. Please enter at least ${MIN_MOTHER_NAME_LENGTH} characters`
-      )
-      .max(
-        MAX_MOTHER_MAIDEN_NAME_LENGTH,
-        `Mother's maiden name is too long. Please enter up to ${MAX_MOTHER_MAIDEN_NAME_LENGTH} characters.`
-      )
-      .matches(NAME_REGEX, nameInvalidMessage),
-    eidNumber: Yup.string().when("residenceCountry", {
-      is: value => value === UAE,
-      then: Yup.string()
-        .required(getRequiredMessage("Emirates ID"))
-        .transform(value => value.replace(/-/g, ""))
-        .matches(EMIRATES_ID_REGEX, getInvalidMessage("Emirates ID"))
-    }),
-    passportNumber: Yup.string()
-      .required(getRequiredMessage("Passport number"))
-      .max(12, "Maximum 12 characters allowed")
-      .matches(ALPHANUMERIC_REGEX, getInvalidMessage("Passport number")),
-    passportExpiryDate: Yup.string().required(getRequiredMessage("Passport expiry")),
-    eidExpiryDt: Yup.string().required(getRequiredMessage("Emirates ID expiry")),
-    dateOfBirth: Yup.string().required(getRequiredMessage("Date of birth")),
-    nationality: Yup.string().required(getRequiredMessage("Nationality"))
-  });
-
-  const changeDateProspectHandler = (_, value, path) =>
-    isValid(value) && { [path]: format(value, DATE_FORMAT) };
 
   const formatEidNumber = number => {
     const cleanNumber = String(number).replace(/\D/g, "");
@@ -224,13 +75,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
   const formatDate = useCallback(date => (date ? format(new Date(date), "dd/MM/yyyy") : ""), [
     displayFields
   ]);
-
-  const selectRadioBoolean = ({ values, setFieldValue }) => async event => {
-    const value = JSON.parse(event.target.value);
-    const name = event.target.name;
-    await setFieldValue(name, value);
-    dispatch(updateProspect({ "prospect.signatoryInfo[0].isEFRDataCorrect": value }));
-  };
 
   const handleClickStakeholderPreviewNextStep = useCallback(() => {
     setIsLoading(true);
@@ -269,6 +113,9 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
           signatoryInfo && formatDate(signatoryInfo[0]?.kycDetails?.emirateIdDetails?.eidExpiryDt),
         passportNumber:
           signatoryInfo && signatoryInfo[0]?.kycDetails?.passportDetails[0].passportNumber,
+        passportIssueDate:
+          signatoryInfo &&
+          formatDate(signatoryInfo[0]?.kycDetails?.passportDetails[0].passportIssueDate),
         passportExpiryDate:
           signatoryInfo &&
           formatDate(signatoryInfo[0]?.kycDetails?.passportDetails[0].passportExpiryDate)
@@ -288,327 +135,6 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
     }
     dispatch(updateProspect({ "prospect.accordionsStatus": JSON.stringify(statuses) }));
   }, []);
-
-  const customerReviewDetails = () => {
-    return (
-      <div className={classes.reviewDetails}>
-        <div>
-          <h5 className={classes.reviewDetailsTitle}>Essential information</h5>
-        </div>
-        <div className={classes.stakeHolderPreviewHorizontal}></div>
-        <div className={classes.infoLabelValue}>
-          <label>Full name:</label>
-          <p>{displayFields.signatoryFullName}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Nationality:</label>
-          <p>{displayFields.signatoryNationality}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Date of birth:</label>
-          <p>{displayFields.dateOfBirth}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Emirates ID number:</label>
-          <p>{displayFields.eidNumber}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Emirates ID expiry date:</label>
-          <p>{displayFields.eidExpiryDt}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Passport number:</label>
-          <p>{displayFields.passportNumber}</p>
-        </div>
-        <div className={classes.infoLabelValue}>
-          <label>Passport expiry:</label>
-          <p>{displayFields.passportExpiryDate}</p>
-        </div>
-      </div>
-    );
-  };
-
-  const OperatorReviewDetails = (values, isSubmitting, setFieldValue) => {
-    if (isSubmitting) {
-      const el = document.querySelector(".Mui-error");
-      const element = el && el.parentElement ? el.parentElement : el;
-      element && element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    const {
-      firstName: signatoryFirstName,
-      middleName: signatoryMiddleName,
-      lastName: signatoryLastName
-    } = values;
-
-    useEffect(() => {
-      const concatNames = (...nameParts) =>
-        nameParts
-          .filter(Boolean)
-          .join(" ")
-          .trim();
-      setFieldValue(
-        "fullName",
-        concatNames(signatoryFirstName, signatoryMiddleName, signatoryLastName)
-      );
-    }, [signatoryFirstName, signatoryMiddleName, signatoryLastName]);
-
-    return (
-      <>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={false}
-            name="fullName"
-            path="prospect.signatoryInfo[0].editedFullName"
-            label="Full name"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 80 }
-            }}
-            disabled={isEditable}
-            showEditIcon={!isEditable}
-            fieldDescription={"Please ensure the full name is per your passport"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="firstName"
-            path="prospect.signatoryInfo[0].firstName"
-            label="First name"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 30 }
-            }}
-            fieldDescription={"Please ensure the first name is as per your passport"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="middleName"
-            path="prospect.signatoryInfo[0].middleName"
-            label="Middle name"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 30 }
-            }}
-            fieldDescription={"Please ensure the middle name is as per your passport"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="lastName"
-            path="prospect.signatoryInfo[0].lastName"
-            label="Last name"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: 30 }
-            }}
-            disabled={!isEditable}
-            showEditIcon={!isEditable}
-            fieldDescription={"Please ensure the last name is as per your passport"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="countryofBirth"
-            path="prospect.signatoryInfo[0].countryofBirth"
-            label="Country of birth"
-            datalistId="country"
-            component={SelectAutocomplete}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
-            }}
-            disabled={!isEditable}
-            showEditIcon={!isEditable}
-            fieldDescription={"Enter Country of birth"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="mothersMaidenName"
-            path="prospect.signatoryInfo[0].mothersMaidenName"
-            label="Mother's maiden name"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
-            }}
-            allowedCharRegex={ALLOWED_CHAR_REGEX}
-            disabled={displayFields?.mothersMaidenName && !isEditable ? true : false}
-            fieldDescription={"Enter Mother's maiden name as per your passport"}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="nationality"
-            path="prospect.signatoryInfo[0].kycDetails.nationality"
-            datalistId="nationality"
-            label="Nationality"
-            component={SelectAutocomplete}
-            InputProps={{
-              inputProps: { tabIndex: 0 }
-            }}
-            disabled={!isEditable}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="dateOfBirth"
-            path="prospect.signatoryInfo[0].kycDetails.dateOfBirth"
-            label="Date of birth"
-            component={DatePicker}
-            inputAdornmentPosition="end"
-            changeProspect={changeDateProspectHandler}
-            InputProps={{
-              inputProps: { tabIndex: 0 }
-            }}
-            disabled={!isEditable}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            name="eidNumber"
-            path="prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"
-            label="Emirates ID"
-            placeholder="784-1950-1234567-8"
-            disabled={!isEditable}
-            component={EmiratesID}
-            changeProspect={(prospect, value) => ({
-              ...prospect,
-              ["prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidNumber"]: value.replace(
-                /-/g,
-                ""
-              )
-            })}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="eidExpiryDt"
-            path="prospect.signatoryInfo[0].kycDetails.emirateIdDetails.eidExpiryDt"
-            label="Emirates ID expiry"
-            component={DatePicker}
-            changeProspect={changeDateProspectHandler}
-            InputProps={{
-              inputProps: { tabIndex: 0 }
-            }}
-            inputAdornmentPosition="end"
-            disabled={!isEditable}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="passportNumber"
-            path="prospect.signatoryInfo[0].kycDetails.passportDetails[0].passportNumber"
-            label="Passport number"
-            component={Input}
-            InputProps={{
-              inputProps: { tabIndex: 0 }
-            }}
-            disabled={!isEditable}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Field
-            isLoadDefaultValueFromStore={true}
-            name="passportExpiryDate"
-            path="prospect.signatoryInfo[0].kycDetails.passportDetails[0].passportExpiryDate"
-            label="Passport expiry"
-            component={DatePicker}
-            InputProps={{
-              inputProps: { tabIndex: 0 }
-            }}
-            changeProspect={changeDateProspectHandler}
-            disabled={!isEditable}
-            inputAdornmentPosition="end"
-          />
-        </Grid>
-      </>
-    );
-  };
-
-  const customerConfirmEFRDetails = (isSubmitting, errors, radioChangeHandler) => {
-    if (isSubmitting) {
-      const fieldErrorNames = Object.keys(errors);
-      const el =
-        document.querySelector(`input[name='${fieldErrorNames[0]}']`) ||
-        document.querySelector(".Mui-error");
-      const element = el && el.parentElement ? el.parentElement : el;
-      element && element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    return (
-      <>
-        <div className={classes.reviewDetails}>
-          <div>
-            <h5 className={classes.reviewDetailsTitle}>Other information</h5>
-          </div>
-          <div className={classes.stakeHolderPreviewHorizontal}></div>
-          <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
-            <label>Country of birth:</label>
-            <Field
-              name="countryofBirth"
-              path="prospect.signatoryInfo[0].countryofBirth"
-              placeholder="Select"
-              label=""
-              datalistId="country"
-              component={SelectAutocomplete}
-              tabIndex="0"
-              classes={{
-                formControlRoot: classes.previewFormControl
-              }}
-              addSelectLabelOption={true}
-            />
-          </div>
-          <div className={cx(classes.infoLabelValue, classes.editCustomerDetails)}>
-            <label>Mother's maiden name:</label>
-            <Field
-              name="mothersMaidenName"
-              path="prospect.signatoryInfo[0].mothersMaidenName"
-              label=""
-              component={Input}
-              InputProps={{
-                inputProps: { tabIndex: 0, maxLength: MAX_MOTHER_MAIDEN_NAME_LENGTH }
-              }}
-              allowedCharRegex={ALLOWED_CHAR_REGEX}
-              classes={{
-                formControlRoot: classes.previewFormControl,
-                input: classes.inputWithoutLabel
-              }}
-              fieldDescription={"Enter Mother's maiden name as per your passport"}
-            />
-          </div>
-        </div>
-        <div>
-          <div className={classes.informationQuestion}>Is all of your information correct?</div>
-          <Field
-            typeRadio
-            options={stakePreviewYesNoOptions}
-            name="questionInput"
-            path="prospect.signatoryInfo[0].isEFRDataCorrect"
-            component={InlineRadioGroup}
-            customIcon={false}
-            classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-            radioColor="primary"
-            onChange={radioChangeHandler}
-          />
-          <div>
-            <p className={classes.reviewRemarks}>
-              If not, don't worry—you can continue with your application. We'll reach out to you
-              within 48 hours to help make any corrections.
-            </p>
-          </div>
-        </div>
-      </>
-    );
-  };
 
   return (
     <>
@@ -633,38 +159,19 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
         </>
       )}
 
-      {!isEditable && customerReviewDetails()}
-      <Formik
-        initialValues={isEditable ? operatorInitialValues : customerInitValues}
-        validationSchema={isEditable ? operatorPreviewValidation : customerPreviewValidation}
-        validateOnChange={true}
-        validateOnBlur={true}
-        onSubmit={handleClickStakeholderPreviewNextStep}
-      >
-        {({ values, setFieldValue, isSubmitting, errors, ...props }) => {
-          const radioChangeHandler = selectRadioBoolean({ values, setFieldValue });
-
-          return (
-            <Form>
-              <Grid container>
-                {!isEditable && (
-                  <Grid item xs={12}>
-                    {customerConfirmEFRDetails(isSubmitting, errors, radioChangeHandler)}
-                  </Grid>
-                )}
-                {isEditable && OperatorReviewDetails(values, isSubmitting, setFieldValue)}
-              </Grid>
-              <Footer>
-                <BackLink
-                  path={isEditable ? routes.companyInfo : routes.stakeholdersInfo}
-                  isTypeButton={true}
-                />
-                <NextStepButton label="Next" type="submit" justify="flex-end" />
-              </Footer>
-            </Form>
-          );
-        }}
-      </Formik>
+      {!isEditable ? (
+        <CustomerReviewDetails
+          customerData={displayFields}
+          onClickNextSubmit={handleClickStakeholderPreviewNextStep}
+        />
+      ) : (
+        <OperatorReviewDetails
+          isEditable={isEditable}
+          customerData={displayFields}
+          signatoryDetails={signatoryInfo}
+          onClickNextSubmit={handleClickStakeholderPreviewNextStep}
+        />
+      )}
       <OverlayLoader open={isLoading} text={"Don't go anywhere...this will just take a minute!"} />
     </>
   );

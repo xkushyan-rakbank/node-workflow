@@ -215,16 +215,18 @@ const useStyles = makeStyles({
   }
 });
 
-export const Footer = ({ children, extraClasses, hideSaveClose = false }) => {
+export const Footer = ({ children, extraClasses, dataTestId, hideSaveClose = false }) => {
+  const { pathname } = useLocation();
+
   const classes = useStyles({
     smallMenu: checkIsShowSmallMenu(pathname)
   });
-  const { pathname } = useLocation();
-  const showSaveClose = Object.values(VIEW_IDS).some(screen => pathname.includes(screen));
+
+  const showSaveClose = Object.values(VIEW_IDS).some(screen => pathname?.includes(screen));
   const isOnlyNextButton = React.Children.toArray(children).length === 1;
 
   return (
-    <div className={classes.footerWrapper}>
+    <div className={classes.footerWrapper} data-testid={dataTestId}>
       <div
         className={cx(classes.linkContainerNew, {
           [classes.linkContainerWithSaveCloseBtn]: showSaveClose && !hideSaveClose
@@ -244,7 +246,12 @@ export const Footer = ({ children, extraClasses, hideSaveClose = false }) => {
           </div>
         )}
         {(!showSaveClose || hideSaveClose) && (
-          <div className={cx(classes.formNavigationButton, extraClasses)}>{children}</div>
+          <div
+            className={cx(classes.formNavigationButton, extraClasses)}
+            data-testid="formNavigationButton"
+          >
+            {children}
+          </div>
         )}
       </div>
     </div>
