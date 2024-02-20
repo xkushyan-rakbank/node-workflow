@@ -67,7 +67,7 @@ export const AutoSaveField = ({
       datalist[datalistId].push(OthersOption);
     }
     if (addSelectLabelOption === true) {
-      datalist[datalistId].push(SelectOption);
+      datalist[datalistId] && datalist[datalistId].push(SelectOption);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

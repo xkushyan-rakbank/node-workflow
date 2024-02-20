@@ -132,6 +132,7 @@ const InputBase = ({
             }
             onBlur(event);
           }}
+          data-testid={props["data-testid"]}
         />
       </ContexualHelp>
       {isIE && !field.value && hasFocus && (
