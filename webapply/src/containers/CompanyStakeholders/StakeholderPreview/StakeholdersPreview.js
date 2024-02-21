@@ -50,7 +50,7 @@ export const StakeholdersPreview = ({ sendProspectToAPI }) => {
 
   const isFrontCorrection = get(currentProspect, "status.statusType") === OPE_EDIT;
   const isOperator = scheme === operatorLoginScheme;
-  const isEditable = isOperator && isFrontCorrection || true;
+  const isEditable = isOperator && isFrontCorrection;
   const { signatoryInfo } = prospect;
 
   const [displayFields, setDisplayFields] = useState({});
