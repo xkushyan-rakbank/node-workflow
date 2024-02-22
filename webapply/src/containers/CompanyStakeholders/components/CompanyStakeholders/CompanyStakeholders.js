@@ -115,7 +115,7 @@ export const CompanyStakeholdersComponent = ({
   };
 
   const analyzeData = async data => {
-    if (data.images.length == 2) {
+    if (data.images.length === 2) {
       const ocrData = {
         docFront: removeEncodingPrefix(data.images[0]),
         docBack: removeEncodingPrefix(data.images[1])
@@ -144,7 +144,7 @@ export const CompanyStakeholdersComponent = ({
           documentType: DOC_TYPE_EID
         })
       );
-    } else if (data.images.length == 1) {
+    } else if (data.images.length === 1) {
       const ocrData = {
         docFront: removeEncodingPrefix(data.images[0])
       };

@@ -24,7 +24,7 @@ export const SessionExpiration = memo(props => {
     } else {
       window.location.reload();
     }
-  }, [isAgent, logout]);
+  }, [isAgent]);
 
   useEffect(() => {
     setExtendExpiryTime(true);
