@@ -23,7 +23,7 @@ export default function useDecisions(path, decisionKey) {
     const newValues = {};
     Object.keys(changedFieldValues).forEach(path => {
       let key = path.split(".").pop();
-      if (values.hasOwnProperty(key)) {
+      if (values[key]) {
         newValues[key] = changedFieldValues[path];
       }
     });

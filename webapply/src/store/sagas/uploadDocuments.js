@@ -364,19 +364,19 @@ export function* increaseDocumentUploadCountSaga(docUploadedCount, documents = n
     }
 
     documents.companyDocuments &&
-      documents.companyDocuments.map((companyDoc, companyDocIndex) => {
+      documents.companyDocuments.forEach((companyDoc, companyDocIndex) => {
         documents.companyDocuments[companyDocIndex].DocumentUplTotalCnt = docUploadedCount;
       });
 
-    Object.keys(documents.stakeholdersDocuments).map(shDocsIndex => {
-      Object.keys(documents.stakeholdersDocuments[shDocsIndex].documents).map(shDocIndex => {
+    Object.keys(documents.stakeholdersDocuments).forEach(shDocsIndex => {
+      Object.keys(documents.stakeholdersDocuments[shDocsIndex].documents).forEach(shDocIndex => {
         const doc = documents.stakeholdersDocuments[shDocsIndex].documents[shDocIndex];
         doc.DocumentUplTotalCnt = docUploadedCount;
       });
     });
 
     documents.otherDocuments &&
-      documents.otherDocuments.map((otherDoc, otherDocIndex) => {
+      documents.otherDocuments.forEach((otherDoc, otherDocIndex) => {
         documents.otherDocuments[otherDocIndex].DocumentUplTotalCnt = docUploadedCount;
       });
 

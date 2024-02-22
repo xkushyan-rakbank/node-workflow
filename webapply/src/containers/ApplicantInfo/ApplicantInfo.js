@@ -88,7 +88,7 @@ export const ApplicantInfoContainer = ({
     const lowerCaseProductCode = productCode ? productCode.toLowerCase() : "";
     if (dataList["allianceCode"] !== undefined) {
       return dataList["allianceCode"].find(
-        element => element.code.toLowerCase() == lowerCaseProductCode
+        element => element.code.toLowerCase() === lowerCaseProductCode
       );
     } else {
       return undefined;

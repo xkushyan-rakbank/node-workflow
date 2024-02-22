@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 /* eslint-disable max-len */
 import React, { forwardRef, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

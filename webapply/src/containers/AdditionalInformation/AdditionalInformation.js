@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Form, Formik } from "formik";
 import { useSelector } from "react-redux";
@@ -145,7 +146,7 @@ export function AdditionalInformation({ stakeholderName, sendProspectToAPI }) {
 
   const SchemaObject = useMemo(() => {
     const schema = {};
-    Object.keys(initialValues).map(field => {
+    Object.keys(initialValues).forEach(field => {
       if (field.includes("doc")) {
         schema[field] = Yup.array().of(
           Yup.mixed()

@@ -16,7 +16,7 @@ export const SearchResults = ({
   if (!searchResults.length) {
     if (searchError) {
       let errorMsg = "";
-      searchErrorDesc[0].errorCode == "12019"
+      searchErrorDesc[0].errorCode === "12019"
         ? (errorMsg = searchErrorDesc[0].message)
         : (errorMsg = "Something went wrong, please try after sometime.");
       return <div>{errorMsg}</div>;
