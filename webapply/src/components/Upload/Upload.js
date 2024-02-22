@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -19,6 +19,7 @@ import { getFileUploadErrorMessage } from "../../constants";
 const FileIcon = ({ height, width }) => (
   <img src={FileUploadIcon} style={{ height, width }} alt="fileIconPng" />
 );
+
 export const Upload = ({
   accept,
   fileSize,

@@ -51,7 +51,7 @@ const completedSteps = handleActions(
       state.map(item =>
         steps.map(
           (step, index) =>
-            item.flowId == step.flowId && item.step == step.step && steps.splice(index, 1)
+            item.flowId === step.flowId && item.step === step.step && steps.splice(index, 1)
         )
       );
       return [...state, ...steps];

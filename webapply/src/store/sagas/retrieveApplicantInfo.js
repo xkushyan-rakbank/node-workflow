@@ -233,7 +233,7 @@ export function* getProspectIdInfo({ payload }) {
 
           let newSteps = [];
 
-          completedSteps.map(step => {
+          completedSteps.forEach(step => {
             step.flowId.startsWith(COMPANY_STAKEHOLDER_ID) &&
               (stakeholderStep = stakeholderStep + 1);
 
