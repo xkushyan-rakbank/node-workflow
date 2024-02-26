@@ -43,12 +43,14 @@ export const CheckboxGroup = ({
     flexWrap: "wrap",
     alignItems: "flex-start",
     alignContent: "start",
-    flexDirection: isInlineStyle ? "row" : "column"
+    flexDirection: isInlineStyle ? "row" : "column",
+    gap: isInlineStyle ? "1.5rem" : "0rem"
   });
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);
 
   const opts = useMemo(() => filterOptions(options), [options, filterOptions]);
+  const disabledCheckboxByDefault = ["AED"];
 
   const classes = useStyles();
   return (
@@ -66,6 +68,7 @@ export const CheckboxGroup = ({
                   classes={extendedClasses}
                   customIcon={customIcon}
                   color="primary"
+                  data-testid={extractId(item)}
                 />
               ))}
               {textArea}
@@ -81,10 +84,11 @@ export const CheckboxGroup = ({
                 value={extractValue(item)}
                 label={extractLabel(item)}
                 onSelect={onSelect}
-                disabled={disabled}
+                disabled={disabledCheckboxByDefault.includes(item.value) || disabled}
                 checked={(field.value || []).includes(extractValue(item))}
                 classes={extendedClasses}
                 onChange={clickHandled ? () => {} : field.onChange}
+                data-testid={extractId(item)}
               />
             ))}
           </CheckboxesWrapper>

@@ -30,6 +30,10 @@ import { ReactComponent as ArrowUp } from "../../assets/icons/arrowUp.svg";
 import { ReactComponent as EditIcon } from "../../assets/icons/editIcon.svg";
 import { ReactComponent as ArrowLeft } from "../../assets/icons/arrowLeft.svg";
 import { ReactComponent as ArrowRight } from "../../assets/icons/arrowRight.svg";
+import { ReactComponent as AedFlag } from "../../assets/images/icons/aed_flag.svg";
+import { ReactComponent as UsdFlag } from "../../assets/images/icons/usd_flag.svg";
+import { ReactComponent as EuroFlag } from "../../assets/images/icons/euro_flag.svg";
+import { ReactComponent as GbpFlag } from "../../assets/images/icons/gbp.svg";
 
 export const iconComponents = {
   done: Done,
@@ -63,7 +67,11 @@ export const iconComponents = {
   arrowUp: ArrowUp,
   editIcon: EditIcon,
   arrowLeft: ArrowLeft,
-  arrowRight: ArrowRight
+  arrowRight: ArrowRight,
+  aedFlag: AedFlag,
+  usdFlag: UsdFlag,
+  euroFlag: EuroFlag,
+  gbpFlag: GbpFlag
 };
 
 export const ICONS = {
@@ -98,5 +106,9 @@ export const ICONS = {
   arrowUp: "arrowUp",
   editIcon: "editIcon",
   arrowLeft: "arrowLeft",
-  arrowRight: "arrowRight"
+  arrowRight: "arrowRight",
+  aedFlag: "aedFlag",
+  usdFlag: "usdFlag",
+  euroFlag: "euroFlag",
+  gbpFlag: "gbpFlag"
 };

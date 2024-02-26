@@ -47,6 +47,7 @@ export const ConfirmDialog = ({
         container: classes.container,
         paper: title !== null ? classes.paper : classes.noTitlePaper
       }}
+      data-testid="confirm-dialog"
     >
       {title !== null && (
         <DialogTitle id="draggable-dialog-title" classes={{ root: classes.title }}>
@@ -63,6 +64,7 @@ export const ConfirmDialog = ({
             variant="outlined"
             className={classes.actionButton}
             disabled={isDisplayBtnLoader}
+            data-testid="cancelButton"
           >
             {cancelLabel}
           </Button>
@@ -73,6 +75,7 @@ export const ConfirmDialog = ({
             color="primary"
             variant="contained"
             className={cx(classes.actionButton, classes.marginTop12)}
+            data-testid="confirmButton"
           >
             {isDisplayBtnLoader ? (
               <Loader className={classes.loader} alt="loading" />

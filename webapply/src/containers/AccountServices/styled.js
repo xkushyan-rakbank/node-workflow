@@ -526,5 +526,42 @@ export const useStyles = makeStyles(theme => ({
     "&:hover": {
       textDecoration: "underline"
     }
+  },
+  accountCurrenciesWrapper: {
+    margin: "10px 0px 30px 5px"
+  },
+  flagIconStyle: {
+    borderRadius: "50%",
+    marginLeft: "10px",
+    width: "1.625rem",
+    height: "1.625rem"
+  },
+  rootCheckbox: {
+    marginRight: "0px"
+  },
+  checkboxFormControlRoot: {
+    display: "flex",
+    gap: "1.5rem",
+    alignItems: "flex-start"
+  },
+  accountCurrenciesLabel: {
+    fontWeight: 500
+  },
+  currencyWrapper: {
+    display: "flex",
+    alignItems: "center",
+    color: "#1F1F1F",
+    fontSize: "0.875rem",
+    fontWeight: 500
+  },
+  currencyExtraInfoLabel: {
+    color: "#ADADAD",
+    fontSize: "0.75rem",
+    fontWeight: 400
+  },
+  defaultCurrencyLabel: {
+    display: "flex",
+    flexDirection: "column",
+    lineHeight: "1rem"
   }
 }));
