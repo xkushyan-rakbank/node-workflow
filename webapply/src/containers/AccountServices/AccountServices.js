@@ -20,8 +20,7 @@ import {
   CheckboxGroup,
   AutoSaveField as Field,
   InlineRadioGroup,
-  Input,
-  SelectAutocomplete
+  Input
 } from "../../components/Form";
 import { useStyles } from "./styled";
 import {
@@ -84,6 +83,7 @@ import TermsAndConditionsDialog from "../CompanyStakeholders/components/Stakehol
 import { getSearchResultsStatuses } from "../../store/selectors/searchProspect";
 import { OPE_EDIT } from "../AgentPages/SearchedAppInfo/constants";
 import { useShortenName } from "../../utils/useShortenNameNew";
+import { ServicePreferences } from "./components/ServicePreferencesNew";
 
 const marketingChannelSelectionHandlers = {
   "all the above": ({ isSelected }) =>
@@ -136,6 +136,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const prospectId = useSelector(getProspectId);
   const isChqbookNameEditable = useSelector(getIsChequeBookNameFieldEnabled);
   const isChequeBookApplied = useSelector(getAccountInfo).chequeBookApplied;
+  const getAccountCurrencies = useSelector(getAccountInfo).accountCurrencies || ["AED"];
 
   const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
     .statusType;
@@ -248,6 +249,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const initialValues = {
     isChqbookNameEditable,
     rakValuePackage: "",
+    accountCurrencies: getAccountCurrencies,
     accountCurrency: "AED",
     accountEmirateCity:
       accountEmirateCity || (matchedEmirateList && matchedEmirateList[0]?.value) || "",
@@ -426,7 +428,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const selectRadioBoolean = ({ values, setFieldValue, setFieldTouched }) => async event => {
     const value = JSON.parse(event.target.value);
     const name = event.target.name;
-    await setFieldValue(name, value);
+    setFieldValue(name, value);
     if (name === "debitCardApplied") {
       dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": value }));
     }
@@ -632,68 +634,11 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                       }}
                       accordionRef={servicePreferenceRef}
                     >
-                      <Field
-                        name="accountCurrency"
-                        path={"prospect.accountInfo.accountCurrency"}
-                        label="Account currency"
-                        placeholder="Account currency"
-                        datalistId="accountCurrencies"
-                        component={SelectAutocomplete}
-                        disabled={true}
+                      <ServicePreferences
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        isIslamic={isIslamic}
                       />
-                      <Field
-                        name="accountEmirateCity"
-                        path={"prospect.accountInfo.accountEmirateCity"}
-                        label="Emirate or City"
-                        placeholder="Emirate or City"
-                        datalistId="branchCity"
-                        component={SelectAutocomplete}
-                        isLoadDefaultValueFromStore={false}
-                      />
-                      <Field
-                        name="branchId"
-                        path={"prospect.accountInfo.branchId"}
-                        label="Branch"
-                        placeholder="Branch"
-                        datalistId="branchCity"
-                        component={SelectAutocomplete}
-                        filterOptions={options =>
-                          options
-                            .filter(city => city.code === values.accountEmirateCity)
-                            .reduce(
-                              (acc, curr) => (curr.subGroup ? [...acc, ...curr.subGroup] : acc),
-                              []
-                            )
-                        }
-                      />
-                      <div className={classes.questionareWrapper}>
-                        <label className={classes.sectionLabel}>
-                          {isIslamic
-                            ? "Do you want to earn profit on your account?"
-                            : "Do you want to earn interest on this account?"}
-                          <ContexualHelp
-                            title={
-                              "Get the most out of your money. Just maintain\n the minimum account balance to unlock\n competitive interest rates."
-                            }
-                            placement="right"
-                            isDisableHoverListener={false}
-                            classes={classes.infoIcon}
-                          >
-                            <HelpOutlineIcon className={classes.infoIcon} />
-                          </ContexualHelp>
-                        </label>
-                        <Field
-                          typeRadio
-                          options={yesNoOptions}
-                          name="receiveInterest"
-                          path={"prospect.accountInfo.receiveInterest"}
-                          component={InlineRadioGroup}
-                          customIcon={false}
-                          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-                          radioColor="primary"
-                          onChange={radioChangeHandler}
-                        />
-                      </div>
                     </Accordion>
                   </div>
                   <div className={classes.packageSelectionWrapper}>

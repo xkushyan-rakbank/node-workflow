@@ -1,9 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
 import { Formik } from "formik";
 import { act } from "react-dom/test-utils";
 import { render, fireEvent } from "@testing-library/react";
+import { mockStore } from "../../../../../testUtils";
 import { OperatorReviewDetails } from "../OperatorReviewDetailsNew";
 
 jest.mock("react-router-dom", () => ({
@@ -19,8 +19,8 @@ jest.mock("../../../../../components/Buttons/NextStepButton", () => ({
 }));
 
 describe("OperatorReviewDetails", () => {
-  const mockStore = configureStore([]);
-  const store = mockStore({
+  const store = {
+    ...mockStore,
     appConfig: {
       prospect: {
         signatoryInfo: [
@@ -50,71 +50,9 @@ describe("OperatorReviewDetails", () => {
           }
         ]
       }
-    },
-    serverValidation: {
-      inputs: {}
-    },
-    inputFieldBehaviours: {
-      "prospect.prospectDocuments.companyDocument.tradeLicenseOrCOI": {
-        visible: true,
-        enabled: true
-      },
-      "prospect.organizationInfo.countryOfIncorporation": {
-        visible: true,
-        enabled: false
-      },
-      "prospect.organizationInfo.licenseOrCOIExpiryDate": {
-        visible: true,
-        enabled: true
-      },
-      "prospect.prospectDocuments.companyDocument.moa": {
-        visible: false,
-        enabled: true
-      },
-      "prospect.companyAdditionalInfo.topCustomers[0].name": {
-        visible: true,
-        enabled: true,
-        label: ""
-      },
-      "prospect.companyAdditionalInfo.topCustomers[0].country": {
-        visible: true,
-        enabled: true,
-        label: ""
-      },
-      "prospect.companyAdditionalInfo.topSuppliers.title": {
-        visible: true,
-        enabled: true,
-        label: ""
-      },
-      "prospect.companyAdditionalInfo.topCustomers.title": {
-        visible: true,
-        enabled: true,
-        label: ""
-      },
-      "prospect.companyAdditionalInfo.dnfbpField": {
-        visible: false,
-        enabled: true
-      },
-      "prospect.companyAdditionalInfo.topSuppliers[0].name": {
-        visible: true
-      },
-      "prospect.companyAdditionalInfo.topSuppliers[0].country": {
-        visible: true
-      },
-      "prospect.companyAdditionalInfo.isFinancialInstitution": {
-        visible: false
-      },
-      "prospect.companyAdditionalInfo.globalintermediaryId": {
-        visible: false
-      },
-      "prospect.companyAdditionalInfo.isNonFinancialInstitution": {
-        visible: true
-      }
-    },
-    decisions: {
-      decisionLoading: {}
     }
-  });
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
   });

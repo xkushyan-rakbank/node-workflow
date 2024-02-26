@@ -34,7 +34,9 @@ export const CustomCheckbox = ({
           onClick={onSelect}
           classes={{ root: classes.checkbox }}
           icon={<Icon name={ICONS.uncheckedIcon} alt="checked icon" />}
-          checkedIcon={<Icon name={ICONS.checkedIcon} alt="unchecked icon" />}
+          checkedIcon={
+            <Icon name={ICONS.checkedIcon} alt="unchecked icon" width="26" height="26" />
+          }
           {...rest}
         />
       }
