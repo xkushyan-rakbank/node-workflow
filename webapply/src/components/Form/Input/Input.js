@@ -13,6 +13,9 @@ import { areEqualFieldProps } from "../utils";
 
 import { useStyles } from "./styled";
 import { ICONS, Icon } from "../../Icons";
+import { ALLOWED_CHAR_REGEX } from "../../../utils/validation";
+
+const allowedCharRegex = ALLOWED_CHAR_REGEX;
 
 const InputBase = ({
   contextualHelpText,
@@ -37,7 +40,6 @@ const InputBase = ({
   showEditIcon = false,
   iconColor = "grey",
   infoIcon,
-  allowedCharRegex,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -53,15 +55,14 @@ const InputBase = ({
     ? field.value.length
     : 0;
 
-  const handleSpecialCharacterKeyPress = (event, allowedCharRegex) => {
-    const hasDisAllowedCharacters = allowedCharRegex.test(event.key);
-
+  const handleSpecialCharacterKeyPress = event => {
+    const hasDisAllowedCharacters = allowedCharRegex.test(event.data);
     if (hasDisAllowedCharacters) {
       event.preventDefault();
     }
   };
 
-  const handleSpecialCharacterPaste = (event, allowedCharRegex) => {
+  const handleSpecialCharacterPaste = event => {
     let paste = (event.clipboardData || window.clipboardData).getData("text/plain");
     // Replace non-breaking spaces with regular spaces
     const textWithSpaces = paste.replace(/\xA0/g, " ");
@@ -84,12 +85,8 @@ const InputBase = ({
           placeholder={placeholder}
           disabled={isFieldEditable}
           error={!!isError}
-          onKeyPress={event =>
-            allowedCharRegex ? handleSpecialCharacterKeyPress(event, allowedCharRegex) : null
-          }
-          onPaste={event =>
-            allowedCharRegex ? handleSpecialCharacterPaste(event, allowedCharRegex) : null
-          }
+          onBeforeInput={handleSpecialCharacterKeyPress}
+          onPaste={handleSpecialCharacterPaste}
           autoComplete={"off"}
           InputProps={{
             endAdornment: showEditIcon ? (
