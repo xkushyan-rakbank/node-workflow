@@ -56,6 +56,10 @@ export const ProductInformationReview = ({ fieldValues, isIslamic }) => {
     return labelMap[value] || "";
   };
 
+  const getAccountCurrencies = currency => {
+    return currency.join(", ");
+  };
+
   return (
     <div className={classes.packageSelectionWrapper}>
       <Accordion
@@ -86,7 +90,10 @@ export const ProductInformationReview = ({ fieldValues, isIslamic }) => {
               <label>Signing rights:</label> <p>{signingRightsText?.label}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Currency:</label> <p>{fieldValues.accountCurrency}</p>
+              <label>{fieldValues.accountCurrency?.length > 1 ? "Currencies" : "Currency"}:</label>
+              <p>
+                {fieldValues.accountCurrency && getAccountCurrencies(fieldValues.accountCurrency)}
+              </p>
             </div>
             <div className={classes.infoLabelValue}>
               <label>Branch:</label>

@@ -12,6 +12,7 @@ export const Button = styled(withTheme(ContainedButton))(({ theme }) => ({
   fontWeight: 500,
   letterSpacing: "normal",
   minWidth: "130px",
+  borderRadius: "100px",
   [theme.breakpoints.only("md")]: {
     fontSize: "1.125rem",
     height: "unset",

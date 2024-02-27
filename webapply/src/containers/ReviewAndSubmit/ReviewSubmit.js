@@ -359,7 +359,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
         backgroundInfo:
           signatoryInfo &&
           signatoryInfo[0]?.stakeholderAdditionalInfo?.backgroundDetails?.backgroundInfo,
-        accountCurrency: accountInfo?.accountCurrency,
+        accountCurrency: accountInfo?.accountCurrencies || ["AED"],
         branchEmirate: getBranchEmirate(accountInfo?.accountEmirateCity) || "",
         branch: getBranchName(accountInfo?.branchId) || "",
         receiveInterest: accountInfo?.receiveInterest ? "Yes" : "No",
