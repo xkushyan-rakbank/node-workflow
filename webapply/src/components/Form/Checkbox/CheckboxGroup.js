@@ -36,6 +36,7 @@ export const CheckboxGroup = ({
   customIcon = true,
   typeOfCheckbox = "checkbox",
   isInlineStyle = true,
+  isTwoCoulmnStyle = false,
   clickHandled
 }) => {
   const CheckboxesWrapper = styled("div")({
@@ -44,7 +45,14 @@ export const CheckboxGroup = ({
     alignItems: "flex-start",
     alignContent: "start",
     flexDirection: isInlineStyle ? "row" : "column",
-    gap: isInlineStyle ? "1.5rem" : "0rem"
+    gap: isInlineStyle ? "1.5rem" : "0rem",
+    "& label": isTwoCoulmnStyle
+      ? {
+          display: "flex",
+          flexBasis: "45%",
+          flex: 1
+        }
+      : {}
   });
   const errorMessage = getIn(errors, field.name);
   const hasError = errorMessage && getIn(touched, field.name);

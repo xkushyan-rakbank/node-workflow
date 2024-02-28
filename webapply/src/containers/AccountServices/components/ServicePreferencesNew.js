@@ -15,8 +15,8 @@ import { ContexualHelp } from "../../../components/Notifications";
 import { yesNoOptions } from "../../../constants/options";
 import { ConfirmDialog } from "../../../components/Modals";
 import { updateProspect } from "../../../store/actions/appConfig";
-import { useStyles } from "../styled";
 import { DisclaimerNote } from "../../../components/InfoNote/DisclaimerNote";
+import { useStyles } from "../styled";
 
 export const ServicePreferences = ({ values, setFieldValue, isIslamic }) => {
   const classes = useStyles();
@@ -25,13 +25,13 @@ export const ServicePreferences = ({ values, setFieldValue, isIslamic }) => {
   const [selectedCurrency, setSelectedCurrency] = useState("");
 
   const createCurrencyLabel = useCallback((code, flagIcon, isDefault = false) => (
-    <div key={`${code}_label`} className={classes.currencyWrapper}>
-      <div className={isDefault ? classes.defaultCurrencyLabel : ""}>
+    <span key={`${code}_label`} className={classes.currencyWrapper}>
+      <span className={isDefault ? classes.defaultCurrencyLabel : ""}>
         <span>{code}</span>
-        {isDefault && <span className={classes.currencyExtraInfoLabel}>(default)</span>}
-      </div>
+      </span>
       <Icon name={flagIcon} alt={`${code} icon`} className={classes.flagIconStyle} />
-    </div>
+      {isDefault && <span className={classes.currencyExtraInfoLabel}>(default)</span>}
+    </span>
   ));
 
   const AcceptedCurrencyOptions = [
@@ -119,6 +119,7 @@ export const ServicePreferences = ({ values, setFieldValue, isIslamic }) => {
         </label>
         <FormikField
           isInlineStyle={!isMobile}
+          isTwoCoulmnStyle={true}
           customIcon={true}
           options={AcceptedCurrencyOptions}
           name="accountCurrencies"
@@ -133,6 +134,12 @@ export const ServicePreferences = ({ values, setFieldValue, isIslamic }) => {
           dataTestId="accountCurrencies"
           clickHandled={true}
           data-testid="accountCurrencies"
+        />
+        <DisclaimerNote
+          className={classes.noteWrapper}
+          text={
+            "You will get a separate account number for each currency you select. Note that only AED accounts are eligible for business debit card and cheque book."
+          }
         />
       </div>
       <Field

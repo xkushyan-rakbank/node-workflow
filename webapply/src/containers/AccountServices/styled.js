@@ -499,6 +499,7 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   noteWrapper: {
+    marginTop: "16px",
     alignItems: "start !important",
     "& svg": {
       marginTop: "5px",
@@ -557,7 +558,8 @@ export const useStyles = makeStyles(theme => ({
   currencyExtraInfoLabel: {
     color: "#ADADAD",
     fontSize: "0.75rem",
-    fontWeight: 400
+    fontWeight: 400,
+    marginLeft: "10px"
   },
   defaultCurrencyLabel: {
     display: "flex",
