@@ -108,7 +108,7 @@ export const useStyles = makeStyles(theme => ({
   },
   letsStartBtn: {
     padding: "12px 30px",
-    borderRadius: "100px",
+    borderRadius: "100px !important",
     minWidth: "fit-content",
     [theme.breakpoints.only("sm")]: {
       padding: "12px 25px"

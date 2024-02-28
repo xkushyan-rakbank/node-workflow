@@ -4,9 +4,9 @@ import Typography from "@material-ui/core/Typography";
 
 //import routes from "../../../routes";
 import { ContainedButton } from "../../Buttons/ContainedButton";
-import { useStyles } from "./styled";
 import { accountsInfo } from "./constants";
 import { BackLink } from "../../Buttons/BackLink";
+import { useStyles } from "./styled";
 
 export const AccountInfoScreen = ({
   isShowApply,
@@ -85,7 +85,7 @@ export const AccountInfoScreen = ({
             justify="flex-start"
             label="Let's start"
             handleClick={handleStart}
-            className={classes.letsStartBtn}
+            classes={{ buttonStyle: classes.letsStartBtn }}
           />
         </div>
       )}
