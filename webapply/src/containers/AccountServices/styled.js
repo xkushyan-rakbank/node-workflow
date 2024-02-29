@@ -533,9 +533,12 @@ export const useStyles = makeStyles(theme => ({
   },
   flagIconStyle: {
     borderRadius: "50%",
-    marginLeft: "10px",
-    width: "1.625rem",
-    height: "1.625rem"
+    width: "1.5rem",
+    height: "1.5rem",
+    [theme.breakpoints.up("sm")]: {
+      width: "1.625rem",
+      height: "1.625rem"
+    }
   },
   rootCheckbox: {
     marginRight: "0px"
@@ -553,13 +556,13 @@ export const useStyles = makeStyles(theme => ({
     alignItems: "center",
     color: "#1F1F1F",
     fontSize: "0.875rem",
-    fontWeight: 500
+    fontWeight: 500,
+    gap: "0.5rem"
   },
   currencyExtraInfoLabel: {
     color: "#ADADAD",
     fontSize: "0.75rem",
-    fontWeight: 400,
-    marginLeft: "10px"
+    fontWeight: 400
   },
   defaultCurrencyLabel: {
     display: "flex",
