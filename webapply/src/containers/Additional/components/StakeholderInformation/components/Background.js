@@ -247,6 +247,7 @@ export const Background = ({ id, refs }) => {
                 }}
                 component={Input}
                 classes={{ formControlRoot: classes.customUrlLabel }}
+                enableAllCharacters={true}
               />
               <span className={classes.orSelection}>Or</span>
               <Field
