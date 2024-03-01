@@ -40,6 +40,7 @@ const InputBase = ({
   showEditIcon = false,
   iconColor = "grey",
   infoIcon,
+  enableAllCharacters = false,
   ...props
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -57,7 +58,7 @@ const InputBase = ({
 
   const handleSpecialCharacterKeyPress = event => {
     const hasDisAllowedCharacters = allowedCharRegex.test(event.data);
-    if (hasDisAllowedCharacters) {
+    if (hasDisAllowedCharacters && !enableAllCharacters) {
       event.preventDefault();
     }
   };
@@ -86,7 +87,7 @@ const InputBase = ({
           disabled={isFieldEditable}
           error={!!isError}
           onBeforeInput={handleSpecialCharacterKeyPress}
-          onPaste={handleSpecialCharacterPaste}
+          onPaste={!enableAllCharacters ? handleSpecialCharacterPaste : () => {}}
           autoComplete={"off"}
           InputProps={{
             endAdornment: showEditIcon ? (
