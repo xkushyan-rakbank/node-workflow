@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import { Formik } from "formik";
 import { act } from "react-dom/test-utils";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { OperatorReviewDetails } from "../OperatorReviewDetailsNew";
 
 jest.mock("react-router-dom", () => ({
@@ -25,9 +25,9 @@ describe("OperatorReviewDetails", () => {
       prospect: {
         signatoryInfo: [
           {
-            editedFullName: "",
-            firstName: "",
-            middleName: "",
+            editedFullName: "John Doe",
+            firstName: "John",
+            middleName: "Doe",
             lastName: "",
             fullName: "",
             mothersMaidenName: "Mariyamm Babu",
@@ -126,7 +126,9 @@ describe("OperatorReviewDetails", () => {
   const defaultProps = {
     isEditable: true,
     customerData: {},
-    signatoryDetails: [{ firstName: "John", middleName: "Doe", lastName: "" }],
+    signatoryDetails: [
+      { editedFullName: "John Doe", firstName: "John", middleName: "Doe", lastName: "" }
+    ],
     onClickNextSubmit: jest.fn()
   };
 
@@ -134,7 +136,7 @@ describe("OperatorReviewDetails", () => {
     fullName: "",
     firstName: "John",
     middleName: "Doe",
-    lastName: "",
+    lastName: "Smith",
     mothersMaidenName: "",
     nationality: "",
     dateOfBirth: "",
@@ -183,12 +185,34 @@ describe("OperatorReviewDetails", () => {
   });
 
   it("should call handleChange function on change on first name, last name, middle name fields", async () => {
-    const { getByTestId } = renderComponent();
+    const props = {
+      ...defaultProps,
+      values: {
+        ...defaultProps.values,
+        firstName: "John",
+        middleName: "Doe",
+        lastName: "Smith",
+        fullName: "John Doe"
+      }
+    };
+    const { getByTestId } = renderComponent(props);
+    const firstName = getByTestId("firstName");
+    const middleName = getByTestId("middleName");
     const lastName = getByTestId("lastName");
     const fullName = getByTestId("fullName");
-    fireEvent.blur(lastName, { target: { value: "Smith" } });
-    expect(lastName).toHaveProperty("value", "Smith");
-    expect(fullName).toHaveProperty("value", "Smith");
+    expect(fullName).toHaveProperty("value", "John Doe");
+
+    fireEvent.change(firstName, { target: { value: "Joe", name: "firstName" } });
+    fireEvent.blur(firstName);
+    fireEvent.change(middleName, { target: { value: "Don" } });
+    fireEvent.blur(middleName);
+    fireEvent.change(lastName, { target: { value: "Smith" } });
+    fireEvent.blur(lastName);
+
+    await waitFor(() => {
+      expect(firstName).toHaveProperty("value", "Joe");
+      expect(fullName).toHaveProperty("value", "Joe Don Smith");
+    });
   });
 
   it("should render emirated id field", async () => {

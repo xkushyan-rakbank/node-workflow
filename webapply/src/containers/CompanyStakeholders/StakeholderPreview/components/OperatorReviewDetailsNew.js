@@ -66,7 +66,7 @@ export const OperatorReviewDetails = ({
     const value = event.target.value;
     const target = event.target.name;
     setFieldValue(target, value);
-    setFieldValue("fullName", concatNames(value, middleName, lastName));
+    setFieldValue("fullName", concatNames(firstName, middleName, lastName));
     dispatch(
       updateProspect({
         "prospect.signatoryInfo[0].editedFullName": concatNames(firstName, middleName, lastName)
@@ -175,7 +175,6 @@ export const OperatorReviewDetails = ({
           const element = el && el.parentElement ? el.parentElement : el;
           element && element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-        const handleNameChange = handleFullNameChange({ values, setFieldValue });
 
         return (
           <Form data-testid="operatorReviewDetailForm">
@@ -204,7 +203,7 @@ export const OperatorReviewDetails = ({
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 30, "data-testid": "firstName" },
-                    onBlur: handleNameChange
+                    onBlur: handleFullNameChange({ values, setFieldValue })
                   }}
                   fieldDescription={"Please ensure the first name is as per your passport"}
                 />
@@ -218,7 +217,7 @@ export const OperatorReviewDetails = ({
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 30, "data-testid": "middleName" },
-                    onBlur: handleNameChange
+                    onBlur: handleFullNameChange({ values, setFieldValue })
                   }}
                   fieldDescription={"Please ensure the middle name is as per your passport"}
                 />
@@ -232,7 +231,7 @@ export const OperatorReviewDetails = ({
                   component={Input}
                   InputProps={{
                     inputProps: { tabIndex: 0, maxLength: 30, "data-testid": "lastName" },
-                    onBlur: handleNameChange
+                    onBlur: handleFullNameChange({ values, setFieldValue })
                   }}
                   disabled={!isEditable}
                   showEditIcon={!isEditable}
