@@ -666,6 +666,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
                         setFieldValue={setFieldValue}
                         isChqbookNameFieldEditable={!isChqbookNameEditable}
                         statementsViaRadioColor={!values.statementsVia ? "primary" : "#00CA2C"}
+                        nameOfChequeBook={chequeBookName}
                         {...props}
                       />
                     </Accordion>
