@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     marginBottom: "20px",
     border: "1px solid #E6E6E6",
     [theme.breakpoints.up("sm")]: {
-      padding: "18px", 
+      padding: "18px"
     }
   },
   kfsDescriptionContent: {
@@ -67,7 +67,10 @@ export const useStyles = makeStyles(theme => ({
     "&:hover": {
       background: "rgba(0, 0, 0, 0.7)"
     },
-
+    "&.Mui-disabled": {
+      color: "rgb(255, 255, 255)",
+      backgroundColor: "#757575 !important"
+    },
     [theme.breakpoints.up("sm")]: {
       width: "206px",
       height: "40px",
@@ -89,7 +92,7 @@ export const useStyles = makeStyles(theme => ({
     color: "#157947",
     fontWeight: 500,
     [theme.breakpoints.up("sm")]: {
-      minWidth: "98px",
+      minWidth: "98px"
     }
   },
   notAcceptWrapper: {
@@ -122,7 +125,7 @@ export const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.up("sm")]: {
       padding: "unset",
-      paddingLeft: "24px", 
+      paddingLeft: "24px"
     }
   },
   container: {
@@ -212,22 +215,22 @@ export const useStyles = makeStyles(theme => ({
   content: {
     padding: "unset",
     height: "400px",
-    "overflow-x": "hidden !important", 
+    "overflow-x": "hidden !important",
     [theme.breakpoints.up("sm")]: {
-      padding: "8px 17px",
+      padding: "8px 17px"
     },
     [theme.breakpoints.between("sm", "md")]: {
-      "overflow-x": "hidden !important",
+      "overflow-x": "hidden !important"
     },
     [theme.breakpoints.up("md")]: {
-      padding: "8px 17px", 
+      padding: "8px 17px"
     },
     "& .react-pdf__Page__canvas": {
       height: "100% !important",
       width: "100% !important",
       overflow: "hidden",
       [theme.breakpoints.between("sm", "md")]: {
-        width: "100% !important",
+        width: "100% !important"
       }
     },
     "&::-webkit-scrollbar": {

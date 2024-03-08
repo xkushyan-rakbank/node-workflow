@@ -6,7 +6,8 @@ import { log } from "../../utils/loggger";
 import {
   SEND_CUSTOMER_CONSENT_TO_CPF,
   SEND_KFS_MAIL,
-  termsAndConditionsAccepted
+  termsAndConditionsAccepted,
+  termsAndConditionsLoading
 } from "../actions/termsAndConditions";
 import {
   getAccountType,
@@ -54,6 +55,11 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
       docModificationInfo,
       individualId
     };
+    yield put(
+      termsAndConditionsLoading({
+        isLoadingPdf: true
+      })
+    );
     yield call(kfsAcknowledgement.sendMail, body, headers);
     yield put(
       termsAndConditionsAccepted({
@@ -68,11 +74,21 @@ export function* sendKfsMail({ payload: { docModificationInfo } }) {
         }
       })
     );
+    yield put(
+      termsAndConditionsLoading({
+        isLoadingPdf: false
+      })
+    );
   } catch (error) {
     log(error);
     yield put(
       termsAndConditionsAccepted({
         kfs: false
+      })
+    );
+    yield put(
+      termsAndConditionsLoading({
+        isLoadingPdf: false
       })
     );
   }
@@ -98,6 +114,11 @@ export function* sendCustomerConsentToCPF({ payload: { docModificationInfo, cons
       ],
       docModificationInfo
     };
+    yield put(
+      termsAndConditionsLoading({
+        isLoadingPdf: true
+      })
+    );
     yield call(cpfCustomerConsent.send, body, headers);
     const acceptedTimeStamp = formattedAccTimeStamp(new Date());
     if (consentType === "TNC_CONSENT") {
@@ -131,6 +152,11 @@ export function* sendCustomerConsentToCPF({ payload: { docModificationInfo, cons
         })
       );
     }
+    yield put(
+      termsAndConditionsLoading({
+        isLoadingPdf: false
+      })
+    );
   } catch (error) {
     log(error);
     if (consentType === "TNC_CONSENT") {
@@ -146,6 +172,11 @@ export function* sendCustomerConsentToCPF({ payload: { docModificationInfo, cons
         })
       );
     }
+    yield put(
+      termsAndConditionsLoading({
+        isLoadingPdf: false
+      })
+    );
   }
 }
 
