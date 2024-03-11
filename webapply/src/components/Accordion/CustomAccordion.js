@@ -126,7 +126,6 @@ export const Accordion = ({
   subTitle,
   classes: extendedClasses,
   showHelperText,
-  expandedByDefault = false,
   accordionRef,
   expandedDescription
 }) => {
@@ -188,6 +187,7 @@ export const Accordion = ({
         TransitionComponent={Collapse}
         TransitionProps={transitionProps}
         classes={{ root: classes.accordionRoot, expanded: classes.accordionExpanded }}
+        data-testid="accordion"
       >
         <MuiAccordionSummary
           expandIcon={
@@ -206,15 +206,20 @@ export const Accordion = ({
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <span className="activePanel"></span>
-              {isCompleted && statuses[id] && <Check size="16px" className={classes.success} />}
+              {isCompleted && statuses[id] && (
+                <span data-testid="accordion-completed-status">
+                  <Check size="16px" className={classes.success} />
+                </span>
+              )}
               <div className="accordionTitle">
-                <div className="title">
+                <div className="title" data-testid="accordion-title">
                   {title}
                   {showHelperText && (
                     <ContexualHelp
                       title={showHelperText}
                       placement="right"
                       isDisableHoverListener={false}
+                      dataTestId="accordion-help"
                     >
                       <HelpOutlineIcon className="helperIcon" />
                     </ContexualHelp>
@@ -233,7 +238,10 @@ export const Accordion = ({
             </div>
           </div>
         </MuiAccordionSummary>
-        <MuiAccordionDetails classes={{ root: classes.accordionDetails }}>
+        <MuiAccordionDetails
+          classes={{ root: classes.accordionDetails }}
+          data-testid="accordion-details"
+        >
           {children}
         </MuiAccordionDetails>
       </MuiAccordion>

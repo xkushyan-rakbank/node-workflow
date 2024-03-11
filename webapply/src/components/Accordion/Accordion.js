@@ -56,7 +56,7 @@ export const Accordion = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik]);
   return (
-    <div className="accordion">
+    <div className="accordion" data-testid="accordion">
       <ExpansionPanel className="panel" expanded={expanded} onChange={handleChange}>
         <ExpansionPanelSummary aria-controls="panel1a-content" id="panel1a-header">
           <div className={classes.wrapper}>
