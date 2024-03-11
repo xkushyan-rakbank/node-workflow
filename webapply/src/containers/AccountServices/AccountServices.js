@@ -515,6 +515,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
       const authorizationValidation =
         Object.prototype.hasOwnProperty.call(validatedFormFields, "chequeBookApplied") ||
+        Object.prototype.hasOwnProperty.call(validatedFormFields, "nameOnChequeBook") ||
         Object.prototype.hasOwnProperty.call(validatedFormFields, "nameOnDebitCard");
 
       const communicationValidation =
