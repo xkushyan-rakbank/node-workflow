@@ -329,7 +329,6 @@ export const AccountServices = ({ sendProspectToAPI }) => {
       then: Yup.string()
         .required(getRequiredMessage("Name on cheque book"))
         .max(MAX_CHEQUE_BOOK_NAME_LENGTH, "Maximum ${max} characters allowed")
-        .matches(NAME_REGEX, nameInvalidMessage)
     }),
     statementsVia: Yup.string().required("This field is required"),
     preferredLanguage: Yup.string().required("This field is required"),
