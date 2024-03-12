@@ -16,7 +16,6 @@ describe("CustomAccordion", () => {
     title: "Accordion Title",
     children: "Accordion Children",
     showDefinition: "",
-    isCompleted: false,
     subTitle: "",
     showHelperText: false,
     expandedByDefault: false,
@@ -103,6 +102,16 @@ describe("CustomAccordion", () => {
     };
     renderedComponent(props);
     expect(screen.queryByTestId("accordion-completed-status")).toBeTruthy();
+  });
+
+  it("should call handleChange on click accordion", () => {
+    const props = {
+      ...defaultProps,
+      isCompleted: true,
+      id: "isTaxDeclarationCompleted"
+    };
+    renderedComponent(props);
+    fireEvent.click(screen.getByText(defaultProps.title));
   });
 
   it("should not display checkmark icon if not isCompleted", () => {
