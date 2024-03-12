@@ -3,6 +3,7 @@ import BaseNumberFormat from "react-number-format";
 
 export const NumberFormat = ({ inputRef, onChange, ...props }) => (
   <BaseNumberFormat
+    data-testid={props["data-testid"]}
     getInputRef={inputRef}
     onValueChange={({ value }) => {
       onChange({
@@ -15,4 +16,8 @@ export const NumberFormat = ({ inputRef, onChange, ...props }) => (
     isNumericString
     {...props}
   />
+);
+
+export const POBoxNumberInput = props => (
+  <NumberFormat allowNegative={false} decimalSeparator={false} {...props} />
 );
