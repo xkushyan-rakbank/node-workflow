@@ -19,6 +19,7 @@ module.exports = {
     "src/components/Form/Input/**",
     "src/components/Form/RadioButton/**",
     "src/components/Form/InlineRadioGroup/**",
+    "src/components/Form/Checkbox/**",
     "src/**/*New.{js,jsx}"
   ],
 
