@@ -18,6 +18,7 @@ module.exports = {
     "!src/containers/WebChat/**",
     "src/components/Form/Input/**",
     "src/components/Form/RadioButton/**",
+    "src/components/Form/InlineRadioGroup/**",
     "src/**/*New.{js,jsx}"
   ],
 
