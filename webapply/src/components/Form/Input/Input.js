@@ -75,7 +75,10 @@ const InputBase = ({
   };
 
   return (
-    <FormControl classes={{ root: classes.formControlRoot }}>
+    <FormControl
+      classes={{ root: classes.formControlRoot }}
+      data-testid={`${props["data-testid"]}Parent`}
+    >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps} placement={placement}>
         <TextField
           {...field}
@@ -91,12 +94,10 @@ const InputBase = ({
           autoComplete={"off"}
           InputProps={{
             endAdornment: showEditIcon ? (
-              <InputAdornment position="end">
-                <Icon
-                  name={ICONS.editIcon}
-                  className={classes.closeIcon}
-                  onClick={() => setIsFieldEditable(false)}
-                />
+              <InputAdornment position="end" data-testid={`${props["data-testid"]}Adornment`}>
+                <span onClick={() => setIsFieldEditable(false)}>
+                  <Icon name={ICONS.editIcon} className={classes.closeIcon} />
+                </span>
               </InputAdornment>
             ) : null,
             ...InputProps,
