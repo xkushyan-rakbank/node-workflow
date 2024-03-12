@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import { ReactComponent as LetsGoGreen } from "../../../assets/icons/letsGoGreenIcon.svg";
 import { AutoSaveField as Field, InlineRadioGroup, Input } from "../../../components/Form";
@@ -6,6 +7,7 @@ import { SinglyOptionList, yesNoOptions } from "../../../constants/options";
 import { ContexualHelp } from "../../../components/Notifications";
 import { DisclaimerNote } from "../../../components/InfoNote/DisclaimerNote";
 import { useStyles } from "../styled";
+import { updateProspect } from "../../../store/actions/appConfig";
 
 const labelTextForGoGreenOption = (
   <span style={{ display: "flex", alignItems: "center" }}>
@@ -45,6 +47,16 @@ export const AuthorisationPreferences = ({
   ...props
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleBlurChequeBookName = target => {
+    const { name, value } = target;
+    const capitalizedChequeBookName = value.toUpperCase();
+    setFieldValue(name, capitalizedChequeBookName);
+    dispatch(
+      updateProspect({ "prospect.accountInfo.nameOnChequeBook": capitalizedChequeBookName })
+    );
+  };
 
   return (
     <div data-testid="authorisationPreferencesSection">
@@ -101,7 +113,8 @@ export const AuthorisationPreferences = ({
               path={"prospect.accountInfo.nameOnChequeBook"}
               placeholder={"Name on cheque book"}
               InputProps={{
-                inputProps: { tabIndex: 1, maxLength: 50, "data-testid": "chequeBookNameField" }
+                inputProps: { tabIndex: 1, maxLength: 50, "data-testid": "chequeBookNameField" },
+                onBlur: e => handleBlurChequeBookName(e.target)
               }}
               component={Input}
               classes={{ formControlRoot: classes.customLabel }}

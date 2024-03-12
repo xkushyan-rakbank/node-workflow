@@ -136,6 +136,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   const prospectId = useSelector(getProspectId);
   const isChqbookNameEditable = useSelector(getIsChequeBookNameFieldEnabled);
   const isChequeBookApplied = useSelector(getAccountInfo).chequeBookApplied;
+  const getNameOnChequeBook = useSelector(getAccountInfo)?.nameOnChequeBook;
 
   const prospectStatus = (prospectLists.find(status => status.prospectId === prospectId) || {})
     .statusType;
@@ -171,12 +172,16 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   }, [accountType]);
 
   useEffect(() => {
-    const chequeBookName =
+    const shortenChequeBookName =
       companyName.length > MAX_COMPANY_NAME_LENGTH ? shortenedCompanyName : companyName;
-    setChequeBookName(chequeBookName);
+    const chequeBookName = getNameOnChequeBook || shortenChequeBookName;
+    const capitalizedChequeBookName = chequeBookName?.toUpperCase();
+    setChequeBookName(capitalizedChequeBookName);
     dispatch(updateProspect({ "prospect.signatoryInfo[0].debitCardInfo.issueDebitCard": true }));
     if (isChequeBookApplied) {
-      dispatch(updateProspect({ "prospect.accountInfo.nameOnChequeBook": chequeBookName }));
+      dispatch(
+        updateProspect({ "prospect.accountInfo.nameOnChequeBook": capitalizedChequeBookName })
+      );
     }
     setTimeout(() => scrollToDOMNode(refToTopOfAccountService), 0);
     packageRef.current.click();

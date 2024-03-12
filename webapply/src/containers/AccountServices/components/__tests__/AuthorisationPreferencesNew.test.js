@@ -120,7 +120,8 @@ describe("AuthorisationPreferences", () => {
     radioChangeHandler,
     accountServiceChangeHandler,
     openDebitCardPriceGuideDialogOnClick: jest.fn(),
-    isChqbookNameFieldEditable: false
+    isChqbookNameFieldEditable: false,
+    setFieldValue: jest.fn()
   };
 
   const renderComp = (props = defaultProps) =>
@@ -204,11 +205,24 @@ describe("AuthorisationPreferences", () => {
   it("should render company cheque book name field", async () => {
     const props = {
       ...defaultProps,
-      values: { ...defaultProps.values, chequeBookApplied: true }
+      values: {
+        ...defaultProps.values,
+        chequeBookApplied: true,
+        nameOnChequeBook: "TESTING COMPANY LLC"
+      }
     };
     renderComp(props);
     const chequeBookNameField = screen.getByTestId("chequeBookNameField");
     expect(chequeBookNameField).toBeTruthy();
+    expect(chequeBookNameField).toHaveProperty("value", "TESTING COMPANY LLC");
+    fireEvent.change(chequeBookNameField, {
+      target: { value: "John Doe TESTING COMPANY Trading LLC" }
+    });
+    fireEvent.blur(chequeBookNameField);
+    expect(defaultProps.setFieldValue).toHaveBeenCalledWith(
+      "nameOnChequeBook",
+      "JOHN DOE TESTING COMPANY TRADING LLC"
+    );
   });
 
   it("should show validation error if company cheque book name field is empty or length greater than 50", async () => {
@@ -231,10 +245,11 @@ describe("AuthorisationPreferences", () => {
       values: {
         ...defaultProps.values,
         chequeBookApplied: true,
-        nameOnChequeBook: "Testing Company LLC"
+        nameOnChequeBook: "TESTING COMPANY LLC"
       }
     };
     const { getByTestId } = renderComp(props);
     expect(getByTestId("chequeBookNameField")).toHaveProperty("disabled", true);
+    expect(getByTestId("chequeBookNameField")).toHaveProperty("value", "TESTING COMPANY LLC");
   });
 });
