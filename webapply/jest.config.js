@@ -17,6 +17,7 @@ module.exports = {
     "!src/stories/**",
     "!src/containers/WebChat/**",
     "src/components/Form/Input/**",
+    "src/components/Form/RadioButton/**",
     "src/**/*New.{js,jsx}"
   ],
 

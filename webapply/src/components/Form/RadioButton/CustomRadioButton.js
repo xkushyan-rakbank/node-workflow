@@ -19,6 +19,7 @@ export const CustomRadioButton = ({
   customIcon = true,
   onSelect = () => {},
   classes: extendedClasses,
+  dataTestId,
   ...rest
 }) => {
   const classes = useStyles({ classes: extendedClasses });
@@ -30,6 +31,7 @@ export const CustomRadioButton = ({
         onClick={onSelect}
         icon={<Icon name={ICONS.unCheckedRadio} alt="select icon" />}
         checkedIcon={<Icon name={ICONS.checkedRadio} alt="selected icon" />}
+        data-testid={dataTestId}
         {...rest}
       />
     );
@@ -43,7 +45,7 @@ export const CustomRadioButton = ({
       }
     },
     checked: {}
-  })(props => <Radio color="primary" {...props} />);
+  })(props => <Radio data-testid={dataTestId} color="primary" {...props} />);
 
   return (
     <FormControlLabel
