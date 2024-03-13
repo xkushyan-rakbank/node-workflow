@@ -331,8 +331,9 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     receiveInterest: Yup.string().required("This field is required"),
     signingPreferences: Yup.string().required("This field is required"),
     chequeBookApplied: Yup.string().required("This field is required"),
-    nameOnChequeBook: Yup.string().when("isChqbookNameEditable", {
-      is: isChqbookNameEditable => isChqbookNameEditable,
+    nameOnChequeBook: Yup.string().when(["isChqbookNameEditable", "chequeBookApplied"], {
+      is: (isChqbookNameEditable, chequeBookApplied) =>
+        isChqbookNameEditable && chequeBookApplied === "true",
       then: Yup.string()
         .required(getRequiredMessage("Name on cheque book"))
         .max(MAX_CHEQUE_BOOK_NAME_LENGTH, "Maximum ${max} characters allowed")
