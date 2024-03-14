@@ -17,7 +17,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
     wcmData,
     true
   );
-  const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const { termsAndConditions, isLoadingPdf } = useSelector(getTermsAndConditions);
   const [isAuthorizationProgress, setAuthorizationProgress] = useState(
     termsAndConditions?.authorisation
   );
@@ -76,6 +76,7 @@ export const StakeholderAuthorisations = ({ wcmData }) => {
           variant="outlined"
           className={!termsAndConditions.authorisation ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
+          disabled={isLoadingPdf}
         >
           {!termsAndConditions.authorisation ? (
             !isAuthorizationProgress ? (

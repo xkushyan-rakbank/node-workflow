@@ -52,7 +52,6 @@ describe("OperatorReviewDetails", () => {
       }
     }
   };
-
   beforeEach(() => {
     jest.clearAllMocks();
   });

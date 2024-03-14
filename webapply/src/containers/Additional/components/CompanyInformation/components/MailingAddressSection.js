@@ -211,7 +211,7 @@ export const MailingAddressSection = forwardRef(({ id, refs }) => {
         return (
           <div>
             <Accordion
-              title={"Mailing address"}
+              title={"Company mailing address"}
               id={id}
               isCompleted={IsValidForm}
               classes={{
