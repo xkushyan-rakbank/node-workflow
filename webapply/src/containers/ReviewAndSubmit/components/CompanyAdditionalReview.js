@@ -90,7 +90,7 @@ export const CompanyAdditionalReview = ({ fieldValues, addressFormat, formatDate
               <p>{fieldValues?.countriesOfBusinessDealing}</p>
             </div>
             <div className={classes.infoLabelValue}>
-              <label>Mailing address:</label>
+              <label>Company mailing address:</label>
               <p>{fieldValues.mailingAddress && addressFormat(fieldValues.mailingAddress)}</p>
             </div>
             <div className={classes.infoLabelValue}>

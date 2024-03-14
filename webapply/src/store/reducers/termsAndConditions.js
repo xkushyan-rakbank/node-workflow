@@ -1,4 +1,4 @@
-import { TERMS_ACCEPTED } from "../actions/termsAndConditions.js";
+import { TERMS_ACCEPTED, TERMS_LOADING } from "../actions/termsAndConditions.js";
 import { handleActions } from "../../utils/redux-utils";
 
 export const initialState = {
@@ -6,7 +6,8 @@ export const initialState = {
     kfs: false,
     authorisation: false,
     generalTCs: false
-  }
+  },
+  isLoadingPdf: false
 };
 
 export default handleActions(
@@ -17,6 +18,10 @@ export default handleActions(
         ...state.termsAndConditions,
         ...payload
       }
+    }),
+    [TERMS_LOADING]: (state, { payload }) => ({
+      ...state,
+      isLoadingPdf: payload.isLoadingPdf
     })
   },
   initialState

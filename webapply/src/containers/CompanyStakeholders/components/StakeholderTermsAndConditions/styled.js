@@ -67,7 +67,10 @@ export const useStyles = makeStyles(theme => ({
     "&:hover": {
       background: "rgba(0, 0, 0, 0.7)"
     },
-
+    "&.Mui-disabled": {
+      color: "rgb(255, 255, 255)",
+      backgroundColor: "#757575 !important"
+    },
     [theme.breakpoints.up("sm")]: {
       width: "206px",
       height: "40px",

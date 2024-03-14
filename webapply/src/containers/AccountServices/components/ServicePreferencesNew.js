@@ -160,40 +160,39 @@ export const ServicePreferences = ({ values, setFieldValue, isIslamic }) => {
         component={SelectAutocomplete}
         filterOptions={options => filteredBranches(options)}
       />
-      <div className={classes.questionareWrapper} data-testid="receiveInterestFieldWrapper">
-        <label className={classes.sectionLabel}>
-          {isIslamic
-            ? "Do you want to earn profit on your account(s)?"
-            : "Do you want to earn interest on your account(s)?"}
-          <ContexualHelp
-            title={
-              "Get the most out of your money. Just maintain\n the minimum account balance to unlock\n competitive interest rates."
-            }
-            placement="right"
-            isDisableHoverListener={false}
-            classes={classes.infoIcon}
-          >
-            <HelpOutlineIcon className={classes.infoIcon} />
-          </ContexualHelp>
-        </label>
-        <Field
-          typeRadio
-          options={yesNoOptions}
-          name="receiveInterest"
-          path={"prospect.accountInfo.receiveInterest"}
-          component={InlineRadioGroup}
-          customIcon={false}
-          classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
-          radioColor="primary"
-          onChange={handleRecieveInterestChange}
-        />
-        <DisclaimerNote
-          className={classes.noteWrapper}
-          text={`Note: Only AED and USD currency accounts are eligible to earn ${
-            isIslamic ? "profit" : "interest"
-          }.`}
-        />
-      </div>
+      {!isIslamic && (
+        <div className={classes.questionareWrapper} data-testid="receiveInterestFieldWrapper">
+          <label className={classes.sectionLabel}>
+            Do you want to earn interest on your account(s)?
+            <ContexualHelp
+              title={
+                "Get the most out of your money. Just maintain\n the minimum account balance to unlock\n competitive interest rates."
+              }
+              placement="right"
+              isDisableHoverListener={false}
+              classes={classes.infoIcon}
+            >
+              <HelpOutlineIcon className={classes.infoIcon} />
+            </ContexualHelp>
+          </label>
+          <Field
+            typeRadio
+            options={yesNoOptions}
+            name="receiveInterest"
+            path={"prospect.accountInfo.receiveInterest"}
+            component={InlineRadioGroup}
+            customIcon={false}
+            classes={{ root: classes.radioButtonRoot, label: classes.radioLabelRoot }}
+            radioColor="primary"
+            onChange={handleRecieveInterestChange}
+          />
+          <DisclaimerNote
+            className={classes.noteWrapper}
+            text={"Note: Only AED and USD currency accounts are eligible to earn interest."}
+          />
+        </div>
+      )}
+
       <ConfirmDialog
         title={"Are you sure?"}
         isOpen={isOpen}

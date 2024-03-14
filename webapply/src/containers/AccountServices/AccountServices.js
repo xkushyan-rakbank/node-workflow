@@ -253,6 +253,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
 
   const initialValues = {
     isChqbookNameEditable,
+    isIslamic,
     rakValuePackage: "",
     accountCurrencies: getAccountCurrencies,
     accountCurrency: "AED",
@@ -316,6 +317,7 @@ export const AccountServices = ({ sendProspectToAPI }) => {
   };
 
   const accountInfoValidation = Yup.object().shape({
+    isIslamic: Yup.boolean(),
     isChqbookNameEditable: Yup.boolean(),
     debitCardApplied: Yup.boolean().required("This field is required"),
     nameOnDebitCard: Yup.string().when("debitCardApplied", {
@@ -328,7 +330,10 @@ export const AccountServices = ({ sendProspectToAPI }) => {
     }),
     branchId: Yup.string().required(getRequiredMessage("Branch")),
     accountEmirateCity: Yup.string().required(getRequiredMessage("Emirate or city")),
-    receiveInterest: Yup.string().required("This field is required"),
+    receiveInterest: Yup.string().when("isIslamic", {
+      is: isIslamic => !isIslamic,
+      then: Yup.string().required("This field is required")
+    }),
     signingPreferences: Yup.string().required("This field is required"),
     chequeBookApplied: Yup.string().required("This field is required"),
     nameOnChequeBook: Yup.string().when(["isChqbookNameEditable", "chequeBookApplied"], {

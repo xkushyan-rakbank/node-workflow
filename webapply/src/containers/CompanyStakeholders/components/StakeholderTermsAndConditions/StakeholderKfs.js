@@ -16,7 +16,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
     wcmData,
     true
   );
-  const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const { termsAndConditions, isLoadingPdf } = useSelector(getTermsAndConditions);
   const dispatch = useDispatch();
   const [isKfsProgress, setKfsProgress] = useState(termsAndConditions?.kfs);
   const openKFSModal = () => {
@@ -57,6 +57,7 @@ export const StakeholderKfs = ({ wcmData, setConsent }) => {
           variant="outlined"
           className={!termsAndConditions.kfs ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
+          disabled={isLoadingPdf}
         >
           {!termsAndConditions.kfs ? (
             !isKfsProgress ? (
