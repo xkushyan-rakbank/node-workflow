@@ -11,7 +11,7 @@ export const TermsAndConditions = ({ wcmData }) => {
   const classes = useStyles();
   const [openKfsDialog, setKfsDialog] = useState(false);
   const [pdfLink, setPdfLink] = useState(null);
-  const { termsAndConditions } = useSelector(getTermsAndConditions);
+  const { termsAndConditions, isLoadingPdf } = useSelector(getTermsAndConditions);
   const [isTNCProgress, setTNCProgress] = useState(termsAndConditions?.generalTCs);
   const dispatch = useDispatch();
 
@@ -59,6 +59,7 @@ export const TermsAndConditions = ({ wcmData }) => {
           variant="outlined"
           className={!termsAndConditions.generalTCs ? classes.readAcceptBtn : classes.readBtn}
           onClick={openKFSModal}
+          disabled={isLoadingPdf}
         >
           {!termsAndConditions.generalTCs ? (
             !isTNCProgress ? (

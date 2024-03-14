@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { Formik } from "formik";
 import { act } from "react-dom/test-utils";
-import { render, fireEvent, within, waitFor, getByText } from "@testing-library/react";
+import { render, fireEvent, within, waitFor, screen } from "@testing-library/react";
 import { mockStore } from "../../../../testUtils";
 import { ServicePreferences } from "../ServicePreferencesNew";
 
@@ -55,16 +55,20 @@ describe("ServicePreferences", () => {
     expect(getByTestId("servicePreferenceWrapper")).toBeTruthy();
   });
 
-  it("should display label for recieve interest field based on isIslamic props", () => {
-    const { getByTestId } = renderComp({ ...defaultProps, isIslamic: true });
-    const fieldContainer = getByTestId("receiveInterestFieldWrapper");
-    expect(
-      getByText(fieldContainer, "Do you want to earn profit on your account(s)?")
-    ).toBeTruthy();
+  it("should display hide recieve interest field based for islamic banking", () => {
+    renderComp({ ...defaultProps, isIslamic: true });
+    const receiveInterestWrapper = screen.queryByTestId("receiveInterestFieldWrapper");
+    expect(receiveInterestWrapper).toBeFalsy();
+  });
+
+  it("should display hide recieve interest field based for islamic banking", () => {
+    renderComp({ ...defaultProps, isIslamic: false });
+    const receiveInterestWrapper = screen.queryByTestId("receiveInterestFieldWrapper");
+    expect(receiveInterestWrapper).toBeTruthy();
   });
 
   it("should call handleReceiveInterestChange when receive interest field is changed", () => {
-    const { getByTestId } = renderComp();
+    const { getByTestId } = renderComp({ ...defaultProps, isIslamic: false });
     const receiveInterestWrapper = getByTestId("receiveInterestFieldWrapper");
     const radioButtons = within(receiveInterestWrapper).getByTestId("Yes");
     const radioInput = radioButtons.querySelector("input");
