@@ -92,10 +92,12 @@ export const ProductInformationReview = ({ fieldValues, isIslamic }) => {
               <label>Branch:</label>
               <p>{fieldValues.branch && `${fieldValues.branch}, ${fieldValues.branchEmirate}`}</p>
             </div>
-            <div className={classes.infoLabelValue}>
-              <label>Earn {isIslamic ? "profit" : "interest"} on account:</label>
-              <p>{fieldValues.receiveInterest}</p>
-            </div>
+            {!isIslamic && (
+              <div className={classes.infoLabelValue}>
+                <label>Earn interest on account:</label>
+                <p>{fieldValues.receiveInterest}</p>
+              </div>
+            )}
             <div className={classes.infoLabelValue}>
               <label>Business debit card:</label>
               <p>{fieldValues.debitCardApplied}</p>

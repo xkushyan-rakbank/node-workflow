@@ -236,7 +236,7 @@ export function* prospectAutoSave() {
   }
 }
 
-const getRequestPayloadForNode = (key, prospect, viewId, isAgent, isEditable) => {
+const getRequestPayloadForNode = (key, prospect, viewId, isAgent, isEditable, isIslamicBanking) => {
   let nodePayload;
   switch (key) {
     case "organizationInfo": {
@@ -345,6 +345,15 @@ const getRequestPayloadForNode = (key, prospect, viewId, isAgent, isEditable) =>
       }
       break;
     }
+    case "accountInfo": {
+      if (isIslamicBanking) {
+        const { receiveInterest, ...rest } = prospect[key];
+        nodePayload = { ...rest, receiveInterest: false };
+      } else {
+        nodePayload = prospect[key];
+      }
+      break;
+    }
     default:
       nodePayload = prospect[key];
   }
@@ -361,6 +370,7 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
     const signatoryInfo = yield select(getSignatories);
     const isAgent = yield select(checkLoginStatus);
     const searchResults = yield select(getSearchResults);
+    const isIslamicBanking = yield select(getIsIslamicBanking);
     const currentProspect = searchResults.find(item => item.prospectId === prospectId);
 
     const viewId = applicationInfo.viewId;
@@ -394,7 +404,8 @@ export function* sendProspectToAPI({ payload: { newProspect, saveType, actionTyp
             newProspect,
             viewId,
             isAgent,
-            isEditable
+            isEditable,
+            isIslamicBanking
           );
         }
       });

@@ -1,9 +1,10 @@
 import React from "react";
 import { Provider } from "react-redux";
-import configureStore from "redux-mock-store";
 import { Formik } from "formik";
 import { act } from "react-dom/test-utils";
 import { render, screen, fireEvent, within, waitFor } from "@testing-library/react";
+
+import { mockStore } from "../../../../testUtils";
 import { AuthorisationPreferences } from "../AuthorisationPreferencesNew";
 
 jest.mock("../../../../components/Accordion/CustomAccordion", () => ({
@@ -11,8 +12,8 @@ jest.mock("../../../../components/Accordion/CustomAccordion", () => ({
 }));
 
 describe("AuthorisationPreferences", () => {
-  const mockStore = configureStore([]);
-  const store = mockStore({
+  const store = {
+    ...mockStore,
     appConfig: {
       prospect: {
         accountInfo: {
@@ -96,7 +97,7 @@ describe("AuthorisationPreferences", () => {
     decisions: {
       decisionLoading: {}
     }
-  });
+  };
   beforeEach(() => {
     jest.clearAllMocks();
   });
