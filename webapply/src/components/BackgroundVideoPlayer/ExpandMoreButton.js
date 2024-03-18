@@ -16,6 +16,7 @@ export const ExpandMoreButton = ({ className = "", onClick = () => {} }) => {
       className={cx(classes.scrollButton, className)}
       name={1}
       onClick={onClick}
+      data-testid="expand-more-button"
     >
       Read more
       <ExpandMoreIcon className={classes.expandMoreIc} alt="scroll down" />

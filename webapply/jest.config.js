@@ -23,6 +23,7 @@ module.exports = {
     "src/components/Form/Select/**",
     "src/components/Avatar/**",
     "src/components/ApplicationStatus/**",
+    "src/components/BackgroundVideoPlayer/**",
     "src/**/*New.{js,jsx}"
   ],
 
