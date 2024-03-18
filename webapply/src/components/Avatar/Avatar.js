@@ -17,7 +17,7 @@ export const Avatar = ({
 
   if (isEmptyAvatar) {
     return (
-      <UserAvatar className={classes.emptyAvatar}>
+      <UserAvatar className={classes.emptyAvatar} data-testid="empty-avatar">
         {defaultAvatarIcon && (
           <img src={defaultAvatarIcon} alt="defaultIcon" className={classes.defaultAvatar} />
         )}
