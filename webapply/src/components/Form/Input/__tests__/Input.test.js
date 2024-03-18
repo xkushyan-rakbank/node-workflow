@@ -24,14 +24,16 @@ describe("Input", () => {
     label: "Name"
   };
 
+  const ref = React.createRef();
+
   const renderComp = (props = defaultInputProps) =>
     render(
-      <Formik initialValues={{}}>
+      <Formik initialValues={{}} innerRef={ref}>
         <Input
           data-testid="input"
           InputProps={props.InputProps || InputProps}
           form={{ errors: props.errors, touched: props.touched, ...form }}
-          field={{ onBlur: onBlurMock, name: "test", value: "" }}
+          field={props.field || { onBlur: onBlurMock, name: "test", value: "" }}
           contextualHelpText="contextualHelpText"
           contextualHelpProps={{}}
           onBeforeInput={onBeforeInputFunctionMock}
@@ -95,6 +97,18 @@ describe("Input", () => {
     act(() => {
       fireEvent.blur(inputElem);
     });
+  });
+
+  it("handles onFocus when isIE is true", () => {
+    const originalUserAgent = window.navigator.userAgent;
+    jest.spyOn(window.navigator, "userAgent", "get").mockReturnValue("test MSIE ");
+    const { getByTestId } = renderComp();
+    const inputElement = getByTestId("input");
+    const inputElem = inputElement.querySelector("input");
+    act(() => {
+      fireEvent.focus(inputElem);
+    });
+    jest.spyOn(window.navigator, "userAgent", "get").mockReturnValue(originalUserAgent);
   });
 
   it("renders with placeholder correctly", () => {
@@ -205,6 +219,42 @@ describe("Input", () => {
 
   it("renders with fieldValueLength", () => {
     const { getByTestId } = renderComp({ showCounter: true, fieldValueLength: 5 });
+    const parent = getByTestId("inputParent");
+    const counter = parent.childNodes[1];
+    expect(counter).toBeTruthy();
+  });
+
+  it("calls handleSpecialCharactersPaste", () => {
+    const { getByTestId } = renderComp();
+    const input = getByTestId("input");
+    const inputElem = input.querySelector("input");
+    act(() => {
+      fireEvent.paste(inputElem, {
+        clipboardData: {
+          getData: jest.fn().mockReturnValue("test$")
+        }
+      });
+    });
+  });
+
+  it("renders when enableAllCharacters is true onPaste", () => {
+    const { getByTestId } = renderComp({ enableAllCharacters: true });
+    const input = getByTestId("input");
+    const inputElem = input.querySelector("input");
+    act(() => {
+      fireEvent.paste(inputElem, {
+        clipboardData: {
+          getData: jest.fn().mockReturnValue("test$")
+        }
+      });
+    });
+  });
+
+  it("sets fieldValueLength when not provided and field.value is set", () => {
+    const { getByTestId } = renderComp({
+      showCounter: true,
+      field: { value: "test", name: "test" }
+    });
     const parent = getByTestId("inputParent");
     const counter = parent.childNodes[1];
     expect(counter).toBeTruthy();
