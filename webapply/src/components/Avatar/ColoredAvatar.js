@@ -25,6 +25,11 @@ const useStyles = makeStyles(theme => ({
 export const ColoredAvatar = ({ color, textColor, children }) => {
   const classes = useStyles({ color, textColor });
   return (
-    <Avatar className={cx(classes.coloredBackground, classes.coloredAvatar)}>{children}</Avatar>
+    <Avatar
+      className={cx(classes.coloredBackground, classes.coloredAvatar)}
+      data-testid="default-avatar-icon"
+    >
+      {children}
+    </Avatar>
   );
 };
