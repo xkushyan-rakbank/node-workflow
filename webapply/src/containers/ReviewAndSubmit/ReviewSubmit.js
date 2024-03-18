@@ -187,7 +187,7 @@ export const ReviewSubmit = ({ sendProspectToAPI }) => {
       if (displayFields.branchEmirate) {
         return branchCityList
           .find(branch => displayFields.branchEmirate === branch.displayText)
-          .subGroup?.find(val => val.code === branchCode).displayText;
+          .subGroup?.find(val => val.code === branchCode)?.displayText;
       }
     },
     [displayFields, branchCityList]
