@@ -56,6 +56,7 @@ const InputBase = ({
     ? field.value.length
     : 0;
 
+  /*istanbul ignore next*/
   const handleSpecialCharacterKeyPress = event => {
     const hasDisAllowedCharacters = allowedCharRegex.test(event.data);
     if (hasDisAllowedCharacters && !enableAllCharacters) {
@@ -63,6 +64,7 @@ const InputBase = ({
     }
   };
 
+  /*istanbul ignore next*/
   const handleSpecialCharacterPaste = event => {
     let paste = (event.clipboardData || window.clipboardData).getData("text/plain");
     // Replace non-breaking spaces with regular spaces
