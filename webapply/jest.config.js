@@ -22,6 +22,7 @@ module.exports = {
     "src/components/Form/Checkbox/**",
     "src/components/Form/Select/**",
     "src/components/Avatar/**",
+    "src/components/ApplicationStatus/**",
     "src/**/*New.{js,jsx}"
   ],
 
