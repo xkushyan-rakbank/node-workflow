@@ -68,7 +68,7 @@ export const Field = ({
           .join(", ");
 
   return (
-    <FormControl className="formControl" variant="outlined">
+    <FormControl className="formControl" variant="outlined" data-testid="custom-select">
       <InputLabel ref={inputLabel} shrink={shrink}>
         {label}
       </InputLabel>

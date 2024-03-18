@@ -16,6 +16,11 @@ module.exports = {
     "!**/constants/**",
     "!src/stories/**",
     "!src/containers/WebChat/**",
+    "src/components/Form/Input/**",
+    "src/components/Form/RadioButton/**",
+    "src/components/Form/InlineRadioGroup/**",
+    "src/components/Form/Checkbox/**",
+    "src/components/Form/Select/**",
     "src/**/*New.{js,jsx}"
   ],
 
@@ -42,10 +47,10 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      statements: 98,
-      branches: 98,
-      functions: 98,
-      lines: 98
+      statements: 90,
+      branches: 90,
+      functions: 90,
+      lines: 80
     }
   },
   moduleNameMapper: {

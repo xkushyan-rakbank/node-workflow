@@ -26,6 +26,7 @@ export const Control = ({ selectProps, innerRef, children, innerProps }) => (
     }}
     {...selectProps.textFieldProps}
     value={selectProps.value}
+    data-testid="control"
   />
 );
 
@@ -82,10 +83,16 @@ export const MultiValue = ({ selectProps, children, isFocused, removeProps }) =>
     className={classNames(selectProps.classes.chip, {
       [selectProps.classes.chipFocused]: isFocused
     })}
-    deleteIcon={<CloseIcon style={{ width: "14px", height: "14px", fill: "#000000" }} />}
+    deleteIcon={
+      <CloseIcon
+        data-testid="multi-value-remove"
+        style={{ width: "14px", height: "14px", fill: "#000000" }}
+      />
+    }
     onDelete={event => {
       removeProps.onClick();
       removeProps.onMouseDown(event);
     }}
+    data-testid="multi-value"
   />
 );

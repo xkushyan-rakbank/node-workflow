@@ -12,5 +12,4 @@ export { SkeletonLoader } from "./SkeletonLoader";
 export { NumberFormat } from "./Input/NumberFormat";
 export { EmiratesID } from "./Input/EmiratesID";
 export { TimePicker } from "./TimePicker/TimePicker";
-export { GlobalIntermediaryID } from "./Input/GlobalIntermediaryID";
-export { POBoxNumberInput } from "./Input/EmiratesID";
+export { POBoxNumberInput } from "./Input/NumberFormat";

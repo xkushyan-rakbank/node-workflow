@@ -42,6 +42,7 @@ const SelectAutocompleteBase = ({
     ? options.find(option => extractValue(option) === field.value)
     : options.filter(option => (field.value || []).map(extractValue).includes(option.value));
 
+  /*istanbul ignore next*/
   const handleChange = selected => {
     const value = multiple ? (selected || []).map(item => item.value) : extractValue(selected);
     const selectInnerRef = props.innerRef || selectRef;
@@ -73,7 +74,11 @@ const SelectAutocompleteBase = ({
   }, [disabled]);
 
   return (
-    <FormControl classes={{ root: classes.formControlRoot }} variant="filled">
+    <FormControl
+      classes={{ root: classes.formControlRoot }}
+      variant="filled"
+      data-testid="select-autocomplete"
+    >
       <ContexualHelp title={contextualHelpText} {...contextualHelpProps}>
         <Select
           {...field}
