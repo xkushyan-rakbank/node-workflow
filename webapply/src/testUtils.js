@@ -63,5 +63,8 @@ export const mockStore = configureMockStore()({
   },
   decisions: {
     decisionLoading: {}
+  },
+  sendProspectToAPI: {
+    loading: true
   }
 });
