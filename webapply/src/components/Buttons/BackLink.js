@@ -106,16 +106,17 @@ const BackLinkBase = ({ text = "Back", className = "", path, isTypeButton = fals
   };
 
   return (
-    <Link
-      className={cx(className, classes.root, { [classes.linkContainerBtn]: isTypeButton })}
-      to={path}
-      onClick={handleLinkClick}
-      replace
-      {...props}
-    >
-      <Icon className="arrowIcon" alt="collapse-icon" name={ICONS.arrowLeft} />
-      <span>{text}</span>
-    </Link>
+    <span onClick={handleLinkClick} data-testid="back-link">
+      <Link
+        className={cx(className, classes.root, { [classes.linkContainerBtn]: isTypeButton })}
+        to={path}
+        replace
+        {...props}
+      >
+        <Icon className="arrowIcon" alt="collapse-icon" name={ICONS.arrowLeft} />
+        <span>{text}</span>
+      </Link>
+    </span>
   );
 };
 

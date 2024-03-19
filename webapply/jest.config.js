@@ -24,6 +24,7 @@ module.exports = {
     "src/components/Avatar/**",
     "src/components/ApplicationStatus/**",
     "src/components/BackgroundVideoPlayer/**",
+    "src/components/Buttons/**",
     "src/**/*New.{js,jsx}"
   ],
 

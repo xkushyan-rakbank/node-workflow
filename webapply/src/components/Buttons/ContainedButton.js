@@ -113,10 +113,11 @@ const BaseButton = ({
     disabled={isDisplayLoader || disabled}
     onClick={handleClick}
     name={name}
+    data-testid="contained-button"
     {...props}
   >
     {isDisplayLoader ? (
-      <Loader className={classes.loader} alt="loading" />
+      <Loader className={classes.loader} alt="loading" data-testid="loader" />
     ) : (
       [
         label,
