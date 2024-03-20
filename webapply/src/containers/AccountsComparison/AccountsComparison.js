@@ -26,7 +26,10 @@ export const AccountsComparisonContainer = ({
 
   const dispatch = useDispatch();
   const pushHistory = useTrackingHistory();
-  const queryParams = useLocation().search;
+  const searchParam = useLocation().search;
+  const queryHash = useLocation().hash;
+
+  const queryParams = queryHash ? `?${queryHash.split("?")[1]}` : searchParam;
 
   useEffect(() => {
     dispatch(resetProspect());
