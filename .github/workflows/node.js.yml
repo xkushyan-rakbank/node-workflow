@@ -20,6 +20,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Switch to webapply directory and install dependencies
+      run: npm ci
+      working-directory: webapply
+
+    - name: Set Registry in .npmrc
+      run: |
+        echo "@rakbank:registry=https://pkgs.dev.azure.com/softwarelicense/505d78ca-5ab9-4415-bd14-9ad67f816ed9/_packaging/rakbank/npm/registry/" >> webapply/.npmrc
+        echo "always-auth=true" >> webapply/.npmrc
+
     - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
